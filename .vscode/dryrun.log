@@ -1,0 +1,27 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/rs2015/Mathematiques'
+make -C /versioning -j all
+make -C /include -j all
+\cd /src && make -j all
+\cd /examples && make -j all 
+\cd /benchmark && make -j all 
+\cd /test && make -j all 
+\cd /sandbox && make -j all 
+cat body.src.md doc/about/part-one.src.md > body.temp.md
+\cd /doc && make all   
+make: Leaving directory '/home/rs2015/Mathematiques'
+ 
+Makefile:62: /make-lib/info.mk: No such file or directory
+make: *** No rule to make target '/make-lib/info.mk'.
+Makefile:12: /make-lib/style.mk: No such file or directory
+make: *** No rule to make target '/make-lib/style.mk'.
+Makefile:11: /make-lib/variables.mk: No such file or directory
+make: *** No rule to make target '/make-lib/variables.mk'.
+Makefile:10: make-lib/dirmathq.config.mk: No such file or directory
+make: *** No rule to make target 'make-lib/dirmathq.config.mk'.
+make: Failed to remake makefile '/make-lib/info.mk'.
+make: Failed to remake makefile '/make-lib/style.mk'.
+make: Failed to remake makefile '/make-lib/variables.mk'.
+make: Failed to remake makefile 'make-lib/dirmathq.config.mk'.
+make: *** No rule to make target '/scripts/doc_create_top.py', needed by 'README.md'.
+

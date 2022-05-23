@@ -1,6 +1,6 @@
 
 
-# Mathématiques v3.5.78-c++17
+# Mathématiques v0.40.0-c++17
 
 
 ## User Manual
