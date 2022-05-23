@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+for var in "$@"
+do
+    rm -f ${var}{,.o,.md,link_md,_opts.cpp}
+    make -j ${var} && ./${var} > ${var}.md && more ${var}.md
+done
+
+  

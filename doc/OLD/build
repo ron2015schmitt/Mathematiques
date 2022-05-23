@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$1" = "all" ]; then
+    make -j clean
+    make -j cleandocs
+else
+    ./clean $@
+fi
+
+set -x
+make -j newtag toc && git add -u && make -j git
+set +x

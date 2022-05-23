@@ -1,0 +1,14 @@
+#!/bin/bash
+
+pwd=`pwd`
+echo -e "running reconfigure from pwd=${pwd}"
+mydir=`dirname $(readlink -f $0)`
+if [ "${pwd}" != "${mydir}" ]; then
+    echo -e "${RED}ERROR${DEFCLR} You must run this script from its directory."
+    exit -1
+fi
+
+
+./deconfigure
+./configure
+

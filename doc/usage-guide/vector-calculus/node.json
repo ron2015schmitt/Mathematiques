@@ -1,0 +1,36 @@
+{
+  "index": 10,
+  "name": "vector-calculus",
+  "skip-readme": false,
+  "title": "Vector Calculus",
+  "version": "v3.5.78-c++17",
+  "prefix": "7.10.",
+  "src": "vector-calculus/template.md",
+  "dest": "vector-calculus/README.md",
+  "level": 3,
+  "parent": {
+    "index": 7,
+    "name": "usage-guide",
+    "skip-readme": true,
+    "title": "Usage Guide: Syntax, Data Types, Functions, etc",
+    "version": "v3.5.78-c++17",
+    "prefix": "7.",
+    "src": "usage-guide/template.md",
+    "dest": "usage-guide/README.md",
+    "level": 2,
+    "parent": {
+      "title": "User Manual",
+      "prefix": "",
+      "level": 1,
+      "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v3.5.78-c++17</h1>"
+    },
+    "prev": "first-project",
+    "next": "benchmarks",
+    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v3.5.78-c++17</h1>\n\n<details>\n\n<summary>User Manual</summary>\n\n# [User Manual](../README.md)<br>\n1. [About](../about/README.md)<br>\n2. [License](../license/README.md)<br>\n3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>\n4. [Description and Example Usage](../description-examples/README.md)<br>\n5. [Installation](../installation/README.md)<br>\n6. [Your First Math\u00e9matiques Project](../first-project/README.md)<br>\n7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>\n8. [Benchmarks](../benchmarks/README.md)<br>\n9. [Tests](../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
+    "footer": "\n\n| \u21e6 <br />[Your First Math\u00e9matiques Project](../first-project/README.md)  | [User Manual](../README.md)<br />Usage Guide: Syntax, Data Types, Functions, etc<br /><img width=1000/> | \u21e8 <br />[Benchmarks](../benchmarks/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
+  },
+  "prev": "calculus",
+  "next": "tensor-calculus",
+  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v3.5.78-c++17</h1>\n\n<details>\n\n<summary>User Manual</summary>\n\n# [User Manual](../../README.md)<br>\n1. [About](../../about/README.md)<br>\n2. [License](../../license/README.md)<br>\n3. [Status, Planned Work & Release Notes](../../status-release/README.md)<br>\n4. [Description and Example Usage](../../description-examples/README.md)<br>\n5. [Installation](../../installation/README.md)<br>\n6. [Your First Math\u00e9matiques Project](../../first-project/README.md)<br>\n7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>\n8. [Benchmarks](../../benchmarks/README.md)<br>\n9. [Tests](../../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../../developer-guide/README.md)<br>\n\n\n</details>\n\n\n\n<details>\n\n<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>\n\n# [7. Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br>\n7.1. [Usage Guide Notation](../notation/README.md)<br>\n7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>\n7.3. [Container Types (Vector, Matrix & Tensor)](../containers/README.md)<br>\n7.4. [Operators](../operators/README.md)<br>\n7.5. [Functions](../functions/README.md)<br>\n7.6. [Linear Algebra](../linear-algebra/README.md)<br>\n7.7. [Indexing, Masks, and Sorting](../indexing-sorting/README.md)<br>\n7.8. [Ranges and Grids](../ranges-grids/README.md)<br>\n7.9. [Calculus](../calculus/README.md)<br>\n7.10. _Vector Calculus_ <br>\n7.11. [Tensor Calculus](../tensor-calculus/README.md)<br>\n7.12. [Display of Results](../display/README.md)<br>\n7.13. [FILE I/O](../file-io/README.md)<br>\n7.14. [Debug Modes](../debug/README.md)<br>\n\n\n</details>\n\n",
+  "footer": "\n\n| \u21e6 <br />[Calculus](../calculus/README.md)  | [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br />Vector Calculus<br /><img width=1000/> | \u21e8 <br />[Tensor Calculus](../tensor-calculus/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
+}

@@ -1,0 +1,7 @@
+# ****  This was created by the command "make gitignore".
+# ****  Do NOT manually edit.
+/run
+/example
+/example2
+/example-matrices
+/example3

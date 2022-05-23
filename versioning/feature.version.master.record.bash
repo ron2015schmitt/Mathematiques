@@ -1,0 +1,52 @@
+#!/bin/bash
+# version = Major.Minor
+# Minor should be manually updated any time new functionality is added.
+# Major should be manually incremented for major releases.
+# Both should be integers with no leading zeroes (ie NOT 2.01)
+# Do NOT include a revision string!!
+# The Makefile will tack on a revision string (to yield the full version strign eg. 2.1.21) for commits between changes.
+# This files documents features and functionality, not patches nor bug fixes
+export FEATURE_VERSION_MATHQ=3.5
+# V3.5  completing user guide, display changes and refactoring
+# V3.4  doc refactoring 
+# V3.3  massive refactoring of configure and make.  started doc refactoring.
+# V3.2  added IdentityMatrix, ConstDiagMatrix
+# V3.1  added ZeroMatrix
+# V3.0  refactoring/restructuring complete to allow nested tensors
+# V2.33 renamed matricks -> mathq
+# V2.32 Adding E=element type as well as D=number type
+# V2.31 Working build with recursive Tensors working
+# V2.30 Intermediate refactoring build--not-working fully
+# V2.29 Vector restructuring
+# V2.28 Imaginary number functionality complete. Scalar restructuring
+# V2.27 NewScalar and NewVector classes work recursively
+# V2.26 Upped requirements to C++17 so can use static if
+# V2.25 BaseType->FundamentalType, Added NumberType and DepthType
+# V2.24 new addition TensorR functions for 
+# V2.23 added Imaginary<D> class
+# V2.22 refactoring.  Use C+11 from now on. Adding mixed-math operators
+# V2.21 introduced Tensor type (arbitrary rank)
+# V2.20 re-introduced Matrix type
+# V2.19 introduced Scalar type
+# V2.18 Introduced benchmark and functionality test codes
+# V2.17 Introducing Tensor class and its tensor subclassess. No more Vexpr!
+# V2.16 major refactoring functors.h: cleanup, and adding support for debugging
+# V2.15 addign documentation for display and various functions not yet documented
+# V2.14 adding cumsum,cumprod,cumtrapz and other calculus functions
+# V2.13 introducing color and styles for terminal output
+# V2.12 finished implementing slices
+# V2.11 convert sort and uniq from functions to methods
+# V2.10 check index < 0 in Vector and in VWrapper
+#       change rep to an expression
+# V2.9  (v1,v2) join now works for expressions and on LHS.
+#       Added print1, print2 functions that only get compiled if
+#       MATHQ_DEBUG==1,2 respectively
+#       some fixes to the new debug facility
+# V2.8  started migration to new debug facility
+# V2.7  changed how addresses are stored and checked. 
+# V2.6  negative indices like python. changing all indices to index_type = int
+# V2.5  concat and rep -- only for Vectors
+# V2.4  masks working -- only for Vectors
+# V2.3  v[seq(start,end)] slices -- only for Vectors
+# V2.2  namespace Matricks -> mathq
+# V2.1  Introduced version control

@@ -1,0 +1,85 @@
+#!/bin/bash
+
+pwd=`pwd`
+echo -e "running configure from pwd=${pwd}"
+mydir=`dirname $(readlink -f $0)`
+if [ "${pwd}" != "${mydir}" ]; then
+    echo -e "${RED}ERROR${DEFCLR} You must run this script from its directory."
+    exit -1
+fi
+
+source scripts/style.bash || exit 1
+
+
+# Create file that contains the installation path
+
+DIR_MATHQ=${pwd}
+MAKEDIR=${DIR_MATHQ}/make-lib
+
+cat > ${MAKEDIR}/dirmathq.config.mk << EOF 
+# created by configure script
+# Do NOT store in git
+DIR_MATHQ := ${DIR_MATHQ}
+EOF
+chmod a-w ${MAKEDIR}/dirmathq.config.mk
+
+# create Makefile for user in examples
+
+Makefile_example=${DIR_MATHQ}/examples/Makefile
+
+TAG_FILE_MATHQ=${DIR_MATHQ}/versioning/tag.mathq.out.txt
+TAG_MATHQ=`cat ${TAG_FILE_MATHQ}`
+
+
+cat > ${Makefile_example} << EOF 
+##############################################################################################
+# Mathematiques ${TAG_MATHQ} User Code Makefile
+#
+# Copy this Makefile to your project directory
+#
+# `date`
+#
+# This Makefile was created by ${DIR_MATHQ}/configure from
+#   ${MAKEDIR}/variables.mk
+#   ${MAKEDIR}/example.variables.mk
+#   ${MAKEDIR}/recipes.mk
+#   ${MAKEDIR}/example.recipes.mk
+##############################################################################################
+
+DIR_MATHQ := ${DIR_MATHQ}
+
+##############################################################################################
+##############################################################################################
+#                                       VARIABLES
+##############################################################################################
+##############################################################################################
+
+EOF
+
+cat ${MAKEDIR}/variables.mk >> ${Makefile_example}
+cat ${MAKEDIR}/example.variables.mk >> ${Makefile_example}
+
+cat >> ${Makefile_example} << EOF 
+
+#---------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
+#                                         RECIPES
+#---------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------
+
+EOF
+cat ${MAKEDIR}/recipes.mk >> ${Makefile_example}
+cat ${MAKEDIR}/example.recipes.mk >> ${Makefile_example}
+chmod a-w ${Makefile_example}
+
+python3 include-templates/fun_unary.py ${DIR_MATHQ}
+chmod a-w ${DIR_MATHQ}/include/fun_unary_AUTO.h
+
+python3 include-templates/fun_binary.py ${DIR_MATHQ}
+chmod a-w ${DIR_MATHQ}/include/fun_binary_AUTO.h
+
+python3 include-templates/fun_ternary.py ${DIR_MATHQ}
+chmod a-w ${DIR_MATHQ}/include/fun_ternary_AUTO.h
+
+
+ 

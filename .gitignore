@@ -1,3 +1,23 @@
+# specific files for this project
+/make-lib/dirmathq.config.mk
+/examples/Makefile
+/scripts/__pycache__/
+
+# NOTE: that most of the subdirectories have .gitignore files as well
+
+
+# temp files
+*.g++_copts
+*.tmp
+*.temp
+~*
+*~
+*.temp.md
+
+.vscode/targets.log
+
+# -------------C++ output files--------------
+
 # Prerequisites
 *.d
 

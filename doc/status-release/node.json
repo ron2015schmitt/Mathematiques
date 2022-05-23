@@ -1,0 +1,21 @@
+{
+  "index": 3,
+  "name": "status-release",
+  "skip-readme": false,
+  "title": "Status, Planned Work & Release Notes",
+  "version": "v3.5.78-c++17",
+  "prefix": "3.",
+  "src": "status-release/template.md",
+  "dest": "status-release/README.md",
+  "level": 2,
+  "parent": {
+    "title": "User Manual",
+    "prefix": "",
+    "level": 1,
+    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v3.5.78-c++17</h1>"
+  },
+  "prev": "license",
+  "next": "description-examples",
+  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v3.5.78-c++17</h1>\n\n<details>\n\n<summary>User Manual</summary>\n\n# [User Manual](../README.md)<br>\n1. [About](../about/README.md)<br>\n2. [License](../license/README.md)<br>\n3. _Status, Planned Work & Release Notes_ <br>\n4. [Description and Example Usage](../description-examples/README.md)<br>\n5. [Installation](../installation/README.md)<br>\n6. [Your First Math\u00e9matiques Project](../first-project/README.md)<br>\n7. [Usage Guide: Syntax, Data Types, Functions, etc](../usage-guide/README.md)<br>\n8. [Benchmarks](../benchmarks/README.md)<br>\n9. [Tests](../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
+  "footer": "\n\n| \u21e6 <br />[License](../license/README.md)  | [User Manual](../README.md)<br />Status, Planned Work & Release Notes<br /><img width=1000/> | \u21e8 <br />[Description and Example Usage](../description-examples/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
+}

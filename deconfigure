@@ -1,0 +1,27 @@
+#!/bin/bash
+
+pwd=`pwd`
+echo -e "running deconfigure from pwd=${pwd}"
+mydir=`dirname $(readlink -f $0)`
+if [ "${pwd}" != "${mydir}" ]; then
+    echo -e "${RED}ERROR${DEFCLR} You must run this script from its directory."
+    exit -1
+fi
+
+source scripts/style.bash || exit 1
+
+DIRMATHQ_FILE='make-lib/dirmathq.config.mk'
+
+\make -j cleanall || echo "can't perform make clean.  configuration Makefile likely already deleted. continuing with deconfigure..."
+
+echo "removing configuration output files"
+\rm -fr scripts/__pycache__/
+
+# the following are created in configure and are not removed by makefiles
+\rm -fr examples/Makefile
+\rm -f ${DIRMATHQ_FILE}
+\rm -f include/fun_unary_AUTO.h
+\rm -f include/fun_binary_AUTO.h
+\rm -f include/fun_ternary_AUTO.h
+
+
