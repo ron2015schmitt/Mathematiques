@@ -108,7 +108,7 @@ namespace mathq {
 
   template <class E, int R = 0, typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
   class
-    Tensor;
+    MultiArray;
 
   // *********************************************************************
   // * Special Matrices
@@ -232,7 +232,7 @@ namespace mathq {
 
   template <class E, class D, int M, int R>
   class Materialize {
-    typedef Tensor<E, R, D, M> TEN;
+    typedef MultiArray<E, R, D, M> TEN;
     typedef Matrix<E, 0, 0, D, M> MAT;
     typedef Vector<E, 0, D, M> VEC;
     typedef Scalar<E, D, M> SCA;
@@ -423,14 +423,14 @@ namespace mathq {
 
   template <typename D>
   class
-    IsMathqContainer<Tensor<D>> {
+    IsMathqContainer<MultiArray<D>> {
   public:
     constexpr static bool value = true;
     typedef D RealType;
   };
   template <typename D, int R>
   class
-    IsMathqContainer<Tensor<D, R>> {
+    IsMathqContainer<MultiArray<D, R>> {
   public:
     constexpr static bool value = true;
     typedef D RealType;
@@ -607,10 +607,10 @@ namespace mathq {
     }
   };
 
-  //  Tensor<E>
+  //  MultiArray<E>
   template <class E>
   class
-    FundamentalType<Tensor<E>> {
+    FundamentalType<MultiArray<E>> {
   public:
     typedef typename FundamentalType<E>::Type Type;
     constexpr static int depth() {
@@ -618,10 +618,10 @@ namespace mathq {
     }
   };
 
-  //  Tensor<E,R>
+  //  MultiArray<E,R>
   template <class E, int R>
   class
-    FundamentalType<Tensor<E, R>> {
+    FundamentalType<MultiArray<E, R>> {
   public:
     typedef typename FundamentalType<E>::Type Type;
     constexpr static int depth() {
@@ -883,16 +883,16 @@ namespace mathq {
 
 
 
-  //  Tensor<E>
+  //  MultiArray<E>
 
   template <class E, typename NewD>
   class
-    NumberType<Tensor<E>, NewD> {
+    NumberType<MultiArray<E>, NewD> {
   public:
-    typedef Tensor<E> InputType;
+    typedef MultiArray<E> InputType;
     typedef typename NumberType<E>::Type Type;
-    typedef Tensor<typename NumberType<E, NewD>::ReplaceTypeD> ReplaceTypeD;
-    typedef Tensor<NewD> ReplaceTypeE;
+    typedef MultiArray<typename NumberType<E, NewD>::ReplaceTypeD> ReplaceTypeD;
+    typedef MultiArray<NewD> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
       return 1 + NumberType<E, NewD>::depth();
@@ -905,16 +905,16 @@ namespace mathq {
     }
   };
 
-  //  Tensor<E,R>
+  //  MultiArray<E,R>
 
   template <class E, typename NewD, int R>
   class
-    NumberType<Tensor<E, R>, NewD> {
+    NumberType<MultiArray<E, R>, NewD> {
   public:
-    typedef Tensor<E, R> InputType;
+    typedef MultiArray<E, R> InputType;
     typedef typename NumberType<E>::Type Type;
-    typedef Tensor<typename NumberType<E, NewD>::ReplaceTypeD, R> ReplaceTypeD;
-    typedef Tensor<NewD, R> ReplaceTypeE;
+    typedef MultiArray<typename NumberType<E, NewD>::ReplaceTypeD, R> ReplaceTypeD;
+    typedef MultiArray<NewD, R> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
       return 1 + NumberType<E, NewD>::depth();
@@ -1098,25 +1098,25 @@ namespace mathq {
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
   };
 
-  //  Tensor<E>
+  //  MultiArray<E>
   template <class E, class C>
   class
-    InversionType<Tensor<E>, C> {
+    InversionType<MultiArray<E>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef Tensor<D> TensorD;
-    typedef Tensor<C> TensorC;
+    typedef MultiArray<D> TensorD;
+    typedef MultiArray<C> TensorC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
   };
 
-  //  Tensor<E,R>
+  //  MultiArray<E,R>
   template <class E, int R, class C>
   class
-    InversionType<Tensor<E, R>, C> {
+    InversionType<MultiArray<E, R>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef Tensor<D, R> TensorD;
-    typedef Tensor<C, R> TensorC;
+    typedef MultiArray<D, R> TensorD;
+    typedef MultiArray<C, R> TensorC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
   };
 

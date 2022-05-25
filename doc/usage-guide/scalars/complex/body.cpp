@@ -159,7 +159,7 @@ int main() {
 
   GMD_HEADER2("Containers of std::complex numbers");
   CR();
-  OUTPUT("Mathématiques container classes (ie `Vector<D>`, `Matrix<d>`, and `Tensor<D>`) can have complex numbers as their underlying type.");
+  OUTPUT("Mathématiques container classes (ie `Vector<D>`, `Matrix<d>`, and `MultiArray<D>`) can have complex numbers as their underlying type.");
   OUTPUT("Below are examples of container math with complex numbers.  Mixed math is allowed.\n");
   CR();
 

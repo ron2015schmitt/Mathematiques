@@ -205,7 +205,7 @@ namespace mathq {
 
 
 
-  // (11) Tensor<E1(D1)> , Tensor<E2(D2)> 
+  // (11) MultiArray<E1(D1)> , MultiArray<E2(D2)> 
 
   template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
   auto approx(const TensorR<A, E1, D1, M, R>& x1, const TensorR<B, E2, D2, M, R>& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
@@ -220,7 +220,7 @@ namespace mathq {
       FUNCTOR_approx<E1, E2, E3, D1, D2, D3> >(x1, x2, tol);
   }
 
-  // (10) Tensor<E1(D1)> , D2 
+  // (10) MultiArray<E1(D1)> , D2 
 
   template <class A, class E1, class D1, class D2, int M, int R>
   auto approx(const TensorR<A, E1, D1, M, R>& x1, const D2& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
@@ -237,7 +237,7 @@ namespace mathq {
 
 
 
-  // (01) D1, Tensor<E2(D2)> 
+  // (01) D1, MultiArray<E2(D2)> 
 
   template <class B, class E2, class D1, class D2, int M, int R>
   auto approx(D1& x1, const TensorR<B, E2, D2, M, R>& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
@@ -624,10 +624,10 @@ namespace mathq {
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
   auto grid(const Domain<D>& r1, const Domain<D>& r2, const Domain<D>& r3) {
     auto dims = Dimensions(r2.N, r1.N, r3.N);
-    auto X = Tensor<D, 3>(dims);
-    auto Y = Tensor<D, 3>(dims);
-    auto Z = Tensor<D, 3>(dims);
-    auto* G = new Vector<Tensor<D>, 3>({ Dimensions(3),dims });
+    auto X = MultiArray<D, 3>(dims);
+    auto Y = MultiArray<D, 3>(dims);
+    auto Z = MultiArray<D, 3>(dims);
+    auto* G = new Vector<MultiArray<D>, 3>({ Dimensions(3),dims });
     // TRDISP(G->deepdims());
     // TRDISP((*G)(0));
     // X
@@ -744,11 +744,11 @@ namespace mathq {
   //
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto fgrid(std::function<D(D, D, D)> func, const Vector<Tensor<D>, 3>& grid) {
-    const Tensor<D>& X = grid(0);
-    const Tensor<D>& Y = grid(1);
-    const Tensor<D>& Z = grid(2);
-    auto* y = new Tensor<D, 3>(X.dims());
+  auto fgrid(std::function<D(D, D, D)> func, const Vector<MultiArray<D>, 3>& grid) {
+    const MultiArray<D>& X = grid(0);
+    const MultiArray<D>& Y = grid(1);
+    const MultiArray<D>& Z = grid(2);
+    auto* y = new MultiArray<D, 3>(X.dims());
     for (int k = 0; k < X.size(); k++) {
       (*y)[k] = func(X[k], Y[k], Z[k]);
     }
@@ -756,7 +756,7 @@ namespace mathq {
   }
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto fgrid(D(func)(D, D, D), const Vector<Tensor<D>, 3>& grid) {
+  auto fgrid(D(func)(D, D, D), const Vector<MultiArray<D>, 3>& grid) {
     // All 3 of these work
     // std::function<D(D,D)> func2 = func;  return fgrid( func2, grid );
     // return fgrid( std::function<D(D,D)>(std::forward<decltype(func)>(func)), grid );

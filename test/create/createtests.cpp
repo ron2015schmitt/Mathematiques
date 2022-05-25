@@ -142,7 +142,7 @@ int main ( int argc, char *argv[] )
 
   // TODO: create arrays for float types, signed int types, unisgen dint types, bool
   //       create default data for each. Then just loop through every combo
-  //       as well as loops of Scalar, Vector, Matrix, Tensor
+  //       as well as loops of Scalar, Vector, Matrix, MultiArray
   //       test with complex and imaginary types as well
   createUnaryTest("Scalar<%s>", "Scalar<%s>", "double", "double", "-", {"2.3"});
 

@@ -1,1 +1,1 @@
-Container Types (Vector, Matrix & Tensor)
+Container Types (Vector, Matrix & MultiArray)

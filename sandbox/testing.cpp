@@ -340,7 +340,7 @@ int main(int argc, char *argv[]) {
   {
     Dimensions dims3(2, 2, 2);
     DISP(dims3);
-    Tensor<double> T(dims3);
+    MultiArray<double> T(dims3);
     DISP(T.dims());
     DISP(T.index(0, 0, 0));
     DISP(T.index(0, 0, 1));
@@ -376,7 +376,7 @@ int main(int argc, char *argv[]) {
     Dimensions dims(3, 2, 1, 6);
     DISP(dims);
     double c = 0;
-    Tensor<double> T(dims);
+    MultiArray<double> T(dims);
     for (int i = 0; i < T.dims()[0]; i++) {
       for (int j = 0; j < T.dims()[1]; j++) {
         for (int k = 0; k < T.dims()[2]; k++) {
@@ -392,7 +392,7 @@ int main(int argc, char *argv[]) {
     Dimensions dims(3, 2, 3, 6);
     DISP(dims);
     double c = 0;
-    Tensor<double> T(dims);
+    MultiArray<double> T(dims);
     for (int i = 0; i < T.dims()[0]; i++) {
       for (int j = 0; j < T.dims()[1]; j++) {
         for (int k = 0; k < T.dims()[2]; k++) {
@@ -408,7 +408,7 @@ int main(int argc, char *argv[]) {
     Dimensions dims(3, 2);
     DISP(dims);
     double c = 0;
-    Tensor<double> T(dims);
+    MultiArray<double> T(dims);
     for (int i = 0; i < T.dims()[0]; i++) {
       for (int j = 0; j < T.dims()[1]; j++) {
         T(i, j) = c++;
@@ -662,7 +662,7 @@ int main(int argc, char *argv[]) {
     TLDISP(z);
     TLDISP(x);
     TLDISP((z + x));
-    AddType<ImDouble, ImFloat>::Type q = z + x; // TODO: NOTICE THAT ADDTYPE WORKS FOR IMAGINARY WORKS! use for Tensor functions
+    AddType<ImDouble, ImFloat>::Type q = z + x; // TODO: NOTICE THAT ADDTYPE WORKS FOR IMAGINARY WORKS! use for MultiArray functions
     TLDISP(q);
   }
 
@@ -674,7 +674,7 @@ int main(int argc, char *argv[]) {
     TLDISP(z);
     TLDISP(x);
     TLDISP((z * x));
-    MultType<ImDouble, ImFloat>::Type q = z * x; // TODO: NOTICE THAT ADDTYPE WORKS FOR IMAGINARY WORKS! use for Tensor functions
+    MultType<ImDouble, ImFloat>::Type q = z * x; // TODO: NOTICE THAT ADDTYPE WORKS FOR IMAGINARY WORKS! use for MultiArray functions
     TLDISP(q);
   }
 

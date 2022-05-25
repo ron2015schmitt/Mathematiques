@@ -4,9 +4,9 @@
 namespace mathq {
 
   /********************************************************************
-   * Tensor<E>      -- Tensor of 0 dimension (scalar)
+   * MultiArray<E>      -- MultiArray of 0 dimension (scalar)
    *                   E  = type for elements
-   * Tensor<E,NDIM> -- Tensor of NDIM dimension
+   * MultiArray<E,NDIM> -- MultiArray of NDIM dimension
    *                   NDIM = number of dimensions (0=scalar,1=vector,2=matrix,etc)
    *
    * DO NOT SPECIFY: D,M
@@ -21,14 +21,14 @@ namespace mathq {
 
   template <class E, int R, typename D, int M>
   class
-    Tensor : public TensorRW<Tensor<E, R, D, M>, E, D, M, R> {
+    MultiArray : public TensorRW<MultiArray<E, R, D, M>, E, D, M, R> {
   public:
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
 
-    typedef Tensor<E, R, D, M> XType;
+    typedef MultiArray<E, R, D, M> XType;
     typedef E EType;
     typedef D DType;
     typedef typename FundamentalType<D>::Type FType;
@@ -50,7 +50,7 @@ namespace mathq {
 
     // --------------------- default CONSTRUCTOR ---------------------
 
-    explicit Tensor<E, R, D, M>() {
+    explicit MultiArray<E, R, D, M>() {
       std::vector<size_type> dv(R);
       resize(new Dimensions(dv));
       constructorHelper();
@@ -58,14 +58,14 @@ namespace mathq {
 
     // --------------------- constant=0 CONSTRUCTOR ---------------------
 
-    explicit Tensor<E, R, D, M>(const Dimensions& dims) {
+    explicit MultiArray<E, R, D, M>(const Dimensions& dims) {
       resize(dims);
       constructorHelper();
     }
 
     // --------------------- constant E CONSTRUCTOR ---------------------
 
-    explicit Tensor<E, R, D, M>(const Dimensions& dims, const E& e) {
+    explicit MultiArray<E, R, D, M>(const Dimensions& dims, const E& e) {
       resize(dims);
       constructorHelper();
       *this = e;
@@ -75,14 +75,14 @@ namespace mathq {
 
     template <size_t M1 = M, EnableIf<(M1 > 0)> = 0>
 
-    explicit Tensor<E, R, D, M>(const Dimensions& dims, const D d) {
+    explicit MultiArray<E, R, D, M>(const Dimensions& dims, const D d) {
       resize(dims);
       constructorHelper();
       *this = d;
     }
 
     // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    Tensor<E, R, D, M>(const NestedInitializerList<E, R>& mylist) {
+    MultiArray<E, R, D, M>(const NestedInitializerList<E, R>& mylist) {
       *this = mylist;
       constructorHelper();
     }
@@ -90,7 +90,7 @@ namespace mathq {
     // ************* Expression CONSTRUCTOR---------------------
 
     template <class X>
-    Tensor<E, R, D, M>(const TensorR<X, E, D, M, R>& x) {
+    MultiArray<E, R, D, M>(const TensorR<X, E, D, M, R>& x) {
       *this = x;
       constructorHelper();
     }
@@ -104,7 +104,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~Tensor<E, R, D, M>() {
+    ~MultiArray<E, R, D, M>() {
       // remove from directory
     }
 
@@ -210,7 +210,7 @@ namespace mathq {
     //********************* Resize ********************** ******************
     //**********************************************************************
 
-    Tensor& resize(const Dimensions& dims_in) {
+    MultiArray& resize(const Dimensions& dims_in) {
       Dimensions dims = dims_in;
       while (dims.rank() < R) {
         dims.push_back(0);
@@ -220,13 +220,13 @@ namespace mathq {
       return *this;
     }
 
-    Tensor& resize(const Dimensions* dims_in) {
+    MultiArray& resize(const Dimensions* dims_in) {
       return resize(*dims_in);
     }
 
     // TODO: should just pass an index and make deepdims const
 
-    Tensor<E, R, D, M>& resize(const std::vector<Dimensions>& deepdims_in) {
+    MultiArray<E, R, D, M>& resize(const std::vector<Dimensions>& deepdims_in) {
       std::vector<Dimensions> deepdims(deepdims_in);
       Dimensions newdims = deepdims[0];
       resize(newdims);
@@ -292,7 +292,7 @@ namespace mathq {
 
     // "read/write": x.dat(Indices)
     D& dat(const Indices& inds) {
-      // printf("Tensor.dat(Indices)\n");
+      // printf("MultiArray.dat(Indices)\n");
       // MOUT << "  ";
       // TLDISP(inds.size());
       // MOUT << "  ";
@@ -320,7 +320,7 @@ namespace mathq {
 
     // "read": x.dat(Indices)
     const D dat(const Indices& inds) const {
-      // printf("Tensor.dat(Indices) const\n");
+      // printf("MultiArray.dat(Indices) const\n");
       // MOUT << "  ";
       // TLDISP(inds.size());
       // MOUT << "  ";
@@ -398,7 +398,7 @@ namespace mathq {
     }
 
     //**********************************************************************
-    //*******Tensor-style Element Access: A(i,j,k,...) *********************
+    //*******MultiArray-style Element Access: A(i,j,k,...) *********************
     //**********************************************************************
 
     index_type indexOf(const Indices& inds) const {
@@ -504,7 +504,7 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // ----------------- tensor = e ----------------
-    Tensor<E, R, D, M>&
+    MultiArray<E, R, D, M>&
       operator=(const E e) {
       for (index_type i = size(); i--;)
         data_[i] = e;
@@ -513,7 +513,7 @@ namespace mathq {
 
     // ----------------- tensor = d ----------------
     template <class T = E>
-    typename std::enable_if<!std::is_same<T, D>::value, Tensor<T, R, D, M>&>::type operator=(const D& d) {
+    typename std::enable_if<!std::is_same<T, D>::value, MultiArray<T, R, D, M>&>::type operator=(const D& d) {
 
       for (index_type i = 0; i < deepsize(); i++) {
         data_.dat(i) = d;
@@ -522,7 +522,7 @@ namespace mathq {
     }
 
     // ----------------- tensor = C++11 init list
-    Tensor<E, R, D, M>& operator=(const NestedInitializerList<E, R>& mylist) {
+    MultiArray<E, R, D, M>& operator=(const NestedInitializerList<E, R>& mylist) {
       // MOUT << "operator=: ";
       // TLDISP(mylist);
       int i = 0;
@@ -532,10 +532,10 @@ namespace mathq {
       return *this;
     }
 
-    // ----------------- tensor = Tensor<E,R,D,M> ----------------
+    // ----------------- tensor = MultiArray<E,R,D,M> ----------------
     template <int R1>
-    Tensor<E, R, D, M>&
-      operator=(const Tensor<E, R1, D, M>& x) {
+    MultiArray<E, R, D, M>&
+      operator=(const MultiArray<E, R1, D, M>& x) {
       // TODO: issue warning
       // TRDISP(x);
       resize(x.dims());
@@ -547,7 +547,7 @@ namespace mathq {
 
     // ----------------- tensor = TensorR<X,E,D,M,R> ----------------
     template <class X>
-    Tensor<E, R, D, M>&
+    MultiArray<E, R, D, M>&
       operator=(const TensorR<X, E, D, M, R>& x) {
 
       if constexpr (M <= 1) {
@@ -571,7 +571,7 @@ namespace mathq {
 
     // ------------- tensor = array[] ----------------
 
-    Tensor<E, R, D, M>&
+    MultiArray<E, R, D, M>&
       operator=(const E array1[]) {
       for (index_type i = 0; i < size(); i++) {
         (*this)[i] = array1[i];
@@ -586,7 +586,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    Tensor<E, R, D, M>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MultiArray<E, R, D, M>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       for (index_type i = size(); i--;) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
@@ -597,7 +597,7 @@ namespace mathq {
     // NOTE: in-place
 
     template <typename T = D>
-    typename std::enable_if<is_complex<T>{}, Tensor<T>&>::type conj() {
+    typename std::enable_if<is_complex<T>{}, MultiArray<T>&>::type conj() {
       for (index_type i = size(); i--;) {
         data_[i] = std::conj(data_[i]);
       }
@@ -610,7 +610,7 @@ namespace mathq {
 
     inline std::string classname() const {
       using namespace display;
-      std::string s = "Tensor";
+      std::string s = "MultiArray";
       s += StyledString::get(ANGLE1).get();
       E d;
       s += getTypeName(d);
@@ -684,7 +684,7 @@ namespace mathq {
 
     // TODO: implement format
 
-    friend std::ostream& operator<<(std::ostream& stream, const Tensor<E, R, D, M>& t) {
+    friend std::ostream& operator<<(std::ostream& stream, const MultiArray<E, R, D, M>& t) {
       using namespace display;
       index_type n = 0;
       t.send(stream, n, t.dims());
@@ -692,7 +692,7 @@ namespace mathq {
     }
 
     // template <class D>
-    friend inline std::istream& operator>>(const std::string s, Tensor<E, R, D, M>& x) {
+    friend inline std::istream& operator>>(const std::string s, MultiArray<E, R, D, M>& x) {
       std::istringstream st(s);
       return (st >> x);
     }
@@ -700,7 +700,7 @@ namespace mathq {
     // stream >> operator
     // TODO: implement
 
-    friend std::istream& operator>>(std::istream& stream, Tensor<E, R, D, M>& x) {
+    friend std::istream& operator>>(std::istream& stream, MultiArray<E, R, D, M>& x) {
       return stream;
     }
 

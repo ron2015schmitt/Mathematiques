@@ -298,12 +298,12 @@ int main(int argc, char *argv[]) {
 
   CR();
   CR();
-  MOUT << bold.apply("Tensor") << endl;
+  MOUT << bold.apply("MultiArray") << endl;
   {
     CR();
-    MOUT << bold.apply("Tensor") << " - " << blue.apply("Real Scalar") << endl;
+    MOUT << bold.apply("MultiArray") << " - " << blue.apply("Real Scalar") << endl;
     CR();
-    Tensor<double, 3> tr{
+    MultiArray<double, 3> tr{
         {{0, 1, 2, 3, 4}, {10, 11, 12, 13, 14}},
         {{100, 101, 102, 103, 104}, {110, 111, 112, 113, 114}},
         {{200, 201, 202, 203, 204}, {210, 211, 212, 213, 214}}};
@@ -428,7 +428,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Scalar<Tensor<double, 2>> s{{{1, 2}, {3, 4}}};
+    Scalar<MultiArray<double, 2>> s{{{1, 2}, {3, 4}}};
     TLDISP(s);
     TLDISP(sin(s));
     TLDISP(exp(s));
@@ -461,7 +461,7 @@ int main(int argc, char *argv[]) {
   }
   {
     CR();
-    Vector<Tensor<double, 2>> v{{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}}};
+    Vector<MultiArray<double, 2>> v{{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}}};
     TLDISP(v);
     TLDISP(sin(v));
     TLDISP(exp(v));
@@ -500,7 +500,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Matrix<Tensor<double, 3>, 2, 2> m{{{{{-0, -1},
+    Matrix<MultiArray<double, 3>, 2, 2> m{{{{{-0, -1},
                                          {-10, -11},
                                          {-20, -21}},
                                         {{-100, -101},
@@ -536,10 +536,10 @@ int main(int argc, char *argv[]) {
 
   // CR();
   // CR();
-  // MOUT << bold.apply("Two-Level Tensor tests") << endl;
+  // MOUT << bold.apply("Two-Level MultiArray tests") << endl;
   // {
   //   CR();
-  //   Tensor<Scalar<double>,2> t {{{1},{2}},{{3},{4}}};
+  //   MultiArray<Scalar<double>,2> t {{{1},{2}},{{3},{4}}};
   //   TLDISP(t);
   //   TLDISP(sin(t));
   //   TLDISP(beta(t));
@@ -548,7 +548,7 @@ int main(int argc, char *argv[]) {
   // }
   // {
   //   CR();
-  //   Tensor<Vector<double>,2> t {{{1,2,3},{4,5,6}},{{7,8,9},{10,11,12}}};
+  //   MultiArray<Vector<double>,2> t {{{1,2,3},{4,5,6}},{{7,8,9},{10,11,12}}};
   //   TLDISP(t);
   //   TLDISP(sin(t));
   //   TLDISP(beta(t));
@@ -558,7 +558,7 @@ int main(int argc, char *argv[]) {
 
   // {
   //   CR();
-  //   Tensor<Matrix<double,2,2>,2> t  {
+  //   MultiArray<Matrix<double,2,2>,2> t  {
   //     { {{1,2},{3,4}}, {{5,6},{7,8}} },
   // 	{ {{9,10},{11,12}}, {{13,14},{15,16}} }
   //   };
@@ -572,7 +572,7 @@ int main(int argc, char *argv[]) {
 
   // {
   //   CR();
-  //   Tensor<Tensor<double,3>,2> t { {
+  //   MultiArray<MultiArray<double,3>,2> t { {
   // 	{
   // 	  {
   // 	    {0, 1},

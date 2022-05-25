@@ -562,7 +562,7 @@ namespace mathq {
       typename NestedInitializerListDef<E, L-1>::type
     >;
     template <class D, int R, int M>
-    static void compute(Tensor<E, R, D, M>& t, const type& list, int& i) {
+    static void compute(MultiArray<E, R, D, M>& t, const type& list, int& i) {
 
       for (auto nlist : list) {
         NestedInitializerListDef<E, L-1>::compute(t, nlist, i);
@@ -593,7 +593,7 @@ namespace mathq {
     using type = E;
 
     template <class D, int R, int M>
-    static void compute(Tensor<E, R, D, M>& t, const type& item, int& i) {
+    static void compute(MultiArray<E, R, D, M>& t, const type& item, int& i) {
       //TLDISP(item);
       t[i++] = item;
     }
@@ -676,7 +676,7 @@ namespace mathq {
 
   // -------------------------------------------------------------------
   //
-  // Tensors enum - one enum for each actual Tensor:
+  // Tensors enum - one enum for each actual MultiArray:
   //                Scalar, Vector, Matrix, etc. And then two expressions.
   //                return type of getEnum
   //
@@ -752,7 +752,7 @@ namespace mathq {
         }
         else
           if constexpr (R>=3) {
-            Tensor<E, R> t;
+            MultiArray<E, R> t;
             t = te;
             stream << "" +display::getTypeName(t)+" ";
             stream << t;

@@ -98,7 +98,7 @@ namespace mathq
 
    // TODO: realtime check (in debug mode) that deep dimensions of E1 and E2 are compatible
 
-   // (1A: T • T) Tensor<E1(D1)> | Tensor<E2(D2)>
+   // (1A: T • T) MultiArray<E1(D1)> | MultiArray<E2(D2)>
    // TODO: implement this
 
    // template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
@@ -210,7 +210,7 @@ namespace mathq
     return m3;
   }
 
-  // (4A) Tensor<D1,R,M> + Tensor<D2,R,1>
+  // (4A) MultiArray<D1,R,M> + MultiArray<D2,R,1>
 
   // Depending on rank and dimensions, this may be top-level or element wise Addition
   // Note: M2==1 -> E2==D2
@@ -239,7 +239,7 @@ namespace mathq
   //                     FUNCTOR_add<E1, E2, E3, D1, D2, D3>>(x1, x2);
   // }
 
-  // (4B) Tensor<D1,R,1> + Tensor<D2,R,M>
+  // (4B) MultiArray<D1,R,1> + MultiArray<D2,R,M>
 
   // Depending on rank and dimensions, this may be top-level or element wise Addition
   // Note: M1==1 -> E1==D1

@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.0-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.1-c++17</h1>
 
 <details>
 
@@ -28,7 +28,7 @@
 # [7. Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br>
 7.1. [Usage Guide Notation](../notation/README.md)<br>
 7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>
-7.3. [Container Types (Vector, Matrix & Tensor)](../containers/README.md)<br>
+7.3. [Container Types (Vector, Matrix & MultiArray)](../containers/README.md)<br>
 7.4. [Operators](../operators/README.md)<br>
 7.5. [Functions](../functions/README.md)<br>
 7.6. [Linear Algebra](../linear-algebra/README.md)<br>
@@ -36,7 +36,7 @@
 7.8. [Ranges and Grids](../ranges-grids/README.md)<br>
 7.9. [Calculus](../calculus/README.md)<br>
 7.10. [Vector Calculus](../vector-calculus/README.md)<br>
-7.11. _Tensor Calculus_ <br>
+7.11. _MultiArray Calculus_ <br>
 7.12. [Display of Results](../display/README.md)<br>
 7.13. [FILE I/O](../file-io/README.md)<br>
 7.14. [Debug Modes](../debug/README.md)<br>
@@ -46,10 +46,10 @@
 
 
 
-# 7.11. Tensor Calculus
+# 7.11. MultiArray Calculus
 
 
 
-| ⇦ <br />[Vector Calculus](../vector-calculus/README.md)  | [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br />Tensor Calculus<br /><img width=1000/> | ⇨ <br />[Display of Results](../display/README.md)   |
+| ⇦ <br />[Vector Calculus](../vector-calculus/README.md)  | [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br />MultiArray Calculus<br /><img width=1000/> | ⇨ <br />[Display of Results](../display/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

@@ -12,7 +12,7 @@
 // ##COMMENTNAME## (##OP##)
 //----------------------------------------------
 
-// (1) Tensor<E1(D1)> ##OP## Tensor<E2(D2)>
+// (1) MultiArray<E1(D1)> ##OP## MultiArray<E2(D2)>
 
 // TODO: realtime check that deep dimensions of E1 and E2 are the same
 
@@ -29,7 +29,7 @@ auto ##FUNCTION##(const TensorR<A, E1, D1, M, R>& x1, const TensorR<B, E2, D2, M
 
 
 
-// (2A) Tensor<E(D1)> ##OP## D2
+// (2A) MultiArray<E(D1)> ##OP## D2
 
 template <class A, class D2, class E, class D1, int M, int R, typename = std::enable_if_t<NumberType<D2>::value>>
 auto ##FUNCTION##(const TensorR<A, E, D1, M, R>& x1, const D2& x2) {
@@ -43,7 +43,7 @@ auto ##FUNCTION##(const TensorR<A, E, D1, M, R>& x1, const D2& x2) {
 
 
 
-// (2B) D1 ##OP## Tensor<E(D2)>
+// (2B) D1 ##OP## MultiArray<E(D2)>
 
 template <class D1, class B, class E, class D2, int M, int R, typename = std::enable_if_t<NumberType<D1>::value>>
 auto ##FUNCTION##(const D1& x1, const TensorR<B, E, D2, M, R>& x2) {
@@ -98,7 +98,7 @@ template <class A, class B, class E1, class E2, class D1, class D2, int M1, int 
 }
 
 
-// (4A) Tensor<D1,R,M> ##OP## Tensor<D2,R,1>
+// (4A) MultiArray<D1,R,M> ##OP## MultiArray<D2,R,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise ##COMMENTNAME##
 // Note: M2==1 -> E2==D2
@@ -125,7 +125,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int R,
     FUNCTOR_##NAME##<E1, E2, E3, D1, D2, D3> >(x1, x2);
 }
 
-// (4B) Tensor<D1,R,1> ##OP## Tensor<D2,R,M>
+// (4B) MultiArray<D1,R,1> ##OP## MultiArray<D2,R,M>
 
 // Depending on rank and dimensions, this may be top-level or element wise ##COMMENTNAME##
 // Note: M1==1 -> E1==D1

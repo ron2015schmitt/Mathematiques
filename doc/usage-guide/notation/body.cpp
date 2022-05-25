@@ -98,7 +98,7 @@ int main() {
   OUTPUT("| :---: | :---: | ");
   OUTPUT("| 𝕍 | any `Vector<T>` for any scalar or container type or type symbol T | ");
   OUTPUT("| 𝕄 | any `Matrix<T>` for any scalar or container type or type symbol T | ");
-  OUTPUT("| 𝕥 | any `Tensor<T>` for any scalar or container type or type symbol T | ");
+  OUTPUT("| 𝕥 | any `MultiArray<T>` for any scalar or container type or type symbol T | ");
   OUTPUT("| 𝕌 | any 𝕍, 𝕄, 𝕥 | ");
   CR();
   OUTPUT("Lower case 𝕥 was chosen because 𝕋 is commonly used in mathematics for the torus groups\n");

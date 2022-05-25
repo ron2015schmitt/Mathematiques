@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.0-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.1-c++17</h1>
 
 <details>
 
@@ -28,7 +28,7 @@
 # [7. Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
 7.1. [Usage Guide Notation](../../notation/README.md)<br>
 7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../scalars/README.md)<br>
-7.3. _Container Types (Vector, Matrix & Tensor)_ <br>
+7.3. _Container Types (Vector, Matrix & MultiArray)_ <br>
 7.4. [Operators](../../operators/README.md)<br>
 7.5. [Functions](../../functions/README.md)<br>
 7.6. [Linear Algebra](../../linear-algebra/README.md)<br>
@@ -36,7 +36,7 @@
 7.8. [Ranges and Grids](../../ranges-grids/README.md)<br>
 7.9. [Calculus](../../calculus/README.md)<br>
 7.10. [Vector Calculus](../../vector-calculus/README.md)<br>
-7.11. [Tensor Calculus](../../tensor-calculus/README.md)<br>
+7.11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>
 7.12. [Display of Results](../../display/README.md)<br>
 7.13. [FILE I/O](../../file-io/README.md)<br>
 7.14. [Debug Modes](../../debug/README.md)<br>
@@ -48,9 +48,9 @@
 
 <details>
 
-<summary>Container Types (Vector, Matrix & Tensor)</summary>
+<summary>Container Types (Vector, Matrix & MultiArray)</summary>
 
-# [7.3. Container Types (Vector, Matrix & Tensor)](../README.md)<br>
+# [7.3. Container Types (Vector, Matrix & MultiArray)](../README.md)<br>
 
 7.3.1. _Vectors_ <br>
 7.3.2. [Matrices](../matrix/README.md)<br>
@@ -158,7 +158,7 @@ Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 });
 ☀ gradXY(0) ➜ Matrix<double> { {-2, 0, 2}, {-0.828427, 0, 0.828427}, {-0.472136, 0, 0.472136}, {-0.324555, 0, 0.324555} };
 ☀ gradXY(1) ➜ Matrix<double> { {1, 0, 1}, {1.41421, 1, 1.41421}, {2.23607, 2, 2.23607}, {3.16228, 3, 3.16228} };
 
-☀ gridXYZ(0) ➜ Tensor<double> 
+☀ gridXYZ(0) ➜ MultiArray<double> 
 {
   {
     {-1, -1},
@@ -181,7 +181,7 @@ Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 });
     {1, 1}
   }
 };
-☀ gridXYZ(1) ➜ Tensor<double> 
+☀ gridXYZ(1) ➜ MultiArray<double> 
 {
   {
     {0, 0},
@@ -204,7 +204,7 @@ Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 });
     {3, 3}
   }
 };
-☀ gridXYZ(2) ➜ Tensor<double> 
+☀ gridXYZ(2) ➜ MultiArray<double> 
 {
   {
     {10, 11},
@@ -227,7 +227,7 @@ Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 });
     {10, 11}
   }
 };
-☀ R3D ➜ Tensor<double,R=3> 
+☀ R3D ➜ MultiArray<double,R=3> 
 {
   {
     {10.0499, 11.0454},
@@ -250,7 +250,7 @@ Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 });
     {10.4881, 11.4455}
   }
 };
-☀ R3D_2 ➜ Tensor<double,R=3> 
+☀ R3D_2 ➜ MultiArray<double,R=3> 
 {
   {
     {10.0499, 11.0454},
@@ -365,7 +365,7 @@ Below are a few examples.
 ```
 ## Containers of Quaternions
 
-Mathématiques container classes (ie `Vector<D>`, `Matrix<d>`, and `Tensor<D>` can have quaternions as their underlying type.
+Mathématiques container classes (ie `Vector<D>`, `Matrix<d>`, and `MultiArray<D>` can have quaternions as their underlying type.
 Below are examples of container math with quaternions.  Mixed math is allowed.
 
 
@@ -373,6 +373,6 @@ Below are examples of container math with quaternions.  Mixed math is allowed.
 ```
 
 
-| ⇦ <br />  | [Container Types (Vector, Matrix & Tensor)](../README.md)<br />Vectors<br /><img width=1000/> | ⇨ <br />[Matrices](../matrix/README.md)   |
+| ⇦ <br />  | [Container Types (Vector, Matrix & MultiArray)](../README.md)<br />Vectors<br /><img width=1000/> | ⇨ <br />[Matrices](../matrix/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
 
   CR();
   CR();
-  MOUT << bold.apply("Tensor -- Initializer lists") << endl;
+  MOUT << bold.apply("MultiArray -- Initializer lists") << endl;
   {
     CR();
     std::initializer_list<double> x1{1, 2};
@@ -130,21 +130,21 @@ int main(int argc, char *argv[]) {
 
   CR();
   CR();
-  MOUT << bold.apply("Tensor") << endl;
+  MOUT << bold.apply("MultiArray") << endl;
   {
     CR();
-    Tensor<double> t0;
+    MultiArray<double> t0;
     TLDISP(t0.dims());
     TLDISP(t0.eldims());
     TLDISP(t0);
-    Tensor<double, 3> t1;
+    MultiArray<double, 3> t1;
     TLDISP(t1.dims());
     TLDISP(t1.deepdims());
     TLDISP(t1.deepsize());
     TLDISP(t1.depth());
     TLDISP(t1);
     Dimensions dims(3, 2, 5);
-    Tensor<double, 3> t2(dims);
+    MultiArray<double, 3> t2(dims);
     TLDISP(t2.dims());
     TLDISP(t2);
     for (int i = 0; i < t2.size(); i++) {
@@ -161,17 +161,17 @@ int main(int argc, char *argv[]) {
     }
     TLDISP(t2);
 
-    Tensor<double, 1> t3{1, 2, 3};
+    MultiArray<double, 1> t3{1, 2, 3};
     TLDISP(t3.dims());
     TLDISP(t3.eldims());
     TLDISP(t3);
 
 
-    Tensor<double, 2> t4{{1.1, 2.2}, {3.3, 4.4}};
+    MultiArray<double, 2> t4{{1.1, 2.2}, {3.3, 4.4}};
     TLDISP(t4.dims());
     TLDISP(t4);
 
-    Tensor<double, 3> t5{
+    MultiArray<double, 3> t5{
         {{0, 1, 2, 3, 4}, {10, 11, 12, 13, 14}},
         {{100, 101, 102, 103, 104}, {110, 111, 112, 113, 114}},
         {{200, 201, 202, 203, 204}, {210, 211, 212, 213, 214}}};
@@ -184,9 +184,9 @@ int main(int argc, char *argv[]) {
 
   CR();
   {
-    Tensor<double, 2> t{{1.1, 2.2}, {3.3, 4.4}};
+    MultiArray<double, 2> t{{1.1, 2.2}, {3.3, 4.4}};
     TLDISP(t);
-    Tensor<double, 2> t2;
+    MultiArray<double, 2> t2;
     t2 = -t;
     TLDISP(t2);
   }
@@ -253,7 +253,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Scalar<Tensor<double, 2>> s{{{1, 2}, {3, 4}}};
+    Scalar<MultiArray<double, 2>> s{{{1, 2}, {3, 4}}};
     TLDISP(s);
     TLDISP(s());
     TLDISP(s()(0, 1));
@@ -263,7 +263,7 @@ int main(int argc, char *argv[]) {
     TLDISP(s.depth());
     TLDISP(s.deepdims());
 
-    Scalar<Tensor<double, 2>> s2;
+    Scalar<MultiArray<double, 2>> s2;
     s2 = -s;
     TLDISP(s2);
   }
@@ -315,14 +315,14 @@ int main(int argc, char *argv[]) {
   }
   {
     CR();
-    Vector<Tensor<double, 2>> v{{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}}};
+    Vector<MultiArray<double, 2>> v{{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}}};
     TLDISP(v);
     TLDISP(v(0));
     TLDISP(v(2)(1, 1));
     TLDISP(v.dims());
     TLDISP(v.size());
     TLDISP(v.deepdims());
-    Vector<Tensor<double, 2>> v2;
+    Vector<MultiArray<double, 2>> v2;
     MOUT << "v2 = -v;" << endl;
     v2 = -v;
     TLDISP(v2);
@@ -383,7 +383,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Matrix<Tensor<double, 3>, 2, 2> m1;
+    Matrix<MultiArray<double, 3>, 2, 2> m1;
     TLDISP(m1);
     TLDISP(m1.dims());
     TLDISP(m1.size());
@@ -410,7 +410,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1.deepdims());
 
 
-    Matrix<Tensor<double, 3>> m2;
+    Matrix<MultiArray<double, 3>> m2;
     MOUT << "m2 = -m1;" << endl;
     m2 = -m1;
     TLDISP(m2);
@@ -418,7 +418,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Matrix<Tensor<double, 3>, 2, 2> m1{{{{{-0, -1},
+    Matrix<MultiArray<double, 3>, 2, 2> m1{{{{{-0, -1},
                                           {-10, -11},
                                           {-20, -21}},
                                          {{-100, -101},
@@ -456,10 +456,10 @@ int main(int argc, char *argv[]) {
 
   CR();
   CR();
-  MOUT << bold.apply("Two-Level Tensor tests") << endl;
+  MOUT << bold.apply("Two-Level MultiArray tests") << endl;
   {
     CR();
-    Tensor<Scalar<double>, 2> t;
+    MultiArray<Scalar<double>, 2> t;
     TLDISP(t);
     TLDISP(t.dims());
     TLDISP(t.deepdims());
@@ -477,7 +477,7 @@ int main(int argc, char *argv[]) {
   {
 
     CR();
-    Tensor<Scalar<double>, 2> t{{{1}, {2}}, {{3}, {4}}};
+    MultiArray<Scalar<double>, 2> t{{{1}, {2}}, {{3}, {4}}};
     TLDISP(t);
     TLDISP(t(1, 0));
     TLDISP(t(1, 0)());
@@ -491,10 +491,10 @@ int main(int argc, char *argv[]) {
     typename decltype(t)::EType e;
     TLDISP(e);
 
-    Tensor<Scalar<double>, 2> t2;
-    typename Tensor<Scalar<double>, 2>::DType d2a;
+    MultiArray<Scalar<double>, 2> t2;
+    typename MultiArray<Scalar<double>, 2>::DType d2a;
     TLDISP(d2a);
-    typename Tensor<Scalar<double>, 2>::EType e2a;
+    typename MultiArray<Scalar<double>, 2>::EType e2a;
     TLDISP(e2a);
     typename decltype(t2)::DType d2b;
     TLDISP(d2b);
@@ -506,13 +506,13 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Tensor<Vector<double>, 2> t{{{1, 2, 3}, {4, 5, 6}}, {{7, 8, 9}, {10, 11, 12}}};
+    MultiArray<Vector<double>, 2> t{{{1, 2, 3}, {4, 5, 6}}, {{7, 8, 9}, {10, 11, 12}}};
     TLDISP(t);
     TLDISP(t(0, 0));
     TLDISP(t(0, 0)(1));
     TLDISP(t.dims());
     TLDISP(t.deepdims());
-    Tensor<Vector<double>, 2> t2;
+    MultiArray<Vector<double>, 2> t2;
     MOUT << "t2 = -t;" << endl;
     t2 = -t;
     TLDISP(t2);
@@ -520,7 +520,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Tensor<Matrix<double, 2, 2>, 2> m{
+    MultiArray<Matrix<double, 2, 2>, 2> m{
         {{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}},
         {{{9, 10}, {11, 12}}, {{13, 14}, {15, 16}}}};
     TLDISP(m);
@@ -529,7 +529,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m.dims());
     TLDISP(m.size());
     TLDISP(m.deepdims());
-    Tensor<Matrix<double, 2, 2>, 2> m2;
+    MultiArray<Matrix<double, 2, 2>, 2> m2;
     MOUT << "m2 = -m;" << endl;
     m2 = -m;
     TLDISP(m2);
@@ -537,7 +537,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Tensor<Tensor<double, 3>, 2> m1;
+    MultiArray<MultiArray<double, 3>, 2> m1;
     TLDISP(m1);
     TLDISP(m1.dims());
     TLDISP(m1.size());
@@ -566,7 +566,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1.deepdims());
 
 
-    Tensor<Tensor<double, 3>, 2> m2;
+    MultiArray<MultiArray<double, 3>, 2> m2;
     MOUT << "m2 = -m1;" << endl;
     m2 = -m1;
     TLDISP(m2);
@@ -574,7 +574,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Tensor<Tensor<double, 3>, 2> m1{{{{{-0, -1},
+    MultiArray<MultiArray<double, 3>, 2> m1{{{{{-0, -1},
                                        {-10, -11},
                                        {-20, -21}},
                                       {{-100, -101},

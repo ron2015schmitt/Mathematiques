@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.0-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.1-c++17</h1>
 
 <details>
 
@@ -29,7 +29,7 @@
 
 7.1. _Usage Guide Notation_ <br>
 7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>
-7.3. [Container Types (Vector, Matrix & Tensor)](../containers/README.md)<br>
+7.3. [Container Types (Vector, Matrix & MultiArray)](../containers/README.md)<br>
 7.4. [Operators](../operators/README.md)<br>
 7.5. [Functions](../functions/README.md)<br>
 7.6. [Linear Algebra](../linear-algebra/README.md)<br>
@@ -37,7 +37,7 @@
 7.8. [Ranges and Grids](../ranges-grids/README.md)<br>
 7.9. [Calculus](../calculus/README.md)<br>
 7.10. [Vector Calculus](../vector-calculus/README.md)<br>
-7.11. [Tensor Calculus](../tensor-calculus/README.md)<br>
+7.11. [MultiArray Calculus](../tensor-calculus/README.md)<br>
 7.12. [Display of Results](../display/README.md)<br>
 7.13. [FILE I/O](../file-io/README.md)<br>
 7.14. [Debug Modes](../debug/README.md)<br>
@@ -118,7 +118,7 @@ Lower case 𝕤 was chosen because 𝕊 is commonly used in mathematics for the 
 | :---: | :---: | 
 | 𝕍 | any `Vector<T>` for any scalar or container type or type symbol T | 
 | 𝕄 | any `Matrix<T>` for any scalar or container type or type symbol T | 
-| 𝕥 | any `Tensor<T>` for any scalar or container type or type symbol T | 
+| 𝕥 | any `MultiArray<T>` for any scalar or container type or type symbol T | 
 | 𝕌 | any 𝕍, 𝕄, 𝕥 | 
 
 Lower case 𝕥 was chosen because 𝕋 is commonly used in mathematics for the torus groups

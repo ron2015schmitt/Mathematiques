@@ -151,7 +151,7 @@ int main() {
 
   GMD_HEADER2("Containers of Imaginary numbers");
   CR();
-  OUTPUT("Mathématiques container classes (ie `Vector<D>`, `Matrix<d>`, and `Tensor<D>` can have imaginary numbers as their underlying type.");
+  OUTPUT("Mathématiques container classes (ie `Vector<D>`, `Matrix<d>`, and `MultiArray<D>` can have imaginary numbers as their underlying type.");
   OUTPUT("Below are examples of container math with imaginary numbers.  Mixed math is allowed.\n");
   CR();
 

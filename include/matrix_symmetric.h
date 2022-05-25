@@ -346,7 +346,7 @@ namespace mathq {
 
 
     //**********************************************************************
-    //***************Tensor-style Element Access: A(r,c) *********************
+    //***************MultiArray-style Element Access: A(r,c) *********************
     //**********************************************************************
 
     const index_type dataIndex(const index_type r, const index_type c) const {

@@ -54,8 +54,8 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    MOUT << bold.apply("Scalar<Vector<Matrix<Tensor<double,3>,3,2>,4>>") << endl;
-    Scalar<Vector<Matrix<Tensor<double, 3>, 3, 2>, 4>> x;
+    MOUT << bold.apply("Scalar<Vector<Matrix<MultiArray<double,3>,3,2>,4>>") << endl;
+    Scalar<Vector<Matrix<MultiArray<double, 3>, 3, 2>, 4>> x;
     TLDISP(x);
     TLDISP(x.dims());
     TLDISP(x.size());
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
     CR();
 
     MOUT << "set via initializer_list" << endl;
-    Scalar<Vector<Matrix<Tensor<double, 3>, 3, 2>, 4>> x{{{{{{{0, 1}},
+    Scalar<Vector<Matrix<MultiArray<double, 3>, 3, 2>, 4>> x{{{{{{{0, 1}},
                                                              {{100, 101}}},
                                                             {{{1000, 1001}},
                                                              {{1100, 1101}}}},
@@ -144,15 +144,15 @@ int main(int argc, char *argv[]) {
     TLDISP(x.deepdims());
 
 
-    Vector<Matrix<Tensor<double, 3>, 3, 2>, 4> v;
+    Vector<Matrix<MultiArray<double, 3>, 3, 2>, 4> v;
     v = x();
     TLDISP(v);
 
-    Matrix<Tensor<double, 3>, 3, 2> m;
+    Matrix<MultiArray<double, 3>, 3, 2> m;
     m = x()(1);
     TLDISP(m);
 
-    Tensor<double, 3> t;
+    MultiArray<double, 3> t;
     t = x()(1)(2, 1);
     TLDISP(t);
     TLDISP(t.dims());
@@ -172,7 +172,7 @@ int main(int argc, char *argv[]) {
     TLDISP(x.deepdims());
 
 
-    Tensor<Matrix<Vector<Scalar<double>, 4>, 3, 2>, 3> g3;
+    MultiArray<Matrix<Vector<Scalar<double>, 4>, 3, 2>, 3> g3;
     TLDISP(g3);
     g3 = insideout(x);
     TLDISP(g3.deepdims());

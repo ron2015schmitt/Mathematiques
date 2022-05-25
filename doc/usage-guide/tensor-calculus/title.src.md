@@ -1,1 +1,1 @@
-Tensor Calculus
+MultiArray Calculus

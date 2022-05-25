@@ -1752,7 +1752,7 @@ int main(int argc, char* argv[]) {
   // }
 
 
-  //---------- Tensor-scalar mix: logic -----------------
+  //---------- MultiArray-scalar mix: logic -----------------
   // {
   //   // Scalar && scalar
   //   printStart(++testnum);
@@ -1809,7 +1809,7 @@ int main(int argc, char* argv[]) {
 
 
 
-  // //---------- Tensor scalar mix: relational -----------------
+  // //---------- MultiArray scalar mix: relational -----------------
 
   // {
   //   // Scalar == scalar
