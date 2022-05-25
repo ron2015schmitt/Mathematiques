@@ -775,8 +775,13 @@ namespace display {
   //---------------------------------------------------------------------------------
 
   template <typename T>
-  inline Style getTypeStyle(const T& var) {
+  typename std::enable_if<!std::is_pointer<T>::value, display::Style>::type
+    getTypeStyle(const T& var) {
     return CREATESTYLE(CYAN);
+  }
+  template <typename T>
+  inline Style getTypeStyle(const T* var) {
+    return CREATESTYLE(RED);
   }
   template <>
   inline Style getTypeStyle(const std::string& var) {
@@ -787,6 +792,10 @@ namespace display {
   template <>                                  \
   inline Style getTypeStyle(const TYPE &var) { \
     return CREATESTYLE(MAGENTA);               \
+  }                                            \
+  template <>                                  \
+  inline Style getTypeStyle(const TYPE* var) { \
+    return CREATESTYLE(RED);               \
   }
 
   SPECIALIZE_getTypeStyle(float);
@@ -880,10 +889,21 @@ namespace display {
   //------------------------------------------------------------------
 
   template <class T>
-  inline std::string getTypeName(const T& var) {
+  typename std::enable_if<!std::is_pointer<T>::value, std::string>::type
+    getTypeName(const T& var) {
     std::string s = typeid(var).name();
     if constexpr (Has_classname<T>::value) {
       s = var.classname();
+    }
+    return getTypeStyle(var).apply(s);
+  }
+  template <class T>
+  std::string getTypeName(const T* var) {
+    std::string s = "*";
+    if constexpr (Has_classname<T>::value) {
+      s += var.classname();
+    } else {
+      s += typeid(var).name();
     }
     return getTypeStyle(var).apply(s);
   }
@@ -892,6 +912,10 @@ namespace display {
   template <>                                       \
   inline std::string getTypeName(const TYPE &var) { \
     return getTypeStyle(var).apply(#TYPE);          \
+  }                                                 \
+  template <>                                       \
+  inline std::string getTypeName(const TYPE *var) { \
+    return getTypeStyle(var).apply(std::string("*")+#TYPE);          \
   }
 
   SPECIALIZE_getTypeName(float);

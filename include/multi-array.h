@@ -241,8 +241,22 @@ namespace mathq {
     }
 
     //**********************************************************************
-    //*********************  Accesss to Internal valarray ******************
+    //********************* Direct access to data_  ***********************************
     //**********************************************************************
+
+    // -------------------- getInternalStdArray() --------------------
+    // "read/write" to the wrapped valarray/aray
+    auto& getInternalStdArray() {
+      return data_;
+    }
+
+    // get C pointer to raw data
+    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+    E* data() {
+      // MutltiArrays are always wrap avalarray<E>
+      return &(data_[0]);
+    }
+
 
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************

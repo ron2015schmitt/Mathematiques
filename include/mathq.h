@@ -42,7 +42,7 @@
 #include "slices.h"
 #include "util.h"
 
-#include "tensors.h"
+#include "multiarrays.h"
 #include "debug.h"
 #include "scalar.h"
 #include "vector.h"
@@ -65,7 +65,7 @@
 #include "matrix_vandermonde.h"
 #include "matrix_zero.h"
 
-#include "tensor.h"
+#include "multi-array.h"
 
 #include "expressionsR.h"
 #include "expressionsRW.h"

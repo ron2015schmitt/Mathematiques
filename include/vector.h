@@ -540,10 +540,22 @@ namespace mathq {
         //********************* Direct access to data_  ***********************************
         //**********************************************************************
 
-        // -------------------- getArray() --------------------
+        // -------------------- getInternalStdArray() --------------------
         // "read/write" to the wrapped valarray/aray
-        auto& getValArray() {
+        auto& getInternalStdArray() {
           return data_;
+        }
+
+        // get C pointer to raw data
+        // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+        E* data() {
+          if constexpr (NE == 0) {
+            // valarray<E>
+            return &(data_[0]);
+          } else {
+            // array<E>
+            return data_.data();
+          }
         }
 
 

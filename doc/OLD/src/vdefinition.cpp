@@ -43,7 +43,7 @@ int main()
     GMD_CODE_START("C++");
     ECHO_CODE(using namespace std);
     codemultiNoteC11Array( Vector<double> vec({0,1,2,3}) );
-    ECHO_CODE( valarray<double>& valias = vec.getValArray() );
+    ECHO_CODE( valarray<double>& valias = vec.getInternalStdArray() );
     ECHO_CODE( vec[1] = -1 );
     ECHO_CODE( valias[2] = -2 );
     GMD_CODE_END();
@@ -68,7 +68,7 @@ int main()
     GMD_CODE_START("C++");
     ECHO_CODE(using namespace std);
     ECHO_CODE( Vector<double> vec(2) );
-    ECHO_CODE( valarray<double>& valias = vec.getValArray() );
+    ECHO_CODE( valarray<double>& valias = vec.getInternalStdArray() );
     ECHO_CODE( vec[1] = 1 );
     ECHO_CODE( valias[2] = 2 );
     GMD_CODE_END();

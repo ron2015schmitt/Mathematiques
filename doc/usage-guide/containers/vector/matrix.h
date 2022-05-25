@@ -8,9 +8,9 @@ namespace mathq {
 
 
   /********************************************************************
-   * Matrix<E>    -- variable size matrix (valarray)
+   * Matrix<E>    -- variable size matrix (vector)
    *                 E  = type for elements
-   * Matrix<E,NR> -- fixed number of rows (valarray)
+   * Matrix<E,NR> -- fixed number of rows (vector)
    *                 NR = number of rows
    * Matrix<E,NR,NC> -- fixed number of rows and cols (array)
    *                 NC = number of cols
@@ -44,7 +44,7 @@ namespace mathq {
     typedef typename FundamentalType<D>::Type FType;
 
 
-    // if either NR or NC is 0, then we use valarray
+    // if either NR or NC is 0, then we use vector
     typedef typename ArrayType<E, NR* NC>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
@@ -146,10 +146,10 @@ namespace mathq {
     }
 
 
-    // --------------------- 1D valarray CONSTRUCTOR ---------------------
+    // --------------------- 1D vector CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    Matrix<E, NR, NC, D, M>(const size_type Nr, const size_type Nc, const std::valarray<E>& valar) {
+    Matrix<E, NR, NC, D, M>(const size_type Nr, const size_type Nc, const std::vector<E>& valar) {
       resize(Nr, Nc);
       *this = valar;
     }
@@ -370,7 +370,7 @@ namespace mathq {
       // TODO: check that N==size()
       // rob the data_
       Vector<E> m = new Vector<E>(N, this->data_);
-      this->data_ = new std::valarray<E>(0);
+      this->data_ = new std::vector<E>(0);
       // return the new Matrix, while we live on at zero size...
       return *m;
     }
@@ -847,9 +847,9 @@ namespace mathq {
     //                   1D assignment
     //********************************************************
 
-    // ------------------------ matrix = valarray[] ----------------
+    // ------------------------ matrix = vector[] ----------------
 
-    Matrix<E, NR, NC, D, M>& operator=(const std::valarray<E>& valar) {
+    Matrix<E, NR, NC, D, M>& operator=(const std::vector<E>& valar) {
       for (index_type i = 0; i < size(); i++) {
         (*this)[i] = valar[i];
       }
@@ -882,30 +882,22 @@ namespace mathq {
 
 
 
-
     //**********************************************************************
-    //********************* Direct access to data_  ***********************************
+    //************************** data_ access ***********************************
     //**********************************************************************
 
-    // -------------------- getInternalStdArray() --------------------
-    // "read/write" to the wrapped valarray/aray
-    auto& getInternalStdArray() {
-      return data_;
-    }
+    // -------access to the internal data vector --------------------
 
-    // get C pointer to raw data
-    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-    E* data() {
-      if constexpr ((NR == 0) && (NC == 0)) {
-        // valarray<E>
-        return &(data_[0]);
-      }
-      else {
-        // array<E>
-        return data_.data();
-      }
+    // "read/write" to the wrapped vector
+    std::vector<E>& getInternalStdArray() {
+      return *data_;
     }
-
+    Matrix<E, NR, NC, D, M>& setValArray(std::vector<E>* valptr) {
+      delete  data_;
+      const size_t N = valptr->size();
+      data_ = valptr;
+      return *this;
+    }
 
     //**********************************************************************
     //************************** MATH **************************************

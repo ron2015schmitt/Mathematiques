@@ -116,6 +116,9 @@
 * refactor the headers so that 
   * vectors, matrices display tensors Scalar are broken out into different headers
   * use copious #ifdefs so that order of inclusion matters
+* valarray internal data access via data()
+  * https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+  * use &(a[0])
 
 * Create a `Number` class to generalize (division alegra numbers) real's imaginary and complex, quaternions?
   * see https://en.cppreference.com/w/cpp/types/is_arithmetic

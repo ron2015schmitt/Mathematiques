@@ -16,7 +16,7 @@ _This document was automatically generated from file_ **`vdefinition.cpp`** (Mat
 ```C++
 using namespace std;
 Vector<double> vec({0,1,2,3}); // C++11 list
-valarray<double>& valias = vec.getValArray();
+valarray<double>& valias = vec.getInternalStdArray();
 vec[1] = -1;
 valias[2] = -2;
 ```
@@ -37,7 +37,7 @@ valias[2] = -2;
 ```C++
 using namespace std;
 Vector<double> vec(2);
-valarray<double>& valias = vec.getValArray();
+valarray<double>& valias = vec.getInternalStdArray();
 vec[1] = 1;
 valias[2] = 2;
 ```
