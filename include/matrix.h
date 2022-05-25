@@ -29,7 +29,7 @@ namespace mathq {
 
 
   template <class E, int NR, int NC, typename D, int M>
-  class Matrix : public TensorRW<Matrix<E, NR, NC, D, M>, E, D, M, 2> {
+  class Matrix : public MArrayExpRW<Matrix<E, NR, NC, D, M>, E, D, M, 2> {
 
   public:
     constexpr static int R = 2;
@@ -140,7 +140,7 @@ namespace mathq {
 
 
     template <class X>
-    Matrix<E, NR, NC, D, M>(const TensorR<X, E, D, M, R>& x) {
+    Matrix<E, NR, NC, D, M>(const MArrayExpR<X, E, D, M, R>& x) {
       resize(x.dims()[0], x.dims()[1]);
       *this = x;
     }
@@ -208,7 +208,7 @@ namespace mathq {
     bool isExpression(void) const {
       return false;
     }
-    Tensors getEnum() const {
+    MultiArrays getEnum() const {
       return T_MATRIX;
     }
 
@@ -740,7 +740,7 @@ namespace mathq {
     //************************** ASSIGNMENT **************************************
     //**********************************************************************
 
-    // Any new assignment operators should also be addedc to TensorRW for consistency.
+    // Any new assignment operators should also be addedc to MArrayExpRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
@@ -784,9 +784,9 @@ namespace mathq {
     }
 
 
-    // ----------------- matrix = TensorR<X,E,D,M,R> ----------------
+    // ----------------- matrix = MArrayExpR<X,E,D,M,R> ----------------
     template <class X> Matrix<E, NR, NC, D, M>&
-      operator=(const TensorR<X, E, D, M, R>& x) {
+      operator=(const MArrayExpR<X, E, D, M, R>& x) {
 
       if constexpr (M<=1) {
         resize(x.dims());

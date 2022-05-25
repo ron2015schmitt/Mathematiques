@@ -6,7 +6,7 @@
 
 
 template <typename D, int M = 1 + mathq::NumberType<D>::depth()>
-class Test : public mathq::TensorRW<Test<D>, D, typename mathq::NumberType<D>::Type, M, 1> {
+class Test : public mathq::MArrayExpRW<Test<D>, D, typename mathq::NumberType<D>::Type, M, 1> {
 public:
   typedef D Type;
   Test() {
@@ -19,7 +19,7 @@ public:
 
 
 template <typename D>
-class Test2 : public mathq::TensorRW<Test<D>, D, D, 1, 1> {
+class Test2 : public mathq::MArrayExpRW<Test<D>, D, D, 1, 1> {
 public:
   typedef D Type;
   D d_;

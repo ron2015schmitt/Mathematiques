@@ -11,7 +11,7 @@ namespace mathq {
   // TERW_Subset   Subset Expression
   //---------------------------------------------------------------------------
   template<class D>
-  class TERW_Subset : public  TensorRW<TERW_Subset<D>, D, D, 1, 1> {
+  class TERW_Subset : public  MArrayExpRW<TERW_Subset<D>, D, D, 1, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = 1;
@@ -78,7 +78,7 @@ namespace mathq {
     }
 
     template <class Y, class D2>
-    TERW_Subset<D>& operator=(const TensorR<Y, D2, D2, Mvalue, Rvalue>& rhs) {
+    TERW_Subset<D>& operator=(const MArrayExpR<Y, D2, D2, Mvalue, Rvalue>& rhs) {
       return this->equals(rhs);
     }
 
@@ -159,7 +159,7 @@ namespace mathq {
   // TERW_Submask   Submask Expression
   //--------------------------------------------------------------------------
   template<class D>
-  class TERW_Submask : public  TensorRW<TERW_Submask<D>, D, D, 1, 1> {
+  class TERW_Submask : public  MArrayExpRW<TERW_Submask<D>, D, D, 1, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = 1;
@@ -207,7 +207,7 @@ namespace mathq {
     }
 
     template <class Y, class D2>
-    TERW_Submask<D>& operator=(const TensorR<Y, D2, D2, Mvalue, Rvalue>& rhs) {
+    TERW_Submask<D>& operator=(const MArrayExpR<Y, D2, D2, Mvalue, Rvalue>& rhs) {
       return this->equals(rhs);
     }
 
@@ -291,7 +291,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class X, class Y, class E, class D, int M>
-  class TERW_Join : public  TensorRW<TERW_Join<X, Y, E, D, M>, E, D, M, 1> {
+  class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, E, D, M>, E, D, M, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = M;
@@ -354,7 +354,7 @@ namespace mathq {
     }
 
     template <class Z>
-    TERW_Join<X, Y, E, D, M>& operator=(const TensorR<Z, E, D, M, 1>& rhs) {
+    TERW_Join<X, Y, E, D, M>& operator=(const MArrayExpR<Z, E, D, M, 1>& rhs) {
       return this->equals(rhs);
     }
 
@@ -450,7 +450,7 @@ namespace mathq {
   //   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //   //---------------------------------------------------------------------------
   //   template <class D, class OP, int M>
-  //     class TERW_RealFromComplex : public  TensorRW<D,TERW_RealFromComplex<D,OP,M> > {
+  //     class TERW_RealFromComplex : public  MArrayExpRW<D,TERW_RealFromComplex<D,OP,M> > {
   //   private:
     // can't be constant since we alow to be on left hand side
   //     Vector<std::complex<D> >& a_;
@@ -530,7 +530,7 @@ namespace mathq {
 
 
   //     template <class D2, class B>
-  //       TERW_RealFromComplex<D,OP,M>& operator=(const TensorR<D2,B>& rhs) { 
+  //       TERW_RealFromComplex<D,OP,M>& operator=(const MArrayExpR<D2,B>& rhs) { 
   //       return this->equals(rhs);
   //     }
 

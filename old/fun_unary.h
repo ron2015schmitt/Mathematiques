@@ -50,8 +50,8 @@ namespace mathq {
 
 #define FUNCTION_UNARY(Function,Functor)		\
   template <class X, class E, class D, int M, int R>			\
-  inline auto Function(const TensorR<X,E,D,M,R>& x) {		\
-    return  TER_Unary<TensorR<X,E,D,M,R>,E,D,M,R, Functor<E,D> >(x); \
+  inline auto Function(const MArrayExpR<X,E,D,M,R>& x) {		\
+    return  TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R, Functor<E,D> >(x); \
     }
 
 
@@ -252,9 +252,9 @@ namespace mathq {
 
 #define FUNCTION_UNARY_TYPE2(Function,Functor,DIN,DOUT)			\
   template <class X, class E, class D, int M, int R>			\
-  inline auto Function(const TensorR<X,E,DIN,M,R>& x) {		\
+  inline auto Function(const MArrayExpR<X,E,DIN,M,R>& x) {		\
     typedef typename NumberType<E,DOUT>::ReplaceTypeE EOUT;		\
-    return  TER_Unary<TensorR<X,E,DIN,M,R>,EOUT,DOUT,M,R, Functor<E,DIN,DOUT>>(x); \
+    return  TER_Unary<MArrayExpR<X,E,DIN,M,R>,EOUT,DOUT,M,R, Functor<E,DIN,DOUT>>(x); \
     }
   
   // ************************************************************************
@@ -280,8 +280,8 @@ namespace mathq {
   // function: conj(x) x=real
 
   template <class X, class E, class D, int M, int R> 
-    EnableMethodIf<std::is_arithmetic<D>::value,const TensorR<X,E,D,M,R>&>  
-    conj(const TensorR<X,E,D,M,R>& x) {
+    EnableMethodIf<std::is_arithmetic<D>::value,const MArrayExpR<X,E,D,M,R>&>  
+    conj(const MArrayExpR<X,E,D,M,R>& x) {
     return x;
   }
 
@@ -289,7 +289,7 @@ namespace mathq {
   // function: conj(y) y=imag
   
   template <class X, class E, class D, int M, int R> 
-  inline const auto conj(const TensorR<X,E,Imaginary<D>,M,R>& x) {
+  inline const auto conj(const MArrayExpR<X,E,Imaginary<D>,M,R>& x) {
     return  -x; 
   }
   
@@ -299,9 +299,9 @@ namespace mathq {
   FUNCTOR_UNARY(std::conj,conj_complex);
 
   template <class X, class E, class D, int M, int R> 
-    inline auto conj(const TensorR<X,E,std::complex<D>,M,R>& x) {
+    inline auto conj(const MArrayExpR<X,E,std::complex<D>,M,R>& x) {
     typedef std::complex<D> DIN;
-    return  TER_Unary<TensorR<X,E,DIN,M,R>,E,DIN,M,R,FUNCTOR_conj_complex<E,DIN>>(x); 
+    return  TER_Unary<MArrayExpR<X,E,DIN,M,R>,E,DIN,M,R,FUNCTOR_conj_complex<E,DIN>>(x); 
   }
 
 
@@ -311,8 +311,8 @@ namespace mathq {
 
   // function: real(x) x=real
   
-  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,const TensorR<X,E,D,M,R>&>  
-    real(const TensorR<X,E,D,M,R>& x) {
+  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,const MArrayExpR<X,E,D,M,R>&>  
+    real(const MArrayExpR<X,E,D,M,R>& x) {
     return x;
   }
 
@@ -337,9 +337,9 @@ namespace mathq {
 
   // function: imag(x) x=real
 
-  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,TER_Unary<TensorR<X,E,D,M,R>,E,D,M,R,FUNCTOR_zero<E,D>>>  
-    imag(const TensorR<X,E,D,M,R>& x) {
-    return  TER_Unary<TensorR<X,E,D,M,R>,E,D,M,R,FUNCTOR_zero<E,D>>(x); 
+  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_zero<E,D>>>  
+    imag(const MArrayExpR<X,E,D,M,R>& x) {
+    return  TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_zero<E,D>>(x); 
   }
 
 
@@ -365,9 +365,9 @@ namespace mathq {
   
   FUNCTOR_UNARY(std::abs,abs_of_real);
 
-  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<TensorR<X,E,D,M,R>,E,D,M,R,FUNCTOR_abs_of_real<E,D>>>  
-    abs(const TensorR<X,E,D,M,R>& x) {
-    return  TER_Unary<TensorR<X,E,D,M,R>,E,D,M,R,FUNCTOR_abs_of_real<E,D>>(x); 
+  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_abs_of_real<E,D>>>  
+    abs(const MArrayExpR<X,E,D,M,R>& x) {
+    return  TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_abs_of_real<E,D>>(x); 
   }
 
 
@@ -392,9 +392,9 @@ namespace mathq {
   
   FUNCTOR_UNARY(std::arg,arg_of_real);
 
-  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<TensorR<X,E,D,M,R>,E,D,M,R,FUNCTOR_arg_of_real<E,D>>>  
-    arg(const TensorR<X,E,D,M,R>& x) {
-    return  TER_Unary<TensorR<X,E,D,M,R>,E,D,M,R,FUNCTOR_arg_of_real<E,D>>(x); 
+  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_arg_of_real<E,D>>>  
+    arg(const MArrayExpR<X,E,D,M,R>& x) {
+    return  TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_arg_of_real<E,D>>(x); 
   }
 
 
@@ -420,10 +420,10 @@ namespace mathq {
   FUNCTOR_UNARY_TYPE2(std::proj,rproj_of_real);
 
   template <class X, class E, class D, int M, int R,EnableIf<std::is_arithmetic<D>::value> = 0 > auto 
-    rproj(const TensorR<X,E,D,M,R>& x) {
+    rproj(const MArrayExpR<X,E,D,M,R>& x) {
      typedef std::complex<D> DOUT;
      typedef typename NumberType<E,DOUT>::ReplaceTypeE EOUT;
-     return  TER_Unary<TensorR<X,E,D,M,R>,EOUT,DOUT,M,R, FUNCTOR_rproj_of_real<E,D,DOUT> >(x); 
+     return  TER_Unary<MArrayExpR<X,E,D,M,R>,EOUT,DOUT,M,R, FUNCTOR_rproj_of_real<E,D,DOUT> >(x); 
   }
 
 
@@ -438,9 +438,9 @@ namespace mathq {
   FUNCTOR_UNARY(std::proj,rproj_of_complex);
 
   template <class X, class E, class D, int M, int R> 
-    inline auto rproj(const TensorR<X,E,std::complex<D>,M,R>& x) {
+    inline auto rproj(const MArrayExpR<X,E,std::complex<D>,M,R>& x) {
     typedef std::complex<D> DIN;
-    return  TER_Unary<TensorR<X,E,DIN,M,R>,E,DIN,M,R,FUNCTOR_rproj_of_complex<E,DIN>>(x); 
+    return  TER_Unary<MArrayExpR<X,E,DIN,M,R>,E,DIN,M,R,FUNCTOR_rproj_of_complex<E,DIN>>(x); 
   }
 
 

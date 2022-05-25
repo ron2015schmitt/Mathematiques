@@ -60,9 +60,9 @@ namespace mathq {
   //   typedef typename NumberType<T,CType>::ReplaceTypeE Type;
   // };
   // template <typename E, typename A, typename D, int M, int R> class
-  //   Complexify<TensorR<E,A,D,M,R> > {
+  //   Complexify<MArrayExpR<E,A,D,M,R> > {
   // public:
-  //   typedef TensorR<typename Complexify<E>::Type,A,typename Complexify<D>::Type, M,R> Type;
+  //   typedef MArrayExpR<typename Complexify<E>::Type,A,typename Complexify<D>::Type, M,R> Type;
   // };
 
 
@@ -73,9 +73,9 @@ namespace mathq {
   //   typedef typename NumberType<T,FType>::ReplaceTypeE Type;
   // };
   // template <typename E, typename A, typename D, int M, int R> class
-  //   Realify<TensorR<E,A,D,M,R> > {
+  //   Realify<MArrayExpR<E,A,D,M,R> > {
   // public:
-  //   typedef TensorR<typename Realify<E>::Type,A,typename Realify<D>::Type,M,R> Type;
+  //   typedef MArrayExpR<typename Realify<E>::Type,A,typename Realify<D>::Type,M,R> Type;
   // };
 
 
@@ -88,9 +88,9 @@ namespace mathq {
   //   typedef typename NumberType<T,IType>::ReplaceTypeE Type;
   // };
   // template <typename E, typename A, typename D, int M, int R> class
-  //   Imaginarify<TensorR<E,A,D,M,R> > {
+  //   Imaginarify<MArrayExpR<E,A,D,M,R> > {
   // public:
-  //   typedef TensorR<typename Imaginarify<E>::Type,A,typename Imaginarify<D>::Type, M,R> Type;
+  //   typedef MArrayExpR<typename Imaginarify<E>::Type,A,typename Imaginarify<D>::Type, M,R> Type;
   // };
 
 

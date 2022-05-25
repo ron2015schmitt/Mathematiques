@@ -1,22 +1,22 @@
-# Create Tensor Pool and Tensor info
+# Create MultiArray Pool and MultiArray info
 
 _Back to [Table of Contents](../README.md)_
 
-## TensorPool
+## MultiArrayPool
 
 * Meyer's singleton
 * map:
    * keys are of type ```(void \*)```: the pointer to the address of the tensor
-   * values are of type ```TensorInfo```
+   * values are of type ```MultiArrayInfo```
 
-* Add tensor to the TensorPool in the constructor
-* Remove tensor from the TensorPool in the deconstructor
+* Add tensor to the MultiArrayPool in the constructor
+* Remove tensor from the MultiArrayPool in the deconstructor
 
 
-## TensorInfo
+## MultiArrayInfo
 
 contains fields:
-* ```TensorAbstract*```  same as key point but cast as TensorAbstract
+* ```MultiArrayAbstract*```  same as key point but cast as MultiArrayAbstract
 * isRegistered boolean 
 * variable name
 * file name 

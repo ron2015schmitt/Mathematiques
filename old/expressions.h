@@ -14,9 +14,9 @@ namespace matricks {
   //---------------------------------------------------------------------------
     
     template <class E, class A, class D, int M, FUNC> 
-      class TER_Unary  : public  TensorR<D,TER_Unary<D,A,FUNC,M>> {
+      class TER_Unary  : public  MArrayExpR<D,TER_Unary<D,A,FUNC,M>> {
     public:
-      typedef TensorR<E,A,D,M> TIN;
+      typedef MArrayExpR<E,A,D,M> TIN;
   
   private:
     const TIN& a_;
@@ -107,10 +107,10 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TER_Binary    binary operator expressions
   //               note that there is no easy way to define the first template
-  //               of TensorR<> below so use D1
+  //               of MArrayExpR<> below so use D1
   //---------------------------------------------------------------------------
   template<class A, class B, class D1, class D2, class OP, int M1, int M2>
-    class TER_Binary : public  TensorR<typename ResultType<D1,D2,typename OP::Type>::Type,TER_Binary<A,B,D1,D2,OP,M1,M2> > {
+    class TER_Binary : public  MArrayExpR<typename ResultType<D1,D2,typename OP::Type>::Type,TER_Binary<A,B,D1,D2,OP,M1,M2> > {
   public:
     typedef typename std::conditional<M1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<M2==0,const B,const B&>::type TypeB;
@@ -124,7 +124,7 @@ namespace matricks {
     typedef typename NumberType<D1>::Type NumType1;
     typedef typename NumberType<D2>::Type NumType2;
     typedef typename OP::Type NumTypeOut;
-    typedef typename ResultType<D1,D2,typename OP::Type>::Type TensorTypeOut;
+    typedef typename ResultType<D1,D2,typename OP::Type>::Type MultiArrayTypeOut;
     
 
   TER_Binary(TypeA a, TypeB b)
@@ -260,10 +260,10 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TER_Ternary    ternary operator expressions
   //               note that there is no easy way to define the first template
-  //               of TensorR<> below so use D1
+  //               of MArrayExpR<> below so use D1
   //---------------------------------------------------------------------------
   template<class A, class B, class C, class D1, class D2, class D3, class OP, int M1, int M2, int M3>
-    class TER_Ternary : public  TensorR<typename ResultType<D1,D2,typename OP::Type>::Type,TER_Ternary<A,B,C,D1,D2,D3,OP,M1,M2,M3> > {
+    class TER_Ternary : public  MArrayExpR<typename ResultType<D1,D2,typename OP::Type>::Type,TER_Ternary<A,B,C,D1,D2,D3,OP,M1,M2,M3> > {
   public:
     typedef typename std::conditional<M1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<M2==0,const B,const B&>::type TypeB;
@@ -431,7 +431,7 @@ namespace matricks {
   // TERW_Subset   Subset Expression
   //---------------------------------------------------------------------------
   template<class D, int M>
-    class TERW_Subset :  public  TensorRW<D,TERW_Subset<D,M> > {
+    class TERW_Subset :  public  MArrayExpRW<D,TERW_Subset<D,M> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<D>& a_;
@@ -536,7 +536,7 @@ namespace matricks {
 
 
     template <class D2, class B>
-      TERW_Subset<D>& operator=(const TensorR<D2,B>& rhs) { 
+      TERW_Subset<D>& operator=(const MArrayExpR<D2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -570,7 +570,7 @@ namespace matricks {
   // TERW_Submask   subset of a tensor from a mask
   //---------------------------------------------------------------------------
   template<class D, int M>
-    class TERW_Submask :  public  TensorRW<D,TERW_Submask<D,M> > {
+    class TERW_Submask :  public  MArrayExpRW<D,TERW_Submask<D,M> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<D>& a_;
@@ -658,7 +658,7 @@ namespace matricks {
 
 
     template <class D2, class B>
-      TERW_Submask<D>& operator=(const TensorR<D2,B>& rhs) { 
+      TERW_Submask<D>& operator=(const MArrayExpR<D2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -690,7 +690,7 @@ namespace matricks {
   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //---------------------------------------------------------------------------
   template <class D, class OP, int M>
-    class TERW_RealFromComplex : public  TensorRW<D,TERW_RealFromComplex<D,OP,M> > {
+    class TERW_RealFromComplex : public  MArrayExpRW<D,TERW_RealFromComplex<D,OP,M> > {
   private:
     Vector<std::complex<D> >& a_;
     VectorofPtrs *vptrs;
@@ -769,7 +769,7 @@ namespace matricks {
 
 
     template <class D2, class B>
-      TERW_RealFromComplex<D,OP,M>& operator=(const TensorR<D2,B>& rhs) { 
+      TERW_RealFromComplex<D,OP,M>& operator=(const MArrayExpR<D2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -795,7 +795,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
   template<class D, class A, class X, int M>
-    class TER_Series : public  TensorR<D,TER_Series<D,A,X,M> > {
+    class TER_Series : public  MArrayExpR<D,TER_Series<D,A,X,M> > {
 
   private:
     const A& a_;
@@ -914,7 +914,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
   
   template<class D, class A, class B, class X, class OP1, class OP2, int M>
-    class TER_Series2 : public  TensorR<D,TER_Series2< D, A, B, X, OP1, OP2> > {
+    class TER_Series2 : public  MArrayExpR<D,TER_Series2< D, A, B, X, OP1, OP2> > {
 
   private:
     const A& a_;
@@ -1048,7 +1048,7 @@ namespace matricks {
   //-----------------------------------------------------------------------------
 
   template<class D, class A, class FUNC, int M>
-    class TERW_Transpose  : public  TensorRW<D,TERW_Transpose<D,A,FUNC,M> > {
+    class TERW_Transpose  : public  MArrayExpRW<D,TERW_Transpose<D,A,FUNC,M> > {
   
   private:
     A& a_;
@@ -1129,7 +1129,7 @@ namespace matricks {
     }
 
     template <class D2, class B>
-      TERW_Submask<D>& operator=(const TensorR<D2,B>& rhs) { 
+      TERW_Submask<D>& operator=(const MArrayExpR<D2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -1158,7 +1158,7 @@ namespace matricks {
   //-----------------------------------------------------------------------------
 
   template<class D, class A, class FUNC, int M>
-    class TER_Transpose  : public  TensorR<D,TER_Transpose<D,A,FUNC,M> > {
+    class TER_Transpose  : public  MArrayExpR<D,TER_Transpose<D,A,FUNC,M> > {
   
   private:
     const A& a_;
@@ -1245,11 +1245,11 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // VER_Join   joining two Tensors (RHS only)
+  // VER_Join   joining two MultiArrays (RHS only)
   //---------------------------------------------------------------------------
 
   template<class D, class A, class B, int M>
-    class VER_Join : public  TensorR<D,VER_Join<D,A,B,M> > {
+    class VER_Join : public  MArrayExpR<D,VER_Join<D,A,B,M> > {
 
   private:
     const A& a_;
@@ -1341,7 +1341,7 @@ namespace matricks {
 
 
   template<class D, class A, class B, int M>
-    class VERW_Join : public  TensorRW<D,VERW_Join<D,A,B,M> > {
+    class VERW_Join : public  MArrayExpRW<D,VERW_Join<D,A,B,M> > {
 
   private:
     A& a_;
@@ -1427,14 +1427,14 @@ namespace matricks {
     }
 
     template <class C>
-      VERW_Join<D,A,B>& operator=(const TensorR<D,C>& rhs) { 
-      PRINTF2("VERW_Join<D,A,B>& operator=(const TensorR<D,C>& rhs)\n");
+      VERW_Join<D,A,B>& operator=(const MArrayExpR<D,C>& rhs) { 
+      PRINTF2("VERW_Join<D,A,B>& operator=(const MArrayExpR<D,C>& rhs)\n");
       return this->equals(rhs);
     }
 
 
     template <class D2, class C>
-      VERW_Join<D,A,B>& operator=(const TensorR<D2,C>& rhs) { 
+      VERW_Join<D,A,B>& operator=(const MArrayExpR<D2,C>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -1463,7 +1463,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
   template<class D, class A, int M>
-    class VER_Rep : public  TensorR<D,VER_Rep<D,A,M> > {
+    class VER_Rep : public  MArrayExpR<D,VER_Rep<D,A,M> > {
 
   private:
     const A& a_;

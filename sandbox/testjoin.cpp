@@ -95,11 +95,11 @@ int main(int argc, char *argv[]) {
     MOUT << " ";
     MDISP(Vd1, Vd2, Vd3);
 
-    TLDISP(IsTensorRW<mathq::TER_Join<mathq::TensorR<mathq::TensorRW<mathq::TERW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>, mathq::TensorR<mathq::TensorRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1, 1>, double, double, 1>>::value);
+    TLDISP(IsMArrayExpRW<mathq::TER_Join<mathq::MArrayExpR<mathq::MArrayExpRW<mathq::TERW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>, mathq::MArrayExpR<mathq::MArrayExpRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1, 1>, double, double, 1>>::value);
 
-    TLDISP(IsTensorRW<mathq::TensorR<mathq::TensorRW<mathq::TERW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>>::value);
+    TLDISP(IsMArrayExpRW<mathq::MArrayExpR<mathq::MArrayExpRW<mathq::TERW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>>::value);
 
-    TLDISP(IsTensorRW<mathq::TERW_Join<mathq::TensorRW<mathq::Vector<double>, double, double, 1, 1>, mathq::TensorRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1>>::value);
+    TLDISP(IsMArrayExpRW<mathq::TERW_Join<mathq::MArrayExpRW<mathq::Vector<double>, double, double, 1, 1>, mathq::MArrayExpRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1>>::value);
   }
 
 

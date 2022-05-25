@@ -13,7 +13,7 @@
 //----------------------------------------------
 
 template <class X, class E, class D, int M, int R>
-auto ##FUNCTION##(const TensorR<X, E, ##DIN##, M, R>& x) {
+auto ##FUNCTION##(const MArrayExpR<X, E, ##DIN##, M, R>& x) {
   typedef typename NumberType<E, ##DOUT##>::ReplaceTypeD EOUT;
-  return  TER_Unary<TensorR<X, E, ##DIN##, M, R>, EOUT, ##DOUT##, M, R, ##FUNCTOR##<E, EOUT, ##DIN##, ##DOUT##>>(x);
+  return  TER_Unary<MArrayExpR<X, E, ##DIN##, M, R>, EOUT, ##DOUT##, M, R, ##FUNCTOR##<E, EOUT, ##DIN##, ##DOUT##>>(x);
 }

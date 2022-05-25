@@ -12,7 +12,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Matrix<std::complex<D> >
-  operator^(const TensorR<std::complex<D>,A>& a, const TensorR<D,B>& b)
+  operator^(const MArrayExpR<std::complex<D>,A>& a, const MArrayExpR<D,B>& b)
   {
     const size_type NC = a.size();
     const size_type NR = b.size();
@@ -32,7 +32,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Matrix<std::complex<D> >
-  operator^(const TensorR<D,A>& a, const TensorR<std::complex<D>,B>& b)
+  operator^(const MArrayExpR<D,A>& a, const MArrayExpR<std::complex<D>,B>& b)
   {
     const size_type NC = a.size();
     const size_type NR = b.size();
@@ -59,7 +59,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
-  operator|( const MorE<std::complex<D> ,A>& a, const  TensorR<D,B>& b ) {
+  operator|( const MorE<std::complex<D> ,A>& a, const  MArrayExpR<D,B>& b ) {
     const size_type NR = a.Nrows();
     const size_type M = a.Ncols();
     const index_type C1 = NR*M;
@@ -88,7 +88,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
-  operator|( const TensorR<D,A>& a, const  MorE<std::complex<D> ,B>& b ) {
+  operator|( const MArrayExpR<D,A>& a, const  MorE<std::complex<D> ,B>& b ) {
     const size_type NC = b.Ncols();
     const size_type M = b.Nrows();
 
@@ -120,7 +120,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
-  operator|( const MorE<D,A>& a, const  TensorR<std::complex<D> ,B>& b ) {
+  operator|( const MorE<D,A>& a, const  MArrayExpR<std::complex<D> ,B>& b ) {
     const size_type NR = a.Nrows();
     const size_type M = a.Ncols();
     const index_type C1 = NR*M;
@@ -149,7 +149,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
-  operator|( const TensorR<std::complex<D> ,A>& a, const  MorE<D,B>& b ) {
+  operator|( const MArrayExpR<std::complex<D> ,A>& a, const  MorE<D,B>& b ) {
     const size_type NC = b.Ncols();
     const size_type M = b.Nrows();
 

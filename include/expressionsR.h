@@ -13,7 +13,7 @@ namespace mathq {
   //       only the function/functor needs the input types
 
   template <class X, class E, class D, int M, int R, class FUNC>
-  class TER_Unary : public TensorR<TER_Unary<X, E, D, M, R, FUNC>, E, D, M, R> {
+  class TER_Unary : public MArrayExpR<TER_Unary<X, E, D, M, R, FUNC>, E, D, M, R> {
   public:
     typedef Materialize<E, D, M, R> XType;
     typedef E EType;
@@ -119,7 +119,7 @@ namespace mathq {
   //       only the function/functor needs the input types
 
   template <class X, class E, class D, int M, int R>
-  class TER_Unary_User : public TensorR<TER_Unary_User<X, E, D, M, R>, E, D, M, R> {
+  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, E, D, M, R>, E, D, M, R> {
   public:
     typedef Materialize<E, D, M, R> XType;
     typedef E EType;
@@ -224,7 +224,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class B, class E1, class E2, class E3, class D1, class D2, class D3, int M1, int M2, int M3, int R1, int R2, int R3, class OP>
-  class TER_Binary : public TensorR<TER_Binary<A, B, E1, E2, E3, D1, D2, D3, M1, M2, M3, R1, R2, R3, OP>, E3, D3, M3, R3> {
+  class TER_Binary : public MArrayExpR<TER_Binary<A, B, E1, E2, E3, D1, D2, D3, M1, M2, M3, R1, R2, R3, OP>, E3, D3, M3, R3> {
   public:
     typedef E3 EType;
     typedef D3 DType;
@@ -558,7 +558,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class B, class E1, class E2, class E3, class D1, class D2, class D3, int M1, int M2, int M3, int R1, int R2, int R3>
-  class TER_Binary_User : public TensorR<TER_Binary_User<A, B, E1, E2, E3, D1, D2, D3, M1, M2, M3, R1, R2, R3>, E3, D3, M3, R3> {
+  class TER_Binary_User : public MArrayExpR<TER_Binary_User<A, B, E1, E2, E3, D1, D2, D3, M1, M2, M3, R1, R2, R3>, E3, D3, M3, R3> {
   public:
     typedef E3 EType;
     typedef D3 DType;
@@ -890,7 +890,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class B, class C, class E1, class E2, class E3, class E4, class D1, class D2, class D3, class D4, int M1, int M2, int M3, int M4, int R1, int R2, int R3, int R4, class OP>
-  class TER_Ternary : public TensorR<TER_Ternary<A, B, C, E1, E2, E3, E4, D1, D2, D3, D4, M1, M2, M3, M4, R1, R2, R3, R4, OP>, E4, D4, M4, R4> {
+  class TER_Ternary : public MArrayExpR<TER_Ternary<A, B, C, E1, E2, E3, E4, D1, D2, D3, D4, M1, M2, M3, M4, R1, R2, R3, R4, OP>, E4, D4, M4, R4> {
   public:
     typedef E4 EType;
     typedef D4 DType;
@@ -1107,7 +1107,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class X, class E, class D, int M, int R>
-  class TER_Series : public TensorR<TER_Series<A, X, E, D, M, R>, E, D, M, R> {
+  class TER_Series : public MArrayExpR<TER_Series<A, X, E, D, M, R>, E, D, M, R> {
   public:
     typedef Materialize<E, D, M, R> XType;
     typedef E EType;
@@ -1249,7 +1249,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class B, class X, class D, class OP1, class OP2>
-  class TER_Series2 : public TensorR<TER_Series2<A, B, X, D, OP1, OP2>, D, D, 1, 1> {
+  class TER_Series2 : public MArrayExpR<TER_Series2<A, B, X, D, OP1, OP2>, D, D, 1, 1> {
   public:
     typedef Materialize<D, D, 1, 1> XType;
     typedef D EType;
@@ -1379,7 +1379,7 @@ namespace mathq {
   //-----------------------------------------------------------------------------
 
   template <class X, class E, class D, int M, int R, class FUNC>
-  class TER_Transpose : public TensorR<TER_Transpose<X, E, D, M, R, FUNC>, E, D, M, R> {
+  class TER_Transpose : public MArrayExpR<TER_Transpose<X, E, D, M, R, FUNC>, E, D, M, R> {
   public:
     typedef Materialize<E, D, M, R> XType;
     typedef E EType;
@@ -1481,7 +1481,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class X, class Y, class E, class D, int M>
-  class TER_Join : public TensorR<TER_Join<X, Y, E, D, M>, E, D, M, 1> {
+  class TER_Join : public MArrayExpR<TER_Join<X, Y, E, D, M>, E, D, M, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = M;
@@ -1600,7 +1600,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class D>
-  class TER_Rep : public TensorR<TER_Rep<A, D>, D, D, 1, 1> {
+  class TER_Rep : public MArrayExpR<TER_Rep<A, D>, D, D, 1, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = 1;

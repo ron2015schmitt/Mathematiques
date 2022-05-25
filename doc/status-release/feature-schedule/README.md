@@ -60,7 +60,7 @@
 1. Make sure data type to output of inner products works
   * DISP(v1 | v2) = Vector<double> {16, -6}; 
   * DISP(M1 | v2) = ^Vector<double>^ {-10, -10};  # missing part between the ^'s
-1. [Tensor class FormatData](topics/tensorformatdata.md)
+1. [MultiArray class FormatData](topics/tensorformatdata.md)
    1. compact 
    1. by aligned rows and columns with and without braces
    1. Mathematica
@@ -77,7 +77,7 @@
 1. put example.cpp::printoptsfile  into  print_mathq_info by grabbing (or passing) the file_name
   * handle when no filename
   * handle when no .g++_copts file
-1. [Create Tensor Pool and Tensor info](topics/poolandinfo.md)
+1. [Create MultiArray Pool and MultiArray info](topics/poolandinfo.md)
 1. [Exceptions and Assertions](topics/exceptions.md)
 1. [Implement all error checking](topics/errorchecking.md)
 1. Implement `VectorOfPtrs` code properly
@@ -123,12 +123,12 @@
 * element wise dotproducts (in process)
 * refactor: `::Type` to `::type`
 * Add support for the rest of the [common math functions](https://en.cppreference.com/w/cpp/numeric/math) introduced in `C++11` and `C++20`: `frexp`, `isnan` etc, `ldexp`, `logb`, `ilogb`, `modf`, `div`, `remiander`, `remqou`, `fmod`, `ispow2`, `trunc`, `nearbyint`, `ceil2`, `floor2`, etc.
-* `TensorRW` implementation of `real(t)` and `imag(t)`
-* `TensorRW` implementation of `A.row(r)` and `A.col(r)`
+* `MArrayExpRW` implementation of `real(t)` and `imag(t)`
+* `MArrayExpRW` implementation of `A.row(r)` and `A.col(r)`
 * `Matrix` constructor and assignment using parameter pack (or list?) of `Vector`, as either cols or rows
 * Modify Taylor Series to operate at top level (not deep level.)  Test with Scalar<Matrix> and Vector <Matrix> 
    * dat(i) must call [i].
-   * perhaps have a boolean in all TensorR subclasses that denotes which is faster: [i] or dat(i)
+   * perhaps have a boolean in all MArrayExpR subclasses that denotes which is faster: [i] or dat(i)
 * `Vector` size modifications. Refer to [C++ Containers library](https://en.cppreference.com/w/cpp/container)
    * implement `join` functions for Vector and a scalar
    * Implement `insert(i)`, `remove(i)`,`pop_front`,`push_front`, `pop_back`,`push_back`, methods to `Vector` class
@@ -169,8 +169,8 @@
 * use LAPACK / BLAS where efficacious to do so
 
 
-### Tensor Products
-1. [Tensor dot product](topics/dotproduct.md)
+### MultiArray Products
+1. [MultiArray dot product](topics/dotproduct.md)
 1. [Outer Product and Wedge Product](topics/outerwedge.md)
 1. [Add Benchmarks](topics/benchmarks.md)
 
@@ -181,7 +181,7 @@
 
 
 
-### Tensor Calculus 
+### MultiArray Calculus 
 1. contravariant and covariant vectors
    * define Rank0: 
       * Vector<NE=1>
@@ -189,10 +189,10 @@
       * Matrix<N,1> for bool=true (contravariant/high indices)
       * Matrix<1,N> for bool=false (covariant/low indices)
    * define Rank2<N,bool,bool>: 
-      * Tensor<R=4> with dimenions (N,1,N,1) for <true,true> 
-      * Tensor<R=4> with dimenions (N,1,1,N) for <true,false> 
-      * Tensor<R=4> with dimenions (1,N,N,1) for <false,true> 
-      * Tensor<R=4> with dimenions (1,N,1,N) for <false,false>  
+      * MultiArray<R=4> with dimenions (N,1,N,1) for <true,true> 
+      * MultiArray<R=4> with dimenions (N,1,1,N) for <true,false> 
+      * MultiArray<R=4> with dimenions (1,N,N,1) for <false,true> 
+      * MultiArray<R=4> with dimenions (1,N,1,N) for <false,false>  
 1. Use compomnent-free notation  for inner products (Misner, Wheeler, Thorne; Frankel)
      
 1. generalized coordinate systems

@@ -28,8 +28,8 @@ _Back to [Table of Contents](../README.md)_
  
 * write `diag(Matrix)`, which presents the diagonal of a matrix as a vector (via TERW expression Rin=2, Rout=1)
 * write `diag(Vector)`, which presents a vector as the digonal of a matrix (via TERW expression Rin=1, Rout=2))
-* implement `constructor(constTensor<X,D,D,1,2>& x)` and `operator=(constTensor<X,D,D,1,2>& x)`
-   * need `(r,c)` method for TensorR
+* implement `constructor(constMultiArray<X,D,D,1,2>& x)` and `operator=(constMultiArray<X,D,D,1,2>& x)`
+   * need `(r,c)` method for MArrayExpR
    * `Matrix` should use `(r,c)` instead of `.dat()` and `[k]`
 * implement direct data access for each matrix
   * implement `dataIndex(r,c)` method for use with `data_`  (refer to `MatrixSymmetric`)

@@ -30,7 +30,7 @@ _Mathématiques distinguishes itself from other libraries by an elegance and ver
 + Linear algebra
   + inner products
   + outer products
-+ Tensors
++ MultiArrays
 + A multitude of special functions that operate on
   + scalars
   + vectors

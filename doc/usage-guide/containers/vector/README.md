@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.1-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.2-c++17</h1>
 
 <details>
 
@@ -54,7 +54,7 @@
 
 7.3.1. _Vectors_ <br>
 7.3.2. [Matrices](../matrix/README.md)<br>
-7.3.3. [Tensors](../tensor/README.md)<br>
+7.3.3. [MultiArrays](../tensor/README.md)<br>
 
 
 </details>

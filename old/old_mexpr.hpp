@@ -83,7 +83,7 @@ namespace mathq {
 
 
   /****************************************************************************
-   * TensorRW Expression Template 
+   * MArrayExpRW Expression Template 
    *
    * abstract class 
    ****************************************************************************
@@ -164,7 +164,7 @@ namespace mathq {
     //assign to vector(expression)
     
     template <class B>
-    DERIVED& equals(const TensorR<D,B>& rhs) { 
+    DERIVED& equals(const MArrayExpR<D,B>& rhs) { 
       
       const size_type N =size();
 

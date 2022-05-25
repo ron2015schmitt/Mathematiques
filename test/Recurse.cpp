@@ -84,8 +84,8 @@ int main(int argc, char* argv[]) {
 
     // getEnum()
     printStart(++testnum);
-    Tensors Eexpected = T_SCALAR;
-    Tensors Eresult;
+    MultiArrays Eexpected = T_SCALAR;
+    MultiArrays Eresult;
     testcode(Eresult = s.getEnum());
     pass = (Eresult == Eexpected);
     printEnd(pass, Eresult, Eexpected);
@@ -227,8 +227,8 @@ int main(int argc, char* argv[]) {
 
     // getEnum()
     printStart(++testnum);
-    Tensors Eexpected = T_SCALAR;
-    Tensors Eresult;
+    MultiArrays Eexpected = T_SCALAR;
+    MultiArrays Eresult;
     testcode(Eresult = s.getEnum());
     pass = (Eresult == Eexpected);
     printEnd(pass, Eresult, Eexpected);
@@ -381,8 +381,8 @@ int main(int argc, char* argv[]) {
 
   //   // getEnum()
   //   printStart(++testnum);
-  //   Tensors Eexpected = T_SCALAR;
-  //   Tensors Eresult;
+  //   MultiArrays Eexpected = T_SCALAR;
+  //   MultiArrays Eresult;
   //   testcode( Eresult = s.getEnum() );
   //   pass = (Eresult==Eexpected);
   //   printEnd(pass,Eresult,Eexpected);

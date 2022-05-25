@@ -85,13 +85,13 @@ namespace mathq {
   // D = number type (int, double, complex<double>, bool, etc)
 
   template <class X, class E, typename D, int M, int R>
-  class TensorR;
+  class MArrayExpR;
   template <class X, class E, typename D, int M, int R>
-  class TensorRW;
+  class MArrayExpRW;
 
 
   // *********************************************************************
-  // * Concrete Tensors
+  // * Concrete MultiArrays
   // ********************************************************************
 
 
@@ -296,7 +296,7 @@ namespace mathq {
   };
   template <typename X, typename E, typename D, int M, int R>
   class
-    ContainedType<TensorR<X, E, D, M, R>> {
+    ContainedType<MArrayExpR<X, E, D, M, R>> {
   public:
     typedef E Type;
   };
@@ -439,14 +439,14 @@ namespace mathq {
 
   template <class X, class E, typename D, int M, int R>
   class
-    IsMathqContainer<TensorR<X, E, D, M, R>> {
+    IsMathqContainer<MArrayExpR<X, E, D, M, R>> {
   public:
     constexpr static bool value = true;
     typedef D RealType;
   };
   template <class X, class E, typename D, int M, int R>
   class
-    IsMathqContainer<TensorRW<X, E, D, M, R>> {
+    IsMathqContainer<MArrayExpRW<X, E, D, M, R>> {
   public:
     constexpr static bool value = true;
     typedef D RealType;
@@ -454,29 +454,29 @@ namespace mathq {
 
 
   // ***************************************************************************
-  //  IsTensorRW<T>
+  //  IsMArrayExpRW<T>
   // ***************************************************************************
 
 
   template <typename T>
   class
-    IsTensorRW {
+    IsMArrayExpRW {
   public:
     constexpr static bool value = false;
     typedef void RealType;
   };
   template <class X, class E, typename D, int M, int R>
   class
-    IsTensorRW<TensorRW<X, E, D, M, R>> {
+    IsMArrayExpRW<MArrayExpRW<X, E, D, M, R>> {
   public:
     constexpr static bool value = true;
     typedef D RealType;
   };
   template <class X, class E, typename D, int M, int R>
   class
-    IsTensorRW<TensorR<X, E, D, M, R>> {
+    IsMArrayExpRW<MArrayExpR<X, E, D, M, R>> {
   public:
-    constexpr static bool value = IsTensorRW<X>::value;
+    constexpr static bool value = IsMArrayExpRW<X>::value;
     typedef D RealType;
   };
 
@@ -629,11 +629,11 @@ namespace mathq {
     }
   };
 
-  //  TensorR<X,E,D,M,R>
+  //  MArrayExpR<X,E,D,M,R>
 
   template <class X, class E, class D, int M, int R>
   class
-    FundamentalType<TensorR<X, E, D, M, R>> {
+    FundamentalType<MArrayExpR<X, E, D, M, R>> {
   public:
     typedef typename FundamentalType<D>::Type Type;
     constexpr static int depth() {
@@ -929,18 +929,18 @@ namespace mathq {
 
 
 
-  //  TensorR<X,E,D,M,R>
+  //  MArrayExpR<X,E,D,M,R>
 
   template <class X, class E, class D, int M, int R, typename NewD>
   class
-    NumberType<TensorR<X, E, D, M, R>, NewD> {
+    NumberType<MArrayExpR<X, E, D, M, R>, NewD> {
   public:
-    typedef TensorR<X, E, D, M, R> InputType;
+    typedef MArrayExpR<X, E, D, M, R> InputType;
     typedef D Type;
     typedef typename NumberType<E, NewD>::ReplaceTypeD NewE;
     typedef typename NumberType<X, NewD>::ReplaceTypeD NewX;
     typedef NewX ReplaceTypeD;
-    typedef TensorR<X, NewD, D, M, R> ReplaceTypeE;
+    typedef MArrayExpR<X, NewD, D, M, R> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
       return M;
@@ -953,18 +953,18 @@ namespace mathq {
     }
   };
 
-  //  TensorRW<X,E,D,M,R>
+  //  MArrayExpRW<X,E,D,M,R>
 
   template <class X, class E, class D, int M, int R, typename NewD>
   class
-    NumberType<TensorRW<X, E, D, M, R>, NewD> {
+    NumberType<MArrayExpRW<X, E, D, M, R>, NewD> {
   public:
-    typedef TensorRW<X, E, D, M, R> InputType;
+    typedef MArrayExpRW<X, E, D, M, R> InputType;
     typedef D Type;
     typedef typename NumberType<E, NewD>::ReplaceTypeD NewE;
     typedef typename NumberType<X, NewD>::ReplaceTypeD NewX;
     typedef NewX ReplaceTypeD;
-    typedef TensorRW<X, NewD, D, M, R> ReplaceTypeE;
+    typedef MArrayExpRW<X, NewD, D, M, R> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
       return M;
@@ -1034,9 +1034,9 @@ namespace mathq {
     InversionType<Scalar<E>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef Scalar<D> TensorD;
-    typedef Scalar<C> TensorC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
+    typedef Scalar<D> MultiArrayD;
+    typedef Scalar<C> MultiArrayC;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
   };
 
   //  Vector<E>
@@ -1046,9 +1046,9 @@ namespace mathq {
     InversionType<Vector<E>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef Vector<D> TensorD;
-    typedef Vector<C> TensorC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
+    typedef Vector<D> MultiArrayD;
+    typedef Vector<C> MultiArrayC;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
   };
 
   //  Vector<E,NE>
@@ -1057,9 +1057,9 @@ namespace mathq {
     InversionType<Vector<E, NE>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef Vector<D, NE> TensorD;
-    typedef Vector<C, NE> TensorC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
+    typedef Vector<D, NE> MultiArrayD;
+    typedef Vector<C, NE> MultiArrayC;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
   };
 
   //  Matrix<E>
@@ -1069,9 +1069,9 @@ namespace mathq {
     InversionType<Matrix<E>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef Matrix<D> TensorD;
-    typedef Matrix<C> TensorC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
+    typedef Matrix<D> MultiArrayD;
+    typedef Matrix<C> MultiArrayC;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
   };
 
   //  Matrix<E,NR>
@@ -1081,9 +1081,9 @@ namespace mathq {
     InversionType<Matrix<E, NR>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef Matrix<D, NR> TensorD;
-    typedef Matrix<C, NR> TensorC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
+    typedef Matrix<D, NR> MultiArrayD;
+    typedef Matrix<C, NR> MultiArrayC;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
   };
 
   //  Matrix<E,NR,NC>
@@ -1093,9 +1093,9 @@ namespace mathq {
     InversionType<Matrix<E, NR, NC>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef Matrix<D, NR, NC> TensorD;
-    typedef Matrix<C, NR, NC> TensorC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
+    typedef Matrix<D, NR, NC> MultiArrayD;
+    typedef Matrix<C, NR, NC> MultiArrayC;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
   };
 
   //  MultiArray<E>
@@ -1104,9 +1104,9 @@ namespace mathq {
     InversionType<MultiArray<E>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef MultiArray<D> TensorD;
-    typedef MultiArray<C> TensorC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
+    typedef MultiArray<D> MultiArrayD;
+    typedef MultiArray<C> MultiArrayC;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
   };
 
   //  MultiArray<E,R>
@@ -1115,13 +1115,13 @@ namespace mathq {
     InversionType<MultiArray<E, R>, C> {
   public:
     typedef typename NumberType<E>::Type D;
-    typedef MultiArray<D, R> TensorD;
-    typedef MultiArray<C, R> TensorC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, TensorD>::Type, typename InversionType<E, TensorC>::Type>::type Type;
+    typedef MultiArray<D, R> MultiArrayD;
+    typedef MultiArray<C, R> MultiArrayC;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
   };
 
 
-  // Can't define InversionType for TensorR nor TensorRW nor any expresssions
+  // Can't define InversionType for MArrayExpR nor MArrayExpRW nor any expresssions
 
 
   // ***************************************************************************
@@ -1228,7 +1228,7 @@ namespace mathq {
 
 
   // ************************************************************************
-  // * ReturnType: Class that determines return type of two Tensors of different depths
+  // * ReturnType: Class that determines return type of two MultiArrays of different depths
   // ***************************************************************************
 
 
@@ -1236,9 +1236,9 @@ namespace mathq {
   class ResultType {
   public:
     typedef typename DeeperType<A, B>::Type DeeperType;
-    typedef typename NumberType<DeeperType, NewD>::ReplaceTypeD TensorType;
+    typedef typename NumberType<DeeperType, NewD>::ReplaceTypeD MultiArrayType;
     constexpr static bool isprim = (NumberType<A>::depth() == 0) && (NumberType<B>::depth() == 0);
-    typedef typename std::conditional<isprim, NewD, TensorType>::type Type;
+    typedef typename std::conditional<isprim, NewD, MultiArrayType>::type Type;
   };
 
 
@@ -1346,7 +1346,7 @@ namespace mathq {
   ////////////////////////////////////////////////////////////
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<std::is_same<D, bool>::value, Vector<index_type>&> findtrue(const TensorR<X, E, D, M, R>& v);
+  EnableMethodIf<std::is_same<D, bool>::value, Vector<index_type>&> findtrue(const MArrayExpR<X, E, D, M, R>& v);
 
 
 

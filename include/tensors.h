@@ -13,8 +13,8 @@ namespace mathq {
   template <class DAT> class Pair;
   class Dimensions;
   class Indices;
-  enum Tensors : unsigned int;
-  enum TensorOrExpression : unsigned int;
+  enum MultiArrays : unsigned int;
+  enum MultiArrayOrExpression : unsigned int;
 
 
 
@@ -250,7 +250,7 @@ namespace mathq {
 
   // -------------------------------------------------------------------
   //
-  // Dimensions - class to hold dimensions of Tensors
+  // Dimensions - class to hold dimensions of MultiArrays
   // -------------------------------------------------------------------
 
   class Dimensions : public std::vector<size_type> {
@@ -463,7 +463,7 @@ namespace mathq {
 
   // -------------------------------------------------------------------
   //
-  // Deepindices - class to full indices of nested Tensors
+  // Deepindices - class to full indices of nested MultiArrays
   // -------------------------------------------------------------------
 
   class DeepIndices : public std::vector<Indices> {
@@ -624,7 +624,7 @@ namespace mathq {
 
 
   template <class X, class E, typename D, int M, int R>
-  auto& insideout(const TensorRW<X, E, D, M, R>& t) {
+  auto& insideout(const MArrayExpRW<X, E, D, M, R>& t) {
 
     typedef typename InversionType<X, Null>::Type Type;
     Type* tout = new Type();
@@ -676,11 +676,11 @@ namespace mathq {
 
   // -------------------------------------------------------------------
   //
-  // Tensors enum - one enum for each actual MultiArray:
+  // MultiArrays enum - one enum for each actual MultiArray:
   //                Scalar, Vector, Matrix, etc. And then two expressions.
   //                return type of getEnum
   //
-  // TensorType struct - this returns the corresponding type for
+  // MultiArrayType struct - this returns the corresponding type for
   //                     a given enum, which allows to create a new
   //                     varieble that is of the same class as a variable
   //                     that was passed to the code
@@ -693,22 +693,22 @@ namespace mathq {
   // -------------------------------------------------------------------
 
 
-  enum TensorOrExpression : unsigned int { T_TENSOR_OBJ, T_TENSOR_EXP };
+  enum MultiArrayOrExpression : unsigned int { T_TENSOR_OBJ, T_TENSOR_EXP };
 
 
-  enum Tensors : unsigned int { T_SCALAR, T_VECTOR, T_MATRIX, T_TENSOR, T_EXPRESSION_R, T_EXPRESSION_RW };
+  enum MultiArrays : unsigned int { T_SCALAR, T_VECTOR, T_MATRIX, T_TENSOR, T_EXPRESSION_R, T_EXPRESSION_RW };
 
 
 
 
 
   template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
-  bool dimequiv(const TensorR<A, E1, D1, M, R>& x1, const TensorR<B, E2, D2, M, R>& x2) {
+  bool dimequiv(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2) {
     return equiv(x1.dims(), x2.dims());
   }
 
   template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
-  bool common(const TensorR<A, E1, D1, M, R>& x1, const TensorR<B, E2, D2, M, R>& x2) {
+  bool common(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2) {
     // PRINTF3("in common");
     return common(x1.getAddresses(), x2.getAddresses());
   }
@@ -717,7 +717,7 @@ namespace mathq {
 
   // -------------------------------------------------------------------
   //
-  // printTensorExpression
+  // printMultiArrayExpression
   //
   // Basically this is the vistor design pattern.
   // -------------------------------------------------------------------
@@ -725,7 +725,7 @@ namespace mathq {
 
 
   template <class X, class E, class D, int M, int R>
-  std::ostream& printTensorExpression(std::ostream& stream, const TensorR<X, E, D, M, R>& te) {
+  std::ostream& printMultiArrayExpression(std::ostream& stream, const MArrayExpR<X, E, D, M, R>& te) {
 
     if constexpr (R==0) {
       Scalar<E> s;
@@ -764,12 +764,12 @@ namespace mathq {
 
   // -------------------------------------------------------------------
   //
-  // TensorR -- Abstract class that represents 
+  // MArrayExpR -- Abstract class that represents 
   //            either a tensor or a tensor expression that is "read only"
   // -------------------------------------------------------------------
 
   template <class X, class E, typename D, int M, int R> class
-    TensorR {
+    MArrayExpR {
   public:
     typedef Materialize<E, D, M, R> XType;
     typedef E EType;
@@ -820,7 +820,7 @@ namespace mathq {
     bool isExpression(void) const {
       return derived().isExpression();
     }
-    Tensors getEnum(void) const {
+    MultiArrays getEnum(void) const {
       // return T_EXPRESSION_R;
       return derived().getEnum();
     }
@@ -859,10 +859,10 @@ namespace mathq {
       return derived().classname();
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const TensorR<X, E, D, M, R>& te) {
+    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpR<X, E, D, M, R>& te) {
       const X& td = te.derived();
       if (td.isExpression()) {
-        return printTensorExpression(stream, te);
+        return printMultiArrayExpression(stream, te);
       }
       else {
         stream << te.derived();
@@ -878,14 +878,14 @@ namespace mathq {
 
   // -------------------------------------------------------------------
   //
-  // TensorRW -- Abstract class that represents 
+  // MArrayExpRW -- Abstract class that represents 
   //             either a tensor or a tensor expression that can be
   //             both read and written
   // -------------------------------------------------------------------
 
 
   template <class X, class E, typename D, int M, int R> class
-    TensorRW : public TensorR<TensorRW<X, E, D, M, R>, E, D, M, R> {
+    MArrayExpRW : public MArrayExpR<MArrayExpRW<X, E, D, M, R>, E, D, M, R> {
   public:
     typedef Materialize<E, D, M, R> XType;
     typedef E EType;
@@ -941,7 +941,7 @@ namespace mathq {
     bool isExpression(void) const {
       return derived().isExpression();
     }
-    Tensors getEnum(void) const {
+    MultiArrays getEnum(void) const {
       return derived().getEnum();
       // return T_EXPRESSION_RW;
     }
@@ -980,10 +980,10 @@ namespace mathq {
       return derived().classname();
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const TensorRW<X, E, D, M, R>& te) {
+    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpRW<X, E, D, M, R>& te) {
       const X& td = te.derived();
       if (td.isExpression()) {
-        return printTensorExpression(stream, te);
+        return printMultiArrayExpression(stream, te);
       }
       else {
         stream << te.derived();
@@ -1003,7 +1003,7 @@ namespace mathq {
 
     // assign to vector or expression
     template <class Y>
-    X& equals(const TensorR<Y, E, D, M, R>& rhs) {
+    X& equals(const MArrayExpR<Y, E, D, M, R>& rhs) {
 
       const size_type N = size();
 
@@ -1033,7 +1033,7 @@ namespace mathq {
 
 
 
-  //  template <class X, class E, typename D, int M, int R> class TensorObject {
+  //  template <class X, class E, typename D, int M, int R> class MultiArrayObject {
   //  };
 
 

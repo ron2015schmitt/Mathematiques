@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.1-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.2-c++17</h1>
 
 <details>
 
@@ -53,17 +53,17 @@
 # [7.3. Container Types (Vector, Matrix & MultiArray)](../README.md)<br>
 7.3.1. [Vectors](../vector/README.md)<br>
 7.3.2. [Matrices](../matrix/README.md)<br>
-7.3.3. _Tensors_ <br>
+7.3.3. _MultiArrays_ <br>
 
 
 </details>
 
 
 
-# 7.3.3. Tensors
+# 7.3.3. MultiArrays
 
 
 
-| ⇦ <br />[Matrices](../matrix/README.md)  | [Container Types (Vector, Matrix & MultiArray)](../README.md)<br />Tensors<br /><img width=1000/> | ⇨ <br />   |
+| ⇦ <br />[Matrices](../matrix/README.md)  | [Container Types (Vector, Matrix & MultiArray)](../README.md)<br />MultiArrays<br /><img width=1000/> | ⇨ <br />   |
 | ------------ | :-------------------------------: | ------------ |
 

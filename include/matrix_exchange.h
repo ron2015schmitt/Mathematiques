@@ -19,7 +19,7 @@ namespace mathq {
 
    //, typename = EnableIf<NumberType<D>::value>
   template <class D, int NR, int NC >
-  class MatrixExchange : public TensorRW<MatrixExchange<D, NR, NC>, D, D, 1, 2> {
+  class MatrixExchange : public MArrayExpRW<MatrixExchange<D, NR, NC>, D, D, 1, 2> {
 
   public:
     constexpr static int R = 2;
@@ -109,7 +109,7 @@ namespace mathq {
     bool isExpression(void) const {
       return false;
     }
-    Tensors getEnum() const {
+    MultiArrays getEnum() const {
       return T_MATRIX;
     }
 

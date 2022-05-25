@@ -14,7 +14,7 @@ _Back to [Table of Contents](../README.md)_
 * inclue all tests as .cpp files into the main of test.cpp
 * in this manner, all tests will be summarized in one final paragraph
 
-* Write automated unit test creation code that can be re-used for Scalar, Vector, Matrix, and Tensor.  
+* Write automated unit test creation code that can be re-used for Scalar, Vector, Matrix, and MultiArray.  
    * `test/create/createtests.cpp` has been started.  
    * currently using `bc`
    * will switch to open source tools/libraier to calculate the expected results

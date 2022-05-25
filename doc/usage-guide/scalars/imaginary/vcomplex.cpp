@@ -291,7 +291,7 @@ int main()
     CR();
 
     resultstart2(": functions of complex vectors");
-    // TODO: need to implement these for complex numbers and then for Tensors
+    // TODO: need to implement these for complex numbers and then for MultiArrays
     //  resultmulti( floor(v)  );
     //  resultmulti( ceil(v)  );
     // resultmulti( sgn(v)  );

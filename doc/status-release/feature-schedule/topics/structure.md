@@ -3,7 +3,7 @@ _Back to [Table of Contents](../README.md)_
 
 _Most or all of these features have been implemented._
 
-## Recursive Tensors (Tensors with Tensor elements)
+## Recursive MultiArrays (MultiArrays with MultiArray elements)
 
 Implement code necessary so that mathematical operations work for recursive tensors, eg. `Vector<Vector<double>>`.  This allows for the most straightforward way to implement vector and tensor functions of space and time.
 
@@ -14,8 +14,8 @@ Implement code necessary so that mathematical operations work for recursive tens
     1. `Vector(i)` ✓ complete 
     1. Expressions — in progress
        1. get `Vector<Vector<double>> + Vector<double>` working
-       1. add `.dat(i)`, `.depth()`, `.deepsize()`, `setequals` vistor pattern etc methods to TensorAbstract
-       1. for each class `Scalar`, `Vector`, etc, use setquals pattern when inside equals (TensorR) and uses deep indexing
+       1. add `.dat(i)`, `.depth()`, `.deepsize()`, `setequals` vistor pattern etc methods to MultiArrayAbstract
+       1. for each class `Scalar`, `Vector`, etc, use setquals pattern when inside equals (MArrayExpR) and uses deep indexing
        1. convert all binary functions in `functions.h` to the new methodlogy of `operator+`, including use of `NumberType`
        1. have alternate version of binary operators `addr` that uses recursion. This is faster in certain cases.
        1. convert all functors in `functors.h` to the new methodlogy of `New_Fun_Add` and delete old versions
@@ -26,12 +26,12 @@ Implement code necessary so that mathematical operations work for recursive tens
        1. Benchmark a large vector of 3D vectors (of both types): see recursiveadd branch
        1. verify that `operator=` and `constructors` are paired in `scalar.h`, `vector.h`
     1. `Matrix(i,j)`  —  initiated
-    1. `Tensor(i...)`  — initiated
+    1. `MultiArray(i...)`  — initiated
        1. number of dimensions must be a template parameter?
 
-## Tensor Dimensions as Template Parameters
+## MultiArray Dimensions as Template Parameters
 
-Add template parameters for dimensions of each Tensor class.  
+Add template parameters for dimensions of each MultiArray class.  
 * Each parameter should have the default value of 0
 * If parameters are > 0, then the tensor is of fixed size and the `array` class is used for storage
 * If paramters are == 0, then the tensor is of variable size and the class `valarray` is used for storage.  
@@ -48,8 +48,8 @@ template class Vector<class D, int NR = 0, int NC = 0>
 * if only one of the values is greater than zero, then that dimension is fixed, but the other dimensions is variable and thus a `valarray` must be used.
 
 
-### Tensor class
-The `Tensor<D,int R>` class with Rank `R>=0` has size parameters.  Recall that R=0 is a scalar. The new class will use variadic template parameters.
+### MultiArray class
+The `MultiArray<D,int R>` class with Rank `R>=0` has size parameters.  Recall that R=0 is a scalar. The new class will use variadic template parameters.
 
 ```C++
 template class Vector<class D, int R = 0, int ... Dims>
@@ -64,5 +64,5 @@ D& operator()(Index i1, Index i2, Index i3) {
 }
 ```
 
-Due to this, it is probably a good idea to not allow tensor to change rank, except by creating a new Tensor, similar to rehaphing a vector into a matrix.
+Due to this, it is probably a good idea to not allow tensor to change rank, except by creating a new MultiArray, similar to rehaphing a vector into a matrix.
 

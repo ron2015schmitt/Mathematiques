@@ -19,7 +19,7 @@ namespace mathq {
 
    //, typename = EnableIf<NumberType<D>::value>
   template <class D, int NR, int NC >
-  class MatrixVandermonde : public TensorRW<MatrixVandermonde<D, NR, NC>, D, D, 1, 2> {
+  class MatrixVandermonde : public MArrayExpRW<MatrixVandermonde<D, NR, NC>, D, D, 1, 2> {
 
   public:
     constexpr static int R = 2;
@@ -147,7 +147,7 @@ namespace mathq {
     bool isExpression(void) const {
       return false;
     }
-    Tensors getEnum() const {
+    MultiArrays getEnum() const {
       return T_MATRIX;
     }
 
@@ -392,7 +392,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixVandermonde<D, NR, NC>& operator=(const TensorR<X, D, D, 1, 1>& v) {
+    MatrixVandermonde<D, NR, NC>& operator=(const MArrayExpR<X, D, D, 1, 1>& v) {
       for (index_type k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }

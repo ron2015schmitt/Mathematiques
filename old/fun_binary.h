@@ -52,48 +52,48 @@ namespace mathq {
 
 
   
-  // // Tensor<D1> && Tensor<D2>
+  // // MultiArray<D1> && MultiArray<D2>
 
   // template <class D1, class D2, class A, class B> 
-  //   inline auto operator&&(const TensorR<D1,A>& a, const TensorR<D2,B>& b)
+  //   inline auto operator&&(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
   // {
-  //   return  TER_Binary<TensorR<D1,A>,TensorR<D2,B>,D1,D2,Fun_And<D1,D2>>(a,b);
+  //   return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_And<D1,D2>>(a,b);
   // }
 
 
-  // // Tensor<D1> && bool
+  // // MultiArray<D1> && bool
 
   // template <class D1, class A> 
-  //   inline auto operator&&(const TensorR<D1,A>& a, const bool& b)
+  //   inline auto operator&&(const MArrayExpR<D1,A>& a, const bool& b)
   //   {
-  //     return  TER_Binary<TensorR<D1,A>,bool,D1,bool,Fun_And<D1,bool>>(a,b);
+  //     return  TER_Binary<MArrayExpR<D1,A>,bool,D1,bool,Fun_And<D1,bool>>(a,b);
   //   }
 
   
-  // // bool && Tensor<D2>
+  // // bool && MultiArray<D2>
 
   // template <class D2, class B>
-  //   inline auto operator&&(const bool& a, const TensorR<D2,B>& b)
+  //   inline auto operator&&(const bool& a, const MArrayExpR<D2,B>& b)
   //   {
-  //     return  TER_Binary<bool,TensorR<D2,B>,bool,D2,Fun_And<bool,D2>>(a,b);
+  //     return  TER_Binary<bool,MArrayExpR<D2,B>,bool,D2,Fun_And<bool,D2>>(a,b);
   //   }
 
     
-  // // Tensor<T> && T
+  // // MultiArray<T> && T
     
-  // template <class T, class A, typename = std::enable_if_t<std::is_base_of<TensorAbstract,T>::value>> 
-  //   inline auto operator&&(const TensorR<T,A>& a, const T& b)
+  // template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
+  //   inline auto operator&&(const MArrayExpR<T,A>& a, const T& b)
   //   {
-  //     return  TER_Binary<TensorR<T,A>,T,T,T,Fun_And<T,T>>(a,b);
+  //     return  TER_Binary<MArrayExpR<T,A>,T,T,T,Fun_And<T,T>>(a,b);
   //   }
     
 
-  // // T && Tensor<T>
+  // // T && MultiArray<T>
 
-  // template <class T, class B, typename = std::enable_if_t<std::is_base_of<TensorAbstract,T>::value>> 
-  //   inline auto operator&&(const T& a, const TensorR<T,B>& b)
+  // template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
+  //   inline auto operator&&(const T& a, const MArrayExpR<T,B>& b)
   //   {
-  //     return  TER_Binary<T,TensorR<T,B>,T,T,Fun_And<T,T>>(a,b);
+  //     return  TER_Binary<T,MArrayExpR<T,B>,T,T,Fun_And<T,T>>(a,b);
   //   }
 
 

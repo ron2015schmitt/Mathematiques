@@ -25,7 +25,7 @@ namespace mathq {
 
 
   template <class E, typename D, int M> class Scalar :
-    public TensorRW< Scalar<E, D, M>, E, D, M, 0> {
+    public MArrayExpRW< Scalar<E, D, M>, E, D, M, 0> {
   public:
     typedef Scalar<E, D, M> XType;
     typedef E EType;
@@ -87,7 +87,7 @@ namespace mathq {
 
 
     template <class X>
-    Scalar<E, D, M>(const TensorR<X, E, D, M, Rvalue>& x) {
+    Scalar<E, D, M>(const MArrayExpR<X, E, D, M, Rvalue>& x) {
 
       *this = x;
       constructorHelper();
@@ -104,7 +104,7 @@ namespace mathq {
     // --------------------- constructorHelper() --------------------
 
     void constructorHelper() {
-      //add to TensorPool
+      //add to MultiArrayPool
     }
 
 
@@ -116,7 +116,7 @@ namespace mathq {
     //**********************************************************************
 
     ~Scalar<E, D, M>() {
-      //remove from TensorPool
+      //remove from MultiArrayPool
     }
 
 
@@ -192,7 +192,7 @@ namespace mathq {
     bool isExpression(void) const {
       return false;
     }
-    Tensors getEnum(void) const {
+    MultiArrays getEnum(void) const {
       return T_SCALAR;
     }
     VectorofPtrs getAddresses(void) const {
@@ -369,7 +369,7 @@ namespace mathq {
 
 
     template <class X>
-    Scalar<E, D, M>& operator=(const TensorR<X, E, D, M, Rvalue>& x) {
+    Scalar<E, D, M>& operator=(const MArrayExpR<X, E, D, M, Rvalue>& x) {
       if constexpr (M<=1) {
         data_ = x[0];
       }

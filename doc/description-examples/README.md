@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.1-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.2-c++17</h1>
 
 <details>
 
@@ -55,7 +55,7 @@ _Mathématiques distinguishes itself from other libraries by an elegance and ver
 + Linear algebra
   + inner products
   + outer products
-+ Tensors
++ MultiArrays
 + A multitude of special functions that operate on
   + scalars
   + vectors

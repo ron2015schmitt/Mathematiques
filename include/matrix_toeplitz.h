@@ -19,7 +19,7 @@ namespace mathq {
 
    //, typename = EnableIf<NumberType<D>::value>
   template <class D, int NR, int NC >
-  class MatrixToeplitz : public TensorRW<MatrixToeplitz<D, NR, NC>, D, D, 1, 2> {
+  class MatrixToeplitz : public MArrayExpRW<MatrixToeplitz<D, NR, NC>, D, D, 1, 2> {
 
   public:
     constexpr static int R = 2;
@@ -150,7 +150,7 @@ namespace mathq {
     bool isExpression(void) const {
       return false;
     }
-    Tensors getEnum() const {
+    MultiArrays getEnum() const {
       return T_MATRIX;
     }
 
@@ -393,7 +393,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixToeplitz<D, NR, NC>& operator=(const TensorR<X, D, D, 1, 1>& v) {
+    MatrixToeplitz<D, NR, NC>& operator=(const MArrayExpR<X, D, D, 1, 1>& v) {
       for (index_type k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }

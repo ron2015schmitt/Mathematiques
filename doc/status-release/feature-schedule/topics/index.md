@@ -27,6 +27,6 @@ Refer to file `sandbox/indexing.cpp` for prototyping.
    * `Scalar()` - same method for both
    * `Vector(index_type k)` and `Vector(Index ind)`
    * `Matrix(index_type r, index_type c)` and  `Matrix(Index ind1, Index ind2)` and 
-   * `Tensor(index_type... ks)` and  `Tensor(Index... inds)`
+   * `MultiArray(index_type... ks)` and  `MultiArray(Index... inds)`
 * define `even`, `odd`, `rev` slices in their own namespace
 

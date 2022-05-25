@@ -1,4 +1,4 @@
-# Recursive Tensors (Tensors with Tensor elements)
+# Recursive MultiArrays (MultiArrays with MultiArray elements)
 _Back to [Table of Contents](../README.md)_
 
 _Most or all of these features have been implemented._
@@ -13,5 +13,5 @@ Implement code necessary so that mathematical operations work for recursive tens
        1. derivatives for Vector<Vector><double>>?
        1. implement NN fixed size versus variable vector size
     1. `Matrix(i,j)` 
-    1. `Tensor(i...)`
+    1. `MultiArray(i...)`
 

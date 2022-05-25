@@ -17,7 +17,7 @@ namespace mathq {
    */
 
   template <class D, int N>
-  class MatrixUpperTriangle : public TensorRW<MatrixUpperTriangle<D, N>, D, D, 1, 2> {
+  class MatrixUpperTriangle : public MArrayExpRW<MatrixUpperTriangle<D, N>, D, D, 1, 2> {
 
   public:
     constexpr static int R = 2;
@@ -84,7 +84,7 @@ namespace mathq {
     // --------------------- Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<(NN>0)> = 0>
 
-    explicit MatrixUpperTriangle<D, N>(const TensorR<X, D, D, 1, 2> A) {
+    explicit MatrixUpperTriangle<D, N>(const MArrayExpR<X, D, D, 1, 2> A) {
       // TODO: chekc that A is N x N
       resize(N);
       *this = A;
@@ -124,7 +124,7 @@ namespace mathq {
     // --------------------- variable-size Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixUpperTriangle<D, N>(const TensorR<X, D, D, 1, 2> A) {
+    explicit MatrixUpperTriangle<D, N>(const MArrayExpR<X, D, D, 1, 2> A) {
       const index_type M = A.Nrows();
       // TODO: chekc that A is square
       resize(M);
@@ -169,7 +169,7 @@ namespace mathq {
     bool isExpression(void) const {
       return false;
     }
-    Tensors getEnum() const {
+    MultiArrays getEnum() const {
       return T_MATRIX;
     }
 
@@ -396,7 +396,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixUpperTriangle<D, N>& operator=(const TensorR<X, D, D, 1, 1>& v) {
+    MatrixUpperTriangle<D, N>& operator=(const MArrayExpR<X, D, D, 1, 1>& v) {
       for (index_type k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -404,7 +404,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixUpperTriangle<D, N>& operator=(const TensorR<X, D, D, 1, 2>& A) {
+    MatrixUpperTriangle<D, N>& operator=(const MArrayExpR<X, D, D, 1, 2>& A) {
       const index_type M = A.Nrows();
       // TODO: check that A is square
       resize(M);

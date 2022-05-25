@@ -15,7 +15,7 @@ namespace mathq {
    */
 
   template <class D> class Vector :
-    public TensorRW<D,Vector<D> > {
+    public MArrayExpRW<D,Vector<D> > {
   private:
 
     // *********************** OBJECT DATA ***********************************
@@ -98,7 +98,7 @@ namespace mathq {
     // --------------------- EXPRESSION CONSTRUCTOR --------------------
 
     template <class A>
-    Vector<D>(const TensorR<D,A>& x) 
+    Vector<D>(const MArrayExpR<D,A>& x) 
     {
       const size_type N = x.size();
       data_ = new std::valarray<D>(N);
@@ -148,7 +148,7 @@ namespace mathq {
     bool isExpression(void) const {
       return false;
     }
-    Tensors getEnum() const {
+    MultiArrays getEnum() const {
       return T_VECTOR;
     }
     VectorofPtrs getAddresses(void) const  {
@@ -389,7 +389,7 @@ namespace mathq {
     //************************** ASSIGNMENT **************************************
     //**********************************************************************
 
-    // Any new assignment operators should also be addedc to TensorRW for consistency.
+    // Any new assignment operators should also be addedc to MArrayExpRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
@@ -405,7 +405,7 @@ namespace mathq {
 
 
     // Assignment to a vector expression
-    template <class A>  Vector<D>& equals(const TensorR<D,A>& x) {  
+    template <class A>  Vector<D>& equals(const MArrayExpR<D,A>& x) {  
 
       // resize to avoid segmentation faults
       resize(x.size());
@@ -427,30 +427,30 @@ namespace mathq {
       return *this; 
     }
     
-    template <class A>  Vector<D>& operator=(const TensorR<D,A>& x) {  
+    template <class A>  Vector<D>& operator=(const MArrayExpR<D,A>& x) {  
       return equals(x);
     }
     
 
 
     // doesn't work
-    //    template <class A, class B>  Vector<D>& equals(const TensorR<TensorR<D,A>,B>& x) {  
-    //    template <class A, class B>  Vector<D>& operator=(TensorR<TensorR<typename FundamentalType<D>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<D>& operator=(TensorR<TensorR<D,A>,B>) {
+    //    template <class A, class B>  Vector<D>& equals(const MArrayExpR<MArrayExpR<D,A>,B>& x) {  
+    //    template <class A, class B>  Vector<D>& operator=(MArrayExpR<MArrayExpR<typename FundamentalType<D>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<D>& operator=(MArrayExpR<MArrayExpR<D,A>,B>) {
     //    template <class A>  Vector<D>& operator=(A& x) {
-    //    template <class A, class B>  Vector<D>& operator=(const TensorR<TensorR<typename FundamentalType<D>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<D>& operator=(const TensorR<TensorR<typename FundamentalType<D>::Type,A>,B> x) {
-    //    template <template<class,class> class A, class B, class C>  Vector<D>& operator=(const TensorR<A<D,B>,C>& x) {
-    //    template <template<class,class> class A, class B, class C>  Vector<D>& operator=(const TensorR<A<PrimDataType,B>,C>& x) {
+    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<MArrayExpR<typename FundamentalType<D>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<MArrayExpR<typename FundamentalType<D>::Type,A>,B> x) {
+    //    template <template<class,class> class A, class B, class C>  Vector<D>& operator=(const MArrayExpR<A<D,B>,C>& x) {
+    //    template <template<class,class> class A, class B, class C>  Vector<D>& operator=(const MArrayExpR<A<PrimDataType,B>,C>& x) {
    // WORKS
     //    template <class A>  Vector<D>& operator=(A x) {
     //    template <class A>  Vector<D>& operator=(const A x) {
     //    template <class A>  Vector<D>& operator=(const A& x) {
-    //    template <class A, class B>  Vector<D>& operator=(const TensorR<A,B> x) {
-    //  template <class A, class B>  Vector<D>& operator=(const TensorR<A,B>& x) {
+    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<A,B> x) {
+    //  template <class A, class B>  Vector<D>& operator=(const MArrayExpR<A,B>& x) {
  
 
-    template <class X, class Y>  Vector<D>& operator=(const TensorR<X,Y>& x) {
+    template <class X, class Y>  Vector<D>& operator=(const MArrayExpR<X,Y>& x) {
       MOUT << __FUNCTION__ <<" ";
       //      return *this;
       const Y& y = x.derived();

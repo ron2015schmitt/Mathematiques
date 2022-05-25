@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     // printStart(++testnum);
     // Scalar<int> s1 = 1;
     // testtext( "dynamic casting" );
-    // TensorRW<int,Scalar<int> > &s2 = s1;
+    // MArrayExpRW<int,Scalar<int> > &s2 = s1;
     // Scalar<int> *sp1 = dynamic_cast<Scalar<int>*>(&s2);
     // void* result = (void*)&s1;
     // void* expected = (void*)sp1;
@@ -1226,7 +1226,7 @@ int main(int argc, char* argv[]) {
   }
 
   /****************************************************************************
-   * Unary Functions/Operators that bools or index_type Tensors
+   * Unary Functions/Operators that bools or index_type MultiArrays
    ****************************************************************************
    */
 

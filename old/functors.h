@@ -1201,7 +1201,7 @@ namespace matricks {
   public:
     typedef bool Type;
     typedef typename DeeperType<A,B>::Type DeeperType_;
-    typedef typename NumberType<DeeperType_,Type>::Type TensorType;
+    typedef typename NumberType<DeeperType_,Type>::Type MultiArrayType;
 
     Fun_And() { }
   
@@ -1237,7 +1237,7 @@ namespace matricks {
   public:
     typedef bool Type;
     typedef typename DeeperType<A,B>::Type DeeperType_;
-    typedef typename NumberType<DeeperType_,Type>::Type TensorType;
+    typedef typename NumberType<DeeperType_,Type>::Type MultiArrayType;
 
     Fun_Or() { }
   

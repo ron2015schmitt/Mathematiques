@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.1-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.2-c++17</h1>
 
 <details>
 
@@ -106,7 +106,7 @@ The first step of refactoring has been completed.
   + special functions such as Bessel functions (C++17).
 
 **Linear algreba**
-  + element-wise mathematics for Vectors, Matrices, and Tensors
+  + element-wise mathematics for Vectors, Matrices, and MultiArrays
   + dot/inner product
   + outer product and wedge products in progress 
 
@@ -115,7 +115,7 @@ The first step of refactoring has been completed.
   + Taylor series
   + Fourier Series
 
-**Tensor algreba**
+**MultiArray algreba**
   + convariant / contravairant tensors and operations are in progress...
  
 **Tests**

@@ -49,9 +49,9 @@ namespace mathq {
   //----------------------------------------------
 
   template <class D2, class X, class E, class D, int M, int R>
-  auto numbercast(const TensorR<X, E, D, M, R>& x) {
+  auto numbercast(const MArrayExpR<X, E, D, M, R>& x) {
     typedef typename NumberType<E, D2>::ReplaceTypeD EOUT;
-    return  TER_Unary<TensorR<X, E, D, M, R>, EOUT, D2, M, R, FUNCTOR_numbercast<E, EOUT, D, D2>>(x);
+    return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D2, M, R, FUNCTOR_numbercast<E, EOUT, D, D2>>(x);
   }
 
 
@@ -104,10 +104,10 @@ namespace mathq {
   //         
   // -------------------------------------------------------------------
   template <class X, class E, class D, int M, int R>
-  auto roundzero(const TensorR<X, E, D, M, R>& x, const typename FundamentalType<D>::Type& tol = Functions<typename FundamentalType<D>::Type>::tolerance) {
+  auto roundzero(const MArrayExpR<X, E, D, M, R>& x, const typename FundamentalType<D>::Type& tol = Functions<typename FundamentalType<D>::Type>::tolerance) {
 
     typedef typename FundamentalType<D>::Type DTOL;
-    return  TER_Binary<TensorR<X, E, D, M, R>,
+    return  TER_Binary<MArrayExpR<X, E, D, M, R>,
       DTOL,
       E, DTOL, E, D, DTOL, D, M, 0, M, R, 0, R,
       FUNCTOR_roundzero<E, D>>(x, tol);
@@ -121,7 +121,7 @@ namespace mathq {
   //         checks dimensions first
   // -------------------------------------------------------------------
   template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
-  bool equal(const TensorR<A, E1, D1, M, R>& x1, const TensorR<B, E2, D2, M, R>& x2) {
+  bool equal(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2) {
     if (!dimequiv(x1, x2)) {
       return false;
     }
@@ -208,13 +208,13 @@ namespace mathq {
   // (11) MultiArray<E1(D1)> , MultiArray<E2(D2)> 
 
   template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
-  auto approx(const TensorR<A, E1, D1, M, R>& x1, const TensorR<B, E2, D2, M, R>& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  auto approx(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
 
     typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
     typedef bool D3;
     typedef typename NumberType<E1, D3>::ReplaceTypeD E3;
-    return  TER_Ternary<TensorR<A, E1, D1, M, R>,
-      TensorR<B, E2, D2, M, R>,
+    return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
+      MArrayExpR<B, E2, D2, M, R>,
       DTOL,
       E1, E2, DTOL, E3, D1, D2, DTOL, D3, M, M, 0, M, R, R, 0, R,
       FUNCTOR_approx<E1, E2, E3, D1, D2, D3> >(x1, x2, tol);
@@ -223,12 +223,12 @@ namespace mathq {
   // (10) MultiArray<E1(D1)> , D2 
 
   template <class A, class E1, class D1, class D2, int M, int R>
-  auto approx(const TensorR<A, E1, D1, M, R>& x1, const D2& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  auto approx(const MArrayExpR<A, E1, D1, M, R>& x1, const D2& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
 
     typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
     typedef bool D3;
     typedef typename NumberType<E1, D3>::ReplaceTypeD E3;
-    return  TER_Ternary<TensorR<A, E1, D1, M, R>,
+    return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
       D2,
       DTOL,
       E1, D2, DTOL, E3, D1, D2, DTOL, D3, M, 0, 0, M, R, 0, 0, R,
@@ -240,13 +240,13 @@ namespace mathq {
   // (01) D1, MultiArray<E2(D2)> 
 
   template <class B, class E2, class D1, class D2, int M, int R>
-  auto approx(D1& x1, const TensorR<B, E2, D2, M, R>& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  auto approx(D1& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
 
     typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
     typedef bool D3;
     typedef typename NumberType<E2, D3>::ReplaceTypeD E3;
     return  TER_Ternary<D1,
-      TensorR<B, E2, D2, M, R>,
+      MArrayExpR<B, E2, D2, M, R>,
       DTOL,
       D1, E2, DTOL, E3, D1, D2, DTOL, D3, 0, M, 0, M, 0, R, 0, R,
       FUNCTOR_approx<D1, E2, E3, D1, D2, D3> >(x1, x2, tol);
@@ -259,7 +259,7 @@ namespace mathq {
   //          checks dimensions first
   // -------------------------------------------------------------------
   template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
-  bool equal_approx(const TensorR<A, E1, D1, M, R>& x1, const TensorR<B, E2, D2, M, R>& x2, const  typename FundamentalType<typename AddType<D1, D2>::Type>::Type tol = Functions< typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  bool equal_approx(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const  typename FundamentalType<typename AddType<D1, D2>::Type>::Type tol = Functions< typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
 
     if (!dimequiv(x1, x2)) {
       return false;
@@ -270,7 +270,7 @@ namespace mathq {
 
 
   /****************************************************************************
-   * Unary Functions/Operators that bools or index_type Tensors
+   * Unary Functions/Operators that bools or index_type MultiArrays
    ****************************************************************************
    */
 
@@ -279,7 +279,7 @@ namespace mathq {
    // alltrue(a)
 
   template <class X, class E, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
-  bool alltrue(const TensorR<X, E, D, M, R>& x) {
+  bool alltrue(const MArrayExpR<X, E, D, M, R>& x) {
 
     for (index_type i = 0; i< x.deepsize(); i++) {
       if (!x.dat(i)) {
@@ -294,7 +294,7 @@ namespace mathq {
   // anytrue(a)
 
   template <class X, class E, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
-  bool anytrue(const TensorR<X, E, D, M, R>& x) {
+  bool anytrue(const MArrayExpR<X, E, D, M, R>& x) {
 
     for (index_type i = 0; i< x.deepsize(); i++) {
       if (x.dat(i)) {
@@ -309,7 +309,7 @@ namespace mathq {
   // numtrue(a)
 
   template <class X, class E, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
-  index_type numtrue(const TensorR<X, E, D, M, R>& x) {
+  index_type numtrue(const MArrayExpR<X, E, D, M, R>& x) {
 
     index_type result = 0;
 
@@ -330,7 +330,7 @@ namespace mathq {
 
   template <class X, class E, class D, int M, int R>
   EnableMethodIf<std::is_same<D, bool>::value, Vector<index_type>&>
-    findtrue(const TensorR<X, E, D, M, R>& x) {
+    findtrue(const MArrayExpR<X, E, D, M, R>& x) {
     index_type N = numtrue(x);
     Vector<index_type>* y = new Vector<index_type>(N);
 
@@ -351,7 +351,7 @@ namespace mathq {
    // sum(a)
 
   template <class X, class E, class D, int M, int R >
-  E sum(const TensorR<X, E, D, M, R>& v) {
+  E sum(const MArrayExpR<X, E, D, M, R>& v) {
 
 
     const size_type N = v.size();
@@ -373,7 +373,7 @@ namespace mathq {
   // prod(a)
 
   template <class X, class E, class D, int M, int R >
-  E prod(const TensorR<X, E, D, M, R>& v) {
+  E prod(const MArrayExpR<X, E, D, M, R>& v) {
 
 
     const size_type N = v.size();
@@ -400,7 +400,7 @@ namespace mathq {
   // min(a)
 
   template <class X, class E, class D, int M, int R>
-  D min(const TensorR<X, E, D, M, R>& v) {
+  D min(const MArrayExpR<X, E, D, M, R>& v) {
 
     const size_type N = v.deepsize();
     if (N==0) {
@@ -422,7 +422,7 @@ namespace mathq {
   // max(a)
 
   template <class X, class E, class D, int M, int R>
-  D max(const TensorR<X, E, D, M, R>& v) {
+  D max(const MArrayExpR<X, E, D, M, R>& v) {
 
     const size_type N = v.deepsize();
     if (N==0) {
@@ -441,7 +441,7 @@ namespace mathq {
   // sumofsqrs(a)
 
   template <class X, class E, class D, int M, int R>
-  D sumofsqrs(const TensorR<X, E, D, M, R>& v) {
+  D sumofsqrs(const MArrayExpR<X, E, D, M, R>& v) {
     D result = D();
     for (index_type i = 0; i < v.size(); i++) {
       result += normsqr(v[i]);
@@ -452,7 +452,7 @@ namespace mathq {
   // norm(a)  - L2 norm
 
   template <class X, class E, class D, int M, int R>
-  D norm(const TensorR<X, E, D, M, R>& v) {
+  D norm(const MArrayExpR<X, E, D, M, R>& v) {
     return std::sqrt(sumofsqrs(v));
   }
 
@@ -881,7 +881,7 @@ namespace mathq {
   // reverse
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> reverse(const TensorR<X, E, D, M, R>& f) {
+  EnableMethodIf<R==1, Vector<E>&> reverse(const MArrayExpR<X, E, D, M, R>& f) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->reverse();
@@ -892,7 +892,7 @@ namespace mathq {
   // cumsum() -- cumulative sum
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumsum(const TensorR<X, E, D, M, R>& f) {
+  EnableMethodIf<R==1, Vector<E>&> cumsum(const MArrayExpR<X, E, D, M, R>& f) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->cumsum();
@@ -902,7 +902,7 @@ namespace mathq {
   // cumprod()  --  cumulative product
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumprod(const TensorR<X, E, D, M, R>& f) {
+  EnableMethodIf<R==1, Vector<E>&> cumprod(const MArrayExpR<X, E, D, M, R>& f) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->cumprod();
@@ -913,7 +913,7 @@ namespace mathq {
   // cumtrapz() -- cumulative trapezoidal summation
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumtrapz(const TensorR<X, E, D, M, R>& f) {
+  EnableMethodIf<R==1, Vector<E>&> cumtrapz(const MArrayExpR<X, E, D, M, R>& f) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->cumtrapz();
@@ -925,7 +925,7 @@ namespace mathq {
   //     0  rectangular
   //     1  trapazoidal
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> integrate_a2x(const TensorR<X, E, D, M, R>& f, const D a, const D b, const int order = 1) {
+  EnableMethodIf<R==1, Vector<E>&> integrate_a2x(const MArrayExpR<X, E, D, M, R>& f, const D a, const D b, const int order = 1) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->integrate_a2x(a, b, order);
@@ -936,7 +936,7 @@ namespace mathq {
   // cumsumrev() -- cumulative sum -- from last to first
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumsum_rev(const TensorR<X, E, D, M, R>& f) {
+  EnableMethodIf<R==1, Vector<E>&> cumsum_rev(const MArrayExpR<X, E, D, M, R>& f) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->cumsum_rev();
@@ -946,7 +946,7 @@ namespace mathq {
   // cumprodrev()  --  cumulative product  -- from last to first
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumprod_rev(const TensorR<X, E, D, M, R>& f) {
+  EnableMethodIf<R==1, Vector<E>&> cumprod_rev(const MArrayExpR<X, E, D, M, R>& f) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->cumprod_rev();
@@ -957,7 +957,7 @@ namespace mathq {
   // cumtrapz() -- cumulative trapezoidal summation -- from last to first
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumtrapz_rev(const TensorR<X, E, D, M, R>& f) {
+  EnableMethodIf<R==1, Vector<E>&> cumtrapz_rev(const MArrayExpR<X, E, D, M, R>& f) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->cumtrapz_rev();
@@ -971,7 +971,7 @@ namespace mathq {
   //     0  rectangular
   //     1  trapazoidal
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> integrate_x2b(const TensorR<X, E, D, M, R>& f, const D a, const D b, const int order = 1) {
+  EnableMethodIf<R==1, Vector<E>&> integrate_x2b(const MArrayExpR<X, E, D, M, R>& f, const D a, const D b, const int order = 1) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->integrate_x2b(a, b, order);
@@ -982,7 +982,7 @@ namespace mathq {
 
   // diff   (v[n] = v[n] - v[n-1])
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&>  diff(const TensorR<X, E, D, M, R>& f, const bool periodic = false) {
+  EnableMethodIf<R==1, Vector<E>&>  diff(const MArrayExpR<X, E, D, M, R>& f, const bool periodic = false) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->diff(periodic);
@@ -991,7 +991,7 @@ namespace mathq {
 
   // diff_rev   (v[n] = v[n+1] - v[n])
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&>  diff_rev(const TensorR<X, E, D, M, R>& f, const bool periodic = false) {
+  EnableMethodIf<R==1, Vector<E>&>  diff_rev(const MArrayExpR<X, E, D, M, R>& f, const bool periodic = false) {
     Vector<E>* g = new Vector<E>(f.size());
     *g = f;
     g->diff_rev(periodic);
@@ -1003,7 +1003,7 @@ namespace mathq {
   // any change in the default parameters must be likewise made in Vector.deriv(...)
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&>  deriv(const TensorR<X, E, D, M, R>& f, const D a, const D b, const int n = 1, int Dpts = 7, const bool periodic = false) {
+  EnableMethodIf<R==1, Vector<E>&>  deriv(const MArrayExpR<X, E, D, M, R>& f, const D a, const D b, const int n = 1, int Dpts = 7, const bool periodic = false) {
     //    MDISP(a,b,n,Dpts,periodic,f.size());
     Vector<E>* df = new Vector<E>(f.size());
     //    TLDISP(*df);
@@ -1021,7 +1021,7 @@ namespace mathq {
   //     4  Boole
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<(M==1)&&(R==1), D> integrate_a2b(const TensorR<X, E, D, M, R>& v, const D a, const D b, const int order = 1) {
+  EnableMethodIf<(M==1)&&(R==1), D> integrate_a2b(const MArrayExpR<X, E, D, M, R>& v, const D a, const D b, const int order = 1) {
 
 
     const size_type N = v.size();
@@ -1142,23 +1142,23 @@ namespace mathq {
   // maclaurin(vector coefs, vector vals, max N, x0)
 
   template <class A, class X, class E, class D, int M1, int M2, int R1, int R2, typename = EnableIf<(M1==1)&&(R1==1)>>
-  auto maclaurin(const TensorR<A, D, D, M1, R1>& a, const TensorR<X, E, D, M2, R2>& x, const int N, const D x0) {
-    return TER_Series<TensorR<A, D, D, M1, R1>, TensorR<X, E, D, M2, R2>, E, D, M2, R2>(a, x, N, x0);
+  auto maclaurin(const MArrayExpR<A, D, D, M1, R1>& a, const MArrayExpR<X, E, D, M2, R2>& x, const int N, const D x0) {
+    return TER_Series<MArrayExpR<A, D, D, M1, R1>, MArrayExpR<X, E, D, M2, R2>, E, D, M2, R2>(a, x, N, x0);
   }
 
   // // taylor(vector coefs, vector vals, max N)
 
   template <class A, class X, class E, class D, int M1, int M2, int R1, int R2, typename = EnableIf<(M1==1)&&(R1==1)>>
-  auto taylor(const TensorR<A, D, D, M1, R1>& a, const TensorR<X, E, D, M2, R2>& x, const int N) {
-    return TER_Series<TensorR<A, D, D, M1, R1>, TensorR<X, E, D, M2, R2>, E, D, M2, R2>(a, x, N);
+  auto taylor(const MArrayExpR<A, D, D, M1, R1>& a, const MArrayExpR<X, E, D, M2, R2>& x, const int N) {
+    return TER_Series<MArrayExpR<A, D, D, M1, R1>, MArrayExpR<X, E, D, M2, R2>, E, D, M2, R2>(a, x, N);
   }
 
   // // ifourier(vector cos coefs, vector sin coefs, vector vals, max N, k1=2pi/wavelength or 2pi/period)
   // // sin coefs must include a coef for n=0 even though its irrelevant
 
   template <class A, class B, class X, class D, int M, int R, typename = EnableIf<(M==1)&&(R==1)> >
-  auto ifourier(const TensorR<A, D, D, M, R>& Acos, const TensorR<B, D, D, M, R>& Bsin, const TensorR<X, D, D, M, R>& x, const int N, const D k1) {
-    return  TER_Series2<TensorR<A, D, D, M, R>, TensorR<B, D, D, M, R>, TensorR<X, D, D, M, R>, D, FUNCTOR_cos<D, D, D, D>, FUNCTOR_sin<D, D, D, D> >(Acos, Bsin, x, N, k1);
+  auto ifourier(const MArrayExpR<A, D, D, M, R>& Acos, const MArrayExpR<B, D, D, M, R>& Bsin, const MArrayExpR<X, D, D, M, R>& x, const int N, const D k1) {
+    return  TER_Series2<MArrayExpR<A, D, D, M, R>, MArrayExpR<B, D, D, M, R>, MArrayExpR<X, D, D, M, R>, D, FUNCTOR_cos<D, D, D, D>, FUNCTOR_sin<D, D, D, D> >(Acos, Bsin, x, N, k1);
   }
 
 

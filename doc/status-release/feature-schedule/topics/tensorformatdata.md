@@ -1,4 +1,4 @@
-# Implement FormatData class for `Tensors` and diagonal matrices
+# Implement FormatData class for `MultiArrays` and diagonal matrices
 
 _Back to [Table of Contents](../README.md)_
 

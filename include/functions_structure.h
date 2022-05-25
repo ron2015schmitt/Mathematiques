@@ -16,15 +16,15 @@ namespace mathq {
   // transpose(A) 
 
   template <class X, class E, class D, int M, int R>
-  auto transpose(const TensorR<X, E, D, M, R>& x) {
-    return TER_Transpose<TensorR<X, E, D, M, R>, E, D, M, R, FUNCTOR_pos<E, E, D, D>>(x);
+  auto transpose(const MArrayExpR<X, E, D, M, R>& x) {
+    return TER_Transpose<MArrayExpR<X, E, D, M, R>, E, D, M, R, FUNCTOR_pos<E, E, D, D>>(x);
   }
 
   // adjoint(A) - conjugate transpose - complex
 
   template <class X, class E, class D, int M, int R>
-  auto adjoint(const TensorR<X, E, std::complex<D>, M, R>& x) {
-    return TER_Transpose<TensorR<X, E, std::complex<D>, M, R>, E, std::complex<D>, M, R, FUNCTOR_conj_complex<E, E, std::complex<D>, std::complex<D>>>(x);
+  auto adjoint(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
+    return TER_Transpose<MArrayExpR<X, E, std::complex<D>, M, R>, E, std::complex<D>, M, R, FUNCTOR_conj_complex<E, E, std::complex<D>, std::complex<D>>>(x);
   }
 
 
@@ -32,8 +32,8 @@ namespace mathq {
   // adjoint(A) - conjugate transpose - Imaginary
 
   template <class X, class E, class D, int M, int R>
-  auto adjoint(const TensorR<X, E, Imaginary<D>, M, R>& x) {
-    return TER_Transpose<TensorR<X, E, Imaginary<D>, M, R>, E, Imaginary<D>, M, R, FUNCTOR_conj_imag<E, E, Imaginary<D>, Imaginary<D>>>(x);
+  auto adjoint(const MArrayExpR<X, E, Imaginary<D>, M, R>& x) {
+    return TER_Transpose<MArrayExpR<X, E, Imaginary<D>, M, R>, E, Imaginary<D>, M, R, FUNCTOR_conj_imag<E, E, Imaginary<D>, Imaginary<D>>>(x);
   }
 
 
@@ -42,7 +42,7 @@ namespace mathq {
   // ~A conjugate transpose operator
 
   template <class X, class E, class D, int M, int R>
-  auto operator~(const TensorR<X, E, D, M, R>& x) {
+  auto operator~(const MArrayExpR<X, E, D, M, R>& x) {
     return adjoint(x);
   }
 
@@ -65,10 +65,10 @@ namespace mathq {
   //       Only work-around I have come up with i sto use conts and then cast the const away
 
   template <class A, class B, class E, class D, int M, int R, typename = EnableIf<R==1> >
-  auto join(const TensorRW<A, E, D, M, R>& x1, const TensorRW<B, E, D, M, R>& x2) {
-    TensorRW<A, E, D, M, R>& a1 = const_cast<TensorRW<A, E, D, M, R>&>(x1);
-    TensorRW<B, E, D, M, R>& a2 = const_cast<TensorRW<B, E, D, M, R>&>(x2);
-    return TERW_Join<TensorRW<A, E, D, M, R>, TensorRW<B, E, D, M, R>, E, D, M>(a1, a2);
+  auto join(const MArrayExpRW<A, E, D, M, R>& x1, const MArrayExpRW<B, E, D, M, R>& x2) {
+    MArrayExpRW<A, E, D, M, R>& a1 = const_cast<MArrayExpRW<A, E, D, M, R>&>(x1);
+    MArrayExpRW<B, E, D, M, R>& a2 = const_cast<MArrayExpRW<B, E, D, M, R>&>(x2);
+    return TERW_Join<MArrayExpRW<A, E, D, M, R>, MArrayExpRW<B, E, D, M, R>, E, D, M>(a1, a2);
   }
 
 
@@ -77,9 +77,9 @@ namespace mathq {
   // Note above applies here as well.
 
   template <class A, class B, class E, class D, int M, int R, typename = EnableIf<R==1> >
-  auto operator,(const TensorRW<A, E, D, M, R>& x1, const TensorRW<B, E, D, M, R>& x2) {
-    TensorRW<A, E, D, M, R>& a1 = const_cast<TensorRW<A, E, D, M, R>&>(x1);
-    TensorRW<B, E, D, M, R>& a2 = const_cast<TensorRW<B, E, D, M, R>&>(x2);
+  auto operator,(const MArrayExpRW<A, E, D, M, R>& x1, const MArrayExpRW<B, E, D, M, R>& x2) {
+    MArrayExpRW<A, E, D, M, R>& a1 = const_cast<MArrayExpRW<A, E, D, M, R>&>(x1);
+    MArrayExpRW<B, E, D, M, R>& a2 = const_cast<MArrayExpRW<B, E, D, M, R>&>(x2);
     return join(a1, a2);
   }
 
@@ -87,15 +87,15 @@ namespace mathq {
   // join - RHS
 
   template <class A, class B, class E, class D, int M, int R, typename = EnableIf<(R==1)>  >
-  auto join(const TensorR<A, E, D, M, R>& x1, const TensorR<B, E, D, M, R>& x2) {
-    return  TER_Join<TensorR<A, E, D, M, R>, TensorR<B, E, D, M, R>, E, D, M>(x1, x2);
+  auto join(const MArrayExpR<A, E, D, M, R>& x1, const MArrayExpR<B, E, D, M, R>& x2) {
+    return  TER_Join<MArrayExpR<A, E, D, M, R>, MArrayExpR<B, E, D, M, R>, E, D, M>(x1, x2);
   }
 
 
   // operator, - RHS
 
   template <class A, class B, class E, class D, int M, int R, typename = EnableIf<(R==1)>  >
-  auto operator,(const TensorR<A, E, D, M, R>& x1, const TensorR<B, E, D, M, R>& x2) {
+  auto operator,(const MArrayExpR<A, E, D, M, R>& x1, const MArrayExpR<B, E, D, M, R>& x2) {
     return join(x1, x2);
   }
 
@@ -104,8 +104,8 @@ namespace mathq {
   // rep(v,m)
 
   template <class A, class D>
-  auto rep(const TensorR<A, D, D, 1, 1>& a, const size_type m) {
-    return TER_Rep<TensorR<A, D, D, 1, 1>, D>(a, m);
+  auto rep(const MArrayExpR<A, D, D, 1, 1>& a, const size_type m) {
+    return TER_Rep<MArrayExpR<A, D, D, 1, 1>, D>(a, m);
   }
 
 

@@ -8,5 +8,5 @@ _Back to [Table of Contents](../README.md)_
   * can pass lambda function to calculate f
 * need function to create n-dimensional grid tensor, like matlab
 * Function class consists
-   * an n-dimensional tensor for each of the n coordinates (or `Tensor<Vector<D,int N=n>>`)
+   * an n-dimensional tensor for each of the n coordinates (or `MultiArray<Vector<D,int N=n>>`)
    * an n-dimensional that holds m-dimensional tensors
