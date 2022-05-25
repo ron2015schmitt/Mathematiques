@@ -183,6 +183,7 @@ int main() {
   TRDISP(R3D);
   auto R3D_2 = fgrid(fradius3d_2, gridXYZ);
   TRDISP(R3D_2);
+  GMD_CODE_END();
 
 
 

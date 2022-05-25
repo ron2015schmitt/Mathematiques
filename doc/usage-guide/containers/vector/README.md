@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.2-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.3-c++17</h1>
 
 <details>
 
@@ -273,6 +273,7 @@ Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 });
     {10.4881, 11.4455}
   }
 };
+```
 
 
 
