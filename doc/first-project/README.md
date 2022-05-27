@@ -1,17 +1,17 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.4-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.5-c++17</h1>
 
 <details>
 
-<summary>User Manual</summary>
+<summary>Documentation</summary>
 
-# [User Manual](../README.md)<br>
-1. [About](../about/README.md)<br>
-2. [License](../license/README.md)<br>
+# [Documentation](../README.md)<br>
+1. [License](../license/README.md)<br>
+2. [About](../about/README.md)<br>
 3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>
-4. [Description and Example Usage](../description-examples/README.md)<br>
+4. [Description and Example Usage](../overview/README.md)<br>
 5. [Installation](../installation/README.md)<br>
 6. _Your First Mathématiques Project_ <br>
-7. [Usage Guide: Syntax, Data Types, Functions, etc](../usage-guide/README.md)<br>
+7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
 8. [Benchmarks](../benchmarks/README.md)<br>
 9. [Tests](../test/README.md)<br>
 10. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
@@ -55,6 +55,6 @@ make example
 ```
 
 
-| ⇦ <br />[Installation](../installation/README.md)  | [User Manual](../README.md)<br />Your First Mathématiques Project<br /><img width=1000/> | ⇨ <br />[Usage Guide: Syntax, Data Types, Functions, etc](../usage-guide/README.md)   |
+| ⇦ <br />[Installation](../installation/README.md)  | [Documentation](../README.md)<br />Your First Mathématiques Project<br /><img width=1000/> | ⇨ <br />[Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

@@ -1,17 +1,18 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.4-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.5-c++17</h1>
 
 <details>
 
-<summary>User Manual</summary>
+<summary>Documentation</summary>
 
-# [User Manual](../README.md)<br>
-1. [About](../about/README.md)<br>
-2. _License_ <br>
+# [Documentation](../README.md)<br>
+
+1. _License_ <br>
+2. [About](../about/README.md)<br>
 3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>
-4. [Description and Example Usage](../description-examples/README.md)<br>
+4. [Description and Example Usage](../overview/README.md)<br>
 5. [Installation](../installation/README.md)<br>
 6. [Your First Mathématiques Project](../first-project/README.md)<br>
-7. [Usage Guide: Syntax, Data Types, Functions, etc](../usage-guide/README.md)<br>
+7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
 8. [Benchmarks](../benchmarks/README.md)<br>
 9. [Tests](../test/README.md)<br>
 10. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
@@ -21,7 +22,7 @@
 
 
 
-# 2. License
+# 1. License
 
 
 The code that makes up this library is copyrighted under the *MIT license*.
@@ -49,6 +50,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-| ⇦ <br />[About](../about/README.md)  | [User Manual](../README.md)<br />License<br /><img width=1000/> | ⇨ <br />[Status, Planned Work & Release Notes](../status-release/README.md)   |
+| ⇦ <br />  | [Documentation](../README.md)<br />License<br /><img width=1000/> | ⇨ <br />[About](../about/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

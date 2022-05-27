@@ -1,18 +1,17 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.4-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.5-c++17</h1>
 
 <details>
 
-<summary>User Manual</summary>
+<summary>Documentation</summary>
 
-# [User Manual](../README.md)<br>
-
-1. _About_ <br>
-2. [License](../license/README.md)<br>
+# [Documentation](../README.md)<br>
+1. [License](../license/README.md)<br>
+2. _About_ <br>
 3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>
-4. [Description and Example Usage](../description-examples/README.md)<br>
+4. [Description and Example Usage](../overview/README.md)<br>
 5. [Installation](../installation/README.md)<br>
 6. [Your First Mathématiques Project](../first-project/README.md)<br>
-7. [Usage Guide: Syntax, Data Types, Functions, etc](../usage-guide/README.md)<br>
+7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
 8. [Benchmarks](../benchmarks/README.md)<br>
 9. [Tests](../test/README.md)<br>
 10. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
@@ -22,12 +21,12 @@
 
 
 
-# 1. About
+# 2. About
 
 ## Goal - Phase 1
 
 The goal of the Mathématiques project is to provide a _library_ for 
-* numerical computation
+* numerical/scientific computation
 * computational sciences
 * machine learning / AI
 * big data
@@ -71,20 +70,74 @@ Currently, in 2022, Mathématiques is undergoing the final changes to make it sp
 
 ## Goal - Phase 2
 
-Design a C++ style language and compiler for high-performance mathematics that
+Design a C-style language and compiler for high-performance mathematics:
 
-* is open-source
-* is module/package based instead of C headers
-* includes a package manager and online repository
-* is strongly typed and compiles to native and web assembly code
-* multi-paradigm and concurrent, drawing influence and features from C++, Rust, JavaScript/TypeScript, and D
-* processes Mathématiques syntax without the need for all intricate the expression templating
-* support templating and operator overloading
-* supports Unicode-16 source code including greek letter variables and many possible operators for overloading
-* has debug modes that include bounds checking and reflection without the need for macros
-* provides user-friendly compiler error messages
-* supports 2D and 3D graphics
+**Open-source**
+* Free and customizable
+
+**Compiled and Modern**
+* Compiles to native machine code and web assembly code
+* Strongly typed
+* User-friendly compiler error messages
+* Module/package based instead of legacy C header-based
+* Package manager and online repository
+* Influenced by 
+  * C++
+  * [D](https://en.wikipedia.org/wiki/D_(programming_language)
+  * [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language)
+
+**Versatile and easy-to-read**
+* Templating and metaprogramming
+* Operator overloading
+* Unicode-16 source code 
+  * greek letter variables
+  * many possible unicode operators for overloading
+
+**Debug and production modes**
+* Debug modes that include 
+  * bounds-checking
+  * reflection and meta-data access (variable names, etc) without the need for macros
+* Production mode
+  * debug features are not available outside debug modes
+  * runs at maximum efficiency
+
+**Multi-paradigm**
+* drawing influence and features from
+  * C++
+  * Java
+  * JavaScript/TypeScript
 * interoperability with other languages, frameworks, and run-times
+
+**Reliable and Conncurrent**
+* drawing influence and features from [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language)
+
+**Core Math Types Defined and built into language**
+* Processes Mathématiques types without the need for all intricate the expression templating
+* number types
+  * integer
+  * floating point
+  * complex
+  * imaginary
+  * quaternion
+  * Multi-vector
+  * Clifford algebras
+* multi-arrays
+  * vector
+  * matrix
+  * multi-array
+* tensors and differential forms
+  * covariant / contravariant tensors of any rank
+  * spinors etc
+* calculus operators
+
+**Core numerical support**
+* support core computational features of  
+  * Matlab
+  * Mathematica
+  * Julia
+
+**Package repository for added functionality**
+* 2D and 3D graphics
 * LateX / Notebook interoperability
 
 
@@ -135,6 +188,6 @@ Other configurations are of course possible with modification.
 /home/rs2015/Mathematiques/doc
 
 
-| ⇦ <br />  | [User Manual](../README.md)<br />About<br /><img width=1000/> | ⇨ <br />[License](../license/README.md)   |
+| ⇦ <br />[License](../license/README.md)  | [Documentation](../README.md)<br />About<br /><img width=1000/> | ⇨ <br />[Status, Planned Work & Release Notes](../status-release/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

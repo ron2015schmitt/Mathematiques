@@ -1,0 +1,21 @@
+{
+  "index": 3,
+  "name": "multi-array",
+  "skip-readme": false,
+  "title": "MultiArray",
+  "version": "v0.40.5-c++17",
+  "prefix": "3.",
+  "src": "multi-array/template.md",
+  "dest": "multi-array/README.md",
+  "level": 2,
+  "parent": {
+    "title": "Container Types (Vector, Matrix & MultiArray)",
+    "prefix": "",
+    "level": 1,
+    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.5-c++17</h1>"
+  },
+  "prev": "matrix",
+  "next": null,
+  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.5-c++17</h1>\n\n<details>\n\n<summary>Container Types (Vector, Matrix & MultiArray)</summary>\n\n# [Container Types (Vector, Matrix & MultiArray)](../README.md)<br>\n1. [Vector](../vector/README.md)<br>\n2. [Matrix](../matrix/README.md)<br>\n3. _MultiArray_ <br>\n\n\n</details>\n\n",
+  "footer": "\n\n| \u21e6 <br />[Matrix](../matrix/README.md)  | [Container Types (Vector, Matrix & MultiArray)](../README.md)<br />MultiArray<br /><img width=1000/> | \u21e8 <br />   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
+}

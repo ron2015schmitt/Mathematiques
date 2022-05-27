@@ -6,11 +6,10 @@
 #ifndef MATHQ_H
 #define MATHQ_H
 
-
+#include <cstddef>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-
 #include <complex>
 #include <fstream>
 #include <iomanip>

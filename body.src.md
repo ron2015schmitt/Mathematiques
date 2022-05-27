@@ -1,7 +1,7 @@
 
-## User Manual
+## Documentation
 
-[User Manual](doc/README.md)
+[Documentation](doc/README.md)
 
 
 

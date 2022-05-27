@@ -515,8 +515,6 @@ namespace mathq {
     }
     (*y)[N-1] = end;
     return *y;
-
-
   }
 
 
@@ -567,6 +565,87 @@ namespace mathq {
   // *********************************************************
 
 // Vector<D>& linspace(D start, D end, size_type N)
+
+
+
+
+  // ***************************************************************************
+  // * Domain
+  // ***************************************************************************
+
+  template <class D, typename X>
+  class
+    Domain {
+  private:
+    int Neff;
+  public:
+    const D a;
+    const D b;
+    const std::size_t N;
+    const D step;
+    Vector<D> grid;
+
+    Domain(const D a, const D b, const std::size_t N) :
+      a(a),
+      b(b),
+      N(N),
+      step((b-a)/static_cast<D>(N-1)) {
+    }
+
+    ~Domain() {
+    }
+
+    void deflateGrid() {
+      grid.resize(0);
+    }
+    void inflateGrid() {
+      grid.resize(N);
+    }
+
+    const D get(size_type i) const {
+      if (i == 0) {
+        return a;
+      }
+      else if (i == N-1) {
+        return b;
+      }
+      else {
+        return a + static_cast<D>(i)*step;
+      }
+    }
+
+    Vector<D>& getGrid() {
+      inflateGrid();
+      grid[0] = a;
+      for (size_type i = 1; i<(N-1); i++) {
+        grid[i] = a + static_cast<D>(i)*step;
+      }
+      grid[N-1] = b;
+      return grid;
+    }
+  };
+
+
+  // ***************************************************************************
+  // * TargetSet
+  // *************************************************************************** 
+
+  template <class D>
+  class
+    TargetSet {
+  public:
+    const unsigned short Ndims;
+    const unsigned short rank;
+    TargetSet(const unsigned short Ndims, unsigned short rank) :
+      Ndims(Ndims),
+      rank(rank) {
+    }
+    ~TargetSet() {
+    }
+  };
+
+
+
 
   // complex and Quaternions are not ordered sets so they can't be used in a range
 
@@ -1127,10 +1206,10 @@ namespace mathq {
       std::cerr << "integrate_a2b: bad order parameter order="<<order<<std::endl;
 #endif
       break;
-    }
+      }
 
     return result;
-  }
+    }
 
 
 
@@ -1165,6 +1244,6 @@ namespace mathq {
 
 
 
-};
+  };
 
 #endif 

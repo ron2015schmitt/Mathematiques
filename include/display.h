@@ -851,6 +851,12 @@ namespace display {
     return style;
   }
 
+  template <class T>
+  Style getTypeStyle(const mathq::TargetSet<T>& var) {
+    Style style = CREATESTYLE(CYAN);
+    return style;
+  }
+
   inline Style getFunctionTypeStyle() {
     return CREATESTYLE(BLUE);
   }
@@ -990,6 +996,7 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER(std::queue);
   SPECIALIZE_getTypeName_CONTAINER(std::initializer_list);
   SPECIALIZE_getTypeName_CONTAINER(mathq::Domain);
+  SPECIALIZE_getTypeName_CONTAINER(mathq::TargetSet);
 
 #define SPECIALIZE_getTypeName_CONTAINER2(TYPE)             \
   template <typename D1, typename D2>                       \
@@ -1012,6 +1019,7 @@ namespace display {
     std::string s = getTypeStyle(var).apply("mathq::Nabla");
     return s;
   }
+
 
 
   template <typename D, unsigned long int N>
@@ -1304,14 +1312,28 @@ namespace display {
   // mathq::Domain
   template <typename T>
   inline void dispval_strm(std::ostream& stream, const mathq::Domain<T>& var) {
-    stream << "(";
+    stream << "(a=";
     dispval_strm(stream, var.a);
-    stream << ",";
+    stream << ", b=";
     dispval_strm(stream, var.b);
-    stream << ",";
+    stream << ", N=";
     dispval_strm(stream, var.N);
+    stream << ", gridState=";
+    dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated" );
     stream << ")";
   }
+
+
+  // mathq::TargetSet
+  template <typename D>
+  inline void dispval_strm(std::ostream& stream, const mathq::TargetSet<D>& var) {
+    stream << "(Ndims=";
+    dispval_strm(stream, var.Ndims);
+    stream << ", rank=";
+    dispval_strm(stream, var.rank);
+    stream << ")";
+  }
+
 
   // mathq::Nabla
   template <typename D>
