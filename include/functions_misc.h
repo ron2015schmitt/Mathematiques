@@ -576,8 +576,6 @@ namespace mathq {
   template <class D, typename X>
   class
     Domain {
-  private:
-    int Neff;
   public:
     const D a;
     const D b;
@@ -623,6 +621,47 @@ namespace mathq {
       grid[N-1] = b;
       return grid;
     }
+
+    friend std::ostream& operator<<(std::ostream& stream, const Domain<D, X>& x) {
+      using namespace display;
+      dispval_strm(stream, x);
+      return stream;
+    }
+  };
+
+
+
+  // ***************************************************************************
+  // * MultiDomain
+  // ***************************************************************************
+
+  template <class D, typename X>
+  class
+    MultiDomain {
+  public:
+    const std::vector<Domain<D>> domains;
+    const size_t Ndims;
+
+    MultiDomain(const std::initializer_list<Domain<D>>& list) :
+      domains(std::vector<Domain<D>>{ list }),
+      Ndims(list.size()) {
+    }
+    MultiDomain(const std::vector<Domain<D>>& v) :
+      domains(v),
+      Ndims(v.size()) {
+    }
+    MultiDomain(const MultiDomain<D>& x) :
+      domains(x.domains),
+      Ndims(x.Ndims) {
+    }
+
+    ~MultiDomain() {
+    }
+
+    size_t size() const {
+      return Ndims;
+    }
+
   };
 
 
@@ -1195,21 +1234,21 @@ namespace mathq {
           }
           else {
             s4 += v[j];
-          }
         }
+      }
         result += 32*s1 + 12*s2 + 32*s3 + 14*s4;
         result = result * 2*(b-a)/(45*D(N-1));
-      }
+    }
       break;
     default:
 #if MATHQ_DEBUG>0
       std::cerr << "integrate_a2b: bad order parameter order="<<order<<std::endl;
 #endif
       break;
-      }
+  }
 
     return result;
-    }
+}
 
 
 
@@ -1244,6 +1283,6 @@ namespace mathq {
 
 
 
-  };
+};
 
 #endif 

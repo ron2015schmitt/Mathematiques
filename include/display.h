@@ -6,6 +6,9 @@
 #include <functional>
 #include <tuple>
 
+
+
+
 //****************************************************************************
 //                      MACROS
 //
@@ -845,6 +848,13 @@ namespace display {
     return style;
   }
 
+  template <class D>
+  Style getTypeStyle(const mathq::MultiDomain<D>& var) {
+    Style style = CREATESTYLE(CYAN);
+    return style;
+  }
+
+
   template <class T>
   Style getTypeStyle(const mathq::Nabla<T>& var) {
     Style style = CREATESTYLE(CYAN);
@@ -908,7 +918,8 @@ namespace display {
     std::string s = "*";
     if constexpr (Has_classname<T>::value) {
       s += var.classname();
-    } else {
+    }
+    else {
       s += typeid(var).name();
     }
     return getTypeStyle(var).apply(s);
@@ -996,6 +1007,7 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER(std::queue);
   SPECIALIZE_getTypeName_CONTAINER(std::initializer_list);
   SPECIALIZE_getTypeName_CONTAINER(mathq::Domain);
+  SPECIALIZE_getTypeName_CONTAINER(mathq::MultiDomain);
   SPECIALIZE_getTypeName_CONTAINER(mathq::TargetSet);
 
 #define SPECIALIZE_getTypeName_CONTAINER2(TYPE)             \
@@ -1259,6 +1271,9 @@ namespace display {
   //       dispvalstrm
   //---------------------------------------------------------------------------------
 
+  template <typename D>
+  inline void dispval_strm(std::ostream& stream, const std::initializer_list<D>& var);
+
   template <typename T>
   inline void dispval_strm(std::ostream& stream, const T& d) {
     stream << d;
@@ -1308,44 +1323,6 @@ namespace display {
   SPECIALIZE_floating_dispval_strm(double);
   SPECIALIZE_floating_dispval_strm(long double);
 
-
-  // mathq::Domain
-  template <typename T>
-  inline void dispval_strm(std::ostream& stream, const mathq::Domain<T>& var) {
-    stream << "(a=";
-    dispval_strm(stream, var.a);
-    stream << ", b=";
-    dispval_strm(stream, var.b);
-    stream << ", N=";
-    dispval_strm(stream, var.N);
-    stream << ", gridState=";
-    dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated" );
-    stream << ")";
-  }
-
-
-  // mathq::TargetSet
-  template <typename D>
-  inline void dispval_strm(std::ostream& stream, const mathq::TargetSet<D>& var) {
-    stream << "(Ndims=";
-    dispval_strm(stream, var.Ndims);
-    stream << ", rank=";
-    dispval_strm(stream, var.rank);
-    stream << ")";
-  }
-
-
-  // mathq::Nabla
-  template <typename D>
-  inline void dispval_strm(std::ostream& stream, const mathq::Nabla<D>& var) {
-    stream << "(Ndims=";
-    dispval_strm(stream, var.Ndims);
-    stream << ", Nwindow=";
-    dispval_strm(stream, var.Nwindow);
-    stream << ", periodic=";
-    dispval_strm(stream, var.periodic);
-    stream << ")";
-  }
 
 
 
@@ -1413,7 +1390,22 @@ namespace display {
     stream << "}";
   }
 
-  // std::valarray
+
+  //   // std::vector
+  //   template <typename D>
+  //   inline void dispval_strm_with_types(std::ostream& stream, const std::vector<D>& var) {
+  //     stream << "{";
+  //     for (size_t ii = 0; ii < var.size(); ii++) {
+  //       if (ii > 0)
+  //         stream << ", ";
+  //       dispval_strm(stream, var[ii]);
+  // //      Display::disp_w_type(stream, var[ii]);
+  //     }
+  //     stream << "}";
+  //   }
+
+
+    // std::valarray
   template <typename D>
   inline void dispval_strm(std::ostream& stream, const std::valarray<D>& var) {
     stream << "{";
@@ -1535,6 +1527,56 @@ namespace display {
       stream << std::get<I>(var);
       dispval_strm<I + 1, Ts...>(stream, var);
     }
+  }
+
+
+
+  // mathq::Domain
+  template <typename T>
+  inline void dispval_strm(std::ostream& stream, const mathq::Domain<T>& var) {
+    stream << "(a=";
+    dispval_strm(stream, var.a);
+    stream << ", b=";
+    dispval_strm(stream, var.b);
+    stream << ", N=";
+    dispval_strm(stream, var.N);
+    stream << ", gridState=";
+    dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
+    stream << ")";
+  }
+
+  // mathq::MultiDomain
+  template <typename T>
+  inline void dispval_strm(std::ostream& stream, const mathq::MultiDomain<T>& var) {
+    stream << "(Ndims=";
+    dispval_strm(stream, var.Ndims);
+    stream << ", domains=";
+    dispval_strm(stream, var.domains);
+  }
+
+
+
+  // mathq::TargetSet
+  template <typename D>
+  inline void dispval_strm(std::ostream& stream, const mathq::TargetSet<D>& var) {
+    stream << "(Ndims=";
+    dispval_strm(stream, var.Ndims);
+    stream << ", rank=";
+    dispval_strm(stream, var.rank);
+    stream << ")";
+  }
+
+
+  // mathq::Nabla
+  template <typename D>
+  inline void dispval_strm(std::ostream& stream, const mathq::Nabla<D>& var) {
+    stream << "(Ndims=";
+    dispval_strm(stream, var.Ndims);
+    stream << ", Nwindow=";
+    dispval_strm(stream, var.Nwindow);
+    stream << ", periodic=";
+    dispval_strm(stream, var.periodic);
+    stream << ")";
   }
 
 
@@ -1744,6 +1786,11 @@ namespace display {
       }
     }
 
+    static void issuecr(std::ostream& stream) {
+      stream << std::endl;
+    }
+
+
     // NOTE: do NOT try to combine mydisp_notype and mydisp_type
     //       this wil causes compilation failure if X.classname() does not
     //       exists, EVEN if you put getTypeName(x) inside an if clause
@@ -1763,6 +1810,12 @@ namespace display {
       }
     }
     template <typename X>
+    static void mydisp_notype(std::ostream& stream, const std::initializer_list<X>& x, const std::string name, const bool issueCR, const std::string postString = "") {
+      mydisp_notype(stream, std::list(x), name, issueCR, postString);
+    }
+
+
+    template <typename X>
     static void multidisp_notype(std::ostream& stream, const X& x, const std::string name) {
       using namespace std;
       //      log3("display","Display","mydisp_notype","(const X& x, const std::string name)");
@@ -1772,12 +1825,22 @@ namespace display {
       dispval_strm(stream, x);
       stream << multiSeparatorStyledString;
     }
+    template <typename X>
+    static void multidisp_notype(std::ostream& stream, const std::initializer_list<X>& x, const std::string name) {
+      multidisp_notype(stream, std::list(x), name);
+    }
+
 
     template <typename X>
     static void mydispcr(std::ostream& stream, const X& x, const std::string name, const std::string postString = "") {
       using namespace std;
       mydisp_notype(stream, x, name, true, postString);
     }
+    template <typename X>
+    static void mydispcr(std::ostream& stream, const std::initializer_list<X>& x, const std::string name, const std::string postString = "") {
+      mydispcr(stream, std::list(x), name, postString);
+    }
+
 
     template <typename X>
     static void mydisp_type(std::ostream& stream, const X& x, const std::string name, const bool issueCR) {
@@ -1792,6 +1855,11 @@ namespace display {
         stream << endl;
       }
     }
+    template <typename X>
+    static void mydisp_type(std::ostream& stream, const std::initializer_list<X>& x, const std::string name, const bool issueCR) {
+      mydisp_type(stream, std::list(x), name, issueCR);
+    }
+
 
     template <typename X>
     static void mydisp_type_rhs(std::ostream& stream, const X& x, const std::string name, const bool issueCR) {
@@ -1808,14 +1876,45 @@ namespace display {
       }
     }
     template <typename X>
+    static void mydisp_type_rhs(std::ostream& stream, const std::initializer_list<X>& x, const std::string name, const bool issueCR) {
+      mydisp_type_rhs(stream, std::list(x), name, issueCR);
+    }
+    template <typename X>
+    static void disp_w_type(std::ostream& stream, const X& x, const bool issueCR = false) {
+      using namespace std;
+      //      log3("display","Display","mydisp_type_rhs","(const X& x, const std::string name)");
+      stream << getTypeName(x) << " ";
+      dispval_strm(stream, x);
+      stream << terminatorStyledString;
+      if (issueCR) {
+        stream << endl;
+      }
+    }
+    template <typename X>
+    static void disp_w_type(std::ostream& stream, const std::initializer_list<X>& x, const bool  issueCR = false) {
+      disp_w_type(stream, std::list(x), issueCR);
+    }
+
+
+
+    template <typename X>
     static void tmydisp(std::ostream& stream, const X& x, const std::string name) {
       using namespace std;
       mydisp_type(stream, x, name, false);
     }
     template <typename X>
+    static void tmydisp(std::ostream& stream, const std::initializer_list<X>& x, const std::string name) {
+      tmydisp(stream, std::list(x), name);
+    }
+
+    template <typename X>
     static void tmydispcr(std::ostream& stream, const X& x, const std::string name) {
       using namespace std;
       mydisp_type(stream, x, name, true);
+    }
+    template <typename X>
+    static void tmydispcr(std::ostream& stream, const std::initializer_list<X>& x, const std::string name) {
+      tmydispcr(stream, std::list(x), name);
     }
 
     template <typename X>
@@ -1824,14 +1923,20 @@ namespace display {
       mydisp_type_rhs(stream, x, name, false);
     }
     template <typename X>
+    static void trmydisp(std::ostream& stream, const std::initializer_list<X>& x, const std::string name) {
+      trmydisp(stream, std::list(x), name);
+    }
+
+    template <typename X>
     static void trmydispcr(std::ostream& stream, const X& x, const std::string name) {
       using namespace std;
       mydisp_type_rhs(stream, x, name, true);
     }
-
-    static void issuecr(std::ostream& stream) {
-      stream << std::endl;
+    template <typename X>
+    static void trmydispcr(std::ostream& stream, const std::initializer_list<X>& x, const std::string name) {
+      trmydispcr(stream, std::list(x), name);
     }
+
   }; // class Display
 
 

@@ -1,6 +1,6 @@
 
 
-# Mathématiques v0.40.5-c++17
+# Mathématiques v0.40.6-c++17
 
 
 ## Documentation
@@ -56,24 +56,26 @@ Currently, in 2022, Mathématiques is undergoing the final changes to make it sp
 
 ## Goal - Phase 2
 
-Design a C-style language and compiler for high-performance mathematics:
+Design a C-style language and compiler for high-performance mathematics, likely based on Rust.
 
 **Open-source**
 * Free and customizable
+* Package manager and online repository
 
 **Compiled and Modern**
+* Uses LLVM toolchain
 * Compiles to native machine code and web assembly code
 * Strongly typed
+* Compiled, Strongly typed, and lack of garbage collection distinguishes it from Python and Julia
 * User-friendly compiler error messages
 * Module/package based instead of legacy C header-based
-* Package manager and online repository
-* Influenced by 
+* Influenced by (in order)
+  * [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language)
   * C++
   * [D](https://en.wikipedia.org/wiki/D_(programming_language)
-  * [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language)
 
 **Versatile and easy-to-read**
-* Templating and metaprogramming
+* Generics (aka "templates" sin C++ terminology) and metaprogramming.  
 * Operator overloading
 * Unicode-16 source code 
   * greek letter variables
@@ -92,9 +94,9 @@ Design a C-style language and compiler for high-performance mathematics:
   * C++
   * Java
   * JavaScript/TypeScript
-* interoperability with other languages, frameworks, and run-times
+* interoperability with other languages, frameworks, and run-times via LLVM
 
-**Reliable and Conncurrent**
+**Reliable and Concurrent**
 * drawing influence and features from [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language)
 
 **Core Math Types Defined and built into language**
@@ -105,8 +107,6 @@ Design a C-style language and compiler for high-performance mathematics:
   * complex
   * imaginary
   * quaternion
-  * Multi-vector
-  * Clifford algebras
 * multi-arrays
   * vector
   * matrix
@@ -114,13 +114,17 @@ Design a C-style language and compiler for high-performance mathematics:
 * tensors and differential forms
   * covariant / contravariant tensors of any rank
   * spinors etc
-* calculus operators
+* Other types
+  * Multi-vectors (Grassman algebras)
+  * Clifford algebras
+* Calculus operators
 
 **Core numerical support**
-* support core computational features of  
+* aim to support core computational features of  
   * Matlab
   * Mathematica
   * Julia
+  * NumPy
 
 **Package repository for added functionality**
 * 2D and 3D graphics

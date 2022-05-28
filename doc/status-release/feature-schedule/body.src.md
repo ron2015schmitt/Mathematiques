@@ -96,10 +96,11 @@
   }
   // this seems to works for ints. if problems, use a helper class to determine which exp to call: expf expl, exp
 ```
-* create Tenor3/Array3. use level for the name of th ethird dimension Nlevels
-* create MultiArray4/Array4 for xyzt
+* create MultiArray3. use level for the name of th ethird dimension Nlevels
+* create MultiArray4 for xyzt
 * slcies to get row or col of matrix
 * get rid of typename usage in templates?
+* formalize template notation for the following: types with ordering (ints and reals), division algebras, Multiarrays, Tensors
 * use of variable templates to simplify variadics like Dimension?
   * use list for DeepDimensions
   * Deep -> Nested

@@ -1,21 +1,67 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.5-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.6-c++17</h1>
 
 <details>
 
-<summary>Container Types (Vector, Matrix & MultiArray)</summary>
+<summary>Documentation</summary>
 
-# [Container Types (Vector, Matrix & MultiArray)](../README.md)<br>
-
-1. _Vector_ <br>
-2. [Matrix](../matrix/README.md)<br>
-3. [MultiArray](../multi-array/README.md)<br>
+# [Documentation](../../../README.md)<br>
+1. [License](../../../license/README.md)<br>
+2. [About](../../../about/README.md)<br>
+3. [Status, Planned Work & Release Notes](../../../status-release/README.md)<br>
+4. [Description and Example Usage](../../../overview/README.md)<br>
+5. [Installation](../../../installation/README.md)<br>
+6. [Your First Mathématiques Project](../../../first-project/README.md)<br>
+7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
+8. [Benchmarks](../../../benchmarks/README.md)<br>
+9. [Tests](../../../test/README.md)<br>
+10. [Developer Guide: Modifying and Extending Mathématiques](../../../developer-guide/README.md)<br>
 
 
 </details>
 
 
 
-# 1. Vector
+<details>
+
+<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>
+
+# [7. Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
+7.1. [Usage Guide Notation](../../notation/README.md)<br>
+7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../scalars/README.md)<br>
+7.3. _Container Types (Vector, Matrix & MultiArray)_ <br>
+7.4. [Operators](../../operators/README.md)<br>
+7.5. [Functions](../../functions/README.md)<br>
+7.6. [Linear Algebra](../../linear-algebra/README.md)<br>
+7.7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>
+7.8. [Ranges and Grids](../../ranges-grids/README.md)<br>
+7.9. [Calculus](../../calculus/README.md)<br>
+7.10. [Vector Calculus](../../vector-calculus/README.md)<br>
+7.11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>
+7.12. [Display of Results](../../display/README.md)<br>
+7.13. [FILE I/O](../../file-io/README.md)<br>
+7.14. [Debug Modes](../../debug/README.md)<br>
+
+
+</details>
+
+
+
+<details>
+
+<summary>Container Types (Vector, Matrix & MultiArray)</summary>
+
+# [7.3. Container Types (Vector, Matrix & MultiArray)](../README.md)<br>
+
+7.3.1. _Vector_ <br>
+7.3.2. [Matrix](../matrix/README.md)<br>
+7.3.3. [MultiArray](../multi-array/README.md)<br>
+
+
+</details>
+
+
+
+# 7.3.1. Vector
 
 
 
@@ -83,14 +129,21 @@ Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 });
 
 ☀ d1 ➜ mathq::Nabla (Ndims=1, Nwindow=7, periodic=0);
 ☀ u ➜ mathq::TargetSet<std::complex<double>> (Ndims=1, rank=0);
-Domain<double> rx(-1, 1, 5);
-☀ rx ➜ mathq::Domain<double> (a=-1, b=1, N=5, gridState=deflated);
-auto gridX0 = rx.getGrid();
-☀ rx ➜ mathq::Domain<double> (a=-1, b=1, N=5, gridState=inflated);
+Domain<double> domX(-1, 1, 5);
+☀ domX ➜ mathq::Domain<double> (a=-1, b=1, N=5, gridState=deflated);
+auto gridX0 = domX.getGrid();
+☀ domX ➜ mathq::Domain<double> (a=-1, b=1, N=5, gridState=inflated);
 ☀ gridX0 ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
 ☀ g ➜ Vector<double,NE=5> {-1, -0.5, 0, 0.5, 1};
 ☀ gridX ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
 ☀ ry ➜ mathq::Domain<double> (a=0, b=3, N=4, gridState=deflated);
+☀ { 1,2 } ➜ {1, 2};
+☀ { 1,2 } ➜ std::list<int> {1, 2};
+MultiDomain<double> domXY({ domX, ry });
+☀ domXY ➜ mathq::MultiDomain<double> (Ndims=2, domains={(a=-1, b=1, N=5, gridState=inflated), (a=0, b=3, N=4, gridState=deflated)};
+MultiDomain<double> domXY2({ Domain<double>(-1, 1, 5), Domain<double>(0, 3, 4) });
+☀ domXY2 ➜ mathq::MultiDomain<double> (Ndims=2, domains={(a=-1, b=1, N=5, gridState=deflated), (a=0, b=3, N=4, gridState=deflated)};
+☀ domXY3 ➜ mathq::MultiDomain<double> (Ndims=2, domains={(a=-1, b=1, N=5, gridState=deflated), (a=0, b=3, N=4, gridState=deflated)};
 ☀ rz ➜ mathq::Domain<double> (a=10, b=11, N=2, gridState=deflated);
 ☀ divX ➜ Vector<double> {1, 1, 1, 1, 1};
 ☀ gridX2 ➜ Vector<double> {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};

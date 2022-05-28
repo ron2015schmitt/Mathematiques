@@ -1303,6 +1303,15 @@ namespace mathq {
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
   class Domain;
 
+
+  // ***************************************************************************
+  // * MultiDomain
+  // ***************************************************************************
+
+  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  class MultiDomain;
+
+
   // ***************************************************************************
   // * TargetSet
   // ***************************************************************************

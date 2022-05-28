@@ -1,0 +1,31 @@
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+g++ -pipe -std=c++17 -O1  insideout.o -o insideout -L/home/rs2015/Mathematiques/lib -lmathq 
+In file included from /home/rs2015/Mathematiques/include/mathq.h:40,
+                 from testunary.cpp:5:
+/home/rs2015/Mathematiques/include/display.h: In instantiation of ‘void display::dispval_strm(std::ostream&, const T&) [with T = std::initializer_list<double>; std::ostream = std::basic_ostream<char>]’:
+/home/rs2015/Mathematiques/include/display.h:1437:19:   required from ‘void display::dispval_strm(std::ostream&, const std::__cxx11::list<D>&) [with D = std::initializer_list<double>; std::ostream = std::basic_ostream<char>]’
+/home/rs2015/Mathematiques/include/display.h:1849:19:   required from ‘static void display::Display::mydisp_type(std::ostream&, const X&, std::string, bool) [with X = std::__cxx11::list<std::initializer_list<double>, std::allocator<std::initializer_list<double> > >; std::ostream = std::basic_ostream<char>; std::string = std::__cxx11::basic_string<char>]’
+/home/rs2015/Mathematiques/include/display.h:1910:18:   required from ‘static void display::Display::tmydispcr(std::ostream&, const X&, std::string) [with X = std::__cxx11::list<std::initializer_list<double>, std::allocator<std::initializer_list<double> > >; std::ostream = std::basic_ostream<char>; std::string = std::__cxx11::basic_string<char>]’
+/home/rs2015/Mathematiques/include/display.h:1914:16:   required from ‘static void display::Display::tmydispcr(std::ostream&, const std::initializer_list<_Tp>&, std::string) [with X = std::initializer_list<double>; std::ostream = std::basic_ostream<char>; std::string = std::__cxx11::basic_string<char>]’
+testunary.cpp:122:5:   required from here
+/home/rs2015/Mathematiques/include/display.h:1276:12: error: no match for ‘operator<<’ (operand types are ‘std::ostream’ {aka ‘std::basic_ostream<char>’} and ‘const std::initializer_list<double>’)
+ 1276 |     stream << d;
+      |     ~~~~~~~^~~~
+compilation terminated due to -Wfatal-errors.
+
+
+error is 
+
+display.h:1276:12: error: no match for ‘operator<<’ (operand types are ‘std::ostream’ {aka ‘std::basic_ostream<char>’} and ‘const std::initializer_list<double>’)
+ 1276 |     stream << d
+
+
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+ 
