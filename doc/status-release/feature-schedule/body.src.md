@@ -112,6 +112,29 @@
 * use https://doxygen.nl/manual/docblocks.html os similar to generate method and function docs?
 * reformat all files using VSCode plugin: all done except sandbox
 * all objects should ave .invert() and conjugate(), not .inv and .conj
+* cast between various multi-arrays
+  * https://en.cppreference.com/w/cpp/language/cast_operator
+  * completed: MArray Constructor from Vector in multi-array.h
+      // ************* Vector Constructor---------------------
+    template <int NE>
+    MultiArray<E, R, D, M>(const Vector<E, NE, D, M>& v) {
+      resize(v.deepdims());
+      for (int c = 0; c < v.deepsize(); c++ ) {
+        (*this)[c] = v[c];
+      }
+      constructorHelper();
+    }
+  * completed: cast Vector as MultiArray  in vector.h
+    operator MultiArray<E, R, D, M>() const {
+      MultiArray<E, 1, D, M> ma(*this);
+    }
+
+  * testing is in sandbox/multiarrays-conversion.cpp 
+  *  what about expresssions? 
+    * Can we have Constructor for Vector, Matrix, Exp from expressions?
+    * Can we cast expressiosn to these?
+  * Look into fixing or removing the enums for all multi-arrays
+
 * inv<D>(D x) for real, integers, imaginar, complex, quaternion
 * make all temp README.md files read-only
 * refactor the headers so that 

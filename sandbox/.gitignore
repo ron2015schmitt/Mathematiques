@@ -1,6 +1,7 @@
 # ****  This was created by the command "make gitignore".
 # ****  Do NOT manually edit.
 /run
+/multiarrays-conversion
 /printing
 /testing
 /testing2
