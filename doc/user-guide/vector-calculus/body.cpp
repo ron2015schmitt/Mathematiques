@@ -55,7 +55,7 @@ int main() {
   TRDISP(u);
 
 
-  ECHO_CODE(Domain<double> domX(-1, 1, 5));
+  ECHO_CODE(Domain<double> domX(-1, 1, 5, "x"));
   TRDISP(domX);
 
   ECHO_CODE(auto gridX0 = domX.getGrid());
@@ -71,15 +71,18 @@ int main() {
   auto gridX = grid(domX);
   TRDISP(gridX);
 
-  Domain<double> ry(0, 3, 4);
-  TRDISP(ry);
+  Domain<double> domY(0, 3, 4, "y");
+  TRDISP(domY);
 
 
   DISP({ 1,2 });
   TRDISP({ 1,2 });
-  ECHO_CODE(MultiDomain<double> domXY({ domX, ry }));
+  ECHO_CODE(MultiDomain<double> domXY({ domX, domY }, "Cartesian-2D"));
   TRDISP(domXY);
-  ECHO_CODE(MultiDomain<double> domXY2({ Domain<double>(-1, 1, 5), Domain<double>(0, 3, 4) }));
+  TRDISP(domXY[0]);
+  TRDISP(domXY["x"]);
+
+  ECHO_CODE(MultiDomain<double> domXY2({ Domain<double>(-10, 10, 5), Domain<double>(0, 7, 4) }));
   TRDISP(domXY2);
   MultiDomain<double> domXY3(domXY2);
   TRDISP(domXY3);
@@ -116,11 +119,11 @@ int main() {
   TRDISP(func4(-3));
   TRDISP(fgrid(func4, gridX));
   CR();
-  TRDISP(ry);
-  TRDISP(grid(ry));
+  TRDISP(domY);
+  TRDISP(grid(domY));
   TRDISP(rz);
   TRDISP(grid(rz));
-  auto gridXY = grid(domX, ry);
+  auto gridXY = grid(domX, domY);
   TRDISP(gridXY(0));
   TRDISP(gridXY(1));
 
@@ -131,17 +134,16 @@ int main() {
   auto R2 = fgrid(fradius2, gridXY);
   TRDISP(R2);
 
-  auto gradXY = grad(R, domX, ry);
+  auto gradXY = grad(R, domX, domY);
   TRDISP(gradXY(0));
   TRDISP(gradXY(1));
-  gradXY = nabla_old & std::make_tuple(R, domX, ry);
+  gradXY = nabla_old & std::make_tuple(R, domX, domY);
   TRDISP(gradXY(0));
   TRDISP(gradXY(1));
-
 
 
   CR();
-  auto gridXYZ = grid(domX, ry, rz);
+  auto gridXYZ = grid(domX, domY, rz);
   TRDISP(gridXYZ(0));
   TRDISP(gridXYZ(1));
   TRDISP(gridXYZ(2));

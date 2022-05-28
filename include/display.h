@@ -1540,7 +1540,9 @@ namespace display {
     dispval_strm(stream, var.b);
     stream << ", N=";
     dispval_strm(stream, var.N);
-    stream << ", gridState=";
+    stream << ", name=\"";
+    dispval_strm(stream, var.name);
+    stream << "\", gridState=";
     dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
     stream << ")";
   }
@@ -1550,7 +1552,9 @@ namespace display {
   inline void dispval_strm(std::ostream& stream, const mathq::MultiDomain<T>& var) {
     stream << "(Ndims=";
     dispval_strm(stream, var.Ndims);
-    stream << ", domains=";
+    stream << ", name=\"";
+    dispval_strm(stream, var.name);
+    stream << "\", domains=";
     dispval_strm(stream, var.domains);
   }
 

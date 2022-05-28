@@ -581,13 +581,15 @@ namespace mathq {
     const D b;
     const std::size_t N;
     const D step;
+    const std::string name;
     Vector<D> grid;
 
-    Domain(const D a, const D b, const std::size_t N) :
+    Domain(const D a, const D b, const std::size_t N, std::string name = "unnamed") :
       a(a),
       b(b),
       N(N),
-      step((b-a)/static_cast<D>(N-1)) {
+      step((b-a)/static_cast<D>(N-1)),
+      name(name) {
     }
 
     ~Domain() {
@@ -633,6 +635,7 @@ namespace mathq {
 
   // ***************************************************************************
   // * MultiDomain
+
   // ***************************************************************************
 
   template <class D, typename X>
@@ -641,18 +644,26 @@ namespace mathq {
   public:
     const std::vector<Domain<D>> domains;
     const size_t Ndims;
+    const std::string name;
+    std::vector<std::string> names;
 
-    MultiDomain(const std::initializer_list<Domain<D>>& list) :
+    MultiDomain(const std::initializer_list<Domain<D>>& list, std::string name = "unnamed") :
       domains(std::vector<Domain<D>>{ list }),
-      Ndims(list.size()) {
+      Ndims(list.size()),
+      name(name),
+      names(MultiDomain::makeNames(domains)) {
     }
-    MultiDomain(const std::vector<Domain<D>>& v) :
+    MultiDomain(const std::vector<Domain<D>>& v, std::string name = "unnamed") :
       domains(v),
-      Ndims(v.size()) {
+      Ndims(v.size()),
+      name(name),
+      names(MultiDomain::makeNames(domains)) {
     }
-    MultiDomain(const MultiDomain<D>& x) :
+    MultiDomain(const MultiDomain<D>& x, std::string name = "unnamed") :
       domains(x.domains),
-      Ndims(x.Ndims) {
+      Ndims(x.Ndims),
+      name(name),
+      names(MultiDomain::makeNames(domains)) {
     }
 
     ~MultiDomain() {
@@ -660,6 +671,34 @@ namespace mathq {
 
     size_t size() const {
       return Ndims;
+    }
+
+    const Domain<D>& operator[](const std::string name) {
+      return this->getDomainFromName(name);
+    }
+
+    const Domain<D>& operator[](const size_t c) {
+      return domains[c];
+    }
+
+
+    const Domain<D>& getDomainFromName(const std::string name) {
+      // TODO: in debug mode, check to ensure one and only one found
+      for (size_t c = 0; c < domains.size(); c++) {
+        if (domains[c].name == name) {
+          return domains[c];
+        }
+      }
+      // this is intended to produce a run-time error because the name was not found
+      return domains[domains.size()];
+    }
+
+    static std::vector<std::string>& makeNames(const std::vector<Domain<D>> domains) {
+      std::vector<std::string>* names = new std::vector<std::string>(domains.size());
+      for (size_t c = 0; c < domains.size(); c++) {
+        (*names)[c] = domains[c].name;
+      }
+      return *names;
     }
 
   };
@@ -1234,21 +1273,21 @@ namespace mathq {
           }
           else {
             s4 += v[j];
+          }
         }
-      }
         result += 32*s1 + 12*s2 + 32*s3 + 14*s4;
         result = result * 2*(b-a)/(45*D(N-1));
-    }
+      }
       break;
     default:
 #if MATHQ_DEBUG>0
       std::cerr << "integrate_a2b: bad order parameter order="<<order<<std::endl;
 #endif
       break;
-  }
+    }
 
     return result;
-}
+  }
 
 
 

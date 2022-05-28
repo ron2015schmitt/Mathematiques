@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.7-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.8-c++17</h1>
 
 <details>
 
@@ -63,22 +63,24 @@
 
 ☀ d1 ➜ mathq::Nabla (Ndims=1, Nwindow=7, periodic=0);
 ☀ u ➜ mathq::TargetSet<std::complex<double>> (Ndims=1, rank=0);
-Domain<double> domX(-1, 1, 5);
-☀ domX ➜ mathq::Domain<double> (a=-1, b=1, N=5, gridState=deflated);
+Domain<double> domX(-1, 1, 5, "x");
+☀ domX ➜ mathq::Domain<double> (a=-1, b=1, N=5, name="x", gridState=deflated);
 auto gridX0 = domX.getGrid();
-☀ domX ➜ mathq::Domain<double> (a=-1, b=1, N=5, gridState=inflated);
+☀ domX ➜ mathq::Domain<double> (a=-1, b=1, N=5, name="x", gridState=inflated);
 ☀ gridX0 ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
 ☀ g ➜ Vector<double,NE=5> {-1, -0.5, 0, 0.5, 1};
 ☀ gridX ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
-☀ ry ➜ mathq::Domain<double> (a=0, b=3, N=4, gridState=deflated);
+☀ domY ➜ mathq::Domain<double> (a=0, b=3, N=4, name="y", gridState=deflated);
 ☀ { 1,2 } ➜ {1, 2};
 ☀ { 1,2 } ➜ std::list<int> {1, 2};
-MultiDomain<double> domXY({ domX, ry });
-☀ domXY ➜ mathq::MultiDomain<double> (Ndims=2, domains={(a=-1, b=1, N=5, gridState=inflated), (a=0, b=3, N=4, gridState=deflated)};
-MultiDomain<double> domXY2({ Domain<double>(-1, 1, 5), Domain<double>(0, 3, 4) });
-☀ domXY2 ➜ mathq::MultiDomain<double> (Ndims=2, domains={(a=-1, b=1, N=5, gridState=deflated), (a=0, b=3, N=4, gridState=deflated)};
-☀ domXY3 ➜ mathq::MultiDomain<double> (Ndims=2, domains={(a=-1, b=1, N=5, gridState=deflated), (a=0, b=3, N=4, gridState=deflated)};
-☀ rz ➜ mathq::Domain<double> (a=10, b=11, N=2, gridState=deflated);
+MultiDomain<double> domXY({ domX, domY }, "Cartesian-2D");
+☀ domXY ➜ mathq::MultiDomain<double> (Ndims=2, name="Cartesian-2D", domains={(a=-1, b=1, N=5, name="x", gridState=inflated), (a=0, b=3, N=4, name="y", gridState=deflated)};
+☀ domXY[0] ➜ mathq::Domain<double> (a=-1, b=1, N=5, name="x", gridState=inflated);
+☀ domXY["x"] ➜ mathq::Domain<double> (a=-1, b=1, N=5, name="x", gridState=inflated);
+MultiDomain<double> domXY2({ Domain<double>(-10, 10, 5), Domain<double>(0, 7, 4) });
+☀ domXY2 ➜ mathq::MultiDomain<double> (Ndims=2, name="unnamed", domains={(a=-10, b=10, N=5, name="unnamed", gridState=deflated), (a=0, b=7, N=4, name="unnamed", gridState=deflated)};
+☀ domXY3 ➜ mathq::MultiDomain<double> (Ndims=2, name="unnamed", domains={(a=-10, b=10, N=5, name="unnamed", gridState=deflated), (a=0, b=7, N=4, name="unnamed", gridState=deflated)};
+☀ rz ➜ mathq::Domain<double> (a=10, b=11, N=2, name="unnamed", gridState=deflated);
 ☀ divX ➜ Vector<double> {1, 1, 1, 1, 1};
 ☀ gridX2 ➜ Vector<double> {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 ☀ gradX2 ➜ Vector<double> {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
@@ -94,9 +96,9 @@ MultiDomain<double> domXY2({ Domain<double>(-1, 1, 5), Domain<double>(0, 3, 4) }
 ☀ func4(-3) ➜ double 0.0497871;
 ☀ fgrid(func4, gridX) ➜ Vector<double> {0.367879, 0.606531, 1, 1.64872, 2.71828};
 
-☀ ry ➜ mathq::Domain<double> (a=0, b=3, N=4, gridState=deflated);
-☀ grid(ry) ➜ Vector<double> {0, 1, 2, 3};
-☀ rz ➜ mathq::Domain<double> (a=10, b=11, N=2, gridState=deflated);
+☀ domY ➜ mathq::Domain<double> (a=0, b=3, N=4, name="y", gridState=deflated);
+☀ grid(domY) ➜ Vector<double> {0, 1, 2, 3};
+☀ rz ➜ mathq::Domain<double> (a=10, b=11, N=2, name="unnamed", gridState=deflated);
 ☀ grid(rz) ➜ Vector<double> {10, 11};
 ☀ gridXY(0) ➜ Matrix<double> { {-1, -0.5, 0, 0.5, 1}, {-1, -0.5, 0, 0.5, 1}, {-1, -0.5, 0, 0.5, 1}, {-1, -0.5, 0, 0.5, 1} };
 ☀ gridXY(1) ➜ Matrix<double> { {0, 0, 0, 0, 0}, {1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3} };
