@@ -843,13 +843,26 @@ namespace display {
   }
 
   template <class D>
-  Style getTypeStyle(const mathq::Domain<D>& var) {
+  Style getTypeStyle(const mathq::Coordinate<D>& var) {
     Style style = CREATESTYLE(CYAN);
     return style;
   }
 
   template <class D>
-  Style getTypeStyle(const mathq::MultiDomain<D>& var) {
+  Style getTypeStyle(const mathq::Interval<D>& var) {
+    Style style = CREATESTYLE(CYAN);
+    return style;
+  }
+
+  template <class D>
+  Style getTypeStyle(const mathq::Coordinates<D>& var) {
+    Style style = CREATESTYLE(CYAN);
+    return style;
+  }
+
+
+  template <class D>
+  Style getTypeStyle(const mathq::Region<D>& var) {
     Style style = CREATESTYLE(CYAN);
     return style;
   }
@@ -1006,8 +1019,10 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER(std::list);
   SPECIALIZE_getTypeName_CONTAINER(std::queue);
   SPECIALIZE_getTypeName_CONTAINER(std::initializer_list);
-  SPECIALIZE_getTypeName_CONTAINER(mathq::Domain);
-  SPECIALIZE_getTypeName_CONTAINER(mathq::MultiDomain);
+  SPECIALIZE_getTypeName_CONTAINER(mathq::Coordinate);
+  SPECIALIZE_getTypeName_CONTAINER(mathq::Interval);
+  SPECIALIZE_getTypeName_CONTAINER(mathq::Coordinates);
+  SPECIALIZE_getTypeName_CONTAINER(mathq::Region);
   SPECIALIZE_getTypeName_CONTAINER(mathq::TargetSet);
 
 #define SPECIALIZE_getTypeName_CONTAINER2(TYPE)             \
@@ -1531,9 +1546,19 @@ namespace display {
 
 
 
-  // mathq::Domain
+  // mathq::Coordinate
   template <typename T>
-  inline void dispval_strm(std::ostream& stream, const mathq::Domain<T>& var) {
+  inline void dispval_strm(std::ostream& stream, const mathq::Coordinate<T>& var) {
+    stream << "(name=\"";
+    dispval_strm(stream, var.name);
+    stream << "\")";
+  }
+
+
+
+  // mathq::Interval
+  template <typename T>
+  inline void dispval_strm(std::ostream& stream, const mathq::Interval<T>& var) {
     stream << "(a=";
     dispval_strm(stream, var.a);
     stream << ", b=";
@@ -1547,15 +1572,29 @@ namespace display {
     stream << ")";
   }
 
-  // mathq::MultiDomain
+
+  // mathq::Coordinates
   template <typename T>
-  inline void dispval_strm(std::ostream& stream, const mathq::MultiDomain<T>& var) {
+  inline void dispval_strm(std::ostream& stream, const mathq::Coordinates<T>& var) {
     stream << "(Ndims=";
     dispval_strm(stream, var.Ndims);
     stream << ", name=\"";
     dispval_strm(stream, var.name);
-    stream << "\", domains=";
+    stream << ")";
+  }
+
+
+
+  // mathq::Region
+  template <typename T>
+  inline void dispval_strm(std::ostream& stream, const mathq::Region<T>& var) {
+    stream << "( Ndims=";
+    dispval_strm(stream, var.Ndims);
+    stream << ", name=\"";
+    dispval_strm(stream, var.name);
+    stream << "\", intervals=";
     dispval_strm(stream, var.domains);
+    stream << " )";
   }
 
 

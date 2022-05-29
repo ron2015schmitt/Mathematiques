@@ -1297,19 +1297,35 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // * Domain
+  // * Coordinate
   // ***************************************************************************
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  class Domain;
+  class Coordinate;
 
 
   // ***************************************************************************
-  // * MultiDomain
+  // * Interval
   // ***************************************************************************
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  class MultiDomain;
+  class Interval;
+
+
+  // ***************************************************************************
+  // * Coordinates
+  // ***************************************************************************
+
+  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  class Coordinates;
+
+
+  // ***************************************************************************
+  // * Region
+  // ***************************************************************************
+
+  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  class Region;
 
 
   // ***************************************************************************

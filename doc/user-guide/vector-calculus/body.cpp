@@ -54,8 +54,11 @@ int main() {
   TargetSet<std::complex<double>> u(1, 0);
   TRDISP(u);
 
+  ECHO_CODE(Coordinate<double> x_coord("x"));
+  TRDISP(x_coord);
 
-  ECHO_CODE(Domain<double> domX(-1, 1, 5, "x"));
+
+  ECHO_CODE(Interval<double> domX(-1, 1, 5, "x"));
   TRDISP(domX);
 
   ECHO_CODE(auto gridX0 = domX.getGrid());
@@ -71,32 +74,32 @@ int main() {
   auto gridX = grid(domX);
   TRDISP(gridX);
 
-  Domain<double> domY(0, 3, 4, "y");
+  Interval<double> domY(0, 3, 4, "y");
   TRDISP(domY);
 
 
   DISP({ 1,2 });
   TRDISP({ 1,2 });
-  ECHO_CODE(MultiDomain<double> domXY({ domX, domY }, "Cartesian-2D"));
+  ECHO_CODE(Region<double> domXY({ domX, domY }, "Cartesian-2D"));
   TRDISP(domXY);
   TRDISP(domXY[0]);
   TRDISP(domXY["x"]);
 
-  ECHO_CODE(MultiDomain<double> domXY2({ Domain<double>(-10, 10, 5), Domain<double>(0, 7, 4) }));
+  ECHO_CODE(Region<double> domXY2({ Interval<double>(-10, 10, 5), Interval<double>(0, 7, 4) }));
   TRDISP(domXY2);
-  MultiDomain<double> domXY3(domXY2);
+  Region<double> domXY3(domXY2);
   TRDISP(domXY3);
-  // MultiDomain<double> domXY4(domXY2.domains);
+  // Region<double> domXY4(domXY2.domains);
   // TRDISP(domXY4);
 
 
-  Domain<double> rz(10, 11, 2);
+  Interval<double> rz(10, 11, 2);
   TRDISP(rz);
 
 
   auto divX = grad(grid(domX), domX);
   TRDISP(divX);
-  Domain<double> rx2(-10, 10, 21);
+  Interval<double> rx2(-10, 10, 21);
   auto gridX2 = grid(rx2);
   TRDISP(gridX2);
   auto gradX2 = grad(gridX2, rx2);

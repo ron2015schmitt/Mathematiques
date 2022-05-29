@@ -1,52 +1,31 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.8-c++17</h1>
-
-<details>
-
-<summary>Documentation</summary>
-
-# [Documentation](../../README.md)<br>
-1. [License](../../license/README.md)<br>
-2. [About](../../about/README.md)<br>
-3. [Status, Planned Work & Release Notes](../../status-release/README.md)<br>
-4. [Description and Example Usage](../../overview/README.md)<br>
-5. [Installation](../../installation/README.md)<br>
-6. [Your First Mathématiques Project](../../first-project/README.md)<br>
-7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
-8. [Benchmarks](../../benchmarks/README.md)<br>
-9. [Tests](../../test/README.md)<br>
-10. [Developer Guide: Modifying and Extending Mathématiques](../../developer-guide/README.md)<br>
-
-
-</details>
-
-
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.9-c++17</h1>
 
 <details>
 
 <summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>
 
-# [7. Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br>
-7.1. [Usage Guide Notation](../notation/README.md)<br>
-7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>
-7.3. [Container Types (Vector, Matrix & MultiArray)](../multiarrays/README.md)<br>
-7.4. [Operators](../operators/README.md)<br>
-7.5. [Functions](../functions/README.md)<br>
-7.6. [Linear Algebra](../linear-algebra/README.md)<br>
-7.7. [Indexing, Masks, and Sorting](../indexing-sorting/README.md)<br>
-7.8. [Ranges and Grids](../ranges-grids/README.md)<br>
-7.9. [Calculus](../calculus/README.md)<br>
-7.10. _Vector Calculus_ <br>
-7.11. [MultiArray Calculus](../tensor-calculus/README.md)<br>
-7.12. [Display of Results](../display/README.md)<br>
-7.13. [FILE I/O](../file-io/README.md)<br>
-7.14. [Debug Modes](../debug/README.md)<br>
+# [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br>
+1. [Usage Guide Notation](../notation/README.md)<br>
+2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>
+3. [Container Types (Vector, Matrix & MultiArray)](../multiarrays/README.md)<br>
+4. [Operators](../operators/README.md)<br>
+5. [Functions](../functions/README.md)<br>
+6. [Linear Algebra](../linear-algebra/README.md)<br>
+7. [Indexing, Masks, and Sorting](../indexing-sorting/README.md)<br>
+8. [Ranges and Grids](../ranges-grids/README.md)<br>
+9. [Calculus](../calculus/README.md)<br>
+10. _Vector Calculus_ <br>
+11. [MultiArray Calculus](../tensor-calculus/README.md)<br>
+12. [Display of Results](../display/README.md)<br>
+13. [FILE I/O](../file-io/README.md)<br>
+14. [Debug Modes](../debug/README.md)<br>
 
 
 </details>
 
 
 
-# 7.10. Vector Calculus
+# 10. Vector Calculus
 
 
 
@@ -63,24 +42,26 @@
 
 ☀ d1 ➜ mathq::Nabla (Ndims=1, Nwindow=7, periodic=0);
 ☀ u ➜ mathq::TargetSet<std::complex<double>> (Ndims=1, rank=0);
-Domain<double> domX(-1, 1, 5, "x");
-☀ domX ➜ mathq::Domain<double> (a=-1, b=1, N=5, name="x", gridState=deflated);
+Coordinate<double> x_coord("x");
+☀ x_coord ➜ mathq::Coordinate<double> (name="x");
+Interval<double> domX(-1, 1, 5, "x");
+☀ domX ➜ mathq::Interval<double> (a=-1, b=1, N=5, name="x", gridState=deflated);
 auto gridX0 = domX.getGrid();
-☀ domX ➜ mathq::Domain<double> (a=-1, b=1, N=5, name="x", gridState=inflated);
+☀ domX ➜ mathq::Interval<double> (a=-1, b=1, N=5, name="x", gridState=inflated);
 ☀ gridX0 ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
 ☀ g ➜ Vector<double,NE=5> {-1, -0.5, 0, 0.5, 1};
 ☀ gridX ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
-☀ domY ➜ mathq::Domain<double> (a=0, b=3, N=4, name="y", gridState=deflated);
+☀ domY ➜ mathq::Interval<double> (a=0, b=3, N=4, name="y", gridState=deflated);
 ☀ { 1,2 } ➜ {1, 2};
 ☀ { 1,2 } ➜ std::list<int> {1, 2};
-MultiDomain<double> domXY({ domX, domY }, "Cartesian-2D");
-☀ domXY ➜ mathq::MultiDomain<double> (Ndims=2, name="Cartesian-2D", domains={(a=-1, b=1, N=5, name="x", gridState=inflated), (a=0, b=3, N=4, name="y", gridState=deflated)};
-☀ domXY[0] ➜ mathq::Domain<double> (a=-1, b=1, N=5, name="x", gridState=inflated);
-☀ domXY["x"] ➜ mathq::Domain<double> (a=-1, b=1, N=5, name="x", gridState=inflated);
-MultiDomain<double> domXY2({ Domain<double>(-10, 10, 5), Domain<double>(0, 7, 4) });
-☀ domXY2 ➜ mathq::MultiDomain<double> (Ndims=2, name="unnamed", domains={(a=-10, b=10, N=5, name="unnamed", gridState=deflated), (a=0, b=7, N=4, name="unnamed", gridState=deflated)};
-☀ domXY3 ➜ mathq::MultiDomain<double> (Ndims=2, name="unnamed", domains={(a=-10, b=10, N=5, name="unnamed", gridState=deflated), (a=0, b=7, N=4, name="unnamed", gridState=deflated)};
-☀ rz ➜ mathq::Domain<double> (a=10, b=11, N=2, name="unnamed", gridState=deflated);
+Region<double> domXY({ domX, domY }, "Cartesian-2D");
+☀ domXY ➜ mathq::Region<double> ( Ndims=2, name="Cartesian-2D", intervals={(a=-1, b=1, N=5, name="x", gridState=inflated), (a=0, b=3, N=4, name="y", gridState=deflated)} );
+☀ domXY[0] ➜ mathq::Interval<double> (a=-1, b=1, N=5, name="x", gridState=inflated);
+☀ domXY["x"] ➜ mathq::Interval<double> (a=-1, b=1, N=5, name="x", gridState=inflated);
+Region<double> domXY2({ Interval<double>(-10, 10, 5), Interval<double>(0, 7, 4) });
+☀ domXY2 ➜ mathq::Region<double> ( Ndims=2, name="unnamed", intervals={(a=-10, b=10, N=5, name="unnamed", gridState=deflated), (a=0, b=7, N=4, name="unnamed", gridState=deflated)} );
+☀ domXY3 ➜ mathq::Region<double> ( Ndims=2, name="unnamed", intervals={(a=-10, b=10, N=5, name="unnamed", gridState=deflated), (a=0, b=7, N=4, name="unnamed", gridState=deflated)} );
+☀ rz ➜ mathq::Interval<double> (a=10, b=11, N=2, name="unnamed", gridState=deflated);
 ☀ divX ➜ Vector<double> {1, 1, 1, 1, 1};
 ☀ gridX2 ➜ Vector<double> {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 ☀ gradX2 ➜ Vector<double> {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
@@ -96,9 +77,9 @@ MultiDomain<double> domXY2({ Domain<double>(-10, 10, 5), Domain<double>(0, 7, 4)
 ☀ func4(-3) ➜ double 0.0497871;
 ☀ fgrid(func4, gridX) ➜ Vector<double> {0.367879, 0.606531, 1, 1.64872, 2.71828};
 
-☀ domY ➜ mathq::Domain<double> (a=0, b=3, N=4, name="y", gridState=deflated);
+☀ domY ➜ mathq::Interval<double> (a=0, b=3, N=4, name="y", gridState=deflated);
 ☀ grid(domY) ➜ Vector<double> {0, 1, 2, 3};
-☀ rz ➜ mathq::Domain<double> (a=10, b=11, N=2, name="unnamed", gridState=deflated);
+☀ rz ➜ mathq::Interval<double> (a=10, b=11, N=2, name="unnamed", gridState=deflated);
 ☀ grid(rz) ➜ Vector<double> {10, 11};
 ☀ gridXY(0) ➜ Matrix<double> { {-1, -0.5, 0, 0.5, 1}, {-1, -0.5, 0, 0.5, 1}, {-1, -0.5, 0, 0.5, 1}, {-1, -0.5, 0, 0.5, 1} };
 ☀ gridXY(1) ➜ Matrix<double> { {0, 0, 0, 0, 0}, {1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3} };

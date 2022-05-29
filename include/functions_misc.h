@@ -462,7 +462,7 @@ namespace mathq {
   // *          Functions that create vectors
   // *********************************************************
 
-  // The Domain generating function (with step given)
+  // The Interval generating function (with step given)
 
   template <class D>
   Vector<D>& range(D start, D end, D step) {
@@ -486,7 +486,7 @@ namespace mathq {
   }
 
 
-  // The Domain generating function (step by +/-1)
+  // The Interval generating function (step by +/-1)
 
   template <class D>
   Vector<D>& range(D start, D end) {
@@ -566,16 +566,40 @@ namespace mathq {
 
 // Vector<D>& linspace(D start, D end, size_type N)
 
-
-
-
-  // ***************************************************************************
-  // * Domain
+// ***************************************************************************
+  // * Coordinate
   // ***************************************************************************
 
   template <class D, typename X>
   class
-    Domain {
+    Coordinate {
+  public:
+    const std::string name;
+
+    Coordinate(std::string name) :
+      name(name) {
+    }
+
+    ~Coordinate() {
+    }
+
+    friend std::ostream& operator<<(std::ostream& stream, const Coordinate<D, X>& x) {
+      using namespace display;
+      dispval_strm(stream, x);
+      return stream;
+    }
+  };
+
+
+
+
+  // ***************************************************************************
+  // * Interval
+  // ***************************************************************************
+
+  template <class D, typename X>
+  class
+    Interval {
   public:
     const D a;
     const D b;
@@ -584,7 +608,7 @@ namespace mathq {
     const std::string name;
     Vector<D> grid;
 
-    Domain(const D a, const D b, const std::size_t N, std::string name = "unnamed") :
+    Interval(const D a, const D b, const std::size_t N, std::string name = "unnamed") :
       a(a),
       b(b),
       N(N),
@@ -592,7 +616,7 @@ namespace mathq {
       name(name) {
     }
 
-    ~Domain() {
+    ~Interval() {
     }
 
     void deflateGrid() {
@@ -624,7 +648,7 @@ namespace mathq {
       return grid;
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const Domain<D, X>& x) {
+    friend std::ostream& operator<<(std::ostream& stream, const Interval<D, X>& x) {
       using namespace display;
       dispval_strm(stream, x);
       return stream;
@@ -634,55 +658,54 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // * MultiDomain
-
+  // * Coordinates
   // ***************************************************************************
 
   template <class D, typename X>
   class
-    MultiDomain {
+    Coordinates {
   public:
-    const std::vector<Domain<D>> domains;
+    const std::vector<Interval<D>> domains;
     const size_t Ndims;
     const std::string name;
     std::vector<std::string> names;
 
-    MultiDomain(const std::initializer_list<Domain<D>>& list, std::string name = "unnamed") :
-      domains(std::vector<Domain<D>>{ list }),
+    Coordinates(const std::initializer_list<Interval<D>>& list, std::string name = "unnamed") :
+      domains(std::vector<Interval<D>>{ list }),
       Ndims(list.size()),
       name(name),
-      names(MultiDomain::makeNames(domains)) {
+      names(Coordinates::makeNames(domains)) {
     }
-    MultiDomain(const std::vector<Domain<D>>& v, std::string name = "unnamed") :
+    Coordinates(const std::vector<Interval<D>>& v, std::string name = "unnamed") :
       domains(v),
       Ndims(v.size()),
       name(name),
-      names(MultiDomain::makeNames(domains)) {
+      names(Coordinates::makeNames(domains)) {
     }
-    MultiDomain(const MultiDomain<D>& x, std::string name = "unnamed") :
+    Coordinates(const Coordinates<D>& x, std::string name = "unnamed") :
       domains(x.domains),
       Ndims(x.Ndims),
       name(name),
-      names(MultiDomain::makeNames(domains)) {
+      names(Coordinates::makeNames(domains)) {
     }
 
-    ~MultiDomain() {
+    ~Coordinates() {
     }
 
     size_t size() const {
       return Ndims;
     }
 
-    const Domain<D>& operator[](const std::string name) {
+    const Interval<D>& operator[](const std::string name) {
       return this->getDomainFromName(name);
     }
 
-    const Domain<D>& operator[](const size_t c) {
+    const Interval<D>& operator[](const size_t c) {
       return domains[c];
     }
 
 
-    const Domain<D>& getDomainFromName(const std::string name) {
+    const Interval<D>& getDomainFromName(const std::string name) {
       // TODO: in debug mode, check to ensure one and only one found
       for (size_t c = 0; c < domains.size(); c++) {
         if (domains[c].name == name) {
@@ -693,7 +716,80 @@ namespace mathq {
       return domains[domains.size()];
     }
 
-    static std::vector<std::string>& makeNames(const std::vector<Domain<D>> domains) {
+    static std::vector<std::string>& makeNames(const std::vector<Interval<D>> domains) {
+      std::vector<std::string>* names = new std::vector<std::string>(domains.size());
+      for (size_t c = 0; c < domains.size(); c++) {
+        (*names)[c] = domains[c].name;
+      }
+      return *names;
+    }
+
+  };
+
+
+
+
+
+  // ***************************************************************************
+  // * Region
+  // ***************************************************************************
+
+  template <class D, typename X>
+  class
+    Region {
+  public:
+    const std::vector<Interval<D>> domains;
+    const size_t Ndims;
+    const std::string name;
+    std::vector<std::string> names;
+
+    Region(const std::initializer_list<Interval<D>>& list, std::string name = "unnamed") :
+      domains(std::vector<Interval<D>>{ list }),
+      Ndims(list.size()),
+      name(name),
+      names(Region::makeNames(domains)) {
+    }
+    Region(const std::vector<Interval<D>>& v, std::string name = "unnamed") :
+      domains(v),
+      Ndims(v.size()),
+      name(name),
+      names(Region::makeNames(domains)) {
+    }
+    Region(const Region<D>& x, std::string name = "unnamed") :
+      domains(x.domains),
+      Ndims(x.Ndims),
+      name(name),
+      names(Region::makeNames(domains)) {
+    }
+
+    ~Region() {
+    }
+
+    size_t size() const {
+      return Ndims;
+    }
+
+    const Interval<D>& operator[](const std::string name) {
+      return this->getDomainFromName(name);
+    }
+
+    const Interval<D>& operator[](const size_t c) {
+      return domains[c];
+    }
+
+
+    const Interval<D>& getDomainFromName(const std::string name) {
+      // TODO: in debug mode, check to ensure one and only one found
+      for (size_t c = 0; c < domains.size(); c++) {
+        if (domains[c].name == name) {
+          return domains[c];
+        }
+      }
+      // this is intended to produce a run-time error because the name was not found
+      return domains[domains.size()];
+    }
+
+    static std::vector<std::string>& makeNames(const std::vector<Interval<D>> domains) {
       std::vector<std::string>* names = new std::vector<std::string>(domains.size());
       for (size_t c = 0; c < domains.size(); c++) {
         (*names)[c] = domains[c].name;
@@ -728,7 +824,7 @@ namespace mathq {
   // complex and Quaternions are not ordered sets so they can't be used in a range
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grid(const Domain<D>& rang) {
+  auto grid(const Interval<D>& rang) {
     return linspace(rang.a, rang.b, rang.N);
   }
 
@@ -736,7 +832,7 @@ namespace mathq {
 
   // uses same convetnion as meshgrid form matlab
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grid(const Domain<D>& r1, const Domain<D>& r2) {
+  auto grid(const Interval<D>& r1, const Interval<D>& r2) {
     auto X = Matrix<D>(r2.N, r1.N);
     auto Y = Matrix<D>(r2.N, r1.N);
     auto* G = new Vector<Matrix<D>, 2>();
@@ -779,7 +875,7 @@ namespace mathq {
   }
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grid(const Domain<D>& r1, const Domain<D>& r2, const Domain<D>& r3) {
+  auto grid(const Interval<D>& r1, const Interval<D>& r2, const Interval<D>& r3) {
     auto dims = Dimensions(r2.N, r1.N, r3.N);
     auto X = MultiArray<D, 3>(dims);
     auto Y = MultiArray<D, 3>(dims);
@@ -953,7 +1049,7 @@ namespace mathq {
   //
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grad(const Vector<D>& gridfunc, const Domain<D>& range, const int Dpts = 7, const bool periodic = false) {
+  auto grad(const Vector<D>& gridfunc, const Interval<D>& range, const int Dpts = 7, const bool periodic = false) {
     const size_type N = gridfunc.size();
     Vector<D>* df = new Vector<D>(N);
     *df = gridfunc;
@@ -962,7 +1058,7 @@ namespace mathq {
   }
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto operator&(const Nabla_old<void> i, std::pair<Vector<D>, Domain<D>> funcANDrange) {
+  auto operator&(const Nabla_old<void> i, std::pair<Vector<D>, Interval<D>> funcANDrange) {
     return grad(funcANDrange.first, funcANDrange.second);
   }
 
@@ -982,7 +1078,7 @@ namespace mathq {
   // }
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grad(const Matrix<D>& gridfunc, const Domain<D>& domX, const Domain<D>& domY, const int Dpts = 7, const bool periodic = false) {
+  auto grad(const Matrix<D>& gridfunc, const Interval<D>& domX, const Interval<D>& domY, const int Dpts = 7, const bool periodic = false) {
 
     // TODO: rewrite with slices
 
@@ -1024,7 +1120,7 @@ namespace mathq {
   }
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto operator&(const Nabla_old<void> i, std::tuple<Matrix<D>, Domain<D>, Domain<D>> funcANDrange) {
+  auto operator&(const Nabla_old<void> i, std::tuple<Matrix<D>, Interval<D>, Interval<D>> funcANDrange) {
     return grad(std::get<0>(funcANDrange), std::get<1>(funcANDrange), std::get<2>(funcANDrange));
   }
 
