@@ -3,7 +3,7 @@
   "name": "arithmetic",
   "skip-readme": false,
   "title": "Arithmetic",
-  "version": "v0.40.9-c++17",
+  "version": "v0.40.10-c++17",
   "prefix": "4.1.",
   "src": "arithmetic/template.md",
   "dest": "arithmetic/README.md",
@@ -13,7 +13,7 @@
     "name": "operators",
     "skip-readme": true,
     "title": "Operators",
-    "version": "v0.40.9-c++17",
+    "version": "v0.40.10-c++17",
     "prefix": "4.",
     "src": "operators/template.md",
     "dest": "operators/README.md",
@@ -22,15 +22,15 @@
       "title": "Usage Guide: Syntax, Data Types, Functions, etc",
       "prefix": "",
       "level": 1,
-      "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.9-c++17</h1>"
+      "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.10-c++17</h1>"
     },
     "prev": "multiarrays",
     "next": "functions",
-    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.9-c++17</h1>\n\n<details>\n\n<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>\n\n# [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br>\n1. [Usage Guide Notation](../notation/README.md)<br>\n2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>\n3. [Container Types (Vector, Matrix & MultiArray)](../multiarrays/README.md)<br>\n4. _Operators_ <br>\n5. [Functions](../functions/README.md)<br>\n6. [Linear Algebra](../linear-algebra/README.md)<br>\n7. [Indexing, Masks, and Sorting](../indexing-sorting/README.md)<br>\n8. [Ranges and Grids](../ranges-grids/README.md)<br>\n9. [Calculus](../calculus/README.md)<br>\n10. [Vector Calculus](../vector-calculus/README.md)<br>\n11. [MultiArray Calculus](../tensor-calculus/README.md)<br>\n12. [Display of Results](../display/README.md)<br>\n13. [FILE I/O](../file-io/README.md)<br>\n14. [Debug Modes](../debug/README.md)<br>\n\n\n</details>\n\n",
+    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.10-c++17</h1>\n\n<details>\n\n<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>\n\n# [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br>\n1. [Usage Guide Notation](../notation/README.md)<br>\n2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>\n3. [Container Types (Vector, Matrix & MultiArray)](../multiarrays/README.md)<br>\n4. _Operators_ <br>\n5. [Functions](../functions/README.md)<br>\n6. [Linear Algebra](../linear-algebra/README.md)<br>\n7. [Indexing, Masks, and Sorting](../indexing-sorting/README.md)<br>\n8. [Ranges and Grids](../ranges-grids/README.md)<br>\n9. [Calculus](../calculus/README.md)<br>\n10. [Vector Calculus](../vector-calculus/README.md)<br>\n11. [MultiArray Calculus](../tensor-calculus/README.md)<br>\n12. [Display of Results](../display/README.md)<br>\n13. [FILE I/O](../file-io/README.md)<br>\n14. [Debug Modes](../debug/README.md)<br>\n\n\n</details>\n\n",
     "footer": "\n\n| \u21e6 <br />[Container Types (Vector, Matrix & MultiArray)](../multiarrays/README.md)  | [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br />Operators<br /><img width=1000/> | \u21e8 <br />[Functions](../functions/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
   },
   "prev": null,
   "next": "integer-division",
-  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.9-c++17</h1>\n\n<details>\n\n<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>\n\n# [Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>\n1. [Usage Guide Notation](../../notation/README.md)<br>\n2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../scalars/README.md)<br>\n3. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>\n4. _Operators_ <br>\n5. [Functions](../../functions/README.md)<br>\n6. [Linear Algebra](../../linear-algebra/README.md)<br>\n7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>\n8. [Ranges and Grids](../../ranges-grids/README.md)<br>\n9. [Calculus](../../calculus/README.md)<br>\n10. [Vector Calculus](../../vector-calculus/README.md)<br>\n11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>\n12. [Display of Results](../../display/README.md)<br>\n13. [FILE I/O](../../file-io/README.md)<br>\n14. [Debug Modes](../../debug/README.md)<br>\n\n\n</details>\n\n\n\n<details>\n\n<summary>Operators</summary>\n\n# [4. Operators](../README.md)<br>\n\n4.1. _Arithmetic_ <br>\n4.2. [Integer Division](../integer-division/README.md)<br>\n4.3. [Logic](../logic/README.md)<br>\n4.4. [Relational](../relational/README.md)<br>\n\n\n</details>\n\n",
+  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.10-c++17</h1>\n\n<details>\n\n<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>\n\n# [Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>\n1. [Usage Guide Notation](../../notation/README.md)<br>\n2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../scalars/README.md)<br>\n3. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>\n4. _Operators_ <br>\n5. [Functions](../../functions/README.md)<br>\n6. [Linear Algebra](../../linear-algebra/README.md)<br>\n7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>\n8. [Ranges and Grids](../../ranges-grids/README.md)<br>\n9. [Calculus](../../calculus/README.md)<br>\n10. [Vector Calculus](../../vector-calculus/README.md)<br>\n11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>\n12. [Display of Results](../../display/README.md)<br>\n13. [FILE I/O](../../file-io/README.md)<br>\n14. [Debug Modes](../../debug/README.md)<br>\n\n\n</details>\n\n\n\n<details>\n\n<summary>Operators</summary>\n\n# [4. Operators](../README.md)<br>\n\n4.1. _Arithmetic_ <br>\n4.2. [Integer Division](../integer-division/README.md)<br>\n4.3. [Logic](../logic/README.md)<br>\n4.4. [Relational](../relational/README.md)<br>\n\n\n</details>\n\n",
   "footer": "\n\n| \u21e6 <br />  | [Operators](../README.md)<br />Arithmetic<br /><img width=1000/> | \u21e8 <br />[Integer Division](../integer-division/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
 }

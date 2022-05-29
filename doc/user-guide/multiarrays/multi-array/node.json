@@ -3,7 +3,7 @@
   "name": "multi-array",
   "skip-readme": false,
   "title": "MultiArray",
-  "version": "v0.40.9-c++17",
+  "version": "v0.40.10-c++17",
   "prefix": "3.3.",
   "src": "multi-array/template.md",
   "dest": "multi-array/README.md",
@@ -13,7 +13,7 @@
     "name": "multiarrays",
     "skip-readme": true,
     "title": "Container Types (Vector, Matrix & MultiArray)",
-    "version": "v0.40.9-c++17",
+    "version": "v0.40.10-c++17",
     "prefix": "3.",
     "src": "multiarrays/template.md",
     "dest": "multiarrays/README.md",
@@ -22,15 +22,15 @@
       "title": "Usage Guide: Syntax, Data Types, Functions, etc",
       "prefix": "",
       "level": 1,
-      "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.9-c++17</h1>"
+      "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.10-c++17</h1>"
     },
     "prev": "scalars",
     "next": "operators",
-    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.9-c++17</h1>\n\n<details>\n\n<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>\n\n# [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br>\n1. [Usage Guide Notation](../notation/README.md)<br>\n2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>\n3. _Container Types (Vector, Matrix & MultiArray)_ <br>\n4. [Operators](../operators/README.md)<br>\n5. [Functions](../functions/README.md)<br>\n6. [Linear Algebra](../linear-algebra/README.md)<br>\n7. [Indexing, Masks, and Sorting](../indexing-sorting/README.md)<br>\n8. [Ranges and Grids](../ranges-grids/README.md)<br>\n9. [Calculus](../calculus/README.md)<br>\n10. [Vector Calculus](../vector-calculus/README.md)<br>\n11. [MultiArray Calculus](../tensor-calculus/README.md)<br>\n12. [Display of Results](../display/README.md)<br>\n13. [FILE I/O](../file-io/README.md)<br>\n14. [Debug Modes](../debug/README.md)<br>\n\n\n</details>\n\n",
+    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.10-c++17</h1>\n\n<details>\n\n<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>\n\n# [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br>\n1. [Usage Guide Notation](../notation/README.md)<br>\n2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>\n3. _Container Types (Vector, Matrix & MultiArray)_ <br>\n4. [Operators](../operators/README.md)<br>\n5. [Functions](../functions/README.md)<br>\n6. [Linear Algebra](../linear-algebra/README.md)<br>\n7. [Indexing, Masks, and Sorting](../indexing-sorting/README.md)<br>\n8. [Ranges and Grids](../ranges-grids/README.md)<br>\n9. [Calculus](../calculus/README.md)<br>\n10. [Vector Calculus](../vector-calculus/README.md)<br>\n11. [MultiArray Calculus](../tensor-calculus/README.md)<br>\n12. [Display of Results](../display/README.md)<br>\n13. [FILE I/O](../file-io/README.md)<br>\n14. [Debug Modes](../debug/README.md)<br>\n\n\n</details>\n\n",
     "footer": "\n\n| \u21e6 <br />[Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)  | [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br />Container Types (Vector, Matrix & MultiArray)<br /><img width=1000/> | \u21e8 <br />[Operators](../operators/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
   },
   "prev": "matrix",
   "next": null,
-  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.9-c++17</h1>\n\n<details>\n\n<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>\n\n# [Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>\n1. [Usage Guide Notation](../../notation/README.md)<br>\n2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../scalars/README.md)<br>\n3. _Container Types (Vector, Matrix & MultiArray)_ <br>\n4. [Operators](../../operators/README.md)<br>\n5. [Functions](../../functions/README.md)<br>\n6. [Linear Algebra](../../linear-algebra/README.md)<br>\n7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>\n8. [Ranges and Grids](../../ranges-grids/README.md)<br>\n9. [Calculus](../../calculus/README.md)<br>\n10. [Vector Calculus](../../vector-calculus/README.md)<br>\n11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>\n12. [Display of Results](../../display/README.md)<br>\n13. [FILE I/O](../../file-io/README.md)<br>\n14. [Debug Modes](../../debug/README.md)<br>\n\n\n</details>\n\n\n\n<details>\n\n<summary>Container Types (Vector, Matrix & MultiArray)</summary>\n\n# [3. Container Types (Vector, Matrix & MultiArray)](../README.md)<br>\n3.1. [Vector](../vector/README.md)<br>\n3.2. [Matrix](../matrix/README.md)<br>\n3.3. _MultiArray_ <br>\n\n\n</details>\n\n",
+  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.10-c++17</h1>\n\n<details>\n\n<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>\n\n# [Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>\n1. [Usage Guide Notation](../../notation/README.md)<br>\n2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../scalars/README.md)<br>\n3. _Container Types (Vector, Matrix & MultiArray)_ <br>\n4. [Operators](../../operators/README.md)<br>\n5. [Functions](../../functions/README.md)<br>\n6. [Linear Algebra](../../linear-algebra/README.md)<br>\n7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>\n8. [Ranges and Grids](../../ranges-grids/README.md)<br>\n9. [Calculus](../../calculus/README.md)<br>\n10. [Vector Calculus](../../vector-calculus/README.md)<br>\n11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>\n12. [Display of Results](../../display/README.md)<br>\n13. [FILE I/O](../../file-io/README.md)<br>\n14. [Debug Modes](../../debug/README.md)<br>\n\n\n</details>\n\n\n\n<details>\n\n<summary>Container Types (Vector, Matrix & MultiArray)</summary>\n\n# [3. Container Types (Vector, Matrix & MultiArray)](../README.md)<br>\n3.1. [Vector](../vector/README.md)<br>\n3.2. [Matrix](../matrix/README.md)<br>\n3.3. _MultiArray_ <br>\n\n\n</details>\n\n",
   "footer": "\n\n| \u21e6 <br />[Matrix](../matrix/README.md)  | [Container Types (Vector, Matrix & MultiArray)](../README.md)<br />MultiArray<br /><img width=1000/> | \u21e8 <br />   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
 }

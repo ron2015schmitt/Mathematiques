@@ -599,21 +599,20 @@ namespace mathq {
 
   template <class D, typename X>
   class
-    Interval {
+    Interval : public Coordinate<D,X> {
   public:
     const D a;
     const D b;
     const std::size_t N;
     const D step;
-    const std::string name;
     Vector<D> grid;
 
-    Interval(const D a, const D b, const std::size_t N, std::string name = "unnamed") :
+    Interval(std::string name, const D a, const D b, const std::size_t N) :
+      Coordinate<D,X>(name),
       a(a),
       b(b),
       N(N),
-      step((b-a)/static_cast<D>(N-1)),
-      name(name) {
+      step((b-a)/static_cast<D>(N-1)) {
     }
 
     ~Interval() {

@@ -58,103 +58,105 @@ int main() {
   TRDISP(x_coord);
 
 
-  ECHO_CODE(Interval<double> domX(-1, 1, 5, "x"));
-  TRDISP(domX);
+  ECHO_CODE(Interval<double> x_interval("x", -1, 1, 5));
+  TRDISP(x_interval);
 
-  ECHO_CODE(auto gridX0 = domX.getGrid());
-  TRDISP(domX);
-  TRDISP(gridX0);
+  // ECHO_CODE(auto gridX0 = x_interval.getGrid());
+  // TRDISP(x_interval);
+  // TRDISP(gridX0);
 
-  Vector<double, 5> g;
-  for (size_type i = 0; i<5; i++) {
-    g(i) = domX.get(i);
-  }
-  TRDISP(g);
+  // Vector<double, 5> g;
+  // for (size_type i = 0; i<5; i++) {
+  //   g(i) = x_interval.get(i);
+  // }
+  // TRDISP(g);
 
-  auto gridX = grid(domX);
-  TRDISP(gridX);
+  // auto gridX = grid(x_interval);
+  // TRDISP(gridX);
 
-  Interval<double> domY(0, 3, 4, "y");
-  TRDISP(domY);
-
-
-  DISP({ 1,2 });
-  TRDISP({ 1,2 });
-  ECHO_CODE(Region<double> domXY({ domX, domY }, "Cartesian-2D"));
-  TRDISP(domXY);
-  TRDISP(domXY[0]);
-  TRDISP(domXY["x"]);
-
-  ECHO_CODE(Region<double> domXY2({ Interval<double>(-10, 10, 5), Interval<double>(0, 7, 4) }));
-  TRDISP(domXY2);
-  Region<double> domXY3(domXY2);
-  TRDISP(domXY3);
-  // Region<double> domXY4(domXY2.domains);
-  // TRDISP(domXY4);
+  // Interval<double> domY(0, 3, 4, "y");
+  // TRDISP(domY);
 
 
-  Interval<double> rz(10, 11, 2);
-  TRDISP(rz);
+  // DISP({ 1,2 });
+  // TRDISP({ 1,2 });
+  // ECHO_CODE(Region<double> domXY({ x_interval, domY }, "Cartesian-2D"));
+  // TRDISP(domXY);
+  // TRDISP(domXY[0]);
+  // TRDISP(domXY["x"]);
+
+  // ECHO_CODE(Region<double> domXY2({ Interval<double>(-10, 10, 5), Interval<double>(0, 7, 4) }));
+  // TRDISP(domXY2);
+  // Region<double> domXY3(domXY2);
+  // TRDISP(domXY3);
+  // // Region<double> domXY4(domXY2.domains);
+  // // TRDISP(domXY4);
 
 
-  auto divX = grad(grid(domX), domX);
-  TRDISP(divX);
-  Interval<double> rx2(-10, 10, 21);
-  auto gridX2 = grid(rx2);
-  TRDISP(gridX2);
-  auto gradX2 = grad(gridX2, rx2);
-  TRDISP(gradX2);
-  auto gradX2_2 = nabla_old & pair(gridX2, rx2);
-  TRDISP(gradX2_2);
-
-  TRDISP(sqr(gridX + 2));
-  std::function<double(double)> func = [](double d) {  return mathq::sqr(d+2); };
-  TRDISP(func(-3));
-  TRDISP(fgrid(func, gridX));
-  double (*func2)(double) = &std::exp;
-  TRDISP(func2(1));
-  TRDISP(fgrid(func2, gridX));  // doesnt work
-  TRDISP(static_cast<double (*)(double)>(&std::exp)(1));
-  std::function<double(double)> func3 = static_cast<double (*)(double)>(&std::exp);
-  TRDISP(func3(1));
-  TRDISP(fgrid(func3, gridX));
-  std::function<double(double)> func4 = [](double d) {  return std::exp(d); };
-  TRDISP(func4(-3));
-  TRDISP(fgrid(func4, gridX));
-  CR();
-  TRDISP(domY);
-  TRDISP(grid(domY));
-  TRDISP(rz);
-  TRDISP(grid(rz));
-  auto gridXY = grid(domX, domY);
-  TRDISP(gridXY(0));
-  TRDISP(gridXY(1));
+  // Interval<double> rz(10, 11, 2);
+  // TRDISP(rz);
 
 
-  std::function<double(double, double)> fradius = [](double x, double y) {  return std::sqrt(x*x + y*y); };
-  auto R = fgrid(fradius, gridXY);
-  TRDISP(R);
-  auto R2 = fgrid(fradius2, gridXY);
-  TRDISP(R2);
+  // auto divX = grad(grid(x_interval), x_interval);
+  // TRDISP(divX);
+  // Interval<double> rx2(-10, 10, 21);
+  // auto gridX2 = grid(rx2);
+  // TRDISP(gridX2);
+  // auto gradX2 = grad(gridX2, rx2);
+  // TRDISP(gradX2);
+  // auto gradX2_2 = nabla_old & pair(gridX2, rx2);
+  // TRDISP(gradX2_2);
 
-  auto gradXY = grad(R, domX, domY);
-  TRDISP(gradXY(0));
-  TRDISP(gradXY(1));
-  gradXY = nabla_old & std::make_tuple(R, domX, domY);
-  TRDISP(gradXY(0));
-  TRDISP(gradXY(1));
+  // TRDISP(sqr(gridX + 2));
+  // std::function<double(double)> func = [](double d) {  return mathq::sqr(d+2); };
+  // TRDISP(func(-3));
+  // TRDISP(fgrid(func, gridX));
+  // double (*func2)(double) = &std::exp;
+  // TRDISP(func2(1));
+  // TRDISP(fgrid(func2, gridX));  // doesnt work
+  // TRDISP(static_cast<double (*)(double)>(&std::exp)(1));
+  // std::function<double(double)> func3 = static_cast<double (*)(double)>(&std::exp);
+  // TRDISP(func3(1));
+  // TRDISP(fgrid(func3, gridX));
+  // std::function<double(double)> func4 = [](double d) {  return std::exp(d); };
+  // TRDISP(func4(-3));
+  // TRDISP(fgrid(func4, gridX));
+  // CR();
+  // TRDISP(domY);
+  // TRDISP(grid(domY));
+  // TRDISP(rz);
+  // TRDISP(grid(rz));
+  // auto gridXY = grid(x_interval, domY);
+  // TRDISP(gridXY(0));
+  // TRDISP(gridXY(1));
 
 
-  CR();
-  auto gridXYZ = grid(domX, domY, rz);
-  TRDISP(gridXYZ(0));
-  TRDISP(gridXYZ(1));
-  TRDISP(gridXYZ(2));
-  std::function<double(double, double, double)> fradius3d = [](double x, double y, double z) {  return std::sqrt(x*x + y*y + z*z); };
-  auto R3D = fgrid(fradius3d, gridXYZ);
-  TRDISP(R3D);
-  auto R3D_2 = fgrid(fradius3d_2, gridXYZ);
-  TRDISP(R3D_2);
+  // std::function<double(double, double)> fradius = [](double x, double y) {  return std::sqrt(x*x + y*y); };
+  // auto R = fgrid(fradius, gridXY);
+  // TRDISP(R);
+  // auto R2 = fgrid(fradius2, gridXY);
+  // TRDISP(R2);
+
+  // auto gradXY = grad(R, x_interval, domY);
+  // TRDISP(gradXY(0));
+  // TRDISP(gradXY(1));
+  // gradXY = nabla_old & std::make_tuple(R, x_interval, domY);
+  // TRDISP(gradXY(0));
+  // TRDISP(gradXY(1));
+
+
+  // CR();
+  // auto gridXYZ = grid(x_interval, domY, rz);
+  // TRDISP(gridXYZ(0));
+  // TRDISP(gridXYZ(1));
+  // TRDISP(gridXYZ(2));
+  // std::function<double(double, double, double)> fradius3d = [](double x, double y, double z) {  return std::sqrt(x*x + y*y + z*z); };
+  // auto R3D = fgrid(fradius3d, gridXYZ);
+  // TRDISP(R3D);
+  // auto R3D_2 = fgrid(fradius3d_2, gridXYZ);
+  // TRDISP(R3D_2);
+
+
   GMD_CODE_END();
 
 

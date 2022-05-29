@@ -1551,7 +1551,8 @@ namespace display {
   inline void dispval_strm(std::ostream& stream, const mathq::Coordinate<T>& var) {
     stream << "(name=\"";
     dispval_strm(stream, var.name);
-    stream << "\")";
+    stream << "\"";
+    stream << ")";
   }
 
 
@@ -1559,15 +1560,16 @@ namespace display {
   // mathq::Interval
   template <typename T>
   inline void dispval_strm(std::ostream& stream, const mathq::Interval<T>& var) {
-    stream << "(a=";
+    stream << "(name=\"";
+    dispval_strm(stream, var.name);
+    stream << "\"";
+    stream << ", a=";
     dispval_strm(stream, var.a);
     stream << ", b=";
     dispval_strm(stream, var.b);
     stream << ", N=";
     dispval_strm(stream, var.N);
-    stream << ", name=\"";
-    dispval_strm(stream, var.name);
-    stream << "\", gridState=";
+    stream << ", gridState=";
     dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
     stream << ")";
   }
