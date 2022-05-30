@@ -1555,6 +1555,18 @@ namespace display {
     stream << ")";
   }
 
+  // mathq::Coordinates
+  template <typename T>
+  inline void dispval_strm(std::ostream& stream, const mathq::Coordinates<T>& var) {
+    stream << "(name=\"";
+    dispval_strm(stream, var.name);
+    stream << "\"";
+    stream << ", coordinates=";
+    dispval_strm(stream, var.coordinates);
+    stream << ")";
+  }
+
+
 
 
   // mathq::Interval
@@ -1574,16 +1586,6 @@ namespace display {
     stream << ")";
   }
 
-
-  // mathq::Coordinates
-  template <typename T>
-  inline void dispval_strm(std::ostream& stream, const mathq::Coordinates<T>& var) {
-    stream << "(Ndims=";
-    dispval_strm(stream, var.Ndims);
-    stream << ", name=\"";
-    dispval_strm(stream, var.name);
-    stream << ")";
-  }
 
 
 

@@ -1,24 +1,45 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.10-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.11-c++17</h1>
+
+<details>
+
+<summary>Documentation</summary>
+
+# [Documentation](../../../README.md)<br>
+1. [License](../../../license/README.md)<br>
+2. [About](../../../about/README.md)<br>
+3. [Status, Planned Work & Release Notes](../../../status-release/README.md)<br>
+4. [Description and Example Usage](../../../overview/README.md)<br>
+5. [Installation](../../../installation/README.md)<br>
+6. [Your First Mathématiques Project](../../../first-project/README.md)<br>
+7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
+8. [Benchmarks](../../../benchmarks/README.md)<br>
+9. [Tests](../../../test/README.md)<br>
+10. [Developer Guide: Modifying and Extending Mathématiques](../../../developer-guide/README.md)<br>
+
+
+</details>
+
+
 
 <details>
 
 <summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>
 
-# [Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
-1. [Usage Guide Notation](../../notation/README.md)<br>
-2. _Scalar Types (Real, Imaginary, Complex & Quaternion)_ <br>
-3. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>
-4. [Operators](../../operators/README.md)<br>
-5. [Functions](../../functions/README.md)<br>
-6. [Linear Algebra](../../linear-algebra/README.md)<br>
-7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>
-8. [Ranges and Grids](../../ranges-grids/README.md)<br>
-9. [Calculus](../../calculus/README.md)<br>
-10. [Vector Calculus](../../vector-calculus/README.md)<br>
-11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>
-12. [Display of Results](../../display/README.md)<br>
-13. [FILE I/O](../../file-io/README.md)<br>
-14. [Debug Modes](../../debug/README.md)<br>
+# [7. Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
+7.1. [Usage Guide Notation](../../notation/README.md)<br>
+7.2. _Scalar Types (Real, Imaginary, Complex & Quaternion)_ <br>
+7.3. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>
+7.4. [Operators](../../operators/README.md)<br>
+7.5. [Functions](../../functions/README.md)<br>
+7.6. [Linear Algebra](../../linear-algebra/README.md)<br>
+7.7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>
+7.8. [Ranges and Grids](../../ranges-grids/README.md)<br>
+7.9. [Calculus](../../calculus/README.md)<br>
+7.10. [Vector Calculus](../../vector-calculus/README.md)<br>
+7.11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>
+7.12. [Display of Results](../../display/README.md)<br>
+7.13. [FILE I/O](../../file-io/README.md)<br>
+7.14. [Debug Modes](../../debug/README.md)<br>
 
 
 </details>
@@ -29,18 +50,18 @@
 
 <summary>Scalar Types (Real, Imaginary, Complex & Quaternion)</summary>
 
-# [2. Scalar Types (Real, Imaginary, Complex & Quaternion)](../README.md)<br>
-2.1. [Reals](../real/README.md)<br>
-2.2. [Complex numbers](../complex/README.md)<br>
-2.3. [Imaginary numbers](../imaginary/README.md)<br>
-2.4. _Quaternions_ <br>
+# [7.2. Scalar Types (Real, Imaginary, Complex & Quaternion)](../README.md)<br>
+7.2.1. [Reals](../real/README.md)<br>
+7.2.2. [Complex numbers](../complex/README.md)<br>
+7.2.3. [Imaginary numbers](../imaginary/README.md)<br>
+7.2.4. _Quaternions_ <br>
 
 
 </details>
 
 
 
-# 2.4. Quaternions
+# 7.2.4. Quaternions
 
 
 

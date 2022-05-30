@@ -56,23 +56,39 @@ int main() {
 
   ECHO_CODE(Coordinate<double> x_coord("x"));
   TRDISP(x_coord);
+  ECHO_CODE(Coordinate<double> y_coord("y"));
+  TRDISP(y_coord);
+
+  ECHO_CODE(Coordinates<double> xy_coords("xy",{x_coord, y_coord}) );
+  TRDISP(xy_coords);
+
+  ECHO_CODE(Coordinates<double> xy_coords2("xy",{"x","y"}) );
+  TRDISP(xy_coords2);
+
 
 
   ECHO_CODE(Interval<double> x_interval("x", -1, 1, 5));
   TRDISP(x_interval);
 
-  // ECHO_CODE(auto gridX0 = x_interval.getGrid());
-  // TRDISP(x_interval);
-  // TRDISP(gridX0);
+  ECHO_CODE(Interval<double> y_interval("y", -1, 1, 5));
+  TRDISP(y_interval);
 
-  // Vector<double, 5> g;
-  // for (size_type i = 0; i<5; i++) {
-  //   g(i) = x_interval.get(i);
-  // }
-  // TRDISP(g);
 
-  // auto gridX = grid(x_interval);
-  // TRDISP(gridX);
+  ECHO_CODE(auto gridX0 = x_interval.getGrid());
+  TRDISP(x_interval);
+  TRDISP(gridX0);
+
+  Vector<double, 5> g;
+  for (size_type i = 0; i<5; i++) {
+    g(i) = x_interval.get(i);
+  }
+  TRDISP(g);
+
+  auto gridX = grid(x_interval);
+  TRDISP(gridX);
+
+
+
 
   // Interval<double> domY(0, 3, 4, "y");
   // TRDISP(domY);
