@@ -70,7 +70,7 @@ int main() {
   ECHO_CODE(Interval<double> x_interval("x", -1, 1, 5));
   TRDISP(x_interval);
 
-  ECHO_CODE(Interval<double> y_interval("y", -1, 1, 5));
+  ECHO_CODE(Interval<double> y_interval("y", 0, 3, 4));
   TRDISP(y_interval);
 
 
@@ -88,18 +88,10 @@ int main() {
   TRDISP(gridX);
 
 
-
-
-  // Interval<double> domY(0, 3, 4, "y");
-  // TRDISP(domY);
-
-
-  // DISP({ 1,2 });
-  // TRDISP({ 1,2 });
-  // ECHO_CODE(Region<double> domXY({ x_interval, domY }, "Cartesian-2D"));
-  // TRDISP(domXY);
-  // TRDISP(domXY[0]);
-  // TRDISP(domXY["x"]);
+  ECHO_CODE(Region<double> xy_region("Cartesian-2D", { x_interval, y_interval }));
+  TRDISP(xy_region);
+  // TRDISP(xy_region[0]);
+  // TRDISP(xy_region["x"]);
 
   // ECHO_CODE(Region<double> domXY2({ Interval<double>(-10, 10, 5), Interval<double>(0, 7, 4) }));
   // TRDISP(domXY2);
@@ -138,11 +130,11 @@ int main() {
   // TRDISP(func4(-3));
   // TRDISP(fgrid(func4, gridX));
   // CR();
-  // TRDISP(domY);
-  // TRDISP(grid(domY));
+  // TRDISP(y_interval);
+  // TRDISP(grid(y_interval));
   // TRDISP(rz);
   // TRDISP(grid(rz));
-  // auto gridXY = grid(x_interval, domY);
+  // auto gridXY = grid(x_interval, y_interval);
   // TRDISP(gridXY(0));
   // TRDISP(gridXY(1));
 
@@ -153,16 +145,16 @@ int main() {
   // auto R2 = fgrid(fradius2, gridXY);
   // TRDISP(R2);
 
-  // auto gradXY = grad(R, x_interval, domY);
+  // auto gradXY = grad(R, x_interval, y_interval);
   // TRDISP(gradXY(0));
   // TRDISP(gradXY(1));
-  // gradXY = nabla_old & std::make_tuple(R, x_interval, domY);
+  // gradXY = nabla_old & std::make_tuple(R, x_interval, y_interval);
   // TRDISP(gradXY(0));
   // TRDISP(gradXY(1));
 
 
   // CR();
-  // auto gridXYZ = grid(x_interval, domY, rz);
+  // auto gridXYZ = grid(x_interval, y_interval, rz);
   // TRDISP(gridXYZ(0));
   // TRDISP(gridXYZ(1));
   // TRDISP(gridXYZ(2));

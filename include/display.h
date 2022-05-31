@@ -1597,7 +1597,7 @@ namespace display {
     stream << ", name=\"";
     dispval_strm(stream, var.name);
     stream << "\", intervals=";
-    dispval_strm(stream, var.domains);
+    dispval_strm(stream, var.intervals);
     stream << " )";
   }
 

@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.11-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.12-c++17</h1>
 
 <details>
 
@@ -70,18 +70,18 @@ Coordinate<double> y_coord("y");
 Coordinates<double> xy_coords("xy",{x_coord, y_coord});
 ☀ xy_coords ➜ mathq::Coordinates<double> (name="xy", coordinates={(name="x"), (name="y")});
 Coordinates<double> xy_coords2("xy",{"x","y"});
-☀ *coordinates ➜ std::vector<mathq::Coordinate<double>> {};
-☀ *coordinates ➜ std::vector<mathq::Coordinate<double>> {(name="x"), (name="y")};
 ☀ xy_coords2 ➜ mathq::Coordinates<double> (name="xy", coordinates={(name="x"), (name="y")});
 Interval<double> x_interval("x", -1, 1, 5);
 ☀ x_interval ➜ mathq::Interval<double> (name="x", a=-1, b=1, N=5, gridState=deflated);
-Interval<double> y_interval("y", -1, 1, 5);
-☀ y_interval ➜ mathq::Interval<double> (name="y", a=-1, b=1, N=5, gridState=deflated);
+Interval<double> y_interval("y", 0, 3, 4);
+☀ y_interval ➜ mathq::Interval<double> (name="y", a=0, b=3, N=4, gridState=deflated);
 auto gridX0 = x_interval.getGrid();
 ☀ x_interval ➜ mathq::Interval<double> (name="x", a=-1, b=1, N=5, gridState=inflated);
 ☀ gridX0 ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
 ☀ g ➜ Vector<double,NE=5> {-1, -0.5, 0, 0.5, 1};
 ☀ gridX ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
+Region<double> xy_region("Cartesian-2D", { x_interval, y_interval });
+☀ xy_region ➜ mathq::Region<double> ( Ndims=2, name="Cartesian-2D", intervals={(name="x", a=-1, b=1, N=5, gridState=inflated), (name="y", a=0, b=3, N=4, gridState=deflated)} );
 ```
 
 
