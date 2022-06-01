@@ -842,8 +842,9 @@ namespace display {
     return style;
   }
 
+
   template <class D>
-  Style getTypeStyle(const mathq::Coordinate<D>& var) {
+  Style getTypeStyle(const mathq::GridSet<D>& var) {
     Style style = CREATESTYLE(CYAN);
     return style;
   }
@@ -853,6 +854,13 @@ namespace display {
     Style style = CREATESTYLE(CYAN);
     return style;
   }
+
+  template <class D>
+  Style getTypeStyle(const mathq::Coordinate<D>& var) {
+    Style style = CREATESTYLE(CYAN);
+    return style;
+  }
+
 
   template <class D>
   Style getTypeStyle(const mathq::Coordinates<D>& var) {
@@ -1019,6 +1027,7 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER(std::list);
   SPECIALIZE_getTypeName_CONTAINER(std::queue);
   SPECIALIZE_getTypeName_CONTAINER(std::initializer_list);
+  SPECIALIZE_getTypeName_CONTAINER(mathq::GridSet);
   SPECIALIZE_getTypeName_CONTAINER(mathq::Coordinate);
   SPECIALIZE_getTypeName_CONTAINER(mathq::Interval);
   SPECIALIZE_getTypeName_CONTAINER(mathq::Coordinates);
@@ -1546,12 +1555,38 @@ namespace display {
 
 
 
+
+  // mathq::Interval
+  template <typename T>
+  inline void dispval_strm(std::ostream& stream, const mathq::Interval<T>& var) {
+    stream << "(a=";
+    dispval_strm(stream, var.a);
+    stream << ", b=";
+    dispval_strm(stream, var.b);
+    stream << ", N=";
+    dispval_strm(stream, var.N);
+    stream << ", gridState=";
+    dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
+    stream << ")";
+  }
+
+
+  // mathq::GridSet
+  template <typename T>
+  inline void dispval_strm(std::ostream& stream, const mathq::GridSet<T>& var) {
+    stream << "{EmptySet}";
+  }
+
+
+
   // mathq::Coordinate
   template <typename T>
   inline void dispval_strm(std::ostream& stream, const mathq::Coordinate<T>& var) {
     stream << "(name=\"";
     dispval_strm(stream, var.name);
     stream << "\"";
+    stream << ", gridSet=";
+    dispval_strm(stream, var.gridSet);
     stream << ")";
   }
 
@@ -1567,24 +1602,6 @@ namespace display {
   }
 
 
-
-
-  // mathq::Interval
-  template <typename T>
-  inline void dispval_strm(std::ostream& stream, const mathq::Interval<T>& var) {
-    stream << "(name=\"";
-    dispval_strm(stream, var.name);
-    stream << "\"";
-    stream << ", a=";
-    dispval_strm(stream, var.a);
-    stream << ", b=";
-    dispval_strm(stream, var.b);
-    stream << ", N=";
-    dispval_strm(stream, var.N);
-    stream << ", gridState=";
-    dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-    stream << ")";
-  }
 
 
 

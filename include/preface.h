@@ -1300,8 +1300,16 @@ namespace mathq {
   // * Coordinate
   // ***************************************************************************
 
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  template <class D,typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
   class Coordinate;
+
+
+  // ***************************************************************************
+  // * GridSet
+  // ***************************************************************************
+
+  template <class D>
+  class GridSet;
 
 
   // ***************************************************************************

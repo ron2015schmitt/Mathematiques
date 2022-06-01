@@ -13,6 +13,26 @@ inline double fradius2(double x, double y) { return  std::sqrt(x*x + y*y); }
 inline double fradius3d_2(double x, double y, double z) { return  std::sqrt(x*x + y*y + z*z); }
 
 
+template <class D, template <typename> class T>
+class
+  Coordinate2 {
+public:
+  const std::string name;
+  T<D> gridSet;
+
+  Coordinate2() :
+    name("[no-name]") {
+  }
+
+  Coordinate2(std::string name, T<D> gridSet = T<D>()) :
+    name(name),
+    gridSet(gridSet) {
+  }
+
+  ~Coordinate2() {
+  }
+
+};
 
 int main() {
   using namespace mathq;
@@ -54,42 +74,48 @@ int main() {
   TargetSet<std::complex<double>> u(1, 0);
   TRDISP(u);
 
-  ECHO_CODE(Coordinate<double> x_coord("x"));
-  TRDISP(x_coord);
-  ECHO_CODE(Coordinate<double> y_coord("y"));
-  TRDISP(y_coord);
+  ECHO_CODE(GridSet<double> gs);
+  TRDISP(gs);
 
-  ECHO_CODE(Coordinates<double> xy_coords("xy",{x_coord, y_coord}) );
-  TRDISP(xy_coords);
-
-  ECHO_CODE(Coordinates<double> xy_coords2("xy",{"x","y"}) );
-  TRDISP(xy_coords2);
-
-
-
-  ECHO_CODE(Interval<double> x_interval("x", -1, 1, 5));
+  ECHO_CODE(Interval<double> x_interval(-1, 1, 5));
   TRDISP(x_interval);
 
-  ECHO_CODE(Interval<double> y_interval("y", 0, 3, 4));
-  TRDISP(y_interval);
+
+  ECHO_CODE(Coordinate2<double,Interval> x_coord("x", x_interval));
+  TRDISP(x_coord.gridSet);
+  // TRDISP(x_coord);
+  // ECHO_CODE(Coordinate<double> y_coord("y"));
+  // TRDISP(y_coord);
+
+  // ECHO_CODE(Coordinates<double> xy_coords("xy",{x_coord, y_coord}) );
+  // TRDISP(xy_coords);
+
+  // ECHO_CODE(Coordinates<double> xy_coords2("xy",{"x","y"}) );
+  // TRDISP(xy_coords2);
 
 
-  ECHO_CODE(auto gridX0 = x_interval.getGrid());
-  TRDISP(x_interval);
-  TRDISP(gridX0);
-
-  Vector<double, 5> g;
-  for (size_type i = 0; i<5; i++) {
-    g(i) = x_interval.get(i);
-  }
-  TRDISP(g);
-
-  auto gridX = grid(x_interval);
-  TRDISP(gridX);
 
 
-  ECHO_CODE(Region<double> xy_region("Cartesian-2D", { x_interval, y_interval }));
-  TRDISP(xy_region);
+  // ECHO_CODE(Interval<double> y_interval("y", 0, 3, 4));
+  // TRDISP(y_interval);
+
+
+  // ECHO_CODE(auto gridX0 = x_interval.getGrid());
+  // TRDISP(x_interval);
+  // TRDISP(gridX0);
+
+  // Vector<double, 5> g;
+  // for (size_type i = 0; i<5; i++) {
+  //   g(i) = x_interval.get(i);
+  // }
+  // TRDISP(g);
+
+  // auto gridX = grid(x_interval);
+  // TRDISP(gridX);
+
+
+  // ECHO_CODE(Region<double> xy_region("Cartesian-2D", { x_interval, y_interval }));
+  // TRDISP(xy_region);
   // TRDISP(xy_region[0]);
   // TRDISP(xy_region["x"]);
 

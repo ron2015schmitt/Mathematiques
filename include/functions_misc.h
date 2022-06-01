@@ -564,110 +564,23 @@ namespace mathq {
   // *          Functions that return a grid
   // *********************************************************
 
-// Vector<D>& linspace(D start, D end, size_type N)
 
-// ***************************************************************************
-  // * Coordinate
+  // ***************************************************************************
+  // * GridSet
   // ***************************************************************************
 
-  template <class D, typename X>
+  template <class D>
   class
-    Coordinate {
+    GridSet {
   public:
-    const std::string name;
-
-    Coordinate() :
-      name("[no-name]") {
+    const bool isEmptySet;
+    GridSet() : isEmptySet(true) {
     }
-
-    Coordinate(std::string name) :
-      name(name) {
+    GridSet(const bool isEmpty) : isEmptySet(isEmpty) {
     }
-
-    ~Coordinate() {
-    }
-
-    Coordinate<D, X>& operator=(const Coordinate<D, X>& x) {
-      // this->name = x;
-      // TODO: issue error when in DEBUG mode
-      return *this;
-    }
-
-    friend std::ostream& operator<<(std::ostream& stream, const Coordinate<D, X>& x) {
-      using namespace display;
-      dispval_strm(stream, x);
-      return stream;
+    ~GridSet() {
     }
   };
-
-  // ***************************************************************************
-  // * Coordinates
-  // ***************************************************************************
-
-  template <class D, typename X>
-  class
-    Coordinates {
-  public:
-    std::vector<Coordinate<D>> coordinates;
-    const size_t Ndims;
-    const std::string name;
-
-    Coordinates(std::string name, const std::initializer_list<Coordinate<D>>& list) :
-      name(name),
-      coordinates(std::vector<Coordinate<D>>{ list }),
-      Ndims(list.size()) {
-    }
-    Coordinates(std::string name, const std::initializer_list<std::string>& list) :
-      name(name),
-      coordinates(Coordinates::makeCoordinates(list)),
-      Ndims(list.size()) {
-    }
-    Coordinates(std::string name, const std::vector<Coordinate<D>>& v) :
-      name(name),
-      coordinates(v),
-      Ndims(v.size()) {
-    }
-    Coordinates(std::string name, const std::vector<std::string>& v) :
-      name(name),
-      coordinates(Coordinates::makeCoordinates(v)),
-      Ndims(v.size()) {
-    }
-
-    // need copy constructor
-    Coordinates(const Coordinates<D>& x, std::string name = "unnamed") :
-      coordinates(x.coordinates),
-      Ndims(x.Ndims),
-      name(name) {
-    }
-
-    ~Coordinates() {
-    }
-
-    static std::vector<Coordinate<D>>& makeCoordinates(const std::initializer_list<std::string>& list) {
-      std::vector<Coordinate<D>>* coordinates = new std::vector<Coordinate<D>>(0);
-      size_t c = 0;
-      for (std::initializer_list<std::string>::iterator it = list.begin(); it != list.end(); ++it) {
-        Coordinate<D> coord(*it);
-        coordinates->push_back(Coordinate<D>(*it));
-      }
-      return *coordinates;
-    }
-    static std::vector<Coordinate<D>>& makeCoordinates(const std::vector<std::string>& v) {
-      std::vector<Coordinate<D>>* coordinates = new std::vector<Coordinate<D>>(0);
-      for (size_t c = 0; c < v.size(); c++) {
-        coordinates->push_back(v[c]);
-      }
-      return *coordinates;
-    }
-
-    size_t size() const {
-      return Ndims;
-    }
-
-
-  };
-
-
 
 
   // ***************************************************************************
@@ -676,7 +589,7 @@ namespace mathq {
 
   template <class D, typename X>
   class
-    Interval : public Coordinate<D, X> {
+    Interval : public GridSet<D> {
   public:
     const D a;
     const D b;
@@ -684,8 +597,8 @@ namespace mathq {
     const D step;
     Vector<D> grid;
 
-    Interval(std::string name, const D a, const D b, const std::size_t N) :
-      Coordinate<D, X>(name),  // parent class constructor
+    Interval(const D a, const D b, const std::size_t N) :
+      // GridSet(false),
       a(a),
       b(b),
       N(N),
@@ -734,71 +647,179 @@ namespace mathq {
 
 
 
-
-
-
   // ***************************************************************************
-  // * Region
-  // ***************************************************************************
+    // * Coordinate
+    // ***************************************************************************
 
   template <class D, typename X>
   class
-    Region : public Coordinates<D, X> {
+    Coordinate {
   public:
-    std::vector<Interval<D>> intervals;
+    const std::string name;
+    GridSet<D> gridSet;
 
-    Region(std::string name, const std::initializer_list<Interval<D>>& list) :
-      Coordinates<D, X>(name, Region::makeNames(list)),
-      intervals(std::vector<Interval<D>>{ list }) {
+    Coordinate() :
+      name("[no-name]") {
     }
 
-    // Region(const std::vector<Interval<D>>& v, std::string name = "unnamed") :
-    //   intervals(v),
-    //   Ndims(v.size()),
-    //   name(name),
-    //   names(Region::makeNames(intervals)) {
-    // }
-    // Region(const Region<D>& x, std::string name = "unnamed") :
-    //   intervals(x.intervals),
-    //   Ndims(x.Ndims),
-    //   name(name),
-    //   names(Region::makeNames(intervals)) {
-    // }
-
-    ~Region() {
+    Coordinate(std::string name, GridSet<D> gridSet = GridSet<D>()) :
+      name(name),
+      gridSet(gridSet) {
     }
 
-    static std::vector<std::string>& makeNames(const std::vector<Interval<D>> intervals) {
-      std::vector<std::string>* names = new std::vector<std::string>(intervals.size());
-      for (size_t c = 0; c < intervals.size(); c++) {
-        (*names)[c] = intervals[c].name;
-      }
-      return *names;
+    ~Coordinate() {
     }
 
-
-    // const Interval<D>& operator[](const std::string name) {
-    //   return this->get(name);
-    // }
-
-    // const Interval<D>& operator[](const size_t c) {
-    //   return intervals[c];
-    // }
-
-
-    const Interval<D>& get(const std::string name) {
-      // TODO: in debug mode, check to ensure one and only one found
-      for (size_t c = 0; c < intervals.size(); c++) {
-        if (intervals[c].name == name) {
-          return intervals[c];
-        }
-      }
-      // this is intended to produce a run-time error because the name was not found
-      return intervals[intervals.size()];
+    Coordinate<D, X>& operator=(const Coordinate<D, X>& x) {
+      // this->name = x;
+      // TODO: issue error when in DEBUG mode
+      return *this;
     }
 
-
+    friend std::ostream& operator<<(std::ostream& stream, const Coordinate<D, X>& x) {
+      using namespace display;
+      dispval_strm(stream, x);
+      return stream;
+    }
   };
+
+
+
+
+
+  // // ***************************************************************************
+  // // * Coordinates
+  // // ***************************************************************************
+
+  // template <class D, typename X>
+  // class
+  //   Coordinates {
+  // public:
+  //   std::vector<Coordinate<D>> coordinates;
+  //   const size_t Ndims;
+  //   const std::string name;
+
+  //   Coordinates(std::string name, const std::initializer_list<Coordinate<D>>& list) :
+  //     name(name),
+  //     coordinates(std::vector<Coordinate<D>>{ list }),
+  //     Ndims(list.size()) {
+  //   }
+  //   Coordinates(std::string name, const std::initializer_list<std::string>& list) :
+  //     name(name),
+  //     coordinates(Coordinates::makeCoordinates(list)),
+  //     Ndims(list.size()) {
+  //   }
+  //   Coordinates(std::string name, const std::vector<Coordinate<D>>& v) :
+  //     name(name),
+  //     coordinates(v),
+  //     Ndims(v.size()) {
+  //   }
+  //   Coordinates(std::string name, const std::vector<std::string>& v) :
+  //     name(name),
+  //     coordinates(Coordinates::makeCoordinates(v)),
+  //     Ndims(v.size()) {
+  //   }
+
+  //   // need copy constructor
+  //   Coordinates(const Coordinates<D>& x, std::string name = "unnamed") :
+  //     coordinates(x.coordinates),
+  //     Ndims(x.Ndims),
+  //     name(name) {
+  //   }
+
+  //   ~Coordinates() {
+  //   }
+
+  //   static std::vector<Coordinate<D>>& makeCoordinates(const std::initializer_list<std::string>& list) {
+  //     std::vector<Coordinate<D>>* coordinates = new std::vector<Coordinate<D>>(0);
+  //     size_t c = 0;
+  //     for (std::initializer_list<std::string>::iterator it = list.begin(); it != list.end(); ++it) {
+  //       Coordinate<D> coord(*it);
+  //       coordinates->push_back(Coordinate<D>(*it));
+  //     }
+  //     return *coordinates;
+  //   }
+  //   static std::vector<Coordinate<D>>& makeCoordinates(const std::vector<std::string>& v) {
+  //     std::vector<Coordinate<D>>* coordinates = new std::vector<Coordinate<D>>(0);
+  //     for (size_t c = 0; c < v.size(); c++) {
+  //       coordinates->push_back(v[c]);
+  //     }
+  //     return *coordinates;
+  //   }
+
+  //   size_t size() const {
+  //     return Ndims;
+  //   }
+
+
+  // };
+
+
+
+
+
+  // // ***************************************************************************
+  // // * Region
+  // // ***************************************************************************
+
+  // template <class D, typename X>
+  // class
+  //   Region : public Coordinates<D, X> {
+  // public:
+  //   std::vector<Interval<D>> intervals;
+
+  //   Region(std::string name, const std::initializer_list<Interval<D>>& list) :
+  //     Coordinates<D, X>(name, Region::makeNames(list)),
+  //     intervals(std::vector<Interval<D>>{ list }) {
+  //   }
+
+  //   // Region(const std::vector<Interval<D>>& v, std::string name = "unnamed") :
+  //   //   intervals(v),
+  //   //   Ndims(v.size()),
+  //   //   name(name),
+  //   //   names(Region::makeNames(intervals)) {
+  //   // }
+  //   // Region(const Region<D>& x, std::string name = "unnamed") :
+  //   //   intervals(x.intervals),
+  //   //   Ndims(x.Ndims),
+  //   //   name(name),
+  //   //   names(Region::makeNames(intervals)) {
+  //   // }
+
+  //   ~Region() {
+  //   }
+
+  //   static std::vector<std::string>& makeNames(const std::vector<Interval<D>> intervals) {
+  //     std::vector<std::string>* names = new std::vector<std::string>(intervals.size());
+  //     for (size_t c = 0; c < intervals.size(); c++) {
+  //       (*names)[c] = intervals[c].name;
+  //     }
+  //     return *names;
+  //   }
+
+
+  //   // const Interval<D>& operator[](const std::string name) {
+  //   //   return this->get(name);
+  //   // }
+
+  //   // const Interval<D>& operator[](const size_t c) {
+  //   //   return intervals[c];
+  //   // }
+
+
+  //   const Interval<D>& get(const std::string name) {
+  //     // TODO: in debug mode, check to ensure one and only one found
+  //     for (size_t c = 0; c < intervals.size(); c++) {
+  //       if (intervals[c].name == name) {
+  //         return intervals[c];
+  //       }
+  //     }
+  //     // this is intended to produce a run-time error because the name was not found
+  //     return intervals[intervals.size()];
+  //   }
+
+
+  // };
 
 
   // ***************************************************************************
