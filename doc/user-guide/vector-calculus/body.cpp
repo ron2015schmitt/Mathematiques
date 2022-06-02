@@ -24,7 +24,7 @@ public:
     name("[no-name]") {
   }
 
-  Coordinate2(std::string name, T<D> gridSet = T<D>()) :
+  Coordinate2(const std::string& name, const T<D>& gridSet = T<D>()) :
     name(name),
     gridSet(gridSet) {
   }
