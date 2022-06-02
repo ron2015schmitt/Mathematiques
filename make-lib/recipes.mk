@@ -18,6 +18,7 @@ default: some
 FORCE: ;
 
 # this forces all recipes to use a single shell
+# note: ***make only reads the '@','-','+' prefixes of the first line in one shell!!!
 .ONESHELL:
 
 
@@ -33,8 +34,17 @@ FORCE: ;
 #
 #---------------------------------------------------------------------
 %.o: %.cpp 
-	@\echo -e "g++ compile command used:  $(CPPC) $(CFLAGS)" > $*.g++_copts
+	\echo -e "g++ compile command used:  $(CPPC) $(CFLAGS)" > $*.g++_copts
 	$(CPPC) $(CFLAGS) -c $*.cpp -o $@
+
+
+%.s: %.cpp 
+	\echo -e "g++ compile command used:  $(CPPC) $(CFLAGS)" > $*.g++_copts
+	$(CPPC) $(CFLAGS) -S $*.cpp 
+
+%.ii: %.cpp 
+	\echo -e "g++ compile command used:  $(CPPC) $(CFLAGS)" > $*.g++_copts
+	$(CPPC) $(CFLAGS) -E $*.cpp -o $@
 
 
 #---------------------------------------------------------------------

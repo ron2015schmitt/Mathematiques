@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.14-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.15-c++17</h1>
 
 <details>
 
@@ -61,14 +61,35 @@
 
 ```C++
 
-☀ d1 ➜ mathq::Nabla (Ndims=1, Nwindow=7, periodic=0);
-☀ u ➜ mathq::TargetSet<std::complex<double>> (Ndims=1, rank=0);
+* d1 -> mathq::Nabla (Ndims=1, Nwindow=7, periodic=0);
+* u -> mathq::TargetSet<std::complex<double>> (Ndims=1, rank=0);
 GridSet<double> gs;
-☀ gs ➜ mathq::GridSet<double> {EmptySet};
+* gs -> mathq::GridSet<double> {EmptySet};
 Interval<double> x_interval(-1, 1, 5);
-☀ x_interval ➜ mathq::Interval<double> (a=-1, b=1, N=5, gridState=deflated);
-Coordinate2<double,Interval> x_coord("x", x_interval);
-☀ x_coord.gridSet ➜ mathq::Interval<double> (a=-1, b=1, N=5, gridState=deflated);
+* x_interval -> mathq::Interval<double> (a=-1, b=1, N=5, gridState=deflated);
+* rs.a -> double -2;
+* rs.b -> double 2;
+* rs.N -> unsigned long 5;
+* rs.logscale -> bool 0;
+* rs.include_a -> bool 1;
+* rs.include_b -> bool 1;
+* rs.hasInflatedGrid() -> bool 0;
+* rs.makeGrid() -> Vector<double> {-2, -1, 0, 1, 2};
+* rs.hasInflatedGrid() -> bool 1;
+* rs1.a -> double -2;
+* rs1.b -> double 3;
+* rs1.N -> unsigned long 5;
+* rs1.logscale -> bool 0;
+* rs1.include_a -> bool 1;
+* rs1.include_b -> bool 0;
+* rs1.hasInflatedGrid() -> bool 0;
+* rs1.makeGrid() -> Vector<double> {-2, -1, 0, 1, 2};
+* rs1.hasInflatedGrid() -> bool 1;
+* std::numeric_limits<double>::lowest() -> double -1.79769e+308;
+RealSet<double> rs2 = RealSet<double>::realLine(10);
+* rs2.a -> double -inf;
+* rs2.N -> unsigned long 0;
+* std::numeric_limits<double>::infinity() > 1 -> bool 1;
 ```
 
 

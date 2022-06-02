@@ -11,7 +11,7 @@ namespace display {
   //                          Terminal
   //****************************************************************************
 
-  std::ostream* Terminal::outputstream;
+  std::ostream* Terminal::outputstream = &std::cout;
 
   bool Terminal::isInitialized = false;
   bool Terminal::colorOverride = false;
@@ -158,25 +158,25 @@ namespace display {
   std::string FormatData<long long>::format_string = format_string_default;
 
   // unsigned short
-  Style FormatData<unsigned short>::style_for_value = CREATESTYLE(VIOLET1);
+  Style FormatData<unsigned short>::style_for_value = CREATESTYLE(BLUE1);
   Style FormatData<unsigned short>::style_for_zero = CREATESTYLE(GRAY1);
   const std::string FormatData<unsigned short>::format_string_default = "%u";
   std::string FormatData<unsigned short>::format_string = format_string_default;
 
   // unsigned int
-  Style FormatData<unsigned int>::style_for_value = CREATESTYLE(VIOLET1);
+  Style FormatData<unsigned int>::style_for_value = CREATESTYLE(BLUE1);
   Style FormatData<unsigned int>::style_for_zero = CREATESTYLE(GRAY1);
   const std::string FormatData<unsigned int>::format_string_default = "%u";
   std::string FormatData<unsigned int>::format_string = format_string_default;
 
   // unsigned long
-  Style FormatData<unsigned long>::style_for_value = CREATESTYLE(VIOLET1);
+  Style FormatData<unsigned long>::style_for_value = CREATESTYLE(BLUE1);
   Style FormatData<unsigned long>::style_for_zero = CREATESTYLE(GRAY1);
   const std::string FormatData<unsigned long>::format_string_default = "%lu";
   std::string FormatData<unsigned long>::format_string = format_string_default;
 
   // unsigned long long
-  Style FormatData<unsigned long long>::style_for_value = CREATESTYLE(VIOLET1);
+  Style FormatData<unsigned long long>::style_for_value = CREATESTYLE(BLUE1);
   Style FormatData<unsigned long long>::style_for_zero = CREATESTYLE(GRAY1);
   const std::string FormatData<unsigned long long>::format_string_default = "%llu";
   std::string FormatData<unsigned long long>::format_string = format_string_default;
@@ -321,9 +321,9 @@ namespace display {
 
   // prefix for display C++ in git markdown so that syntax highlighting works fully
   // ☀ ☘ ☯ ☄ " " (U+00A0) 📣 ⚡ ⚟  ⚠ ☼ ☠  ☒  ☑ ★ ☾  ♫  ⛏  ⛒ ⛭  ⛯  ✅  ✬  ✦ ❀ ❉ ❋ ❌ ❗ ❶ ❷ ❸ ➀ ➊ ➿ ➾ ⛔ ✔ ✖ ✴❓🔧  🛑 🔥🗣 🛠 🛎
-  StyledString Display::prefixStyledString = StyledString(CREATESTYLE(GREEN), "☀ ");
+  StyledString Display::prefixStyledString = StyledString(CREATESTYLE(GREEN), "* ");
 
-  StyledString Display::equalsStyledString = StyledString(CREATESTYLE(GRAY1), " ➜ ");
+  StyledString Display::equalsStyledString = StyledString(CREATESTYLE(GRAY1), " -> ");
   //StyledString Display::equalsStyledString = StyledString(CREATESTYLE(GRAY1), "  =  ");
   StyledString Display::multiSeparatorStyledString = StyledString(CREATESTYLE(GRAY1), "; ");
   StyledString Display::terminatorStyledString = StyledString(CREATESTYLE(GRAY1), ";");  // need the terminator for markdown to color correctly

@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.14-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.15-c++17</h1>
 
 <details>
 
@@ -61,13 +61,13 @@ double pi = 3.14;
 double r = 2.5;
 double area = pi * pow(r, 2);
 ```
-Results are also shown in code blocks but with each line preceded by the symbol `☀ `
+Results are also shown in code blocks but with each line preceded by the symbol `* `
 
 
 ```C++
-☀ pi ➜ double 3.14;
-☀ r ➜ double 2.5;
-☀ area ➜ double 19.625;
+* pi -> double 3.14;
+* r -> double 2.5;
+* area -> double 19.625;
 ```
 This is also how the results are output in a linux terminal, albeit with slightly different coloring.  A screen shot of the same results are shown below
 
@@ -85,11 +85,11 @@ TRDISP(area);
 ```
 This topic is covered in detail in the Display section of this guide.
 
-Often we will display code and results together, with the symbol `☀ ` distinguishing results from code:
+Often we will display code and results together, with the symbol `* ` distinguishing results from code:
 
 ```C++
 double x = 1.52;
-☀ x ➜ double 1.52;
+* x -> double 1.52;
 ```
 ## Numbers and containers
 The following notation shorthand is used in the User Guide (but certainly not in C++ code!).

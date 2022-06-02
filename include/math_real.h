@@ -176,6 +176,13 @@ namespace mathq {
   }
 
 
+ // logN(x, N)
+
+  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
+  D logN(const D& x, unsigned int N) {
+    return std::log(x)/std::log(N);
+  }
+
   // approx
 
   // TODO: use std::frexp() instead ?

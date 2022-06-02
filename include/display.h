@@ -767,7 +767,7 @@ namespace display {
       return "StyledString";
     }
 
-    inline friend std::ostream& operator<<(std::ostream& stream, const StyledString& ss) {
+    friend std::ostream& operator<<(std::ostream& stream, const StyledString& ss) {
       stream << ss.get();
       return stream;
     }
@@ -1579,6 +1579,7 @@ namespace display {
 
 
 
+
   // mathq::Coordinate
   template <typename T>
   inline void dispval_strm(std::ostream& stream, const mathq::Coordinate<T>& var) {
@@ -1897,12 +1898,11 @@ namespace display {
 
     template <typename X>
     static void mydispcr(std::ostream& stream, const X& x, const std::string name, const std::string postString = "") {
-      using namespace std;
-      mydisp_notype(stream, x, name, true, postString);
+      display::Display::mydisp_notype(stream, x, name, true, postString);
     }
     template <typename X>
     static void mydispcr(std::ostream& stream, const std::initializer_list<X>& x, const std::string name, const std::string postString = "") {
-      mydispcr(stream, std::list(x), name, postString);
+      display::Display::mydispcr(stream, std::list(x), name, postString);
     }
 
 

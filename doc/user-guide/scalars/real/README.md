@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.14-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.15-c++17</h1>
 
 <details>
 
@@ -114,10 +114,10 @@ Two associated constants are defined: `true` and `false`.
 
 
 ```C++
-☀ CHAR_BIT*sizeof(bool) ➜ 8 bits;
+* CHAR_BIT*sizeof(bool) -> 8 bits;
 
-☀ false ➜ bool 0;
-☀ true ➜ bool 1;
+* false -> bool 0;
+* true -> bool 1;
 ```
 
 <br>
@@ -129,7 +129,7 @@ It's size depends on implementation.  The 64-bit Ubuntu 20.04 size is shown belo
 
 
 ```C++
-☀ CHAR_BIT*sizeof(size_t) ➜ 64 bits;
+* CHAR_BIT*sizeof(size_t) -> 64 bits;
 ```
 
 
@@ -186,14 +186,14 @@ Below are a few examples.
 ```C++
 double pi = 3.14159265358979311599796346854;
 ☀ pi  ➜  double 3.1415926535897931159980;
-☀ pi/2+100-0.5*pi ➜ double 100;
-☀ 2*sin(pi/4) - 1 ➜ double 0.414214;
-☀ 3/pi*asin(0.86602540378) ➜ double 1;
-☀ exp(2) ➜ double 7.38906;
-☀ log(10) ➜ double 2.30259;
-☀ log10(10) ➜ double 1;
-☀ pow(2, 10) ➜ double 1024;
-☀ pow(2, 2.5-2) ➜ double 1.41421;
+* pi/2+100-0.5*pi -> double 100;
+* 2*sin(pi/4) - 1 -> double 0.414214;
+* 3/pi*asin(0.86602540378) -> double 1;
+* exp(2) -> double 7.38906;
+* log(10) -> double 2.30259;
+* log10(10) -> double 1;
+* pow(2, 10) -> double 1024;
+* pow(2, 2.5-2) -> double 1.41421;
 ```
 ## Containers of Imaginary numbers
 
@@ -203,10 +203,10 @@ Below are examples of container math with imaginary numbers.  Mixed math is allo
 
 ```C++
 auto v = Vector<double>() = { 0, 1, 2, 3, 4 };
-☀ v ➜ Vector<double> {0, 1, 2, 3, 4};
-☀ pi*v/4 ➜ TER_Binary Vector<double> {0, 0.785398, 1.5708, 2.35619, 3.14159};
-☀ 10*sin(pi*v/4) ➜ TER_Binary Vector<double> {0, 7.07107, 10, 7.07107, 1.22465e-15};
-☀ 10*sin(pi*v/4) + 100*v + 1 + v*v ➜ TER_Binary Vector<double> {1, 109.071, 215, 317.071, 417};
+* v -> Vector<double> {0, 1, 2, 3, 4};
+* pi*v/4 -> TER_Binary Vector<double> {0, 0.785398, 1.5708, 2.35619, 3.14159};
+* 10*sin(pi*v/4) -> TER_Binary Vector<double> {0, 7.07107, 10, 7.07107, 1.22465e-15};
+* 10*sin(pi*v/4) + 100*v + 1 + v*v -> TER_Binary Vector<double> {1, 109.071, 215, 317.071, 417};
 ```
 
 

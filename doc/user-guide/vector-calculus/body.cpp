@@ -5,40 +5,243 @@
 #include <stdbool.h>
 #include <typeinfo>
 #include <optional>
-
-
+#include <variant>
+#include <cmath>
 #include "mathq.h"
 
 inline double fradius2(double x, double y) { return  std::sqrt(x*x + y*y); }
 inline double fradius3d_2(double x, double y, double z) { return  std::sqrt(x*x + y*y + z*z); }
 
 
-template <class D, template <typename> class T>
+template <class D = double, bool LOGSCALE = false>
 class
-  Coordinate2 {
+  RealSet {
 public:
-  const std::string name;
-  T<D> gridSet;
+  size_t N;
+  D a;
+  D b;
+  bool include_a;
+  bool include_b;
+  bool logscale = LOGSCALE;
 
-  Coordinate2() :
-    name("[no-name]") {
+  // dependent variables
+  // move to private
+  D log_a;
+  D log_b;
+  size_t Neff;
+  D start;
+  D step;
+  mathq::Vector<D> grid;
+
+  RealSet() noexcept {
+    include_a = true;
+    a = -std::numeric_limits<D>::infinity();
+    include_b = true;
+    b = std::numeric_limits<D>::infinity();
+    N = 0;
+    this->init();
+  }
+  RealSet(const D& a, const D& b, const size_t N, const bool include_a = true, const bool include_b = true) noexcept :
+    a(a), b(b), N(N), include_a(include_a), include_b(include_b) {
+    this->init();
+  }
+  ~RealSet() {
   }
 
-  Coordinate2(const std::string& name, const T<D>& gridSet = T<D>()) :
-    name(name),
-    gridSet(gridSet) {
+  void deflateGrid() {
+    grid.resize(0);
+  }
+  void inflateGrid() {
+    grid.resize(N);
+  }
+  bool hasInflatedGrid() {
+    return grid.size() > 0;
   }
 
-  ~Coordinate2() {
+
+  RealSet& init() {
+    Neff = N +  size_t(!include_a) + size_t(!include_b);
+    if constexpr (LOGSCALE) {
+      log_a = std::log10(a);
+      log_b = std::log10(b);
+      step = (log_b - log_a)/static_cast<D>(Neff-1);
+      if (include_a) {
+        start = log_a;
+      }
+      else {
+        start = log_a + step;
+      }
+    }
+    else {
+      step = (b - a)/static_cast<D>(Neff-1);
+      if (include_a) {
+        start = a;
+      }
+      else {
+        start = a + step;
+      }
+    }
+    return *this;
+  }
+
+
+  const D getGridPoint(size_t c) const {
+    if constexpr (LOGSCALE) {
+      return getGridPoint_Log(c);
+    }
+    else {
+      return getGridPoint_Linear(c);
+    }
+  }
+
+  const D getGridPoint_Linear(size_t c) const {
+    if (N == 0) return std::numeric_limits<D>::quiet_NaN();
+
+    if (c == N-1) {
+      if (include_b) {
+        return b;
+      }
+      else {
+        return b - step;
+      }
+    }
+    return start + static_cast<D>(c)*step;
+  }
+
+  const D getGridPoint_Log(size_t c) const {
+    if (N == 0) return std::numeric_limits<D>::quiet_NaN();
+
+    if (c == N-1) {
+      if (include_b) {
+        return b;
+      }
+      else {
+        return pow(10, log_b - step);
+      }
+    }
+    return pow(10, log_a + static_cast<D>(c)*step);
+  }
+
+
+  mathq::Vector<D>& makeGrid() {
+    if constexpr (LOGSCALE) {
+      return makeGrid_Log();
+    }
+    else {
+      return makeGrid_Linear();
+    }
+  }
+
+
+  mathq::Vector<D>& makeGrid_Linear() {
+    inflateGrid();
+    init();
+    if (N == 0) return grid;
+
+    for (size_t c = 0; c<(N-1); c++) {
+      grid[c] = start + static_cast<D>(c)*step;
+    }
+    if (include_b) {
+      grid[N-1] = b;
+    }
+    else {
+      grid[N-1] = b - step;
+    }
+    return grid;
+  }
+
+
+  mathq::Vector<D>& makeGrid_Log() {
+    inflateGrid();
+    init();
+    if (N == 0) return grid;
+
+    for (size_t c = 0; c<(N-1); c++) {
+      grid[c] = std::pow(10, start + static_cast<D>(c)*step);
+    }
+    if (include_b) {
+      grid[N-1] = b;
+    }
+    else {
+      grid[N-1] = std::pow(10, log_b - step);
+    }
+    return grid;
+  }
+
+
+  static RealSet<D> emptySet() {
+    return RealSet<D>(0, 0, 0, 0, false, false);
+  }
+
+  static RealSet<D> point(const D& p) {
+    return RealSet<D>(p, p, 1, 0, true, true);
+  }
+
+
+  static RealSet<D> realLine(const bool include_a = true, const bool include_b = true) {
+    D a;
+    if (include_a) {
+      a = -std::numeric_limits<D>::infinity();
+    }
+    else {
+      a = std::numeric_limits<D>::lowest();
+    }
+    D b;
+    if (include_b) {
+      b = std::numeric_limits<D>::infinity();
+    }
+    else {
+      b = std::numeric_limits<D>::max();
+    }
+    return RealSet<D>(a, b, 0, include_a, include_b);
+  }
+
+  static RealSet<D> realLineNeg(const bool include_a = true, const bool include_b = true) {
+    D a;
+    if (include_a) {
+      a = -std::numeric_limits<D>::infinity();
+    }
+    else {
+      a = std::numeric_limits<D>::lowest();
+    }
+    D b;
+    if (include_b) {
+      b = 0;
+    }
+    else {
+      b = -std::numeric_limits<D>::min();
+    }
+    return RealSet<D>(a, b, 0, include_a, include_b);
+  }
+
+  static RealSet<D> realLinePos(const bool include_a = true, const bool include_b = true) {
+    D a;
+    if (include_a) {
+      a = 0;
+    }
+    else {
+      a = std::numeric_limits<D>::min();
+    }
+    D b;
+    if (include_b) {
+      b = std::numeric_limits<D>::infinity();
+    }
+    else {
+      b = std::numeric_limits<D>::max();
+    }
+    return RealSet<D>(a, b, 0, include_a, include_b);
   }
 
 };
+
+
+
+
 
 int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  using namespace mathq;
 
 
   CR();
@@ -80,9 +283,38 @@ int main() {
   ECHO_CODE(Interval<double> x_interval(-1, 1, 5));
   TRDISP(x_interval);
 
+  RealSet<double>  rs(-2, +2, 5);
+  TRDISP(rs.a);
+  TRDISP(rs.b);
+  TRDISP(rs.N);
+  TRDISP(rs.logscale);
+  TRDISP(rs.include_a);
+  TRDISP(rs.include_b);
+  TRDISP(rs.hasInflatedGrid());
+  TRDISP(rs.makeGrid());
+  TRDISP(rs.hasInflatedGrid());
 
-  ECHO_CODE(Coordinate2<double,Interval> x_coord("x", x_interval));
-  TRDISP(x_coord.gridSet);
+  RealSet<double>  rs1(-2, +3, 5, true, false);
+  TRDISP(rs1.a);
+  TRDISP(rs1.b);
+  TRDISP(rs1.N);
+  TRDISP(rs1.logscale);
+  TRDISP(rs1.include_a);
+  TRDISP(rs1.include_b);
+  TRDISP(rs1.hasInflatedGrid());
+  TRDISP(rs1.makeGrid());
+  TRDISP(rs1.hasInflatedGrid());
+
+
+  TRDISP(std::numeric_limits<double>::lowest());
+  ECHO_CODE(RealSet<double>  rs2 = RealSet<double>::realLine(10));
+  TRDISP(rs2.a);
+  TRDISP(rs2.N);
+
+  TRDISP(std::numeric_limits<double>::infinity()  > 1);
+
+  // ECHO_CODE(Coordinate2<double, Interval> x_coord2("x", x_interval));
+  // TRDISP(x_coord2.gridSet);
   // TRDISP(x_coord);
   // ECHO_CODE(Coordinate<double> y_coord("y"));
   // TRDISP(y_coord);
@@ -100,7 +332,7 @@ int main() {
   // TRDISP(y_interval);
 
 
-  // ECHO_CODE(auto gridX0 = x_interval.getGrid());
+  // ECHO_CODE(auto gridX0 = x_interval.makeGrid());
   // TRDISP(x_interval);
   // TRDISP(gridX0);
 

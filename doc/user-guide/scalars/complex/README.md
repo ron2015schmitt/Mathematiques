@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.14-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.15-c++17</h1>
 
 <details>
 
@@ -106,11 +106,11 @@ complex<double> c3(1, 2.3);
 complex<double> c4 = 1.4 + 3.5i;
 auto c5 = complex<double>(1.3, -10.5);
 
-☀ c1 ➜ std::complex<double> (0,0);
-☀ c2 ➜ std::complex<double> (2,-3.5);
-☀ c3 ➜ std::complex<double> (1,2.3);
-☀ c4 ➜ std::complex<double> (1.4,3.5);
-☀ c5 ➜ std::complex<double> (1.3,-10.5);
+* c1 -> std::complex<double> (0,0);
+* c2 -> std::complex<double> (2,-3.5);
+* c3 -> std::complex<double> (1,2.3);
+* c4 -> std::complex<double> (1.4,3.5);
+* c5 -> std::complex<double> (1.3,-10.5);
 ```
 In the above expression `c4 = 1.4 + 3.5i`, the C++ operator `std::complex_literals::i` is used. 
 This operator can only be used after a number and there can NOT be a space between the number and `i`.  
@@ -120,10 +120,10 @@ The operator `i` is a `double`, while `if` and `il` are a `float` and a `long do
 The 4 fundamental arithmetic operators can be used with complex numbers.
 ```C++
 
-☀ 1.4 + 3.5i + 2.6 + 1.5i ➜ std::complex<double> (4,5);
-☀ complex<double>(1.3, -10.5) - complex<double>(1.3, -10.5) ➜ std::complex<double> (0,0);
-☀ 2 + 4.5i * 2 + 3i ➜ std::complex<double> (2,12);
-☀ 2 + 4.5i / 2 + 3i ➜ std::complex<double> (2,5.25);
+* 1.4 + 3.5i + 2.6 + 1.5i -> std::complex<double> (4,5);
+* complex<double>(1.3, -10.5) - complex<double>(1.3, -10.5) -> std::complex<double> (0,0);
+* 2 + 4.5i * 2 + 3i -> std::complex<double> (2,12);
+* 2 + 4.5i / 2 + 3i -> std::complex<double> (2,5.25);
 
 ```
 ## Methods
@@ -137,20 +137,20 @@ A few examples are shown below.
 
 ```C++
 complex<double> z = 1.5 + 3.5i;
-☀ z ➜ std::complex<double> (1.5,3.5);
-☀ z.real() ➜ double 1.5;
-☀ z.imag() ➜ double 3.5;
+* z -> std::complex<double> (1.5,3.5);
+* z.real() -> double 1.5;
+* z.imag() -> double 3.5;
 ```
 ## Math with mixed types
 Mathématiques extends the C++ functionality so that mixed math (ints, floating pt, complex<int>, complex<floating pt>) is possible.
 ```C++
 
-☀ 1 + 10i ➜ std::complex<double> (1,10);
-☀ complex<double>(1.3, -10.5) - complex<int>(1, 3) ➜ std::complex<double> (0.3,-13.5);
-☀ complex<double>(1.3, -10.5) - complex<float>(1.2, 5) ➜ std::complex<double> (0.1,-15.5);
-☀ 5 + complex<double>(1.3, -10.5) ➜ std::complex<double> (6.3,-10.5);
-☀ int(100) + complex<double>(1.3, -10.5) ➜ std::complex<double> (101.3,-10.5);
-☀ float(100) + complex<double>(1.3, -10.5) ➜ std::complex<double> (101.3,-10.5);
+* 1 + 10i -> std::complex<double> (1,10);
+* complex<double>(1.3, -10.5) - complex<int>(1, 3) -> std::complex<double> (0.3,-13.5);
+* complex<double>(1.3, -10.5) - complex<float>(1.2, 5) -> std::complex<double> (0.1,-15.5);
+* 5 + complex<double>(1.3, -10.5) -> std::complex<double> (6.3,-10.5);
+* int(100) + complex<double>(1.3, -10.5) -> std::complex<double> (101.3,-10.5);
+* float(100) + complex<double>(1.3, -10.5) -> std::complex<double> (101.3,-10.5);
 
 ```
 **Without Mathématiques, all of the above expressions will fail to compile!**
@@ -173,9 +173,9 @@ Below are a few examples.
 
 ```C++
 
-☀ sin(1.4 + 3.5i) ➜ std::complex<double> (16.3317,2.8117);
-☀ exp((3.1415/2)*1i) ➜ std::complex<double> (4.63268e-05,1);
-☀ pow(1.5 + 3i, 0.5) ➜ std::complex<double> (1.5579,0.962835);
+* sin(1.4 + 3.5i) -> std::complex<double> (16.3317,2.8117);
+* exp((3.1415/2)*1i) -> std::complex<double> (4.63268e-05,1);
+* pow(1.5 + 3i, 0.5) -> std::complex<double> (1.5579,0.962835);
 
 ```
 ## Containers of std::complex numbers
@@ -191,16 +191,16 @@ using namespace std::complex_literals;
 complex<double> z = 1.5 + 3.5i;
 Vector<complex<double>> v = Vector<complex<double>>({ 1, 1i, 1 + 1i, 1 - 1i });
 
-☀ z ➜ std::complex<double> (1.5,3.5);
-☀ v ➜ Vector<std::complex<double>> {(1,0), (0,1), (1,1), (1,-1)};
+* z -> std::complex<double> (1.5,3.5);
+* v -> Vector<std::complex<double>> {(1,0), (0,1), (1,1), (1,-1)};
 
-☀ v + z ➜ TER_Binary Vector<std::complex<double>> {(2.5,3.5), (1.5,4.5), (2.5,4.5), (2.5,2.5)};
-☀ v*1i ➜ TER_Binary Vector<std::complex<double>> {(0,1), (-1,0), (-1,1), (1,1)};
-☀ exp(v) ➜ TER_Unary Vector<std::complex<double>> {(2.71828,0), (0.540302,0.841471), (1.46869,2.28736), (1.46869,-2.28736)};
-☀ exp(v) + 1 ➜ TER_Binary Vector<std::complex<double>> {(3.71828,0), (1.5403,0.841471), (2.46869,2.28736), (2.46869,-2.28736)};
-☀ exp(v) + complex(1, 2) ➜ TER_Binary Vector<std::complex<double>> {(3.71828,2), (1.5403,2.84147), (2.46869,4.28736), (2.46869,-0.287355)};
-☀ exp(v) + v ➜ TER_Binary Vector<std::complex<double>> {(3.71828,0), (0.540302,1.84147), (2.46869,3.28736), (2.46869,-3.28736)};
-☀ exp(v)/v + v ➜ TER_Binary Vector<std::complex<double>> {(3.71828,0), (0.841471,0.459698), (2.87802,1.40933), (2.87802,-1.40933)};
+* v + z -> TER_Binary Vector<std::complex<double>> {(2.5,3.5), (1.5,4.5), (2.5,4.5), (2.5,2.5)};
+* v*1i -> TER_Binary Vector<std::complex<double>> {(0,1), (-1,0), (-1,1), (1,1)};
+* exp(v) -> TER_Unary Vector<std::complex<double>> {(2.71828,0), (0.540302,0.841471), (1.46869,2.28736), (1.46869,-2.28736)};
+* exp(v) + 1 -> TER_Binary Vector<std::complex<double>> {(3.71828,0), (1.5403,0.841471), (2.46869,2.28736), (2.46869,-2.28736)};
+* exp(v) + complex(1, 2) -> TER_Binary Vector<std::complex<double>> {(3.71828,2), (1.5403,2.84147), (2.46869,4.28736), (2.46869,-0.287355)};
+* exp(v) + v -> TER_Binary Vector<std::complex<double>> {(3.71828,0), (0.540302,1.84147), (2.46869,3.28736), (2.46869,-3.28736)};
+* exp(v)/v + v -> TER_Binary Vector<std::complex<double>> {(3.71828,0), (0.841471,0.459698), (2.87802,1.40933), (2.87802,-1.40933)};
 ```
 
 
