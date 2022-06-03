@@ -188,7 +188,7 @@
    * Implement `insertRow/Col(i)`, `removeRow/Col(i)`,`pop_top/bot`,`push_top/bot`, `pop_left/right`,`push_left/right`, methods to `Matrix` class
    * support column major matrices and tensors
 * add latex helper functions for disp?
-
+* https://www.gccxml.org/HTML/Index.html
 
 ## Futrue work
 

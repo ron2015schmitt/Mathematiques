@@ -565,123 +565,268 @@ namespace mathq {
   // *********************************************************
 
 
-  // ***************************************************************************
-  // * GridSet
-  // ***************************************************************************
-
-  template <class D>
-  class
-    GridSet {
-  public:
-    const bool isEmptySet;
-    GridSet() : isEmptySet(true) {
-    }
-    GridSet(const bool isEmpty) : isEmptySet(isEmpty) {
-    }
-    ~GridSet() {
-    }
-  };
 
 
-  // ***************************************************************************
-  // * Interval
-  // ***************************************************************************
+template <class D, mathq::GridScaleEnum SCALE>
+class
+  RealSet {
+public:
+  size_t N;
+  D a;
+  D b;
+  bool include_a;
+  bool include_b;
+  GridScaleEnum scale = SCALE;
 
-  template <class D, typename X>
-  class
-    Interval : public GridSet<D> {
-  public:
-    const D a;
-    const D b;
-    const std::size_t N;
-    const D step;
-    Vector<D> grid;
+  // dependent variables
+  // move to private
+  D log_a;
+  D log_b;
+  size_t Neff;
+  D start;
+  D step;
+  mathq::Vector<D> grid;
 
-    Interval(const D a, const D b, const std::size_t N) :
-      // GridSet(false),
-      a(a),
-      b(b),
-      N(N),
-      step((b-a)/static_cast<D>(N-1)) {
-    }
+  RealSet() noexcept {
+    include_a = true;
+    a = -std::numeric_limits<D>::infinity();
+    include_b = true;
+    b = std::numeric_limits<D>::infinity();
+    N = 0;
+    this->init();
+  }
+  RealSet(const D& a, const D& b, const size_t N, const bool include_a = true, const bool include_b = true) noexcept :
+    a(a), b(b), N(N), include_a(include_a), include_b(include_b) {
+    this->init();
+  }
+  ~RealSet() {
+  }
 
-    ~Interval() {
-    }
+  void deflateGrid() {
+    grid.resize(0);
+  }
+  void inflateGrid() {
+    grid.resize(N);
+  }
+  bool hasInflatedGrid() {
+    return grid.size() > 0;
+  }
 
-    void deflateGrid() {
-      grid.resize(0);
-    }
-    void inflateGrid() {
-      grid.resize(N);
-    }
 
-    const D get(size_type i) const {
-      if (i == 0) {
-        return a;
+  RealSet& init() {
+    Neff = N +  size_t(!include_a) + size_t(!include_b);
+    if constexpr (SCALE == GridScale::LOG) {
+      log_a = std::log10(a);
+      log_b = std::log10(b);
+      step = (log_b - log_a)/static_cast<D>(Neff-1);
+      if (include_a) {
+        start = log_a;
       }
-      else if (i == N-1) {
+      else {
+        start = log_a + step;
+      }
+    }
+    else {
+      step = (b - a)/static_cast<D>(Neff-1);
+      if (include_a) {
+        start = a;
+      }
+      else {
+        start = a + step;
+      }
+    }
+    return *this;
+  }
+
+
+  const D getGridPoint(size_t c) const {
+    if constexpr (SCALE == GridScale::LOG) {
+      return getGridPoint_Log(c);
+    }
+    else {
+      return getGridPoint_Linear(c);
+    }
+  }
+
+  const D getGridPoint_Linear(size_t c) const {
+    if (N == 0) return std::numeric_limits<D>::quiet_NaN();
+
+    if (c == N-1) {
+      if (include_b) {
         return b;
       }
       else {
-        return a + static_cast<D>(i)*step;
+        return b - step;
       }
     }
+    return start + static_cast<D>(c)*step;
+  }
 
-    Vector<D>& getGrid() {
-      inflateGrid();
-      grid[0] = a;
-      for (size_type i = 1; i<(N-1); i++) {
-        grid[i] = a + static_cast<D>(i)*step;
+  const D getGridPoint_Log(size_t c) const {
+    if (N == 0) return std::numeric_limits<D>::quiet_NaN();
+
+    if (c == N-1) {
+      if (include_b) {
+        return b;
       }
+      else {
+        return pow(10, log_b - step);
+      }
+    }
+    return pow(10, log_a + static_cast<D>(c)*step);
+  }
+
+
+  mathq::Vector<D>& makeGrid() {
+    if constexpr (SCALE == GridScale::LOG) {
+      return makeGrid_Log();
+    }
+    else {
+      return makeGrid_Linear();
+    }
+  }
+
+
+  mathq::Vector<D>& makeGrid_Linear() {
+    inflateGrid();
+    init();
+    if (N == 0) return grid;
+
+    for (size_t c = 0; c<(N-1); c++) {
+      grid[c] = start + static_cast<D>(c)*step;
+    }
+    if (include_b) {
       grid[N-1] = b;
-      return grid;
     }
-
-    friend std::ostream& operator<<(std::ostream& stream, const Interval<D, X>& x) {
-      using namespace display;
-      dispval_strm(stream, x);
-      return stream;
+    else {
+      grid[N-1] = b - step;
     }
-  };
+    return grid;
+  }
 
 
+  mathq::Vector<D>& makeGrid_Log() {
+    inflateGrid();
+    init();
+    if (N == 0) return grid;
 
-
-  // ***************************************************************************
-    // * Coordinate
-    // ***************************************************************************
-
-  template <class D, typename X>
-  class
-    Coordinate {
-  public:
-    const std::string name;
-    GridSet<D> gridSet;
-
-    Coordinate() :
-      name("[no-name]") {
+    for (size_t c = 0; c<(N-1); c++) {
+      grid[c] = std::pow(10, start + static_cast<D>(c)*step);
     }
-
-    Coordinate(std::string name, GridSet<D> gridSet = GridSet<D>()) :
-      name(name),
-      gridSet(gridSet) {
+    if (include_b) {
+      grid[N-1] = b;
     }
-
-    ~Coordinate() {
+    else {
+      grid[N-1] = std::pow(10, log_b - step);
     }
+    return grid;
+  }
 
-    Coordinate<D, X>& operator=(const Coordinate<D, X>& x) {
-      // this->name = x;
-      // TODO: issue error when in DEBUG mode
-      return *this;
-    }
 
-    friend std::ostream& operator<<(std::ostream& stream, const Coordinate<D, X>& x) {
-      using namespace display;
-      dispval_strm(stream, x);
-      return stream;
+  static RealSet<D> emptySet() {
+    return RealSet<D>(0, 0, 0, false, false);
+  }
+
+  static RealSet<D> point(const D& p) {
+    return RealSet<D>(p, p, 1, true, true);
+  }
+
+
+  static RealSet<D> realLine(const bool include_a = true, const bool include_b = true) {
+    D a;
+    if (include_a) {
+      a = -std::numeric_limits<D>::infinity();
     }
-  };
+    else {
+      a = std::numeric_limits<D>::lowest();
+    }
+    D b;
+    if (include_b) {
+      b = std::numeric_limits<D>::infinity();
+    }
+    else {
+      b = std::numeric_limits<D>::max();
+    }
+    return RealSet<D>(a, b, 0, include_a, include_b);
+  }
+
+  static RealSet<D> realLineNeg(const bool include_a = true, const bool include_b = true) {
+    D a;
+    if (include_a) {
+      a = -std::numeric_limits<D>::infinity();
+    }
+    else {
+      a = std::numeric_limits<D>::lowest();
+    }
+    D b;
+    if (include_b) {
+      b = 0;
+    }
+    else {
+      b = -std::numeric_limits<D>::min();
+    }
+    return RealSet<D>(a, b, 0, include_a, include_b);
+  }
+
+  static RealSet<D> realLinePos(const bool include_a = true, const bool include_b = true) {
+    D a;
+    if (include_a) {
+      a = 0;
+    }
+    else {
+      a = std::numeric_limits<D>::min();
+    }
+    D b;
+    if (include_b) {
+      b = std::numeric_limits<D>::infinity();
+    }
+    else {
+      b = std::numeric_limits<D>::max();
+    }
+    return RealSet<D>(a, b, 0, include_a, include_b);
+  }
+
+};
+
+
+
+
+
+  // // ***************************************************************************
+  //   // * Coordinate
+  //   // ***************************************************************************
+
+  // template <class D, typename X>
+  // class
+  //   Coordinate {
+  // public:
+  //   const std::string name;
+  //   GridSet<D> gridSet;
+
+  //   Coordinate() :
+  //     name("[no-name]") {
+  //   }
+
+  //   Coordinate(std::string name, GridSet<D> gridSet = GridSet<D>()) :
+  //     name(name),
+  //     gridSet(gridSet) {
+  //   }
+
+  //   ~Coordinate() {
+  //   }
+
+  //   Coordinate<D, X>& operator=(const Coordinate<D, X>& x) {
+  //     // this->name = x;
+  //     // TODO: issue error when in DEBUG mode
+  //     return *this;
+  //   }
+
+  //   friend std::ostream& operator<<(std::ostream& stream, const Coordinate<D, X>& x) {
+  //     using namespace display;
+  //     dispval_strm(stream, x);
+  //     return stream;
+  //   }
+  // };
 
 
 
@@ -843,250 +988,156 @@ namespace mathq {
 
 
 
-  // complex and Quaternions are not ordered sets so they can't be used in a range
+  // // complex and Quaternions are not ordered sets so they can't be used in a range
 
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grid(const Interval<D>& rang) {
-    return linspace(rang.a, rang.b, rang.N);
-  }
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto grid(const Interval<D>& rang) {
+  //   return linspace(rang.a, rang.b, rang.N);
+  // }
 
-  /// TODO: use reprow and repcol matrices
+  // /// TODO: use reprow and repcol matrices
 
-  // uses same convetnion as meshgrid form matlab
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grid(const Interval<D>& r1, const Interval<D>& r2) {
-    auto X = Matrix<D>(r2.N, r1.N);
-    auto Y = Matrix<D>(r2.N, r1.N);
-    auto* G = new Vector<Matrix<D>, 2>();
+  // // uses same convetnion as meshgrid form matlab
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto grid(const Interval<D>& r1, const Interval<D>& r2) {
+  //   auto X = Matrix<D>(r2.N, r1.N);
+  //   auto Y = Matrix<D>(r2.N, r1.N);
+  //   auto* G = new Vector<Matrix<D>, 2>();
 
-    for (size_type c = 0; c < r1.N; c++) {
-      D temp;
+  //   for (size_type c = 0; c < r1.N; c++) {
+  //     D temp;
 
-      if (c == 0) {
-        temp = r1.a;
-      }
-      else if (c == r1.N-1) {
-        temp = r1.b;
-      }
-      else {
-        temp = r1.a + static_cast<D>(c)*r1.step;
-      }
-      for (size_type r = 0; r < r2.N; r++) {
-        X(r, c) = temp;
-      }
-    }
+  //     if (c == 0) {
+  //       temp = r1.a;
+  //     }
+  //     else if (c == r1.N-1) {
+  //       temp = r1.b;
+  //     }
+  //     else {
+  //       temp = r1.a + static_cast<D>(c)*r1.step;
+  //     }
+  //     for (size_type r = 0; r < r2.N; r++) {
+  //       X(r, c) = temp;
+  //     }
+  //   }
 
-    for (size_type r = 0; r < r2.N; r++) {
-      D temp;
-      if (r == 0) {
-        temp = r2.a;
-      }
-      else if (r == r2.N-1) {
-        temp = r2.b;
-      }
-      else {
-        temp = r2.a + static_cast<D>(r)*r2.step;
-      }
-      for (size_type c = 0; c < r1.N; c++) {
-        Y(r, c) = temp;
-      }
-    }
-    (*G)(0) = X;
-    (*G)(1) = Y;
-    return *G;
-  }
+  //   for (size_type r = 0; r < r2.N; r++) {
+  //     D temp;
+  //     if (r == 0) {
+  //       temp = r2.a;
+  //     }
+  //     else if (r == r2.N-1) {
+  //       temp = r2.b;
+  //     }
+  //     else {
+  //       temp = r2.a + static_cast<D>(r)*r2.step;
+  //     }
+  //     for (size_type c = 0; c < r1.N; c++) {
+  //       Y(r, c) = temp;
+  //     }
+  //   }
+  //   (*G)(0) = X;
+  //   (*G)(1) = Y;
+  //   return *G;
+  // }
 
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grid(const Interval<D>& r1, const Interval<D>& r2, const Interval<D>& r3) {
-    auto dims = Dimensions(r2.N, r1.N, r3.N);
-    auto X = MultiArray<D, 3>(dims);
-    auto Y = MultiArray<D, 3>(dims);
-    auto Z = MultiArray<D, 3>(dims);
-    auto* G = new Vector<MultiArray<D>, 3>({ Dimensions(3),dims });
-    // TRDISP(G->deepdims());
-    // TRDISP((*G)(0));
-    // X
-    for (size_type c = 0; c < r1.N; c++) {
-      D temp;
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto grid(const Interval<D>& r1, const Interval<D>& r2, const Interval<D>& r3) {
+  //   auto dims = Dimensions(r2.N, r1.N, r3.N);
+  //   auto X = MultiArray<D, 3>(dims);
+  //   auto Y = MultiArray<D, 3>(dims);
+  //   auto Z = MultiArray<D, 3>(dims);
+  //   auto* G = new Vector<MultiArray<D>, 3>({ Dimensions(3),dims });
+  //   // TRDISP(G->deepdims());
+  //   // TRDISP((*G)(0));
+  //   // X
+  //   for (size_type c = 0; c < r1.N; c++) {
+  //     D temp;
 
-      if (c == 0) {
-        temp = r1.a;
-      }
-      else if (c == r1.N-1) {
-        temp = r1.b;
-      }
-      else {
-        temp = r1.a + static_cast<D>(c)*r1.step;
-      }
-      for (size_type r = 0; r < r2.N; r++) {
-        for (size_type k = 0; k < r3.N; k++) {
-          X({ r, c, k }) = temp;
-        }
-      }
-    }
+  //     if (c == 0) {
+  //       temp = r1.a;
+  //     }
+  //     else if (c == r1.N-1) {
+  //       temp = r1.b;
+  //     }
+  //     else {
+  //       temp = r1.a + static_cast<D>(c)*r1.step;
+  //     }
+  //     for (size_type r = 0; r < r2.N; r++) {
+  //       for (size_type k = 0; k < r3.N; k++) {
+  //         X({ r, c, k }) = temp;
+  //       }
+  //     }
+  //   }
 
-    // Y 
-    for (size_type r = 0; r < r2.N; r++) {
-      D temp;
-      if (r == 0) {
-        temp = r2.a;
-      }
-      else if (r == r2.N-1) {
-        temp = r2.b;
-      }
-      else {
-        temp = r2.a + static_cast<D>(r)*r2.step;
-      }
-      for (size_type c = 0; c < r1.N; c++) {
-        for (size_type k = 0; k < r3.N; k++) {
-          Y({ r, c, k }) = temp;
-        }
-      }
-    }
-    // Z
-    for (size_type k = 0; k < r3.N; k++) {
-      D temp;
-      if (k == 0) {
-        temp = r3.a;
-      }
-      else if (k == r3.N-1) {
-        temp = r3.b;
-      }
-      else {
-        temp = r3.a + static_cast<D>(k)*r3.step;
-      }
-      for (size_type r = 0; r < r2.N; r++) {
-        for (size_type c = 0; c < r1.N; c++) {
-          Z({ r, c, k }) = temp;
-        }
-      }
-    }
-    // TRDISP((*G)(0));
-    // TRDISP(X);
-    (*G)(0) = X;
-    (*G)(1) = Y;
-    (*G)(2) = Z;
-    return *G;
-  }
-
-
-  // fgrid 1D - apply function to 1D grid
-
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  Vector<D>& fgrid(std::function<D(D)> func, const Vector<D>& grid) {
-    Vector<D>* y = new Vector<D>(grid.size());
-    for (int k = 0; k < grid.size(); k++) {
-      (*y)[k] = func(grid[k]);
-    }
-    return *y;
-  }
-
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  Vector<D>& fgrid(D(func)(D), const Vector<D>& grid) {
-    // All 3 of these work
-    // std::function<D(D)> func2 = func;  return fgrid( func2, grid );
-    // return fgrid( std::function<D(D)>(std::forward<decltype(func)>(func)), grid );
-    return fgrid(std::function<D(D)>(func), grid);
-  }
+  //   // Y 
+  //   for (size_type r = 0; r < r2.N; r++) {
+  //     D temp;
+  //     if (r == 0) {
+  //       temp = r2.a;
+  //     }
+  //     else if (r == r2.N-1) {
+  //       temp = r2.b;
+  //     }
+  //     else {
+  //       temp = r2.a + static_cast<D>(r)*r2.step;
+  //     }
+  //     for (size_type c = 0; c < r1.N; c++) {
+  //       for (size_type k = 0; k < r3.N; k++) {
+  //         Y({ r, c, k }) = temp;
+  //       }
+  //     }
+  //   }
+  //   // Z
+  //   for (size_type k = 0; k < r3.N; k++) {
+  //     D temp;
+  //     if (k == 0) {
+  //       temp = r3.a;
+  //     }
+  //     else if (k == r3.N-1) {
+  //       temp = r3.b;
+  //     }
+  //     else {
+  //       temp = r3.a + static_cast<D>(k)*r3.step;
+  //     }
+  //     for (size_type r = 0; r < r2.N; r++) {
+  //       for (size_type c = 0; c < r1.N; c++) {
+  //         Z({ r, c, k }) = temp;
+  //       }
+  //     }
+  //   }
+  //   // TRDISP((*G)(0));
+  //   // TRDISP(X);
+  //   (*G)(0) = X;
+  //   (*G)(1) = Y;
+  //   (*G)(2) = Z;
+  //   return *G;
+  // }
 
 
-  //
-  // fgrid 2D 
-  //
+  // // fgrid 1D - apply function to 1D grid
 
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto fgrid(std::function<D(D, D)> func, const Vector<Matrix<D>, 2>& grid) {
-    const Matrix<D>& X = grid(0);
-    const Matrix<D>& Y = grid(1);
-    auto* y = new Matrix<D>(X.Nrows(), X.Ncols());
-    for (int k = 0; k < X.size(); k++) {
-      (*y)[k] = func(X[k], Y[k]);
-    }
-    return *y;
-  }
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // Vector<D>& fgrid(std::function<D(D)> func, const Vector<D>& grid) {
+  //   Vector<D>* y = new Vector<D>(grid.size());
+  //   for (int k = 0; k < grid.size(); k++) {
+  //     (*y)[k] = func(grid[k]);
+  //   }
+  //   return *y;
+  // }
 
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto fgrid(D(func)(D, D), const Vector<Matrix<D>, 2>& grid) {
-    // All 3 of these work
-    // std::function<D(D,D)> func2 = func;  return fgrid( func2, grid );
-    // return fgrid( std::function<D(D,D)>(std::forward<decltype(func)>(func)), grid );
-    return fgrid(std::function<D(D, D)>(func), grid);
-  }
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // Vector<D>& fgrid(D(func)(D), const Vector<D>& grid) {
+  //   // All 3 of these work
+  //   // std::function<D(D)> func2 = func;  return fgrid( func2, grid );
+  //   // return fgrid( std::function<D(D)>(std::forward<decltype(func)>(func)), grid );
+  //   return fgrid(std::function<D(D)>(func), grid);
+  // }
 
 
-  //
-  // fgrid 3D 
-  //
-
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto fgrid(std::function<D(D, D, D)> func, const Vector<MultiArray<D>, 3>& grid) {
-    const MultiArray<D>& X = grid(0);
-    const MultiArray<D>& Y = grid(1);
-    const MultiArray<D>& Z = grid(2);
-    auto* y = new MultiArray<D, 3>(X.dims());
-    for (int k = 0; k < X.size(); k++) {
-      (*y)[k] = func(X[k], Y[k], Z[k]);
-    }
-    return *y;
-  }
-
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto fgrid(D(func)(D, D, D), const Vector<MultiArray<D>, 3>& grid) {
-    // All 3 of these work
-    // std::function<D(D,D)> func2 = func;  return fgrid( func2, grid );
-    // return fgrid( std::function<D(D,D)>(std::forward<decltype(func)>(func)), grid );
-    return fgrid(std::function<D(D, D, D)>(func), grid);
-  }
-
-
-  // ***************************************************************************
-  // * nabla operator
-  // ***************************************************************************
-
-  template <class T>
-  class Nabla_old {
-  public:
-    Nabla_old() {
-    }
-    ~Nabla_old() {
-    }
-  };
-
-  const Nabla_old<void> nabla_old;
-
-
-
-
-
-  // ***************************************************************************
-  // * gradient of a scalar function in N dimensions
-  // ***************************************************************************
-
-  // gradient
-  // assumes a uniform linear grid spacing
-  // TODO: non-uniform grids
-
-  // 
-  // 1D
-  //
-
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grad(const Vector<D>& gridfunc, const Interval<D>& range, const int Dpts = 7, const bool periodic = false) {
-    const size_type N = gridfunc.size();
-    Vector<D>* df = new Vector<D>(N);
-    *df = gridfunc;
-    df->deriv(range.a, range.b, 1, Dpts, periodic);
-    return *df;
-  }
-
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto operator&(const Nabla_old<void> i, std::pair<Vector<D>, Interval<D>> funcANDrange) {
-    return grad(funcANDrange.first, funcANDrange.second);
-  }
-
-  // 
-  // 2D
-  //
+  // //
+  // // fgrid 2D 
+  // //
 
   // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
   // auto fgrid(std::function<D(D, D)> func, const Vector<Matrix<D>, 2>& grid) {
@@ -1099,52 +1150,146 @@ namespace mathq {
   //   return *y;
   // }
 
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto grad(const Matrix<D>& gridfunc, const Interval<D>& domX, const Interval<D>& domY, const int Dpts = 7, const bool periodic = false) {
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto fgrid(D(func)(D, D), const Vector<Matrix<D>, 2>& grid) {
+  //   // All 3 of these work
+  //   // std::function<D(D,D)> func2 = func;  return fgrid( func2, grid );
+  //   // return fgrid( std::function<D(D,D)>(std::forward<decltype(func)>(func)), grid );
+  //   return fgrid(std::function<D(D, D)>(func), grid);
+  // }
 
-    // TODO: rewrite with slices
 
-    const size_type NR = gridfunc.Nrows();
-    const size_type NC = gridfunc.Ncols();
-    Vector<Matrix<D>, 2>* df = new Vector<Matrix<D>, 2>();
-    // starts off with empty matrices
-    // TRDISP(*df);
+  // //
+  // // fgrid 3D 
+  // //
 
-    // take d/dx
-    Vector<D> vtemp = Vector<D>(NC);
-    Matrix<D> mtemp = Matrix<D>(NR, NC);
-    for (int r = 0; r < NR; r++) {
-      for (int c = 0; c < NC; c++) {
-        vtemp(c) = gridfunc(r, c);
-      }
-      vtemp.deriv(domX.a, domX.b, 1, Dpts, periodic);
-      for (int c = 0; c < NC; c++) {
-        mtemp(r, c) = vtemp(c);
-      }
-    }
-    (*df)(0) = mtemp;
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto fgrid(std::function<D(D, D, D)> func, const Vector<MultiArray<D>, 3>& grid) {
+  //   const MultiArray<D>& X = grid(0);
+  //   const MultiArray<D>& Y = grid(1);
+  //   const MultiArray<D>& Z = grid(2);
+  //   auto* y = new MultiArray<D, 3>(X.dims());
+  //   for (int k = 0; k < X.size(); k++) {
+  //     (*y)[k] = func(X[k], Y[k], Z[k]);
+  //   }
+  //   return *y;
+  // }
 
-    // take d/dy
-    vtemp.resize(NR);
-    for (int c = 0; c < NC; c++) {
-      for (int r = 0; r < NR; r++) {
-        vtemp(r) = gridfunc(r, c);
-      }
-      vtemp.deriv(domY.a, domY.b, 1, Dpts, periodic);
-      for (int r = 0; r < NR; r++) {
-        mtemp(r, c) = vtemp(r);
-      }
-    }
-    (*df)(1) = mtemp;
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto fgrid(D(func)(D, D, D), const Vector<MultiArray<D>, 3>& grid) {
+  //   // All 3 of these work
+  //   // std::function<D(D,D)> func2 = func;  return fgrid( func2, grid );
+  //   // return fgrid( std::function<D(D,D)>(std::forward<decltype(func)>(func)), grid );
+  //   return fgrid(std::function<D(D, D, D)>(func), grid);
+  // }
 
-    // TRDISP(*df);
-    return *df;
-  }
 
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  auto operator&(const Nabla_old<void> i, std::tuple<Matrix<D>, Interval<D>, Interval<D>> funcANDrange) {
-    return grad(std::get<0>(funcANDrange), std::get<1>(funcANDrange), std::get<2>(funcANDrange));
-  }
+  // // ***************************************************************************
+  // // * nabla operator
+  // // ***************************************************************************
+
+  // template <class T>
+  // class Nabla_old {
+  // public:
+  //   Nabla_old() {
+  //   }
+  //   ~Nabla_old() {
+  //   }
+  // };
+
+  // const Nabla_old<void> nabla_old;
+
+
+
+
+
+  // // ***************************************************************************
+  // // * gradient of a scalar function in N dimensions
+  // // ***************************************************************************
+
+  // // gradient
+  // // assumes a uniform linear grid spacing
+  // // TODO: non-uniform grids
+
+  // // 
+  // // 1D
+  // //
+
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto grad(const Vector<D>& gridfunc, const Interval<D>& range, const int Dpts = 7, const bool periodic = false) {
+  //   const size_type N = gridfunc.size();
+  //   Vector<D>* df = new Vector<D>(N);
+  //   *df = gridfunc;
+  //   df->deriv(range.a, range.b, 1, Dpts, periodic);
+  //   return *df;
+  // }
+
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto operator&(const Nabla_old<void> i, std::pair<Vector<D>, Interval<D>> funcANDrange) {
+  //   return grad(funcANDrange.first, funcANDrange.second);
+  // }
+
+  // // 
+  // // 2D
+  // //
+
+  // // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // // auto fgrid(std::function<D(D, D)> func, const Vector<Matrix<D>, 2>& grid) {
+  // //   const Matrix<D>& X = grid(0);
+  // //   const Matrix<D>& Y = grid(1);
+  // //   auto* y = new Matrix<D>(X.Nrows(), X.Ncols());
+  // //   for (int k = 0; k < X.size(); k++) {
+  // //     (*y)[k] = func(X[k], Y[k]);
+  // //   }
+  // //   return *y;
+  // // }
+
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto grad(const Matrix<D>& gridfunc, const Interval<D>& domX, const Interval<D>& domY, const int Dpts = 7, const bool periodic = false) {
+
+  //   // TODO: rewrite with slices
+
+  //   const size_type NR = gridfunc.Nrows();
+  //   const size_type NC = gridfunc.Ncols();
+  //   Vector<Matrix<D>, 2>* df = new Vector<Matrix<D>, 2>();
+  //   // starts off with empty matrices
+  //   // TRDISP(*df);
+
+  //   // take d/dx
+  //   Vector<D> vtemp = Vector<D>(NC);
+  //   Matrix<D> mtemp = Matrix<D>(NR, NC);
+  //   for (int r = 0; r < NR; r++) {
+  //     for (int c = 0; c < NC; c++) {
+  //       vtemp(c) = gridfunc(r, c);
+  //     }
+  //     vtemp.deriv(domX.a, domX.b, 1, Dpts, periodic);
+  //     for (int c = 0; c < NC; c++) {
+  //       mtemp(r, c) = vtemp(c);
+  //     }
+  //   }
+  //   (*df)(0) = mtemp;
+
+  //   // take d/dy
+  //   vtemp.resize(NR);
+  //   for (int c = 0; c < NC; c++) {
+  //     for (int r = 0; r < NR; r++) {
+  //       vtemp(r) = gridfunc(r, c);
+  //     }
+  //     vtemp.deriv(domY.a, domY.b, 1, Dpts, periodic);
+  //     for (int r = 0; r < NR; r++) {
+  //       mtemp(r, c) = vtemp(r);
+  //     }
+  //   }
+  //   (*df)(1) = mtemp;
+
+  //   // TRDISP(*df);
+  //   return *df;
+  // }
+
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // auto operator&(const Nabla_old<void> i, std::tuple<Matrix<D>, Interval<D>, Interval<D>> funcANDrange) {
+  //   return grad(std::get<0>(funcANDrange), std::get<1>(funcANDrange), std::get<2>(funcANDrange));
+  // }
 
 
 

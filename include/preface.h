@@ -1300,47 +1300,46 @@ namespace mathq {
   // * Coordinate
   // ***************************************************************************
 
-  template <class D,typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
   class Coordinate;
 
 
   // ***************************************************************************
-  // * GridSet
+  // * GridScale 
   // ***************************************************************************
 
-  template <class D>
-  class GridSet;
+  namespace GridScale {
+    enum Type { LINEAR = false, LOG = true };
+  };
+
+  using GridScaleEnum = GridScale::Type;
+
+  template <class D, GridScaleEnum SCALE = GridScale::LINEAR>
+  class RealSet;
 
 
-  // ***************************************************************************
-  // * Interval
-  // ***************************************************************************
 
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  class Interval;
+  // // ***************************************************************************
+  // // * Coordinates
+  // // ***************************************************************************
 
-
-  // ***************************************************************************
-  // * Coordinates
-  // ***************************************************************************
-
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  class Coordinates;
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // class Coordinates;
 
 
-  // ***************************************************************************
-  // * Region
-  // ***************************************************************************
+  // // ***************************************************************************
+  // // * Region
+  // // ***************************************************************************
 
-  template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  class Region;
+  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
+  // class Region;
 
 
-  // ***************************************************************************
-  // * TargetSet
-  // ***************************************************************************
+  // // ***************************************************************************
+  // // * TargetSet
+  // // ***************************************************************************
 
-  template <class D> class TargetSet;
+  // template <class D> class TargetSet;
 
   // ***************************************************************************
   // * nabla object
