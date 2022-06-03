@@ -257,7 +257,6 @@ namespace mathq {
   private:
     size_type datasize_;
 
-
   public:
     typedef typename std::vector<size_type> Parent;
     typedef typename Parent::iterator Iterator;

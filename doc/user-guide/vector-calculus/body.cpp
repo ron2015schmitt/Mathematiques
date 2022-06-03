@@ -71,7 +71,7 @@ int main() {
   TRDISP(rs.hasInflatedGrid());
 
   CR();
-  ECHO_CODE(RealSet<double>  rs1(-2, +3, 5, true, false));
+  ECHO_CODE(RealSet<double>  rs1(-2, +3, 5, GridScale::LINEAR, true, false));
   TRDISP(rs1);
   TRDISP(rs1.makeGrid());
   TRDISP(rs1.hasInflatedGrid());
@@ -82,7 +82,7 @@ int main() {
   TRDISP(rs2);
 
   CR();
-  ECHO_CODE(RealSet<double, GridScale::LOG>  rs3(10, 1e5, 10));
+  ECHO_CODE(RealSet<double>  rs3(10, 1e5, 10, GridScale::LOG));
   TRDISP(rs3);
   TRDISP(rs3.makeGrid());
   TRDISP(mathq::log10(rs3.makeGrid()));
@@ -101,16 +101,22 @@ int main() {
   TRDISP(rx);
 
   CR();
-  ECHO_CODE(RealSet<double, GridScale::LOG> ry(1, 100, 3));
+  ECHO_CODE(RealSet<double> ry(1, 100, 3, GridScale::LOG));
   TRDISP(ry);
   TRDISP(ry.makeGrid());
 
-  CR();
-  auto setXY = std::make_tuple(rx, ry);
-  TRDISP(std::get<0>(setXY));
-  TRDISP(std::get<1>(setXY));
+  // CR();
+  // auto setXY = std::make_tuple(rx, ry);
+  // TRDISP(std::get<0>(setXY));
+  // TRDISP(std::get<1>(setXY));
 
-  // TRDISP(std::numeric_limits<double>::infinity()  > 1);
+  CR();
+  ECHO_CODE(RealSetN<double> setXY({rx, ry}));
+  TRDISP(setXY);
+  TRDISP(setXY[0]);
+  TRDISP(setXY[1]);
+
+
 
   // ECHO_CODE(Coordinate2<double, Interval> x_coord2("x", x_interval));
   // TRDISP(x_coord2.gridSet);

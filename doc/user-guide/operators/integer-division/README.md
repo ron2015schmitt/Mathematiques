@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.17-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.18-c++17</h1>
 
 <details>
 
@@ -82,12 +82,12 @@ For details refer to [Arithmetic Operators](https://en.cppreference.com/w/cpp/la
 
 ### Examples: integer division
 ```C++
-* 7 / 2 -> int 3;
+☀ 7 / 2 ➜ int 3;
 ```
 * The modulus operator `a % b`, gives the remainder after integer divison of `a` by `b`.
 
 ```C++
-* 7 % 2 -> int 1;
+☀ 7 % 2 ➜ int 1;
 ```
 * The function [`std::div`](https://en.cppreference.com/w/cpp/numeric/math/div) can also be used for integer division, It returns both the result and remainder.
 
@@ -97,8 +97,8 @@ div_t result = div(7, 2);
 With result:
 
 ```C++
-* result.quot -> int 3;
-* result.rem -> int 1;
+☀ result.quot ➜ int 3;
+☀ result.rem ➜ int 1;
 ```
 
 

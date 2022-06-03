@@ -855,13 +855,6 @@ namespace display {
     return style;
   }
 
-  template <class D>
-  Style getTypeStyle(const mathq::Coordinate<D>& var) {
-    Style style = CREATESTYLE(CYAN);
-    return style;
-  }
-
-
 
 
   template <class T>
@@ -1037,7 +1030,7 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER(std::list);
   SPECIALIZE_getTypeName_CONTAINER(std::queue);
   SPECIALIZE_getTypeName_CONTAINER(std::initializer_list);
-  SPECIALIZE_getTypeName_CONTAINER(mathq::Coordinate);
+  SPECIALIZE_getTypeName_CONTAINER(mathq::RealSetN);
 
 #define SPECIALIZE_getTypeName_CONTAINER2(TYPE)             \
   template <typename D1, typename D2>                       \
@@ -1076,18 +1069,17 @@ namespace display {
   }
 
 
-  template <typename D, mathq::GridScaleEnum SCALE>
-  inline std::string getTypeName(const mathq::RealSet<D, SCALE>& var) {
+  template <typename D>
+  inline std::string getTypeName(const mathq::RealSet<D>& var) {
     std::string s = getTypeStyle(var).apply("mathq::RealSet");
     D d;
     s += StyledString::get(ANGLE1).get();
     s += getTypeName(d);
-    s += StyledString::get(COMMA).get();
-    // s += "SCALE";  // TODO: put text
-    s += getTypeName(SCALE);
     s += StyledString::get(ANGLE2).get();
     return s;
   }
+
+
 
 
   // template< class T >
@@ -1423,8 +1415,8 @@ namespace display {
   }
 
   // mathq::RealSet
-  template <typename D, mathq::GridScaleEnum SCALE>
-  inline void dispval_strm(std::ostream& stream, const mathq::RealSet<D, SCALE>& var) {
+  template <typename D>
+  inline void dispval_strm(std::ostream& stream, const mathq::RealSet<D>& var) {
     if (var.a == var.b) {
       // point
       stream << "{point=";
@@ -1493,6 +1485,21 @@ namespace display {
     }
     stream << "}";
   }
+
+
+  // RealSetN
+  template <typename D>
+  inline void dispval_strm(std::ostream& stream, const mathq::RealSetN<D>& var) {
+    stream << "{\n";
+    for (size_t ii = 0; ii < var.size(); ii++) {
+      if (ii > 0)
+        stream << ", \n";
+      stream << "  ";
+      dispval_strm(stream, var[ii]);
+    }
+    stream << "\n}";
+  }
+
 
 
   //   // std::vector
@@ -1609,37 +1616,6 @@ namespace display {
       dispval_strm<I + 1, Ts...>(stream, var);
     }
   }
-
-
-
-
-
-
-
-
-
-
-  // mathq::Coordinate
-  template <typename T>
-  inline void dispval_strm(std::ostream& stream, const mathq::Coordinate<T>& var) {
-    // stream << "(name=\"";
-    // dispval_strm(stream, var.name);
-    // stream << "\"";
-    // stream << ", gridSet=";
-    // dispval_strm(stream, var.gridSet);
-    // stream << ")";
-  }
-
-  // // mathq::Coordinates
-  // template <typename T>
-  // inline void dispval_strm(std::ostream& stream, const mathq::Coordinates<T>& var) {
-  //   stream << "(name=\"";
-  //   dispval_strm(stream, var.name);
-  //   stream << "\"";
-  //   stream << ", coordinates=";
-  //   dispval_strm(stream, var.coordinates);
-  //   stream << ")";
-  // }
 
 
 

@@ -565,425 +565,293 @@ namespace mathq {
   // *********************************************************
 
 
-
-
-template <class D, mathq::GridScaleEnum SCALE>
-class
-  RealSet {
-public:
-  size_t N;
-  D a;
-  D b;
-  bool include_a;
-  bool include_b;
-  GridScaleEnum scale = SCALE;
-
-  // dependent variables
-  // move to private
-  D log_a;
-  D log_b;
-  size_t Neff;
-  D start;
-  D step;
-  mathq::Vector<D> grid;
-
-  RealSet() noexcept {
-    include_a = true;
-    a = -std::numeric_limits<D>::infinity();
-    include_b = true;
-    b = std::numeric_limits<D>::infinity();
-    N = 0;
-    this->init();
-  }
-  RealSet(const D& a, const D& b, const size_t N, const bool include_a = true, const bool include_b = true) noexcept :
-    a(a), b(b), N(N), include_a(include_a), include_b(include_b) {
-    this->init();
-  }
-  ~RealSet() {
-  }
-
-  void deflateGrid() {
-    grid.resize(0);
-  }
-  void inflateGrid() {
-    grid.resize(N);
-  }
-  bool hasInflatedGrid() {
-    return grid.size() > 0;
-  }
-
-
-  RealSet& init() {
-    Neff = N +  size_t(!include_a) + size_t(!include_b);
-    if constexpr (SCALE == GridScale::LOG) {
-      log_a = std::log10(a);
-      log_b = std::log10(b);
-      step = (log_b - log_a)/static_cast<D>(Neff-1);
-      if (include_a) {
-        start = log_a;
-      }
-      else {
-        start = log_a + step;
-      }
-    }
-    else {
-      step = (b - a)/static_cast<D>(Neff-1);
-      if (include_a) {
-        start = a;
-      }
-      else {
-        start = a + step;
-      }
-    }
-    return *this;
-  }
-
-
-  const D getGridPoint(size_t c) const {
-    if constexpr (SCALE == GridScale::LOG) {
-      return getGridPoint_Log(c);
-    }
-    else {
-      return getGridPoint_Linear(c);
-    }
-  }
-
-  const D getGridPoint_Linear(size_t c) const {
-    if (N == 0) return std::numeric_limits<D>::quiet_NaN();
-
-    if (c == N-1) {
-      if (include_b) {
-        return b;
-      }
-      else {
-        return b - step;
-      }
-    }
-    return start + static_cast<D>(c)*step;
-  }
-
-  const D getGridPoint_Log(size_t c) const {
-    if (N == 0) return std::numeric_limits<D>::quiet_NaN();
-
-    if (c == N-1) {
-      if (include_b) {
-        return b;
-      }
-      else {
-        return pow(10, log_b - step);
-      }
-    }
-    return pow(10, log_a + static_cast<D>(c)*step);
-  }
-
-
-  mathq::Vector<D>& makeGrid() {
-    if constexpr (SCALE == GridScale::LOG) {
-      return makeGrid_Log();
-    }
-    else {
-      return makeGrid_Linear();
-    }
-  }
-
-
-  mathq::Vector<D>& makeGrid_Linear() {
-    inflateGrid();
-    init();
-    if (N == 0) return grid;
-
-    for (size_t c = 0; c<(N-1); c++) {
-      grid[c] = start + static_cast<D>(c)*step;
-    }
-    if (include_b) {
-      grid[N-1] = b;
-    }
-    else {
-      grid[N-1] = b - step;
-    }
-    return grid;
-  }
-
-
-  mathq::Vector<D>& makeGrid_Log() {
-    inflateGrid();
-    init();
-    if (N == 0) return grid;
-
-    for (size_t c = 0; c<(N-1); c++) {
-      grid[c] = std::pow(10, start + static_cast<D>(c)*step);
-    }
-    if (include_b) {
-      grid[N-1] = b;
-    }
-    else {
-      grid[N-1] = std::pow(10, log_b - step);
-    }
-    return grid;
-  }
-
-
-  static RealSet<D> emptySet() {
-    return RealSet<D>(0, 0, 0, false, false);
-  }
-
-  static RealSet<D> point(const D& p) {
-    return RealSet<D>(p, p, 1, true, true);
-  }
-
-
-  static RealSet<D> realLine(const bool include_a = true, const bool include_b = true) {
-    D a;
-    if (include_a) {
-      a = -std::numeric_limits<D>::infinity();
-    }
-    else {
-      a = std::numeric_limits<D>::lowest();
-    }
-    D b;
-    if (include_b) {
-      b = std::numeric_limits<D>::infinity();
-    }
-    else {
-      b = std::numeric_limits<D>::max();
-    }
-    return RealSet<D>(a, b, 0, include_a, include_b);
-  }
-
-  static RealSet<D> realLineNeg(const bool include_a = true, const bool include_b = true) {
-    D a;
-    if (include_a) {
-      a = -std::numeric_limits<D>::infinity();
-    }
-    else {
-      a = std::numeric_limits<D>::lowest();
-    }
-    D b;
-    if (include_b) {
-      b = 0;
-    }
-    else {
-      b = -std::numeric_limits<D>::min();
-    }
-    return RealSet<D>(a, b, 0, include_a, include_b);
-  }
-
-  static RealSet<D> realLinePos(const bool include_a = true, const bool include_b = true) {
-    D a;
-    if (include_a) {
-      a = 0;
-    }
-    else {
-      a = std::numeric_limits<D>::min();
-    }
-    D b;
-    if (include_b) {
-      b = std::numeric_limits<D>::infinity();
-    }
-    else {
-      b = std::numeric_limits<D>::max();
-    }
-    return RealSet<D>(a, b, 0, include_a, include_b);
-  }
-
-};
-
-
-
-
-
-  // // ***************************************************************************
-  //   // * Coordinate
-  //   // ***************************************************************************
-
-  // template <class D, typename X>
-  // class
-  //   Coordinate {
-  // public:
-  //   const std::string name;
-  //   GridSet<D> gridSet;
-
-  //   Coordinate() :
-  //     name("[no-name]") {
-  //   }
-
-  //   Coordinate(std::string name, GridSet<D> gridSet = GridSet<D>()) :
-  //     name(name),
-  //     gridSet(gridSet) {
-  //   }
-
-  //   ~Coordinate() {
-  //   }
-
-  //   Coordinate<D, X>& operator=(const Coordinate<D, X>& x) {
-  //     // this->name = x;
-  //     // TODO: issue error when in DEBUG mode
-  //     return *this;
-  //   }
-
-  //   friend std::ostream& operator<<(std::ostream& stream, const Coordinate<D, X>& x) {
-  //     using namespace display;
-  //     dispval_strm(stream, x);
-  //     return stream;
-  //   }
-  // };
-
-
-
-
-
-  // // ***************************************************************************
-  // // * Coordinates
-  // // ***************************************************************************
-
-  // template <class D, typename X>
-  // class
-  //   Coordinates {
-  // public:
-  //   std::vector<Coordinate<D>> coordinates;
-  //   const size_t Ndims;
-  //   const std::string name;
-
-  //   Coordinates(std::string name, const std::initializer_list<Coordinate<D>>& list) :
-  //     name(name),
-  //     coordinates(std::vector<Coordinate<D>>{ list }),
-  //     Ndims(list.size()) {
-  //   }
-  //   Coordinates(std::string name, const std::initializer_list<std::string>& list) :
-  //     name(name),
-  //     coordinates(Coordinates::makeCoordinates(list)),
-  //     Ndims(list.size()) {
-  //   }
-  //   Coordinates(std::string name, const std::vector<Coordinate<D>>& v) :
-  //     name(name),
-  //     coordinates(v),
-  //     Ndims(v.size()) {
-  //   }
-  //   Coordinates(std::string name, const std::vector<std::string>& v) :
-  //     name(name),
-  //     coordinates(Coordinates::makeCoordinates(v)),
-  //     Ndims(v.size()) {
-  //   }
-
-  //   // need copy constructor
-  //   Coordinates(const Coordinates<D>& x, std::string name = "unnamed") :
-  //     coordinates(x.coordinates),
-  //     Ndims(x.Ndims),
-  //     name(name) {
-  //   }
-
-  //   ~Coordinates() {
-  //   }
-
-  //   static std::vector<Coordinate<D>>& makeCoordinates(const std::initializer_list<std::string>& list) {
-  //     std::vector<Coordinate<D>>* coordinates = new std::vector<Coordinate<D>>(0);
-  //     size_t c = 0;
-  //     for (std::initializer_list<std::string>::iterator it = list.begin(); it != list.end(); ++it) {
-  //       Coordinate<D> coord(*it);
-  //       coordinates->push_back(Coordinate<D>(*it));
-  //     }
-  //     return *coordinates;
-  //   }
-  //   static std::vector<Coordinate<D>>& makeCoordinates(const std::vector<std::string>& v) {
-  //     std::vector<Coordinate<D>>* coordinates = new std::vector<Coordinate<D>>(0);
-  //     for (size_t c = 0; c < v.size(); c++) {
-  //       coordinates->push_back(v[c]);
-  //     }
-  //     return *coordinates;
-  //   }
-
-  //   size_t size() const {
-  //     return Ndims;
-  //   }
-
-
-  // };
-
-
-
-
-
-  // // ***************************************************************************
-  // // * Region
-  // // ***************************************************************************
-
-  // template <class D, typename X>
-  // class
-  //   Region : public Coordinates<D, X> {
-  // public:
-  //   std::vector<Interval<D>> intervals;
-
-  //   Region(std::string name, const std::initializer_list<Interval<D>>& list) :
-  //     Coordinates<D, X>(name, Region::makeNames(list)),
-  //     intervals(std::vector<Interval<D>>{ list }) {
-  //   }
-
-  //   // Region(const std::vector<Interval<D>>& v, std::string name = "unnamed") :
-  //   //   intervals(v),
-  //   //   Ndims(v.size()),
-  //   //   name(name),
-  //   //   names(Region::makeNames(intervals)) {
-  //   // }
-  //   // Region(const Region<D>& x, std::string name = "unnamed") :
-  //   //   intervals(x.intervals),
-  //   //   Ndims(x.Ndims),
-  //   //   name(name),
-  //   //   names(Region::makeNames(intervals)) {
-  //   // }
-
-  //   ~Region() {
-  //   }
-
-  //   static std::vector<std::string>& makeNames(const std::vector<Interval<D>> intervals) {
-  //     std::vector<std::string>* names = new std::vector<std::string>(intervals.size());
-  //     for (size_t c = 0; c < intervals.size(); c++) {
-  //       (*names)[c] = intervals[c].name;
-  //     }
-  //     return *names;
-  //   }
-
-
-  //   // const Interval<D>& operator[](const std::string name) {
-  //   //   return this->get(name);
-  //   // }
-
-  //   // const Interval<D>& operator[](const size_t c) {
-  //   //   return intervals[c];
-  //   // }
-
-
-  //   const Interval<D>& get(const std::string name) {
-  //     // TODO: in debug mode, check to ensure one and only one found
-  //     for (size_t c = 0; c < intervals.size(); c++) {
-  //       if (intervals[c].name == name) {
-  //         return intervals[c];
-  //       }
-  //     }
-  //     // this is intended to produce a run-time error because the name was not found
-  //     return intervals[intervals.size()];
-  //   }
-
-
-  // };
-
-
-  // ***************************************************************************
-  // * TargetSet
-  // *************************************************************************** 
+//
+// RealSet<D>
+//
 
   template <class D>
   class
-    TargetSet {
+    RealSet {
   public:
-    const unsigned short Ndims;
-    const unsigned short rank;
-    TargetSet(const unsigned short Ndims, unsigned short rank) :
-      Ndims(Ndims),
-      rank(rank) {
+    size_t N;
+    D a;
+    D b;
+    bool include_a;
+    bool include_b;
+    GridScaleEnum scale;
+
+    // dependent variables
+    // move to private
+    D log_a;
+    D log_b;
+    size_t Neff;
+    D start;
+    D step;
+    mathq::Vector<D> grid;
+
+    RealSet() noexcept {
+      include_a = true;
+      a = -std::numeric_limits<D>::infinity();
+      include_b = true;
+      b = std::numeric_limits<D>::infinity();
+      N = 0;
+      this->init();
     }
-    ~TargetSet() {
+    RealSet(const D& a, const D& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
+      a(a), b(b), N(N), scale(scale), include_a(include_a), include_b(include_b) {
+      this->init();
     }
+    ~RealSet() {
+    }
+
+    void deflateGrid() {
+      grid.resize(0);
+    }
+    void inflateGrid() {
+      grid.resize(N);
+    }
+    bool hasInflatedGrid() {
+      return grid.size() > 0;
+    }
+
+
+    RealSet& init() {
+      Neff = N +  size_t(!include_a) + size_t(!include_b);
+      if (scale == GridScale::LOG) {
+        log_a = std::log10(a);
+        log_b = std::log10(b);
+        step = (log_b - log_a)/static_cast<D>(Neff-1);
+        if (include_a) {
+          start = log_a;
+        }
+        else {
+          start = log_a + step;
+        }
+      }
+      else {
+        step = (b - a)/static_cast<D>(Neff-1);
+        if (include_a) {
+          start = a;
+        }
+        else {
+          start = a + step;
+        }
+      }
+      return *this;
+    }
+
+
+    const D getGridPoint(size_t c) const {
+      if (scale == GridScale::LOG) {
+        return getGridPoint_Log(c);
+      }
+      else {
+        return getGridPoint_Linear(c);
+      }
+    }
+
+    const D getGridPoint_Linear(size_t c) const {
+      if (N == 0) return std::numeric_limits<D>::quiet_NaN();
+
+      if (c == N-1) {
+        if (include_b) {
+          return b;
+        }
+        else {
+          return b - step;
+        }
+      }
+      return start + static_cast<D>(c)*step;
+    }
+
+    const D getGridPoint_Log(size_t c) const {
+      if (N == 0) return std::numeric_limits<D>::quiet_NaN();
+
+      if (c == N-1) {
+        if (include_b) {
+          return b;
+        }
+        else {
+          return pow(10, log_b - step);
+        }
+      }
+      return pow(10, log_a + static_cast<D>(c)*step);
+    }
+
+
+    mathq::Vector<D>& makeGrid() {
+      if (scale == GridScale::LOG) {
+        return makeGrid_Log();
+      }
+      else {
+        return makeGrid_Linear();
+      }
+    }
+
+
+    mathq::Vector<D>& makeGrid_Linear() {
+      inflateGrid();
+      init();
+      if (N == 0) return grid;
+
+      for (size_t c = 0; c<(N-1); c++) {
+        grid[c] = start + static_cast<D>(c)*step;
+      }
+      if (include_b) {
+        grid[N-1] = b;
+      }
+      else {
+        grid[N-1] = b - step;
+      }
+      return grid;
+    }
+
+
+    mathq::Vector<D>& makeGrid_Log() {
+      inflateGrid();
+      init();
+      if (N == 0) return grid;
+
+      for (size_t c = 0; c<(N-1); c++) {
+        grid[c] = std::pow(10, start + static_cast<D>(c)*step);
+      }
+      if (include_b) {
+        grid[N-1] = b;
+      }
+      else {
+        grid[N-1] = std::pow(10, log_b - step);
+      }
+      return grid;
+    }
+
+
+    static RealSet<D> emptySet() {
+      return RealSet<D>(0, 0, 0, GridScale::LINEAR, false, false);
+    }
+
+    static RealSet<D> point(const D& p) {
+      return RealSet<D>(p, p, 1, GridScale::LINEAR, true, true);
+    }
+
+    // [a,b]
+    static RealSet<D> interval_CC(const D& a, const D& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return RealSet<D>(a, b, N, scale, true, true);
+    }
+
+    // (a,b]
+    static RealSet<D> interval_OC(const D& a, const D& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return RealSet<D>(a, b, N, scale, false, true);
+    }
+
+    // [a,b)
+    static RealSet<D> interval_CO(const D& a, const D& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return RealSet<D>(a, b, N, scale, true, false);
+    }
+
+    // (a,b)
+    static RealSet<D> interval_OO(const D& a, const D& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return RealSet<D>(a, b, N, scale, false, false);
+    }
+
+
+
+    static RealSet<D> realLine(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+      D a;
+      if (include_a) {
+        a = -std::numeric_limits<D>::infinity();
+      }
+      else {
+        a = std::numeric_limits<D>::lowest();
+      }
+      D b;
+      if (include_b) {
+        b = std::numeric_limits<D>::infinity();
+      }
+      else {
+        b = std::numeric_limits<D>::max();
+      }
+      return RealSet<D>(a, b, 0, scale, include_a, include_b);
+    }
+
+    static RealSet<D> realLineNeg(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+      D a;
+      if (include_a) {
+        a = -std::numeric_limits<D>::infinity();
+      }
+      else {
+        a = std::numeric_limits<D>::lowest();
+      }
+      D b;
+      if (include_b) {
+        b = 0;
+      }
+      else {
+        b = -std::numeric_limits<D>::min();
+      }
+      return RealSet<D>(a, b, 0, scale, include_a, include_b);
+    }
+
+    static RealSet<D> realLinePos(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+      D a;
+      if (include_a) {
+        a = 0;
+      }
+      else {
+        a = std::numeric_limits<D>::min();
+      }
+      D b;
+      if (include_b) {
+        b = std::numeric_limits<D>::infinity();
+      }
+      else {
+        b = std::numeric_limits<D>::max();
+      }
+      return RealSet<D>(a, b, 0, include_a, include_b);
+    }
+
   };
+
+
+
+  //
+  // RealSetN<D>
+  //
+
+  template <class D>
+  class
+    RealSetN : public std::vector<RealSet<D>> {
+  public:
+    typedef typename std::vector<RealSet<D>> Parent;
+    typedef typename Parent::iterator Iterator;
+    typedef RealSet<D> ElementType;
+    typedef D DataType;
+
+    RealSetN(const std::initializer_list<RealSet<D>>& mylist) : Parent(mylist) {
+    }
+
+    void deflateGrid() {
+      // grid.resize(0);
+    }
+    void inflateGrid() {
+      // grid.resize(N);
+    }
+    bool hasInflatedGrid() {
+      // return grid.size() > 0;
+      return false;
+    }
+
+    // mathq::Vector<D>& makeGrid() {
+    //   if (scale == GridScale::LOG) {
+    //     return makeGrid_Log();
+    //   }
+    //   else {
+    //     return makeGrid_Linear();
+    //   }
+    // }
+
+
+  };
+
 
 
 
@@ -1536,21 +1404,21 @@ public:
           }
           else {
             s4 += v[j];
-          }
         }
+      }
         result += 32*s1 + 12*s2 + 32*s3 + 14*s4;
         result = result * 2*(b-a)/(45*D(N-1));
-      }
+    }
       break;
     default:
 #if MATHQ_DEBUG>0
       std::cerr << "integrate_a2b: bad order parameter order="<<order<<std::endl;
 #endif
       break;
-    }
+  }
 
     return result;
-  }
+}
 
 
 

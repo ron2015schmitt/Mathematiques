@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.17-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.18-c++17</h1>
 
 <details>
 
@@ -94,16 +94,16 @@ The size of a quaternions is simply _four times_ the size of the underlying arit
 
 
 ```C++
-* CHAR_BIT -> 8 bits;
+☀ CHAR_BIT ➜ 8 bits;
 
-* CHAR_BIT*sizeof(int) -> 32 bits;
-* CHAR_BIT*sizeof(Quaternion<int>) -> 128 bits;
+☀ CHAR_BIT*sizeof(int) ➜ 32 bits;
+☀ CHAR_BIT*sizeof(Quaternion<int>) ➜ 128 bits;
 
-* CHAR_BIT*sizeof(double) -> 64 bits;
-* CHAR_BIT*sizeof(Quaternion<double>) -> 256 bits;
+☀ CHAR_BIT*sizeof(double) ➜ 64 bits;
+☀ CHAR_BIT*sizeof(Quaternion<double>) ➜ 256 bits;
 
-* CHAR_BIT*sizeof(long double) -> 128 bits;
-* CHAR_BIT*sizeof(Quaternion<long double>) -> 512 bits;
+☀ CHAR_BIT*sizeof(long double) ➜ 128 bits;
+☀ CHAR_BIT*sizeof(Quaternion<long double>) ➜ 512 bits;
 
 ```
 ## Declaration and initialization
@@ -123,9 +123,9 @@ auto p = Quaternion<double>() = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k;
 In the above expressions we used the constants `i`, `j`, and `k`, which are defined as follows:
 
 ```C++
-* mathq::unit_imaginary::i -> Imaginary<double> i;
-* mathq::unit_quaternion::j -> Quaternion<double> j;
-* mathq::unit_quaternion::k -> Quaternion<double> k;
+☀ mathq::unit_imaginary::i ➜ Imaginary<double> i;
+☀ mathq::unit_quaternion::j ➜ Quaternion<double> j;
+☀ mathq::unit_quaternion::k ➜ Quaternion<double> k;
 ```
 Unlike the standard C++ `i`, which is an operator, the Mathématiques `i`, `j`, and `k` are constants
 ## Arithmetic Operators
@@ -133,10 +133,10 @@ The 4 fundamental arithmetic operators can be used with quaternions.
 Mathématiques supports the four arithmetic operators for quaternions:
 
 ```C++
-* q1+q2 -> Quaternion<double> 5 + 5*i + -3*j + -8*k;
-* q1-q2 -> Quaternion<double> -3 + -i + j + 2*k;
-* q1*q2 -> Quaternion<double> -19 + 10*i + -5*j + -18*k;
-* q2/q1 -> Quaternion<double> 1.8 + -0.4*i + 0.2*j + 0.4*k;
+☀ q1+q2 ➜ Quaternion<double> 5 + 5*i + -3*j + -8*k;
+☀ q1-q2 ➜ Quaternion<double> -3 + -i + j + 2*k;
+☀ q1*q2 ➜ Quaternion<double> -19 + 10*i + -5*j + -18*k;
+☀ q2/q1 ➜ Quaternion<double> 1.8 + -0.4*i + 0.2*j + 0.4*k;
 ```
 ## Methods
 Assume `q`  is of type `Quaternion<D>` with 
@@ -188,19 +188,19 @@ Note that for complex numbers **n̂** = +i or -i.
 A few examples are shown below.
 
 ```C++
-* q1 -> Quaternion<double> 1 + 2*i + -j + -3*k;
-* q1.real() -> double 1;
-* q1.imag() -> double 2;
-* q1.jmag() -> double -1;
-* q1.kmag() -> double -3;
-* q1.abs() -> double 3.87298;
-* q1.scalar() -> double 1;
-* q1.vector() -> Vector<double,NE=3> {2, -1, -3};
-* q1.vabs() -> double 3.74166;
-* q1.unitvector() -> Vector<double,NE=3> {0.534522, -0.267261, -0.801784};
-* q1.angle() -> double 1.30964;
-* q1.polar() -> std::tuple<double,double,Vector<double,NE=3>> {3.87298,1.30964,{0.534522, -0.267261, -0.801784}};
-* q1.matrix2by2() -> Matrix<std::complex<double>,NR=2,NC=2> { {(1,2), (-1,-3)}, {(1,-3), (1,-2)} };
+☀ q1 ➜ Quaternion<double> 1 + 2*i + -j + -3*k;
+☀ q1.real() ➜ double 1;
+☀ q1.imag() ➜ double 2;
+☀ q1.jmag() ➜ double -1;
+☀ q1.kmag() ➜ double -3;
+☀ q1.abs() ➜ double 3.87298;
+☀ q1.scalar() ➜ double 1;
+☀ q1.vector() ➜ Vector<double,NE=3> {2, -1, -3};
+☀ q1.vabs() ➜ double 3.74166;
+☀ q1.unitvector() ➜ Vector<double,NE=3> {0.534522, -0.267261, -0.801784};
+☀ q1.angle() ➜ double 1.30964;
+☀ q1.polar() ➜ std::tuple<double,double,Vector<double,NE=3>> {3.87298,1.30964,{0.534522, -0.267261, -0.801784}};
+☀ q1.matrix2by2() ➜ Matrix<std::complex<double>,NR=2,NC=2> { {(1,2), (-1,-3)}, {(1,-3), (1,-2)} };
 ```
 typename = std::tuple<double,double,Vector<double,NE=3>>
 ## Functions
@@ -211,13 +211,13 @@ Below are a few examples.
 
 
 ```C++
-* q -> Quaternion<double> 16 + 2*i + 3*j + 13*k;
-* exp(q) -> Quaternion<double> 5.35246e+06 + 1.05157e+06*i + 1.57736e+06*j + 6.83522e+06*k;
-* log(q) -> Quaternion<double> 3.04111 + 0.103851*i + 0.155777*j + 0.675034*k;
-* pow(q, 2) -> Quaternion<double> 74 + 64*i + 96*j + 416*k;
-* pow(q, 0.5) -> Quaternion<double> 4.297 + 0.23272*i + 0.349081*j + 1.51268*k;
-* inv(q) -> Quaternion<double> 0.0365297 + -0.00456621*i + -0.00684932*j + -0.0296804*k;
-* conj(q) -> Quaternion<double> 16 + -2*i + -3*j + -13*k;
+☀ q ➜ Quaternion<double> 16 + 2*i + 3*j + 13*k;
+☀ exp(q) ➜ Quaternion<double> 5.35246e+06 + 1.05157e+06*i + 1.57736e+06*j + 6.83522e+06*k;
+☀ log(q) ➜ Quaternion<double> 3.04111 + 0.103851*i + 0.155777*j + 0.675034*k;
+☀ pow(q, 2) ➜ Quaternion<double> 74 + 64*i + 96*j + 416*k;
+☀ pow(q, 0.5) ➜ Quaternion<double> 4.297 + 0.23272*i + 0.349081*j + 1.51268*k;
+☀ inv(q) ➜ Quaternion<double> 0.0365297 + -0.00456621*i + -0.00684932*j + -0.0296804*k;
+☀ conj(q) ➜ Quaternion<double> 16 + -2*i + -3*j + -13*k;
 ```
 ## Containers of Quaternions
 
@@ -229,21 +229,21 @@ Below are examples of container math with quaternions.  Mixed math is allowed.
 auto v = Vector<Quaternion<double>>({ 16 + 2*i + 3*j + 13*k, 5 + 11*i + 10*j + 8*k, 9 + 7*i + 6*j + 12*k, 4 + 14*i + 15*j + 1*k });
 ```
 ```C++
-* q -> Quaternion<double> 16 + 2*i + 3*j + 13*k;
+☀ q ➜ Quaternion<double> 16 + 2*i + 3*j + 13*k;
 
-* v -> Vector<Quaternion<double>> {
+☀ v ➜ Vector<Quaternion<double>> {
 16 + 2*i + 3*j + 13*k, 
 5 + 11*i + 10*j + 8*k, 
 9 + 7*i + 6*j + 12*k, 
 4 + 14*i + 15*j + k};
 
-* v + q -> TER_Binary Vector<Quaternion<double>> {
+☀ v + q ➜ TER_Binary Vector<Quaternion<double>> {
 32 + 4*i + 6*j + 26*k, 
 21 + 13*i + 13*j + 21*k, 
 25 + 9*i + 9*j + 25*k, 
 20 + 16*i + 18*j + 14*k};
 
-* exp(v) -> TER_Unary Vector<Quaternion<double>> {
+☀ exp(v) ➜ TER_Unary Vector<Quaternion<double>> {
 5.35246e+06 + 1.05157e+06*i + 1.57736e+06*j + 6.83522e+06*k, 
 -57.3593 + -89.1893*i + -81.0812*j + -64.865*k, 
 -6799.09 + 2039.12*i + 1747.82*j + 3495.64*k, 

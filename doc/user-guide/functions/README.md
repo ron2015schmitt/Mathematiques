@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.17-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.18-c++17</h1>
 
 <details>
 
@@ -81,9 +81,9 @@ The default `zero_tolerance` values are global variables and can be changed by t
 The default values were chosen so that the typical numerical error encountered with trig functions will produce exactly zero when appropriate.
 
 ```C++
-* Functions<float>::tolerance -> 3.5e-07;
-* Functions<double>::tolerance -> 1.5e-16;
-* Functions<long double>::tolerance -> 1.5e-30;
+☀ Functions<float>::tolerance ➜ 3.5e-07;
+☀ Functions<double>::tolerance ➜ 1.5e-16;
+☀ Functions<long double>::tolerance ➜ 1.5e-30;
 ```
 
 
@@ -325,9 +325,9 @@ Examples:
 
 ```C++
 int n = 3;
-* typeid(n).name() -> i;
+☀ typeid(n).name() ➜ i;
 string s = "hello";
-* typeid(s).name() -> NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
+☀ typeid(s).name() ➜ NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE;
 ```
 
 <br>
@@ -338,9 +338,9 @@ Examples:
 
 ```C++
 int n = 3;
-* getTypeName(n) -> int;
+☀ getTypeName(n) ➜ int;
 string s = "hello";
-* getTypeName(s) -> std::string;
+☀ getTypeName(s) ➜ std::string;
 ```
 
 <br>
@@ -356,15 +356,15 @@ Examples:
 ```C++
 short n1 = 3;
 int n2 = 100;
-* n1 * n2 -> int 300;
+☀ n1 * n2 ➜ int 300;
 
 float x1 = 3;
 double x2 = 0.1415;
-* x1 + x2 -> double 3.1415;
+☀ x1 + x2 ➜ double 3.1415;
 
 int8_t y1 = 25;
 double y2 = 0.25;
-* y1 / y2 + y2 -> double 100.25;
+☀ y1 / y2 + y2 ➜ double 100.25;
 ```
 
 <br>
@@ -378,17 +378,17 @@ Converting a floating point type to an integer:
 
 ```C++
 int n1 = (int)3.14;
-* n1 -> int 3;
+☀ n1 ➜ int 3;
 int n2 = int(3.14);
-* n2 -> int 3;
+☀ n2 ➜ int 3;
 ```
 Forcing floating point division by converting the numerator to a `float`
 
 ```C++
 double x = (21 + 1) / 7;
-* x -> double 3;
+☀ x ➜ double 3;
 double y = float(21 + 1) / 7;
-* y -> double 3.14286;
+☀ y ➜ double 3.14286;
 ```
 
 

@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.17-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.18-c++17</h1>
 
 <details>
 
@@ -84,22 +84,22 @@ For details refer [Logical Operators](https://en.cppreference.com/w/c/language/o
 Examples:
 
 ```C++
-* true -> bool 1;
-* false -> bool 0;
-* !true -> bool 0;
-* !false -> bool 1;
-* true && true -> bool 1;
-* true && false -> bool 0;
-* true || false -> bool 1;
+☀ true ➜ bool 1;
+☀ false ➜ bool 0;
+☀ !true ➜ bool 0;
+☀ !false ➜ bool 1;
+☀ true && true ➜ bool 1;
+☀ true && false ➜ bool 0;
+☀ true || false ➜ bool 1;
 ```
 * In C++ logical operators work for all real and integer types: `0` corresponds to `false` and all non-zero values correspond to `true`
 
 ```C++
-* !true -> bool 0;
-* !8 -> bool 0;
-* !!8.293 -> bool 1;
-* true && 3 -> bool 1;
-* true && 0 -> bool 0;
+☀ !true ➜ bool 0;
+☀ !8 ➜ bool 0;
+☀ !!8.293 ➜ bool 1;
+☀ true && 3 ➜ bool 1;
+☀ true && 0 ➜ bool 0;
 ```
 
 <br>

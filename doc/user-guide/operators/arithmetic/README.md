@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.17-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.18-c++17</h1>
 
 <details>
 
@@ -91,8 +91,8 @@ For container types, the following rules apply for `x op y`:
 ## Exponentiation and the `pow` function
 C++ does not have an exponentiation operator.  Instead it provides the [`std::pow`](https://en.cppreference.com/w/cpp/numeric/math/div) function
 ```C++
-* pow(2, 8) -> double 256;
-* pow(25, 1 / 2) -> double 1;
+☀ pow(2, 8) ➜ double 256;
+☀ pow(25, 1 / 2) ➜ double 1;
 ```
 
 <br>
@@ -101,31 +101,31 @@ C++ does not have an exponentiation operator.  Instead it provides the [`std::po
 #### Reals
 
 ```C++
-* 1 + 2 -> int 3;
-* 7.5 + 2 -> double 9.5;
-* 7.5 - 0.5 -> double 7;
+☀ 1 + 2 ➜ int 3;
+☀ 7.5 + 2 ➜ double 9.5;
+☀ 7.5 - 0.5 ➜ double 7;
 ```
 
 #### Complex, Imaginary and Mixed
 
 ```C++
-* complex<double>(1.5, 0) + complex<double>(0.5, 4) -> std::complex<double> (2,4);
+☀ complex<double>(1.5, 0) + complex<double>(0.5, 4) ➜ std::complex<double> (2,4);
 ```
 
 #### Imaginary
 
 ```C++
-* complex<double>(1.5, 0) + complex<double>(0.5, 4) -> std::complex<double> (2,4);
-* Imaginary<double>(1) + Imaginary<double>(33.12) -> Imaginary<double> 34.12i;
-* -10 + Imaginary<double>(5.25) -> std::complex<double> (-10,5.25);
-* 100 + complex<double>(1.5, 2) + Imaginary<double>(5.25) -> std::complex<double> (101.5,7.25);
+☀ complex<double>(1.5, 0) + complex<double>(0.5, 4) ➜ std::complex<double> (2,4);
+☀ Imaginary<double>(1) + Imaginary<double>(33.12) ➜ Imaginary<double> 34.12i;
+☀ -10 + Imaginary<double>(5.25) ➜ std::complex<double> (-10,5.25);
+☀ 100 + complex<double>(1.5, 2) + Imaginary<double>(5.25) ➜ std::complex<double> (101.5,7.25);
 ```
 
 ```C++
-* complex(1.0, 1.0) + complex(2.0, 4.0) -> (3,5);
-* complex(1.0, 1.0) - complex(2.0, 4.0) -> (-1,-3);
-* complex(1.0, 1.0) * complex(2.0, 4.0) -> (-2,6);
-* complex(1.0, 1.0) / complex(2.0, 4.0) -> (0.3,-0.1);
+☀ complex(1.0, 1.0) + complex(2.0, 4.0) ➜ (3,5);
+☀ complex(1.0, 1.0) - complex(2.0, 4.0) ➜ (-1,-3);
+☀ complex(1.0, 1.0) * complex(2.0, 4.0) ➜ (-2,6);
+☀ complex(1.0, 1.0) / complex(2.0, 4.0) ➜ (0.3,-0.1);
 ```
 
 <br>
@@ -133,7 +133,7 @@ C++ does not have an exponentiation operator.  Instead it provides the [`std::po
 ### Exponentiation and the ```pow``` function
 C++ does not have an exponentiation operator.  Instead it provides the [```std::pow```](https://en.cppreference.com/w/cpp/numeric/complex/div) function
 ```C++
-* pow(complex(1.0, 1.0), complex(2.0, 4.0)) -> (-0.084961,0.0158558);
+☀ pow(complex(1.0, 1.0), complex(2.0, 4.0)) ➜ (-0.084961,0.0158558);
 ```
 
 <br>
@@ -153,19 +153,19 @@ Examples:
 
 ```C++
 
-* complex(1.0, 1.0) == complex(1.0, 1.0) -> 1;
-* complex(1.0, 1.0) != complex(1.0, 1.0) -> 0;
+☀ complex(1.0, 1.0) == complex(1.0, 1.0) ➜ 1;
+☀ complex(1.0, 1.0) != complex(1.0, 1.0) ➜ 0;
 
-* complex(1.0, 1.0) == complex(2.0, 4.0) -> 0;
-* complex(1.0, 1.0) != complex(2.0, 4.0) -> 1;
+☀ complex(1.0, 1.0) == complex(2.0, 4.0) ➜ 0;
+☀ complex(1.0, 1.0) != complex(2.0, 4.0) ➜ 1;
 ```
 #### Mixed Type
 
 ```C++
-* complex<double>(1.5, 0) + complex<double>(0.5, 4) -> std::complex<double> (2,4);
-* Imaginary<double>(1) + Imaginary<double>(33.12) -> Imaginary<double> 34.12i;
-* -10 + Imaginary<double>(5.25) -> std::complex<double> (-10,5.25);
-* 100 + complex<double>(1.5, 2) + Imaginary<double>(5.25) -> std::complex<double> (101.5,7.25);
+☀ complex<double>(1.5, 0) + complex<double>(0.5, 4) ➜ std::complex<double> (2,4);
+☀ Imaginary<double>(1) + Imaginary<double>(33.12) ➜ Imaginary<double> 34.12i;
+☀ -10 + Imaginary<double>(5.25) ➜ std::complex<double> (-10,5.25);
+☀ 100 + complex<double>(1.5, 2) + Imaginary<double>(5.25) ➜ std::complex<double> (101.5,7.25);
 ```
 
 #### Containers
