@@ -311,6 +311,19 @@ int main() {
   TRDISP(rs2.a);
   TRDISP(rs2.N);
 
+  ECHO_CODE(RealSet<double, true>  rs3(10, 1e5, 10));
+  TRDISP(rs3.a);
+  TRDISP(rs3.b);
+  TRDISP(rs3.N);
+  TRDISP(rs3.logscale);
+  TRDISP(rs3.include_a);
+  TRDISP(rs3.include_b);
+  TRDISP(rs3.hasInflatedGrid());
+  TRDISP(rs3.makeGrid());
+  TRDISP(mathq::log10(rs3.makeGrid()));
+  TRDISP(rs3.hasInflatedGrid());
+
+
   TRDISP(std::numeric_limits<double>::infinity()  > 1);
 
   // ECHO_CODE(Coordinate2<double, Interval> x_coord2("x", x_interval));
