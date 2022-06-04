@@ -1306,6 +1306,20 @@ namespace mathq {
 
 
 
+
+  // ***************************************************************************
+  // * Grid
+  //
+  // This is a nested structure with M=2:
+  //   top level: A single vector of fixed size, Vector<D,NDIMS>
+  //   second level: multiarrays of fixed rank=NDIMS but dynamic size
+  // ***************************************************************************
+
+  template <class D, size_t NDIMS>
+  using Grid = typename Materialize<D, D, 1, NDIMS>::Type;
+
+
+
   // ***************************************************************************
   // * GridScale 
   // ***************************************************************************
@@ -1327,7 +1341,7 @@ namespace mathq {
   // ***************************************************************************
 
   template <class D, size_t NDIMS>
-  using VectorofGrids = Vector<typename Materialize<D, D, 1, NDIMS>::Type, NDIMS>;
+  using VectorofGrids = Vector<Grid<D, NDIMS>, NDIMS>;
 
 
   // ***************************************************************************
@@ -1341,7 +1355,7 @@ namespace mathq {
   // The two types can be converted from one to another using the function 'insideout'.
   // ***************************************************************************
   template <class D, size_t NDIMS>
-  using GridofVectors = typename Materialize<Vector<D,NDIMS>, D, 1, NDIMS>::Type;
+  using GridofVectors = typename Grid<Vector<D, NDIMS>, NDIMS>::Type;
 
 
 

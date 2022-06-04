@@ -8,7 +8,7 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixRepRow<D        -- variable size matrix (valarray)
+   * MatrixRepRow<D>        -- variable size matrix (valarray)
    *                        D  = type for elements
    * MatrixRepRow<D,NR>    -- fixed number of rows (valarray)
    *                        NR = number of rows

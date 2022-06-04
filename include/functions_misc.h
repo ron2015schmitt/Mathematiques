@@ -844,6 +844,7 @@ namespace mathq {
     // Rank of our multiarray grid is equal to number of dimensions
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
+
     VectorofGrids<D, NDIMS> grid;
 
     RealSetN(const std::initializer_list<RealSet<D>>& mylist) {
@@ -855,18 +856,23 @@ namespace mathq {
       return *this;
     }
 
-    /// TODO: implement these by looping over all dimensions
     RealSetN& deflateGrids() {
-      // grid.resize(0);
+      for (size_t c = 0; c < NDIMS; c++) {
+        get(c).deflateGrid();
+        grid[c].resize(0);
+      }
       return *this;
     }
     RealSetN& inflateGrids() {
-      // grid.resize(gridDims());
+      for (size_t c = 0; c < NDIMS; c++) {
+        RealSet<D>& set = get(c);
+        set.inflateGrid();
+      }
       return *this;
     }
     bool hasInflatedGrids() {
       for (size_t c = 0; c < NDIMS; c++) {
-        if (!((*this)[c]).hasInflatedGrid()) {
+        if (!(get(c)).hasInflatedGrid()) {
           return false;
         }
       }
@@ -898,10 +904,10 @@ namespace mathq {
       return NDIMS;
     }
 
-    Dimensions gridDims(void) const {
+    Dimensions gridDims(void) {
       Dimensions dims;
       for (size_t c = 0; c < NDIMS; c++) {
-        const RealSet<D>& rs = (*this)[c];
+        RealSet<D>& rs = get(c);
         dims.push_back(rs.N);
       }
       return dims;
@@ -914,6 +920,11 @@ namespace mathq {
         (*this)[i++] = *it;
       }
       return *this;
+    }
+
+
+    RealSet<D>& get(size_t c) {
+      return (*this)[c];
     }
 
     VectorofGrids<D, NDIMS>& getGrid() {
@@ -929,9 +940,14 @@ namespace mathq {
       }
       else if constexpr (NDIMS == 1) {
         grid = (*this)[0].makegrid();
-        // }
-        // else if constexpr (NDIMS == 2) {
-        //   grid = (*this)[0].makegrid();
+      }
+      else if constexpr (NDIMS == 2) {
+        Grid<D, 1>& xgrid = get(0).forceRegenGrid();
+        Grid<D, 1>& ygrid = get(1).forceRegenGrid();
+        Grid<D, NDIMS>& X = grid[0];
+        Grid<D, NDIMS>& Y = grid[1];
+        X = MatrixRepCol<D>(xgrid, gridDims()[1]);
+        Y = MatrixRepRow<D>(ygrid, gridDims()[0]);
       }
       else {
 
