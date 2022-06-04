@@ -250,7 +250,7 @@ namespace mathq {
 
   // -------------------------------------------------------------------
   //
-  // Dimensions - class to hold dimensions of MultiArrays
+  // Dimensions - class to hold (top-level, M=1) dimensions of a MultiArray
   // -------------------------------------------------------------------
 
   class Dimensions : public std::vector<size_type> {
@@ -268,7 +268,7 @@ namespace mathq {
       }
       calcSize();
     }
-    // TODO: use parmpack instead, to handle any number of dimensions as input
+    // TODO: use parmpack or initializer_list instead, to handle any number of dimensions as input
 
     Dimensions() {
       resize(0, 0);

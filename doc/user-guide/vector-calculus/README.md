@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.18-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.19-c++17</h1>
 
 <details>
 
@@ -65,12 +65,12 @@
 
 RealSet<double> rs(-2, +2, 5);
 ☀ rs ➜ mathq::RealSet<double> {interval=[-2, 2], N=5, scale=LINEAR, gridState=deflated};
-☀ rs.makeGrid() ➜ Vector<double> {-2, -1, 0, 1, 2};
+☀ rs.getGrid() ➜ Vector<double> {-2, -1, 0, 1, 2};
 ☀ rs.hasInflatedGrid() ➜ bool 1;
 
 RealSet<double> rs1(-2, +3, 5, GridScale::LINEAR, true, false);
 ☀ rs1 ➜ mathq::RealSet<double> {interval=[-2, 3], N=5, scale=LINEAR, gridState=deflated};
-☀ rs1.makeGrid() ➜ Vector<double> {-2, -1, 0, 1, 2};
+☀ rs1.getGrid() ➜ Vector<double> {-2, -1, 0, 1, 2};
 ☀ rs1.hasInflatedGrid() ➜ bool 1;
 
 RealSet<double> rs2 = RealSet<double>::realLine();
@@ -78,13 +78,13 @@ RealSet<double> rs2 = RealSet<double>::realLine();
 
 RealSet<double> rs3(10, 1e5, 10, GridScale::LOG);
 ☀ rs3 ➜ mathq::RealSet<double> {interval=[10, 100000], N=10, scale=LOG, gridState=deflated};
-☀ rs3.makeGrid() ➜ Vector<double> {10, 27.8256, 77.4264, 215.443, 599.484, 1668.1, 4641.59, 12915.5, 35938.1, 100000};
-☀ mathq::log10(rs3.makeGrid()) ➜ TER_Unary Vector<double> {1, 1.44444, 1.88889, 2.33333, 2.77778, 3.22222, 3.66667, 4.11111, 4.55556, 5};
+☀ rs3.getGrid() ➜ Vector<double> {10, 27.8256, 77.4264, 215.443, 599.484, 1668.1, 4641.59, 12915.5, 35938.1, 100000};
+☀ mathq::log10(rs3.getGrid()) ➜ TER_Unary Vector<double> {1, 1.44444, 1.88889, 2.33333, 2.77778, 3.22222, 3.66667, 4.11111, 4.55556, 5};
 ☀ rs3.hasInflatedGrid() ➜ bool 1;
 
 auto rs4 = RealSet<double>::point(2.5);
 ☀ rs4 ➜ mathq::RealSet<double> {point=2.5, gridState=deflated};
-☀ rs4.makeGrid() ➜ Vector<double> {2.5};
+☀ rs4.getGrid() ➜ Vector<double> {2.5};
 ☀ rs4.hasInflatedGrid() ➜ bool 1;
 
 RealSet<double> rx(-2, +2, 5);
@@ -92,13 +92,13 @@ RealSet<double> rx(-2, +2, 5);
 
 RealSet<double> ry(1, 100, 3, GridScale::LOG);
 ☀ ry ➜ mathq::RealSet<double> {interval=[1, 100], N=3, scale=LOG, gridState=deflated};
-☀ ry.makeGrid() ➜ Vector<double> {1, 10, 100};
+☀ ry.getGrid() ➜ Vector<double> {1, 10, 100};
 
-RealSetN<double> setXY({rx, ry});
-☀ setXY ➜ mathq::RealSetN<double> {
+RealSetN<double,2> setXY({rx, ry});
+☀ setXY ➜ N5mathq8RealSetNIdLm2EEE { gridState=inflated, {
   {interval=[-2, 2], N=5, scale=LINEAR, gridState=deflated}, 
   {interval=[1, 100], N=3, scale=LOG, gridState=inflated}
-};
+}};
 ☀ setXY[0] ➜ mathq::RealSet<double> {interval=[-2, 2], N=5, scale=LINEAR, gridState=deflated};
 ☀ setXY[1] ➜ mathq::RealSet<double> {interval=[1, 100], N=3, scale=LOG, gridState=inflated};
 ```

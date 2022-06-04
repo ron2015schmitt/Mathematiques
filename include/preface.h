@@ -99,9 +99,11 @@ namespace mathq {
   template <class E, typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
   class
     Scalar;
+
   template <class E, int NE = 0, typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
   class
     Vector;
+
   template <class E, int NR = 0, int NC = 0, typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
   class
     Matrix;
@@ -230,25 +232,32 @@ namespace mathq {
   // Materialize - this returns a concrete tensor of type specified by paramters
   // ***************************************************************************
 
-  template <class E, class D, int M, int R>
+  template <class E, class D, int M, int R, int N1 = 0, int N2 = 0>
   class Materialize {
+  public:
     typedef MultiArray<E, R, D, M> TEN;
     typedef Matrix<E, 0, 0, D, M> MAT;
     typedef Vector<E, 0, D, M> VEC;
     typedef Scalar<E, D, M> SCA;
     typedef typename std::conditional<R == 0, SCA, std::conditional<R == 1, VEC, std::conditional<R == 2, MAT, TEN>>>::type Type;
   };
+
   template <class E, class D, int M>
   class Materialize<E, D, M, 0> {
+  public:
     typedef Scalar<E, D, M> Type;
   };
-  template <class E, class D, int M>
-  class Materialize<E, D, M, 1> {
-    typedef Vector<E, 0, D, M> Type;
+
+  template <class E, class D, int M, int N1>
+  class Materialize<E, D, M, 1, N1> {
+  public:
+    typedef Vector<E, N1, D, M> Type;
   };
-  template <class E, class D, int M>
-  class Materialize<E, D, M, 2> {
-    typedef Matrix<E, 0, 0, D, M> Type;
+
+  template <class E, class D, int M, int N1, int N2>
+  class Materialize<E, D, M, 2, N1, N2> {
+  public:
+    typedef Matrix<E, N1, N2, D, M> Type;
   };
 
 
@@ -1301,11 +1310,40 @@ namespace mathq {
   // * GridScale 
   // ***************************************************************************
 
+  // put in a namespace so that the enums don't clash
   namespace GridScale {
     enum Type { LINEAR = false, LOG = true };
   };
 
   using GridScaleEnum = GridScale::Type;
+
+
+  // ***************************************************************************
+  // * VectorofGrids
+  //
+  // This is a nested structure with M=2:
+  //   top level: A single vector of fixed size, Vector<D,NDIMS>
+  //   second level: multiarrays of fixed rank=NDIMS but dynamic size
+  // ***************************************************************************
+
+  template <class D, size_t NDIMS>
+  using VectorofGrids = Vector<typename Materialize<D, D, 1, NDIMS>::Type, NDIMS>;
+
+
+  // ***************************************************************************
+  // * GridofVectors
+  //
+  // This is a nested structure with M=2:
+  //   top level: a single multiarray of fixed rank=NDIMS but dynamic size
+  //   second level: Vectors of fixed size, Vector<D,NDIMS>
+  //
+  // This type has the same total number of elements as VectorofGrids.
+  // The two types can be converted from one to another using the function 'insideout'.
+  // ***************************************************************************
+  template <class D, size_t NDIMS>
+  using GridofVectors = typename Materialize<Vector<D,NDIMS>, D, 1, NDIMS>::Type;
+
+
 
   // ***************************************************************************
   // * RealSet 
@@ -1318,7 +1356,7 @@ namespace mathq {
   // ***************************************************************************
   // * RealSetN 
   // ***************************************************************************
-  template <class D>
+  template <class D, size_t NE = 0>
   class RealSetN;
 
 

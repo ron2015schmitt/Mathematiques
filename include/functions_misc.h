@@ -679,7 +679,8 @@ namespace mathq {
     }
 
 
-    mathq::Vector<D>& makeGrid() {
+    mathq::Vector<D>& getGrid() {
+      if (hasInflatedGrid()) return grid;
       if (scale == GridScale::LOG) {
         return makeGrid_Log();
       }
@@ -687,6 +688,17 @@ namespace mathq {
         return makeGrid_Linear();
       }
     }
+
+
+    mathq::Vector<D>& forceRegenGrid() {
+      if (scale == GridScale::LOG) {
+        return makeGrid_Log();
+      }
+      else {
+        return makeGrid_Linear();
+      }
+    }
+
 
 
     mathq::Vector<D>& makeGrid_Linear() {
@@ -816,38 +828,133 @@ namespace mathq {
   //
   // RealSetN<D>
   //
+  // Dimensions cannot be changed
 
-  template <class D>
+  template <class D, size_t NDIMS>
   class
-    RealSetN : public std::vector<RealSet<D>> {
+    RealSetN : public std::array<RealSet<D>, NDIMS> {
   public:
-    typedef typename std::vector<RealSet<D>> Parent;
+    typedef typename std::array<RealSet<D>, NDIMS> Parent;
     typedef typename Parent::iterator Iterator;
     typedef RealSet<D> ElementType;
     typedef D DataType;
 
-    RealSetN(const std::initializer_list<RealSet<D>>& mylist) : Parent(mylist) {
+    const size_t Ndims = NDIMS;
+
+    // Rank of our multiarray grid is equal to number of dimensions
+    // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
+    // the dimensions of the multiarray are dynamic
+    VectorofGrids<D, NDIMS> grid;
+
+    RealSetN(const std::initializer_list<RealSet<D>>& mylist) {
+      *this = mylist;
     }
 
-    void deflateGrid() {
+    RealSetN& init() {
+      inflateGrids();
+      return *this;
+    }
+
+    /// TODO: implement these by looping over all dimensions
+    RealSetN& deflateGrids() {
       // grid.resize(0);
+      return *this;
     }
-    void inflateGrid() {
-      // grid.resize(N);
+    RealSetN& inflateGrids() {
+      // grid.resize(gridDims());
+      return *this;
     }
-    bool hasInflatedGrid() {
-      // return grid.size() > 0;
-      return false;
+    bool hasInflatedGrids() {
+      for (size_t c = 0; c < NDIMS; c++) {
+        if (!((*this)[c]).hasInflatedGrid()) {
+          return false;
+        }
+      }
+      return true;
     }
 
-    // mathq::Vector<D>& makeGrid() {
-    //   if (scale == GridScale::LOG) {
-    //     return makeGrid_Log();
-    //   }
-    //   else {
-    //     return makeGrid_Linear();
-    //   }
-    // }
+
+    size_t ndims(void) const {
+      return NDIMS;
+    }
+
+    Dimensions dims(void) const {
+      Dimensions dimensions(NDIMS);
+      return dimensions;
+    }
+    Dimensions tdims(void) const {
+      Dimensions dimensions(NDIMS);
+      return dimensions;
+    }
+    inline size_t depth(void) const {
+      return 1;
+    }
+
+    inline size_t gridDepth(void) const {
+      return 1;
+    }
+
+    Dimensions gridRank(void) const {
+      return NDIMS;
+    }
+
+    Dimensions gridDims(void) const {
+      Dimensions dims;
+      for (size_t c = 0; c < NDIMS; c++) {
+        const RealSet<D>& rs = (*this)[c];
+        dims.push_back(rs.N);
+      }
+      return dims;
+    }
+
+    RealSetN& operator=(const std::initializer_list<RealSet<D>>& mylist) {
+      size_t i = 0;
+      typename std::initializer_list<RealSet<D>>::iterator it;
+      for (it = mylist.begin(); it != mylist.end(); ++it) {
+        (*this)[i++] = *it;
+      }
+      return *this;
+    }
+
+    VectorofGrids<D, NDIMS>& getGrid() {
+      if (hasInflatedGrids()) return grid;
+      return forceRegenGrid();
+    }
+
+
+    VectorofGrids<D, NDIMS>& forceRegenGrid() {
+      init();
+      if constexpr (NDIMS == 0) {
+        // do something?
+      }
+      else if constexpr (NDIMS == 1) {
+        grid = (*this)[0].makegrid();
+        // }
+        // else if constexpr (NDIMS == 2) {
+        //   grid = (*this)[0].makegrid();
+      }
+      else {
+
+      }
+      return grid;
+    }
+
+
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const RealSetN& var) {
+      stream << "{ ";
+      stream << "gridState=";
+      display::dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
+      stream << ", {\n";
+      for (size_t ii = 0; ii < var.size(); ii++) {
+        if (ii > 0)
+          stream << ", \n";
+        stream << "  ";
+        display::dispval_strm(stream, var[ii]);
+      }
+      stream << "\n}}";
+      return stream;
+    }
 
 
   };
@@ -1404,21 +1511,21 @@ namespace mathq {
           }
           else {
             s4 += v[j];
+          }
         }
-      }
         result += 32*s1 + 12*s2 + 32*s3 + 14*s4;
         result = result * 2*(b-a)/(45*D(N-1));
-    }
+      }
       break;
     default:
 #if MATHQ_DEBUG>0
       std::cerr << "integrate_a2b: bad order parameter order="<<order<<std::endl;
 #endif
       break;
-  }
+    }
 
     return result;
-}
+  }
 
 
 

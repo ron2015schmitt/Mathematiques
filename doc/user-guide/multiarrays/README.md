@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.18-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.19-c++17</h1>
 
 <details>
 

@@ -1490,14 +1490,7 @@ namespace display {
   // RealSetN
   template <typename D>
   inline void dispval_strm(std::ostream& stream, const mathq::RealSetN<D>& var) {
-    stream << "{\n";
-    for (size_t ii = 0; ii < var.size(); ii++) {
-      if (ii > 0)
-        stream << ", \n";
-      stream << "  ";
-      dispval_strm(stream, var[ii]);
-    }
-    stream << "\n}";
+    stream << var;
   }
 
 

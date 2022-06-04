@@ -27,8 +27,13 @@
 1. This is includes files:
   * display.h
   * display.cpp
+1. split files, rename display namespace to mathq::text and mathq::streams
 1. add support for std::tuple
-1. move ostream operators guts to FormatData:  `stdout << Vector` etc
+1. all classes should have ostream operators:  `stdout << Vector` , and then dispval_strm should simply call
+1. use `{}` for element lists. 
+1. support json format: use OPEN and CLOSE definitions for `{`. use EQUAL parameter `{ data: 25, name: "Joe" }`, ie `${OPEN} data${EQUAL}, name${EQUAL} "Joe" ${CLOSE}`
+  1. How hard would it be to do string interpolation?
+1. do same for getTypeName?
 1. implement istream operators:  `stdin >> Vector` etc
 1. refactor Style, StyledString, Terminal, and Display, Log
   1. reformat all files using VSCode C++ extension

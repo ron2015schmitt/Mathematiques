@@ -1,6 +1,6 @@
 
 
-# Mathématiques v0.40.18-c++17
+# Mathématiques v0.40.19-c++17
 
 
 ## Documentation
@@ -75,18 +75,32 @@ Design a C-style language and compiler for high-performance mathematics, likely 
   * [D](https://en.wikipedia.org/wiki/D_(programming_language)
 
 **Versatile and easy-to-read**
-* Generics (aka "templates" sin C++ terminology) and metaprogramming.  
+* Generics (aka "templates" in C++ terminology) and metaprogramming.  
+* Use Java Interface and Stroustrup "concepts" (instead of inheritance?)
+  * requirements and attibrutes
+  * suport for mix-in methodology
 * Operator overloading
 * Unicode-16 source code 
   * greek letter variables
   * many possible unicode operators for overloading
+* Named parameters like JavaScript and Fortran
+* Initializer lists and initializer lists with names and/or types
+* aggregator lists on LHS like JavaScript
+* Improve upon C++ tuple, any, variant
+  * the return value of a function can depend on which element is returned
+* modern function support
+  * lambda functions and closures
+* Support JavaScript-like string interpolation 
+* No setters or getters
+  * have optional methods that are called if present when obj.variable is referenced on LHS or RHS
+* support for fixed size and dynamically sized containers and multiarrays
 
 **Debug and production modes**
 * Debug modes that include 
   * bounds-checking
   * reflection and meta-data access (variable names, etc) without the need for macros
 * Production mode
-  * debug features are not available outside debug modes
+  * debug features and reflection are not available outside debug modes
   * runs at maximum efficiency
 
 **Multi-paradigm**
