@@ -1409,10 +1409,10 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // * RealSetN 
+  // * RealMultiSet 
   // ***************************************************************************
   template <class D, size_t NE = 0>
-  class RealSetN;
+  class RealMultiSet;
 
 
 

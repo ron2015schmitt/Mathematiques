@@ -116,14 +116,14 @@ int main() {
   // TRDISP(std::get<1>(setXY));
 
   CR();
-  ECHO_CODE(RealSetN<double, 2> setXY({ rx, ry }));
+  ECHO_CODE(RealMultiSet<double, 2> setXY({ rx, ry }));
   TRDISP(setXY);
   TRDISP(setXY.getGrid()[0]);
   TRDISP(setXY.getGrid()[1]);
   // TRDISP(insideout(setXY.getGrid()));
 
   CR();
-  ECHO_CODE(RealSetN<double, 3> setXYZ({ rx, ry, rz }));
+  ECHO_CODE(RealMultiSet<double, 3> setXYZ({ rx, ry, rz }));
   TRDISP(setXYZ);
   auto XYZ = setXYZ.getGrid();
   // TRDISP(setXYZ);

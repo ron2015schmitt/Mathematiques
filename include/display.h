@@ -1030,7 +1030,7 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER(std::list);
   SPECIALIZE_getTypeName_CONTAINER(std::queue);
   SPECIALIZE_getTypeName_CONTAINER(std::initializer_list);
-  SPECIALIZE_getTypeName_CONTAINER(mathq::RealSetN);
+  SPECIALIZE_getTypeName_CONTAINER(mathq::RealMultiSet);
 
 #define SPECIALIZE_getTypeName_CONTAINER2(TYPE)             \
   template <typename D1, typename D2>                       \
@@ -1487,9 +1487,9 @@ namespace display {
   }
 
 
-  // RealSetN
+  // RealMultiSet
   template <typename D>
-  inline void dispval_strm(std::ostream& stream, const mathq::RealSetN<D>& var) {
+  inline void dispval_strm(std::ostream& stream, const mathq::RealMultiSet<D>& var) {
     stream << var;
   }
 

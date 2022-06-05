@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.22-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.23-c++17</h1>
 
 <details>
 
@@ -97,8 +97,8 @@ RealSet<double> rz(30, 33, 4, GridScale::LINEAR);
 ☀ rz ➜ mathq::RealSet<double> {interval=[30, 33], N=4, scale=LINEAR, gridState=deflated};
 ☀ rz.getGrid() ➜ Vector<double> {30, 31, 32, 33};
 
-RealSetN<double, 2> setXY({ rx, ry });
-☀ setXY ➜ RealSetN<double,NDIMS=2> { gridState=inflated, {
+RealMultiSet<double, 2> setXY({ rx, ry });
+☀ setXY ➜ RealMultiSet<double,NDIMS=2> { gridState=inflated, {
   {interval=[-10, 10], N=3, scale=LINEAR, gridState=deflated}, 
   {interval=[-20, 20], N=5, scale=LINEAR, gridState=inflated}
 }};
@@ -109,8 +109,8 @@ inflategrids
 ☀ hasInflatedGrids_() ➜ bool 1;
 ☀ setXY.getGrid()[1] ➜ Matrix<double> { {-20, -10, 0, 10, 20}, {-20, -10, 0, 10, 20}, {-20, -10, 0, 10, 20} };
 
-RealSetN<double, 3> setXYZ({ rx, ry, rz });
-☀ setXYZ ➜ RealSetN<double,NDIMS=3> { gridState=inflated, {
+RealMultiSet<double, 3> setXYZ({ rx, ry, rz });
+☀ setXYZ ➜ RealMultiSet<double,NDIMS=3> { gridState=inflated, {
   {interval=[-10, 10], N=3, scale=LINEAR, gridState=deflated}, 
   {interval=[-20, 20], N=5, scale=LINEAR, gridState=inflated}, 
   {interval=[30, 33], N=4, scale=LINEAR, gridState=inflated}

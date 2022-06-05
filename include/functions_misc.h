@@ -826,13 +826,13 @@ namespace mathq {
 
 
   //
-  // RealSetN<D>
+  // RealMultiSet<D>
   //
   // Dimensions cannot be changed
 
   template <class D, size_t NDIMS>
   class
-    RealSetN : public std::array<RealSet<D>, NDIMS> {
+    RealMultiSet : public std::array<RealSet<D>, NDIMS> {
   public:
     typedef typename std::array<RealSet<D>, NDIMS> Parent;
     typedef typename Parent::iterator Iterator;
@@ -847,24 +847,24 @@ namespace mathq {
 
     VectorofGrids<D, NDIMS> grid;
 
-    RealSetN(const std::initializer_list<RealSet<D>>& mylist) {
+    RealMultiSet(const std::initializer_list<RealSet<D>>& mylist) {
       *this = mylist;
     }
 
 
-    RealSetN& init_() {
+    RealMultiSet& init_() {
       inflateGrids_();
       return *this;
     }
 
-    RealSetN& deflateGrids_() {
+    RealMultiSet& deflateGrids_() {
       for (size_t g = 0; g < NDIMS; g++) {
         get(g).deflateGrid_();
         grid[g].resize(0);
       }
       return *this;
     }
-    RealSetN& inflateGrids_() {
+    RealMultiSet& inflateGrids_() {
       const Dimensions gdims = gridDims();
       OUTPUT("inflategrids");
       TRDISP(gdims);
@@ -922,7 +922,7 @@ namespace mathq {
       return dims;
     }
 
-    RealSetN& operator=(const std::initializer_list<RealSet<D>>& mylist) {
+    RealMultiSet& operator=(const std::initializer_list<RealSet<D>>& mylist) {
       size_t i = 0;
       typename std::initializer_list<RealSet<D>>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it) {
@@ -1006,7 +1006,7 @@ namespace mathq {
 
     inline std::string classname() const {
       using namespace display;
-      std::string s = "RealSetN";
+      std::string s = "RealMultiSet";
       s += StyledString::get(ANGLE1).get();
       D d;
       s += getTypeName(d);
@@ -1018,7 +1018,7 @@ namespace mathq {
     }
 
 
-    inline friend std::ostream& operator<<(std::ostream& stream, const RealSetN& var) {
+    inline friend std::ostream& operator<<(std::ostream& stream, const RealMultiSet& var) {
       stream << "{ ";
       stream << "gridState=";
       display::dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
