@@ -102,8 +102,11 @@
   }
   // this seems to works for ints. if problems, use a helper class to determine which exp to call: expf expl, exp
 ```
-* Complex type that inherits from std::complex
-  * can then allows complex, imaginary and quaternion to hold vectors
+* make all temp README.md files read-only
+* refactor the headers so that 
+  * vectors, matrices display tensors Scalar are broken out into different headers
+  * use copious #ifdefs so that order of inclusion matters
+* reformat all files using VSCode plugin: all done except sandbox
 * Grid stuff
   * 2D
     * Change GridType to use MatRep 
@@ -123,8 +126,12 @@
 * replace std::enable_if<std::is_arithmetic<D>::value, D>::type> with mathq version that accepts Imaginary and Quaternions
 * cast method for const std::initializer_list<E>?  is this possible
 * use https://doxygen.nl/manual/docblocks.html os similar to generate method and function docs?
-* reformat all files using VSCode plugin: all done except sandbox
-* all objects should ave .invert() and conjugate(), not .inv and .conj
+* all objects should have .invert() and conjugate(), not .inv and .conj
+* inv<D>(D x) for real, integers, imaginar, complex, quaternion
+* Complex type that inherits from std::complex
+  * google this topic and make sure no problems, else make my own
+  * can then allows complex, imaginary and quaternion to hold vectors (if it makes sense)
+    * what would v1 + i*v2 be?  Vector<complex<D>> or complex<Vector<D>>?
 * cast between various multi-arrays
   * https://en.cppreference.com/w/cpp/language/cast_operator
   * completed: MArray Constructor from Vector in multi-array.h
@@ -141,23 +148,17 @@
     operator MultiArray<E, R, D, M>() const {
       MultiArray<E, 1, D, M> ma(*this);
     }
-
   * testing is in sandbox/multiarrays-conversion.cpp 
   *  what about expresssions? 
     * Can we have Constructor for Vector, Matrix, Exp from expressions?
     * Can we cast expressiosn to these?
   * Look into fixing or removing the enums for all multi-arrays
 
-* inv<D>(D x) for real, integers, imaginar, complex, quaternion
-* make all temp README.md files read-only
-* refactor the headers so that 
-  * vectors, matrices display tensors Scalar are broken out into different headers
-  * use copious #ifdefs so that order of inclusion matters
-* valarray internal data access via data()
+* DONE: valarray internal data access via data()
   * https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
   * use &(a[0])
 
-* Create a `Number` class to generalize (division alegra numbers) real's imaginary and complex, quaternions?
+* Create a `Number` class to generalize division alegras (real's imaginary and complex, quaternions)?
   * see https://en.cppreference.com/w/cpp/types/is_arithmetic
   * <complex> C++ std::complex
     * https://en.cppreference.com/w/cpp/numeric/complex

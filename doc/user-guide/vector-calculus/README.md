@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.21-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.22-c++17</h1>
 
 <details>
 
@@ -66,12 +66,12 @@
 RealSet<double> rs(-2, +2, 5);
 ☀ rs ➜ mathq::RealSet<double> {interval=[-2, 2], N=5, scale=LINEAR, gridState=deflated};
 ☀ rs.getGrid() ➜ Vector<double> {-2, -1, 0, 1, 2};
-☀ rs.hasInflatedGrid() ➜ bool 1;
+☀ rs.hasInflatedGrid_() ➜ bool 1;
 
 RealSet<double> rs1(-2, +3, 5, GridScale::LINEAR, true, false);
 ☀ rs1 ➜ mathq::RealSet<double> {interval=[-2, 3], N=5, scale=LINEAR, gridState=deflated};
 ☀ rs1.getGrid() ➜ Vector<double> {-2, -1, 0, 1, 2};
-☀ rs1.hasInflatedGrid() ➜ bool 1;
+☀ rs1.hasInflatedGrid_() ➜ bool 1;
 
 RealSet<double> rs2 = RealSet<double>::realLine();
 ☀ rs2 ➜ mathq::RealSet<double> {interval=[-inf, inf], N=0, scale=LINEAR, gridState=deflated};
@@ -80,32 +80,116 @@ RealSet<double> rs3(10, 1e5, 10, GridScale::LOG);
 ☀ rs3 ➜ mathq::RealSet<double> {interval=[10, 100000], N=10, scale=LOG, gridState=deflated};
 ☀ rs3.getGrid() ➜ Vector<double> {10, 27.8256, 77.4264, 215.443, 599.484, 1668.1, 4641.59, 12915.5, 35938.1, 100000};
 ☀ mathq::log10(rs3.getGrid()) ➜ TER_Unary Vector<double> {1, 1.44444, 1.88889, 2.33333, 2.77778, 3.22222, 3.66667, 4.11111, 4.55556, 5};
-☀ rs3.hasInflatedGrid() ➜ bool 1;
+☀ rs3.hasInflatedGrid_() ➜ bool 1;
 
 auto rs4 = RealSet<double>::point(2.5);
 ☀ rs4 ➜ mathq::RealSet<double> {point=2.5, gridState=deflated};
 ☀ rs4.getGrid() ➜ Vector<double> {2.5};
-☀ rs4.hasInflatedGrid() ➜ bool 1;
+☀ rs4.hasInflatedGrid_() ➜ bool 1;
 
-RealSet<double> rx(-2, +2, 5);
-☀ rx ➜ mathq::RealSet<double> {interval=[-2, 2], N=5, scale=LINEAR, gridState=deflated};
+RealSet<double> rx(-10, +10, 3);
+☀ rx ➜ mathq::RealSet<double> {interval=[-10, 10], N=3, scale=LINEAR, gridState=deflated};
 
-RealSet<double> ry(1, 100, 3, GridScale::LOG);
-☀ ry ➜ mathq::RealSet<double> {interval=[1, 100], N=3, scale=LOG, gridState=deflated};
-☀ ry.getGrid() ➜ Vector<double> {1, 10, 100};
+RealSet<double> ry(-20, 20, 5, GridScale::LINEAR);
+☀ ry ➜ mathq::RealSet<double> {interval=[-20, 20], N=5, scale=LINEAR, gridState=deflated};
+☀ ry.getGrid() ➜ Vector<double> {-20, -10, 0, 10, 20};
+RealSet<double> rz(30, 33, 4, GridScale::LINEAR);
+☀ rz ➜ mathq::RealSet<double> {interval=[30, 33], N=4, scale=LINEAR, gridState=deflated};
+☀ rz.getGrid() ➜ Vector<double> {30, 31, 32, 33};
 
-RealSetN<double,2> setXY({rx, ry});
-☀ setXY ➜ N5mathq8RealSetNIdLm2EEE { gridState=inflated, {
-  {interval=[-2, 2], N=5, scale=LINEAR, gridState=deflated}, 
-  {interval=[1, 100], N=3, scale=LOG, gridState=inflated}
+RealSetN<double, 2> setXY({ rx, ry });
+☀ setXY ➜ RealSetN<double,NDIMS=2> { gridState=inflated, {
+  {interval=[-10, 10], N=3, scale=LINEAR, gridState=deflated}, 
+  {interval=[-20, 20], N=5, scale=LINEAR, gridState=inflated}
 }};
-☀ setXY[0] ➜ mathq::RealSet<double> {interval=[-2, 2], N=5, scale=LINEAR, gridState=deflated};
-☀ setXY[1] ➜ mathq::RealSet<double> {interval=[1, 100], N=3, scale=LOG, gridState=inflated};
-☀ Nx ➜ 5; ☀ Ny ➜ 3; 
-☀ xgrid ➜ Vector<double> {-2, -1, 0, 1, 2};
-☀ ygrid ➜ Vector<double> {1, 10, 100};
-☀ setXY.getGrid() ➜ Vector<Matrix<double>,NE=2> {{ {-2, -2, -2}, {-1, -1, -1}, {0, 0, 0}, {1, 1, 1}, {2, 2, 2} }, { {1, 10, 100}, {1, 10, 100}, {1, 10, 100}, {1, 10, 100}, {1, 10, 100} }};
-☀ insideout(setXY.getGrid()) ➜ Matrix<Vector<double,NE=2>> { {{-2, 1}, {-2, 10}, {-2, 100}}, {{-1, 1}, {-1, 10}, {-1, 100}}, {{0, 1}, {0, 10}, {0, 100}}, {{1, 1}, {1, 10}, {1, 100}}, {{2, 1}, {2, 10}, {2, 100}} };
+☀ hasInflatedGrids_() ➜ bool 0;
+inflategrids
+☀ gdims ➜ Dimensions {3, 5};
+☀ setXY.getGrid()[0] ➜ Matrix<double> { {-10, -10, -10, -10, -10}, {0, 0, 0, 0, 0}, {10, 10, 10, 10, 10} };
+☀ hasInflatedGrids_() ➜ bool 1;
+☀ setXY.getGrid()[1] ➜ Matrix<double> { {-20, -10, 0, 10, 20}, {-20, -10, 0, 10, 20}, {-20, -10, 0, 10, 20} };
+
+RealSetN<double, 3> setXYZ({ rx, ry, rz });
+☀ setXYZ ➜ RealSetN<double,NDIMS=3> { gridState=inflated, {
+  {interval=[-10, 10], N=3, scale=LINEAR, gridState=deflated}, 
+  {interval=[-20, 20], N=5, scale=LINEAR, gridState=inflated}, 
+  {interval=[30, 33], N=4, scale=LINEAR, gridState=inflated}
+}};
+☀ hasInflatedGrids_() ➜ bool 0;
+inflategrids
+☀ gdims ➜ Dimensions {3, 5, 4};
+☀ X ➜ MultiArray<double,R=3> 
+{
+  {
+    {-10, -10, -10, -10},
+    {-10, -10, -10, -10},
+    {-10, -10, -10, -10},
+    {-10, -10, -10, -10},
+    {-10, -10, -10, -10}
+  },
+  {
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {0, 0, 0, 0}
+  },
+  {
+    {10, 10, 10, 10},
+    {10, 10, 10, 10},
+    {10, 10, 10, 10},
+    {10, 10, 10, 10},
+    {10, 10, 10, 10}
+  }
+};
+☀ Y ➜ MultiArray<double,R=3> 
+{
+  {
+    {-20, -20, -20, -20},
+    {-10, -10, -10, -10},
+    {0, 0, 0, 0},
+    {10, 10, 10, 10},
+    {20, 20, 20, 20}
+  },
+  {
+    {-20, -20, -20, -20},
+    {-10, -10, -10, -10},
+    {0, 0, 0, 0},
+    {10, 10, 10, 10},
+    {20, 20, 20, 20}
+  },
+  {
+    {-20, -20, -20, -20},
+    {-10, -10, -10, -10},
+    {0, 0, 0, 0},
+    {10, 10, 10, 10},
+    {20, 20, 20, 20}
+  }
+};
+☀ Z ➜ MultiArray<double,R=3> 
+{
+  {
+    {30, 31, 32, 33},
+    {30, 31, 32, 33},
+    {30, 31, 32, 33},
+    {30, 31, 32, 33},
+    {30, 31, 32, 33}
+  },
+  {
+    {30, 31, 32, 33},
+    {30, 31, 32, 33},
+    {30, 31, 32, 33},
+    {30, 31, 32, 33},
+    {30, 31, 32, 33}
+  },
+  {
+    {30, 31, 32, 33},
+    {30, 31, 32, 33},
+    {30, 31, 32, 33},
+    {30, 31, 32, 33},
+    {30, 31, 32, 33}
+  }
+};
 ```
 
 

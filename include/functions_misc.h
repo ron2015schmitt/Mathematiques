@@ -595,27 +595,27 @@ namespace mathq {
       include_b = true;
       b = std::numeric_limits<D>::infinity();
       N = 0;
-      this->init();
+      this->init_();
     }
     RealSet(const D& a, const D& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
       a(a), b(b), N(N), scale(scale), include_a(include_a), include_b(include_b) {
-      this->init();
+      this->init_();
     }
     ~RealSet() {
     }
 
-    void deflateGrid() {
+    void deflateGrid_() {
       grid.resize(0);
     }
-    void inflateGrid() {
+    void inflateGrid_() {
       grid.resize(N);
     }
-    bool hasInflatedGrid() {
+    bool hasInflatedGrid_() {
       return grid.size() > 0;
     }
 
 
-    RealSet& init() {
+    RealSet& init_() {
       Neff = N +  size_t(!include_a) + size_t(!include_b);
       if (scale == GridScale::LOG) {
         log_a = std::log10(a);
@@ -680,7 +680,7 @@ namespace mathq {
 
 
     mathq::Vector<D>& getGrid() {
-      if (hasInflatedGrid()) return grid;
+      if (hasInflatedGrid_()) return grid;
       if (scale == GridScale::LOG) {
         return makeGrid_Log();
       }
@@ -702,8 +702,8 @@ namespace mathq {
 
 
     mathq::Vector<D>& makeGrid_Linear() {
-      inflateGrid();
-      init();
+      inflateGrid_();
+      init_();
       if (N == 0) return grid;
 
       for (size_t c = 0; c<(N-1); c++) {
@@ -720,8 +720,8 @@ namespace mathq {
 
 
     mathq::Vector<D>& makeGrid_Log() {
-      inflateGrid();
-      init();
+      inflateGrid_();
+      init_();
       if (N == 0) return grid;
 
       for (size_t c = 0; c<(N-1); c++) {
@@ -851,30 +851,37 @@ namespace mathq {
       *this = mylist;
     }
 
-    RealSetN& init() {
-      inflateGrids();
+
+    RealSetN& init_() {
+      inflateGrids_();
       return *this;
     }
 
-    RealSetN& deflateGrids() {
-      for (size_t ii = 0; ii < NDIMS; ii++) {
-        get(ii).deflateGrid();
-        grid[ii].resize(0);
+    RealSetN& deflateGrids_() {
+      for (size_t g = 0; g < NDIMS; g++) {
+        get(g).deflateGrid_();
+        grid[g].resize(0);
       }
       return *this;
     }
-    RealSetN& inflateGrids() {
+    RealSetN& inflateGrids_() {
       const Dimensions gdims = gridDims();
-      for (size_t ii = 0; ii < NDIMS; ii++) {
-        RealSet<D>& set = get(ii);
-        set.inflateGrid();
-        grid[ii].resize(gdims);
+      OUTPUT("inflategrids");
+      TRDISP(gdims);
+      for (size_t g = 0; g < NDIMS; g++) {
+        RealSet<D>& set = get(g);
+        set.inflateGrid_();
+        grid[g].resize(gdims);
       }
       return *this;
     }
-    bool hasInflatedGrids() {
-      for (size_t ii = 0; ii < NDIMS; ii++) {
-        if (!(get(ii)).hasInflatedGrid()) {
+    bool hasInflatedGrids_() {
+      if (NDIMS == 0) return false;
+      for (size_t g = 0; g < NDIMS; g++) {
+        if (!(get(g)).hasInflatedGrid_()) {
+          return false;
+        }
+        if (grid[g].size() == 0) {
           return false;
         }
       }
@@ -908,8 +915,8 @@ namespace mathq {
 
     Dimensions gridDims(void) {
       Dimensions dims;
-      for (size_t ii = 0; ii < NDIMS; ii++) {
-        RealSet<D>& rs = get(ii);
+      for (size_t g = 0; g < NDIMS; g++) {
+        RealSet<D>& rs = get(g);
         dims.push_back(rs.N);
       }
       return dims;
@@ -925,23 +932,25 @@ namespace mathq {
     }
 
 
-    RealSet<D>& get(size_t ii) {
-      return (*this)[ii];
+    RealSet<D>& get(size_t g) {
+      return (*this)[g];
     }
 
     VectorofGrids<D, NDIMS>& getGrid() {
-      if (hasInflatedGrids()) return grid;
+      TRDISP(hasInflatedGrids_());
+      if (hasInflatedGrids_()) return grid;
       return forceRegenGrid();
     }
 
 
     VectorofGrids<D, NDIMS>& forceRegenGrid() {
-      init();
+      init_();
+
       if constexpr (NDIMS == 0) {
         // do something?
       }
       else if constexpr (NDIMS == 1) {
-        grid = (*this)[0].makegrid();
+        grid = get(0).forceRegenGrid();
       }
       else if constexpr (NDIMS == 2) {
         Grid<D, 1>& xgrid = get(0).forceRegenGrid();
@@ -950,9 +959,6 @@ namespace mathq {
         Grid<D, NDIMS>& Y = grid[1];
         const size_t Nx = gridDims()[0];
         const size_t Ny = gridDims()[1];
-        MDISP(Nx, Ny);
-        TRDISP(xgrid);
-        TRDISP(ygrid);
         X.resize(Nx, Ny);
         Y.resize(Nx, Ny);
         for (size_type r = 0; r < Nx; r++) {
@@ -963,38 +969,65 @@ namespace mathq {
         }
       }
       else {
+        for (size_t g = 0; g < NDIMS; g++) {
+          get(g).forceRegenGrid();
+        }
         Indices indices(NDIMS);  // all zeros
-        setGrid(NDIMS, indices);
+        // TRDISP(indices);
+        setGrid_(0, indices);
+        // DISP("DONE");
       }
       return grid;
     }
 
-    void setGrid(int level, Indices& indices) {
-      const size_t Nlevel = gridDims()[level];  // grdi size of level-th coordinate
-      for (int ll = 0; ll < Nlevel; ll++) {
-        if (level > 0) {
-          setGrid(--level, indices);
+    void setGrid_(int coord, Indices& indices) {
+      const size_t Npts = gridDims()[coord];  // grdi size of coord-th coordinate
+      // MDISP("ENTRY for coord", coord, Npts);
+      for (int p = 0; p < Npts; p++) {
+        indices[coord] = p;
+        if (coord < NDIMS-1) {
+          // OUTPUT("GO TO NEXT coord");
+          setGrid_(coord+1, indices);
         }
         else {
-          for (int ii = 0; ii < NDIMS; ii++) {
+          // we are inside the last coordinate's loop, ie inside all the loops
+          // MDISP(coord, p, indices);
+          for (int g = 0; g < NDIMS; g++) {
             // this loop is for the NDIMS different grids (vectors of size N)
-            grid[ii](indices) = get(ii)[indices[ii]];
+            // we set the grid value of each grid
+            RealSet<D>& rs = get(g);
+            // MDISP(g, indices[g]);
+            grid[g](indices) = rs.getGrid()[indices[g]];
           }
         }
-        indices[level] = indices[level] + 1;
       }
+      // OUTPUT("EXIT");
     }
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "RealSetN";
+      s += StyledString::get(ANGLE1).get();
+      D d;
+      s += getTypeName(d);
+      s += StyledString::get(COMMA).get();
+      s += "NDIMS=";
+      s += num2string(NDIMS);
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+
 
     inline friend std::ostream& operator<<(std::ostream& stream, const RealSetN& var) {
       stream << "{ ";
       stream << "gridState=";
       display::dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
       stream << ", {\n";
-      for (size_t ii = 0; ii < var.size(); ii++) {
-        if (ii > 0)
+      for (size_t g = 0; g < var.size(); g++) {
+        if (g > 0)
           stream << ", \n";
         stream << "  ";
-        display::dispval_strm(stream, var[ii]);
+        display::dispval_strm(stream, var[g]);
       }
       stream << "\n}}";
       return stream;
@@ -1604,6 +1637,6 @@ namespace mathq {
 
 
 
-};
+  };
 
 #endif 

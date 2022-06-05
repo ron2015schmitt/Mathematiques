@@ -68,13 +68,13 @@ int main() {
   ECHO_CODE(RealSet<double>  rs(-2, +2, 5));
   TRDISP(rs);
   TRDISP(rs.getGrid());
-  TRDISP(rs.hasInflatedGrid());
+  TRDISP(rs.hasInflatedGrid_());
 
   CR();
   ECHO_CODE(RealSet<double>  rs1(-2, +3, 5, GridScale::LINEAR, true, false));
   TRDISP(rs1);
   TRDISP(rs1.getGrid());
-  TRDISP(rs1.hasInflatedGrid());
+  TRDISP(rs1.hasInflatedGrid_());
 
 
   CR();
@@ -86,24 +86,29 @@ int main() {
   TRDISP(rs3);
   TRDISP(rs3.getGrid());
   TRDISP(mathq::log10(rs3.getGrid()));
-  TRDISP(rs3.hasInflatedGrid());
+  TRDISP(rs3.hasInflatedGrid_());
 
 
   CR();
   ECHO_CODE(auto rs4 = RealSet<double>::point(2.5));
   TRDISP(rs4);
   TRDISP(rs4.getGrid());
-  TRDISP(rs4.hasInflatedGrid());
+  TRDISP(rs4.hasInflatedGrid_());
 
 
   CR();
-  ECHO_CODE(RealSet<double> rx(-2, +2, 5));
+  ECHO_CODE(RealSet<double> rx(-10, +10, 3));
   TRDISP(rx);
+  // TRDISP(rx.getGrid());
 
   CR();
-  ECHO_CODE(RealSet<double> ry(1, 100, 3, GridScale::LOG));
+  ECHO_CODE(RealSet<double> ry(-20, 20, 5, GridScale::LINEAR));
   TRDISP(ry);
   TRDISP(ry.getGrid());
+
+  ECHO_CODE(RealSet<double> rz(30, 33, 4, GridScale::LINEAR));
+  TRDISP(rz);
+  TRDISP(rz.getGrid());
 
   // CR();
   // auto setXY = std::make_tuple(rx, ry);
@@ -111,13 +116,26 @@ int main() {
   // TRDISP(std::get<1>(setXY));
 
   CR();
-  ECHO_CODE(RealSetN<double,2> setXY({rx, ry}));
+  ECHO_CODE(RealSetN<double, 2> setXY({ rx, ry }));
   TRDISP(setXY);
-  TRDISP(setXY[0]);
-  TRDISP(setXY[1]);
-  TRDISP(setXY.getGrid());
-  TRDISP(insideout(setXY.getGrid()));
+  TRDISP(setXY.getGrid()[0]);
+  TRDISP(setXY.getGrid()[1]);
+  // TRDISP(insideout(setXY.getGrid()));
 
+  CR();
+  ECHO_CODE(RealSetN<double, 3> setXYZ({ rx, ry, rz }));
+  TRDISP(setXYZ);
+  auto XYZ = setXYZ.getGrid();
+  // TRDISP(setXYZ);
+  auto X = XYZ[0];
+  TRDISP(X);
+  auto Y = XYZ[1];
+  TRDISP(Y);
+  auto Z = XYZ[2];
+  TRDISP(Z);
+
+
+  // TRDISP(insideout(setXYZ.getGrid()));
 
   // ECHO_CODE(Coordinate2<double, Interval> x_coord2("x", x_interval));
   // TRDISP(x_coord2.gridSet);
