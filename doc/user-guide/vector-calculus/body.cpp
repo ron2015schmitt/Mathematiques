@@ -116,6 +116,7 @@ int main() {
   TRDISP(setXY[0]);
   TRDISP(setXY[1]);
   TRDISP(setXY.getGrid());
+  TRDISP(insideout(setXY.getGrid()));
 
 
   // ECHO_CODE(Coordinate2<double, Interval> x_coord2("x", x_interval));

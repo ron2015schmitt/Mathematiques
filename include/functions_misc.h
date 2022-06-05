@@ -857,22 +857,24 @@ namespace mathq {
     }
 
     RealSetN& deflateGrids() {
-      for (size_t c = 0; c < NDIMS; c++) {
-        get(c).deflateGrid();
-        grid[c].resize(0);
+      for (size_t ii = 0; ii < NDIMS; ii++) {
+        get(ii).deflateGrid();
+        grid[ii].resize(0);
       }
       return *this;
     }
     RealSetN& inflateGrids() {
-      for (size_t c = 0; c < NDIMS; c++) {
-        RealSet<D>& set = get(c);
+      const Dimensions gdims = gridDims();
+      for (size_t ii = 0; ii < NDIMS; ii++) {
+        RealSet<D>& set = get(ii);
         set.inflateGrid();
+        grid[ii].resize(gdims);
       }
       return *this;
     }
     bool hasInflatedGrids() {
-      for (size_t c = 0; c < NDIMS; c++) {
-        if (!(get(c)).hasInflatedGrid()) {
+      for (size_t ii = 0; ii < NDIMS; ii++) {
+        if (!(get(ii)).hasInflatedGrid()) {
           return false;
         }
       }
@@ -906,8 +908,8 @@ namespace mathq {
 
     Dimensions gridDims(void) {
       Dimensions dims;
-      for (size_t c = 0; c < NDIMS; c++) {
-        RealSet<D>& rs = get(c);
+      for (size_t ii = 0; ii < NDIMS; ii++) {
+        RealSet<D>& rs = get(ii);
         dims.push_back(rs.N);
       }
       return dims;
@@ -923,8 +925,8 @@ namespace mathq {
     }
 
 
-    RealSet<D>& get(size_t c) {
-      return (*this)[c];
+    RealSet<D>& get(size_t ii) {
+      return (*this)[ii];
     }
 
     VectorofGrids<D, NDIMS>& getGrid() {
@@ -946,16 +948,42 @@ namespace mathq {
         Grid<D, 1>& ygrid = get(1).forceRegenGrid();
         Grid<D, NDIMS>& X = grid[0];
         Grid<D, NDIMS>& Y = grid[1];
-        X = MatrixRepCol<D>(xgrid, gridDims()[1]);
-        Y = MatrixRepRow<D>(ygrid, gridDims()[0]);
+        const size_t Nx = gridDims()[0];
+        const size_t Ny = gridDims()[1];
+        MDISP(Nx, Ny);
+        TRDISP(xgrid);
+        TRDISP(ygrid);
+        X.resize(Nx, Ny);
+        Y.resize(Nx, Ny);
+        for (size_type r = 0; r < Nx; r++) {
+          for (size_type c = 0; c < Ny; c++) {
+            X(r, c) = xgrid[r];
+            Y(r, c) = ygrid[c];
+          }
+        }
       }
       else {
-
+        Indices indices(NDIMS);  // all zeros
+        setGrid(NDIMS, indices);
       }
       return grid;
     }
 
-
+    void setGrid(int level, Indices& indices) {
+      const size_t Nlevel = gridDims()[level];  // grdi size of level-th coordinate
+      for (int ll = 0; ll < Nlevel; ll++) {
+        if (level > 0) {
+          setGrid(--level, indices);
+        }
+        else {
+          for (int ii = 0; ii < NDIMS; ii++) {
+            // this loop is for the NDIMS different grids (vectors of size N)
+            grid[ii](indices) = get(ii)[indices[ii]];
+          }
+        }
+        indices[level] = indices[level] + 1;
+      }
+    }
 
     inline friend std::ostream& operator<<(std::ostream& stream, const RealSetN& var) {
       stream << "{ ";

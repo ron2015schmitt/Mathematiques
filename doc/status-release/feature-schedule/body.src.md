@@ -86,6 +86,7 @@
 
 ### Miscellaneous Small Features
 * create template versions of all C++ functions so that there is never overload ambiguity. Put inside namespace
+  * use python to create
 ```C++
   template <class DIN>
   auto test(DIN x) {
@@ -101,18 +102,25 @@
   }
   // this seems to works for ints. if problems, use a helper class to determine which exp to call: expf expl, exp
 ```
-* create MultiArray3. use level for the name of th ethird dimension Nlevels
-* create MultiArray4 for xyzt
+* Complex type that inherits from std::complex
+  * can then allows complex, imaginary and quaternion to hold vectors
+* Grid stuff
+  * 2D
+    * Change GridType to use MatRep 
+  * 3D
+    * create MultiArray3 for xyz: (rows,columns, floors)
+    * MArray3Rep
+  * 3D
+    * create MultiArray4 for xyzt: (rows,columns, floors, moments)
+    * MArray4Rep
 * slcies to get row or col of matrix
 * get rid of typename usage in templates?
 * formalize template notation for the following: types with ordering (ints and reals), division algebras, Multiarrays, Tensors
 * use of variable templates to simplify variadics like Dimension?
   * use list for DeepDimensions
   * Deep -> Nested
-* use https://github.com/cheshirekow/kwargs for named arguments
+* use https://github.com/cheshirekow/kwargs for named arguments?
 * replace std::enable_if<std::is_arithmetic<D>::value, D>::type> with mathq version that accepts Imaginary and Quaternions
-* Complex type that inherits from std::complex
-  * can then allows complex, imaginary and quaternion to hold vectors
 * cast method for const std::initializer_list<E>?  is this possible
 * use https://doxygen.nl/manual/docblocks.html os similar to generate method and function docs?
 * reformat all files using VSCode plugin: all done except sandbox

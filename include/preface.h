@@ -149,6 +149,19 @@ namespace mathq {
   class
     MatrixRepRow;
 
+
+  template <class D>
+  class
+    MatrixRep;
+
+  // put in a namespace so that the enums don't clash
+  namespace MatrixRepTypes {
+    enum Type { REPEAT_ROW, REPEAT_COLUMN };
+  };
+
+  using MatrixRepEnum = MatrixRepTypes::Type;
+
+
   template <class D, int NR = 0, int NC = 0>
   class
     MatrixVandermonde;
@@ -1306,6 +1319,38 @@ namespace mathq {
 
 
 
+  // ***************************************************************************
+  // GridType 
+  // ***************************************************************************
+
+  template <class E, class D, int M, int R, int N1 = 0, int N2 = 0>
+  class GridType {
+  public:
+    typedef MultiArray<E, R, D, M> TEN;
+    typedef Matrix<E, 0, 0, D, M> MAT;
+    typedef Vector<E, 0, D, M> VEC;
+    typedef Scalar<E, D, M> SCA;
+    typedef typename std::conditional<R == 0, SCA, std::conditional<R == 1, VEC, std::conditional<R == 2, MAT, TEN>>>::type Type;
+  };
+
+  template <class E, class D, int M>
+  class GridType<E, D, M, 0> {
+  public:
+    typedef Scalar<E, D, M> Type;
+  };
+
+  template <class E, class D, int M, int N1>
+  class GridType<E, D, M, 1, N1> {
+  public:
+    typedef Vector<E, N1, D, M> Type;
+  };
+
+  template <class E, class D, int M, int N1, int N2>
+  class GridType<E, D, M, 2, N1, N2> {
+  public:
+    typedef Matrix<E, N1, N2, D, M> Type;
+  };
+
 
   // ***************************************************************************
   // * Grid
@@ -1316,12 +1361,12 @@ namespace mathq {
   // ***************************************************************************
 
   template <class D, size_t NDIMS>
-  using Grid = typename Materialize<D, D, 1, NDIMS>::Type;
+  using Grid = typename GridType<D, D, 1, NDIMS>::Type;
 
 
 
   // ***************************************************************************
-  // * GridScale 
+  // * GridScale enum
   // ***************************************************************************
 
   // put in a namespace so that the enums don't clash

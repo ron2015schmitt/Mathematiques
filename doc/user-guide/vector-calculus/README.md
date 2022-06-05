@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.20-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.21-c++17</h1>
 
 <details>
 
@@ -101,7 +101,11 @@ RealSetN<double,2> setXY({rx, ry});
 }};
 ☀ setXY[0] ➜ mathq::RealSet<double> {interval=[-2, 2], N=5, scale=LINEAR, gridState=deflated};
 ☀ setXY[1] ➜ mathq::RealSet<double> {interval=[1, 100], N=3, scale=LOG, gridState=inflated};
+☀ Nx ➜ 5; ☀ Ny ➜ 3; 
+☀ xgrid ➜ Vector<double> {-2, -1, 0, 1, 2};
+☀ ygrid ➜ Vector<double> {1, 10, 100};
 ☀ setXY.getGrid() ➜ Vector<Matrix<double>,NE=2> {{ {-2, -2, -2}, {-1, -1, -1}, {0, 0, 0}, {1, 1, 1}, {2, 2, 2} }, { {1, 10, 100}, {1, 10, 100}, {1, 10, 100}, {1, 10, 100}, {1, 10, 100} }};
+☀ insideout(setXY.getGrid()) ➜ Matrix<Vector<double,NE=2>> { {{-2, 1}, {-2, 10}, {-2, 100}}, {{-1, 1}, {-1, 10}, {-1, 100}}, {{0, 1}, {0, 10}, {0, 100}}, {{1, 1}, {1, 10}, {1, 100}}, {{2, 1}, {2, 10}, {2, 100}} };
 ```
 
 

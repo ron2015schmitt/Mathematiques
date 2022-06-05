@@ -56,6 +56,7 @@
 #include "matrix_revdiag.h"
 #include "matrix_repcol.h"
 #include "matrix_reprow.h"
+#include "matrix_rep.h"
 #include "matrix_skewhermitian.h"
 #include "matrix_skewsymmetric.h"
 #include "matrix_symmetric.h"
