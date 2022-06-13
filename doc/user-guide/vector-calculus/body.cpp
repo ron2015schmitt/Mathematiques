@@ -135,6 +135,21 @@ int main() {
   TRDISP(Z);
 
 
+  CR();
+  CurvilinearCoordinateSystem<double, 2> polar(
+    { "r","𝜑" }, 
+    RealMultiSet<double, 2>({ RealSet<double>(0,10,10), RealSet<double>(0,6.28318530718,10) }),
+    { false, true },
+    { [](double r, double phi) {  return r * std::cos(phi); },
+      [](double r, double phi) {  return r * std::sin(phi); }
+    }
+  );
+
+  TRDISP(polar);
+  TRDISP(polar.funcs_xOfq[0](1.5, 0.5));
+
+
+
   // TRDISP(insideout(setXYZ.getGrid()));
 
   // ECHO_CODE(Coordinate2<double, Interval> x_coord2("x", x_interval));

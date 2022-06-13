@@ -561,7 +561,7 @@ namespace mathq {
 
 
   // *********************************************************
-  // *          Functions that return a grid
+  // *          
   // *********************************************************
 
 
@@ -1037,7 +1037,85 @@ namespace mathq {
   };
 
 
+  //
+  // CurvilinearCoordinateSystem<D>
+  //
 
+  //   template <typename... U>
+    // typename std::enable_if<(std::is_same<U, D>::value && ...), const D>::type operator()(const U... args) 
+    // https://en.cppreference.com/w/cpp/language/parameter_pack
+    // https://en.cppreference.com/w/cpp/concepts
+
+    // https://stackoverflow.com/questions/25885893/how-to-create-a-variadic-generic-lambda
+    // https://stackoverflow.com/questions/24661902/fixed-length-variadic-parameter-packs-in-c11
+    // https://stackoverflow.com/questions/63563252/c-template-concept-that-requires-specific-parameter-pack-size
+    //https://stackoverflow.com/questions/70881511/is-there-a-way-to-make-a-concept-that-can-represent-a-template-parameter-pack
+    // https://stackoverflow.com/questions/24912900/status-of-fixed-size-parameter-packs
+    // https://stackoverflow.com/questions/63563252/c-template-concept-that-requires-specific-parameter-pack-size
+    // https://stackoverflow.com/questions/30346652/enforce-variadic-template-of-certain-type
+    // https://stackoverflow.com/questions/69302003/how-to-use-c20-concepts-to-compile-time-enforce-match-of-number-of-args-for-gi
+    // 
+
+  template <class D, size_t NDIMS>
+  class
+    CurvilinearCoordinateSystem {
+  public:
+    using MyFunc = std::function<D(D,D)>;
+
+
+    std::vector<std::string> names;
+    std::vector<bool> periodic;
+    RealMultiSet<D, NDIMS> rmset;
+    std::vector<MyFunc> funcs_xOfq;
+
+    CurvilinearCoordinateSystem(
+      const std::initializer_list<std::string>& names,
+      const RealMultiSet<D, NDIMS>& set,
+      const std::initializer_list<bool>& isPeriodic,
+      const std::initializer_list<MyFunc>& funcs_xOfq
+    ) noexcept :
+      names(names), rmset(set), periodic(isPeriodic), funcs_xOfq(funcs_xOfq) {
+
+    }
+
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "CurvilinearCoordinateSystem";
+      s += StyledString::get(ANGLE1).get();
+      D d;
+      s += getTypeName(d);
+      s += StyledString::get(COMMA).get();
+      s += "NDIMS=";
+      s += num2string(NDIMS);
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const CurvilinearCoordinateSystem& var) {
+      stream << "{ ";
+      stream << "\n  gridState=";
+      display::dispval_strm(stream, (var.rmset.grid.size() == 0) ? "deflated" : "inflated");
+      stream << ", \n  coords={ ";
+      for (size_t n = 0; n < NDIMS; n++) {
+        if (n>0) {
+          stream << ", ";
+        }
+        stream << "\n    " << var.names[n];
+        stream << ": ";
+        if (var.periodic[n]) {
+          stream << "periodic";
+        }
+        display::dispval_strm(stream, var.rmset[n]);
+      }
+      stream << "\n  }";
+      stream << "\n}";
+      return stream;
+    }
+
+
+  };
 
 
   // // complex and Quaternions are not ordered sets so they can't be used in a range
@@ -1637,6 +1715,6 @@ namespace mathq {
 
 
 
-  };
+};
 
 #endif 

@@ -1032,6 +1032,7 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER(std::initializer_list);
   SPECIALIZE_getTypeName_CONTAINER(mathq::RealMultiSet);
 
+
 #define SPECIALIZE_getTypeName_CONTAINER2(TYPE)             \
   template <typename D1, typename D2>                       \
   inline std::string getTypeName(const TYPE<D1, D2> &var) { \
@@ -1047,6 +1048,8 @@ namespace display {
   }
 
   SPECIALIZE_getTypeName_CONTAINER2(std::map);
+
+
 
   template <typename T>
   inline std::string getTypeName(const mathq::Nabla<T>& var) {
@@ -1079,6 +1082,19 @@ namespace display {
     return s;
   }
 
+
+
+  template <typename D, size_t NDIMS>
+  inline std::string getTypeName(const mathq::CurvilinearCoordinateSystem<D,NDIMS>& var) {
+    std::string s = getTypeStyle(var).apply("mathq::RealSet");
+    D d;
+    s += StyledString::get(ANGLE1).get();
+    s += getTypeName(d);
+    s += StyledString::get(COMMA).get();
+    s += num2string(NDIMS);
+    s += StyledString::get(ANGLE2).get();
+    return s;
+  }
 
 
 
@@ -1490,6 +1506,13 @@ namespace display {
   // RealMultiSet
   template <typename D>
   inline void dispval_strm(std::ostream& stream, const mathq::RealMultiSet<D>& var) {
+    stream << var;
+  }
+
+
+  // CurvilinearCoordinateSystem
+  template <typename D, size_t NDIMS>
+  inline void dispval_strm(std::ostream& stream, const mathq::CurvilinearCoordinateSystem<D,NDIMS>& var) {
     stream << var;
   }
 

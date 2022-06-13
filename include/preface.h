@@ -1415,6 +1415,11 @@ namespace mathq {
   class RealMultiSet;
 
 
+  // ***************************************************************************
+  // * CurvilinearCoordinateSystem 
+  // ***************************************************************************
+  template <class D, size_t NDIMS>
+  class CurvilinearCoordinateSystem;
 
   // ***************************************************************************
   // * nabla object
