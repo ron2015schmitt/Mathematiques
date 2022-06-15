@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.23-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.25-c++17</h1>
 
 <details>
 
@@ -102,8 +102,11 @@ Design a C-style language and compiler for high-performance mathematics, likely 
 * aggregator lists on LHS like JavaScript
 * Improve upon C++ tuple, any, variant
   * the return value of a function can depend on which element is returned
+* parameter pack type definition (same type and specified size)
 * modern function support
   * lambda functions and closures
+  * variadic parmeters of same type and of specified size
+  * https://en.cppreference.com/w/cpp/language/function_template
 * Support JavaScript-like string interpolation 
 * No setters or getters
   * have optional methods that are called if present when obj.variable is referenced on LHS or RHS

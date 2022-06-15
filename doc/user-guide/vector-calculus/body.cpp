@@ -14,7 +14,7 @@ inline double fradius3d_2(double x, double y, double z) { return  std::sqrt(x*x 
 
 
 
-
+const double pi = 3.141592653589793238462643383;
 
 
 
@@ -136,17 +136,27 @@ int main() {
 
 
   CR();
-  CurvilinearCoordinateSystem<double, 2> polar(
-    { "r","𝜑" }, 
-    RealMultiSet<double, 2>({ RealSet<double>(0,10,10), RealSet<double>(0,6.28318530718,10) }),
-    { false, true },
-    { [](double r, double phi) {  return r * std::cos(phi); },
-      [](double r, double phi) {  return r * std::sin(phi); }
-    }
-  );
+  PolarCoords<double> polar;
 
   TRDISP(polar);
-  TRDISP(polar.funcs_xOfq[0](1.5, 0.5));
+  // double phi = std::acos(0.5);
+  double phi = pi/3;
+  TRDISP(phi/pi);
+  TRDISP(polar.x(10, phi));
+  TRDISP(polar.y(10, phi));
+  TRDISP(polar.J(10, phi));
+  TRDISP(polar.g(10, phi));
+
+
+
+  TRDISP(polar.r(5, 8.66025));
+  TRDISP(polar.phi(5, 8.66025)/pi);
+  TRDISP(polar.r_vec_cart(1,0)); 
+  TRDISP(polar.r_vec_cart(1,1)); 
+  TRDISP(polar.r_vec_cart(0,1)); 
+  TRDISP(polar.r_vec_cart(-1,0)); 
+   // TRDISP(polar.xOfq[0](1.5, 0.5));
+  // TRDISP(polar.funcs_uvecsOfq[0](0.5, 0.5));
 
 
 

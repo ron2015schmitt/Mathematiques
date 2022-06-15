@@ -1084,8 +1084,8 @@ namespace display {
 
 
 
-  template <typename D, size_t NDIMS>
-  inline std::string getTypeName(const mathq::CurvilinearCoordinateSystem<D,NDIMS>& var) {
+  template <typename D, size_t NDIMS, typename CHILD>
+  inline std::string getTypeName(const mathq::CurvilinearCoordinateSystem<D,NDIMS,CHILD>& var) {
     std::string s = getTypeStyle(var).apply("mathq::RealSet");
     D d;
     s += StyledString::get(ANGLE1).get();
@@ -1511,8 +1511,8 @@ namespace display {
 
 
   // CurvilinearCoordinateSystem
-  template <typename D, size_t NDIMS>
-  inline void dispval_strm(std::ostream& stream, const mathq::CurvilinearCoordinateSystem<D,NDIMS>& var) {
+  template <typename D, size_t NDIMS, typename CHILD>
+  inline void dispval_strm(std::ostream& stream, const mathq::CurvilinearCoordinateSystem<D,NDIMS, CHILD>& var) {
     stream << var;
   }
 

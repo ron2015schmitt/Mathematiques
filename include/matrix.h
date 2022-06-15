@@ -125,6 +125,14 @@ namespace mathq {
 
 
 
+    Matrix<E, NR, NC, D, M>(const std::list<std::list<E> >& list1) {
+      const int Nr = list1.size();
+      const int Nc = (*(list1.begin())).size();
+      resize(Nr, Nc);
+      *this = list1;
+    }
+
+
 
 
     // --------------------- COPY CONSTRUCTOR --------------------

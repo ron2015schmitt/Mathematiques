@@ -1418,7 +1418,7 @@ namespace mathq {
   // ***************************************************************************
   // * CurvilinearCoordinateSystem 
   // ***************************************************************************
-  template <class D, size_t NDIMS>
+  template <class D, size_t NDIMS, typename CHILD>
   class CurvilinearCoordinateSystem;
 
   // ***************************************************************************

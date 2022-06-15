@@ -1056,26 +1056,21 @@ namespace mathq {
     // https://stackoverflow.com/questions/69302003/how-to-use-c20-concepts-to-compile-time-enforce-match-of-number-of-args-for-gi
     // 
 
-  template <class D, size_t NDIMS>
+  template <class D, size_t NDIMS, typename CHILD>
   class
     CurvilinearCoordinateSystem {
   public:
-    using MyFunc = std::function<D(D,D)>;
 
+    CHILD& derived() {
+      return static_cast<CHILD&>(*this);
+    }
+    const CHILD& derived() const {
+      return static_cast<const CHILD&>(*this);
+    }
 
-    std::vector<std::string> names;
-    std::vector<bool> periodic;
-    RealMultiSet<D, NDIMS> rmset;
-    std::vector<MyFunc> funcs_xOfq;
 
     CurvilinearCoordinateSystem(
-      const std::initializer_list<std::string>& names,
-      const RealMultiSet<D, NDIMS>& set,
-      const std::initializer_list<bool>& isPeriodic,
-      const std::initializer_list<MyFunc>& funcs_xOfq
-    ) noexcept :
-      names(names), rmset(set), periodic(isPeriodic), funcs_xOfq(funcs_xOfq) {
-
+    ) {
     }
 
 
@@ -1094,28 +1089,105 @@ namespace mathq {
 
 
     inline friend std::ostream& operator<<(std::ostream& stream, const CurvilinearCoordinateSystem& var) {
+      stream << "{}";
+      return stream;
+    }
+
+
+  };
+
+
+
+  template <class D>
+  class
+    PolarCoords : public CurvilinearCoordinateSystem<D, 2, PolarCoords<D>> {
+  public:
+    using Func = std::function<D(D, D)>;
+    using VecFunc = std::function<Vector<D, 2>(D, D)>;
+
+
+    std::vector<std::string> names = { "r","𝜑" };
+    std::vector<bool> periodic = { false, true };
+
+    PolarCoords() {
+    }
+
+    double x(double r, double phi) const {
+      return r * std::cos(phi);
+    }
+    double y(double r, double phi) const {
+      return r * std::sin(phi);
+    }
+
+    double r(double x, double y) const {
+      return std::sqrt(x*x + y*y);
+    }
+    double phi(double x, double y) const {
+      return std::atan2(y, x);
+    }
+
+
+    Vector<double, 2> r_vec(double r, double phi) const {
+      return Vector<double, 2>{ std::cos(phi), std::sin(phi) };
+    }
+    Vector<double, 2> phi_vec(double r, double phi) const {
+      return Vector<double, 2>{ -std::sin(phi), std::cos(phi) };
+    }
+
+    Vector<double, 2> r_vec_cart(double x, double y) const {
+      const double r = this->r(x, y);
+      return Vector<double, 2>{ x/r, y/r };
+    }
+    Vector<double, 2> phi_vec_cart(double x, double y) const {
+      const double r = this->r(x, y);
+      return Vector<double, 2>{ -y/r, x/r };
+    }
+
+    // Jacobian 
+    double J(double r, double phi) const {
+      return r;
+    }
+    // metric tensor g^{ij} 
+    Matrix<double, 2, 2> g(double r, double phi) const {
+      Matrix<double, 2, 2> metric;
+      metric = { 1, 0, r*r, 0 };
+      return metric;
+    }
+
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "PolarCoords";
+      s += StyledString::get(ANGLE1).get();
+      D d;
+      s += getTypeName(d);
+      s += StyledString::get(COMMA).get();
+      s += "NDIMS=2";
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords& var) {
       stream << "{ ";
-      stream << "\n  gridState=";
-      display::dispval_strm(stream, (var.rmset.grid.size() == 0) ? "deflated" : "inflated");
-      stream << ", \n  coords={ ";
-      for (size_t n = 0; n < NDIMS; n++) {
+      stream << "\n  coords=(";
+      for (size_t n = 0; n < 2; n++) {
         if (n>0) {
           stream << ", ";
         }
-        stream << "\n    " << var.names[n];
-        stream << ": ";
+        stream << var.names[n];
         if (var.periodic[n]) {
-          stream << "periodic";
+          stream << ": periodic";
         }
-        display::dispval_strm(stream, var.rmset[n]);
       }
-      stream << "\n  }";
+      stream << ")";
       stream << "\n}";
       return stream;
     }
 
 
   };
+
 
 
   // // complex and Quaternions are not ordered sets so they can't be used in a range
