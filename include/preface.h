@@ -1318,6 +1318,18 @@ namespace mathq {
   };
 
 
+  // ***************************************************************************
+  // * GridScale enum
+  // ***************************************************************************
+
+  // put in a namespace so that the enums don't clash
+  namespace GridScale {
+    enum Type { LINEAR = false, LOG = true };
+  };
+
+  using GridScaleEnum = GridScale::Type;
+
+
 
   // ***************************************************************************
   // GridType 
@@ -1351,9 +1363,7 @@ namespace mathq {
   // ***************************************************************************
   // * Grid
   //
-  // This is a nested structure with M=2:
-  //   top level: A single vector of fixed size, Vector<D,NDIMS>
-  //   second level: multiarrays of fixed rank=NDIMS but dynamic size
+  //  multiarray of depth=1 and fixed rank=NDIMS but dynamic size
   // ***************************************************************************
 
   template <class D, size_t NDIMS>
@@ -1361,20 +1371,9 @@ namespace mathq {
 
 
 
-  // ***************************************************************************
-  // * GridScale enum
-  // ***************************************************************************
-
-  // put in a namespace so that the enums don't clash
-  namespace GridScale {
-    enum Type { LINEAR = false, LOG = true };
-  };
-
-  using GridScaleEnum = GridScale::Type;
-
 
   // ***************************************************************************
-  // * VectorofGrids
+  // * VectorOfGrids
   //
   // This is a nested structure with M=2:
   //   top level: A single vector of fixed size, Vector<D,NDIMS>
@@ -1382,21 +1381,49 @@ namespace mathq {
   // ***************************************************************************
 
   template <class D, size_t NDIMS>
-  using VectorofGrids = Vector<Grid<D, NDIMS>, NDIMS>;
+  using VectorOfGrids = Vector<Grid<D, NDIMS>, NDIMS>;
 
 
   // ***************************************************************************
-  // * GridofVectors
+  // * GridOfVectors
   //
   // This is a nested structure with M=2:
   //   top level: a single multiarray of fixed rank=NDIMS but dynamic size
   //   second level: Vectors of fixed size, Vector<D,NDIMS>
   //
-  // This type has the same total number of elements as VectorofGrids.
+  // This type has the same total number of elements as VectorOfGrids.
   // The two types can be converted from one to another using the function 'insideout'.
   // ***************************************************************************
   template <class D, size_t NDIMS>
-  using GridofVectors = typename Grid<Vector<D, NDIMS>, NDIMS>::Type;
+  using GridOfVectors = typename Grid<Vector<D, NDIMS>, NDIMS>::Type;
+
+
+
+
+  // ***************************************************************************
+  // * MatrixOfGrids
+  //
+  // This is a nested structure with M=2:
+  //   top level: A single square matrix of fixed size, Matrix<D,NDIMS,NDIMS>
+  //   second level: multiarrays of fixed rank=NDIMS but dynamic size
+  // ***************************************************************************
+
+  template <class D, size_t NDIMS>
+  using MatrixOfGrids = Matrix<Grid<D, NDIMS>, NDIMS, NDIMS>;
+
+
+  // ***************************************************************************
+  // * GridOfMatrixs
+  //
+  // This is a nested structure with M=2:
+  //   top level: a single multiarray of fixed rank=NDIMS but dynamic size
+  //   second level: A single square matrix of fixed size, Matrix<D,NDIMS,NDIMS>
+  //
+  // This type has the same total number of elements as MatrixOfGrids.
+  // The two types can be converted from one to another using the function 'insideout'.
+  // ***************************************************************************
+  template <class D, size_t NDIMS>
+  using GridOfMatrixs = typename Grid<Matrix<D, NDIMS, NDIMS>, NDIMS>::Type;
 
 
 
@@ -1421,6 +1448,45 @@ namespace mathq {
   template <class D, size_t NDIMS, typename CHILD>
   class CurvilinearCoordinateSystem;
 
+
+  // ***************************************************************************
+  // Materialize - this returns a concrete tensor of type specified by paramters
+  // ***************************************************************************
+
+  template <class D, size_t NDIMS, size_t RANK>
+  class TensorOfGrids {
+  public:
+    typedef MultiArray<Grid<D, NDIMS>, RANK> Type;   // need to specify dimensiosn dynamically
+  };
+
+  template <class D, size_t NDIMS>
+  class TensorOfGrids<D, NDIMS, 0> {
+  public:
+    typedef Grid<D, NDIMS> Type;
+  };
+
+  template <class D, size_t NDIMS>
+  class TensorOfGrids<D, NDIMS, 1> {
+  public:
+    typedef VectorOfGrids<D, NDIMS> Type;
+  };
+
+  template <class D, size_t NDIMS>
+  class TensorOfGrids<D, NDIMS, 2> {
+  public:
+    typedef MatrixOfGrids<D, NDIMS> Type;
+  };
+
+
+  // ***************************************************************************
+  // * CurvilinearField
+  //
+  // physics field object: scalar field, vector field, tensor field 
+  // uses curvilinear coordinates
+  // ***************************************************************************
+  template <class D, size_t NDIMS, size_t RANK>
+  class CurvilinearField;
+
   // ***************************************************************************
   // * nabla object
   // ***************************************************************************
@@ -1428,12 +1494,10 @@ namespace mathq {
   template <class T = void>
   class Nabla {
   public:
-    const unsigned int Ndims;
     const unsigned int Nwindow;
-    const bool periodic;
   public:
-    Nabla(const unsigned int Ndims = 1, const unsigned int Nwindow = 7, const bool periodic = false) :
-      Ndims(Ndims), Nwindow(Nwindow), periodic(periodic) {
+    Nabla(const unsigned int Nwindow = 7) :
+      Nwindow(Nwindow) {
     }
     ~Nabla() {
     }

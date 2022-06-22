@@ -1644,12 +1644,8 @@ namespace display {
   // mathq::Nabla
   template <typename D>
   inline void dispval_strm(std::ostream& stream, const mathq::Nabla<D>& var) {
-    stream << "(Ndims=";
-    dispval_strm(stream, var.Ndims);
-    stream << ", Nwindow=";
+    stream << "(Nwindow=";
     dispval_strm(stream, var.Nwindow);
-    stream << ", periodic=";
-    dispval_strm(stream, var.periodic);
     stream << ")";
   }
 

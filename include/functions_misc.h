@@ -845,7 +845,7 @@ namespace mathq {
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
 
-    VectorofGrids<D, NDIMS> grid;
+    VectorOfGrids<D, NDIMS> grid;
 
     RealMultiSet(const std::initializer_list<RealSet<D>>& mylist) {
       *this = mylist;
@@ -936,14 +936,14 @@ namespace mathq {
       return (*this)[g];
     }
 
-    VectorofGrids<D, NDIMS>& getGrid() {
+    VectorOfGrids<D, NDIMS>& getGrid() {
       TRDISP(hasInflatedGrids_());
       if (hasInflatedGrids_()) return grid;
       return forceRegenGrid();
     }
 
 
-    VectorofGrids<D, NDIMS>& forceRegenGrid() {
+    VectorOfGrids<D, NDIMS>& forceRegenGrid() {
       init_();
 
       if constexpr (NDIMS == 0) {
@@ -1100,7 +1100,7 @@ namespace mathq {
 
   template <class D>
   class
-    PolarCoords : public CurvilinearCoordinateSystem<D, 2, PolarCoords<D>> {
+    PolarCoordSystem : public CurvilinearCoordinateSystem<D, 2, PolarCoordSystem<D>> {
   public:
     using Func = std::function<D(D, D)>;
     using VecFunc = std::function<Vector<D, 2>(D, D)>;
@@ -1109,7 +1109,58 @@ namespace mathq {
     std::vector<std::string> names = { "r","𝜑" };
     std::vector<bool> periodic = { false, true };
 
-    PolarCoords() {
+    class Coords {
+    public:
+      D r;
+      D phi;
+
+      Coords(const D r, const D phi) : r(r), phi(phi) {
+
+      }
+
+      // "read/write"
+      D& operator[](const index_type n) {
+        if (n == 0) {
+          return r;
+        }
+        else {
+          return phi;
+        }
+      }
+
+      // read
+      const D& operator[](const index_type n)  const {
+        if (n == 0) {
+          return r;
+        }
+        else {
+          return phi;
+        }
+      }
+
+      inline std::string classname() const {
+        using namespace display;
+        std::string s = "PolarCoordSystem::Coords";
+        s += StyledString::get(ANGLE1).get();
+        D d;
+        s += getTypeName(d);
+        s += StyledString::get(ANGLE2).get();
+        return s;
+      }
+
+
+      inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoordSystem::Coords& var) {
+        stream << "(r=";
+        stream << var.r;
+        stream << ", φ=";
+        stream << var.phi;
+        stream << ")";
+        return stream;
+      }
+
+    };
+
+    PolarCoordSystem() {
     }
 
     double x(double r, double phi) const {
@@ -1147,6 +1198,7 @@ namespace mathq {
     double J(double r, double phi) const {
       return r;
     }
+
     // metric tensor g^{ij} 
     Matrix<double, 2, 2> g(double r, double phi) const {
       Matrix<double, 2, 2> metric;
@@ -1155,20 +1207,24 @@ namespace mathq {
     }
 
 
+    double dot(const Vector<double, 2>& v1, const Vector<double, 2>& v2) const {
+      return v1[0] * v2[0] * std::cos(v1[1] - v2[1]);
+    }
+
+
+
     inline std::string classname() const {
       using namespace display;
-      std::string s = "PolarCoords";
+      std::string s = "PolarCoordSystem";
       s += StyledString::get(ANGLE1).get();
       D d;
       s += getTypeName(d);
-      s += StyledString::get(COMMA).get();
-      s += "NDIMS=2";
       s += StyledString::get(ANGLE2).get();
       return s;
     }
 
 
-    inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords& var) {
+    inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoordSystem& var) {
       stream << "{ ";
       stream << "\n  coords=(";
       for (size_t n = 0; n < 2; n++) {
@@ -1188,219 +1244,29 @@ namespace mathq {
 
   };
 
+  template <class D>
+  double dot(const PolarCoordSystem<double>::Coords& v1, const PolarCoordSystem<double>::Coords& v2) {
+    return v1.r * v2.r * std::cos(v1.phi - v2.phi);
+  }
 
 
-  // // complex and Quaternions are not ordered sets so they can't be used in a range
-
-  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  // auto grid(const Interval<D>& rang) {
-  //   return linspace(rang.a, rang.b, rang.N);
-  // }
-
-  // /// TODO: use reprow and repcol matrices
-
-  // // uses same convetnion as meshgrid form matlab
-  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  // auto grid(const Interval<D>& r1, const Interval<D>& r2) {
-  //   auto X = Matrix<D>(r2.N, r1.N);
-  //   auto Y = Matrix<D>(r2.N, r1.N);
-  //   auto* G = new Vector<Matrix<D>, 2>();
-
-  //   for (size_type c = 0; c < r1.N; c++) {
-  //     D temp;
-
-  //     if (c == 0) {
-  //       temp = r1.a;
-  //     }
-  //     else if (c == r1.N-1) {
-  //       temp = r1.b;
-  //     }
-  //     else {
-  //       temp = r1.a + static_cast<D>(c)*r1.step;
-  //     }
-  //     for (size_type r = 0; r < r2.N; r++) {
-  //       X(r, c) = temp;
-  //     }
-  //   }
-
-  //   for (size_type r = 0; r < r2.N; r++) {
-  //     D temp;
-  //     if (r == 0) {
-  //       temp = r2.a;
-  //     }
-  //     else if (r == r2.N-1) {
-  //       temp = r2.b;
-  //     }
-  //     else {
-  //       temp = r2.a + static_cast<D>(r)*r2.step;
-  //     }
-  //     for (size_type c = 0; c < r1.N; c++) {
-  //       Y(r, c) = temp;
-  //     }
-  //   }
-  //   (*G)(0) = X;
-  //   (*G)(1) = Y;
-  //   return *G;
-  // }
-
-  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  // auto grid(const Interval<D>& r1, const Interval<D>& r2, const Interval<D>& r3) {
-  //   auto dims = Dimensions(r2.N, r1.N, r3.N);
-  //   auto X = MultiArray<D, 3>(dims);
-  //   auto Y = MultiArray<D, 3>(dims);
-  //   auto Z = MultiArray<D, 3>(dims);
-  //   auto* G = new Vector<MultiArray<D>, 3>({ Dimensions(3),dims });
-  //   // TRDISP(G->deepdims());
-  //   // TRDISP((*G)(0));
-  //   // X
-  //   for (size_type c = 0; c < r1.N; c++) {
-  //     D temp;
-
-  //     if (c == 0) {
-  //       temp = r1.a;
-  //     }
-  //     else if (c == r1.N-1) {
-  //       temp = r1.b;
-  //     }
-  //     else {
-  //       temp = r1.a + static_cast<D>(c)*r1.step;
-  //     }
-  //     for (size_type r = 0; r < r2.N; r++) {
-  //       for (size_type k = 0; k < r3.N; k++) {
-  //         X({ r, c, k }) = temp;
-  //       }
-  //     }
-  //   }
-
-  //   // Y 
-  //   for (size_type r = 0; r < r2.N; r++) {
-  //     D temp;
-  //     if (r == 0) {
-  //       temp = r2.a;
-  //     }
-  //     else if (r == r2.N-1) {
-  //       temp = r2.b;
-  //     }
-  //     else {
-  //       temp = r2.a + static_cast<D>(r)*r2.step;
-  //     }
-  //     for (size_type c = 0; c < r1.N; c++) {
-  //       for (size_type k = 0; k < r3.N; k++) {
-  //         Y({ r, c, k }) = temp;
-  //       }
-  //     }
-  //   }
-  //   // Z
-  //   for (size_type k = 0; k < r3.N; k++) {
-  //     D temp;
-  //     if (k == 0) {
-  //       temp = r3.a;
-  //     }
-  //     else if (k == r3.N-1) {
-  //       temp = r3.b;
-  //     }
-  //     else {
-  //       temp = r3.a + static_cast<D>(k)*r3.step;
-  //     }
-  //     for (size_type r = 0; r < r2.N; r++) {
-  //       for (size_type c = 0; c < r1.N; c++) {
-  //         Z({ r, c, k }) = temp;
-  //       }
-  //     }
-  //   }
-  //   // TRDISP((*G)(0));
-  //   // TRDISP(X);
-  //   (*G)(0) = X;
-  //   (*G)(1) = Y;
-  //   (*G)(2) = Z;
-  //   return *G;
-  // }
 
 
-  // // fgrid 1D - apply function to 1D grid
+  // ***************************************************************************
+  // * CurvilinearField
+  //
+  // physics field object: scalar field, vector field, tensor field 
+  // uses curvilinear coordinates
+  // ***************************************************************************
+  template <class D, size_t NDIMS, size_t RANK>
+  class CurvilinearField {
+  public:
+    TensorOfGrids<D, NDIMS, RANK> data;
 
-  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  // Vector<D>& fgrid(std::function<D(D)> func, const Vector<D>& grid) {
-  //   Vector<D>* y = new Vector<D>(grid.size());
-  //   for (int k = 0; k < grid.size(); k++) {
-  //     (*y)[k] = func(grid[k]);
-  //   }
-  //   return *y;
-  // }
+    CurvilinearField<D, NDIMS, RANK>() {
 
-  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  // Vector<D>& fgrid(D(func)(D), const Vector<D>& grid) {
-  //   // All 3 of these work
-  //   // std::function<D(D)> func2 = func;  return fgrid( func2, grid );
-  //   // return fgrid( std::function<D(D)>(std::forward<decltype(func)>(func)), grid );
-  //   return fgrid(std::function<D(D)>(func), grid);
-  // }
-
-
-  // //
-  // // fgrid 2D 
-  // //
-
-  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  // auto fgrid(std::function<D(D, D)> func, const Vector<Matrix<D>, 2>& grid) {
-  //   const Matrix<D>& X = grid(0);
-  //   const Matrix<D>& Y = grid(1);
-  //   auto* y = new Matrix<D>(X.Nrows(), X.Ncols());
-  //   for (int k = 0; k < X.size(); k++) {
-  //     (*y)[k] = func(X[k], Y[k]);
-  //   }
-  //   return *y;
-  // }
-
-  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  // auto fgrid(D(func)(D, D), const Vector<Matrix<D>, 2>& grid) {
-  //   // All 3 of these work
-  //   // std::function<D(D,D)> func2 = func;  return fgrid( func2, grid );
-  //   // return fgrid( std::function<D(D,D)>(std::forward<decltype(func)>(func)), grid );
-  //   return fgrid(std::function<D(D, D)>(func), grid);
-  // }
-
-
-  // //
-  // // fgrid 3D 
-  // //
-
-  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  // auto fgrid(std::function<D(D, D, D)> func, const Vector<MultiArray<D>, 3>& grid) {
-  //   const MultiArray<D>& X = grid(0);
-  //   const MultiArray<D>& Y = grid(1);
-  //   const MultiArray<D>& Z = grid(2);
-  //   auto* y = new MultiArray<D, 3>(X.dims());
-  //   for (int k = 0; k < X.size(); k++) {
-  //     (*y)[k] = func(X[k], Y[k], Z[k]);
-  //   }
-  //   return *y;
-  // }
-
-  // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  // auto fgrid(D(func)(D, D, D), const Vector<MultiArray<D>, 3>& grid) {
-  //   // All 3 of these work
-  //   // std::function<D(D,D)> func2 = func;  return fgrid( func2, grid );
-  //   // return fgrid( std::function<D(D,D)>(std::forward<decltype(func)>(func)), grid );
-  //   return fgrid(std::function<D(D, D, D)>(func), grid);
-  // }
-
-
-  // // ***************************************************************************
-  // // * nabla operator
-  // // ***************************************************************************
-
-  // template <class T>
-  // class Nabla_old {
-  // public:
-  //   Nabla_old() {
-  //   }
-  //   ~Nabla_old() {
-  //   }
-  // };
-
-  // const Nabla_old<void> nabla_old;
-
+    }
+  };
 
 
 

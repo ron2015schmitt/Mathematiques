@@ -4,10 +4,10 @@
 namespace mathq {
 
   /********************************************************************
-   * MultiArray<E>      -- MultiArray of 0 dimension (scalar)
+   * MultiArray<E>      -- MultiArray of 0 rank (scalar)
    *                   E  = type for elements
-   * MultiArray<E,NDIM> -- MultiArray of NDIM dimension
-   *                   NDIM = number of dimensions (0=scalar,1=vector,2=matrix,etc)
+   * MultiArray<E,R> -- MultiArray of R rank
+   *                   R = number of rank (0=scalar,1=vector,2=matrix,etc)
    *
    * DO NOT SPECIFY: D,M
    *                 The defaults are defined in the declaration in

@@ -136,7 +136,10 @@ int main() {
 
 
   CR();
-  PolarCoords<double> polar;
+  PolarCoordSystem<double> polar;
+
+  PolarCoordSystem<double>::Coords v1(10, pi/3);
+  TRDISP(v1);
 
   TRDISP(polar);
   // double phi = std::acos(0.5);
@@ -155,6 +158,9 @@ int main() {
   TRDISP(polar.r_vec_cart(1,1)); 
   TRDISP(polar.r_vec_cart(0,1)); 
   TRDISP(polar.r_vec_cart(-1,0)); 
+
+
+
    // TRDISP(polar.xOfq[0](1.5, 0.5));
   // TRDISP(polar.funcs_uvecsOfq[0](0.5, 0.5));
 

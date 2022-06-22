@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.25-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.26-c++17</h1>
 
 <details>
 
@@ -61,7 +61,7 @@
 
 ```C++
 
-☀ d1 ➜ mathq::Nabla (Ndims=1, Nwindow=7, periodic=0);
+☀ d1 ➜ mathq::Nabla (Nwindow=7);
 
 RealSet<double> rs(-2, +2, 5);
 ☀ rs ➜ mathq::RealSet<double> {interval=[-2, 2], N=5, scale=LINEAR, gridState=deflated};
@@ -191,7 +191,8 @@ inflategrids
   }
 };
 
-☀ polar ➜ PolarCoords<double,NDIMS=2> { 
+☀ v1 ➜ PolarCoordSystem::Coords<double> (r=10, φ=1.0472);
+☀ polar ➜ PolarCoordSystem<double> { 
   coords=(r, 𝜑: periodic)
 };
 ☀ phi/pi ➜ double 0.333333;
