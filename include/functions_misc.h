@@ -1117,25 +1117,6 @@ namespace mathq {
       (*this)[1] = phi;
     }
 
-    // // "read/write"
-    // D& operator[](const index_type n) {
-    //   if (n == 0) {
-    //     return r;
-    //   }
-    //   else {
-    //     return phi;
-    //   }
-    // }
-
-    // // read
-    // const D& operator[](const index_type n)  const {
-    //   if (n == 0) {
-    //     return r;
-    //   }
-    //   else {
-    //     return phi;
-    //   }
-    // }
 
 
     // const std::vector<bool> periodic = { false, true };
