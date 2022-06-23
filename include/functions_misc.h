@@ -1097,6 +1097,141 @@ namespace mathq {
   };
 
 
+  // ***************************************************************************
+  // * PolarCoords(r, phi)
+  // ***************************************************************************
+
+  template <class D>
+  class PolarCoords {
+  public:
+    static PolarCoords<D> fromCartesian(D x, D y) {
+      return PolarCoords<D>(std::sqrt(x*x + y*y), std::atan2(y, x));
+    }
+
+    D r;
+    D phi;
+
+
+
+    PolarCoords(const D r, const D phi) : r(r), phi(phi) {
+    }
+
+    // "read/write"
+    D& operator[](const index_type n) {
+      if (n == 0) {
+        return r;
+      }
+      else {
+        return phi;
+      }
+    }
+
+    // read
+    const D& operator[](const index_type n)  const {
+      if (n == 0) {
+        return r;
+      }
+      else {
+        return phi;
+      }
+    }
+
+
+    // const std::vector<bool> periodic = { false, true };
+
+    std::vector<std::string>& names() const {
+      std::vector<std::string> names = { "r","𝜑" };
+      return names;
+    }
+    const std::string& name(size_t n) const {
+      if (n == 0) {
+        return std::string("r");
+      }
+      else {
+        return std::string("phi");
+      }
+    }
+
+
+
+    D x() const {
+      return r * std::cos(phi);
+    }
+    D y() const {
+      return r * std::sin(phi);
+    }
+
+
+    Vector<D, 2> pos() const {
+      return toCartesian();
+    }
+    Vector<D, 2> toCartesian() const {
+      return Vector<D, 2>{ x(), y() };
+    }
+
+
+    // unit vectors
+    Vector<D, 2> vec_r() const {
+      return Vector<D, 2>{ std::cos(phi), std::sin(phi) };
+    }
+    Vector<D, 2> vec_phi() const {
+      return Vector<D, 2>{ -std::sin(phi), std::cos(phi) };
+    }
+
+    Vector<D, 2> vec(size_t n) const {
+      if (n == 0) {
+        return vec_r();
+      }
+      else {
+        return vec_phi();
+      }
+    }
+
+
+    // Jacobian 
+    D J() const {
+      return r;
+    }
+
+    // metric tensor g^{ij} 
+    Matrix<D, 2, 2> g() const {
+      Matrix<D, 2, 2> metric;
+      metric = { 1, 0, r*r, 0 };
+      return metric;
+    }
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "PolarCoordSystem";
+      s += StyledString::get(ANGLE1).get();
+      D d;
+      s += getTypeName(d);
+      s += StyledString::get(ANGLE2).get();
+      s += "::Coords";
+      return s;
+    }
+
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords<D>& var) {
+      stream << "(r=";
+      stream << var.r;
+      stream << ", φ=";
+      stream << var.phi;
+      stream << ")";
+      return stream;
+    }
+
+
+  };
+
+
+  template <class D>
+  auto dot(const PolarCoords<D>& v1, const PolarCoords<D>& v2) {
+    return v1.r * v2.r * std::cos(v1.phi - v2.phi);
+  }
+
+
+
 
   template <class D>
   class
@@ -1104,113 +1239,25 @@ namespace mathq {
   public:
     using Func = std::function<D(D, D)>;
     using VecFunc = std::function<Vector<D, 2>(D, D)>;
+    using Coords = PolarCoords<D>;
 
 
-    std::vector<std::string> names = { "r","𝜑" };
-    std::vector<bool> periodic = { false, true };
-
-    class Coords {
-    public:
-      D r;
-      D phi;
-
-      Coords(const D r, const D phi) : r(r), phi(phi) {
+    // ***************************************************************************
+    // * Field
+    //
+    // physics field object: scalar field, vector field, tensor field 
+    // uses curvilinear coordinates
+    // ***************************************************************************
+    template <size_t RANK> class Field {
+      Field() {
 
       }
-
-      // "read/write"
-      D& operator[](const index_type n) {
-        if (n == 0) {
-          return r;
-        }
-        else {
-          return phi;
-        }
-      }
-
-      // read
-      const D& operator[](const index_type n)  const {
-        if (n == 0) {
-          return r;
-        }
-        else {
-          return phi;
-        }
-      }
-
-      inline std::string classname() const {
-        using namespace display;
-        std::string s = "PolarCoordSystem::Coords";
-        s += StyledString::get(ANGLE1).get();
-        D d;
-        s += getTypeName(d);
-        s += StyledString::get(ANGLE2).get();
-        return s;
-      }
-
-
-      inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoordSystem::Coords& var) {
-        stream << "(r=";
-        stream << var.r;
-        stream << ", φ=";
-        stream << var.phi;
-        stream << ")";
-        return stream;
-      }
-
     };
+
+
 
     PolarCoordSystem() {
     }
-
-    double x(double r, double phi) const {
-      return r * std::cos(phi);
-    }
-    double y(double r, double phi) const {
-      return r * std::sin(phi);
-    }
-
-    double r(double x, double y) const {
-      return std::sqrt(x*x + y*y);
-    }
-    double phi(double x, double y) const {
-      return std::atan2(y, x);
-    }
-
-
-    Vector<double, 2> r_vec(double r, double phi) const {
-      return Vector<double, 2>{ std::cos(phi), std::sin(phi) };
-    }
-    Vector<double, 2> phi_vec(double r, double phi) const {
-      return Vector<double, 2>{ -std::sin(phi), std::cos(phi) };
-    }
-
-    Vector<double, 2> r_vec_cart(double x, double y) const {
-      const double r = this->r(x, y);
-      return Vector<double, 2>{ x/r, y/r };
-    }
-    Vector<double, 2> phi_vec_cart(double x, double y) const {
-      const double r = this->r(x, y);
-      return Vector<double, 2>{ -y/r, x/r };
-    }
-
-    // Jacobian 
-    double J(double r, double phi) const {
-      return r;
-    }
-
-    // metric tensor g^{ij} 
-    Matrix<double, 2, 2> g(double r, double phi) const {
-      Matrix<double, 2, 2> metric;
-      metric = { 1, 0, r*r, 0 };
-      return metric;
-    }
-
-
-    double dot(const Vector<double, 2>& v1, const Vector<double, 2>& v2) const {
-      return v1[0] * v2[0] * std::cos(v1[1] - v2[1]);
-    }
-
 
 
     inline std::string classname() const {
@@ -1241,32 +1288,30 @@ namespace mathq {
       return stream;
     }
 
-
   };
 
-  template <class D>
-  double dot(const PolarCoordSystem<double>::Coords& v1, const PolarCoordSystem<double>::Coords& v2) {
-    return v1.r * v2.r * std::cos(v1.phi - v2.phi);
-  }
+
+  // template <class D>
+  // using PolarCoords = typename PolarCoordSystem<D>::Coords;
+
+  // template <class D = double>
+  // auto dot(const typename PolarCoordSystem<D>::Coords& v1, const typename PolarCoordSystem<D>::Coords& v2) {
+  //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
+  // }
+
+
+  // template <class D, template <typename> class T>
+  // auto dot(const typename T<D>::Coords& v1, const typename T<D>::Coords& v2) {
+  //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
+  // }
+
+  // template <class D>
+  // auto dot(const typename PolarCoordSystem<D>::Coords& v1, const typename PolarCoordSystem<D>::Coords& v2) {
+  //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
+  // }
 
 
 
-
-  // ***************************************************************************
-  // * CurvilinearField
-  //
-  // physics field object: scalar field, vector field, tensor field 
-  // uses curvilinear coordinates
-  // ***************************************************************************
-  template <class D, size_t NDIMS, size_t RANK>
-  class CurvilinearField {
-  public:
-    TensorOfGrids<D, NDIMS, RANK> data;
-
-    CurvilinearField<D, NDIMS, RANK>() {
-
-    }
-  };
 
 
 

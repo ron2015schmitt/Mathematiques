@@ -135,29 +135,46 @@ int main() {
   TRDISP(Z);
 
 
-  CR();
-  PolarCoordSystem<double> polar;
 
   PolarCoordSystem<double>::Coords v1(10, pi/3);
   TRDISP(v1);
+  PolarCoordSystem<double>::Coords v2(2, pi/4);
+  TRDISP(v2);
 
-  TRDISP(polar);
-  // double phi = std::acos(0.5);
-  double phi = pi/3;
-  TRDISP(phi/pi);
-  TRDISP(polar.x(10, phi));
-  TRDISP(polar.y(10, phi));
-  TRDISP(polar.J(10, phi));
-  TRDISP(polar.g(10, phi));
+  TRDISP(dot(v1, v2));
 
 
 
-  TRDISP(polar.r(5, 8.66025));
-  TRDISP(polar.phi(5, 8.66025)/pi);
-  TRDISP(polar.r_vec_cart(1,0)); 
-  TRDISP(polar.r_vec_cart(1,1)); 
-  TRDISP(polar.r_vec_cart(0,1)); 
-  TRDISP(polar.r_vec_cart(-1,0)); 
+  PolarCoords<double> u1(10, pi/3);
+  TRDISP(u1);
+  PolarCoords<double> u2(2, pi/4);
+  TRDISP(u1);
+  TRDISP(dot(u1, u2));
+
+
+  DISP(sizeof(PolarCoords<double>)/sizeof(double));
+
+
+  CR();
+  PolarCoordSystem<double> polar;
+
+  // TRDISP(polar);
+  // // double phi = std::acos(0.5);
+  // double phi = pi/3;
+  // TRDISP(phi/pi);
+  // TRDISP(polar.x(10, phi));
+  // TRDISP(polar.y(10, phi));
+  // TRDISP(polar.J(10, phi));
+  // TRDISP(polar.g(10, phi));
+
+
+
+  // TRDISP(polar.r(5, 8.66025));
+  // TRDISP(polar.phi(5, 8.66025)/pi);
+  // TRDISP(polar.r_vec_cart(1,0)); 
+  // TRDISP(polar.r_vec_cart(1,1)); 
+  // TRDISP(polar.r_vec_cart(0,1)); 
+  // TRDISP(polar.r_vec_cart(-1,0)); 
 
 
 

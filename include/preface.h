@@ -1478,14 +1478,6 @@ namespace mathq {
   };
 
 
-  // ***************************************************************************
-  // * CurvilinearField
-  //
-  // physics field object: scalar field, vector field, tensor field 
-  // uses curvilinear coordinates
-  // ***************************************************************************
-  template <class D, size_t NDIMS, size_t RANK>
-  class CurvilinearField;
 
   // ***************************************************************************
   // * nabla object

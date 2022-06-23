@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.26-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.27-c++17</h1>
 
 <details>
 
@@ -190,22 +190,14 @@ inflategrids
     {30, 31, 32, 33}
   }
 };
+☀ v1 ➜ PolarCoordSystem<double>::Coords (r=10, φ=1.0472);
+☀ v2 ➜ PolarCoordSystem<double>::Coords (r=2, φ=0.785398);
+☀ dot(v1, v2) ➜ double 19.3185;
+☀ u1 ➜ PolarCoordSystem<double>::Coords (r=10, φ=1.0472);
+☀ u1 ➜ PolarCoordSystem<double>::Coords (r=10, φ=1.0472);
+☀ dot(u1, u2) ➜ double 19.3185;
+☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 2;
 
-☀ v1 ➜ PolarCoordSystem::Coords<double> (r=10, φ=1.0472);
-☀ polar ➜ PolarCoordSystem<double> { 
-  coords=(r, 𝜑: periodic)
-};
-☀ phi/pi ➜ double 0.333333;
-☀ polar.x(10, phi) ➜ double 5;
-☀ polar.y(10, phi) ➜ double 8.66025;
-☀ polar.J(10, phi) ➜ double 10;
-☀ polar.g(10, phi) ➜ Matrix<double,NR=2,NC=2> { {1, 0}, {100, 0} };
-☀ polar.r(5, 8.66025) ➜ double 10;
-☀ polar.phi(5, 8.66025)/pi ➜ double 0.333333;
-☀ polar.r_vec_cart(1,0) ➜ Vector<double,NE=2> {1, 0};
-☀ polar.r_vec_cart(1,1) ➜ Vector<double,NE=2> {0.707107, 0.707107};
-☀ polar.r_vec_cart(0,1) ➜ Vector<double,NE=2> {0, 1};
-☀ polar.r_vec_cart(-1,0) ➜ Vector<double,NE=2> {-1, 0};
 ```
 
 
