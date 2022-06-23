@@ -3,6 +3,34 @@
 
 namespace mathq {
 
+
+
+  //----------------------------------------------
+  // zeros
+  //----------------------------------------------
+
+  template <class E>
+  inline auto& zeros() {
+    E* e = new E();
+    *e = 0 * *e;
+    return *e;
+  }
+
+
+  //----------------------------------------------
+  // ones
+  //----------------------------------------------
+
+  template <class E>
+  inline auto& ones() {
+    E* e = new E();
+    *e = 0 * *e + 1;
+    return *e;
+  }
+
+
+
+
   /********************************************************************
    * MultiArray<E>      -- MultiArray of 0 rank (scalar)
    *                   E  = type for elements
@@ -100,7 +128,7 @@ namespace mathq {
     template <int NE>
     MultiArray<E, R, D, M>(const Vector<E, NE, D, M>& v) {
       resize(v.deepdims());
-      for (int c = 0; c < v.deepsize(); c++ ) {
+      for (int c = 0; c < v.deepsize(); c++) {
         (*this)[c] = v[c];
       }
       constructorHelper();
@@ -731,8 +759,8 @@ namespace mathq {
     }
 
     // --------------------- FRIENDS ---------------------
-    };
+  };
 
-  }; // namespace mathq
+}; // namespace mathq
 
 #endif

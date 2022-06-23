@@ -156,11 +156,21 @@ int main() {
   TRDISP(u1.pos()|u2.pos());
 
 
+  TRDISP(u1.J());
+  TRDISP(u1.g());
+
+  ECHO_CODE(PolarCoords<double> w = PolarCoords<double>::fromCartesian(sqrt(2), sqrt(2)));
+  TRDISP(w);
+
+  TRDISP(zeros<Vector<double, 2>>());
+  TRDISP(ones<Vector<double, 2>>());
   DISP(sizeof(PolarCoords<double>)/sizeof(double));
 
 
-  CR();
-  PolarCoordSystem<double> polar;
+
+
+  // CR();
+  // PolarCoordSystem<double> polar;
 
   // TRDISP(polar);
   // // double phi = std::acos(0.5);
