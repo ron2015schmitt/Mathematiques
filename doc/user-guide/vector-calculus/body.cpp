@@ -143,6 +143,7 @@ int main() {
 
   TRDISP(dot(v1, v2));
 
+  TRDISP(v1.basis_vec(0));
 
 
   PolarCoords<double> u1(10, pi/3);
@@ -165,6 +166,10 @@ int main() {
 
   ECHO_CODE(CartCoords<double,3> p1({1,2,3}));
   TRDISP(p1);
+  TRDISP(p1.basis_vec(0));
+  TRDISP(p1.basis_vec(1));
+  TRDISP(p1.basis_vec(2));
+
 
   TRDISP(zeros<Vector<double, 2>>());
   TRDISP(ones<Vector<double, 2>>());

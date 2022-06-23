@@ -1037,15 +1037,76 @@ namespace mathq {
   };
 
 
+  // ***************************************************************************
+  // * CurvilinearCoords<D, NDIMS>
+  // ***************************************************************************
+
+  template <class E, size_t NDIMS, class CHILD>
+  class CurvilinearCoords : public Vector<E, NDIMS> {
+  public:
+    typedef CurvilinearCoords<E, NDIMS, CHILD> CLASS;
+    typedef Vector<E, NDIMS> PARENT;
+
+    CHILD& child() {
+      return static_cast<CHILD&>(*this);
+    }
+    const  CHILD& child() const {
+      return static_cast<const CHILD&>(*this);
+    }
+
+
+    // Jacobian 
+    E J() const {
+      return child().J();
+    }
+
+    // metric tensor g^{ij} 
+    Matrix<E, NDIMS, NDIMS> g() const {
+      return child().g();
+    }
+    CartCoords<E, NDIMS>& pos() const {
+      return child().pos();
+    }
+    CartCoords<E, NDIMS>& toCartesian() const {
+      return child().toCartesian();
+    }
+    Vector<E, NDIMS>& basis_vec(size_t n) const {
+      return child().basis_vec();
+    }
+
+
+
+    std::array<std::string, NDIMS>& names() const {
+      return child().names();
+    }
+
+    const std::string& name(size_t n) const {
+      return child().name(n);
+    }
+
+    inline std::string classname() const {
+      return child().classname();
+    }
+
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const CLASS& var) {
+      return stream << var.child();
+    }
+
+
+  };
+
 
   // ***************************************************************************
   // * CartCoords<D, NDIMS>
   // ***************************************************************************
 
   template <class E, size_t NDIMS>
-  class CartCoords : public Vector<E, NDIMS> {
+  class CartCoords : public CurvilinearCoords<E, NDIMS, CartCoords<E, NDIMS>> {
   public:
-    typedef Vector<E, NDIMS> PARENT;
+    typedef CartCoords<E, NDIMS> CLASS;
+    typedef CurvilinearCoords<E, NDIMS, CLASS> PARENT;
+    typedef typename PARENT::PARENT BASE;
 
 
     template<size_t TEMP = NDIMS>
@@ -1055,27 +1116,82 @@ namespace mathq {
       return CartCoords<E, NDIMS>(x, y);
     }
 
-    // E& x = (*this)[0];
-    // E& y = (*this)[1];
-
-
     explicit CartCoords(const std::initializer_list<E>& mylist) {
-      PARENT& me = *this;
+      BASE& me = *this;
       me = mylist;
     }
 
     explicit CartCoords(const CartCoords<E, NDIMS>& v2) {
-      PARENT& me = *this;
+      BASE& me = *this;
       me = v2;
     }
 
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=1)> = 0>
+    E& x1() const {
+      return (*this)[0];
+    }
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=1)> = 0>
+    CartCoords<E, NDIMS>& x1(const E& x1) const {
+      (*this)[0] = x1;
+      return *this;
+    }
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=1)> = 0>
+    E& x() const {
+      return (*this)[0];
+    }
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=1)> = 0>
+    CartCoords<E, NDIMS>& x(const E& x) const {
+      (*this)[0] = x;
+      return *this;
+    }
+
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=2)> = 0>
+    E& x2() const {
+      return (*this)[1];
+    }
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=2)> = 0>
+    CartCoords<E, NDIMS>& x2(const E& x2) const {
+      (*this)[1] = x2;
+      return *this;
+    }
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=2)> = 0>
+    E& y() const {
+      return (*this)[1];
+    }
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=2)> = 0>
+    CartCoords<E, NDIMS>& y(const E& y) const {
+      (*this)[1] = y;
+      return *this;
+    }
+
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=3)> = 0>
+    E& x3() const {
+      return (*this)[2];
+    }
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=3)> = 0>
+    CartCoords<E, NDIMS>& x3(const E& x3) const {
+      (*this)[2] = x3;
+      return *this;
+    }
+
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=3)> = 0>
+    E& z() const {
+      return (*this)[2];
+    }
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP>=3)> = 0>
+    CartCoords<E, NDIMS>& z(const E& z) const {
+      (*this)[2] = z;
+      return *this;
+    }
 
     template<size_t TEMP = NDIMS, EnableIf<(TEMP==2)> = 0>
     explicit CartCoords<E, NDIMS>(const PolarCoords<E>& v2) {
       (*this)[0] = v2.r() * std::cos(v2.phi());
+      (*this)[1] = v2.r() * std::sin(v2.phi());
     }
 
     // const std::vector<bool> periodic = { false, true };
+
 
     std::array<std::string, NDIMS>& names() const {
       std::array<std::string, NDIMS> names;
@@ -1104,6 +1220,20 @@ namespace mathq {
       metric = { ones<E>(), zeros<E>(), ones<E>(), zeros<E>() };
       return metric;
     }
+
+    CartCoords<E, NDIMS>& pos() const {
+      return toCartesian();
+    }
+    CartCoords<E, NDIMS>& toCartesian() const {
+      return *(new CartCoords<E, NDIMS>(*this));
+    }
+
+    Vector<E, NDIMS>& basis_vec(size_t n) const {
+      Vector<E, NDIMS>* vec = new Vector<E, NDIMS>(0);
+      (*vec)[n] = 1;
+      return *vec;
+    }
+
 
     inline std::string classname() const {
       using namespace display;
@@ -1148,9 +1278,11 @@ namespace mathq {
   // ***************************************************************************
 
   template <class E>
-  class PolarCoords : public Vector<E, 2> {
+  class PolarCoords : public CurvilinearCoords<E, 2, PolarCoords<E>> {
   public:
-    typedef Vector<E, 2> PARENT;
+    typedef PolarCoords<E> CLASS;
+    typedef CurvilinearCoords<E, 2, CLASS> PARENT;
+    typedef typename PARENT::PARENT BASE;
 
     static PolarCoords<E> fromCartesian(E x, E y) {
       return PolarCoords<E>(std::sqrt(x*x + y*y), std::atan2(y, x));
@@ -1161,12 +1293,12 @@ namespace mathq {
       (*this)[1] = phi;
     }
     PolarCoords(const std::initializer_list<E>& mylist) {
-      PARENT& me = *this;
+      BASE& me = *this;
       me = mylist;
     }
 
     PolarCoords(const PolarCoords<E>& v2) {
-      PARENT& me = *this;
+      BASE& me = *this;
       me = v2;
     }
 
@@ -1210,11 +1342,17 @@ namespace mathq {
       const E& phi = (*this)[1];
       return r * std::cos(phi);
     }
+    E x1() const {
+      return x();
+    }
 
     E y() const {
       const E& r = (*this)[0];
       const E& phi = (*this)[1];
       return r * std::sin(phi);
+    }
+    E x2() const {
+      return y();
     }
 
 
@@ -1227,18 +1365,18 @@ namespace mathq {
 
 
     // unit vectors
-    Vector<E, 2> basis_r() const {
+    Vector<E, 2>& basis_r() const {
       const E& r = (*this)[0];
       const E& phi = (*this)[1];
-      return Vector<E, 2>{ std::cos(phi), std::sin(phi) };
+      return *(new Vector<E, 2>{ std::cos(phi), std::sin(phi) });
     }
-    Vector<E, 2> basis_phi() const {
+    Vector<E, 2>& basis_phi() const {
       const E& r = (*this)[0];
       const E& phi = (*this)[1];
-      return Vector<E, 2>{ -std::sin(phi), std::cos(phi) };
+      return *(new Vector<E, 2>{ -std::sin(phi), std::cos(phi) });
     }
 
-    Vector<E, 2> basis(size_t n) const {
+    Vector<E, 2>& basis_vec(size_t n) const {
       if (n == 0) {
         return basis_r();
       }

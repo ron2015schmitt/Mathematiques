@@ -1449,6 +1449,7 @@ namespace mathq {
   class CurvilinearCoordinateSystem;
 
 
+  template <class E, size_t NDIMS, class CHILD> class CurvilinearCoords;
   template <class E, size_t NDIMS> class CartCoords;
   template <class E> class PolarCoords;
 
