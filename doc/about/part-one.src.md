@@ -77,7 +77,7 @@ Design a C-style language and compiler for high-performance mathematics, likely 
 * aggregator lists on LHS like JavaScript
 * Improve upon C++ tuple, any, variant
   * the return value of a function can depend on which element is returned
-* parameter pack type definition (same type and specified size)
+* parameter pack type definition with type and size
 * modern function support
   * lambda functions and closures
   * variadic parmeters of same type and of specified size
@@ -85,6 +85,7 @@ Design a C-style language and compiler for high-performance mathematics, likely 
 * Support JavaScript-like string interpolation 
 * No setters or getters
   * have optional methods that are called if present when obj.variable is referenced on LHS or RHS
+  * variable aliases that incur no memory storage
 * support for fixed size and dynamically sized containers and multiarrays
 
 **Debug and production modes**

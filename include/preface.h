@@ -1449,6 +1449,9 @@ namespace mathq {
   class CurvilinearCoordinateSystem;
 
 
+  template <class E, size_t NDIMS> class CartCoords;
+  template <class E> class PolarCoords;
+
   // ***************************************************************************
   // Materialize - this returns a concrete tensor of type specified by paramters
   // ***************************************************************************

@@ -1038,120 +1038,107 @@ namespace mathq {
 
 
 
-  // // ***************************************************************************
-  // // * CartCoords<D, NDIMS>
-  // // ***************************************************************************
+  // ***************************************************************************
+  // * CartCoords<D, NDIMS>
+  // ***************************************************************************
 
-  // template <class E, size_t NDIMS>
-  // class CartCoords : public Vector<E, 2> {
-  // public:
-  //   static CartCoords<E> fromPolar(E x, E y) {
-  //     return CartCoords<E>(std::sqrt(x*x + y*y), std::atan2(y, x));
-  //   }
-
-  //   E& r = (*this)[0];
-  //   E& phi = (*this)[1];
+  template <class E, size_t NDIMS>
+  class CartCoords : public Vector<E, NDIMS> {
+  public:
+    typedef Vector<E, NDIMS> PARENT;
 
 
-  //   CartCoords(const E r, const E phi)  {
-  //     (*this)[0] = r;
-  //     (*this)[1] = phi;
-  //   }
+    template<size_t TEMP = NDIMS>
+    static EnableMethodIf<TEMP==2, CartCoords<E, NDIMS>> fromPolar(const E& r, const E& phi) {
+      E x = r * std::cos(phi);
+      E y = r * std::sin(phi);
+      return CartCoords<E, NDIMS>(x, y);
+    }
+
+    // E& x = (*this)[0];
+    // E& y = (*this)[1];
 
 
+    explicit CartCoords(const std::initializer_list<E>& mylist) {
+      PARENT& me = *this;
+      me = mylist;
+    }
 
-  //   // const std::vector<bool> periodic = { false, true };
-
-  //   std::vector<std::string>& names() const {
-  //     std::vector<std::string> names = { "r","𝜑" };
-  //     return names;
-  //   }
-  //   const std::string& name(size_t n) const {
-  //     if (n == 0) {
-  //       return std::string("r");
-  //     }
-  //     else {
-  //       return std::string("phi");
-  //     }
-  //   }
+    explicit CartCoords(const CartCoords<E, NDIMS>& v2) {
+      PARENT& me = *this;
+      me = v2;
+    }
 
 
+    template<size_t TEMP = NDIMS, EnableIf<(TEMP==2)> = 0>
+    explicit CartCoords<E, NDIMS>(const PolarCoords<E>& v2) {
+      (*this)[0] = v2.r() * std::cos(v2.phi());
+    }
 
-  //   E x() const {
-  //     return r * std::cos(phi);
-  //   }
-  //   E y() const {
-  //     return r * std::sin(phi);
-  //   }
+    // const std::vector<bool> periodic = { false, true };
 
+    std::array<std::string, NDIMS>& names() const {
+      std::array<std::string, NDIMS> names;
+      for (size_t c = 0; c < NDIMS; c++) {
+        names[c] = name(c);
+      }
+      return names;
+    }
 
-  //   Vector<E, 2> pos() const {
-  //     return toCartesian();
-  //   }
-  //   Vector<E, 2> toCartesian() const {
-  //     return Vector<E, 2>{ x(), y() };
-  //   }
-
-
-  //   // unit vectors
-  //   Vector<E, 2> vec_r() const {
-  //     return Vector<E, 2>{ std::cos(phi), std::sin(phi) };
-  //   }
-  //   Vector<E, 2> vec_phi() const {
-  //     return Vector<E, 2>{ -std::sin(phi), std::cos(phi) };
-  //   }
-
-  //   Vector<E, 2> vec(size_t n) const {
-  //     if (n == 0) {
-  //       return vec_r();
-  //     }
-  //     else {
-  //       return vec_phi();
-  //     }
-  //   }
-
-
-  //   // Jacobian 
-  //   E J() const {
-  //     return r;
-  //   }
-
-  //   // metric tensor g^{ij} 
-  //   Matrix<E, 2, 2> g() const {
-  //     Matrix<E, 2, 2> metric;
-  //     metric = { ones<E>(), zeros<E>(), r*r, zeros<E>() };
-  //     return metric;
-  //   }
-
-  //   inline std::string classname() const {
-  //     using namespace display;
-  //     std::string s = "CartCoords";
-  //     s += StyledString::get(ANGLE1).get();
-  //     E d;
-  //     s += getTypeName(d);
-  //     s += StyledString::get(ANGLE2).get();
-  //     return s;
-  //   }
-
-
-  //   inline friend std::ostream& operator<<(std::ostream& stream, const CartCoords<E>& var) {
-  //     stream << "(r=";
-  //     stream << var.r;
-  //     stream << ", φ=";
-  //     stream << var.phi;
-  //     stream << ")";
-  //     return stream;
-  //   }
-
-
-  // };
+    const std::string& name(size_t n) const {
+      std::string* s = new std::string("x");
+      *s += std::to_string(n+1);
+      return *s;
+    }
 
 
 
-  // template <class E>
-  // auto dot(const CartCoords<E>& v1, const CartCoords<E>& v2) {
-  //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
-  // }
+    // Jacobian 
+    E J() const {
+      return 1;
+    }
+
+    // metric tensor g^{ij} 
+    Matrix<E, 2, 2> g() const {
+      Matrix<E, 2, 2> metric;
+      metric = { ones<E>(), zeros<E>(), ones<E>(), zeros<E>() };
+      return metric;
+    }
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "CartCoords";
+      s += StyledString::get(ANGLE1).get();
+      E d;
+      s += getTypeName(d);
+      s += StyledString::get(COMMA).get();
+      s += std::to_string(NDIMS);
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const CartCoords<E, NDIMS>& var) {
+      stream << "(";
+      for (size_t c = 0; c < NDIMS; c++) {
+        if (c>0) stream << ", ";
+        stream << var.name(c);
+        stream << "=";
+        stream << var[c];
+      }
+      stream << ")";
+      return stream;
+    }
+
+
+  };
+
+
+
+  template <class E, size_t NDIMS>
+  auto dot(const CartCoords<E, NDIMS>& v1, const CartCoords<E, NDIMS>& v2) {
+    return v1 | v2;
+  }
 
 
 
@@ -1163,17 +1150,24 @@ namespace mathq {
   template <class E>
   class PolarCoords : public Vector<E, 2> {
   public:
+    typedef Vector<E, 2> PARENT;
+
     static PolarCoords<E> fromCartesian(E x, E y) {
       return PolarCoords<E>(std::sqrt(x*x + y*y), std::atan2(y, x));
     }
 
-    E& r = (*this)[0];
-    E& phi = (*this)[1];
-
-
-    PolarCoords(const E r, const E phi)  {
+    PolarCoords(const E r, const E phi) {
       (*this)[0] = r;
       (*this)[1] = phi;
+    }
+    PolarCoords(const std::initializer_list<E>& mylist) {
+      PARENT& me = *this;
+      me = mylist;
+    }
+
+    PolarCoords(const PolarCoords<E>& v2) {
+      PARENT& me = *this;
+      me = v2;
     }
 
 
@@ -1194,48 +1188,77 @@ namespace mathq {
     }
 
 
+    E& r() const {
+      return (*this)[0];
+    }
+    E& phi() const {
+      return (*this)[1];
+    }
+
+    PolarCoords<E>& r(const E& r) const {
+      (*this)[0] = r;
+      return *this;
+    }
+    PolarCoords<E>& phi(const E& phi) const {
+      (*this)[1] = phi;
+      return *this;
+    }
+
 
     E x() const {
+      const E& r = (*this)[0];
+      const E& phi = (*this)[1];
       return r * std::cos(phi);
     }
+
     E y() const {
+      const E& r = (*this)[0];
+      const E& phi = (*this)[1];
       return r * std::sin(phi);
     }
 
 
-    Vector<E, 2> pos() const {
+    CartCoords<E, 2>& pos() const {
       return toCartesian();
     }
-    Vector<E, 2> toCartesian() const {
-      return Vector<E, 2>{ x(), y() };
+    CartCoords<E, 2>& toCartesian() const {
+      return *(new CartCoords<E, 2>({ x(), y() }));
     }
 
 
     // unit vectors
-    Vector<E, 2> vec_r() const {
+    Vector<E, 2> basis_r() const {
+      const E& r = (*this)[0];
+      const E& phi = (*this)[1];
       return Vector<E, 2>{ std::cos(phi), std::sin(phi) };
     }
-    Vector<E, 2> vec_phi() const {
+    Vector<E, 2> basis_phi() const {
+      const E& r = (*this)[0];
+      const E& phi = (*this)[1];
       return Vector<E, 2>{ -std::sin(phi), std::cos(phi) };
     }
 
-    Vector<E, 2> vec(size_t n) const {
+    Vector<E, 2> basis(size_t n) const {
       if (n == 0) {
-        return vec_r();
+        return basis_r();
       }
       else {
-        return vec_phi();
+        return basis_phi();
       }
     }
 
 
     // Jacobian 
     E J() const {
+      const E& r = (*this)[0];
+      const E& phi = (*this)[1];
       return r;
     }
 
     // metric tensor g^{ij} 
     Matrix<E, 2, 2> g() const {
+      const E& r = (*this)[0];
+      const E& phi = (*this)[1];
       Matrix<E, 2, 2> metric;
       metric = { ones<E>(), zeros<E>(), r*r, zeros<E>() };
       return metric;
@@ -1253,10 +1276,12 @@ namespace mathq {
 
 
     inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords<E>& var) {
+      const E& r = var[0];
+      const E& phi = var[1];
       stream << "(r=";
-      stream << var.r;
+      stream << r;
       stream << ", φ=";
-      stream << var.phi;
+      stream << phi;
       stream << ")";
       return stream;
     }
@@ -1267,7 +1292,7 @@ namespace mathq {
 
   template <class E>
   auto dot(const PolarCoords<E>& v1, const PolarCoords<E>& v2) {
-    return v1.r * v2.r * std::cos(v1.phi - v2.phi);
+    return v1[0] * v2[0] * std::cos(v1[1] - v2[1]);
   }
 
   // template <class E>

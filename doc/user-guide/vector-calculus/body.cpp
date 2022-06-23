@@ -162,6 +162,10 @@ int main() {
   ECHO_CODE(PolarCoords<double> w = PolarCoords<double>::fromCartesian(sqrt(2), sqrt(2)));
   TRDISP(w);
 
+
+  ECHO_CODE(CartCoords<double,3> p1({1,2,3}));
+  TRDISP(p1);
+
   TRDISP(zeros<Vector<double, 2>>());
   TRDISP(ones<Vector<double, 2>>());
   DISP(sizeof(PolarCoords<double>)/sizeof(double));

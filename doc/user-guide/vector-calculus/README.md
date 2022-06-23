@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.30-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.31-c++17</h1>
 
 <details>
 
@@ -196,16 +196,18 @@ inflategrids
 ☀ u1 ➜ PolarCoords<double> (r=10, φ=1.0472);
 ☀ u2 ➜ PolarCoords<double> (r=2, φ=0.785398);
 ☀ dot(u1, u2) ➜ double 19.3185;
-☀ u1.pos() ➜ Vector<double,NE=2> {5, 8.66025};
-☀ u2.pos() ➜ Vector<double,NE=2> {1.41421, 1.41421};
+☀ u1.pos() ➜ CartCoords<double,2> (x1=5, x2=8.66025);
+☀ u2.pos() ➜ CartCoords<double,2> (x1=1.41421, x2=1.41421);
 ☀ u1.pos()|u2.pos() ➜ double 19.3185;
 ☀ u1.J() ➜ double 10;
 ☀ u1.g() ➜ Matrix<double,NR=2,NC=2> { {1, 0}, {100, 0} };
 PolarCoords<double> w = PolarCoords<double>::fromCartesian(sqrt(2), sqrt(2));
 ☀ w ➜ PolarCoords<double> (r=2, φ=0.785398);
+CartCoords<double,3> p1({1,2,3});
+☀ p1 ➜ CartCoords<double,3> (x1=1, x2=2, x3=3);
 ☀ zeros<Vector<double, 2>>() ➜ Vector<double,NE=2> {0, 0};
 ☀ ones<Vector<double, 2>>() ➜ Vector<double,NE=2> {1, 1};
-☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 4;
+☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 2;
 ```
 
 
