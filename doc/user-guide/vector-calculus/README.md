@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.27-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.28-c++17</h1>
 
 <details>
 
@@ -194,9 +194,12 @@ inflategrids
 ☀ v2 ➜ PolarCoordSystem<double>::Coords (r=2, φ=0.785398);
 ☀ dot(v1, v2) ➜ double 19.3185;
 ☀ u1 ➜ PolarCoordSystem<double>::Coords (r=10, φ=1.0472);
-☀ u1 ➜ PolarCoordSystem<double>::Coords (r=10, φ=1.0472);
+☀ u2 ➜ PolarCoordSystem<double>::Coords (r=2, φ=0.785398);
 ☀ dot(u1, u2) ➜ double 19.3185;
-☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 2;
+☀ u1.pos() ➜ Vector<double,NE=2> {5, 8.66025};
+☀ u2.pos() ➜ Vector<double,NE=2> {1.41421, 1.41421};
+☀ u1.pos()|u2.pos() ➜ double 19.3185;
+☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 4;
 
 ```
 

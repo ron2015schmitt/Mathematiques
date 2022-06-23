@@ -148,8 +148,12 @@ int main() {
   PolarCoords<double> u1(10, pi/3);
   TRDISP(u1);
   PolarCoords<double> u2(2, pi/4);
-  TRDISP(u1);
+  TRDISP(u2);
   TRDISP(dot(u1, u2));
+
+  TRDISP(u1.pos());
+  TRDISP(u2.pos());
+  TRDISP(u1.pos()|u2.pos());
 
 
   DISP(sizeof(PolarCoords<double>)/sizeof(double));

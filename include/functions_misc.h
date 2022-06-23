@@ -1102,39 +1102,40 @@ namespace mathq {
   // ***************************************************************************
 
   template <class D>
-  class PolarCoords {
+  class PolarCoords : public Vector<D, 2> {
   public:
     static PolarCoords<D> fromCartesian(D x, D y) {
       return PolarCoords<D>(std::sqrt(x*x + y*y), std::atan2(y, x));
     }
 
-    D r;
-    D phi;
+    D& r = (*this)[0];
+    D& phi = (*this)[1];
 
 
-
-    PolarCoords(const D r, const D phi) : r(r), phi(phi) {
+    PolarCoords(const D r, const D phi)  {
+      (*this)[0] = r;
+      (*this)[1] = phi;
     }
 
-    // "read/write"
-    D& operator[](const index_type n) {
-      if (n == 0) {
-        return r;
-      }
-      else {
-        return phi;
-      }
-    }
+    // // "read/write"
+    // D& operator[](const index_type n) {
+    //   if (n == 0) {
+    //     return r;
+    //   }
+    //   else {
+    //     return phi;
+    //   }
+    // }
 
-    // read
-    const D& operator[](const index_type n)  const {
-      if (n == 0) {
-        return r;
-      }
-      else {
-        return phi;
-      }
-    }
+    // // read
+    // const D& operator[](const index_type n)  const {
+    //   if (n == 0) {
+    //     return r;
+    //   }
+    //   else {
+    //     return phi;
+    //   }
+    // }
 
 
     // const std::vector<bool> periodic = { false, true };
@@ -1233,6 +1234,62 @@ namespace mathq {
 
 
 
+  // ***************************************************************************
+  // * PolarField
+  //
+  // physics field object: scalar field, vector field, tensor field 
+  // uses curvilinear coordinates
+  // ***************************************************************************
+  template <class D, size_t RANK> class PolarField : public TensorOfGrids<D, 2, RANK> {
+  public:
+    using Coords = PolarCoords<D>;
+    // need a grid
+    // dot, grad, div
+// Map a function to cartesian coordinates (pull-back)
+// Map a function from cartesian coordinates (push-forward)
+
+    PolarField() {
+
+    }
+
+    // operators[n] and (r,phi)
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "PolarField";
+      s += StyledString::get(ANGLE1).get();
+      D d;
+      s += getTypeName(d);
+      s += StyledString::get(COMMA).get();
+      s += "RANK=";
+      s += num2string(RANK);
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const PolarField<D, RANK>& var) {
+      stream << "{ ";
+      stream << "\n  coords=(";
+      for (size_t n = 0; n < 2; n++) {
+        if (n>0) {
+          stream << ", ";
+        }
+        stream << var.names[n];
+        if (var.periodic[n]) {
+          stream << ": periodic";
+        }
+      }
+      stream << ")";
+      stream << "\n}";
+      return stream;
+    }
+
+  };
+
+
+
+
   template <class D>
   class
     PolarCoordSystem : public CurvilinearCoordinateSystem<D, 2, PolarCoordSystem<D>> {
@@ -1240,20 +1297,6 @@ namespace mathq {
     using Func = std::function<D(D, D)>;
     using VecFunc = std::function<Vector<D, 2>(D, D)>;
     using Coords = PolarCoords<D>;
-
-
-    // ***************************************************************************
-    // * Field
-    //
-    // physics field object: scalar field, vector field, tensor field 
-    // uses curvilinear coordinates
-    // ***************************************************************************
-    template <size_t RANK> class Field {
-      Field() {
-
-      }
-    };
-
 
 
     PolarCoordSystem() {
