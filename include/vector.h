@@ -22,19 +22,21 @@ namespace mathq {
   ********************************************************************
    */
 
-  template <class E, int NE, typename D, int M> class Vector :
-    public MArrayExpRW<Vector<E, NE, D, M>, E, D, M, 1> {
+  template <class E, int NE> class Vector :
+    public MArrayExpRW<Vector<E, NE>, E, typename NumberType<E>::Type, 1 + NumberType<E>::depth(), 1> {
 
   public:
-    typedef Vector<E, NE, D, M> XType;
+    typedef Vector<E, NE> XType;
     typedef E EType;
-    typedef D DType;
+    typedef typename NumberType<E>::Type D;
+    typedef typename NumberType<E>::Type DType;
     typedef typename FundamentalType<D>::Type FType;
 
     typedef typename ArrayType<E, NE>::Type MyArrayType;
     constexpr static int R = 1;
     constexpr static int Rvalue = 1;
-    constexpr static int Mvalue = M;
+    constexpr static int M = 1 + NumberType<E>::depth();
+    constexpr static int Mvalue = 1 + NumberType<E>::depth();
 
 
     // *********************** OBJECT DATA ***********************************
@@ -59,7 +61,7 @@ namespace mathq {
 
 
     // -------------------  DEFAULT  CONSTRUCTOR: Vector()  --------------------
-    explicit Vector<E, NE, D, M>() {
+    explicit Vector<E, NE>() {
       constructorHelper();
     }
 
@@ -68,7 +70,7 @@ namespace mathq {
 
     template<size_t NE1 = NE, EnableIf<NE1 == 0> = 0>
 
-    explicit Vector<E, NE, D, M>(const size_type N) {
+    explicit Vector<E, NE>(const size_type N) {
       data_.resize(N);
       constructorHelper();
     }
@@ -78,7 +80,7 @@ namespace mathq {
 
     template<size_t NE1 = NE, EnableIf<NE1 == 0> = 0>
 
-    explicit Vector<E, NE, D, M>(const size_type N, const E val) {
+    explicit Vector<E, NE>(const size_type N, const E val) {
       data_.resize(N);
       *this = val;
       constructorHelper();
@@ -88,7 +90,7 @@ namespace mathq {
 
     template<size_t NE1 = NE, EnableIf<(NE1 > 0)> = 0>
 
-    explicit Vector<E, NE, D, M>(const std::initializer_list<Dimensions> deepdims) {
+    explicit Vector<E, NE>(const std::initializer_list<Dimensions> deepdims) {
       // TRDISP(deepdims);
       this->resize(std::vector<Dimensions>(deepdims));
       constructorHelper();
@@ -97,7 +99,7 @@ namespace mathq {
 
     template<size_t NE1 = NE, EnableIf<(NE1 > 0)> = 0>
 
-    explicit Vector<E, NE, D, M>(const std::vector<Dimensions> deepdims) {
+    explicit Vector<E, NE>(const std::vector<Dimensions> deepdims) {
       // TRDISP(deepdims);
       this->resize(deepdims);
       constructorHelper();
@@ -108,7 +110,7 @@ namespace mathq {
 
     template<size_t NE1 = NE, EnableIf<(NE1 > 0)> = 0>
 
-    explicit Vector<E, NE, D, M>(const E val) {
+    explicit Vector<E, NE>(const E val) {
       *this = val;
       constructorHelper();
     }
@@ -117,7 +119,7 @@ namespace mathq {
 
     template<size_t NE1 = NE, EnableIf<(NE1 > 0)&&(M>1)> = 0>
 
-    explicit Vector<E, NE, D, M>(const D val) {
+    explicit Vector<E, NE>(const D val) {
       *this = val;
       constructorHelper();
     }
@@ -127,14 +129,14 @@ namespace mathq {
 
     template<size_t NE1 = NE, EnableIf<NE1 == 0> = 0>
 
-    Vector<E, NE, D, M>(const size_type N, const E(vals)[]) {
+    Vector<E, NE>(const size_type N, const E(vals)[]) {
       data_.resize(N);
       *this = vals;
       constructorHelper();
     }
 
     // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    Vector<E, NE, D, M>(const std::initializer_list<E>& mylist) {
+    Vector<E, NE>(const std::initializer_list<E>& mylist) {
       *this = mylist;
       constructorHelper();
     }
@@ -143,7 +145,7 @@ namespace mathq {
     // --------------------- Vector(Vector) --------------------
 
     template <int NE2>
-    Vector<E, NE, D, M>(const Vector<E, NE2, D, M>& v2) {
+    Vector<E, NE>(const Vector<E, NE2>& v2) {
       *this = v2;
       constructorHelper();
     }
@@ -152,7 +154,7 @@ namespace mathq {
     // --------------------- EXPRESSION CONSTRUCTOR --------------------
 
     template <class X>
-    Vector<E, NE, D, M>(const MArrayExpR<X, E, D, M, Rvalue>& x) {
+    Vector<E, NE>(const MArrayExpR<X, E, D, M, Rvalue>& x) {
       if constexpr (NE==0) {
         this->resize(x.size());
       }
@@ -165,7 +167,7 @@ namespace mathq {
 
 
     // --------------------- Vector(valarray)  ---------------------
-    Vector<E, NE, D, M>(const std::valarray<E>& valar) {
+    Vector<E, NE>(const std::valarray<E>& valar) {
       if constexpr (NE==0) {
         this->resize(valar.size());
       }
@@ -190,7 +192,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~Vector<E, NE, D, M>() {
+    ~Vector<E, NE>() {
     }
 
 
@@ -315,7 +317,7 @@ namespace mathq {
 
     template<size_t NE1 = NE, EnableIf<NE1 == 0> = 0>
 
-    Vector<E, NE, D, M>& resize(const size_type N) {
+    Vector<E, NE>& resize(const size_type N) {
       if (N==this->size())
         return *this;
       // reallocate store
@@ -327,7 +329,7 @@ namespace mathq {
 
     // TODO: should just pass an index and make deepdims const
 
-    Vector<E, NE, D, M>& resize(const std::vector<Dimensions>& deepdims_in) {
+    Vector<E, NE>& resize(const std::vector<Dimensions>& deepdims_in) {
       std::vector<Dimensions> deepdims(deepdims_in);
       Dimensions newdims = deepdims[0];
       const size_type Nnew = newdims[0];
@@ -577,7 +579,7 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
-    Vector<E, NE, D, M>& operator=(const E& e) {
+    Vector<E, NE>& operator=(const E& e) {
       for (index_type i = 0; i < size(); i++) {
         (*this)[i] = e;
       }
@@ -585,7 +587,7 @@ namespace mathq {
     }
 
     template <class T = E>
-    typename std::enable_if<!std::is_same<T, D>::value, Vector<T, NE, D, M>& >::type operator=(const D& d) {
+    typename std::enable_if<!std::is_same<T, D>::value, Vector<T, NE>& >::type operator=(const D& d) {
       for (index_type i = 0; i < deepsize(); i++) {
         (*this).dat(i) = d;
       }
@@ -598,7 +600,7 @@ namespace mathq {
     // ------------------------ Vector = Vector<E,NE2,D,M> ----------------
 
     template <int NE2>
-    Vector<E, NE, D, M>& operator=(const Vector<E, NE2, D, M>& v) {
+    Vector<E, NE>& operator=(const Vector<E, NE2>& v) {
       if constexpr (M<=1) {
         if constexpr (NE==0) {
           if (this->size() != v.size()) {
@@ -622,7 +624,7 @@ namespace mathq {
     // ------------------------ Vector = MArrayExpR ----------------
 
     template <class X>
-    Vector<E, NE, D, M>& operator=(const MArrayExpR<X, E, D, M, Rvalue>& x) {
+    Vector<E, NE>& operator=(const MArrayExpR<X, E, D, M, Rvalue>& x) {
 
       if constexpr (M<=1) {
         if constexpr (NE==0) {
@@ -647,7 +649,7 @@ namespace mathq {
 
     // ------------------------ Vector = array[] ----------------
 
-    Vector<E, NE, D, M>& operator=(const E array[]) {
+    Vector<E, NE>& operator=(const E array[]) {
       for (index_type i = 0; i < size(); i++) {
         (*this)(i) = array[i];
       }
@@ -657,7 +659,7 @@ namespace mathq {
 
     // ------------------------ Vector = list ----------------
 
-    Vector<E, NE, D, M>& operator=(const std::list<E>& mylist) {
+    Vector<E, NE>& operator=(const std::list<E>& mylist) {
       if constexpr (NE==0) {
         // TODO: warn if not in constructor
         if (this->size() != mylist.size()) {
@@ -674,7 +676,7 @@ namespace mathq {
 
     // ------------------------ Vector = initializer_list ----------------
 
-    Vector<E, NE, D, M>& operator=(const std::initializer_list<E>& mylist) {
+    Vector<E, NE>& operator=(const std::initializer_list<E>& mylist) {
       if constexpr (NE==0) {
         // TODO: warn if not in constructor
         if (this->size() != mylist.size()) {
@@ -696,7 +698,7 @@ namespace mathq {
 
     // ------------------------ Vector = std::vector ----------------
 
-    Vector<E, NE, D, M>& operator=(const std::vector<E>& vstd) {
+    Vector<E, NE>& operator=(const std::vector<E>& vstd) {
       // resize to avoid segmentation faults
       if constexpr (NE==0) {
         if (this->size() != vstd.size()) {
@@ -715,7 +717,7 @@ namespace mathq {
     // ------------------------ Vector = std::array ----------------
 
     template <std::size_t N>
-    Vector<E, NE, D, M>& operator=(const std::array<D, N>& varray) {
+    Vector<E, NE>& operator=(const std::array<D, N>& varray) {
       // resize to avoid segmentation faults
       if constexpr (NE==0) {
         if (this->size() != varray.size()) {
@@ -735,7 +737,7 @@ namespace mathq {
 
     // ------------------------ Vector = std::valarray ----------------
 
-    Vector<E, NE, D, M>& operator=(const std::valarray<E>& varray) {
+    Vector<E, NE>& operator=(const std::valarray<E>& varray) {
 
       // resize to avoid segmentation faults
       if constexpr (NE==0) {
@@ -761,7 +763,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    Vector<E, NE, D, M>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    Vector<E, NE>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       for (index_type i = size(); i--;) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
@@ -899,7 +901,7 @@ namespace mathq {
     }
 
 
-    Vector<E, NE, D, M>& reverse() {
+    Vector<E, NE>& reverse() {
 
       const size_type N = size();
       if (N==0)
@@ -918,7 +920,7 @@ namespace mathq {
 
     // .cumsum() -- cumulative sum
 
-    Vector<E, NE, D, M>& cumsum() {
+    Vector<E, NE>& cumsum() {
       const size_type N = size();
       E sum = 0;
       for (index_type i = 0; i < N; i++) {
@@ -930,7 +932,7 @@ namespace mathq {
 
     // .cumprod()  --  cumulative product
 
-    Vector<E, NE, D, M>& cumprod() {
+    Vector<E, NE>& cumprod() {
       const size_type N = size();
       E prod = 1;
       for (index_type i = 0; i < N; i++) {
@@ -943,7 +945,7 @@ namespace mathq {
 
     // .cumtrapz() -- cumulative trapezoidal summation
 
-    Vector<E, NE, D, M>& cumtrapz() {
+    Vector<E, NE>& cumtrapz() {
       const size_type N = size();
       if (N==0) return *this;
       E sum = data_[0]/2;
@@ -959,7 +961,7 @@ namespace mathq {
     // order  name
     //     0  rectangular
     //     1  trapazoidal
-    Vector<E, NE, D, M>& integrate_a2x(const E a, const E b, const int order = 1) {
+    Vector<E, NE>& integrate_a2x(const E a, const E b, const int order = 1) {
 
       const size_type N = size();
 
@@ -986,7 +988,7 @@ namespace mathq {
 
     // .cumsumrev() -- cumulative sum -- from last to first
 
-    Vector<E, NE, D, M>& cumsum_rev() {
+    Vector<E, NE>& cumsum_rev() {
       const size_type N = size();
 
       E sum = 0;
@@ -999,7 +1001,7 @@ namespace mathq {
 
     // .cumprodrev()  --  cumulative product  -- from last to first
 
-    Vector<E, NE, D, M>& cumprod_rev() {
+    Vector<E, NE>& cumprod_rev() {
       const size_type N = size();
 
       E prod = 1;
@@ -1013,7 +1015,7 @@ namespace mathq {
 
     // .cumtrapz() -- cumulative trapezoidal summation -- from last to first
 
-    Vector<E, NE, D, M>& cumtrapz_rev() {
+    Vector<E, NE>& cumtrapz_rev() {
       const size_type N = size();
       if (N==0) return *this;
 
@@ -1032,7 +1034,7 @@ namespace mathq {
     // order  name
     //     0  rectangular
     //     1  trapazoidal
-    Vector<E, NE, D, M>& integrate_x2b(const E a, const E b, const int order = 1) {
+    Vector<E, NE>& integrate_x2b(const E a, const E b, const int order = 1) {
       const size_type N = size();
 
       if (order == 0) {
@@ -1058,7 +1060,7 @@ namespace mathq {
 
 
     // diff   (v[n] = v[n] - v[n-1])
-    Vector<E, NE, D, M>& diff(const bool periodic = false) {
+    Vector<E, NE>& diff(const bool periodic = false) {
       const size_type N = size();
       if (N<=1) return *this;
 
@@ -1079,7 +1081,7 @@ namespace mathq {
     }
 
     // diff_rev   (v[n] = v[n+1] - v[n])
-    Vector<E, NE, D, M>& diff_rev(const bool periodic = false) {
+    Vector<E, NE>& diff_rev(const bool periodic = false) {
       const size_type N = size();
       if (N<=1) return *this;
 
@@ -1107,7 +1109,7 @@ namespace mathq {
     // periodic: if true, perform derivative with start and end connected: 
     //           dat[-1] == dat[n-1], dat[n] == dat[0] etc
 
-    Vector<E, NE, D, M>& deriv(const E a, const E b, const int n = 1, int Dpts = 7, const bool periodic = false) {
+    Vector<E, NE>& deriv(const E a, const E b, const int n = 1, int Dpts = 7, const bool periodic = false) {
       //MDISP(a,b,n,Dpts,periodic);
       const size_type N = size();
       if (N<=1) return *this;
@@ -1283,7 +1285,7 @@ namespace mathq {
 
     // stream << operator
 
-    friend std::ostream& operator<<(std::ostream& stream, const Vector<E, NE, D, M>& v) {
+    friend std::ostream& operator<<(std::ostream& stream, const Vector<E, NE>& v) {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       stream << style.apply(FormatDataVector::string_opening);
@@ -1305,7 +1307,7 @@ namespace mathq {
     }
 
 
-    friend inline std::istream& operator>>(const std::string s, Vector<E, NE, D, M>& x) {
+    friend inline std::istream& operator>>(const std::string s, Vector<E, NE>& x) {
       std::istringstream st(s);
       return (st >> x);
     }
@@ -1313,7 +1315,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, Vector<E, NE, D, M>& x) {
+    friend std::istream& operator>>(std::istream& stream, Vector<E, NE>& x) {
       // const size_type LINESZ = 32768;
       // char line[LINESZ];
       // std::vector<E> v;

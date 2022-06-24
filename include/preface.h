@@ -82,7 +82,7 @@ namespace mathq {
 
 
   // E = element type (int, double, complex<double>, bool, Scalar<double>, Vector<double>, Matrix<double>, etc)
-  // D = number type (int, double, complex<double>, bool, etc)
+  // D = underlying ordered field (orderable-number) type (int, double, complex<double>, bool, etc)
 
   template <class X, class E, typename D, int M, int R>
   class MArrayExpR;
@@ -100,7 +100,7 @@ namespace mathq {
   class
     Scalar;
 
-  template <class E, int NE = 0, typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
+  template <class E, int NE = 0>
   class
     Vector;
 
@@ -259,7 +259,7 @@ namespace mathq {
   public:
     typedef MultiArray<E, R, D, M> TEN;
     typedef Matrix<E, 0, 0, D, M> MAT;
-    typedef Vector<E, 0, D, M> VEC;
+    typedef Vector<E, 0> VEC;
     typedef Scalar<E, D, M> SCA;
     typedef typename std::conditional<R == 0, SCA, std::conditional<R == 1, VEC, std::conditional<R == 2, MAT, TEN>>>::type Type;
   };
@@ -273,7 +273,7 @@ namespace mathq {
   template <class E, class D, int M, int N1>
   class Materialize<E, D, M, 1, N1> {
   public:
-    typedef Vector<E, N1, D, M> Type;
+    typedef Vector<E, N1> Type;
   };
 
   template <class E, class D, int M, int N1, int N2>
@@ -1359,7 +1359,7 @@ namespace mathq {
   template <class E, class D, int M>
   class GridType<E, D, M, 1> {
   public:
-    typedef Vector<E, 0, D, M> Type;
+    typedef Vector<E, 0> Type;
   };
 
   template <class E, class D, int M>

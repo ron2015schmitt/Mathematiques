@@ -126,7 +126,7 @@ namespace mathq {
 
     // ************* Vector Constructor---------------------
     template <int NE>
-    MultiArray<E, R, D, M>(const Vector<E, NE, D, M>& v) {
+    MultiArray<E, R, D, M>(const Vector<E, NE>& v) {
       resize(v.deepdims());
       for (int c = 0; c < v.deepsize(); c++) {
         (*this)[c] = v[c];
