@@ -115,9 +115,9 @@ namespace mathq {
   // , typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
   template <class Element, int rank, size_t... sizes>
   class MultiArrayNEW {
-    public:
-      typedef typename NumberType<Element>::Type Number;
-      static constexpr int Depth = 1 + NumberType<Element>::depth();
+  public:
+    typedef typename NumberType<Element>::Type Number;
+    static constexpr int Depth = 1 + NumberType<Element>::depth();
   };
 
 
@@ -1404,8 +1404,23 @@ namespace mathq {
   // The two types can be converted from one to another using the function 'insideout'.
   // ***************************************************************************
   template <class D, size_t NDIMS>
-  using GridOfVectors = typename Grid<Vector<D, NDIMS>, NDIMS>::Type;
+  using GridOfVectors = Grid<Vector<D, NDIMS>, NDIMS>;
 
+
+  template <class D, size_t NDIMS, bool inv>
+  class CG {
+  public:
+    typedef GridOfVectors<D, NDIMS> Type;
+  };
+
+  template <class D, size_t NDIMS>
+  class CG<D, NDIMS, true> {
+  public:
+    typedef VectorOfGrids<D, NDIMS> Type;
+  };
+
+  template <class D, size_t NDIMS, bool inv>
+  using CG0 = typename CG<D, NDIMS, inv>::Type;
 
 
 

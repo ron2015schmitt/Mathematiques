@@ -1110,7 +1110,9 @@ namespace mathq {
     typedef CartCoords<E, NDIMS> CLASS;
     typedef CurvilinearCoords<E, NDIMS, CLASS> PARENT;
     typedef typename PARENT::PARENT BASE;
-
+    static int ron() {
+      return NDIMS;
+    }
 
     template<size_t TEMP = NDIMS>
     static EnableMethodIf<TEMP==2, CartCoords<E, NDIMS>> fromPolar(const E& r, const E& phi) {
@@ -1974,20 +1976,20 @@ namespace mathq {
           else {
             s4 += v[j];
           }
-          }
+        }
         result += 32*s1 + 12*s2 + 32*s3 + 14*s4;
         result = result * 2*(b-a)/(45*D(N-1));
-        }
+      }
       break;
     default:
 #if MATHQ_DEBUG>0
       std::cerr << "integrate_a2b: bad order parameter order="<<order<<std::endl;
 #endif
       break;
-      }
+    }
 
     return result;
-    }
+  }
 
 
 
@@ -2022,6 +2024,6 @@ namespace mathq {
 
 
 
-  };
+};
 
 #endif 

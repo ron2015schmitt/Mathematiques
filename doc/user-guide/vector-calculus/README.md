@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.33-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.34-c++17</h1>
 
 <details>
 
@@ -210,6 +210,9 @@ CartCoords<double, 3> p1({ 1,2,3 });
 ☀ p1.basis_vec(1) ➜ Vector<double,NE=3> {0, 1, 0};
 ☀ p1.basis_vec(2) ➜ Vector<double,NE=3> {0, 0, 1};
 ☀ p1.g() ➜ Matrix<double,NR=3,NC=3> { {1, 0, 0}, {0, 1, 0}, {0, 0, 1} };
+☀ p1.ron() ➜ int 3;
+☀ decltype(p1)::ron() ➜ int 3;
+☀ CartCoords<double, 2>::ron() ➜ int 2;
 ☀ zeros<Vector<double, 2>>() ➜ Vector<double,NE=2> {0, 0};
 ☀ ones<Vector<double, 2>>() ➜ Vector<double,NE=2> {1, 1};
 ☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 2;

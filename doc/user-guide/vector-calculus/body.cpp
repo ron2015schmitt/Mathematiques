@@ -16,10 +16,11 @@ inline double fradius3d_2(double x, double y, double z) { return  std::sqrt(x*x 
 
 const double pi = 3.141592653589793238462643383;
 
+
+
+
 // classes can NOT have multiple parameter packs
 // you can nest them though ot get tehy same effect
-
-
 template <int Ndims, int... Sizes>
 class Foo {
 public:
@@ -60,11 +61,10 @@ template <typename... Types>
 struct foo {};
 
 template < typename... Types1, template <typename...> class T
-         , typename... Types2, template <typename...> class V
-         , typename U >
-void
-bar(const T<Types1...>&, const V<Types2...>&, const U& u)
-{
+  , typename... Types2, template <typename...> class V
+  , typename U >
+  void
+  bar(const T<Types1...>&, const V<Types2...>&, const U& u) {
   class D {};
   std::cout << sizeof...(Types1) << std::endl;
   std::cout << sizeof...(Types2) << std::endl;
@@ -225,13 +225,25 @@ int main() {
   TRDISP(p1.basis_vec(2));
   TRDISP(p1.g());
 
+  TRDISP(p1.ron());
+  TRDISP(decltype(p1)::ron());
+  TRDISP(CartCoords<double, 2>::ron());
 
   TRDISP(zeros<Vector<double, 2>>());
   TRDISP(ones<Vector<double, 2>>());
   DISP(sizeof(PolarCoords<double>)/sizeof(double));
 
+  VectorOfGrids<double, 2> vgA;
+  GridOfVectors<double, 2> vgB;
+  TRDISP(vgA);
+  TRDISP(vgB);
+  CG<double,2,false>::Type cgA;
+  CG<double,2,true>::Type cgB;
+  TRDISP(cgA);
+  TRDISP(cgB);
 
-
+  CG0<double,2,false> cgA2;
+  TRDISP(cgA2);
 
   // CR();
   // PolarCoordSystem<double> polar;
