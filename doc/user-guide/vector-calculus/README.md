@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.34-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.35-c++17</h1>
 
 <details>
 
@@ -216,16 +216,12 @@ CartCoords<double, 3> p1({ 1,2,3 });
 ☀ zeros<Vector<double, 2>>() ➜ Vector<double,NE=2> {0, 0};
 ☀ ones<Vector<double, 2>>() ➜ Vector<double,NE=2> {1, 1};
 ☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 2;
+☀ vgA ➜ Vector<Matrix<double>,NE=2> {{}, {}};
+☀ vgB ➜ Matrix<Vector<double,NE=2>> {};
+☀ cgA ➜ Matrix<Vector<double,NE=2>> {};
+☀ cgB ➜ Vector<Matrix<double>,NE=2> {{}, {}};
+☀ cgA2 ➜ Matrix<Vector<double,NE=2>> {};
 ```
-Ndims=7
- (Ngiven=4
- (21, 32, 43, 2, 0, 0, 0)
-Ndims=4
- (Ngiven=3
- (100, 20, 32, 0)
-Ndims=4
- (Hgiven=3
- (1, 0, 1, 0)
 
 
 | ⇦ <br />[Calculus](../calculus/README.md)  | [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br />Vector Calculus<br /><img width=1000/> | ⇨ <br />[MultiArray Calculus](../tensor-calculus/README.md)   |
