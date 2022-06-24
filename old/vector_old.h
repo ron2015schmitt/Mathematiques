@@ -29,7 +29,7 @@ namespace mathq {
 
   public:     
     typedef D DataType;
-    typedef typename FundamentalType<D>::Type PrimDataType;
+    typedef typename OrderedNumberTrait<D>::Type PrimDataType;
 
 
 
@@ -435,11 +435,11 @@ namespace mathq {
 
     // doesn't work
     //    template <class A, class B>  Vector<D>& equals(const MArrayExpR<MArrayExpR<D,A>,B>& x) {  
-    //    template <class A, class B>  Vector<D>& operator=(MArrayExpR<MArrayExpR<typename FundamentalType<D>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<D>& operator=(MArrayExpR<MArrayExpR<typename OrderedNumberTrait<D>::Type,A>,B>& x) {
     //    template <class A, class B>  Vector<D>& operator=(MArrayExpR<MArrayExpR<D,A>,B>) {
     //    template <class A>  Vector<D>& operator=(A& x) {
-    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<MArrayExpR<typename FundamentalType<D>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<MArrayExpR<typename FundamentalType<D>::Type,A>,B> x) {
+    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<D>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<D>::Type,A>,B> x) {
     //    template <template<class,class> class A, class B, class C>  Vector<D>& operator=(const MArrayExpR<A<D,B>,C>& x) {
     //    template <template<class,class> class A, class B, class C>  Vector<D>& operator=(const MArrayExpR<A<PrimDataType,B>,C>& x) {
    // WORKS
@@ -474,7 +474,7 @@ namespace mathq {
 
 
     std::string bottom(){
-      typename FundamentalType<D>::Type d;
+      typename OrderedNumberTrait<D>::Type d;
       return display::getTypeName(d);
     }
 

@@ -41,7 +41,7 @@ namespace mathq {
     typedef Matrix<E, NR, NC, D, M> XType;
     typedef E EType;
     typedef D DType;
-    typedef typename FundamentalType<D>::Type FType;
+    typedef typename OrderedNumberTrait<D>::Type FType;
 
 
     // if either NR or NC is 0, then we use valarray

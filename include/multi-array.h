@@ -59,7 +59,7 @@ namespace mathq {
     typedef MultiArray<E, R, D, M> XType;
     typedef E EType;
     typedef D DType;
-    typedef typename FundamentalType<D>::Type FType;
+    typedef typename OrderedNumberTrait<D>::Type FType;
 
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;

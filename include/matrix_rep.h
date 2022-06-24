@@ -26,7 +26,7 @@ namespace mathq {
     typedef MatrixRep<D> XType;
     typedef D EType;
     typedef D DType;
-    typedef typename FundamentalType<D>::Type FType;
+    typedef typename OrderedNumberTrait<D>::Type FType;
 
 
     typedef typename std::valarray<D> MyArrayType;

@@ -513,7 +513,7 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // FundamentalType - this operates recursively to find the primitive arithmetic type
+  // OrderedNumberTrait - this operates recursively to find the primitive arithmetic type
   //                   eg int, float, double, ...
   //    NOTE: THis only works for concrete tensors (and for expresssions)
   //          C++ template paramters and specialization does not find subclasses
@@ -521,7 +521,7 @@ namespace mathq {
 
   template <typename T>
   class
-    FundamentalType {
+    OrderedNumberTrait {
   public:
     typedef T Type;
     constexpr static int depth() {
@@ -531,40 +531,40 @@ namespace mathq {
 
   template <class E, template <typename> class T>
   class
-    FundamentalType<T<E>> {
+    OrderedNumberTrait<T<E>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
   template <class E>
   class
-    FundamentalType<std::complex<E>> {
+    OrderedNumberTrait<std::complex<E>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
-    }
-  };
-
-  template <class E>
-  class
-    FundamentalType<Imaginary<E>> {
-  public:
-    typedef typename FundamentalType<E>::Type Type;
-    constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
 
   template <class E>
   class
-    FundamentalType<Quaternion<E>> {
+    OrderedNumberTrait<Imaginary<E>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
+    }
+  };
+
+  template <class E>
+  class
+    OrderedNumberTrait<Quaternion<E>> {
+  public:
+    typedef typename OrderedNumberTrait<E>::Type Type;
+    constexpr static int depth() {
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
 
@@ -573,32 +573,32 @@ namespace mathq {
   //  Scalar<E>
   template <class E>
   class
-    FundamentalType<Scalar<E>> {
+    OrderedNumberTrait<Scalar<E>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
 
   //  Vector<E>
   template <class E>
   class
-    FundamentalType<Vector<E>> {
+    OrderedNumberTrait<Vector<E>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
   //  Vector<E,NE>
   template <class E, int NE>
   class
-    FundamentalType<Vector<E, NE>> {
+    OrderedNumberTrait<Vector<E, NE>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
 
@@ -606,11 +606,11 @@ namespace mathq {
 
   template <class E>
   class
-    FundamentalType<Matrix<E>> {
+    OrderedNumberTrait<Matrix<E>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
 
@@ -618,11 +618,11 @@ namespace mathq {
 
   template <class E, int NR>
   class
-    FundamentalType<Matrix<E, NR>> {
+    OrderedNumberTrait<Matrix<E, NR>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
 
@@ -630,33 +630,33 @@ namespace mathq {
 
   template <class E, int NR, int NC>
   class
-    FundamentalType<Matrix<E, NR, NC>> {
+    OrderedNumberTrait<Matrix<E, NR, NC>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
 
   //  MultiArray<E>
   template <class E>
   class
-    FundamentalType<MultiArray<E>> {
+    OrderedNumberTrait<MultiArray<E>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
 
   //  MultiArray<E,R>
   template <class E, int R>
   class
-    FundamentalType<MultiArray<E, R>> {
+    OrderedNumberTrait<MultiArray<E, R>> {
   public:
-    typedef typename FundamentalType<E>::Type Type;
+    typedef typename OrderedNumberTrait<E>::Type Type;
     constexpr static int depth() {
-      return 1 + FundamentalType<E>::depth();
+      return 1 + OrderedNumberTrait<E>::depth();
     }
   };
 
@@ -664,9 +664,9 @@ namespace mathq {
 
   template <class X, class E, class D, int M, int R>
   class
-    FundamentalType<MArrayExpR<X, E, D, M, R>> {
+    OrderedNumberTrait<MArrayExpR<X, E, D, M, R>> {
   public:
-    typedef typename FundamentalType<D>::Type Type;
+    typedef typename OrderedNumberTrait<D>::Type Type;
     constexpr static int depth() {
       return M;
     }
@@ -744,7 +744,7 @@ namespace mathq {
   public:
     typedef Imaginary<D> Type;
     typedef NewD ReplaceTypeD;
-    typedef NewD ReplaceTypeE; // DONT modify this (use FundamentalType to change
+    typedef NewD ReplaceTypeE; // DONT modify this (use OrderedNumberTrait to change
     constexpr static bool value = true;
     constexpr static int depth() {
       return 0;
@@ -762,7 +762,7 @@ namespace mathq {
   public:
     typedef Quaternion<D> Type;
     typedef NewD ReplaceTypeD;
-    typedef NewD ReplaceTypeE; // DONT modify this (use FundamentalType to change
+    typedef NewD ReplaceTypeE; // DONT modify this (use OrderedNumberTrait to change
     constexpr static bool value = true;
     constexpr static int depth() {
       return 0;

@@ -68,7 +68,7 @@ namespace mathq {
 
   template <class E, class D> class FUNCTOR_roundzero {
   public:
-    typedef typename FundamentalType<D>::Type DTOL;
+    typedef typename OrderedNumberTrait<D>::Type DTOL;
     static D apply(const D d, const DTOL tol) {
       return mathq::roundzero(d, tol);
     }
@@ -104,9 +104,9 @@ namespace mathq {
   //         
   // -------------------------------------------------------------------
   template <class X, class E, class D, int M, int R>
-  auto roundzero(const MArrayExpR<X, E, D, M, R>& x, const typename FundamentalType<D>::Type& tol = Functions<typename FundamentalType<D>::Type>::tolerance) {
+  auto roundzero(const MArrayExpR<X, E, D, M, R>& x, const typename OrderedNumberTrait<D>::Type& tol = Functions<typename OrderedNumberTrait<D>::Type>::tolerance) {
 
-    typedef typename FundamentalType<D>::Type DTOL;
+    typedef typename OrderedNumberTrait<D>::Type DTOL;
     return  TER_Binary<MArrayExpR<X, E, D, M, R>,
       DTOL,
       E, DTOL, E, D, DTOL, D, M, 0, M, R, 0, R,
@@ -139,7 +139,7 @@ namespace mathq {
 
   template <class E1, class E2, class E3, class D1, class D2, class D3> class FUNCTOR_approx {
   public:
-    typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
+    typedef typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type DTOL;
 
     static D3 apply(const D1 d1, const D2 d2, const DTOL tol) {
       return mathq::approx(d1, d2, tol);
@@ -208,9 +208,9 @@ namespace mathq {
   // (11) MultiArray<E1(D1)> , MultiArray<E2(D2)> 
 
   template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
-  auto approx(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  auto approx(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type>::tolerance) {
 
-    typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
+    typedef typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type DTOL;
     typedef bool D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;
     return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
@@ -223,9 +223,9 @@ namespace mathq {
   // (10) MultiArray<E1(D1)> , D2 
 
   template <class A, class E1, class D1, class D2, int M, int R>
-  auto approx(const MArrayExpR<A, E1, D1, M, R>& x1, const D2& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  auto approx(const MArrayExpR<A, E1, D1, M, R>& x1, const D2& x2, const typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type>::tolerance) {
 
-    typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
+    typedef typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type DTOL;
     typedef bool D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;
     return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
@@ -240,9 +240,9 @@ namespace mathq {
   // (01) D1, MultiArray<E2(D2)> 
 
   template <class B, class E2, class D1, class D2, int M, int R>
-  auto approx(D1& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const typename FundamentalType<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  auto approx(D1& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type>::tolerance) {
 
-    typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
+    typedef typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type DTOL;
     typedef bool D3;
     typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;
     return  TER_Ternary<D1,
@@ -259,7 +259,7 @@ namespace mathq {
   //          checks dimensions first
   // -------------------------------------------------------------------
   template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
-  bool equal_approx(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const  typename FundamentalType<typename AddType<D1, D2>::Type>::Type tol = Functions< typename FundamentalType<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  bool equal_approx(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const  typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type tol = Functions< typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type>::tolerance) {
 
     if (!dimequiv(x1, x2)) {
       return false;

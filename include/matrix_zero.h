@@ -31,7 +31,7 @@ namespace mathq {
     typedef MatrixZero<D, NR, NC> XType;
     typedef D EType;
     typedef D DType;
-    typedef typename FundamentalType<D>::Type FType;
+    typedef typename OrderedNumberTrait<D>::Type FType;
 
 
 

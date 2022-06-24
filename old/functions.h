@@ -716,9 +716,9 @@ namespace matricks {
   // roundzero(MultiArray)
 
   template <class D1, class A>
-     auto roundzero(const MArrayExpR<D1,A>& a, const typename FundamentalType<D1>::Type tolerance = MatricksHelper< typename FundamentalType<D1>::Type >::tolerance)
+     auto roundzero(const MArrayExpR<D1,A>& a, const typename OrderedNumberTrait<D1>::Type tolerance = MatricksHelper< typename OrderedNumberTrait<D1>::Type >::tolerance)
     {
-      typedef typename FundamentalType<D1>::Type TOL;
+      typedef typename OrderedNumberTrait<D1>::Type TOL;
       return  TER_Binary< MArrayExpR<D1,A>,TOL, D1,TOL, Fun_Roundzero<D1,TOL> >(a, tolerance);
     }
   
@@ -1205,7 +1205,7 @@ namespace matricks {
   //          checks dimensions first
   // -------------------------------------------------------------------
   template <class D, class A, class B>
-    inline bool approx(const MArrayExpR<D,A>& tensor1, const MArrayExpR<D,B>& tensor2, typename FundamentalType<D>::Type tolerance = MatricksHelper<typename FundamentalType<D>::Type>::tolerance) {
+    inline bool approx(const MArrayExpR<D,A>& tensor1, const MArrayExpR<D,B>& tensor2, typename OrderedNumberTrait<D>::Type tolerance = MatricksHelper<typename OrderedNumberTrait<D>::Type>::tolerance) {
     if (!dimequiv(tensor1,tensor2)) {
       return false;
     }

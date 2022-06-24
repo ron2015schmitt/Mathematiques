@@ -116,16 +116,16 @@ int main(int argc, char *argv[]) {
     Vector<double> vd{1, 2, 3, 4};
     TLDISP(vd);
 
-    TLDISP(FundamentalType<double>::depth());
-    FundamentalType<double>::Type d1 = 0.1;
+    TLDISP(OrderedNumberTrait<double>::depth());
+    OrderedNumberTrait<double>::Type d1 = 0.1;
     TLDISP(d1);
 
-    TLDISP(FundamentalType<ComplexDouble>::depth());
-    FundamentalType<ComplexDouble>::Type d2 = 0.1;
+    TLDISP(OrderedNumberTrait<ComplexDouble>::depth());
+    OrderedNumberTrait<ComplexDouble>::Type d2 = 0.1;
     TLDISP(d2);
 
-    TLDISP(FundamentalType<decltype(vd)>::depth());
-    FundamentalType<decltype(vd)>::Type d3 = 0.1;
+    TLDISP(OrderedNumberTrait<decltype(vd)>::depth());
+    OrderedNumberTrait<decltype(vd)>::Type d3 = 0.1;
     TLDISP(d3);
 
     TLDISP(NumberTrait<decltype(vd)>::depth());
@@ -138,8 +138,8 @@ int main(int argc, char *argv[]) {
     TLDISP(NumberTrait<ComplexDouble>::depth());
     Vector<ComplexDouble> vd{ComplexDouble(0.1, 1), ComplexDouble(0.2, 2), ComplexDouble(3, 0.3)};
     TLDISP(vd);
-    TLDISP(FundamentalType<decltype(vd)>::depth());
-    FundamentalType<decltype(vd)>::Type d = 3.14;
+    TLDISP(OrderedNumberTrait<decltype(vd)>::depth());
+    OrderedNumberTrait<decltype(vd)>::Type d = 3.14;
     TLDISP(d);
     TLDISP(NumberTrait<decltype(vd)>::depth());
     NumberTrait<decltype(vd)>::Type d2 = ComplexDouble(0.1, 0.2);
@@ -150,8 +150,8 @@ int main(int argc, char *argv[]) {
     MOUT << bold.apply("Vector<Vector<double> > testing") << std::endl;
     Vector<Vector<double>> vd{{1.1, 1.2}, {2.1, 2.2}, {3.1, 3.2}};
     TLDISP(vd);
-    TLDISP(FundamentalType<decltype(vd)>::depth());
-    FundamentalType<decltype(vd)>::Type d = 0.1;
+    TLDISP(OrderedNumberTrait<decltype(vd)>::depth());
+    OrderedNumberTrait<decltype(vd)>::Type d = 0.1;
     TLDISP(d);
     TLDISP(NumberTrait<decltype(vd)>::depth());
     NumberTrait<decltype(vd)>::Type d2 = 0.2;
@@ -165,8 +165,8 @@ int main(int argc, char *argv[]) {
     TLDISP(NumberTrait<complex<Vector<double>>>::depth());
     complex<Vector<double>> vd = complex<Vector<double>>({1.1, 1.2, 1.3}, {2.1, 2.2, 2.3});
     MOUT << vd << endl;
-    TLDISP(FundamentalType<decltype(vd)>::depth());
-    FundamentalType<decltype(vd)>::Type d = 43;
+    TLDISP(OrderedNumberTrait<decltype(vd)>::depth());
+    OrderedNumberTrait<decltype(vd)>::Type d = 43;
     TLDISP(d);
     TLDISP(NumberTrait<decltype(vd)>::depth());
     NumberTrait<decltype(vd)>::Type v2 = vd;

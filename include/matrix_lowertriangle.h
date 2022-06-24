@@ -29,7 +29,7 @@ namespace mathq {
     typedef MatrixLowerTriangle<D, N> XType;
     typedef D EType;
     typedef D DType;
-    typedef typename FundamentalType<D>::Type FType;
+    typedef typename OrderedNumberTrait<D>::Type FType;
 
 
     // if N is 0, then we use valarray

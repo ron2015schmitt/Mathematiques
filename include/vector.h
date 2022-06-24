@@ -27,7 +27,7 @@ namespace mathq {
 
   public:
     typedef typename NumberTrait<Element>::Type Number;
-    typedef typename FundamentalType<Number>::Type OrderedNumber;
+    typedef typename OrderedNumberTrait<Number>::Type OrderedNumber;
 
     typedef typename ArrayType<Element, N1>::Type MyArrayType;
     constexpr static int R = 1;
@@ -35,7 +35,7 @@ namespace mathq {
 
     // rename these
     typedef typename NumberTrait<Element>::Type DType;
-    typedef typename FundamentalType<Number>::Type FType;
+    typedef typename OrderedNumberTrait<Number>::Type FType;
     typedef Vector<Element, N1> XType;
     typedef Element EType;
     constexpr static int Rvalue = 1;
@@ -1251,7 +1251,7 @@ namespace mathq {
     //**********************************************************************
 
     std::string bottom() {
-      typename FundamentalType<Element>::Type d;
+      typename OrderedNumberTrait<Element>::Type d;
       return display::getTypeName(d);
     }
 

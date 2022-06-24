@@ -87,8 +87,8 @@ namespace matricks {
   public:
     typedef typename NumberTrait<D1>::Type TypeIn;
     typedef typename NumberTrait<D2>::Type Type;
-    typedef typename FundamentalType<D1>::Type FTypeIn;
-    typedef typename FundamentalType<D2>::Type FType;
+    typedef typename OrderedNumberTrait<D1>::Type FTypeIn;
+    typedef typename OrderedNumberTrait<D2>::Type FType;
 
     static inline Type apply(const TypeIn a) { 
       return numbercast<FType,FTypeIn>(a); 

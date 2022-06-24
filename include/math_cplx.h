@@ -55,7 +55,7 @@ namespace mathq {
   // template <typename T> class
   //   Complexify {
   // public:
-  //   typedef typename FundamentalType<T>::Type FType;
+  //   typedef typename OrderedNumberTrait<T>::Type FType;
   //   typedef std::complex<FType> CType;
   //   typedef typename NumberTrait<T,CType>::ReplaceTypeE Type;
   // };
@@ -69,7 +69,7 @@ namespace mathq {
   // template <typename T> class
   //   Realify {
   // public:
-  //   typedef typename FundamentalType<T>::Type FType;
+  //   typedef typename OrderedNumberTrait<T>::Type FType;
   //   typedef typename NumberTrait<T,FType>::ReplaceTypeE Type;
   // };
   // template <typename E, typename A, typename D, int M, int R> class
@@ -83,7 +83,7 @@ namespace mathq {
   // template <typename T> class
   //   Imaginarify {
   // public:
-  //   typedef typename FundamentalType<T>::Type FType;
+  //   typedef typename OrderedNumberTrait<T>::Type FType;
   //   typedef Imaginary<FType> IType;
   //   typedef typename NumberTrait<T,IType>::ReplaceTypeE Type;
   // };
