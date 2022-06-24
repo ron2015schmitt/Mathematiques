@@ -7,23 +7,7 @@
 2. Complete _Usage Guide_ covering all the functionality
 3. New in-depth _Developer Guide_
 
-
-
-### v3.6 Indexing Refactoring
-1. Rename MultiArray, MArrayExpR and MArrayExpRW to Array or MArray
-1. Refactor of vector/matrix/tensor indexing, including
-  + new index/iterator types such as slices similar to C++ stdlib, Fortran, and Python, including negative indices
-  + [Index class and new indexing methodology](topics/index.md)
-1. use std::size_t instead of these  (searc and replace everywhere)
-  * typedef std::vector<double>::size_type size_type;
-  * typedef int index_type;
-  * typedef long double extended;  -> quad?
-1. add vararg constructor for Dimensions or parameter pack 
-1. change deepdims from std::vector<Dimensions> to initlist<Dimensions>. define a class deepdims
-1. allow VEctor, Matrix, MultiArray to be initialized from deep dims
-1. create a Array3 type
-
-### v3.7 Display Refactoring
+### v3.6 Display Refactoring
 1. This is includes files:
   * display.h
   * display.cpp
@@ -31,6 +15,7 @@
 1. add support for std::tuple
 1. all classes should have ostream operators:  `stdout << Vector` , and then dispval_strm should simply call
 1. use `{}` for element lists. 
+1. use [Formatting library of C++20](https://en.cppreference.com/w/cpp/utility/format)
 1. support json format: use OPEN and CLOSE definitions for `{`. use EQUAL parameter `{ data: 25, name: "Joe" }`, ie `${OPEN} data${EQUAL}, name${EQUAL} "Joe" ${CLOSE}`
   1. How hard would it be to do string interpolation?
 1. do same for getTypeName?
@@ -59,13 +44,29 @@
    2. python
 1. move the SPECIALIZE_getTypeName into .h file and python script
 
-### v3.8 I/O Refactoring
+### v3.7 I/O Refactoring
 1. [Save tensor to file](topics/filesave.md)
 1. [Implement >> operators](topics/inputstreams.md)
 1. [Load tensor from file](topics/fileload.md)
 
-### v.9 Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary
+### v3.8 Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary
 1. create benchmarks, include display of memory sizes
+
+### v3.9 Indexing Refactoring
+1. Rename MultiArray, MArrayExpR and MArrayExpRW to Array or MArray
+1. Refactor of vector/matrix/tensor indexing, including
+  + new index/iterator types such as slices similar to C++ stdlib, Fortran, and Python, including negative indices
+  + [Index class and new indexing methodology](topics/index.md)
+  + slcies to get row or col of matrix
+1. use std::size_t instead of these  (searc and replace everywhere)
+  * typedef std::vector<double>::size_type size_type;
+  * typedef int index_type;
+  * typedef long double extended;  -> quad?
+1. use [C++20 Ranges](https://en.cppreference.com/w/cpp/ranges)
+1. add vararg constructor for Dimensions or parameter pack 
+1. change deepdims from std::vector<Dimensions> to initlist<Dimensions>. define a class deepdims
+1. allow VEctor, Matrix, MultiArray to be initialized from deep dims
+1. create a Array3 type
 
 
 ### v3.10 Debug Refactoring
@@ -106,6 +107,7 @@
 * refactor the headers so that 
   * vectors, matrices display tensors Scalar are broken out into different headers
   * use copious #ifdefs so that order of inclusion matters
+  * use [C++20 modules](https://en.cppreference.com/w/cpp/language/modules)?
 * reformat all files using VSCode plugin: all done except sandbox
 * Grid stuff
   * 2D
@@ -116,7 +118,6 @@
   * 3D
     * create MultiArray4 for xyzt: (rows,columns, floors, moments)
     * MArray4Rep
-* slcies to get row or col of matrix
 * get rid of typename usage in templates?
 * formalize template notation for the following: types with ordering (ints and reals), division algebras, Multiarrays, Tensors
 * use of variable templates to simplify variadics like Dimension?
@@ -224,6 +225,8 @@
 ### Matrix Math via Lapack/Blas
 1. [Special matrices](topics/diagonal.md)
   * use python script to generate matrix code
+  * constant vector
+  * constant MultiArray
 1. [Matrix operations](topics/matrixlapack.md)
 1. openblas multi-threading support?
 1. Optimize Dot Products for Special Matrices

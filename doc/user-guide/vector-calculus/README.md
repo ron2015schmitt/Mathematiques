@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.32-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.33-c++17</h1>
 
 <details>
 
@@ -201,18 +201,28 @@ inflategrids
 ☀ u2.pos() ➜ CartCoords<double,2> (x1=1.41421, x2=1.41421);
 ☀ u1.pos()|u2.pos() ➜ double 19.3185;
 ☀ u1.J() ➜ double 10;
-☀ u1.g() ➜ Matrix<double,NR=2,NC=2> { {1, 0}, {100, 0} };
+☀ u1.g() ➜ Matrix<double,NR=2,NC=2> { {1, 0}, {0, 100} };
 PolarCoords<double> w = PolarCoords<double>::fromCartesian(sqrt(2), sqrt(2));
 ☀ w ➜ PolarCoords<double> (r=2, φ=0.785398);
-CartCoords<double,3> p1({1,2,3});
+CartCoords<double, 3> p1({ 1,2,3 });
 ☀ p1 ➜ CartCoords<double,3> (x1=1, x2=2, x3=3);
 ☀ p1.basis_vec(0) ➜ Vector<double,NE=3> {1, 0, 0};
 ☀ p1.basis_vec(1) ➜ Vector<double,NE=3> {0, 1, 0};
 ☀ p1.basis_vec(2) ➜ Vector<double,NE=3> {0, 0, 1};
+☀ p1.g() ➜ Matrix<double,NR=3,NC=3> { {1, 0, 0}, {0, 1, 0}, {0, 0, 1} };
 ☀ zeros<Vector<double, 2>>() ➜ Vector<double,NE=2> {0, 0};
 ☀ ones<Vector<double, 2>>() ➜ Vector<double,NE=2> {1, 1};
 ☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 2;
 ```
+Ndims=7
+ (Ngiven=4
+ (21, 32, 43, 2, 0, 0, 0)
+Ndims=4
+ (Ngiven=3
+ (100, 20, 32, 0)
+Ndims=4
+ (Hgiven=3
+ (1, 0, 1, 0)
 
 
 | ⇦ <br />[Calculus](../calculus/README.md)  | [Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br />Vector Calculus<br /><img width=1000/> | ⇨ <br />[MultiArray Calculus](../tensor-calculus/README.md)   |

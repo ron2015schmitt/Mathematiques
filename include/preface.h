@@ -112,6 +112,15 @@ namespace mathq {
   class
     MultiArray;
 
+  // , typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
+  template <class Element, int rank, size_t... sizes>
+  class MultiArrayNEW {
+    public:
+      typedef typename NumberType<Element>::Type Number;
+      static constexpr int Depth = 1 + NumberType<Element>::depth();
+  };
+
+
   // *********************************************************************
   // * Special Matrices
   // ********************************************************************
@@ -1427,36 +1436,6 @@ namespace mathq {
 
 
 
-  // ***************************************************************************
-  // * RealSet 
-  // ***************************************************************************
-
-  template <class D>
-  class RealSet;
-
-
-  // ***************************************************************************
-  // * RealMultiSet 
-  // ***************************************************************************
-  template <class D, size_t NE = 0>
-  class RealMultiSet;
-
-
-  // ***************************************************************************
-  // * CurvilinearCoordinateSystem 
-  // ***************************************************************************
-  template <class D, size_t NDIMS, typename CHILD>
-  class CurvilinearCoordinateSystem;
-
-
-  template <class E, size_t NDIMS, class CHILD> class CurvilinearCoords;
-  template <class E, size_t NDIMS> class CartCoords;
-  template <class E> class PolarCoords;
-
-  // ***************************************************************************
-  // Materialize - this returns a concrete tensor of type specified by paramters
-  // ***************************************************************************
-
   template <class D, size_t NDIMS, size_t RANK>
   class TensorOfGrids {
   public:
@@ -1480,6 +1459,34 @@ namespace mathq {
   public:
     typedef MatrixOfGrids<D, NDIMS> Type;
   };
+
+
+  // ***************************************************************************
+  // * RealSet 
+  // ***************************************************************************
+
+  template <class D>
+  class RealSet;
+
+
+  // ***************************************************************************
+  // * RealMultiSet 
+  // ***************************************************************************
+  template <class D, size_t NDIMS = 0, class MULTIGRID = VectorOfGrids<D, NDIMS>>
+  class RealMultiSet;
+
+
+  // ***************************************************************************
+  // * CurvilinearCoordinateSystem 
+  // ***************************************************************************
+  template <class D, size_t NDIMS, typename CHILD>
+  class CurvilinearCoordinateSystem;
+
+
+  template <class E, size_t NDIMS, class CHILD> class CurvilinearCoords;
+  template <class E, size_t NDIMS> class CartCoords;
+  template <class E> class PolarCoords;
+
 
 
 

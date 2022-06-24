@@ -830,7 +830,10 @@ namespace mathq {
   //
   // Dimensions cannot be changed
 
-  template <class D, size_t NDIMS>
+  // template <typename D, template <typename> typename C>
+  // inline Style getTypeStyle(const C<const D>& var) {
+
+  template <class D, size_t NDIMS, class MULTIGRID>
   class
     RealMultiSet : public std::array<RealSet<D>, NDIMS> {
   public:
@@ -845,7 +848,7 @@ namespace mathq {
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
 
-    VectorOfGrids<D, NDIMS> grid;
+    MULTIGRID grid;
 
     RealMultiSet(const std::initializer_list<RealSet<D>>& mylist) {
       *this = mylist;
@@ -936,14 +939,14 @@ namespace mathq {
       return (*this)[g];
     }
 
-    VectorOfGrids<D, NDIMS>& getGrid() {
+    MULTIGRID& getGrid() {
       TRDISP(hasInflatedGrids_());
       if (hasInflatedGrids_()) return grid;
       return forceRegenGrid();
     }
 
 
-    VectorOfGrids<D, NDIMS>& forceRegenGrid() {
+    MULTIGRID& forceRegenGrid() {
       init_();
 
       if constexpr (NDIMS == 0) {
@@ -1115,6 +1118,11 @@ namespace mathq {
       E y = r * std::sin(phi);
       return CartCoords<E, NDIMS>(x, y);
     }
+    template<size_t TEMP = NDIMS>
+    EnableMethodIf<TEMP==2, PolarCoords<E>> toPolar() {
+      return PolarCoords<E>(*this);
+    }
+
 
     explicit CartCoords(const std::initializer_list<E>& mylist) {
       BASE& me = *this;
@@ -1125,6 +1133,80 @@ namespace mathq {
       BASE& me = *this;
       me = v2;
     }
+
+    std::array<std::string, NDIMS>& names() const {
+      std::array<std::string, NDIMS> names;
+      for (size_t c = 0; c < NDIMS; c++) {
+        names[c] = name(c);
+      }
+      return names;
+    }
+
+    const std::string& name(size_t n) const {
+      std::string* s = new std::string("x");
+      *s += std::to_string(n+1);
+      return *s;
+    }
+
+
+    // Jacobian 
+    E& J() const {
+      E* jacob = new E();
+      *jacob = 1;
+      return *jacob;
+    }
+
+    // metric tensor g^{ij} 
+    Matrix<E, NDIMS, NDIMS> g() const {
+      Matrix<E, NDIMS, NDIMS> metric;
+      for (size_t r = 0; r < NDIMS; r++) {
+        for (size_t c = 0; c < NDIMS; c++) {
+          metric(r, c) = (r==c) ? 1 : 0;
+        }
+      }
+      return metric;
+    }
+
+    CartCoords<E, NDIMS>& pos() const {
+      return toCartesian();
+    }
+    CartCoords<E, NDIMS>& toCartesian() const {
+      return *(new CartCoords<E, NDIMS>(*this));
+    }
+
+    Vector<E, NDIMS>& basis_vec(size_t n) const {
+      Vector<E, NDIMS>* vec = new Vector<E, NDIMS>(0);
+      (*vec)[n] = 1;
+      return *vec;
+    }
+
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "CartCoords";
+      s += StyledString::get(ANGLE1).get();
+      E d;
+      s += getTypeName(d);
+      s += StyledString::get(COMMA).get();
+      s += std::to_string(NDIMS);
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const CartCoords<E, NDIMS>& var) {
+      stream << "(";
+      for (size_t c = 0; c < NDIMS; c++) {
+        if (c>0) stream << ", ";
+        stream << var.name(c);
+        stream << "=";
+        stream << var[c];
+      }
+      stream << ")";
+      return stream;
+    }
+
+
 
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=1)> = 0>
     E& x1() const {
@@ -1190,77 +1272,6 @@ namespace mathq {
       (*this)[1] = v2.r() * std::sin(v2.phi());
     }
 
-    // const std::vector<bool> periodic = { false, true };
-
-
-    std::array<std::string, NDIMS>& names() const {
-      std::array<std::string, NDIMS> names;
-      for (size_t c = 0; c < NDIMS; c++) {
-        names[c] = name(c);
-      }
-      return names;
-    }
-
-    const std::string& name(size_t n) const {
-      std::string* s = new std::string("x");
-      *s += std::to_string(n+1);
-      return *s;
-    }
-
-
-
-    // Jacobian 
-    E J() const {
-      return 1;
-    }
-
-    // metric tensor g^{ij} 
-    Matrix<E, 2, 2> g() const {
-      Matrix<E, 2, 2> metric;
-      metric = { ones<E>(), zeros<E>(), ones<E>(), zeros<E>() };
-      return metric;
-    }
-
-    CartCoords<E, NDIMS>& pos() const {
-      return toCartesian();
-    }
-    CartCoords<E, NDIMS>& toCartesian() const {
-      return *(new CartCoords<E, NDIMS>(*this));
-    }
-
-    Vector<E, NDIMS>& basis_vec(size_t n) const {
-      Vector<E, NDIMS>* vec = new Vector<E, NDIMS>(0);
-      (*vec)[n] = 1;
-      return *vec;
-    }
-
-
-    inline std::string classname() const {
-      using namespace display;
-      std::string s = "CartCoords";
-      s += StyledString::get(ANGLE1).get();
-      E d;
-      s += getTypeName(d);
-      s += StyledString::get(COMMA).get();
-      s += std::to_string(NDIMS);
-      s += StyledString::get(ANGLE2).get();
-      return s;
-    }
-
-
-    inline friend std::ostream& operator<<(std::ostream& stream, const CartCoords<E, NDIMS>& var) {
-      stream << "(";
-      for (size_t c = 0; c < NDIMS; c++) {
-        if (c>0) stream << ", ";
-        stream << var.name(c);
-        stream << "=";
-        stream << var[c];
-      }
-      stream << ")";
-      return stream;
-    }
-
-
   };
 
 
@@ -1302,6 +1313,10 @@ namespace mathq {
       me = v2;
     }
 
+    PolarCoords(const CartCoords<E, 2>& v2) {
+      (*this)[0] = std::sqrt(x*x + y*y);
+      (*this)[1] = std::atan2(y, x);
+    }
 
 
     // const std::vector<bool> periodic = { false, true };
@@ -1398,7 +1413,7 @@ namespace mathq {
       const E& r = (*this)[0];
       const E& phi = (*this)[1];
       Matrix<E, 2, 2> metric;
-      metric = { ones<E>(), zeros<E>(), r*r, zeros<E>() };
+      metric = { ones<E>(), zeros<E>(), zeros<E>(), r*r };
       return metric;
     }
 
@@ -1959,20 +1974,20 @@ namespace mathq {
           else {
             s4 += v[j];
           }
-        }
+          }
         result += 32*s1 + 12*s2 + 32*s3 + 14*s4;
         result = result * 2*(b-a)/(45*D(N-1));
-      }
+        }
       break;
     default:
 #if MATHQ_DEBUG>0
       std::cerr << "integrate_a2b: bad order parameter order="<<order<<std::endl;
 #endif
       break;
-    }
+      }
 
     return result;
-  }
+    }
 
 
 
@@ -2007,6 +2022,6 @@ namespace mathq {
 
 
 
-};
+  };
 
 #endif 
