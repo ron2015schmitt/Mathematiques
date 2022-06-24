@@ -222,7 +222,7 @@ namespace mathq {
     typedef DIN DType;							\
     typedef DOUT DoutType;						\
     typedef E EType;							\
-    typedef typename NumberType<E,DOUT>::ReplaceTypeE EoutType;	      \
+    typedef typename NumberTrait<E,DOUT>::ReplaceTypeE EoutType;	      \
     static DOUT apply(const DIN d) {					\
       return Function(d);						\
     }									\
@@ -253,7 +253,7 @@ namespace mathq {
 #define FUNCTION_UNARY_TYPE2(Function,Functor,DIN,DOUT)			\
   template <class X, class E, class D, int M, int R>			\
   inline auto Function(const MArrayExpR<X,E,DIN,M,R>& x) {		\
-    typedef typename NumberType<E,DOUT>::ReplaceTypeE EOUT;		\
+    typedef typename NumberTrait<E,DOUT>::ReplaceTypeE EOUT;		\
     return  TER_Unary<MArrayExpR<X,E,DIN,M,R>,EOUT,DOUT,M,R, Functor<E,DIN,DOUT>>(x); \
     }
   
@@ -422,7 +422,7 @@ namespace mathq {
   template <class X, class E, class D, int M, int R,EnableIf<std::is_arithmetic<D>::value> = 0 > auto 
     rproj(const MArrayExpR<X,E,D,M,R>& x) {
      typedef std::complex<D> DOUT;
-     typedef typename NumberType<E,DOUT>::ReplaceTypeE EOUT;
+     typedef typename NumberTrait<E,DOUT>::ReplaceTypeE EOUT;
      return  TER_Unary<MArrayExpR<X,E,D,M,R>,EOUT,DOUT,M,R, FUNCTOR_rproj_of_real<E,D,DOUT> >(x); 
   }
 

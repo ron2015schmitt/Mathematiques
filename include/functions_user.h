@@ -33,7 +33,7 @@ namespace mathq {
   template <class A, class B, class E1, class E2, class D1, class D2, int M, int R>
   auto op2(const typename FunctionType2<D1, D2, typename AddType<D1, D2>::Type>::type& f, const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2) {
     typedef typename AddType<D1, D2>::Type D3;
-    typedef typename NumberType<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+    typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
     return  TER_Binary_User<MArrayExpR<A, E1, D1, M, R>,
       MArrayExpR<B, E2, D2, M, R>,
       E1, E2, E3, D1, D2, D3, M, M, M, R, R, R>(f, x1, x2);

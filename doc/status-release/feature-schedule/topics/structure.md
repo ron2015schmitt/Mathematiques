@@ -16,7 +16,7 @@ Implement code necessary so that mathematical operations work for recursive tens
        1. get `Vector<Vector<double>> + Vector<double>` working
        1. add `.dat(i)`, `.depth()`, `.deepsize()`, `setequals` vistor pattern etc methods to MultiArrayAbstract
        1. for each class `Scalar`, `Vector`, etc, use setquals pattern when inside equals (MArrayExpR) and uses deep indexing
-       1. convert all binary functions in `functions.h` to the new methodlogy of `operator+`, including use of `NumberType`
+       1. convert all binary functions in `functions.h` to the new methodlogy of `operator+`, including use of `NumberTrait`
        1. have alternate version of binary operators `addr` that uses recursion. This is faster in certain cases.
        1. convert all functors in `functors.h` to the new methodlogy of `New_Fun_Add` and delete old versions
        1. add test cases for math of recursive Vectors and scalars

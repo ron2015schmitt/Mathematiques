@@ -45,7 +45,7 @@ namespace mathq {
 
     index_type N_;
 
-    static_assert(NumberType<D>::value,
+    static_assert(NumberTrait<D>::value,
       "class MatrixSkewHermitian can only have numbers as elements, ie not vectors, matrices etc.");
 
 

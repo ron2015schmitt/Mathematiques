@@ -17,7 +17,7 @@ namespace mathq {
    ********************************************************************
    */
 
-   //, typename = EnableIf<NumberType<D>::value>
+   //, typename = EnableIf<NumberTrait<D>::value>
   template <class D, int NR, int NC >
   class MatrixRepRow : public MArrayExpRW<MatrixRepRow<D, NR, NC>, D, D, 1, 2> {
 
@@ -49,7 +49,7 @@ namespace mathq {
     index_type Nrows_;
     index_type Ncols_;
 
-    static_assert(NumberType<D>::value,
+    static_assert(NumberTrait<D>::value,
       "class MatrixRepRow can only have numbers as elements, ie not vectors, matrices etc.");
 
 

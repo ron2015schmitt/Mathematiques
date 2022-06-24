@@ -26,7 +26,7 @@ namespace mathq {
     const bool delete_ii_;
     VectorofPtrs* vptrs;
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
     TERW_Subset(Vector<D>& x, const Vector<index_type>& ii)
       : x_(x), ii_(ii), delete_ii_(false) {
@@ -174,7 +174,7 @@ namespace mathq {
     VectorofPtrs* vptrs;
 
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
     TERW_Submask(Vector<D>& x, const Vector<bool>& mask)
       : x_(x), ii_(*(new Vector<index_type>(findtrue(mask)))) {
@@ -457,7 +457,7 @@ namespace mathq {
   //     VectorofPtrs *vptrs;
 
   //   public:
-  //     typedef typename NumberType<D>::Type MyNumberType;
+  //     typedef typename NumberTrait<D>::Type MyNumberType;
 
 
   //   TERW_RealFromComplex(Vector<std::complex<D> >& a)

@@ -28,8 +28,8 @@ namespace matricks {
   template <class D> class Fun_Plus {
     Fun_Plus() {}
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return a;
@@ -58,8 +58,8 @@ namespace matricks {
   template <class D> class Fun_Minus {
     Fun_Minus() { }
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return (-a); 
@@ -85,8 +85,8 @@ namespace matricks {
   template <class D2, class D1> class Fun_Cast {
     Fun_Cast() { }
   public:
-    typedef typename NumberType<D1>::Type TypeIn;
-    typedef typename NumberType<D2>::Type Type;
+    typedef typename NumberTrait<D1>::Type TypeIn;
+    typedef typename NumberTrait<D2>::Type Type;
     typedef typename FundamentalType<D1>::Type FTypeIn;
     typedef typename FundamentalType<D2>::Type FType;
 
@@ -123,8 +123,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Add {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename AddType<NA,NB>::Type Type;
       
     Fun_Add() { }
@@ -162,8 +162,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Subtract {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename SubType<NA,NB>::Type Type;
       
     Fun_Subtract() { }
@@ -198,8 +198,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Multiply {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename MultType<NA,NB>::Type Type;
       
     Fun_Multiply() { }
@@ -234,8 +234,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Divide {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename DivType<NA,NB>::Type Type;
       
     Fun_Divide() { }
@@ -278,8 +278,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Pow {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename MultType<NA,NB>::Type Type;
       
     Fun_Pow() { }
@@ -316,8 +316,8 @@ namespace matricks {
   template <class D> class Fun_Sqr {
     Fun_Sqr() { }
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return (a*a); 
@@ -345,8 +345,8 @@ namespace matricks {
   template <class D> class Fun_Cube {
     Fun_Cube() { }
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return (a*a*a); 
@@ -373,8 +373,8 @@ namespace matricks {
   template <class D> class Fun_Sqrt {
     Fun_Sqrt() { }
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::sqrt;
@@ -403,8 +403,8 @@ namespace matricks {
     Fun_Exp() { }
     
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::exp;
@@ -434,8 +434,8 @@ namespace matricks {
     Fun_Log() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::log;
@@ -466,8 +466,8 @@ namespace matricks {
     Fun_Log2() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::log2;
@@ -499,8 +499,8 @@ namespace matricks {
     }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::log10;
@@ -536,8 +536,8 @@ namespace matricks {
     Fun_Sin() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::sin;
@@ -566,8 +566,8 @@ namespace matricks {
   template <class D> class Fun_Cos {
     Fun_Cos() { }
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::cos;
@@ -598,8 +598,8 @@ namespace matricks {
   template <class D> class Fun_Tan {
     Fun_Tan() { }
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::tan;
@@ -628,8 +628,8 @@ namespace matricks {
     Fun_Asin() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::asin;
@@ -659,8 +659,8 @@ namespace matricks {
     Fun_Acos() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::acos;
@@ -690,8 +690,8 @@ namespace matricks {
     Fun_Atan() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::atan;
@@ -720,8 +720,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Atan2 {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename MultType<NA,NB>::Type Type;
       
     Fun_Atan2() { }
@@ -759,8 +759,8 @@ namespace matricks {
     Fun_Sinh() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::sinh;
@@ -791,8 +791,8 @@ namespace matricks {
     Fun_Cosh() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::cosh;
@@ -822,8 +822,8 @@ namespace matricks {
     Fun_Tanh() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::tanh;
@@ -859,8 +859,8 @@ namespace matricks {
     Fun_Abs() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::abs;
@@ -890,8 +890,8 @@ namespace matricks {
     Fun_Sgn() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return matricks::sgn(a);
@@ -922,8 +922,8 @@ namespace matricks {
     Fun_Ceil() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::ceil;
@@ -955,8 +955,8 @@ namespace matricks {
     Fun_Floor() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::floor;
@@ -988,8 +988,8 @@ namespace matricks {
     Fun_Round() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::round;
@@ -1017,8 +1017,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Roundzero {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename AddType<NA,NB>::Type Type;
 
     Fun_Roundzero() { }
@@ -1053,8 +1053,8 @@ namespace matricks {
 
   template <class A, class B, typename TOL> class Fun_Approx {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef bool Type;
 
     Fun_Approx() { }
@@ -1099,8 +1099,8 @@ namespace matricks {
     Fun_UnaryUser() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
-    typedef typename NumberType<D>::Type Type;
+    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return F(a); 
@@ -1126,10 +1126,10 @@ namespace matricks {
   
   // y = op2<D,userfunc>(a,b)
 
-  template <class A, class B, typename FunctionTypes<typename NumberType<A>::Type>::binary_func F> class Fun_BinaryUser {
+  template <class A, class B, typename FunctionTypes<typename NumberTrait<A>::Type>::binary_func F> class Fun_BinaryUser {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename MultType<NA,NB>::Type Type;
       
     Fun_BinaryUser() { }
@@ -1201,7 +1201,7 @@ namespace matricks {
   public:
     typedef bool Type;
     typedef typename DeeperType<A,B>::Type DeeperType_;
-    typedef typename NumberType<DeeperType_,Type>::Type MultiArrayType;
+    typedef typename NumberTrait<DeeperType_,Type>::Type MultiArrayType;
 
     Fun_And() { }
   
@@ -1237,7 +1237,7 @@ namespace matricks {
   public:
     typedef bool Type;
     typedef typename DeeperType<A,B>::Type DeeperType_;
-    typedef typename NumberType<DeeperType_,Type>::Type MultiArrayType;
+    typedef typename NumberTrait<DeeperType_,Type>::Type MultiArrayType;
 
     Fun_Or() { }
   
@@ -1277,8 +1277,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Equal {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef bool Type;
 
     Fun_Equal() { }
@@ -1316,8 +1316,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_NotEqual {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef bool Type;
 
     Fun_NotEqual() { }
@@ -1356,8 +1356,8 @@ namespace matricks {
   
   template <class A, class B> class Fun_LessOrEqual {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef bool Type;
 
     Fun_LessOrEqual() { }
@@ -1393,8 +1393,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_GreaterOrEqual {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef bool Type;
 
     Fun_GreaterOrEqual() { }
@@ -1429,8 +1429,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Less {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef bool Type;
     
     Fun_Less() { }
@@ -1465,8 +1465,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Greater {
   public: 
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef bool Type;
 
     Fun_Greater() { }
@@ -1508,8 +1508,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Polar {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename AddType<NA,NB>::Type RType;
     typedef typename std::complex<RType> Type;
     
@@ -1550,8 +1550,8 @@ namespace matricks {
 
   template <class A, class B> class Fun_Complex {
   public:
-    typedef typename NumberType<A>::Type NA;
-    typedef typename NumberType<B>::Type NB;
+    typedef typename NumberTrait<A>::Type NA;
+    typedef typename NumberTrait<B>::Type NB;
     typedef typename AddType<NA,NB>::Type RType;
     typedef typename std::complex<RType> Type;
 
@@ -1624,7 +1624,7 @@ namespace matricks {
   template <class D > class Fun_Conj {
     Fun_Conj() { }
   public:
-    typedef typename NumberType<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type TypeIn;
     typedef typename Complexify<TypeIn>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
@@ -1652,7 +1652,7 @@ namespace matricks {
   template <class D> class Fun_Real {
     Fun_Real() { }
   public:
-    typedef typename NumberType<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type TypeIn;
     typedef typename Realify<TypeIn>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
@@ -1684,7 +1684,7 @@ namespace matricks {
     Fun_Imag() { }
 
   public:
-    typedef typename NumberType<D>::Type TypeIn;
+    typedef typename NumberTrait<D>::Type TypeIn;
     typedef typename Realify<TypeIn>::Type Type;
 
     static inline Type apply(const TypeIn a) { 

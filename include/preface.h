@@ -78,7 +78,7 @@ namespace mathq {
   class Quaternion;
 
   template <typename T, typename NUM = double, typename H = void>
-  class NumberType;
+  class NumberTrait;
 
 
   // E = element type (int, double, complex<double>, bool, Scalar<double>, Vector<double>, Matrix<double>, etc)
@@ -96,7 +96,7 @@ namespace mathq {
 
 
 
-  template <class E, typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
+  template <class E, typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
   class
     Scalar;
 
@@ -104,20 +104,20 @@ namespace mathq {
   class
     Vector;
 
-  template <class E, int NR = 0, int NC = 0, typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
+  template <class E, int NR = 0, int NC = 0, typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
   class
     Matrix;
 
-  template <class E, int R = 0, typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
+  template <class E, int R = 0, typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
   class
     MultiArray;
 
-  // , typename D = typename NumberType<E>::Type, int M = 1 + NumberType<E>::depth()>
+  // , typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
   template <class Element, int rank, size_t... sizes>
   class MultiArrayNEW {
   public:
-    typedef typename NumberType<Element>::Type Number;
-    static constexpr int Depth = 1 + NumberType<Element>::depth();
+    typedef typename NumberTrait<Element>::Type Number;
+    static constexpr int Depth = 1 + NumberTrait<Element>::depth();
   };
 
 
@@ -675,7 +675,7 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // NumberType - this operates recursively to find the base number type
+  // NumberTrait - this operates recursively to find the base number type
   //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
   //
   //    NOTE: THis only works for concrete tensors (and for expresssions)
@@ -684,7 +684,7 @@ namespace mathq {
 
   template <typename NewD>
   class
-    NumberType<Null, NewD> {
+    NumberTrait<Null, NewD> {
   public:
     typedef Null Type;
     typedef NewD ReplaceTypeD;
@@ -703,7 +703,7 @@ namespace mathq {
 
   template <typename T, typename NewD>
   class
-    NumberType<T, NewD, typename std::enable_if<std::is_arithmetic<T>::value>::type> {
+    NumberTrait<T, NewD, typename std::enable_if<std::is_arithmetic<T>::value>::type> {
   public:
     typedef T Type;
     typedef NewD ReplaceTypeD;
@@ -722,7 +722,7 @@ namespace mathq {
 
   template <class D, typename NewD>
   class
-    NumberType<std::complex<D>, NewD> {
+    NumberTrait<std::complex<D>, NewD> {
   public:
     typedef std::complex<D> Type;
     typedef NewD ReplaceTypeD;
@@ -740,7 +740,7 @@ namespace mathq {
   };
 
   template <class D, typename NewD>
-  class NumberType<Imaginary<D>, NewD> {
+  class NumberTrait<Imaginary<D>, NewD> {
   public:
     typedef Imaginary<D> Type;
     typedef NewD ReplaceTypeD;
@@ -758,7 +758,7 @@ namespace mathq {
   };
 
   template <class D, typename NewD>
-  class NumberType<Quaternion<D>, NewD> {
+  class NumberTrait<Quaternion<D>, NewD> {
   public:
     typedef Quaternion<D> Type;
     typedef NewD ReplaceTypeD;
@@ -781,15 +781,15 @@ namespace mathq {
 
   template <class E, typename NewD>
   class
-    NumberType<Scalar<E>, NewD> {
+    NumberTrait<Scalar<E>, NewD> {
   public:
     typedef Scalar<E> InputType;
-    typedef typename NumberType<E>::Type Type;
-    typedef Scalar<typename NumberType<E, NewD>::ReplaceTypeD> ReplaceTypeD;
+    typedef typename NumberTrait<E>::Type Type;
+    typedef Scalar<typename NumberTrait<E, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef Scalar<NewD> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberType<E, NewD>::depth();
+      return 1 + NumberTrait<E, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -804,15 +804,15 @@ namespace mathq {
 
   template <class E, typename NewD>
   class
-    NumberType<Vector<E>, NewD> {
+    NumberTrait<Vector<E>, NewD> {
   public:
     typedef Vector<E> InputType;
-    typedef typename NumberType<E>::Type Type;
-    typedef Vector<typename NumberType<E, NewD>::ReplaceTypeD> ReplaceTypeD;
+    typedef typename NumberTrait<E>::Type Type;
+    typedef Vector<typename NumberTrait<E, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef Vector<NewD> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberType<E, NewD>::depth();
+      return 1 + NumberTrait<E, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -826,15 +826,15 @@ namespace mathq {
 
   template <class E, typename NewD, int NE>
   class
-    NumberType<Vector<E, NE>, NewD> {
+    NumberTrait<Vector<E, NE>, NewD> {
   public:
     typedef Vector<E, NE> InputType;
-    typedef typename NumberType<E>::Type Type;
-    typedef Vector<typename NumberType<E, NewD>::ReplaceTypeD, NE> ReplaceTypeD;
+    typedef typename NumberTrait<E>::Type Type;
+    typedef Vector<typename NumberTrait<E, NewD>::ReplaceTypeD, NE> ReplaceTypeD;
     typedef Vector<NewD, NE> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberType<E, NewD>::depth();
+      return 1 + NumberTrait<E, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -849,15 +849,15 @@ namespace mathq {
 
   template <class E, typename NewD>
   class
-    NumberType<Matrix<E>, NewD> {
+    NumberTrait<Matrix<E>, NewD> {
   public:
     typedef Matrix<E> InputType;
-    typedef typename NumberType<E>::Type Type;
-    typedef Matrix<typename NumberType<E, NewD>::ReplaceTypeD> ReplaceTypeD;
+    typedef typename NumberTrait<E>::Type Type;
+    typedef Matrix<typename NumberTrait<E, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef Matrix<NewD> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberType<E, NewD>::depth();
+      return 1 + NumberTrait<E, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -871,15 +871,15 @@ namespace mathq {
 
   template <class E, typename NewD, int NR>
   class
-    NumberType<Matrix<E, NR>, NewD> {
+    NumberTrait<Matrix<E, NR>, NewD> {
   public:
     typedef Matrix<E, NR> InputType;
-    typedef typename NumberType<E>::Type Type;
-    typedef Matrix<typename NumberType<E, NewD>::ReplaceTypeD, NR> ReplaceTypeD;
+    typedef typename NumberTrait<E>::Type Type;
+    typedef Matrix<typename NumberTrait<E, NewD>::ReplaceTypeD, NR> ReplaceTypeD;
     typedef Matrix<NewD, NR> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberType<E, NewD>::depth();
+      return 1 + NumberTrait<E, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -894,15 +894,15 @@ namespace mathq {
 
   template <class E, typename NewD, int NR, int NC>
   class
-    NumberType<Matrix<E, NR, NC>, NewD> {
+    NumberTrait<Matrix<E, NR, NC>, NewD> {
   public:
     typedef Matrix<E, NR, NC> InputType;
-    typedef typename NumberType<E>::Type Type;
-    typedef Matrix<typename NumberType<E, NewD>::ReplaceTypeD, NR, NC> ReplaceTypeD;
+    typedef typename NumberTrait<E>::Type Type;
+    typedef Matrix<typename NumberTrait<E, NewD>::ReplaceTypeD, NR, NC> ReplaceTypeD;
     typedef Matrix<NewD, NR, NC> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberType<E, NewD>::depth();
+      return 1 + NumberTrait<E, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -918,15 +918,15 @@ namespace mathq {
 
   template <class E, typename NewD>
   class
-    NumberType<MultiArray<E>, NewD> {
+    NumberTrait<MultiArray<E>, NewD> {
   public:
     typedef MultiArray<E> InputType;
-    typedef typename NumberType<E>::Type Type;
-    typedef MultiArray<typename NumberType<E, NewD>::ReplaceTypeD> ReplaceTypeD;
+    typedef typename NumberTrait<E>::Type Type;
+    typedef MultiArray<typename NumberTrait<E, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef MultiArray<NewD> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberType<E, NewD>::depth();
+      return 1 + NumberTrait<E, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -940,15 +940,15 @@ namespace mathq {
 
   template <class E, typename NewD, int R>
   class
-    NumberType<MultiArray<E, R>, NewD> {
+    NumberTrait<MultiArray<E, R>, NewD> {
   public:
     typedef MultiArray<E, R> InputType;
-    typedef typename NumberType<E>::Type Type;
-    typedef MultiArray<typename NumberType<E, NewD>::ReplaceTypeD, R> ReplaceTypeD;
+    typedef typename NumberTrait<E>::Type Type;
+    typedef MultiArray<typename NumberTrait<E, NewD>::ReplaceTypeD, R> ReplaceTypeD;
     typedef MultiArray<NewD, R> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberType<E, NewD>::depth();
+      return 1 + NumberTrait<E, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -964,12 +964,12 @@ namespace mathq {
 
   template <class X, class E, class D, int M, int R, typename NewD>
   class
-    NumberType<MArrayExpR<X, E, D, M, R>, NewD> {
+    NumberTrait<MArrayExpR<X, E, D, M, R>, NewD> {
   public:
     typedef MArrayExpR<X, E, D, M, R> InputType;
     typedef D Type;
-    typedef typename NumberType<E, NewD>::ReplaceTypeD NewE;
-    typedef typename NumberType<X, NewD>::ReplaceTypeD NewX;
+    typedef typename NumberTrait<E, NewD>::ReplaceTypeD NewE;
+    typedef typename NumberTrait<X, NewD>::ReplaceTypeD NewX;
     typedef NewX ReplaceTypeD;
     typedef MArrayExpR<X, NewD, D, M, R> ReplaceTypeE;
     constexpr static bool value = false;
@@ -988,12 +988,12 @@ namespace mathq {
 
   template <class X, class E, class D, int M, int R, typename NewD>
   class
-    NumberType<MArrayExpRW<X, E, D, M, R>, NewD> {
+    NumberTrait<MArrayExpRW<X, E, D, M, R>, NewD> {
   public:
     typedef MArrayExpRW<X, E, D, M, R> InputType;
     typedef D Type;
-    typedef typename NumberType<E, NewD>::ReplaceTypeD NewE;
-    typedef typename NumberType<X, NewD>::ReplaceTypeD NewX;
+    typedef typename NumberTrait<E, NewD>::ReplaceTypeD NewE;
+    typedef typename NumberTrait<X, NewD>::ReplaceTypeD NewX;
     typedef NewX ReplaceTypeD;
     typedef MArrayExpRW<X, NewD, D, M, R> ReplaceTypeE;
     constexpr static bool value = false;
@@ -1018,7 +1018,7 @@ namespace mathq {
   class
     DeeperType {
   public:
-    typedef typename std::conditional<NumberType<T1>::depth() >= NumberType<T2>::depth(), T1, T2>::type Type;
+    typedef typename std::conditional<NumberTrait<T1>::depth() >= NumberTrait<T2>::depth(), T1, T2>::type Type;
   };
 
 
@@ -1064,7 +1064,7 @@ namespace mathq {
   class
     InversionType<Scalar<E>, C> {
   public:
-    typedef typename NumberType<E>::Type D;
+    typedef typename NumberTrait<E>::Type D;
     typedef Scalar<D> MultiArrayD;
     typedef Scalar<C> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
@@ -1076,7 +1076,7 @@ namespace mathq {
   class
     InversionType<Vector<E>, C> {
   public:
-    typedef typename NumberType<E>::Type D;
+    typedef typename NumberTrait<E>::Type D;
     typedef Vector<D> MultiArrayD;
     typedef Vector<C> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
@@ -1087,7 +1087,7 @@ namespace mathq {
   class
     InversionType<Vector<E, NE>, C> {
   public:
-    typedef typename NumberType<E>::Type D;
+    typedef typename NumberTrait<E>::Type D;
     typedef Vector<D, NE> MultiArrayD;
     typedef Vector<C, NE> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
@@ -1099,7 +1099,7 @@ namespace mathq {
   class
     InversionType<Matrix<E>, C> {
   public:
-    typedef typename NumberType<E>::Type D;
+    typedef typename NumberTrait<E>::Type D;
     typedef Matrix<D> MultiArrayD;
     typedef Matrix<C> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
@@ -1111,7 +1111,7 @@ namespace mathq {
   class
     InversionType<Matrix<E, NR>, C> {
   public:
-    typedef typename NumberType<E>::Type D;
+    typedef typename NumberTrait<E>::Type D;
     typedef Matrix<D, NR> MultiArrayD;
     typedef Matrix<C, NR> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
@@ -1123,7 +1123,7 @@ namespace mathq {
   class
     InversionType<Matrix<E, NR, NC>, C> {
   public:
-    typedef typename NumberType<E>::Type D;
+    typedef typename NumberTrait<E>::Type D;
     typedef Matrix<D, NR, NC> MultiArrayD;
     typedef Matrix<C, NR, NC> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
@@ -1134,7 +1134,7 @@ namespace mathq {
   class
     InversionType<MultiArray<E>, C> {
   public:
-    typedef typename NumberType<E>::Type D;
+    typedef typename NumberTrait<E>::Type D;
     typedef MultiArray<D> MultiArrayD;
     typedef MultiArray<C> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
@@ -1145,7 +1145,7 @@ namespace mathq {
   class
     InversionType<MultiArray<E, R>, C> {
   public:
-    typedef typename NumberType<E>::Type D;
+    typedef typename NumberTrait<E>::Type D;
     typedef MultiArray<D, R> MultiArrayD;
     typedef MultiArray<C, R> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
@@ -1267,8 +1267,8 @@ namespace mathq {
   class ResultType {
   public:
     typedef typename DeeperType<A, B>::Type DeeperType;
-    typedef typename NumberType<DeeperType, NewD>::ReplaceTypeD MultiArrayType;
-    constexpr static bool isprim = (NumberType<A>::depth() == 0) && (NumberType<B>::depth() == 0);
+    typedef typename NumberTrait<DeeperType, NewD>::ReplaceTypeD MultiArrayType;
+    constexpr static bool isprim = (NumberTrait<A>::depth() == 0) && (NumberTrait<B>::depth() == 0);
     typedef typename std::conditional<isprim, NewD, MultiArrayType>::type Type;
   };
 

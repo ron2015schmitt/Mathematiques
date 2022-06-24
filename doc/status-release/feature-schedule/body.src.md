@@ -173,7 +173,7 @@
 * MultiArray<D> constructed from MultiArray<D,N> as well as equals
   * WHy does Vector<MultiArray<D,2>> create MultiArray<D> (R=0)?
     
-* Refactor `NumberType` etc to use constexpr fields instead of static methods
+* Refactor `NumberTrait` etc to use constexpr fields instead of static methods
 * overload `^` as exponentiation for vectors and matrices?
 * pow(container, scalar)
 * pow(container, container)

@@ -112,7 +112,7 @@
     * https://en.cppreference.com/w/c/numeric/complex/complex
     * https://en.cppreference.com/w/c/numeric/complex/imaginary
     * https://en.cppreference.com/w/c/numeric/complex/I
-* Refactor `NumberType` etc to use constexpr fields instead of static methods
+* Refactor `NumberTrait` etc to use constexpr fields instead of static methods
 * overload `^` as exponentiation for vectors and matrices?
 * pow(container, scalar)
 * pow(container, container)

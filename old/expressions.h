@@ -121,8 +121,8 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberType<D1>::Type NumType1;
-    typedef typename NumberType<D2>::Type NumType2;
+    typedef typename NumberTrait<D1>::Type NumType1;
+    typedef typename NumberTrait<D2>::Type NumType2;
     typedef typename OP::Type NumTypeOut;
     typedef typename ResultType<D1,D2,typename OP::Type>::Type MultiArrayTypeOut;
     
@@ -277,9 +277,9 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberType<D1>::Type NumType1;
-    typedef typename NumberType<D2>::Type NumType2;
-    typedef typename NumberType<D3>::Type NumType3;
+    typedef typename NumberTrait<D1>::Type NumType1;
+    typedef typename NumberTrait<D2>::Type NumType2;
+    typedef typename NumberTrait<D3>::Type NumType3;
     typedef typename OP::Type NumTypeOut;
     
 
@@ -439,7 +439,7 @@ namespace matricks {
     const bool delete_ii_;
     VectorofPtrs *vptrs;
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
   TERW_Subset(Vector<D>& a, const Vector<index_type>& ii)
     : a_(a), ii_(ii), delete_ii_(false) {
@@ -578,7 +578,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
 
   TERW_Submask(Vector<D>& a, const Vector<bool>& mask)
@@ -696,7 +696,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
 
   TERW_RealFromComplex(Vector<std::complex<D> >& a)
@@ -805,7 +805,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
     
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
 
   TER_Series(const A& a, const X& x, const int N, const D x0)
@@ -927,7 +927,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
     
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
 
   TER_Series2(const A& a, const A& b, const X& x, const int N, const D k1)
@@ -1055,7 +1055,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
     Dimensions *rdims;
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
 
 
@@ -1166,7 +1166,7 @@ namespace matricks {
     Dimensions *rdims;
   
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
 
 
@@ -1257,7 +1257,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
 
   VER_Join(const A& a, const B& b)
@@ -1349,7 +1349,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
 
   VERW_Join(A& a, B& b)
@@ -1472,7 +1472,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberType<D>::Type MyNumberType;
+    typedef typename NumberTrait<D>::Type MyNumberType;
 
 
   VER_Rep(const A& a, const size_type m)

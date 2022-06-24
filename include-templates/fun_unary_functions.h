@@ -14,6 +14,6 @@
 
 template <class X, class E, class D, int M, int R>
 auto ##FUNCTION##(const MArrayExpR<X, E, ##DIN##, M, R>& x) {
-  typedef typename NumberType<E, ##DOUT##>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, ##DOUT##>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, ##DIN##, M, R>, EOUT, ##DOUT##, M, R, ##FUNCTOR##<E, EOUT, ##DIN##, ##DOUT##>>(x);
 }

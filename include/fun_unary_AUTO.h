@@ -3370,7 +3370,7 @@ public:
 
 template <class X, class E, class D, int M, int R>
 auto operator+(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_pos<E, EOUT, D, D>>(x);
 }
 
@@ -3389,7 +3389,7 @@ auto operator+(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto operator-(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_neg<E, EOUT, D, D>>(x);
 }
 
@@ -3408,7 +3408,7 @@ auto operator-(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto operator!(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_not<E, EOUT, D, D>>(x);
 }
 
@@ -3427,7 +3427,7 @@ auto operator!(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto sin(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sin<E, EOUT, D, D>>(x);
 }
 
@@ -3446,7 +3446,7 @@ auto sin(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto cos(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_cos<E, EOUT, D, D>>(x);
 }
 
@@ -3465,7 +3465,7 @@ auto cos(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto tan(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_tan<E, EOUT, D, D>>(x);
 }
 
@@ -3484,7 +3484,7 @@ auto tan(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto asin(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_asin<E, EOUT, D, D>>(x);
 }
 
@@ -3503,7 +3503,7 @@ auto asin(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto acos(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_acos<E, EOUT, D, D>>(x);
 }
 
@@ -3522,7 +3522,7 @@ auto acos(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto atan(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_atan<E, EOUT, D, D>>(x);
 }
 
@@ -3541,7 +3541,7 @@ auto atan(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto sinh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sinh<E, EOUT, D, D>>(x);
 }
 
@@ -3560,7 +3560,7 @@ auto sinh(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto cosh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_cosh<E, EOUT, D, D>>(x);
 }
 
@@ -3579,7 +3579,7 @@ auto cosh(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto tanh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_tanh<E, EOUT, D, D>>(x);
 }
 
@@ -3598,7 +3598,7 @@ auto tanh(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto asinh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_asinh<E, EOUT, D, D>>(x);
 }
 
@@ -3617,7 +3617,7 @@ auto asinh(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto acosh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_acosh<E, EOUT, D, D>>(x);
 }
 
@@ -3636,7 +3636,7 @@ auto acosh(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto atanh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_atanh<E, EOUT, D, D>>(x);
 }
 
@@ -3655,7 +3655,7 @@ auto atanh(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto sqrt(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sqrt<E, EOUT, D, D>>(x);
 }
 
@@ -3674,7 +3674,7 @@ auto sqrt(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto cbrt(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_cbrt<E, EOUT, D, D>>(x);
 }
 
@@ -3693,7 +3693,7 @@ auto cbrt(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto sqr(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sqr<E, EOUT, D, D>>(x);
 }
 
@@ -3712,7 +3712,7 @@ auto sqr(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto cube(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_cube<E, EOUT, D, D>>(x);
 }
 
@@ -3731,7 +3731,7 @@ auto cube(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto exp(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_exp<E, EOUT, D, D>>(x);
 }
 
@@ -3750,7 +3750,7 @@ auto exp(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto exp2(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_exp2<E, EOUT, D, D>>(x);
 }
 
@@ -3769,7 +3769,7 @@ auto exp2(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto expm1(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_expm1<E, EOUT, D, D>>(x);
 }
 
@@ -3788,7 +3788,7 @@ auto expm1(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto log(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_log<E, EOUT, D, D>>(x);
 }
 
@@ -3807,7 +3807,7 @@ auto log(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto log10(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_log10<E, EOUT, D, D>>(x);
 }
 
@@ -3826,7 +3826,7 @@ auto log10(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto log2(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_log2<E, EOUT, D, D>>(x);
 }
 
@@ -3845,7 +3845,7 @@ auto log2(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto log1p(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_log1p<E, EOUT, D, D>>(x);
 }
 
@@ -3864,7 +3864,7 @@ auto log1p(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto logb(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_logb<E, EOUT, D, D>>(x);
 }
 
@@ -3883,7 +3883,7 @@ auto logb(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto sgn(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sgn<E, EOUT, D, D>>(x);
 }
 
@@ -3902,7 +3902,7 @@ auto sgn(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto ceil(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_ceil<E, EOUT, D, D>>(x);
 }
 
@@ -3921,7 +3921,7 @@ auto ceil(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto floor(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_floor<E, EOUT, D, D>>(x);
 }
 
@@ -3940,7 +3940,7 @@ auto floor(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto round(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_round<E, EOUT, D, D>>(x);
 }
 
@@ -3959,7 +3959,7 @@ auto round(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto trunc(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_trunc<E, EOUT, D, D>>(x);
 }
 
@@ -3978,7 +3978,7 @@ auto trunc(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto erf(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_erf<E, EOUT, D, D>>(x);
 }
 
@@ -3997,7 +3997,7 @@ auto erf(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto erfc(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_erfc<E, EOUT, D, D>>(x);
 }
 
@@ -4016,7 +4016,7 @@ auto erfc(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto tgamma(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_tgamma<E, EOUT, D, D>>(x);
 }
 
@@ -4035,7 +4035,7 @@ auto tgamma(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto lgamma(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_lgamma<E, EOUT, D, D>>(x);
 }
 
@@ -4054,7 +4054,7 @@ auto lgamma(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto expint(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_expint<E, EOUT, D, D>>(x);
 }
 
@@ -4073,7 +4073,7 @@ auto expint(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto riemann_zeta(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_riemann_zeta<E, EOUT, D, D>>(x);
 }
 
@@ -4092,7 +4092,7 @@ auto riemann_zeta(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto comp_ellint_1(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_comp_ellint_1<E, EOUT, D, D>>(x);
 }
 
@@ -4111,7 +4111,7 @@ auto comp_ellint_1(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto comp_ellint_2(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_comp_ellint_2<E, EOUT, D, D>>(x);
 }
 
@@ -4130,7 +4130,7 @@ auto comp_ellint_2(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto zero(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_zero<E, EOUT, D, D>>(x);
 }
 
@@ -4149,7 +4149,7 @@ auto zero(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto ilogb(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, int>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, int>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, int, M, R, FUNCTOR_ilogb<E, EOUT, D, int>>(x);
 }
 
@@ -4168,7 +4168,7 @@ auto ilogb(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto imaginary(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_imaginary<E, EOUT, D, mathq::Imaginary<D>>>(x);
 }
 
@@ -4187,7 +4187,7 @@ auto imaginary(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto conj(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_conj_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
@@ -4206,7 +4206,7 @@ auto conj(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto real(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_real_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
@@ -4225,7 +4225,7 @@ auto real(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto imag(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_imag_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
@@ -4244,7 +4244,7 @@ auto imag(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto abs(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_abs_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
@@ -4263,7 +4263,7 @@ auto abs(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto arg(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_arg_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
@@ -4282,7 +4282,7 @@ auto arg(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto proj(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_proj_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4301,7 +4301,7 @@ auto proj(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto exp(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_exp_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4320,7 +4320,7 @@ auto exp(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto log(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_log_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4339,7 +4339,7 @@ auto log(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto log10(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_log10_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4358,7 +4358,7 @@ auto log10(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto sqrt(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_sqrt_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4377,7 +4377,7 @@ auto sqrt(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto sin(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_sin_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
@@ -4396,7 +4396,7 @@ auto sin(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto cos(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_cos_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
@@ -4415,7 +4415,7 @@ auto cos(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto tan(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_tan_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
@@ -4434,7 +4434,7 @@ auto tan(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto asin(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_asin_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
@@ -4453,7 +4453,7 @@ auto asin(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto acos(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_acos_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4472,7 +4472,7 @@ auto acos(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto atan(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_atan_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4491,7 +4491,7 @@ auto atan(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto sinh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_sinh_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
@@ -4510,7 +4510,7 @@ auto sinh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto cosh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_cosh_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
@@ -4529,7 +4529,7 @@ auto cosh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto tanh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_tanh_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
@@ -4548,7 +4548,7 @@ auto tanh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto asinh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_asinh_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4567,7 +4567,7 @@ auto asinh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto acosh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_acosh_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4586,7 +4586,7 @@ auto acosh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto atanh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_atanh_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
@@ -4605,7 +4605,7 @@ auto atanh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto conj(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_conj_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
@@ -4624,7 +4624,7 @@ auto conj(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto real(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_real_complex<E, EOUT, std::complex<D>, D>>(x);
 }
 
@@ -4643,7 +4643,7 @@ auto real(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto imag(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_imag_complex<E, EOUT, std::complex<D>, D>>(x);
 }
 
@@ -4662,7 +4662,7 @@ auto imag(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto abs(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_abs_complex<E, EOUT, std::complex<D>, D>>(x);
 }
 
@@ -4681,7 +4681,7 @@ auto abs(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto arg(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_arg_complex<E, EOUT, std::complex<D>, D>>(x);
 }
 
@@ -4700,7 +4700,7 @@ auto arg(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto proj(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_proj_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
@@ -4719,7 +4719,7 @@ auto proj(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto round(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_round_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
@@ -4738,7 +4738,7 @@ auto round(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto log2(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_log2_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
@@ -4757,7 +4757,7 @@ auto log2(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto floor(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_floor_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
@@ -4776,7 +4776,7 @@ auto floor(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto ceil(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_ceil_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
@@ -4795,7 +4795,7 @@ auto ceil(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto quaternion(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_quaternion<E, EOUT, D, mathq::Quaternion<D>>>(x);
 }
 
@@ -4814,7 +4814,7 @@ auto quaternion(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto conj(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberType<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_conj_quat<E, EOUT, mathq::Quaternion<D>, mathq::Quaternion<D>>>(x);
 }
 
@@ -4833,7 +4833,7 @@ auto conj(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto real(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_real_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
@@ -4852,7 +4852,7 @@ auto real(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto imag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_imag_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
@@ -4871,7 +4871,7 @@ auto imag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto jmag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_jmag_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
@@ -4890,7 +4890,7 @@ auto jmag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto kmag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_kmag_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
@@ -4909,7 +4909,7 @@ auto kmag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto abs(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_abs_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
@@ -4928,7 +4928,7 @@ auto abs(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto exp(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberType<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_exp_quat<E, EOUT, mathq::Quaternion<D>, mathq::Quaternion<D>>>(x);
 }
 
@@ -4947,7 +4947,7 @@ auto exp(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R>
 auto log(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberType<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_log_quat<E, EOUT, mathq::Quaternion<D>, mathq::Quaternion<D>>>(x);
 }
 
@@ -4966,7 +4966,7 @@ auto log(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 
 template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
 inline auto conj(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_conj_real<E, EOUT, D, D>>(x);
 }
 
@@ -4985,7 +4985,7 @@ inline auto conj(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
 inline auto real(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_real_real<E, EOUT, D, D>>(x);
 }
 
@@ -5004,7 +5004,7 @@ inline auto real(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
 inline auto imag(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_imag_real<E, EOUT, D, D>>(x);
 }
 
@@ -5023,7 +5023,7 @@ inline auto imag(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
 inline auto abs(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_abs_real<E, EOUT, D, D>>(x);
 }
 
@@ -5042,7 +5042,7 @@ inline auto abs(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
 inline auto arg(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, D>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_arg_real<E, EOUT, D, D>>(x);
 }
 
@@ -5061,7 +5061,7 @@ inline auto arg(const MArrayExpR<X, E, D, M, R>& x) {
 
 template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
 inline auto proj(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberType<E, std::complex<D>>::ReplaceTypeD EOUT;
+  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
   return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_proj_real<E, EOUT, D, std::complex<D>>>(x);
 }
 }; // namespace mathq 

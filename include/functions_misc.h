@@ -50,7 +50,7 @@ namespace mathq {
 
   template <class D2, class X, class E, class D, int M, int R>
   auto numbercast(const MArrayExpR<X, E, D, M, R>& x) {
-    typedef typename NumberType<E, D2>::ReplaceTypeD EOUT;
+    typedef typename NumberTrait<E, D2>::ReplaceTypeD EOUT;
     return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D2, M, R, FUNCTOR_numbercast<E, EOUT, D, D2>>(x);
   }
 
@@ -212,7 +212,7 @@ namespace mathq {
 
     typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
     typedef bool D3;
-    typedef typename NumberType<E1, D3>::ReplaceTypeD E3;
+    typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;
     return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
       MArrayExpR<B, E2, D2, M, R>,
       DTOL,
@@ -227,7 +227,7 @@ namespace mathq {
 
     typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
     typedef bool D3;
-    typedef typename NumberType<E1, D3>::ReplaceTypeD E3;
+    typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;
     return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
       D2,
       DTOL,
@@ -244,7 +244,7 @@ namespace mathq {
 
     typedef typename FundamentalType<typename AddType<D1, D2>::Type>::Type DTOL;
     typedef bool D3;
-    typedef typename NumberType<E2, D3>::ReplaceTypeD E3;
+    typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;
     return  TER_Ternary<D1,
       MArrayExpR<B, E2, D2, M, R>,
       DTOL,

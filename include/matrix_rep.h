@@ -44,7 +44,7 @@ namespace mathq {
     index_type Ncols_;
     MatrixRepEnum repeatType;
 
-    static_assert(NumberType<D>::value,
+    static_assert(NumberTrait<D>::value,
       "class MatrixRep can only have numbers as elements, ie not vectors, matrices etc.");
 
 

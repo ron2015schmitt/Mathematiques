@@ -23,7 +23,7 @@
 template <class A, class B, class C, class E1, class E2, class E3, class D1, class D2, class D3, int M, int R>
 auto ##FUNCTION##(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const MArrayExpR<C, E3, D3, M, R>& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<D1, D2>::Type, D3>::Type D4;
-  typedef typename NumberType<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
     MArrayExpR<B, E2, D2, M, R>,
     MArrayExpR<C, E3, D3, M, R>,
@@ -35,10 +35,10 @@ auto ##FUNCTION##(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2,
 
 // (110) MultiArray<E1(D1)> , MultiArray<E2(D2)> , D3
 
-template <class A, class B, class E1, class E2, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberType<D3>::value>>
+template <class A, class B, class E1, class E2, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberTrait<D3>::value>>
 auto ##FUNCTION##(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const D3& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<D1, D2>::Type, D3>::Type D4;
-  typedef typename NumberType<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
     MArrayExpR<B, E2, D2, M, R>,
     D3,
@@ -48,10 +48,10 @@ auto ##FUNCTION##(const MArrayExpR<A, E1, D1, M, R>& x1, const MArrayExpR<B, E2,
 
 // (101) MultiArray<E1(D1)> , D2 , MultiArray<E3(D3)>
 
-template <class A, class C, class E1, class E3, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberType<D2>::value>>
+template <class A, class C, class E1, class E3, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberTrait<D2>::value>>
 auto ##FUNCTION##(const MArrayExpR<A, E1, D1, M, R>& x1, const D2& x2, const MArrayExpR<C, E3, D3, M, R>& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<D1, D2>::Type, D3>::Type D4;
-  typedef typename NumberType<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
     D2,
     MArrayExpR<C, E3, D3, M, R>,
@@ -61,10 +61,10 @@ auto ##FUNCTION##(const MArrayExpR<A, E1, D1, M, R>& x1, const D2& x2, const MAr
 
 // (100) MultiArray<E1(D1)> , D2 , D3
 
-template <class A, class E1, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberType<D2>::value&& NumberType<D3>::value>>
+template <class A, class E1, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberTrait<D2>::value&& NumberTrait<D3>::value>>
 auto ##FUNCTION##(const MArrayExpR<A, E1, D1, M, R>& x1, const D2& x2, const D3& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<D1, D2>::Type, D3>::Type D4;
-  typedef typename NumberType<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, D1, M, R>,
     D2,
     D3,
@@ -74,10 +74,10 @@ auto ##FUNCTION##(const MArrayExpR<A, E1, D1, M, R>& x1, const D2& x2, const D3&
 
 // (011) D1 , MultiArray<E2(D2)> , MultiArray<E3(D3)>
 
-template <class B, class C, class E2, class E3, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberType<D1>::value>>
+template <class B, class C, class E2, class E3, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberTrait<D1>::value>>
 auto ##FUNCTION##(const D1& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const MArrayExpR<C, E3, D3, M, R>& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<D1, D2>::Type, D3>::Type D4;
-  typedef typename NumberType<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<D1,
     MArrayExpR<B, E2, D2, M, R>,
     MArrayExpR<C, E3, D3, M, R>,
@@ -88,10 +88,10 @@ auto ##FUNCTION##(const D1& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const MAr
 
 // (010) D1, MultiArray<E2(D2)> , D3
 
-template <class B, class E2, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberType<D1>::value&& NumberType<D3>::value>>
+template <class B, class E2, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberTrait<D1>::value&& NumberTrait<D3>::value>>
 auto ##FUNCTION##(const D1& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const D3& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<D1, D2>::Type, D3>::Type D4;
-  typedef typename NumberType<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<D1,
     MArrayExpR<B, E2, D2, M, R>,
     D3,
@@ -101,10 +101,10 @@ auto ##FUNCTION##(const D1& x1, const MArrayExpR<B, E2, D2, M, R>& x2, const D3&
 
 // (001) D1 , D2 , MultiArray<E3(D3)>
 
-template <class C, class E3, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberType<D1>::value&& NumberType<D2>::value>>
+template <class C, class E3, class D1, class D2, class D3, int M, int R, typename = std::enable_if_t<NumberTrait<D1>::value&& NumberTrait<D2>::value>>
 auto ##FUNCTION##(const D1& x1, const D2& x2, const MArrayExpR<C, E3, D3, M, R>& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<D1, D2>::Type, D3>::Type D4;
-  typedef typename NumberType<E3, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<D1,
     D2,
     MArrayExpR<C, E3, D3, M, R>,

@@ -57,7 +57,7 @@ namespace mathq {
   // public:
   //   typedef typename FundamentalType<T>::Type FType;
   //   typedef std::complex<FType> CType;
-  //   typedef typename NumberType<T,CType>::ReplaceTypeE Type;
+  //   typedef typename NumberTrait<T,CType>::ReplaceTypeE Type;
   // };
   // template <typename E, typename A, typename D, int M, int R> class
   //   Complexify<MArrayExpR<E,A,D,M,R> > {
@@ -70,7 +70,7 @@ namespace mathq {
   //   Realify {
   // public:
   //   typedef typename FundamentalType<T>::Type FType;
-  //   typedef typename NumberType<T,FType>::ReplaceTypeE Type;
+  //   typedef typename NumberTrait<T,FType>::ReplaceTypeE Type;
   // };
   // template <typename E, typename A, typename D, int M, int R> class
   //   Realify<MArrayExpR<E,A,D,M,R> > {
@@ -85,7 +85,7 @@ namespace mathq {
   // public:
   //   typedef typename FundamentalType<T>::Type FType;
   //   typedef Imaginary<FType> IType;
-  //   typedef typename NumberType<T,IType>::ReplaceTypeE Type;
+  //   typedef typename NumberTrait<T,IType>::ReplaceTypeE Type;
   // };
   // template <typename E, typename A, typename D, int M, int R> class
   //   Imaginarify<MArrayExpR<E,A,D,M,R> > {
