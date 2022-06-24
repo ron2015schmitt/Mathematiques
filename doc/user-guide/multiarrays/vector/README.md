@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.36-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.37-c++17</h1>
 
 <details>
 
@@ -90,32 +90,32 @@ using namespace mathq;
 auto velocity2D = Vector<double, 2>(0);
 auto velocity3D = Vector<double, 3>(0);
 auto vector = Vector<double, 11>(0);
-☀ velocity2D ➜ Vector<double,NE=2> {0, 0};
-☀ velocity3D ➜ Vector<double,NE=3> {0, 0, 0};
-☀ vector ➜ Vector<double,NE=11> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+☀ velocity2D ➜ Vector<double,N1=2> {0, 0};
+☀ velocity3D ➜ Vector<double,N1=3> {0, 0, 0};
+☀ vector ➜ Vector<double,N1=11> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 Vector<double, 2> velocity2D(0);
 Vector<double, 3> velocity3D(1);
-☀ velocity2D ➜ Vector<double,NE=2> {0, 0};
-☀ velocity3D ➜ Vector<double,NE=3> {1, 1, 1};
+☀ velocity2D ➜ Vector<double,N1=2> {0, 0};
+☀ velocity3D ➜ Vector<double,N1=3> {1, 1, 1};
 
 Vector<double, 2> velocity2D;
 velocity2D = 4;
 Vector<double, 3> velocity3D;
 velocity3D = -0.55;
-☀ velocity2D ➜ Vector<double,NE=2> {4, 4};
-☀ velocity3D ➜ Vector<double,NE=3> {-0.55, -0.55, -0.55};
+☀ velocity2D ➜ Vector<double,N1=2> {4, 4};
+☀ velocity3D ➜ Vector<double,N1=3> {-0.55, -0.55, -0.55};
 
 Vector<double, 2> velocity2D({ 70.5, -30 });
 Vector<double, 3> velocity3D({ 10, 0, -15 });
-☀ velocity2D ➜ Vector<double,NE=2> {70.5, -30};
+☀ velocity2D ➜ Vector<double,N1=2> {70.5, -30};
 Vector<double> v3(3);
-☀ velocity3D ➜ Vector<double,NE=3> {10, 0, -15};
+☀ velocity3D ➜ Vector<double,N1=3> {10, 0, -15};
 
 Vector<double, 2> velocity2D = Vector<double, 2>({ 70.5, -30 });
 Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 });
-☀ velocity2D ➜ Vector<double,NE=2> {70.5, -30};
-☀ velocity3D ➜ Vector<double,NE=3> {70.5, -30, -15};
+☀ velocity2D ➜ Vector<double,N1=2> {70.5, -30};
+☀ velocity3D ➜ Vector<double,N1=3> {70.5, -30, -15};
 ```
 
 

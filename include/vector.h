@@ -7,36 +7,38 @@ namespace mathq {
 
 
   /********************************************************************
-   * Vector<E>    -- variable size vector (valarray)
-   *                 E  = type for elements
-   * Vector<E,NE> -- fixed size vector (array)
-   *                 NE = size = number of elements
+   * Vector<Element>    -- variable size vector (valarray)
+   *                 Element  = type for elements
+   * Vector<Element,N1> -- fixed size vector (array)
+   *                 N1 = size = number of elements
    *
-   * DO NOT SPECIFY: D,M
+   * DO NOT SPECIFY: Number,M
    *                 The defaults are defined in the declaration in
    *                 preface.h
-   *                 D = number type
+   *                 Number = number type
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
-   *                 M = tensor depth. if E=D, then M=1.
+   *                 M = tensor depth. if Element=Number, then M=1.
   ********************************************************************
    */
 
-  template <class E, int NE> class Vector :
-    public MArrayExpRW<Vector<E, NE>, E, typename NumberType<E>::Type, 1 + NumberType<E>::depth(), 1> {
+  template <class Element, int N1> class Vector :
+    public MArrayExpRW<Vector<Element, N1>, Element, typename NumberType<Element>::Type, 1 + NumberType<Element>::depth(), 1> {
 
   public:
-    typedef Vector<E, NE> XType;
-    typedef E EType;
-    typedef typename NumberType<E>::Type D;
-    typedef typename NumberType<E>::Type DType;
-    typedef typename FundamentalType<D>::Type FType;
+    typedef typename NumberType<Element>::Type Number;
+    typedef typename FundamentalType<Number>::Type OrderedNumber;
 
-    typedef typename ArrayType<E, NE>::Type MyArrayType;
+    typedef typename ArrayType<Element, N1>::Type MyArrayType;
     constexpr static int R = 1;
+    constexpr static int M = 1 + NumberType<Element>::depth();
+
+    // rename these
+    typedef typename NumberType<Element>::Type DType;
+    typedef typename FundamentalType<Number>::Type FType;
+    typedef Vector<Element, N1> XType;
+    typedef Element EType;
     constexpr static int Rvalue = 1;
-    constexpr static int M = 1 + NumberType<E>::depth();
-    constexpr static int Mvalue = 1 + NumberType<E>::depth();
 
 
     // *********************** OBJECT DATA ***********************************
@@ -61,16 +63,16 @@ namespace mathq {
 
 
     // -------------------  DEFAULT  CONSTRUCTOR: Vector()  --------------------
-    explicit Vector<E, NE>() {
+    explicit Vector<Element, N1>() {
       constructorHelper();
     }
 
 
     // --------------------- Vector(N)  ---------------------
 
-    template<size_t NE1 = NE, EnableIf<NE1 == 0> = 0>
+    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    explicit Vector<E, NE>(const size_type N) {
+    explicit Vector<Element, N1>(const size_type N) {
       data_.resize(N);
       constructorHelper();
     }
@@ -78,9 +80,9 @@ namespace mathq {
 
     // --------------------- Vector(N,value)  ---------------------
 
-    template<size_t NE1 = NE, EnableIf<NE1 == 0> = 0>
+    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    explicit Vector<E, NE>(const size_type N, const E val) {
+    explicit Vector<Element, N1>(const size_type N, const Element val) {
       data_.resize(N);
       *this = val;
       constructorHelper();
@@ -88,38 +90,38 @@ namespace mathq {
 
     // --------------------- Vector(std::initializer_list<Dimensions>)  ---------------------
 
-    template<size_t NE1 = NE, EnableIf<(NE1 > 0)> = 0>
+    template<size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
 
-    explicit Vector<E, NE>(const std::initializer_list<Dimensions> deepdims) {
+    explicit Vector<Element, N1>(const std::initializer_list<Dimensions> deepdims) {
       // TRDISP(deepdims);
       this->resize(std::vector<Dimensions>(deepdims));
       constructorHelper();
     }
     // --------------------- Vector(std::vector<Dimensions>)  ---------------------
 
-    template<size_t NE1 = NE, EnableIf<(NE1 > 0)> = 0>
+    template<size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
 
-    explicit Vector<E, NE>(const std::vector<Dimensions> deepdims) {
+    explicit Vector<Element, N1>(const std::vector<Dimensions> deepdims) {
       // TRDISP(deepdims);
       this->resize(deepdims);
       constructorHelper();
     }
 
 
-    // --------------------- Vector(E value)  ---------------------
+    // --------------------- Vector(Element value)  ---------------------
 
-    template<size_t NE1 = NE, EnableIf<(NE1 > 0)> = 0>
+    template<size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
 
-    explicit Vector<E, NE>(const E val) {
+    explicit Vector<Element, N1>(const Element val) {
       *this = val;
       constructorHelper();
     }
 
-    // --------------------- Vector(D value)  ---------------------
+    // --------------------- Vector(Number value)  ---------------------
 
-    template<size_t NE1 = NE, EnableIf<(NE1 > 0)&&(M>1)> = 0>
+    template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(M>1)> = 0>
 
-    explicit Vector<E, NE>(const D val) {
+    explicit Vector<Element, N1>(const Number val) {
       *this = val;
       constructorHelper();
     }
@@ -127,16 +129,16 @@ namespace mathq {
 
     // --------------------- array[]  CONSTRUCTOR ---------------------
 
-    template<size_t NE1 = NE, EnableIf<NE1 == 0> = 0>
+    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    Vector<E, NE>(const size_type N, const E(vals)[]) {
+    Vector<Element, N1>(const size_type N, const Element(vals)[]) {
       data_.resize(N);
       *this = vals;
       constructorHelper();
     }
 
     // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    Vector<E, NE>(const std::initializer_list<E>& mylist) {
+    Vector<Element, N1>(const std::initializer_list<Element>& mylist) {
       *this = mylist;
       constructorHelper();
     }
@@ -145,7 +147,7 @@ namespace mathq {
     // --------------------- Vector(Vector) --------------------
 
     template <int NE2>
-    Vector<E, NE>(const Vector<E, NE2>& v2) {
+    Vector<Element, N1>(const Vector<Element, NE2>& v2) {
       *this = v2;
       constructorHelper();
     }
@@ -154,8 +156,8 @@ namespace mathq {
     // --------------------- EXPRESSION CONSTRUCTOR --------------------
 
     template <class X>
-    Vector<E, NE>(const MArrayExpR<X, E, D, M, Rvalue>& x) {
-      if constexpr (NE==0) {
+    Vector<Element, N1>(const MArrayExpR<X, Element, Number, M, Rvalue>& x) {
+      if constexpr (N1==0) {
         this->resize(x.size());
       }
 
@@ -167,8 +169,8 @@ namespace mathq {
 
 
     // --------------------- Vector(valarray)  ---------------------
-    Vector<E, NE>(const std::valarray<E>& valar) {
-      if constexpr (NE==0) {
+    Vector<Element, N1>(const std::valarray<Element>& valar) {
+      if constexpr (N1==0) {
         this->resize(valar.size());
       }
       *this = valar;
@@ -192,7 +194,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~Vector<E, NE>() {
+    ~Vector<Element, N1>() {
     }
 
 
@@ -223,7 +225,7 @@ namespace mathq {
       return dimensions;
     }
     Dimensions tdims(void) const {
-      Dimensions dimensions(NE);
+      Dimensions dimensions(N1);
       return dimensions;
     }
 
@@ -315,25 +317,25 @@ namespace mathq {
 
     // --------------------- .resize(N) ---------------------
 
-    template<size_t NE1 = NE, EnableIf<NE1 == 0> = 0>
+    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    Vector<E, NE>& resize(const size_type N) {
+    Vector<Element, N1>& resize(const size_type N) {
       if (N==this->size())
         return *this;
       // reallocate store
       //      delete  data_ ;
-      //      data_ = new std::valarray<D>(N);
+      //      data_ = new std::valarray<Number>(N);
       data_.resize(N);
       return *this;
     }
 
     // TODO: should just pass an index and make deepdims const
 
-    Vector<E, NE>& resize(const std::vector<Dimensions>& deepdims_in) {
+    Vector<Element, N1>& resize(const std::vector<Dimensions>& deepdims_in) {
       std::vector<Dimensions> deepdims(deepdims_in);
       Dimensions newdims = deepdims[0];
       const size_type Nnew = newdims[0];
-      if constexpr (NE==0) {
+      if constexpr (N1==0) {
         resize(Nnew);
       }
       if constexpr (M>1) {
@@ -353,7 +355,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // "read/write"
-    D& dat(const index_type n) {
+    Number& dat(const index_type n) {
       using namespace::display;
       if constexpr (M < 2) {
         int k = n;
@@ -371,7 +373,7 @@ namespace mathq {
     }
 
     // read
-    const D& dat(const index_type n)  const {
+    const Number& dat(const index_type n)  const {
       using namespace::display;
       if constexpr (M < 2) {
         int k = n;
@@ -392,7 +394,7 @@ namespace mathq {
     // -------------------------------------------------------------
 
     // "read/write": x.dat(DeepIndices)
-    D& dat(const DeepIndices& dinds) {
+    Number& dat(const DeepIndices& dinds) {
       const index_type depth = dinds.size();
       index_type n = dinds[depth-M][0];
 
@@ -405,7 +407,7 @@ namespace mathq {
     }
 
     // "read": x.dat(DeerIndices)
-    const D dat(const DeepIndices& dinds)  const {
+    const Number dat(const DeepIndices& dinds)  const {
       const index_type depth = dinds.size();
       index_type n = dinds[depth-M][0];
 
@@ -422,7 +424,7 @@ namespace mathq {
     // -------------------------------------------------------------
 
     // "read/write": x.dat(Indices)
-    D& dat(const Indices& inds) {
+    Number& dat(const Indices& inds) {
       Indices inds_next(inds);
       MOUT << "Vector: "<<std::endl;
       // error if (inds.size() != sum deepdims[i].rank
@@ -438,7 +440,7 @@ namespace mathq {
     }
 
     // "read": x.dat(Indices)
-    const D dat(const Indices& inds)  const {
+    const Number dat(const Indices& inds)  const {
       Indices inds_next(inds);
       // error if (inds.size() != sum deepdims[i].rank
       index_type n = inds_next[0];
@@ -456,7 +458,7 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write"
-    E& operator[](const index_type n) {
+    Element& operator[](const index_type n) {
       int k = n;
       if (k < 0) {
         k += size();
@@ -465,7 +467,7 @@ namespace mathq {
     }
 
     // read
-    const E& operator[](const index_type n)  const {
+    const Element& operator[](const index_type n)  const {
       int k = n;
       if (k < 0) {
         k += size();
@@ -478,8 +480,8 @@ namespace mathq {
     //***************MultiArray cast *********************
     //**********************************************************************
 
-    operator MultiArray<E, R, D, M>() const {
-      MultiArray<E, 1, D, M> ma(*this);
+    operator MultiArray<Element, R, Number, M>() const {
+      MultiArray<Element, 1, Number, M> ma(*this);
     }
 
       //**********************************************************************
@@ -488,12 +490,12 @@ namespace mathq {
 
 
       // "read/write"
-      E& operator()(const index_type n) {
+      Element& operator()(const index_type n) {
       return data_[n];
     }
 
     // "read only"
-    const E& operator()(const index_type n)  const {
+    const Element& operator()(const index_type n)  const {
       return data_[n];
     }
 
@@ -502,10 +504,10 @@ namespace mathq {
 
     // Accessing a slice of values
 
-    TERW_Subset<E> operator[](const slc& slice) {
+    TERW_Subset<Element> operator[](const slc& slice) {
       return (*this)[slice.toIndexVector(size())];
     }
-    const TERW_Subset<E>  operator[](const slc& slice) const {
+    const TERW_Subset<Element>  operator[](const slc& slice) const {
       //      display::log3("Vector","operator[]","(const slc& slice)\n");
       return (*this)[slice.toIndexVector(size())];
     }
@@ -513,11 +515,11 @@ namespace mathq {
 
     // Accessing a SET of values using a vector of ints
 
-    TERW_Subset<E> operator[](const Vector<index_type>& ii) {
-      return TERW_Subset<E>(*this, ii);
+    TERW_Subset<Element> operator[](const Vector<index_type>& ii) {
+      return TERW_Subset<Element>(*this, ii);
     }
-    const TERW_Subset<E> operator[](const Vector<index_type>& ii) const {
-      return TERW_Subset<E>(*this, ii);
+    const TERW_Subset<Element> operator[](const Vector<index_type>& ii) const {
+      return TERW_Subset<Element>(*this, ii);
     }
 
 
@@ -525,21 +527,21 @@ namespace mathq {
 
     // Accessing a SET of values using a MASK
 
-    TERW_Submask<E> operator[](const Vector<bool>& mask) {
-      return  TERW_Submask<E>(*this, mask);
+    TERW_Submask<Element> operator[](const Vector<bool>& mask) {
+      return  TERW_Submask<Element>(*this, mask);
     }
-    const TERW_Submask<E> operator[](const Vector<bool>& mask)  const {
-      return  TERW_Submask<E>(*this, mask);
+    const TERW_Submask<Element> operator[](const Vector<bool>& mask)  const {
+      return  TERW_Submask<Element>(*this, mask);
     }
 
 
     //Accessing a SET of values using a list
 
-    TERW_Subset<E> operator[](const std::initializer_list<index_type>& list) {
-      return  TERW_Subset<E>(*this, list);
+    TERW_Subset<Element> operator[](const std::initializer_list<index_type>& list) {
+      return  TERW_Subset<Element>(*this, list);
     }
-    const TERW_Subset<E> operator[](const std::initializer_list<index_type>& list) const {
-      return  TERW_Subset<E>(*this, list);
+    const TERW_Subset<Element> operator[](const std::initializer_list<index_type>& list) const {
+      return  TERW_Subset<Element>(*this, list);
     }
 
 
@@ -558,13 +560,13 @@ namespace mathq {
 
     // get C pointer to raw data
     // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-    E* data() {
-      if constexpr (NE == 0) {
-        // valarray<E>
+    Element* data() {
+      if constexpr (N1 == 0) {
+        // valarray<Element>
         return &(data_[0]);
       }
       else {
-        // array<E>
+        // array<Element>
         return data_.data();
       }
     }
@@ -579,15 +581,15 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
-    Vector<E, NE>& operator=(const E& e) {
+    Vector<Element, N1>& operator=(const Element& e) {
       for (index_type i = 0; i < size(); i++) {
         (*this)[i] = e;
       }
       return *this;
     }
 
-    template <class T = E>
-    typename std::enable_if<!std::is_same<T, D>::value, Vector<T, NE>& >::type operator=(const D& d) {
+    template <class T = Element>
+    typename std::enable_if<!std::is_same<T, Number>::value, Vector<T, N1>& >::type operator=(const Number& d) {
       for (index_type i = 0; i < deepsize(); i++) {
         (*this).dat(i) = d;
       }
@@ -597,12 +599,12 @@ namespace mathq {
 
 
 
-    // ------------------------ Vector = Vector<E,NE2,D,M> ----------------
+    // ------------------------ Vector = Vector<Element,NE2,Number,M> ----------------
 
     template <int NE2>
-    Vector<E, NE>& operator=(const Vector<E, NE2>& v) {
+    Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
       if constexpr (M<=1) {
-        if constexpr (NE==0) {
+        if constexpr (N1==0) {
           if (this->size() != v.size()) {
             resize(v.size());
           }
@@ -624,10 +626,10 @@ namespace mathq {
     // ------------------------ Vector = MArrayExpR ----------------
 
     template <class X>
-    Vector<E, NE>& operator=(const MArrayExpR<X, E, D, M, Rvalue>& x) {
+    Vector<Element, N1>& operator=(const MArrayExpR<X, Element, Number, M, Rvalue>& x) {
 
       if constexpr (M<=1) {
-        if constexpr (NE==0) {
+        if constexpr (N1==0) {
           if (this->size() != x.size()) {
             resize(x.size());
           }
@@ -649,7 +651,7 @@ namespace mathq {
 
     // ------------------------ Vector = array[] ----------------
 
-    Vector<E, NE>& operator=(const E array[]) {
+    Vector<Element, N1>& operator=(const Element array[]) {
       for (index_type i = 0; i < size(); i++) {
         (*this)(i) = array[i];
       }
@@ -659,15 +661,15 @@ namespace mathq {
 
     // ------------------------ Vector = list ----------------
 
-    Vector<E, NE>& operator=(const std::list<E>& mylist) {
-      if constexpr (NE==0) {
+    Vector<Element, N1>& operator=(const std::list<Element>& mylist) {
+      if constexpr (N1==0) {
         // TODO: warn if not in constructor
         if (this->size() != mylist.size()) {
           resize(mylist.size());
         }
       }
       index_type i = 0;
-      for (typename std::list<E>::const_iterator it = mylist.begin(); it != mylist.end(); ++it) {
+      for (typename std::list<Element>::const_iterator it = mylist.begin(); it != mylist.end(); ++it) {
         (*this)(i++) = *it;
       }
       return *this;
@@ -676,8 +678,8 @@ namespace mathq {
 
     // ------------------------ Vector = initializer_list ----------------
 
-    Vector<E, NE>& operator=(const std::initializer_list<E>& mylist) {
-      if constexpr (NE==0) {
+    Vector<Element, N1>& operator=(const std::initializer_list<Element>& mylist) {
+      if constexpr (N1==0) {
         // TODO: warn if not in constructor
         if (this->size() != mylist.size()) {
           data_.resize(mylist.size());
@@ -685,7 +687,7 @@ namespace mathq {
       }
 
       size_type k = 0;
-      typename std::initializer_list<E>::iterator it;
+      typename std::initializer_list<Element>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
         data_[k] = *it;
       }
@@ -698,9 +700,9 @@ namespace mathq {
 
     // ------------------------ Vector = std::vector ----------------
 
-    Vector<E, NE>& operator=(const std::vector<E>& vstd) {
+    Vector<Element, N1>& operator=(const std::vector<Element>& vstd) {
       // resize to avoid segmentation faults
-      if constexpr (NE==0) {
+      if constexpr (N1==0) {
         if (this->size() != vstd.size()) {
           resize(vstd.size());
         }
@@ -717,9 +719,9 @@ namespace mathq {
     // ------------------------ Vector = std::array ----------------
 
     template <std::size_t N>
-    Vector<E, NE>& operator=(const std::array<D, N>& varray) {
+    Vector<Element, N1>& operator=(const std::array<Number, N>& varray) {
       // resize to avoid segmentation faults
-      if constexpr (NE==0) {
+      if constexpr (N1==0) {
         if (this->size() != varray.size()) {
           resize(varray.size());
         }
@@ -737,10 +739,10 @@ namespace mathq {
 
     // ------------------------ Vector = std::valarray ----------------
 
-    Vector<E, NE>& operator=(const std::valarray<E>& varray) {
+    Vector<Element, N1>& operator=(const std::valarray<Element>& varray) {
 
       // resize to avoid segmentation faults
-      if constexpr (NE==0) {
+      if constexpr (N1==0) {
         if (this->size() != varray.size()) {
           resize(varray.size());
         }
@@ -763,7 +765,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    Vector<E, NE>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    Vector<Element, N1>& roundzero(OrderedNumber tolerance = Functions<OrderedNumber>::tolerance) {
       for (index_type i = size(); i--;) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
@@ -774,7 +776,7 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template<typename T = D> EnableMethodIf<is_complex<T>{}, Vector<T>&>
+    template<typename T = Number> EnableMethodIf<is_complex<T>{}, Vector<T>&>
 
     conj() {
       using std::conj;
@@ -801,7 +803,7 @@ namespace mathq {
       if (N==0)
         return ivec;
 
-      std::vector<Pair<E> > temp(N);
+      std::vector<Pair<Element> > temp(N);
 
       for (index_type i = 0; i < N; i++) {
         temp[i].index = i;
@@ -824,8 +826,8 @@ namespace mathq {
 
     // .quniq()
     //         removes adjacent duplicates
-    //  template<typename T=D> EnableMethodIf<is_complex<T>{}, Vector<T>&> 
-    template<typename T = index_type> EnableMethodIf<NE==0, Vector<T>& >
+    //  template<typename T=Number> EnableMethodIf<is_complex<T>{}, Vector<T>&> 
+    template<typename T = index_type> EnableMethodIf<N1==0, Vector<T>& >
 
     quniq() {
 
@@ -834,12 +836,12 @@ namespace mathq {
       if (N==0)
         return *(new Vector<index_type>(0));
 
-      std::queue<Pair<E> > unique;
+      std::queue<Pair<Element> > unique;
 
-      Pair<E> prevpair(0, data_[0]);
+      Pair<Element> prevpair(0, data_[0]);
       unique.push(prevpair);
       for (index_type i = 1; i < N; i++) {
-        Pair<E> mypair(i, data_[i]);
+        Pair<Element> mypair(i, data_[i]);
         if (mypair.data != prevpair.data) {
           unique.push(mypair);
           prevpair = mypair;
@@ -850,7 +852,7 @@ namespace mathq {
       Vector<index_type>& indexvec = *(new Vector<index_type>(Nnew));
       resize(Nnew);
       for (index_type i = 0; i < Nnew; i++) {
-        Pair<E> mypair = unique.front();
+        Pair<Element> mypair = unique.front();
         unique.pop();
         indexvec(i) = mypair.index;
         data_[i] = mypair.data;
@@ -862,7 +864,7 @@ namespace mathq {
 
     // .uniq()
     //         removes all duplicates
-    template<typename T = index_type> EnableMethodIf<NE==0, Vector<T>& >
+    template<typename T = index_type> EnableMethodIf<N1==0, Vector<T>& >
 
     uniq() {
 
@@ -871,17 +873,17 @@ namespace mathq {
       if (N==0)
         return *(new Vector<index_type>(0));
 
-      std::map<index_type, D> mymap;
+      std::map<index_type, Number> mymap;
       for (index_type j = 0; j < N; j++) {
         mymap[j] = data_[j];
       }
 
       for (index_type j = 0; j < N; j++) {
         if (mymap.find(j) == mymap.end()) continue;
-        Pair<E> pair1(j, data_[j]);
+        Pair<Element> pair1(j, data_[j]);
         for (index_type k = j+1; k < N; k++) {
           if (mymap.find(k) == mymap.end()) continue;
-          Pair<E> pair2(k, data_[k]);
+          Pair<Element> pair2(k, data_[k]);
           if (pair1.data == pair2.data) {
             mymap.erase(k);
           }
@@ -892,7 +894,7 @@ namespace mathq {
       Vector<index_type>& indexvec = *(new Vector<index_type>(Nnew));
       resize(Nnew);
       index_type k = 0;
-      for (typename std::map<index_type, D>::iterator it = mymap.begin(); it != mymap.end(); ++it) {
+      for (typename std::map<index_type, Number>::iterator it = mymap.begin(); it != mymap.end(); ++it) {
         indexvec(k) = it->first;
         data_[k++] = it->second;
       }
@@ -901,14 +903,14 @@ namespace mathq {
     }
 
 
-    Vector<E, NE>& reverse() {
+    Vector<Element, N1>& reverse() {
 
       const size_type N = size();
       if (N==0)
         return *this;
 
       for (index_type i = 0; i < N/2; i++) {
-        E temp = data_[i];
+        Element temp = data_[i];
         data_[i] = data_[N-i-1];
         data_[N-i-1] = temp;
       }
@@ -920,9 +922,9 @@ namespace mathq {
 
     // .cumsum() -- cumulative sum
 
-    Vector<E, NE>& cumsum() {
+    Vector<Element, N1>& cumsum() {
       const size_type N = size();
-      E sum = 0;
+      Element sum = 0;
       for (index_type i = 0; i < N; i++) {
         sum += data_[i];
         data_[i] = sum;
@@ -932,9 +934,9 @@ namespace mathq {
 
     // .cumprod()  --  cumulative product
 
-    Vector<E, NE>& cumprod() {
+    Vector<Element, N1>& cumprod() {
       const size_type N = size();
-      E prod = 1;
+      Element prod = 1;
       for (index_type i = 0; i < N; i++) {
         prod *= data_[i];
         data_[i] = prod;
@@ -945,10 +947,10 @@ namespace mathq {
 
     // .cumtrapz() -- cumulative trapezoidal summation
 
-    Vector<E, NE>& cumtrapz() {
+    Vector<Element, N1>& cumtrapz() {
       const size_type N = size();
       if (N==0) return *this;
-      E sum = data_[0]/2;
+      Element sum = data_[0]/2;
       data_[0] = 0;
       for (index_type i = 1; i < N; i++) {
         sum += data_[i];
@@ -961,20 +963,20 @@ namespace mathq {
     // order  name
     //     0  rectangular
     //     1  trapazoidal
-    Vector<E, NE>& integrate_a2x(const E a, const E b, const int order = 1) {
+    Vector<Element, N1>& integrate_a2x(const Element a, const Element b, const int order = 1) {
 
       const size_type N = size();
 
       if (order == 0) {
         this->cumsum();
-        const E dx = (b-a)/D(N);
+        const Element dx = (b-a)/Number(N);
         for (index_type i = 0; i < N; i++) {
           data_[i] *= dx;
         }
       }
       else if (order == 1) {
         this->cumtrapz();
-        const E dx = (b-a)/D(N-1);
+        const Element dx = (b-a)/Number(N-1);
         for (index_type i = 0; i < N; i++) {
           data_[i] *= dx;
         }
@@ -988,10 +990,10 @@ namespace mathq {
 
     // .cumsumrev() -- cumulative sum -- from last to first
 
-    Vector<E, NE>& cumsum_rev() {
+    Vector<Element, N1>& cumsum_rev() {
       const size_type N = size();
 
-      E sum = 0;
+      Element sum = 0;
       for (index_type i = 0; i < N; i++) {
         sum += data_[N-1-i];
         data_[N-1-i] = sum;
@@ -1001,10 +1003,10 @@ namespace mathq {
 
     // .cumprodrev()  --  cumulative product  -- from last to first
 
-    Vector<E, NE>& cumprod_rev() {
+    Vector<Element, N1>& cumprod_rev() {
       const size_type N = size();
 
-      E prod = 1;
+      Element prod = 1;
       for (index_type i = 0; i < N; i++) {
         prod *= data_[N-1-i];
         data_[N-1-i] = prod;
@@ -1015,11 +1017,11 @@ namespace mathq {
 
     // .cumtrapz() -- cumulative trapezoidal summation -- from last to first
 
-    Vector<E, NE>& cumtrapz_rev() {
+    Vector<Element, N1>& cumtrapz_rev() {
       const size_type N = size();
       if (N==0) return *this;
 
-      E sum = data_[N-1]/2;
+      Element sum = data_[N-1]/2;
       data_[N-1] = 0;
       for (index_type i = 1; i < N; i++) {
         sum += data_[N-1-i];
@@ -1034,19 +1036,19 @@ namespace mathq {
     // order  name
     //     0  rectangular
     //     1  trapazoidal
-    Vector<E, NE>& integrate_x2b(const E a, const E b, const int order = 1) {
+    Vector<Element, N1>& integrate_x2b(const Element a, const Element b, const int order = 1) {
       const size_type N = size();
 
       if (order == 0) {
         this->cumsum_rev();
-        const E dx = (b-a)/(N);
+        const Element dx = (b-a)/(N);
         for (index_type i = 0; i < N; i++) {
           data_[N-1-i] *= dx;
         }
       }
       else if (order == 1) {
         this->cumtrapz_rev();
-        const E dx = (b-a)/(N-1);
+        const Element dx = (b-a)/(N-1);
         for (index_type i = 0; i < N; i++) {
           data_[N-1-i] *= dx;
         }
@@ -1060,11 +1062,11 @@ namespace mathq {
 
 
     // diff   (v[n] = v[n] - v[n-1])
-    Vector<E, NE>& diff(const bool periodic = false) {
+    Vector<Element, N1>& diff(const bool periodic = false) {
       const size_type N = size();
       if (N<=1) return *this;
 
-      E temp;
+      Element temp;
       if (periodic) {
         temp = data_[0] - data_[N-1];
       }
@@ -1081,11 +1083,11 @@ namespace mathq {
     }
 
     // diff_rev   (v[n] = v[n+1] - v[n])
-    Vector<E, NE>& diff_rev(const bool periodic = false) {
+    Vector<Element, N1>& diff_rev(const bool periodic = false) {
       const size_type N = size();
       if (N<=1) return *this;
 
-      E temp;
+      Element temp;
       if (periodic) {
         temp = data_[0] - data_[N-1];
       }
@@ -1109,12 +1111,12 @@ namespace mathq {
     // periodic: if true, perform derivative with start and end connected: 
     //           dat[-1] == dat[n-1], dat[n] == dat[0] etc
 
-    Vector<E, NE>& deriv(const E a, const E b, const int n = 1, int Dpts = 7, const bool periodic = false) {
+    Vector<Element, N1>& deriv(const Element a, const Element b, const int n = 1, int Dpts = 7, const bool periodic = false) {
       //MDISP(a,b,n,Dpts,periodic);
       const size_type N = size();
       if (N<=1) return *this;
 
-      const E dx = (b-a)/D(N-1);
+      const Element dx = (b-a)/Number(N-1);
 
       if (Dpts > N) {
         //TODO: error or warning
@@ -1129,9 +1131,9 @@ namespace mathq {
 
       }
       else if (Dpts == 3) {
-        E prev;
-        E curr;
-        E last;
+        Element prev;
+        Element curr;
+        Element last;
         if (periodic) {
           // first point
           prev = data_[1] - data_[N-1];
@@ -1145,7 +1147,7 @@ namespace mathq {
           last = 3*data_[N-1] - 4*data_[N-2] + data_[N-3];
         }
 
-        const E c0 = 0.5/dx;
+        const Element c0 = 0.5/dx;
         for (index_type i = 1; i < N-1; i++) {
           curr = data_[i+1] - data_[i-1];
           data_[i-1] = c0*prev;
@@ -1156,11 +1158,11 @@ namespace mathq {
 
       }
       else if (Dpts == 5) {
-        E prev1;
-        E prev2;
-        E curr;
-        E last;
-        E lastminus1;
+        Element prev1;
+        Element prev2;
+        Element curr;
+        Element last;
+        Element lastminus1;
         if (periodic) {
           // second to last point
           lastminus1 = data_[N-4] - 8*data_[N-3] + 8*data_[N-1] - data_[0];
@@ -1178,7 +1180,7 @@ namespace mathq {
           prev1 = data_[4]   -  6*data_[3]   + 18*data_[2]   - 10*data_[1]   -  3*data_[0];
         }
 
-        const E c0 = 1/(12*dx);
+        const Element c0 = 1/(12*dx);
         for (index_type i = 2; i < N-2; i++) {
           curr = data_[i-2] - 8*data_[i-1] + 8*data_[i+1]  - data_[i+2];
           data_[i-2] = c0*prev2;
@@ -1192,13 +1194,13 @@ namespace mathq {
 
       }
       else if (Dpts == 7) {
-        E prev1;
-        E prev2;
-        E prev3;
-        E curr;
-        E last;
-        E lastminus1;
-        E lastminus2;
+        Element prev1;
+        Element prev2;
+        Element prev3;
+        Element curr;
+        Element last;
+        Element lastminus1;
+        Element lastminus2;
         if (periodic) {
           lastminus2 = -data_[N-6] + 9*data_[N-5] - 45*data_[N-4] + 45*data_[N-2]  - 9*data_[N-1] + data_[0];
           lastminus1 = -data_[N-5] + 9*data_[N-4] - 45*data_[N-3] + 45*data_[N-1]  - 9*data_[0] + data_[1];
@@ -1216,7 +1218,7 @@ namespace mathq {
           prev2 = -10*data_[0] -  77*data_[1] + 150*data_[2] - 100*data_[3] +  50*data_[4] - 15*data_[5] +  2*data_[6];
           prev1 = 2*data_[0] -  24*data_[1] -  35*data_[2] +  80*data_[3] -  30*data_[4] +  8*data_[5] -    data_[6];
         }
-        const E c0 = 1/(60*dx);
+        const Element c0 = 1/(60*dx);
         for (index_type i = 3; i < N-3; i++) {
           curr = -data_[i-3] + 9*data_[i-2] - 45*data_[i-1] + 45*data_[i+1]  - 9*data_[i+2] + data_[i+3];
           data_[i-3] = c0*prev3;
@@ -1249,7 +1251,7 @@ namespace mathq {
     //**********************************************************************
 
     std::string bottom() {
-      typename FundamentalType<E>::Type d;
+      typename FundamentalType<Element>::Type d;
       return display::getTypeName(d);
     }
 
@@ -1257,12 +1259,12 @@ namespace mathq {
       using namespace display;
       std::string s = "Vector";
       s += StyledString::get(ANGLE1).get();
-      E d;
+      Element d;
       s += getTypeName(d);
-      if (NE!=0) {
+      if (N1!=0) {
         s += StyledString::get(COMMA).get();
-        s += "NE=";
-        s += num2string(NE);
+        s += "N1=";
+        s += num2string(N1);
       }
       //    if (M>1) {
       //      s += StyledString::get(COMMA).get();
@@ -1285,7 +1287,7 @@ namespace mathq {
 
     // stream << operator
 
-    friend std::ostream& operator<<(std::ostream& stream, const Vector<E, NE>& v) {
+    friend std::ostream& operator<<(std::ostream& stream, const Vector<Element, N1>& v) {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       stream << style.apply(FormatDataVector::string_opening);
@@ -1307,7 +1309,7 @@ namespace mathq {
     }
 
 
-    friend inline std::istream& operator>>(const std::string s, Vector<E, NE>& x) {
+    friend inline std::istream& operator>>(const std::string s, Vector<Element, N1>& x) {
       std::istringstream st(s);
       return (st >> x);
     }
@@ -1315,13 +1317,13 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, Vector<E, NE>& x) {
+    friend std::istream& operator>>(std::istream& stream, Vector<Element, N1>& x) {
       // const size_type LINESZ = 32768;
       // char line[LINESZ];
-      // std::vector<E> v;
+      // std::vector<Element> v;
       // size_type N = 0;
       // const size_type Nold = x.size();
-      // E temp;
+      // Element temp;
       // size_type Nlines = 0;
       // std::istringstream strmline;
 
@@ -1499,9 +1501,9 @@ namespace mathq {
     // std::vector()
 
 
-    operator std::vector<E>() const {
+    operator std::vector<Element>() const {
       const size_type N = size();
-      std::vector<E> y(N);
+      std::vector<Element> y(N);
       for (index_type i = 0; i<N; i++) {
         y[i] = (*this)[i];
       }
@@ -1509,9 +1511,9 @@ namespace mathq {
     }
 
 
-    operator E* () const {
+    operator Element* () const {
       const size_type N = size();
-      E* ptr = new E[N];
+      Element* ptr = new Element[N];
       for (index_type i = 0; i<N; i++) {
         ptr[i] = (*this)[i];
       }
@@ -1519,11 +1521,11 @@ namespace mathq {
     }
 
 
-    // valarray<E>
+    // valarray<Element>
 
-    operator std::valarray<E>() const {
+    operator std::valarray<Element>() const {
       const size_type N = size();
-      std::valarray<E> y(N);
+      std::valarray<Element> y(N);
       for (index_type i = 0; i<N; i++) {
         y[i] = (*this)[i];
       }

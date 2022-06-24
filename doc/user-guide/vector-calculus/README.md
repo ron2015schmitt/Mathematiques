@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.36-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.37-c++17</h1>
 
 <details>
 
@@ -193,7 +193,7 @@ inflategrids
 ☀ v1 ➜ PolarCoords<double> (r=10, φ=1.0472);
 ☀ v2 ➜ PolarCoords<double> (r=2, φ=0.785398);
 ☀ dot(v1, v2) ➜ double 19.3185;
-☀ v1.basis_vec(0) ➜ Vector<double,NE=2> {0.5, 0.866025};
+☀ v1.basis_vec(0) ➜ Vector<double,N1=2> {0.5, 0.866025};
 ☀ u1 ➜ PolarCoords<double> (r=10, φ=1.0472);
 ☀ u2 ➜ PolarCoords<double> (r=2, φ=0.785398);
 ☀ dot(u1, u2) ➜ double 19.3185;
@@ -206,21 +206,21 @@ PolarCoords<double> w = PolarCoords<double>::fromCartesian(sqrt(2), sqrt(2));
 ☀ w ➜ PolarCoords<double> (r=2, φ=0.785398);
 CartCoords<double, 3> p1({ 1,2,3 });
 ☀ p1 ➜ CartCoords<double,3> (x1=1, x2=2, x3=3);
-☀ p1.basis_vec(0) ➜ Vector<double,NE=3> {1, 0, 0};
-☀ p1.basis_vec(1) ➜ Vector<double,NE=3> {0, 1, 0};
-☀ p1.basis_vec(2) ➜ Vector<double,NE=3> {0, 0, 1};
+☀ p1.basis_vec(0) ➜ Vector<double,N1=3> {1, 0, 0};
+☀ p1.basis_vec(1) ➜ Vector<double,N1=3> {0, 1, 0};
+☀ p1.basis_vec(2) ➜ Vector<double,N1=3> {0, 0, 1};
 ☀ p1.g() ➜ Matrix<double,NR=3,NC=3> { {1, 0, 0}, {0, 1, 0}, {0, 0, 1} };
 ☀ p1.ron() ➜ int 3;
 ☀ decltype(p1)::ron() ➜ int 3;
 ☀ CartCoords<double, 2>::ron() ➜ int 2;
-☀ zeros<Vector<double, 2>>() ➜ Vector<double,NE=2> {0, 0};
-☀ ones<Vector<double, 2>>() ➜ Vector<double,NE=2> {1, 1};
+☀ zeros<Vector<double, 2>>() ➜ Vector<double,N1=2> {0, 0};
+☀ ones<Vector<double, 2>>() ➜ Vector<double,N1=2> {1, 1};
 ☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 2;
-☀ vgA ➜ Vector<Matrix<double>,NE=2> {{}, {}};
-☀ vgB ➜ Matrix<Vector<double,NE=2>> {};
-☀ cgA ➜ Matrix<Vector<double,NE=2>> {};
-☀ cgB ➜ Vector<Matrix<double>,NE=2> {{}, {}};
-☀ cgA2 ➜ Matrix<Vector<double,NE=2>> {};
+☀ vgA ➜ Vector<Matrix<double>,N1=2> {{}, {}};
+☀ vgB ➜ Matrix<Vector<double,N1=2>> {};
+☀ cgA ➜ Matrix<Vector<double,N1=2>> {};
+☀ cgB ➜ Vector<Matrix<double>,N1=2> {{}, {}};
+☀ cgA2 ➜ Matrix<Vector<double,N1=2>> {};
 ```
 
 
