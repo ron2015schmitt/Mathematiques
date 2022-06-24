@@ -2,7 +2,7 @@
 
 
 
-template <typename... U>
+template <typename... U, bool ColMajor = false>
 typename std::enable_if<(std::is_same<U, int>::value && ...), void>::
 type test(U... ints) {
   const int size = sizeof...(ints);
