@@ -8,7 +8,6 @@
 
 
 
-
 //****************************************************************************
 //                      MACROS
 //
@@ -178,7 +177,7 @@
 // line of code is both executed and printted to MOUT
 
 #define ECHO_CODE(...)                                                                                        \
-  MOUT << Display::codePrefixStyledString << display::printf2str(stringify(__VA_ARGS__)) << ";" << std::endl; \
+  MOUT << display::Display::codePrefixStyledString << display::printf2str(stringify(__VA_ARGS__)) << ";" << std::endl; \
   __VA_ARGS__
 
 //
@@ -188,7 +187,7 @@
 // the string ("// " + str) is appended to the output
 
 #define ECHO_CODE_W_COMMENT(str, ...)                                                                                   \
-  MOUT << Display::codePrefixStyledString << display::printf2str(stringify(__VA_ARGS__)) << "; // " + str << std::endl; \
+  MOUT << display::Display::codePrefixStyledString << display::printf2str(stringify(__VA_ARGS__)) << "; // " + str << std::endl; \
   __VA_ARGS__
 
 
@@ -300,7 +299,7 @@
 // SPECIFIC TO GITHUB MARKDOWN
 //
 
-#define GMD_PREAMBLE() printf("_This document was generated from the C++ file_ `%s` _using macros and functions (in namespace `mathq::display`) from the header_ `\"mathq.h\"`. ", __FILE__);
+#define GMD_PREAMBLE() std::printf("_This document was generated from the C++ file_ `%s` _using macros and functions (in namespace `mathq::display`) from the header_ `\"mathq.h\"`. ", __FILE__);
 
 
 //
@@ -472,6 +471,7 @@ namespace display {
 
   //------------------------------------------------------------
   //                        printf2str
+  // TODO: replace with std::to_string and C++20 format class
   //------------------------------------------------------------
 
   inline std::string printf2str(const char* format, ...) {
@@ -915,8 +915,10 @@ namespace display {
   //       getTypeName
   //------------------------------------------------------------------
 
+//    getTypeName(const T& var, std::string prefix = "", std::string postfix = "") {
+
   template <class T>
-  typename std::enable_if<!std::is_pointer<T>::value, std::string>::type
+  typename std::enable_if<!std::is_pointer<T>::value && !std::is_const<T>::value, std::string>::type
     getTypeName(const T& var) {
     std::string s = typeid(var).name();
     if constexpr (Has_classname<T>::value) {
@@ -926,7 +928,21 @@ namespace display {
   }
   template <class T>
   std::string getTypeName(const T* var) {
-    std::string s = "*";
+    std::string s;
+    if constexpr (Has_classname<T>::value) {
+      s = var.classname();
+    }
+    else {
+      s = typeid(var).name();
+    }
+    s += "*";
+    return getTypeStyle(var).apply(s);
+  }
+
+  template <class T>
+  typename std::enable_if<!std::is_pointer<T>::value && std::is_const<T>::value, std::string>::type
+    getTypeName(const T var) {
+    std::string s = "const ";
     if constexpr (Has_classname<T>::value) {
       s += var.classname();
     }
@@ -938,14 +954,15 @@ namespace display {
 
 #define SPECIALIZE_getTypeName(TYPE)                \
   template <>                                       \
-  inline std::string getTypeName(const TYPE &var) { \
+  inline typename std::enable_if<!std::is_pointer<TYPE>::value && !std::is_const<TYPE>::value, std::string>::type getTypeName(const TYPE &var) { \
     return getTypeStyle(var).apply(#TYPE);          \
   }                                                 \
   template <>                                       \
   inline std::string getTypeName(const TYPE *var) { \
-    return getTypeStyle(var).apply(std::string("*")+#TYPE);          \
-  }
+    return getTypeStyle(var).apply(std::string("")+#TYPE+std::string("*"));          \
+  }                                                 \
 
+  
   SPECIALIZE_getTypeName(float);
   SPECIALIZE_getTypeName(double);
   SPECIALIZE_getTypeName(long double);
@@ -1085,7 +1102,7 @@ namespace display {
 
 
   template <typename D, size_t NDIMS, typename CHILD>
-  inline std::string getTypeName(const mathq::CurvilinearCoordinateSystem<D,NDIMS,CHILD>& var) {
+  inline std::string getTypeName(const mathq::CurvilinearCoordinateSystem<D, NDIMS, CHILD>& var) {
     std::string s = getTypeStyle(var).apply("mathq::RealSet");
     D d;
     s += StyledString::get(ANGLE1).get();
@@ -1512,7 +1529,7 @@ namespace display {
 
   // CurvilinearCoordinateSystem
   template <typename D, size_t NDIMS, typename CHILD>
-  inline void dispval_strm(std::ostream& stream, const mathq::CurvilinearCoordinateSystem<D,NDIMS, CHILD>& var) {
+  inline void dispval_strm(std::ostream& stream, const mathq::CurvilinearCoordinateSystem<D, NDIMS, CHILD>& var) {
     stream << var;
   }
 

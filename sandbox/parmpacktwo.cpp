@@ -184,6 +184,138 @@ struct integer_sequence2 {
 
 
 
+// put in a namespace so that the enums don't clash
+namespace DimensionsKinds {
+  enum Type { fixed, dynamic };
+};
+using DimensionsKindEnum = DimensionsKinds::Type;
+
+
+
+
+// // put in a namespace so that the enums don't clash
+// namespace Qualifiers {
+//   enum Type { None = 0, ConstLeft = 1, ConstRight = 2, Pointer = 4, Ref = 8, RefRef = 16 };
+// };
+// using QualifiersEnum = Qualifiers::Type;
+
+// inline constexpr QualifiersEnum operator&(QualifiersEnum a, QualifiersEnum b) {
+//   return static_cast<QualifiersEnum>(static_cast<int>(a) | static_cast<int>(b));
+// }
+
+// template <typename T, QualifiersEnum q>
+// class AddQualifiers {
+// public:
+
+//   // template<typename S>
+//   // using ConstLeftOperation = typename std::conditional< (q& Qualifiers::ConstLeft > 0), (const S), S>::type;
+
+//   // //  it actually doesn't matter if you put const on right. what matters is the order
+//   // template<typename S>
+//   // using ConstRightOperation = typename std::conditional< (q& Qualifiers::ConstRight > 0), (S const), S>::type;
+
+//   // template<typename S>
+//   // using PointerOperation = typename std::conditional< (q& Qualifiers::Pointer > 0), (S*), S>::type;
+
+//   // template<typename S>
+//   // using RefOperation = typename std::conditional< (q& Qualifiers::Ref > 0), S&, S>::type;
+
+//   // template<typename S>
+//   // using RefRefOperation = typename std::conditional< (q& Qualifiers::RefRef > 0), S&&, S>::type;
+
+//   // typedef ConstRightOperation<ConstLeftOperation<RefRefOperation<RefOperation<PointerOperation<T>>>>> Type;
+//   // typedef PointerOperation<ConstLeftOperation<T>> Type;
+//   // typedef ConstRightOperation<PointerOperation<T>> Type;
+//   // typedef ConstRightOperation<PointerOperation<ConstLeftOperation<T>>> Type;
+//   typedef T Type;
+// };
+// template <typename T>
+// class AddQualifiers<T, Qualifiers::None> {
+// public:
+//   typedef T Type;
+// };
+// template <typename T>
+// class AddQualifiers<T, Qualifiers::ConstLeft> {
+// public:
+//   typedef const T Type;
+// };
+// template <typename T>
+// class AddQualifiers<T, Qualifiers::ConstRight> {
+// public:
+//   typedef T const Type;
+// };
+// template <typename T>
+// class AddQualifiers<T, Qualifiers::Pointer> {
+// public:
+//   typedef T* Type;
+// };
+// template <typename T>
+// class AddQualifiers<T, Qualifiers::Ref> {
+// public:
+//   typedef T& Type;
+// };
+// template <typename T>
+// class AddQualifiers<T, Qualifiers::RefRef> {
+// public:
+//   typedef T&& Type;
+// };
+
+
+
+// if constexpr ((sizeof...(dims) > 0) && (std::get<0>(std::forward_as_tuple(dims...)) == 0)) {
+  // static_assert ((sizeof...(dims) > 2), "if first index is zero, there must me exactly two indices");
+//   return true;
+// }
+// else {
+//   return false;
+// }
+
+
+template<DimensionsKindEnum kind, size_t... dims>
+class Dims {
+public:
+  typedef size_t Type;
+
+  constexpr static bool is_dynamic() noexcept {
+    return kind == DimensionsKindEnum::dynamic;
+  }
+
+  constexpr static size_t rank() noexcept {
+    if constexpr (is_dynamic()) {
+      return std::get<0>(std::forward_as_tuple(dims...));
+    }
+    else {
+      return sizeof...(dims);
+    }
+  }
+
+
+  typedef typename std::conditional<is_dynamic(), std::array<size_t, rank()>, const std::array<size_t, rank()> >::type ArrayType;
+  ArrayType data = { (static_cast<size_t>(dims))... };
+
+  // "read/write"
+  std::enable_if<is_dynamic(), size_t&> operator[](const size_t n) {
+    size_t k = n;
+    if (k < 0) {
+      k += rank();
+    }
+    return data[k];
+  }
+
+  // read
+  size_t& operator[](const size_t n)  const {
+    size_t k = n;
+    if (k < 0) {
+      k += rank();
+    }
+    return data[k];
+  }
+
+};
+
+
+
+
 // the following doesn;t quite do what we want
 
 template < size_t... Sizes>
@@ -236,6 +368,17 @@ public:
   }
 };
 
+// template <typename T>
+// bool is_const = std::is_same<T, std::remove_const<T>>::value;
+
+//  pointer with right const (pointer cannot be changed))
+template <typename T>
+bool is_pointer_const = std::is_pointer<T>::value && std::is_const<T>::value;
+
+//  pointer with left const (value pointed to cannot be changed))
+template <typename T>
+bool is_const_pointer = std::is_pointer<T>::value && std::is_const<std::remove_pointer_t<T>>::value;
+
 
 
 // see also
@@ -278,6 +421,81 @@ int main(int argc, char* argv[]) {
   Helper<1, 2, 3> help;
   auto bar = Bar< Helper, double, float>();
 
+
+
+  Dims<DimensionsKindEnum::fixed, 1, 4, 2> dims;
+  std::cout << "is_dynamic()=" <<  dims.is_dynamic() << "\n";
+
+  TRDISP(dims.rank());
+  TRDISP(dims.data);
+  TRDISP(dims.data[1]);
+  // dims.data[1] = 42;
+  // dims[1] = 42;
+  TRDISP(dims.data[1]);
+
+  std::array<size_t, 3> a = std::array<size_t, 3>{2, 32, 56};
+  TRDISP(a);
+  // dims.data = a;
+  TRDISP(dims.data);
+
+
+  Dims<DimensionsKindEnum::dynamic, 2> dims2;
+  std::cout << "is_dynamic()=" <<  dims2.is_dynamic() << "\n";
+  TRDISP(dims2.rank());
+  TRDISP(dims2.data);
+
+  int ii = 3;
+  TRDISP(ii);
+  int* ip = &ii;
+  TRDISP(ip);
+  const int ii2 = 2;
+  TRDISP(ii2);
+
+  const int jj = 3;
+  TRDISP(jj);
+
+  int const kk = 3;
+  TRDISP(kk);
+
+  const int& jjj = ii;
+  TRDISP(jjj);
+  // jjj = ii2;
+
+
+  int variable_int;
+  const int const_int = 0;
+
+  TRDISP(is_const<decltype(variable_int)>::value);
+  TRDISP(is_const<decltype(const_int)>::value);
+  TRDISP(std::is_const<std::remove_pointer_t<decltype(const_int)>>::value);
+
+
+  int* variable_pointer;
+  const int* const_pointer;
+  int* const pointer_const = &ii;
+  const int* const const_pointer_const = &ii;
+
+
+  //  pointer with right const (pointer cannot be changed)
+  CR();
+  TRDISP(is_pointer_const<decltype(const_int)>);
+  TRDISP(is_pointer_const<decltype(variable_pointer)>);
+  TRDISP(is_pointer_const<decltype(const_pointer)>);
+  TRDISP(is_pointer_const<decltype(pointer_const)>);
+  TRDISP(is_pointer_const<decltype(const_pointer_const)>);
+
+  //  pointer with left const (value pointed to cannot be changed))
+  CR();
+  TRDISP(is_const_pointer<decltype(const_int)>);
+  TRDISP(is_const_pointer<decltype(variable_pointer)>);
+  TRDISP(is_const_pointer<decltype(const_pointer)>);
+  TRDISP(is_const_pointer<decltype(pointer_const)>);
+  TRDISP(is_const_pointer<decltype(const_pointer_const)>);
+
+
+  // left 
+
+  // AddQualifiers<int, Qualifiers::ConstLeft&Qualifiers::ConstRight >::Type iiii;
 
   return 0;
 }

@@ -11,6 +11,10 @@
 1. This is includes files:
   * display.h
   * display.cpp
+1. include &, ConstLeft, ConstRight, &&, and volatile qualifiers
+  * dispatch to different functions using a type teaits technique, is_const<int>::value etc (instead of calling getTypeName directly)
+  * refer to sandbox/parmpacktwo.cpp
+  * use this to check that AddQualifiers works properly
 1. split files, rename display namespace to mathq::text and mathq::streams
 1. add support for std::tuple
 1. all classes should have ostream operators:  `stdout << Vector` , and then dispval_strm should simply call
