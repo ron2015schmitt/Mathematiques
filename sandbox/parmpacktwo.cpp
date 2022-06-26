@@ -271,30 +271,63 @@ using DimensionsKindEnum = DimensionsKinds::Type;
 // }
 
 
-template<DimensionsKindEnum kind, size_t... dims>
+constexpr static size_t dynamic = 0;
+
+
+template<size_t... dims>
 class Dims {
 public:
   typedef size_t Type;
 
+  constexpr static size_t rawsize = sizeof...(dims);
+  constexpr static std::array<size_t, rawsize> rawdata = { (static_cast<size_t>(dims))... };
+
   constexpr static bool is_dynamic() noexcept {
-    return kind == DimensionsKindEnum::dynamic;
+    return rawdata[0] == 0;
   }
 
   constexpr static size_t rank() noexcept {
+    static_assert(rawsize > 0, "This class must have at least one parameter");
     if constexpr (is_dynamic()) {
-      return std::get<0>(std::forward_as_tuple(dims...));
+      if constexpr ((rawsize == 2) && (rawdata[1] > 0)) {
+        // second parmeter gives the length
+        // eg. Dims<dynamic, 10>
+        return rawdata[1];
+      }
+      else {
+        // should somehow assert error or use concept to make sure all agruments are zero
+        return rawsize;
+      }
     }
     else {
-      return sizeof...(dims);
+      return rawsize;
     }
   }
 
-
   typedef typename std::conditional<is_dynamic(), std::array<size_t, rank()>, const std::array<size_t, rank()> >::type ArrayType;
-  ArrayType data = { (static_cast<size_t>(dims))... };
+  ArrayType data;
+
+  // Default constructor
+
+  explicit Dims() : data({ (static_cast<size_t>(dims))... }) {
+    if constexpr (is_dynamic()) {
+      for (size_t n = 0; n < rank(); n++) {
+        data[n] = 0;
+      }
+    }
+  }
+
+  // Dynamic init constructor
+
+  // TODO: need constraint that all T=size_t and there are rank() of T
+  template<typename...T, size_t DUMMY = 0, mathq::EnableIf<DUMMY==0 && is_dynamic()> = 0>
+  Dims(T... dynamic_dims) {
+    data = { (static_cast<size_t>(dynamic_dims))... };
+  }
 
   // "read/write"
-  std::enable_if<is_dynamic(), size_t&> operator[](const size_t n) {
+  // std::enable_if<is_dynamic(), size_t&> operator[](const size_t n) {
+  size_t& operator[](const size_t n) {
     size_t k = n;
     if (k < 0) {
       k += rank();
@@ -303,7 +336,7 @@ public:
   }
 
   // read
-  size_t& operator[](const size_t n)  const {
+  const size_t& operator[](const size_t n) const {
     size_t k = n;
     if (k < 0) {
       k += rank();
@@ -423,15 +456,16 @@ int main(int argc, char* argv[]) {
 
 
 
-  Dims<DimensionsKindEnum::fixed, 1, 4, 2> dims;
-  std::cout << "is_dynamic()=" <<  dims.is_dynamic() << "\n";
-
+  CR();
+  ECHO_CODE(Dims<1, 4, 2> dims);
+  TRDISP(dims.is_dynamic());
   TRDISP(dims.rank());
   TRDISP(dims.data);
   TRDISP(dims.data[1]);
+
   // dims.data[1] = 42;
   // dims[1] = 42;
-  TRDISP(dims.data[1]);
+  // TRDISP(dims.data[1]);
 
   std::array<size_t, 3> a = std::array<size_t, 3>{2, 32, 56};
   TRDISP(a);
@@ -439,63 +473,105 @@ int main(int argc, char* argv[]) {
   TRDISP(dims.data);
 
 
-  Dims<DimensionsKindEnum::dynamic, 2> dims2;
-  std::cout << "is_dynamic()=" <<  dims2.is_dynamic() << "\n";
+  CR();
+  ECHO_CODE(Dims<dynamic> dims2);
+  TRDISP(dims2.is_dynamic());
   TRDISP(dims2.rank());
   TRDISP(dims2.data);
 
-  int ii = 3;
-  TRDISP(ii);
-  int* ip = &ii;
-  TRDISP(ip);
-  const int ii2 = 2;
-  TRDISP(ii2);
-
-  const int jj = 3;
-  TRDISP(jj);
-
-  int const kk = 3;
-  TRDISP(kk);
-
-  const int& jjj = ii;
-  TRDISP(jjj);
-  // jjj = ii2;
+  dims2.data[0] = 42;
+  TRDISP(dims2.data);
+  dims2[0] = 101;
+  TRDISP(dims2.data);
 
 
-  int variable_int;
-  const int const_int = 0;
-
-  TRDISP(is_const<decltype(variable_int)>::value);
-  TRDISP(is_const<decltype(const_int)>::value);
-  TRDISP(std::is_const<std::remove_pointer_t<decltype(const_int)>>::value);
-
-
-  int* variable_pointer;
-  const int* const_pointer;
-  int* const pointer_const = &ii;
-  const int* const const_pointer_const = &ii;
-
-
-  //  pointer with right const (pointer cannot be changed)
   CR();
-  TRDISP(is_pointer_const<decltype(const_int)>);
-  TRDISP(is_pointer_const<decltype(variable_pointer)>);
-  TRDISP(is_pointer_const<decltype(const_pointer)>);
-  TRDISP(is_pointer_const<decltype(pointer_const)>);
-  TRDISP(is_pointer_const<decltype(const_pointer_const)>);
+  ECHO_CODE(Dims<dynamic, dynamic> dims3);
+  TRDISP(dims3.is_dynamic());
+  TRDISP(dims3.rank());
+  TRDISP(dims3.data);
 
-  //  pointer with left const (value pointed to cannot be changed))
   CR();
-  TRDISP(is_const_pointer<decltype(const_int)>);
-  TRDISP(is_const_pointer<decltype(variable_pointer)>);
-  TRDISP(is_const_pointer<decltype(const_pointer)>);
-  TRDISP(is_const_pointer<decltype(pointer_const)>);
-  TRDISP(is_const_pointer<decltype(const_pointer_const)>);
+  ECHO_CODE(Dims<dynamic, dynamic, dynamic> dims4);
+  TRDISP(dims4.is_dynamic());
+  TRDISP(dims4.rank());
+  TRDISP(dims4.data);
 
 
-  // left 
+  CR();
+  ECHO_CODE(Dims<dynamic, 2> dims5);
+  TRDISP(dims5.is_dynamic());
+  TRDISP(dims5.rank());
+  TRDISP(dims5.data);
 
-  // AddQualifiers<int, Qualifiers::ConstLeft&Qualifiers::ConstRight >::Type iiii;
+  CR();
+  ECHO_CODE(Dims<dynamic, 2> dims6(5, 2));
+  TRDISP(dims6.is_dynamic());
+  TRDISP(dims6.rank());
+  TRDISP(dims6.data);
 
+  CR();
+  ECHO_CODE(Dims<dynamic> dims7(42));
+  TRDISP(dims7.is_dynamic());
+  TRDISP(dims7.rank());
+  TRDISP(dims7.data);
+
+
+
+  /*
+    int ii = 3;
+    TRDISP(ii);
+    int* ip = &ii;
+    TRDISP(ip);
+    const int ii2 = 2;
+    TRDISP(ii2);
+
+    const int jj = 3;
+    TRDISP(jj);
+
+    int const kk = 3;
+    TRDISP(kk);
+
+    const int& jjj = ii;
+    TRDISP(jjj);
+    // jjj = ii2;
+
+
+    int variable_int;
+    const int const_int = 0;
+
+    TRDISP(is_const<decltype(variable_int)>::value);
+    TRDISP(is_const<decltype(const_int)>::value);
+    TRDISP(std::is_const<std::remove_pointer_t<decltype(const_int)>>::value);
+
+
+    int* variable_pointer;
+    const int* const_pointer;
+    int* const pointer_const = &ii;
+    const int* const const_pointer_const = &ii;
+
+
+    //  pointer with right const (pointer cannot be changed)
+    CR();
+    TRDISP(is_pointer_const<decltype(const_int)>);
+    TRDISP(is_pointer_const<decltype(variable_pointer)>);
+    TRDISP(is_pointer_const<decltype(const_pointer)>);
+    TRDISP(is_pointer_const<decltype(pointer_const)>);
+    TRDISP(is_pointer_const<decltype(const_pointer_const)>);
+
+    //  pointer with left const (value pointed to cannot be changed))
+    CR();
+    TRDISP(is_const_pointer<decltype(const_int)>);
+    TRDISP(is_const_pointer<decltype(variable_pointer)>);
+    TRDISP(is_const_pointer<decltype(const_pointer)>);
+    TRDISP(is_const_pointer<decltype(pointer_const)>);
+    TRDISP(is_const_pointer<decltype(const_pointer_const)>);
+
+
+    // left
+
+    // AddQualifiers<int, Qualifiers::ConstLeft&Qualifiers::ConstRight >::Type iiii;
+
+  */
   return 0;
 }
