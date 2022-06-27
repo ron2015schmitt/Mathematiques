@@ -283,8 +283,15 @@ constexpr static size_t dynamic = 0;
 // template<bool... bs> 
 // using all_true = std::is_same<bool_pack<bs..., true>, bool_pack<true, bs...>>;
 
+
+template<size_t rank>
+class Base {
+public:
+};
+
+
 template<size_t... dims>
-class Dims {
+class FixedDims : public Base<sizeof...(dims)> {
 public:
   typedef size_t Type;
 
@@ -312,11 +319,11 @@ public:
     if constexpr (is_dynamic()) {
       if constexpr ((rawsize == 2) && (rawdata[1] > 0)) {
         // second parmeter gives the length
-        // eg. Dims<dynamic, 10>
+        // eg. FixedDims<dynamic, 10>
         return rawdata[1];
       }
       else {
-        static_assert(is_all_zeros({ dims... }), "Dynamic instances with rank>2 must be of form Dims<dynamic,dynamic,dynamic,...>");
+        static_assert(is_all_zeros({ dims... }), "Dynamic instances with rank>2 must be of form FixedDims<dynamic,dynamic,dynamic,...>");
         return rawsize;
       }
     }
@@ -331,7 +338,7 @@ public:
 
   // Default constructor
 
-  explicit Dims() : data({ (static_cast<size_t>(dims))... }) {
+  explicit FixedDims() : data({ (static_cast<size_t>(dims))... }) {
     if constexpr (is_dynamic()) {
       for (size_t n = 0; n < rank(); n++) {
         data[n] = 0;
@@ -343,7 +350,7 @@ public:
 
   // TODO: need constraint that all T=size_t and there are rank() of T
   template<typename...T, size_t DUMMY = 0, mathq::EnableIf<DUMMY==0 && is_dynamic()> = 0>
-  Dims(T... dynamic_dims) {
+  FixedDims(T... dynamic_dims) {
     // if (rawsize != 2) {
     //   for (size_t n = 0; n < rawsize; n++) {
     //   }
@@ -375,7 +382,7 @@ public:
 
   static inline std::string classname() {
     using namespace display;
-    std::string s = "Dims";
+    std::string s = "FixedDims";
     s += StyledString::get(ANGLE1).get();
     for (size_t ii = 0; ii < rank(); ii++) {
       if (ii>0)  s += StyledString::get(COMMA).get();
@@ -392,7 +399,7 @@ public:
   }
 
 
-  inline friend std::ostream& operator<<(std::ostream& stream, const Dims& dims2) {
+  inline friend std::ostream& operator<<(std::ostream& stream, const FixedDims& dims2) {
     using namespace display;
     stream << "{";
     for (size_t ii = 0; ii < dims2.rank(); ii++) {
@@ -406,6 +413,85 @@ public:
 
 };
 
+
+template <typename T, typename ...Ts>
+using areT = std::conjunction<std::is_same<T,Ts>...>;
+
+
+template<size_t Rank>
+class DynamicDims : public Base<Rank> {
+public:
+  typedef size_t Type;
+
+  constexpr static bool is_dynamic() noexcept {
+    return true;
+  }
+
+  constexpr static size_t rank() noexcept {
+    return Rank;
+  }
+
+  std::array<size_t, Rank> data;
+
+  // Default constructor
+
+  explicit DynamicDims() {
+    for (size_t n = 0; n < rank(); n++) {
+      data[n] = 0;
+    }
+  }
+
+  // Dynamic init constructor
+
+  template<typename...T, size_t DUMMY = 0, mathq::EnableIf<(DUMMY == 0) && (sizeof...(T) == Rank) && (std::conjunction<std::is_integral<T>...>::value)> = 0>
+  DynamicDims(T... dynamic_dims) {
+    data = { (static_cast<size_t>(dynamic_dims))... };
+  }
+
+  // "read/write"
+  // std::enable_if<is_dynamic(), size_t&> operator[](const size_t n) {
+  size_t& operator[](const size_t n) {
+    size_t k = n;
+    if (k < 0) {
+      k += rank();
+    }
+    return data[k];
+  }
+
+  // read
+  const size_t& operator[](const size_t n) const {
+    size_t k = n;
+    if (k < 0) {
+      k += rank();
+    }
+    return data[k];
+  }
+
+
+
+  static inline std::string classname() {
+    using namespace display;
+    std::string s = "DynamicDims";
+    s += StyledString::get(ANGLE1).get();
+    s += num2string(Rank);
+    s += StyledString::get(ANGLE2).get();
+    return s;
+  }
+
+
+  inline friend std::ostream& operator<<(std::ostream& stream, const DynamicDims& dims2) {
+    using namespace display;
+    stream << "{";
+    for (size_t ii = 0; ii < dims2.rank(); ii++) {
+      if (ii>0)  stream << ", ";
+      dispval_strm(stream, dims2[ii]);
+    }
+    stream << "}";
+    return stream;
+
+  }
+
+};
 
 
 
@@ -517,7 +603,7 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Dims<1, 4, 2> dims);
+  ECHO_CODE(FixedDims<1, 4, 2> dims);
   TRDISP(dims.is_dynamic());
   TRDISP(dims.rank());
   TRDISP(dims.data);
@@ -531,7 +617,7 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Dims<dynamic> dims2);
+  ECHO_CODE(FixedDims<dynamic> dims2);
   TRDISP(dims2.is_dynamic());
   TRDISP(dims2.rank());
   TRDISP(dims2);
@@ -547,41 +633,51 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Dims<dynamic, dynamic> dims3);
+  ECHO_CODE(FixedDims<dynamic, dynamic> dims3);
   TRDISP(dims3.is_dynamic());
   TRDISP(dims3.rank());
   TRDISP(dims3);
 
   CR();
-  ECHO_CODE(Dims<dynamic, dynamic, dynamic> dims4);
+  ECHO_CODE(FixedDims<dynamic, dynamic, dynamic> dims4);
   TRDISP(dims4.is_dynamic());
   TRDISP(dims4.rank());
   TRDISP(dims4);
 
 
   CR();
-  ECHO_CODE(Dims<dynamic, 2> dims5);
+  ECHO_CODE(FixedDims<dynamic, 2> dims5);
   TRDISP(dims5.is_dynamic());
   TRDISP(dims5.rank());
   TRDISP(dims5);
 
   CR();
-  ECHO_CODE(Dims<dynamic, 2> dims6(5, 2));
+  ECHO_CODE(FixedDims<dynamic, 2> dims6(5, 2));
   TRDISP(dims6.is_dynamic());
   TRDISP(dims6.rank());
   TRDISP(dims6);
 
   CR();
-  ECHO_CODE(Dims<dynamic> dims7(42));
+  ECHO_CODE(FixedDims<dynamic> dims7(42));
   TRDISP(dims7.is_dynamic());
   TRDISP(dims7.rank());
   TRDISP(dims7);
 
-  // generates an error via static_assert
-  // Dims<dynamic,dynamic,5> dims_test(1,2,3); 
+
+
+  CR();
+  ECHO_CODE(DynamicDims<2> dims8(42,13));
+  TRDISP(dims8.is_dynamic());
+  TRDISP(dims8.rank());
+  TRDISP(dims8);
+
+
 
   // generates an error via static_assert
-  // Dims<5,dynamic> dims_test; 
+  // FixedDims<dynamic,dynamic,5> dims_test(1,2,3); 
+
+  // generates an error via static_assert
+  // FixedDims<5,dynamic> dims_test; 
 
 
   /*
