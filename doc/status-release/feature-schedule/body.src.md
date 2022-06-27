@@ -11,7 +11,7 @@
 1. This is includes files:
   * display.h
   * display.cpp
-1. classname() should be static
+1. classname() should be static? no: need inheritance
 1. include &, ConstLeft, ConstRight, &&, and volatile qualifiers
   * dispatch to different functions using a type teaits technique, is_const<int>::value etc (instead of calling getTypeName directly)
   * refer to sandbox/parmpacktwo.cpp

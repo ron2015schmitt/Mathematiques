@@ -1289,6 +1289,26 @@ namespace mathq {
   template <class T, template <class> class U>
   struct is_instance<U<T>, U> : public std::true_type {};
 
+
+
+
+  constexpr bool is_all_zeros(std::initializer_list<size_t> list) {
+    for (auto elem : list) {
+      if (elem != 0) return false;
+    }
+    return true;
+  }
+  constexpr bool is_all_nonzero(std::initializer_list<size_t> list) {
+    for (auto elem : list) {
+      if (elem == 0) return false;
+    }
+    return true;
+  }
+
+
+  template <typename T, typename ...Ts>
+  using areT = std::conjunction<std::is_same<T, Ts>...>;
+
   //***********************************************************************
   //  EnableIf - used for enabling constructors or methods
   //***********************************************************************

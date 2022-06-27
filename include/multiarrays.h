@@ -691,6 +691,7 @@ namespace mathq {
   //       as described below.
   // -------------------------------------------------------------------
 
+/// TODO: get this working or remove
 
   enum MultiArrayOrExpression : unsigned int { T_TENSOR_OBJ, T_TENSOR_EXP };
 
