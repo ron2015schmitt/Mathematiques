@@ -774,7 +774,7 @@ namespace mathq {
     typedef Materialize<Element, Number, depth, rank> XType;
     typedef Element EType;
     typedef Number DType;
-    constexpr static int Rvalue = rank;
+    constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
     X& derived() {
@@ -890,7 +890,7 @@ namespace mathq {
     typedef Materialize<Element, Number, depth, rank> XType;
     typedef Element EType;
     typedef Number DType;
-    constexpr static int Rvalue = rank;
+    constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
     X& derived() {

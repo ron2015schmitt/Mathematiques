@@ -21,7 +21,7 @@ namespace mathq {
 
   public:
     constexpr static int rank = 2;
-    constexpr static int Rvalue = 2;
+    constexpr static int rank_value = 2;
     constexpr static int Mvalue = 1;
     typedef MatrixRep<Number> XType;
     typedef Number EType;
@@ -90,7 +90,7 @@ namespace mathq {
     //**********************************************************************
 
     size_t ndims(void)  const {
-      return Rvalue;
+      return rank_value;
     }
 
     inline size_t size(void) const {

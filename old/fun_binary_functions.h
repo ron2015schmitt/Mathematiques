@@ -54,7 +54,7 @@ auto operator+(const D1& x1, const MArrayExpR<B,Element,D2,depth,rank>& x2) {
   
   
 template <class A, class B, class E1, class E2, class D1, class D2, int M1, int M2, int R1, int R2,
-	  EnableIf<(M1==M2+1)&&(std::is_base_of<MultiArrayAbstract,E1>::value)&&(E1::Rvalue==R2)> = 0 >
+	  EnableIf<(M1==M2+1)&&(std::is_base_of<MultiArrayAbstract,E1>::value)&&(E1::rank_value==R2)> = 0 >
 auto operator+(const MArrayExpR<A,E1,D1,M1,R1>& x1, const MArrayExpR<B,E2,D2,M2,R2>& x2) {
   typedef typename AddType<D1,D2>::Type D3;
   typedef E1 Element;   // see TODO note above
@@ -74,7 +74,7 @@ auto operator+(const MArrayExpR<A,E1,D1,M1,R1>& x1, const MArrayExpR<B,E2,D2,M2,
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class D1, class D2, int M1, int M2, int R1, int R2,
-	  EnableIf<(M1+1==M2)&&(std::is_base_of<MultiArrayAbstract,E2>::value)&&(E2::Rvalue==R1)> = 0 >
+	  EnableIf<(M1+1==M2)&&(std::is_base_of<MultiArrayAbstract,E2>::value)&&(E2::rank_value==R1)> = 0 >
 auto operator+(const MArrayExpR<A,E1,D1,M1,R1>& x1, const MArrayExpR<B,E2,D2,M2,R2>& x2) {
   typedef typename AddType<D1,D2>::Type D3;
   typedef E2 Element;   // see TODO note above

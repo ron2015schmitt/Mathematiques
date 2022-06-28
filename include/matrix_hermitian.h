@@ -21,7 +21,7 @@ namespace mathq {
 
   public:
     constexpr static int rank = 2;
-    constexpr static int Rvalue = 2;
+    constexpr static int rank_value = 2;
     constexpr static int Mvalue = 1;
     constexpr static int NR = N;
     constexpr static int NC = N;
@@ -147,7 +147,7 @@ namespace mathq {
     //**********************************************************************
 
     size_t ndims(void)  const {
-      return Rvalue;
+      return rank_value;
     }
 
 

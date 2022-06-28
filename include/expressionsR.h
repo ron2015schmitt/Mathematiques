@@ -18,7 +18,7 @@ namespace mathq {
     typedef Materialize<Element, Number, depth, rank> XType;
     typedef Element EType;
     typedef Number DType;
-    constexpr static int Rvalue = rank;
+    constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
   private:
@@ -125,7 +125,7 @@ namespace mathq {
     typedef Element EType;
     typedef Number DType;
     typedef typename FunctionType1<Number, Number>::type FUNC;
-    constexpr static int Rvalue = rank;
+    constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
   private:
@@ -232,7 +232,7 @@ namespace mathq {
     typedef typename std::conditional<M2 == 0, A, B>::type::XType TempB;
     typedef Materialize<E3, D3, M3, R3> XType;
     constexpr static int Mvalue = M3;
-    constexpr static int Rvalue = R3;
+    constexpr static int rank_value = R3;
 
     typedef typename std::conditional<M1 == 0, const A, const A&>::type TypeA;
     typedef typename std::conditional<M2 == 0, const B, const B&>::type TypeB;
@@ -283,7 +283,7 @@ namespace mathq {
           return OP::apply(a_.dat(i), b_.dat(i));
         }
         else if constexpr (M1 == M2 + 1) {
-          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::Rvalue)) {
+          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.elsize() == b_.size())) {
               return dat_el1(i); // note this is chosen by fiat
             }
@@ -301,7 +301,7 @@ namespace mathq {
           else if constexpr ((M2 == 1) && (R2 == R1)) {
             return dat_top1(i);
           }
-          else if constexpr (R2 == E1::Rvalue) {
+          else if constexpr (R2 == E1::rank_value) {
             return dat_el1(i);
           }
           else {
@@ -310,7 +310,7 @@ namespace mathq {
           }
         }
         else if constexpr (M2 == M1 + 1) {
-          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::Rvalue)) {
+          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.size() == b_.elsize())) {
               return dat_top2(i); // note this is chosen by fiat
             }
@@ -328,7 +328,7 @@ namespace mathq {
           else if constexpr ((M1 == 1) && (R1 == R2)) {
             return dat_top2(i);
           }
-          else if constexpr (R1 == E2::Rvalue) {
+          else if constexpr (R1 == E2::rank_value) {
             return dat_el2(i);
           }
           else {
@@ -383,7 +383,7 @@ namespace mathq {
           return OP::apply(a_[i], b_[i]);
         }
         else if constexpr (M1 == M2 + 1) {
-          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::Rvalue)) {
+          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.elsize() == b_.size())) {
               return el1(i); // note this is chosen by fiat
             }
@@ -402,7 +402,7 @@ namespace mathq {
           else if constexpr ((M2 == 1) && (R2 == R1)) {
             return top1(i);
           }
-          else if constexpr (R2 == E1::Rvalue) {
+          else if constexpr (R2 == E1::rank_value) {
             return el1(i);
           }
           else {
@@ -412,7 +412,7 @@ namespace mathq {
           }
         }
         else if constexpr (M2 == M1 + 1) {
-          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::Rvalue)) {
+          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.size() == b_.elsize())) {
               return top2(i); // note this is chosen by fiat
             }
@@ -431,7 +431,7 @@ namespace mathq {
           else if constexpr ((M1 == 1) && (R1 == R2)) {
             return top2(i);
           }
-          else if constexpr (R1 == E2::Rvalue) {
+          else if constexpr (R1 == E2::rank_value) {
             return el2(i);
           }
           else {
@@ -566,7 +566,7 @@ namespace mathq {
     typedef typename std::conditional<M2 == 0, A, B>::type::XType TempB;
     typedef Materialize<E3, D3, M3, R3> XType;
     constexpr static int Mvalue = M3;
-    constexpr static int Rvalue = R3;
+    constexpr static int rank_value = R3;
 
     typedef typename std::conditional<M1 == 0, const A, const A&>::type TypeA;
     typedef typename std::conditional<M2 == 0, const B, const B&>::type TypeB;
@@ -615,7 +615,7 @@ namespace mathq {
           return f_(a_.dat(i), b_.dat(i));
         }
         else if constexpr (M1 == M2 + 1) {
-          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::Rvalue)) {
+          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.elsize() == b_.size())) {
               return dat_el1(i); // note this is chosen by fiat
             }
@@ -633,7 +633,7 @@ namespace mathq {
           else if constexpr ((M2 == 1) && (R2 == R1)) {
             return dat_top1(i);
           }
-          else if constexpr (R2 == E1::Rvalue) {
+          else if constexpr (R2 == E1::rank_value) {
             return dat_el1(i);
           }
           else {
@@ -642,7 +642,7 @@ namespace mathq {
           }
         }
         else if constexpr (M2 == M1 + 1) {
-          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::Rvalue)) {
+          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.size() == b_.elsize())) {
               return dat_top2(i); // note this is chosen by fiat
             }
@@ -660,7 +660,7 @@ namespace mathq {
           else if constexpr ((M1 == 1) && (R1 == R2)) {
             return dat_top2(i);
           }
-          else if constexpr (R1 == E2::Rvalue) {
+          else if constexpr (R1 == E2::rank_value) {
             return dat_el2(i);
           }
           else {
@@ -715,7 +715,7 @@ namespace mathq {
           return f_(a_[i], b_[i]);
         }
         else if constexpr (M1 == M2 + 1) {
-          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::Rvalue)) {
+          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.elsize() == b_.size())) {
               return el1(i); // note this is chosen by fiat
             }
@@ -734,7 +734,7 @@ namespace mathq {
           else if constexpr ((M2 == 1) && (R2 == R1)) {
             return top1(i);
           }
-          else if constexpr (R2 == E1::Rvalue) {
+          else if constexpr (R2 == E1::rank_value) {
             return el1(i);
           }
           else {
@@ -744,7 +744,7 @@ namespace mathq {
           }
         }
         else if constexpr (M2 == M1 + 1) {
-          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::Rvalue)) {
+          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.size() == b_.elsize())) {
               return top2(i); // note this is chosen by fiat
             }
@@ -763,7 +763,7 @@ namespace mathq {
           else if constexpr ((M1 == 1) && (R1 == R2)) {
             return top2(i);
           }
-          else if constexpr (R1 == E2::Rvalue) {
+          else if constexpr (R1 == E2::rank_value) {
             return el2(i);
           }
           else {
@@ -896,7 +896,7 @@ namespace mathq {
     typedef D4 DType;
     typedef Materialize<E4, D4, M4, R4> XType;
     constexpr static int Mvalue = M4;
-    constexpr static int Rvalue = R4;
+    constexpr static int rank_value = R4;
 
     typedef typename std::conditional<M1 == 0, const A, const A&>::type TypeA;
     typedef typename std::conditional<M2 == 0, const B, const B&>::type TypeB;
@@ -1112,7 +1112,7 @@ namespace mathq {
     typedef Materialize<Element, Number, depth, rank> XType;
     typedef Element EType;
     typedef Number DType;
-    constexpr static int Rvalue = rank;
+    constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
   private:
@@ -1254,7 +1254,7 @@ namespace mathq {
     typedef Materialize<Number, Number, 1, 1> XType;
     typedef Number EType;
     typedef Number DType;
-    constexpr static int Rvalue = 1;
+    constexpr static int rank_value = 1;
     constexpr static int Mvalue = 1;
 
   private:
@@ -1314,7 +1314,7 @@ namespace mathq {
       return x_.size();
     }
     size_t ndims(void) const {
-      return Rvalue;
+      return rank_value;
     }
     Dimensions dims(void) const {
       return x_.dims();
@@ -1384,7 +1384,7 @@ namespace mathq {
     typedef Materialize<Element, Number, depth, rank> XType;
     typedef Element EType;
     typedef Number DType;
-    constexpr static int Rvalue = rank;
+    constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
   private:
@@ -1483,9 +1483,9 @@ namespace mathq {
   template <class X, class Y, class Element, class Number, int depth>
   class TER_Join : public MArrayExpR<TER_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
   public:
-    constexpr static int Rvalue = 1;
+    constexpr static int rank_value = 1;
     constexpr static int Mvalue = depth;
-    typedef Materialize<Element, Number, depth, Rvalue> XType;
+    typedef Materialize<Element, Number, depth, rank_value> XType;
     typedef Element EType;
     typedef Number DType;
 
@@ -1530,7 +1530,7 @@ namespace mathq {
       return x_.size() + y_.size();
     }
     size_t ndims(void) const {
-      return Rvalue;
+      return rank_value;
     }
     Dimensions dims(void) const {
       Dimensions d(x_.size() + y_.size());
@@ -1602,7 +1602,7 @@ namespace mathq {
   template <class A, class Number>
   class TER_Rep : public MArrayExpR<TER_Rep<A, Number>, Number, Number, 1, 1> {
   public:
-    constexpr static int Rvalue = 1;
+    constexpr static int rank_value = 1;
     constexpr static int Mvalue = 1;
     typedef Materialize<Number, Number, 1, 1> XType;
     typedef Number EType;

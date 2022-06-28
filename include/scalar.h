@@ -31,7 +31,7 @@ namespace mathq {
     typedef Element EType;
     typedef Number DType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
-    constexpr static int Rvalue = 0;
+    constexpr static int rank_value = 0;
     constexpr static int Mvalue = depth;
     typedef typename std::conditional<depth==1, Element, Element&>::type TypeA;
 
@@ -87,7 +87,7 @@ namespace mathq {
 
 
     template <class X>
-    Scalar<Element, Number, depth>(const MArrayExpR<X, Element, Number, depth, Rvalue>& x) {
+    Scalar<Element, Number, depth>(const MArrayExpR<X, Element, Number, depth, rank_value>& x) {
 
       *this = x;
       constructorHelper();
@@ -369,7 +369,7 @@ namespace mathq {
 
 
     template <class X>
-    Scalar<Element, Number, depth>& operator=(const MArrayExpR<X, Element, Number, depth, Rvalue>& x) {
+    Scalar<Element, Number, depth>& operator=(const MArrayExpR<X, Element, Number, depth, rank_value>& x) {
       if constexpr (depth<=1) {
         data_ = x[0];
       }

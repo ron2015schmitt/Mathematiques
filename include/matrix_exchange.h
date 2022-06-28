@@ -23,7 +23,7 @@ namespace mathq {
 
   public:
     constexpr static int rank = 2;
-    constexpr static int Rvalue = 2;
+    constexpr static int rank_value = 2;
     constexpr static int Mvalue = 1;
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
@@ -87,7 +87,7 @@ namespace mathq {
     //**********************************************************************
 
     size_t ndims(void)  const {
-      return Rvalue;
+      return rank_value;
     }
 
 

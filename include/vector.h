@@ -38,7 +38,7 @@ namespace mathq {
     typedef typename OrderedNumberTrait<Number>::Type FType;
     typedef Vector<Element, N1> XType;
     typedef Element EType;
-    constexpr static int Rvalue = 1;
+    constexpr static int rank_value = 1;
 
 
     // *********************** OBJECT DATA ***********************************
@@ -156,7 +156,7 @@ namespace mathq {
     // --------------------- EXPRESSION CONSTRUCTOR --------------------
 
     template <class X>
-    Vector<Element, N1>(const MArrayExpR<X, Element, Number, depth, Rvalue>& x) {
+    Vector<Element, N1>(const MArrayExpR<X, Element, Number, depth, rank_value>& x) {
       if constexpr (N1==0) {
         this->resize(x.size());
       }
@@ -626,7 +626,7 @@ namespace mathq {
     // ------------------------ Vector = MArrayExpR ----------------
 
     template <class X>
-    Vector<Element, N1>& operator=(const MArrayExpR<X, Element, Number, depth, Rvalue>& x) {
+    Vector<Element, N1>& operator=(const MArrayExpR<X, Element, Number, depth, rank_value>& x) {
 
       if constexpr (depth<=1) {
         if constexpr (N1==0) {

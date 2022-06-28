@@ -36,7 +36,7 @@ namespace mathq {
     typedef Number DType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
 
-    constexpr static int Rvalue = rank;
+    constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
     // always use valarray

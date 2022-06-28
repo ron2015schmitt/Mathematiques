@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
     TLDISP(v2);
 
     TLDISP(decltype(v)::Mvalue);
-    TLDISP(decltype(v)::Rvalue);
+    TLDISP(decltype(v)::rank_value);
   }
 
 
