@@ -183,7 +183,6 @@ namespace mathq {
     }
     Dimensions dims(void) const {
       Dimensions dimensions;
-      TRDISP(dimensions);
       return dimensions;
     }
     Dimensions tdims(void) const {

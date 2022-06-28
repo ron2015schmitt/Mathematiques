@@ -375,7 +375,7 @@ namespace mathq {
       return k;
     }
 
-
+    // convert a A[size_t] index to A[Indices]
     inline Indices& indices(const size_t k) const {
       Indices& myinds = *(new Indices(ndims()));
       if (ndims() == 0) return myinds;
