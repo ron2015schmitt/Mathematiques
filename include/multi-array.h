@@ -3,10 +3,6 @@
 
 namespace mathq {
 
-
-
-
-
   /********************************************************************
    * MultiArray<Element>      -- MultiArray of 0 rank (scalar)
    *                   Element  = type for elements
@@ -51,7 +47,7 @@ namespace mathq {
     // TODO: make type trait so that this is static constexpr for FixedDims
     //        for Vector don;t store anything
     //        for Matrix store two numbers
-    Dimensions* dimensions_;  
+    Dimensions* dimensions_;
   public:
     //**********************************************************************
     //************************** CONSTRUCTORS ******************************
@@ -454,10 +450,10 @@ namespace mathq {
     /* } */
 
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, size_t>::type index(const U... args) {
+    typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, size_t>::type index(const U... args) {
 
       const size_t size = sizeof...(args);
-      size_t argarray[size] = {  std::make_unsigned<int>::type(args)... };
+      size_t argarray[size] = { std::make_unsigned<int>::type(args)... };
       Indices& inds = *(new Indices(ndims()));
       const size_t NN = this->ndims();
       for (size_t n = 0; n < NN; n++) {
@@ -508,7 +504,7 @@ namespace mathq {
 
 
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, Element&>::type operator()(const U... args) {
+    typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, Element&>::type operator()(const U... args) {
 
       // const int size = sizeof...(args);
       // int argarray[size] = {args...};
@@ -517,7 +513,7 @@ namespace mathq {
       return (*this)[k];
     }
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, const Element>::type operator()(const U... args) const {
+    typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, const Element>::type operator()(const U... args) const {
       return (*this)(args...);
     }
 

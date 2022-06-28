@@ -1,39 +1,35 @@
 #ifndef MATHQ__SCALAR_H
 #define MATHQ__SCALAR_H 1
 
-
 namespace mathq {
-
-  //*************
-  // DEPRECATED 
-  //*************
-
 
     /********************************************************************
      * Scalar<Element>    -- variable size vector (valarray)
      *                 Element  = type for elements
      *
-     * DO NOT SPECIFY: Number,depth
-     *                 The defaults are defined in the declaration in
-     *                 preface.h
-     *                 Number = number type
+     *                 NumberType = number type
      *                   = underlying algebraic field
      *                     ex. int, double, std::complex<double>
-     *                 depth = tensor depth. if Element=Number, then depth=1.
+     *                 depth = tensor depth. if Element=NumberType, then depth=1.
     ********************************************************************
      */
 
+  template <class Element> class Scalar :
+    public MArrayExpRW<Scalar<Element>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 0> {
 
-  template <class Element, typename Number, int depth> class Scalar :
-    public MArrayExpRW< Scalar<Element, Number, depth>, Element, Number, depth, 0> {
   public:
-    typedef Scalar<Element, Number, depth> ConcreteType;
+    typedef Scalar<Element> ConcreteType;
+
     typedef Element ElementType;
-    typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
-    constexpr static int rank_value = 0;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumberType;
+
+    typedef Element MyArrayType;
+
+    constexpr static int rank = 0;
+    constexpr static int rank_value = rank;
+    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
     constexpr static int depth_value = depth;
-    typedef typename std::conditional<depth==1, Element, Element&>::type TypeA;
 
   private:
 
@@ -55,7 +51,7 @@ namespace mathq {
 
 
     // -------------------  DEFAULT  CONSTRUCTOR: zero --------------------
-    Scalar<Element, Number, depth>() {
+    Scalar<Element>() {
       if constexpr (depth==1) {
         *this = 0;
       }
@@ -67,17 +63,17 @@ namespace mathq {
 
     // --------------------- constant Element CONSTRUCTOR ---------------------
 
-    Scalar<Element, Number, depth>(const Element e) {
+    Scalar<Element>(const Element e) {
 
       *this = e;
       constructorHelper();
     }
 
-    // --------------------- constant Number CONSTRUCTOR ---------------------
+    // --------------------- constant NumberType CONSTRUCTOR ---------------------
 
     template<int D1 = depth, EnableIf<(D1>1)> = 0>
 
-    Scalar<Element, Number, depth>(const Number d) {
+    Scalar<Element>(const NumberType d) {
 
       *this = d;
       constructorHelper();
@@ -87,7 +83,7 @@ namespace mathq {
 
 
     template <class X>
-    Scalar<Element, Number, depth>(const MArrayExpR<X, Element, Number, depth, rank_value>& x) {
+    Scalar<Element>(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
 
       *this = x;
       constructorHelper();
@@ -95,7 +91,7 @@ namespace mathq {
 
 
     // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    Scalar<Element, Number, depth>(const std::initializer_list<Element>& mylist) {
+    Scalar<Element>(const std::initializer_list<Element>& mylist) {
       *this = mylist;
       constructorHelper();
     }
@@ -115,7 +111,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~Scalar<Element, Number, depth>() {
+    ~Scalar<Element>() {
       //remove from MultiArrayPool
     }
 
@@ -204,7 +200,7 @@ namespace mathq {
     // TODO: should just pass an index and make deepdims const
 
 
-    Scalar<Element, Number, depth>& resize(std::vector<Dimensions>& deepdims) {
+    Scalar<Element>& resize(std::vector<Dimensions>& deepdims) {
       if constexpr (depth>1) {
         deepdims.erase(deepdims.begin());
         data_.resize(deepdims);
@@ -216,12 +212,12 @@ namespace mathq {
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
 
-    // -------------------- Number dat(n) --------------------
+    // -------------------- NumberType dat(n) --------------------
     // NOTE: indexes over [0] to [deepsize()]
     // -------------------------------------------------------------
 
     // "read/write": unsigned
-    Number& dat(const size_t n) {
+    NumberType& dat(const size_t n) {
       if constexpr (depth <= 1) {
         return data_;
       }
@@ -231,7 +227,7 @@ namespace mathq {
     }
 
     // "read/write": signed
-    const Number& dat(const size_t n)  const {
+    const NumberType& dat(const size_t n)  const {
       if constexpr (depth <= 1) {
         return data_;
       }
@@ -244,7 +240,7 @@ namespace mathq {
     // -------------------------------------------------------------
 
     // "read/write": DeepIndices
-    Number& dat(const DeepIndices& dinds) {
+    NumberType& dat(const DeepIndices& dinds) {
       // error if (inds.size() != sum deepdims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(dinds);
@@ -255,7 +251,7 @@ namespace mathq {
     }
 
     // "read": DeepIndices
-    const Number dat(const DeepIndices& dinds)  const {
+    const NumberType dat(const DeepIndices& dinds)  const {
       // error if (inds.size() != sum deepdims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(dinds);
@@ -270,7 +266,7 @@ namespace mathq {
     // -------------------------------------------------------------
 
     // "read/write": Indices
-    Number& dat(const Indices& inds) {
+    NumberType& dat(const Indices& inds) {
       // error if (inds.size() != sum deepdims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(inds);
@@ -281,7 +277,7 @@ namespace mathq {
     }
 
     // "read": Indices
-    const Number dat(const Indices& inds)  const {
+    const NumberType dat(const Indices& inds)  const {
       // error if (inds.size() != sum deepdims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(inds);
@@ -333,13 +329,13 @@ namespace mathq {
     //************************** ASSIGNMENT **************************************
     //**********************************************************************
 
-    Scalar<Element, Number, depth>& operator=(const Element e) {
+    Scalar<Element>& operator=(const Element e) {
       data_ = e;
       return *this;
     }
 
     template <int D1 = depth>
-    typename std::enable_if<(D1>1), Scalar<Element, Number, depth>& >::type operator=(const Number& d) {
+    typename std::enable_if<(D1>1), Scalar<Element>& >::type operator=(const NumberType& d) {
       for (size_t i = 0; i < deepsize(); i++) {
         (*this).dat(i) = d;
       }
@@ -347,7 +343,7 @@ namespace mathq {
     }
 
 
-    Scalar<Element, Number, depth>& operator=(const Scalar<Element, Number, depth>& s2) {
+    Scalar<Element>& operator=(const Scalar<Element>& s2) {
       if constexpr (depth<=1) {
         data_ = s2();
       }
@@ -361,7 +357,7 @@ namespace mathq {
     }
 
 
-    Scalar<Element, Number, depth>& operator=(const std::initializer_list<Element>& mylist) {
+    Scalar<Element>& operator=(const std::initializer_list<Element>& mylist) {
       typename std::initializer_list<Element>::iterator it = mylist.begin();
       data_ = *it;
       return *this;
@@ -369,7 +365,7 @@ namespace mathq {
 
 
     template <class X>
-    Scalar<Element, Number, depth>& operator=(const MArrayExpR<X, Element, Number, depth, rank_value>& x) {
+    Scalar<Element>& operator=(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
       if constexpr (depth<=1) {
         data_ = x[0];
       }
@@ -392,7 +388,7 @@ namespace mathq {
     // NOTE: in-place
 
 
-    Scalar<Element, Number, depth>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Scalar<Element>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
       data_ = mathq::roundzero(data_, tolerance);
       return *this;
     }
@@ -400,7 +396,7 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place. Don't allow if not complex.
     //----------------------------------------------------
-    template< typename T = Number >
+    template< typename T = NumberType >
     typename std::enable_if<is_complex<T>{}, Scalar<T>& >::type conj() {
       using std::conj;
       data_ = conj(data_);
@@ -440,7 +436,7 @@ namespace mathq {
 
     // stream << operator
 
-    friend std::ostream& operator<<(std::ostream& stream, const Scalar<Element, Number, depth>& s) {
+    friend std::ostream& operator<<(std::ostream& stream, const Scalar<Element>& s) {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       stream << style.apply(FormatDataVector::string_opening);
@@ -451,8 +447,8 @@ namespace mathq {
     }
 
 
-    //template <typename Number>	
-    friend inline std::istream& operator>>(const std::string s, Scalar<Element, Number, depth>& x) {
+    //template <typename NumberType>	
+    friend inline std::istream& operator>>(const std::string s, Scalar<Element>& x) {
       std::istringstream st(s);
       return (st >> x);
     }
@@ -461,7 +457,7 @@ namespace mathq {
     // stream >> operator
 
     // TODO: implement this
-    friend std::istream& operator>>(std::istream& stream, Scalar<Element, Number, depth>& x) {
+    friend std::istream& operator>>(std::istream& stream, Scalar<Element>& x) {
       return stream;
     }
 

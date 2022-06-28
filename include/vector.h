@@ -1,10 +1,7 @@
 #ifndef MATHQ__VECTOR_H
 #define MATHQ__VECTOR_H 1
 
-
-
 namespace mathq {
-
 
   /********************************************************************
    * Vector<Element>    -- variable size vector (valarray)

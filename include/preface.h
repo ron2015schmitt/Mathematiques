@@ -97,7 +97,7 @@ namespace mathq {
 
 
 
-  template <class Element, typename Number = typename NumberTrait<Element>::Type, int depth = 1 + NumberTrait<Element>::getDepth()>
+  template <class Element>
   class Scalar;
 
   template <class Element, int NE = 0>
@@ -257,14 +257,14 @@ namespace mathq {
     typedef MultiArray<Element, rank> TEN;
     typedef Matrix<Element, 0, 0> MAT;
     typedef Vector<Element, 0> VEC;
-    typedef Scalar<Element, Number, depth> SCA;
+    typedef Scalar<Element> SCA;
     typedef typename std::conditional<rank == 0, SCA, std::conditional<rank == 1, VEC, std::conditional<rank == 2, MAT, TEN>>>::type Type;
   };
 
   template <class Element, typename Number, int depth>
   class Materialize<Element, Number, depth, 0> {
   public:
-    typedef Scalar<Element, Number, depth> Type;
+    typedef Scalar<Element> Type;
   };
 
   template <class Element, typename Number, int depth, int N1>
@@ -1389,7 +1389,7 @@ namespace mathq {
   template <class Element, typename Number, int depth>
   class GridType<Element, Number, depth, 0> {
   public:
-    typedef Scalar<Element, Number, depth> Type;
+    typedef Scalar<Element> Type;
   };
 
   template <class Element, typename Number, int depth>

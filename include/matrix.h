@@ -1,11 +1,7 @@
 #ifndef MATHQ__MATRIX_H
 #define MATHQ__MATRIX_H 1
 
-
-
-
 namespace mathq {
-
 
   /********************************************************************
    * Matrix<Element>    -- variable size matrix (valarray)
