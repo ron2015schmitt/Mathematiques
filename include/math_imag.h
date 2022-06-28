@@ -108,7 +108,7 @@ namespace mathq {
     }
 
 
-    // template <class Number>
+    // template <typename Number>
     friend inline std::istream& operator>>(const std::string s, Imaginary<Number>& w) {
       std::istringstream st(s);
       return (st >> w);

@@ -14,7 +14,7 @@ namespace mathq {
    ****************************************************************************   
    */
 
-  template <class Number> class Vector :
+  template <typename Number> class Vector :
     public MArrayExpRW<Number,Vector<Number> > {
   private:
 
@@ -1134,7 +1134,7 @@ namespace mathq {
     }
 
 
-    //template <class Number>	
+    //template <typename Number>	
     friend inline std::istream& operator>>(const std::string s,  Vector<Number>& x) {	
       std::istringstream st(s);
       return (st >> x);

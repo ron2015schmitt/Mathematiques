@@ -12,12 +12,12 @@ namespace mathq {
   // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class Element, class Number, int depth, int rank, class FUNC>
+  template <class X, class Element, typename Number, int depth, int rank, class FUNC>
   class TER_Unary : public MArrayExpR<TER_Unary<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
   public:
     typedef Materialize<Element, Number, depth, rank> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
     constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
@@ -118,12 +118,12 @@ namespace mathq {
   // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class Element, class Number, int depth, int rank>
+  template <class X, class Element, typename Number, int depth, int rank>
   class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
     typedef Materialize<Element, Number, depth, rank> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
     typedef typename FunctionType1<Number, Number>::type FUNC;
     constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
@@ -226,8 +226,8 @@ namespace mathq {
   template <class A, class B, class E1, class E2, class E3, class D1, class D2, class D3, int M1, int M2, int M3, int R1, int R2, int R3, class OP>
   class TER_Binary : public MArrayExpR<TER_Binary<A, B, E1, E2, E3, D1, D2, D3, M1, M2, M3, R1, R2, R3, OP>, E3, D3, M3, R3> {
   public:
-    typedef E3 EType;
-    typedef D3 DType;
+    typedef E3 ElementType;
+    typedef D3 NumberType;
     typedef typename std::conditional<M1 == 0, B, A>::type::XType TempA;
     typedef typename std::conditional<M2 == 0, A, B>::type::XType TempB;
     typedef Materialize<E3, D3, M3, R3> XType;
@@ -560,8 +560,8 @@ namespace mathq {
   template <class A, class B, class E1, class E2, class E3, class D1, class D2, class D3, int M1, int M2, int M3, int R1, int R2, int R3>
   class TER_Binary_User : public MArrayExpR<TER_Binary_User<A, B, E1, E2, E3, D1, D2, D3, M1, M2, M3, R1, R2, R3>, E3, D3, M3, R3> {
   public:
-    typedef E3 EType;
-    typedef D3 DType;
+    typedef E3 ElementType;
+    typedef D3 NumberType;
     typedef typename std::conditional<M1 == 0, B, A>::type::XType TempA;
     typedef typename std::conditional<M2 == 0, A, B>::type::XType TempB;
     typedef Materialize<E3, D3, M3, R3> XType;
@@ -892,8 +892,8 @@ namespace mathq {
   template <class A, class B, class C, class E1, class E2, class E3, class E4, class D1, class D2, class D3, class D4, int M1, int M2, int M3, int M4, int R1, int R2, int R3, int R4, class OP>
   class TER_Ternary : public MArrayExpR<TER_Ternary<A, B, C, E1, E2, E3, E4, D1, D2, D3, D4, M1, M2, M3, M4, R1, R2, R3, R4, OP>, E4, D4, M4, R4> {
   public:
-    typedef E4 EType;
-    typedef D4 DType;
+    typedef E4 ElementType;
+    typedef D4 NumberType;
     typedef Materialize<E4, D4, M4, R4> XType;
     constexpr static int Mvalue = M4;
     constexpr static int rank_value = R4;
@@ -1106,12 +1106,12 @@ namespace mathq {
   // TER_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
-  template <class A, class X, class Element, class Number, int depth, int rank>
+  template <class A, class X, class Element, typename Number, int depth, int rank>
   class TER_Series : public MArrayExpR<TER_Series<A, X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
     typedef Materialize<Element, Number, depth, rank> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
     constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
@@ -1248,12 +1248,12 @@ namespace mathq {
   // TER_Series2    used for fourier series
   //---------------------------------------------------------------------------
 
-  template <class A, class B, class X, class Number, class OP1, class OP2>
+  template <class A, class B, class X, typename Number, class OP1, class OP2>
   class TER_Series2 : public MArrayExpR<TER_Series2<A, B, X, Number, OP1, OP2>, Number, Number, 1, 1> {
   public:
     typedef Materialize<Number, Number, 1, 1> XType;
-    typedef Number EType;
-    typedef Number DType;
+    typedef Number ElementType;
+    typedef Number NumberType;
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = 1;
 
@@ -1378,12 +1378,12 @@ namespace mathq {
   // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template <class X, class Element, class Number, int depth, int rank, class FUNC>
+  template <class X, class Element, typename Number, int depth, int rank, class FUNC>
   class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
   public:
     typedef Materialize<Element, Number, depth, rank> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
     constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
@@ -1480,14 +1480,14 @@ namespace mathq {
   // VER_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class Element, class Number, int depth>
+  template <class X, class Y, class Element, typename Number, int depth>
   class TER_Join : public MArrayExpR<TER_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = depth;
     typedef Materialize<Element, Number, depth, rank_value> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
 
   private:
     const X& x_;
@@ -1599,14 +1599,14 @@ namespace mathq {
   // TER_Rep  repeat a tensor
   //---------------------------------------------------------------------------
 
-  template <class A, class Number>
+  template <class A, typename Number>
   class TER_Rep : public MArrayExpR<TER_Rep<A, Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = 1;
     typedef Materialize<Number, Number, 1, 1> XType;
-    typedef Number EType;
-    typedef Number DType;
+    typedef Number ElementType;
+    typedef Number NumberType;
 
   private:
     const A& a_;

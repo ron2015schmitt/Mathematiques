@@ -1,5 +1,5 @@
 
-template <class Number>
+template <typename Number>
 class
   NotDefined {
 public:
@@ -11,7 +11,7 @@ public:
 };
 
 
-template <class Number>
+template <typename Number>
 class
   Point {
 public:
@@ -23,7 +23,7 @@ public:
 };
 
 
-template <class Number>
+template <typename Number>
 class
   Intervale {
 public:
@@ -37,25 +37,25 @@ public:
 
 
 
-template <class Number, int ii>
+template <typename Number, int ii>
 class
   Helper {
 public:
   typedef NotDefined<Number> Type;
 };
-template <class Number>
+template <typename Number>
 class
   Helper<Number, 0> {
 public:
   typedef NotDefined<Number> Type;
 };
-template <class Number>
+template <typename Number>
 class
   Helper<Number, 1> {
 public:
   typedef Point<Number> Type;
 };
-template <class Number>
+template <typename Number>
 class
   Helper<Number, 2> {
 public:
@@ -70,7 +70,7 @@ T<Number>& value(const std::variant<NotDefined<Number>, Point<Number>, Intervale
 
 
 
-template <class Number>
+template <typename Number>
 class
   NoGrid : public mathq::GridSet<Number> {
 public:
@@ -88,7 +88,7 @@ inline void dispval_strm(std::ostream& stream, const NoGrid<T>& var) {
 
 // need to be able to place thes ein a std::vector so they need to have same type
 
-template <class Number>
+template <typename Number>
 class
   Coordinate2 {
 public:

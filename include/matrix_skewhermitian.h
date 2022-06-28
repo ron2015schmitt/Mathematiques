@@ -15,7 +15,7 @@ namespace mathq {
    ********************************************************************
    */
 
-  template <class Number, int N>
+  template <typename Number, int N>
   class MatrixSkewHermitian : public MArrayExpRW<MatrixSkewHermitian<Number, N>, Number, Number, 1, 2> {
 
   public:
@@ -26,8 +26,8 @@ namespace mathq {
     constexpr static int NC = N;
     static constexpr bool resizable = (N==0) ? true : false;
     typedef MatrixSkewHermitian<Number, N> XType;
-    typedef Number EType;
-    typedef Number DType;
+    typedef Number ElementType;
+    typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
@@ -534,7 +534,7 @@ namespace mathq {
     }
 
 
-    //template <class Number>	
+    //template <typename Number>	
     friend inline std::istream& operator>>(const std::string s, MatrixSkewHermitian<Number, N>& m2) {
       std::istringstream st(s);
       return (st >> m2);

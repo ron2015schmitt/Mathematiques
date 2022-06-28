@@ -55,11 +55,11 @@ int main(int argc, char *argv[]) {
     x = 0.;
     TLDISP(x);
 
-    typename decltype(v)::EType e;
+    typename decltype(v)::ElementType e;
     e = 0.;
     TLDISP(e);
 
-    typename decltype(v)::DType d = 0.;
+    typename decltype(v)::NumberType d = 0.;
     TLDISP(d);
 
     typename decltype(v)::XType v2;

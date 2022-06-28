@@ -16,7 +16,7 @@ namespace mathq {
    ********************************************************************
    */
 
-  template <class Number>
+  template <typename Number>
   class MatrixRep : public MArrayExpRW<MatrixRep<Number>, Number, Number, 1, 2> {
 
   public:
@@ -24,8 +24,8 @@ namespace mathq {
     constexpr static int rank_value = 2;
     constexpr static int Mvalue = 1;
     typedef MatrixRep<Number> XType;
-    typedef Number EType;
-    typedef Number DType;
+    typedef Number ElementType;
+    typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
@@ -430,7 +430,7 @@ namespace mathq {
     }
 
 
-    //template <class Number>	
+    //template <typename Number>	
     friend inline std::istream& operator>>(const std::string s, MatrixRep<Number>& m2) {
       std::istringstream st(s);
       return (st >> m2);

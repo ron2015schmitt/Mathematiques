@@ -113,7 +113,7 @@ namespace mathq {
   template <class Element, int rank, size_t... sizes>
   class MultiArrayNEW {
   public:
-    typedef typename NumberTrait<Element>::Type Number;
+    typedef typename NumberTrait<Element>::Type NumberType;
     static constexpr int depth = 1 + NumberTrait<Element>::getDepth();
   };
 
@@ -123,40 +123,40 @@ namespace mathq {
   // ********************************************************************
 
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixZero;
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixIdentity;
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixExchange;
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixConstDiag;
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixDiagonal;
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixRevDiag;
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixRepCol;
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixRepRow;
 
 
-  template <class Number>
+  template <typename Number>
   class
     MatrixRep;
 
@@ -168,35 +168,35 @@ namespace mathq {
   using MatrixRepEnum = MatrixRepTypes::Type;
 
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixVandermonde;
 
-  template <class Number, int NR = 0, int NC = 0>
+  template <typename Number, int NR = 0, int NC = 0>
   class
     MatrixToeplitz;
 
-  template <class Number, int N = 0>
+  template <typename Number, int N = 0>
   class
     MatrixUpperTriangle;
 
-  template <class Number, int N = 0>
+  template <typename Number, int N = 0>
   class
     MatrixLowerTriangle;
 
-  template <class Number, int N = 0>
+  template <typename Number, int N = 0>
   class
     MatrixSymmetric;
 
-  template <class Number, int N = 0>
+  template <typename Number, int N = 0>
   class
     MatrixSkewSymmetric;
 
-  template <class Number, int N = 0>
+  template <typename Number, int N = 0>
   class
     MatrixHermitian;
 
-  template <class Number, int N = 0>
+  template <typename Number, int N = 0>
   class
     MatrixSkewHermitian;
 
@@ -206,7 +206,7 @@ namespace mathq {
 
 
 
-  template <class X, class Element, class Number, int depth, int rank, class FUNC>
+  template <class X, class Element, typename Number, int depth, int rank, class FUNC>
   class
     TER_Unary;
 
@@ -218,29 +218,29 @@ namespace mathq {
   class
     TER_Ternary;
 
-  template <class A, class X, class Element, class Number, int depth, int rank>
+  template <class A, class X, class Element, typename Number, int depth, int rank>
   class TER_Series;
 
-  template <class A, class B, class X, class Number, class OP1, class OP2>
+  template <class A, class B, class X, typename Number, class OP1, class OP2>
   class TER_Series2;
 
-  template <class X, class Element, class Number, int depth, int rank, class FUNC>
+  template <class X, class Element, typename Number, int depth, int rank, class FUNC>
   class TER_Transpose;
 
-  template <class A, class Number>
+  template <class A, typename Number>
   class TER_Rep;
 
-  template <class X, class Y, class Element, class Number, int depth>
+  template <class X, class Y, class Element, typename Number, int depth>
   class TER_Join;
 
 
-  template <class Number>
+  template <typename Number>
   class TERW_Subset;
 
-  template <class Number>
+  template <typename Number>
   class TERW_Submask;
 
-  template <class X, class Y, class Element, class Number, int depth>
+  template <class X, class Y, class Element, typename Number, int depth>
   class TERW_Join;
 
   // *********************************************************************
@@ -251,7 +251,7 @@ namespace mathq {
   // Materialize - this returns a concrete tensor of type specified by paramters
   // ***************************************************************************
 
-  template <class Element, class Number, int depth, int rank, int N1 = 0, int N2 = 0>
+  template <class Element, typename Number, int depth, int rank, int N1 = 0, int N2 = 0>
   class Materialize {
   public:
     typedef MultiArray<Element, rank, Number, depth> TEN;
@@ -261,19 +261,19 @@ namespace mathq {
     typedef typename std::conditional<rank == 0, SCA, std::conditional<rank == 1, VEC, std::conditional<rank == 2, MAT, TEN>>>::type Type;
   };
 
-  template <class Element, class Number, int depth>
+  template <class Element, typename Number, int depth>
   class Materialize<Element, Number, depth, 0> {
   public:
     typedef Scalar<Element, Number, depth> Type;
   };
 
-  template <class Element, class Number, int depth, int N1>
+  template <class Element, typename Number, int depth, int N1>
   class Materialize<Element, Number, depth, 1, N1> {
   public:
     typedef Vector<Element, N1> Type;
   };
 
-  template <class Element, class Number, int depth, int N1, int N2>
+  template <class Element, typename Number, int depth, int N1, int N2>
   class Materialize<Element, Number, depth, 2, N1, N2> {
   public:
     typedef Matrix<Element, N1, N2> Type;
@@ -659,7 +659,7 @@ namespace mathq {
 
   //  MArrayExpR<X,Element,Number,depth,rank>
 
-  template <class X, class Element, class Number, int depth, int rank>
+  template <class X, class Element, typename Number, int depth, int rank>
   class
     OrderedNumberTrait<MArrayExpR<X, Element, Number, depth, rank>> {
   public:
@@ -717,7 +717,7 @@ namespace mathq {
     }
   };
 
-  template <class Number, typename NewD>
+  template <typename Number, typename NewD>
   class
     NumberTrait<std::complex<Number>, NewD> {
   public:
@@ -736,7 +736,7 @@ namespace mathq {
     }
   };
 
-  template <class Number, typename NewD>
+  template <typename Number, typename NewD>
   class NumberTrait<Imaginary<Number>, NewD> {
   public:
     typedef Imaginary<Number> Type;
@@ -754,7 +754,7 @@ namespace mathq {
     }
   };
 
-  template <class Number, typename NewD>
+  template <typename Number, typename NewD>
   class NumberTrait<Quaternion<Number>, NewD> {
   public:
     typedef Quaternion<Number> Type;
@@ -959,7 +959,7 @@ namespace mathq {
 
   //  MArrayExpR<X,Element,Number,depth,rank>
 
-  template <class X, class Element, class Number, int depth, int rank, typename NewD>
+  template <class X, class Element, typename Number, int depth, int rank, typename NewD>
   class
     NumberTrait<MArrayExpR<X, Element, Number, depth, rank>, NewD> {
   public:
@@ -983,7 +983,7 @@ namespace mathq {
 
   //  MArrayExpRW<X,Element,Number,depth,rank>
 
-  template <class X, class Element, class Number, int depth, int rank, typename NewD>
+  template <class X, class Element, typename Number, int depth, int rank, typename NewD>
   class
     NumberTrait<MArrayExpRW<X, Element, Number, depth, rank>, NewD> {
   public:
@@ -1027,26 +1027,26 @@ namespace mathq {
   // ***************************************************************************
 
 
-  template <class Number, class C>
+  template <typename Number, class C>
   class
     InversionType {
   public:
     typedef C Type;
   };
-  template <class Number, class C>
+  template <typename Number, class C>
   class
     InversionType<std::complex<Number>, C> {
   public:
     typedef C Type;
   };
-  template <class Number, class C>
+  template <typename Number, class C>
   class
     InversionType<Imaginary<Number>, C> {
   public:
     typedef C Type;
   };
 
-  template <class Number, class C>
+  template <typename Number, class C>
   class
     InversionType<Quaternion<Number>, C> {
   public:
@@ -1061,8 +1061,8 @@ namespace mathq {
   class
     InversionType<Scalar<Element>, C> {
   public:
-    typedef typename NumberTrait<Element>::Type Number;
-    typedef Scalar<Number> MultiArrayD;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef Scalar<NumberType> MultiArrayD;
     typedef Scalar<C> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
@@ -1073,8 +1073,8 @@ namespace mathq {
   class
     InversionType<Vector<Element>, C> {
   public:
-    typedef typename NumberTrait<Element>::Type Number;
-    typedef Vector<Number> MultiArrayD;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef Vector<NumberType> MultiArrayD;
     typedef Vector<C> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
@@ -1084,8 +1084,8 @@ namespace mathq {
   class
     InversionType<Vector<Element, NE>, C> {
   public:
-    typedef typename NumberTrait<Element>::Type Number;
-    typedef Vector<Number, NE> MultiArrayD;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef Vector<NumberType, NE> MultiArrayD;
     typedef Vector<C, NE> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
@@ -1096,8 +1096,8 @@ namespace mathq {
   class
     InversionType<Matrix<Element>, C> {
   public:
-    typedef typename NumberTrait<Element>::Type Number;
-    typedef Matrix<Number> MultiArrayD;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef Matrix<NumberType> MultiArrayD;
     typedef Matrix<C> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
@@ -1108,8 +1108,8 @@ namespace mathq {
   class
     InversionType<Matrix<Element, NR>, C> {
   public:
-    typedef typename NumberTrait<Element>::Type Number;
-    typedef Matrix<Number, NR> MultiArrayD;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef Matrix<NumberType, NR> MultiArrayD;
     typedef Matrix<C, NR> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
@@ -1120,8 +1120,8 @@ namespace mathq {
   class
     InversionType<Matrix<Element, NR, NC>, C> {
   public:
-    typedef typename NumberTrait<Element>::Type Number;
-    typedef Matrix<Number, NR, NC> MultiArrayD;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef Matrix<NumberType, NR, NC> MultiArrayD;
     typedef Matrix<C, NR, NC> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
@@ -1131,8 +1131,8 @@ namespace mathq {
   class
     InversionType<MultiArray<Element>, C> {
   public:
-    typedef typename NumberTrait<Element>::Type Number;
-    typedef MultiArray<Number> MultiArrayD;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef MultiArray<NumberType> MultiArrayD;
     typedef MultiArray<C> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
@@ -1142,8 +1142,8 @@ namespace mathq {
   class
     InversionType<MultiArray<Element, rank>, C> {
   public:
-    typedef typename NumberTrait<Element>::Type Number;
-    typedef MultiArray<Number, rank> MultiArrayD;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef MultiArray<NumberType, rank> MultiArrayD;
     typedef MultiArray<C, rank> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
@@ -1157,19 +1157,19 @@ namespace mathq {
   //            for container of any type, return x[n]
   // ***************************************************************************
 
-  template <class Number>
+  template <typename Number>
   inline Number&& At(Number&& x, size_t n) {
     return x;
   }
-  template <class Number>
+  template <typename Number>
   inline const Number&& At(const Number&& x, size_t n) {
     return x;
   }
-  template <template <class> class T, class Number>
+  template <template <class> class T, typename Number>
   inline Number&& At(T<Number>&& x, size_t n) {
     return x[n];
   }
-  template <template <class> class T, class Number>
+  template <template <class> class T, typename Number>
   inline const Number&& At(const T<Number>&& x, size_t n) {
     return x[n];
   }
@@ -1380,25 +1380,25 @@ namespace mathq {
   // GridType 
   // ***************************************************************************
 
-  template <class Element, class Number, int depth, int rank>
+  template <class Element, typename Number, int depth, int rank>
   class GridType {
   public:
     typedef MultiArray<Element, rank, Number, depth> Type;
   };
 
-  template <class Element, class Number, int depth>
+  template <class Element, typename Number, int depth>
   class GridType<Element, Number, depth, 0> {
   public:
     typedef Scalar<Element, Number, depth> Type;
   };
 
-  template <class Element, class Number, int depth>
+  template <class Element, typename Number, int depth>
   class GridType<Element, Number, depth, 1> {
   public:
     typedef Vector<Element, 0> Type;
   };
 
-  template <class Element, class Number, int depth>
+  template <class Element, typename Number, int depth>
   class GridType<Element, Number, depth, 2> {
   public:
     typedef Matrix<Element, 0, 0> Type;
@@ -1411,7 +1411,7 @@ namespace mathq {
   //  multiarray of depth=1 and fixed rank=NDIMS but dynamic size
   // ***************************************************************************
 
-  template <class Number, size_t NDIMS>
+  template <typename Number, size_t NDIMS>
   using Grid = typename GridType<Number, Number, 1, NDIMS>::Type;
 
 
@@ -1425,7 +1425,7 @@ namespace mathq {
   //   second level: multiarrays of fixed rank=NDIMS but dynamic size
   // ***************************************************************************
 
-  template <class Number, size_t NDIMS>
+  template <typename Number, size_t NDIMS>
   using VectorOfGrids = Vector<Grid<Number, NDIMS>, NDIMS>;
 
 
@@ -1439,23 +1439,23 @@ namespace mathq {
   // This type has the same total number of elements as VectorOfGrids.
   // The two types can be converted from one to another using the function 'insideout'.
   // ***************************************************************************
-  template <class Number, size_t NDIMS>
+  template <typename Number, size_t NDIMS>
   using GridOfVectors = Grid<Vector<Number, NDIMS>, NDIMS>;
 
 
-  template <class Number, size_t NDIMS, bool inv>
+  template <typename Number, size_t NDIMS, bool inv>
   class CG {
   public:
     typedef GridOfVectors<Number, NDIMS> Type;
   };
 
-  template <class Number, size_t NDIMS>
+  template <typename Number, size_t NDIMS>
   class CG<Number, NDIMS, true> {
   public:
     typedef VectorOfGrids<Number, NDIMS> Type;
   };
 
-  template <class Number, size_t NDIMS, bool inv>
+  template <typename Number, size_t NDIMS, bool inv>
   using CG0 = typename CG<Number, NDIMS, inv>::Type;
 
 
@@ -1468,7 +1468,7 @@ namespace mathq {
   //   second level: multiarrays of fixed rank=NDIMS but dynamic size
   // ***************************************************************************
 
-  template <class Number, size_t NDIMS>
+  template <typename Number, size_t NDIMS>
   using MatrixOfGrids = Matrix<Grid<Number, NDIMS>, NDIMS, NDIMS>;
 
 
@@ -1482,30 +1482,30 @@ namespace mathq {
   // This type has the same total number of elements as MatrixOfGrids.
   // The two types can be converted from one to another using the function 'insideout'.
   // ***************************************************************************
-  template <class Number, size_t NDIMS>
+  template <typename Number, size_t NDIMS>
   using GridOfMatrixs = typename Grid<Matrix<Number, NDIMS, NDIMS>, NDIMS>::Type;
 
 
 
-  template <class Number, size_t NDIMS, size_t RANK>
+  template <typename Number, size_t NDIMS, size_t RANK>
   class TensorOfGrids {
   public:
     typedef MultiArray<Grid<Number, NDIMS>, RANK> Type;   // need to specify dimensiosn dynamically
   };
 
-  template <class Number, size_t NDIMS>
+  template <typename Number, size_t NDIMS>
   class TensorOfGrids<Number, NDIMS, 0> {
   public:
     typedef Grid<Number, NDIMS> Type;
   };
 
-  template <class Number, size_t NDIMS>
+  template <typename Number, size_t NDIMS>
   class TensorOfGrids<Number, NDIMS, 1> {
   public:
     typedef VectorOfGrids<Number, NDIMS> Type;
   };
 
-  template <class Number, size_t NDIMS>
+  template <typename Number, size_t NDIMS>
   class TensorOfGrids<Number, NDIMS, 2> {
   public:
     typedef MatrixOfGrids<Number, NDIMS> Type;
@@ -1516,21 +1516,21 @@ namespace mathq {
   // * RealSet 
   // ***************************************************************************
 
-  template <class Number>
+  template <typename Number>
   class RealSet;
 
 
   // ***************************************************************************
   // * RealMultiSet 
   // ***************************************************************************
-  template <class Number, size_t NDIMS = 0, class MULTIGRID = VectorOfGrids<Number, NDIMS>>
+  template <typename Number, size_t NDIMS = 0, class MULTIGRID = VectorOfGrids<Number, NDIMS>>
   class RealMultiSet;
 
 
   // ***************************************************************************
   // * CurvilinearCoordinateSystem 
   // ***************************************************************************
-  template <class Number, size_t NDIMS, typename CHILD>
+  template <typename Number, size_t NDIMS, typename CHILD>
   class CurvilinearCoordinateSystem;
 
 
@@ -1563,7 +1563,7 @@ namespace mathq {
   // In functions_misc.h
   ////////////////////////////////////////////////////////////
 
-  template <class X, class Element, class Number, int depth, int rank>
+  template <class X, class Element, typename Number, int depth, int rank>
   EnableMethodIf<std::is_same<Number, bool>::value, Vector<size_t>&> findtrue(const MArrayExpR<X, Element, Number, depth, rank>& v);
 
 

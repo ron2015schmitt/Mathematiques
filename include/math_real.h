@@ -207,10 +207,11 @@ namespace mathq {
 
   //***********************************************************************
   //       sgn(x) function
+  // TODO: get rid of macros!!
   //***********************************************************************
 
-#define SGN_MACRO(Number)  inline Number sgn(const Number x) {if (x>0) return static_cast<Number>(1); else if (x<0) return static_cast<Number>(-1); else return static_cast<Number>(0);}
-#define SGN_MACRO_US(Number)  inline Number sgn(const Number x) {if (x>0) return static_cast<Number>(1);else return static_cast<Number>(0);}
+#define SGN_MACRO(number)  inline number sgn(const number x) {if (x>0) return static_cast<number>(1); else if (x<0) return static_cast<number>(-1); else return static_cast<number>(0);}
+#define SGN_MACRO_US(number)  inline number sgn(const number x) {if (x>0) return static_cast<number>(1);else return static_cast<number>(0);}
 
   SGN_MACRO(float);
   SGN_MACRO(double);

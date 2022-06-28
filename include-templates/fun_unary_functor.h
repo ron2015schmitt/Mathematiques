@@ -8,9 +8,9 @@
 
 template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_##FUNCTORNAME## {
 public:
-  typedef DIN DType;
+  typedef DIN NumberType;
   typedef DOUT DoutType;
-  typedef Element EType;
+  typedef Element ElementType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return ##FUNCTION##(d);

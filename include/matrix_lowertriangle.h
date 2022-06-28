@@ -16,7 +16,7 @@ namespace mathq {
    ********************************************************************
    */
 
-  template <class Number, int N>
+  template <typename Number, int N>
   class MatrixLowerTriangle : public MArrayExpRW<MatrixLowerTriangle<Number, N>, Number, Number, 1, 2> {
 
   public:
@@ -27,8 +27,8 @@ namespace mathq {
     constexpr static int NC = N;
     static constexpr bool resizable = (N==0) ? true : false;
     typedef MatrixLowerTriangle<Number, N> XType;
-    typedef Number EType;
-    typedef Number DType;
+    typedef Number ElementType;
+    typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
@@ -533,7 +533,7 @@ namespace mathq {
     }
 
 
-    //template <class Number>	
+    //template <typename Number>	
     friend inline std::istream& operator>>(const std::string s, MatrixLowerTriangle<Number, N>& m2) {
       std::istringstream st(s);
       return (st >> m2);

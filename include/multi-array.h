@@ -32,8 +32,8 @@ namespace mathq {
     // keep the instances lightweight
 
     typedef MultiArray<Element, rank, Number, depth> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
 
     constexpr static int rank_value = rank;
@@ -721,7 +721,7 @@ namespace mathq {
       return stream;
     }
 
-    // template <class Number>
+    // template <typename Number>
     friend inline std::istream& operator>>(const std::string s, MultiArray<Element, rank, Number, depth>& x) {
       std::istringstream st(s);
       return (st >> x);

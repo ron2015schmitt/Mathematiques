@@ -28,8 +28,8 @@ namespace mathq {
     public MArrayExpRW< Scalar<Element, Number, depth>, Element, Number, depth, 0> {
   public:
     typedef Scalar<Element, Number, depth> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
     constexpr static int rank_value = 0;
     constexpr static int Mvalue = depth;
@@ -451,7 +451,7 @@ namespace mathq {
     }
 
 
-    //template <class Number>	
+    //template <typename Number>	
     friend inline std::istream& operator>>(const std::string s, Scalar<Element, Number, depth>& x) {
       std::istringstream st(s);
       return (st >> x);

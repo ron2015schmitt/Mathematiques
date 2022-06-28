@@ -15,10 +15,10 @@ namespace mathq {
    * Matrix<Element,NR,NC> -- fixed number of rows and cols (array)
    *                 NC = number of cols
    *
-   *                 Number = number type
+   *                 NumberType = number type
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
-   *                 Mvalue = tensor depth. if Element=Number, then Mvalue=1.
+   *                 Mvalue = tensor depth. if Element=NumberType, then Mvalue=1.
    *
    * ROW MAJOR CONVENTION
    ********************************************************************
@@ -36,9 +36,9 @@ namespace mathq {
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
     typedef Matrix<Element, NR, NC> XType;
-    typedef Element EType;
-    typedef typename NumberTrait<Element>::Type Number;
-    typedef typename OrderedNumberTrait<Number>::Type FType;
+    typedef Element ElementType;
+    typedef typename NumberTrait<Element>::Type NumberType;
+    typedef typename OrderedNumberTrait<NumberType>::Type FType;
 
 
     // if either NR or NC is 0, then we use valarray
@@ -81,7 +81,7 @@ namespace mathq {
     // --------------------- constant CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const Number& val) {
+    explicit Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const NumberType& val) {
       resize(Nr, Nc);
       *this = val;
     }
@@ -89,12 +89,12 @@ namespace mathq {
     // --------------------- 2D array  CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const Number** vals) {
+    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const NumberType** vals) {
       resize(Nr, Nc);
       *this = vals;
     }
 
-    // --------------------- Matrix(Number value)  ---------------------
+    // --------------------- Matrix(NumberType value)  ---------------------
 
     template<size_t NN = NR*NC, EnableIf<(NN > 0)> = 0>
 
@@ -102,11 +102,11 @@ namespace mathq {
       *this = val;
     }
 
-    // --------------------- Matrix(Number value)  ---------------------
+    // --------------------- Matrix(NumberType value)  ---------------------
 
     template<size_t NN = NR*NC, EnableIf<(NN > 0)&&(Mvalue>1)> = 0>
 
-    explicit Matrix<Element, NR, NC>(const Number val) {
+    explicit Matrix<Element, NR, NC>(const NumberType val) {
       *this = val;
     }
 
@@ -144,7 +144,7 @@ namespace mathq {
 
 
     template <class X>
-    Matrix<Element, NR, NC>(const MArrayExpR<X, Element, Number, Mvalue, rank>& x) {
+    Matrix<Element, NR, NC>(const MArrayExpR<X, Element, NumberType, Mvalue, rank>& x) {
       resize(x.dims()[0], x.dims()[1]);
       *this = x;
     }
@@ -162,7 +162,7 @@ namespace mathq {
     // --------------------- 1D array[]  CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const Number(vals)[]) {
+    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const NumberType(vals)[]) {
       resize(Nr, Nc);
       *this = vals;
     }
@@ -393,7 +393,7 @@ namespace mathq {
       // square matrix  
       if (Nc == Nr) {
         size_t r, c;
-        Number temp;
+        NumberType temp;
         for (r = 0; r < Nr; ++r)
           for (c = r + 1; c < Nr; ++c) {
             temp = (*this)[r + c * Nr];
@@ -433,8 +433,8 @@ namespace mathq {
         size_t jstartC = Nminus1 - jstart;
         size_t j = jstart;
         size_t jC = jstartC;
-        Number dstart = (*this)[jstart];
-        Number dstartC = (*this)[jstartC];
+        NumberType dstart = (*this)[jstart];
+        NumberType dstartC = (*this)[jstartC];
 
         // PROCESS THE CURRENT SEQUENcE AND ITS COMPLIMENTARY SEQUENcE
         while (1) {
@@ -501,7 +501,7 @@ namespace mathq {
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = Number >
+    template< typename T = NumberType >
     typename std::enable_if<is_complex<T>{}, Matrix<T>& >::type adjoint() {
       this->conj();
       this->transpose();
@@ -514,7 +514,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // "read/write"
-    Number& dat(const size_t n) {
+    NumberType& dat(const size_t n) {
       using namespace::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
       if constexpr (Mvalue<=1) {
@@ -533,7 +533,7 @@ namespace mathq {
     }
 
     // read
-    const Number& dat(const size_t n)  const {
+    const NumberType& dat(const size_t n)  const {
       using namespace::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
       if constexpr (Mvalue<=1) {
@@ -556,7 +556,7 @@ namespace mathq {
 
 
     // "read/write": x.dat(Indices)
-    Number& dat(const Indices& inds) {
+    NumberType& dat(const Indices& inds) {
       Indices inds_next(inds);
       //MOUT << "Matrix: "<<std::endl;
       // error if (inds.size() != sum deepdims[i].rank)
@@ -578,7 +578,7 @@ namespace mathq {
     }
 
     // "read": x.dat(Indices)
-    const Number dat(const Indices& inds)  const {
+    const NumberType dat(const Indices& inds)  const {
       Indices inds_next(inds);
       // error if (inds.size() != sum deepdims[i].rank)
       size_t n = inds_next[0];
@@ -598,7 +598,7 @@ namespace mathq {
     // -------------------------------------------------------------
 
     // "read/write": x.dat(DeepIndices)
-    Number& dat(const DeepIndices& dinds) {
+    NumberType& dat(const DeepIndices& dinds) {
       const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth -Mvalue];
       size_t n = inds[0];
@@ -613,7 +613,7 @@ namespace mathq {
     }
 
     // "read": x.dat(DeepIndices)
-    const Number dat(const DeepIndices& dinds)  const {
+    const NumberType dat(const DeepIndices& dinds)  const {
       const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth -Mvalue];
       size_t n = inds[0];
@@ -759,7 +759,7 @@ namespace mathq {
 
     // ----------------- matrix = d ----------------
     template <class T = Element>
-    typename std::enable_if<!std::is_same<T, Number>::value, Matrix<Element, NR, NC>& >::type operator=(const Number& d) {
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Matrix<Element, NR, NC>& >::type operator=(const NumberType& d) {
 
       for (size_t i = 0; i < deepsize(); i++) {
         data_.dat(i) = d;
@@ -767,7 +767,7 @@ namespace mathq {
       return *this;
     }
 
-    // ----------------------Matrix = Matrix<Element,NR2,NC2,Number,Mvalue> ----------------
+    // ----------------------Matrix = Matrix<Element,NR2,NC2,NumberType,Mvalue> ----------------
 
     template<int NR2, int NC2>
     Matrix<Element, NR, NC>& operator=(const Matrix<Element, NR2, NC2>& m) {
@@ -788,9 +788,9 @@ namespace mathq {
     }
 
 
-    // ----------------- matrix = MArrayExpR<X,Element,Number,Mvalue,rank> ----------------
+    // ----------------- matrix = MArrayExpR<X,Element,NumberType,Mvalue,rank> ----------------
     template <class X> Matrix<Element, NR, NC>&
-      operator=(const MArrayExpR<X, Element, Number, Mvalue, rank>& x) {
+      operator=(const MArrayExpR<X, Element, NumberType, Mvalue, rank>& x) {
 
       if constexpr (Mvalue<=1) {
         resize(x.dims());
@@ -811,7 +811,7 @@ namespace mathq {
 
 
 
-    // ----------------- matrix = Number[][] ----------------
+    // ----------------- matrix = NumberType[][] ----------------
     Matrix<Element, NR, NC>&
       operator=(const Element** array) {
       size_t k = 0;
@@ -929,7 +929,7 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = Number >
+    template< typename T = NumberType >
     typename std::enable_if<is_complex<T>{}, Matrix<T>& >::type conj() {
       for (size_t i = size(); i--;) {
         data_[i] = std::conj(data_[i]);
@@ -1016,7 +1016,7 @@ namespace mathq {
     }
 
 
-    //template <class Number>	
+    //template <typename NumberType>	
     friend inline std::istream& operator>>(const std::string s, Matrix<Element, NR, NC>& m2) {
       std::istringstream st(s);
       return (st >> m2);

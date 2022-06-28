@@ -46,10 +46,10 @@ namespace mathq {
   template<class T> struct is_complex : std::false_type {};
 
   // std::complex class (true)
-  template<class Number> struct is_complex<std::complex<Number>> : std::true_type {};
+  template<typename Number> struct is_complex<std::complex<Number>> : std::true_type {};
 
   // T<std::complex> (true)  container holding complex
-  template<template<typename> class T, class Number> struct is_complex<T<std::complex<Number> > > : std::true_type {};
+  template<template<typename> class T, typename Number> struct is_complex<T<std::complex<Number> > > : std::true_type {};
 
 
   // template <typename T> class

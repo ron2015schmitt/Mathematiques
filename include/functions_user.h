@@ -21,7 +21,7 @@ namespace mathq {
   // ----------------------------------------------------------------
 
 
-  template <class X, class Element, class Number, int depth, int rank>
+  template <class X, class Element, typename Number, int depth, int rank>
   auto op1(const typename FunctionType1<Number, Number>::type& f, const MArrayExpR<X, Element, Number, depth, rank>& x) {
     return  TER_Unary_User<MArrayExpR<X, Element, Number, depth, rank>, Element, Number, depth, rank>(f, x);
   }

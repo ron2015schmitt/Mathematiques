@@ -22,12 +22,12 @@ namespace mathq {
   // * std::vector related functions
   // ************************************************************************** 
 
-  template <class Number, int NN> class ArrayType {
+  template <typename Number, int NN> class ArrayType {
   public:
     typedef std::array<Number, NN> Type;
   };
 
-  template <class Number> class ArrayType<Number, 0> {
+  template <typename Number> class ArrayType<Number, 0> {
   public:
     typedef std::valarray<Number> Type;
   };
@@ -561,7 +561,7 @@ namespace mathq {
     using type = std::initializer_list<
       typename NestedInitializerListDef<Element, L-1>::type
     >;
-    template <class Number, int rank, int depth>
+    template <typename Number, int rank, int depth>
     static void compute(MultiArray<Element, rank, Number, depth>& t, const type& list, int& i) {
 
       for (auto nlist : list) {
@@ -592,7 +592,7 @@ namespace mathq {
   public:
     using type = Element;
 
-    template <class Number, int rank, int depth>
+    template <typename Number, int rank, int depth>
     static void compute(MultiArray<Element, rank, Number, depth>& t, const type& item, int& i) {
       //TLDISP(item);
       t[i++] = item;
@@ -724,7 +724,7 @@ namespace mathq {
 
 
 
-  template <class X, class Element, class Number, int depth, int rank>
+  template <class X, class Element, typename Number, int depth, int rank>
   std::ostream& printMultiArrayExpression(std::ostream& stream, const MArrayExpR<X, Element, Number, depth, rank>& te) {
 
     if constexpr (rank==0) {
@@ -772,8 +772,8 @@ namespace mathq {
     MArrayExpR {
   public:
     typedef Materialize<Element, Number, depth, rank> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
     constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
@@ -888,8 +888,8 @@ namespace mathq {
     MArrayExpRW : public MArrayExpR<MArrayExpRW<X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
     typedef Materialize<Element, Number, depth, rank> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
     constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 

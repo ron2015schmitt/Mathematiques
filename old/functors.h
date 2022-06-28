@@ -25,7 +25,7 @@ namespace matricks {
 
   // unary+ operator
 
-  template <class Number> class Fun_Plus {
+  template <typename Number> class Fun_Plus {
     Fun_Plus() {}
   public:
     typedef typename NumberTrait<Number>::Type TypeIn;
@@ -55,7 +55,7 @@ namespace matricks {
   
   // unary-
 
-  template <class Number> class Fun_Minus {
+  template <typename Number> class Fun_Minus {
     Fun_Minus() { }
   public:
     typedef typename NumberTrait<Number>::Type TypeIn;
@@ -313,7 +313,7 @@ namespace matricks {
   
   // sqr(a)
 
-  template <class Number> class Fun_Sqr {
+  template <typename Number> class Fun_Sqr {
     Fun_Sqr() { }
   public:
     typedef typename NumberTrait<Number>::Type TypeIn;
@@ -342,7 +342,7 @@ namespace matricks {
 
   // cube(a)
 
-  template <class Number> class Fun_Cube {
+  template <typename Number> class Fun_Cube {
     Fun_Cube() { }
   public:
     typedef typename NumberTrait<Number>::Type TypeIn;
@@ -370,7 +370,7 @@ namespace matricks {
 
   // sqrt(a)
 
-  template <class Number> class Fun_Sqrt {
+  template <typename Number> class Fun_Sqrt {
     Fun_Sqrt() { }
   public:
     typedef typename NumberTrait<Number>::Type TypeIn;
@@ -399,7 +399,7 @@ namespace matricks {
 
 
   // exp(a)
-  template <class Number> class Fun_Exp {
+  template <typename Number> class Fun_Exp {
     Fun_Exp() { }
     
   public:
@@ -430,7 +430,7 @@ namespace matricks {
  
   // log(a)
 
-  template <class Number> class Fun_Log {
+  template <typename Number> class Fun_Log {
     Fun_Log() { }
 
   public:
@@ -462,7 +462,7 @@ namespace matricks {
   
   // log2(a)
 
-  template <class Number> class Fun_Log2 {
+  template <typename Number> class Fun_Log2 {
     Fun_Log2() { }
 
   public:
@@ -494,7 +494,7 @@ namespace matricks {
   
   // log10(a)
  
-  template <class Number> class Fun_Log10 {
+  template <typename Number> class Fun_Log10 {
     Fun_Log10() {
     }
 
@@ -532,7 +532,7 @@ namespace matricks {
 
   // sin(a)
 
-  template <class Number> class Fun_Sin {
+  template <typename Number> class Fun_Sin {
     Fun_Sin() { }
 
   public:
@@ -563,7 +563,7 @@ namespace matricks {
 
   // cos(a)
 
-  template <class Number> class Fun_Cos {
+  template <typename Number> class Fun_Cos {
     Fun_Cos() { }
   public:
     typedef typename NumberTrait<Number>::Type TypeIn;
@@ -595,7 +595,7 @@ namespace matricks {
 
   // tan(a)
 
-  template <class Number> class Fun_Tan {
+  template <typename Number> class Fun_Tan {
     Fun_Tan() { }
   public:
     typedef typename NumberTrait<Number>::Type TypeIn;
@@ -624,7 +624,7 @@ namespace matricks {
 
   // asin(a)
 
-  template <class Number> class Fun_Asin                       {
+  template <typename Number> class Fun_Asin                       {
     Fun_Asin() { }
 
   public:
@@ -655,7 +655,7 @@ namespace matricks {
   
   // acos(a)
 
-  template <class Number> class Fun_Acos                       {
+  template <typename Number> class Fun_Acos                       {
     Fun_Acos() { }
 
   public:
@@ -686,7 +686,7 @@ namespace matricks {
   
   // atan(a)
 
-  template <class Number> class Fun_Atan {
+  template <typename Number> class Fun_Atan {
     Fun_Atan() { }
 
   public:
@@ -755,7 +755,7 @@ namespace matricks {
 
   // sinh(a)
 
-  template <class Number> class Fun_Sinh {
+  template <typename Number> class Fun_Sinh {
     Fun_Sinh() { }
 
   public:
@@ -787,7 +787,7 @@ namespace matricks {
 
   // cosh(a)
 
-  template <class Number> class Fun_Cosh {
+  template <typename Number> class Fun_Cosh {
     Fun_Cosh() { }
 
   public:
@@ -818,7 +818,7 @@ namespace matricks {
   
   // tanh(a)
 
-  template <class Number> class Fun_Tanh {
+  template <typename Number> class Fun_Tanh {
     Fun_Tanh() { }
 
   public:
@@ -855,7 +855,7 @@ namespace matricks {
 
   // abs(a)
 
-  template <class Number> class Fun_Abs {
+  template <typename Number> class Fun_Abs {
     Fun_Abs() { }
 
   public:
@@ -886,7 +886,7 @@ namespace matricks {
   
   // sgn(a)
 
-  template <class Number> class Fun_Sgn {
+  template <typename Number> class Fun_Sgn {
     Fun_Sgn() { }
 
   public:
@@ -918,7 +918,7 @@ namespace matricks {
   
   // ceil(a)
 
-  template <class Number> class Fun_Ceil {
+  template <typename Number> class Fun_Ceil {
     Fun_Ceil() { }
 
   public:
@@ -951,7 +951,7 @@ namespace matricks {
   
   // floor(a)
 
-  template <class Number> class Fun_Floor {
+  template <typename Number> class Fun_Floor {
     Fun_Floor() { }
 
   public:
@@ -984,7 +984,7 @@ namespace matricks {
   
   // round(a)
 
-  template <class Number> class Fun_Round {
+  template <typename Number> class Fun_Round {
     Fun_Round() { }
 
   public:
@@ -1095,7 +1095,7 @@ namespace matricks {
 
   // y = op1<Number,userfunc>(a)
 
-  template <class Number, typename matricks::FunctionTypes<Number>::unary_func F> class Fun_UnaryUser {
+  template <typename Number, typename matricks::FunctionTypes<Number>::unary_func F> class Fun_UnaryUser {
     Fun_UnaryUser() { }
 
   public:
@@ -1589,7 +1589,7 @@ namespace matricks {
 
   // arg(a)
 
-  template <class Number> class Fun_Arg {
+  template <typename Number> class Fun_Arg {
     Fun_Arg() { }
   public:
     typedef std::complex<Number> TypeIn;
@@ -1621,7 +1621,7 @@ namespace matricks {
 
   // conj(a)
 
-  template <class Number > class Fun_Conj {
+  template <typename Number > class Fun_Conj {
     Fun_Conj() { }
   public:
     typedef typename NumberTrait<Number>::Type TypeIn;
@@ -1649,7 +1649,7 @@ namespace matricks {
 
   // real(a)
 
-  template <class Number> class Fun_Real {
+  template <typename Number> class Fun_Real {
     Fun_Real() { }
   public:
     typedef typename NumberTrait<Number>::Type TypeIn;
@@ -1680,7 +1680,7 @@ namespace matricks {
 
   // imag(a)
 
-  template <class Number> class Fun_Imag {
+  template <typename Number> class Fun_Imag {
     Fun_Imag() { }
 
   public:

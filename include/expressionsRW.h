@@ -10,14 +10,14 @@ namespace mathq {
   //---------------------------------------------------------------------------
   // TERW_Subset   Subset Expression
   //---------------------------------------------------------------------------
-  template<class Number>
+  template<typename Number>
   class TERW_Subset : public  MArrayExpRW<TERW_Subset<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = 1;
     typedef Materialize<Number, Number, Mvalue, rank_value> XType;
-    typedef Number EType;
-    typedef Number DType;
+    typedef Number ElementType;
+    typedef Number NumberType;
 
   private:
     // can't be constant since we alow to be on left hand side
@@ -158,14 +158,14 @@ namespace mathq {
   //--------------------------------------------------------------------------
   // TERW_Submask   Submask Expression
   //--------------------------------------------------------------------------
-  template<class Number>
+  template<typename Number>
   class TERW_Submask : public  MArrayExpRW<TERW_Submask<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = 1;
     typedef Materialize<Number, Number, Mvalue, rank_value> XType;
-    typedef Number EType;
-    typedef Number DType;
+    typedef Number ElementType;
+    typedef Number NumberType;
 
   private:
     // can't be constant since we alow to be on left hand side
@@ -290,14 +290,14 @@ namespace mathq {
   // VERW_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class Element, class Number, int depth>
+  template <class X, class Y, class Element, typename Number, int depth>
   class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = depth;
     typedef Materialize<Element, Number, depth, rank_value> XType;
-    typedef Element EType;
-    typedef Number DType;
+    typedef Element ElementType;
+    typedef Number NumberType;
 
   private:
     // can't be constant since we alow to be on left hand side
@@ -449,7 +449,7 @@ namespace mathq {
   //   //---------------------------------------------------------------------------
   //   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //   //---------------------------------------------------------------------------
-  //   template <class Number, class OP, int depth>
+  //   template <typename Number, class OP, int depth>
   //     class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,depth> > {
   //   private:
     // can't be constant since we alow to be on left hand side

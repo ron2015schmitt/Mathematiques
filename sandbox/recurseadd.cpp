@@ -206,8 +206,8 @@ int main(int argc, char *argv[]) {
     TLDISP(v3);
 
     CR();
-    decltype(v3)::EType e;
-    decltype(v3)::DType d;
+    decltype(v3)::ElementType e;
+    decltype(v3)::NumberType d;
     TLDISP(e);
     TLDISP(d);
     TLDISP(decltype(v3)::rank_value);

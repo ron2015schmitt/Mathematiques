@@ -13,7 +13,7 @@ namespace matricks {
   // TER_Unary    unary expressions
   //---------------------------------------------------------------------------
     
-    template <class Element, class A, class Number, int depth, FUNC> 
+    template <class Element, class A, typename Number, int depth, FUNC> 
       class TER_Unary  : public  MArrayExpR<Number,TER_Unary<Number,A,FUNC,depth>> {
     public:
       typedef MArrayExpR<Element,A,Number,depth> TIN;
@@ -430,7 +430,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TERW_Subset   Subset Expression
   //---------------------------------------------------------------------------
-  template<class Number, int depth>
+  template<typename Number, int depth>
     class TERW_Subset :  public  MArrayExpRW<Number,TERW_Subset<Number,depth> > {
   private:
     // can't be constant since we alow to be on left hand side
@@ -569,7 +569,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TERW_Submask   subset of a tensor from a mask
   //---------------------------------------------------------------------------
-  template<class Number, int depth>
+  template<typename Number, int depth>
     class TERW_Submask :  public  MArrayExpRW<Number,TERW_Submask<Number,depth> > {
   private:
     // can't be constant since we alow to be on left hand side
@@ -689,7 +689,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //---------------------------------------------------------------------------
-  template <class Number, class OP, int depth>
+  template <typename Number, class OP, int depth>
     class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,depth> > {
   private:
     Vector<std::complex<Number> >& a_;
@@ -794,7 +794,7 @@ namespace matricks {
   // TER_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
-  template<class Number, class A, class X, int depth>
+  template<typename Number, class A, class X, int depth>
     class TER_Series : public  MArrayExpR<Number,TER_Series<Number,A,X,depth> > {
 
   private:
@@ -913,7 +913,7 @@ namespace matricks {
   // TER_Series2    used for fourier series
   //---------------------------------------------------------------------------
   
-  template<class Number, class A, class B, class X, class OP1, class OP2, int depth>
+  template<typename Number, class A, class B, class X, class OP1, class OP2, int depth>
     class TER_Series2 : public  MArrayExpR<Number,TER_Series2< Number, A, B, X, OP1, OP2> > {
 
   private:
@@ -1047,7 +1047,7 @@ namespace matricks {
   // TERW_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template<class Number, class A, class FUNC, int depth>
+  template<typename Number, class A, class FUNC, int depth>
     class TERW_Transpose  : public  MArrayExpRW<Number,TERW_Transpose<Number,A,FUNC,depth> > {
   
   private:
@@ -1157,7 +1157,7 @@ namespace matricks {
   // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template<class Number, class A, class FUNC, int depth>
+  template<typename Number, class A, class FUNC, int depth>
     class TER_Transpose  : public  MArrayExpR<Number,TER_Transpose<Number,A,FUNC,depth> > {
   
   private:
@@ -1248,7 +1248,7 @@ namespace matricks {
   // VER_Join   joining two MultiArrays (RHS only)
   //---------------------------------------------------------------------------
 
-  template<class Number, class A, class B, int depth>
+  template<typename Number, class A, class B, int depth>
     class VER_Join : public  MArrayExpR<Number,VER_Join<Number,A,B,depth> > {
 
   private:
@@ -1340,7 +1340,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
 
-  template<class Number, class A, class B, int depth>
+  template<typename Number, class A, class B, int depth>
     class VERW_Join : public  MArrayExpRW<Number,VERW_Join<Number,A,B,depth> > {
 
   private:
@@ -1462,7 +1462,7 @@ namespace matricks {
   // VER_Rep  repeat a tensor
   //---------------------------------------------------------------------------
 
-  template<class Number, class A, int depth>
+  template<typename Number, class A, int depth>
     class VER_Rep : public  MArrayExpR<Number,VER_Rep<Number,A,depth> > {
 
   private:

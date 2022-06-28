@@ -489,19 +489,19 @@ int main(int argc, char *argv[]) {
     TLDISP(t.eldims());
     decltype(t) xx;
     TLDISP(xx);
-    typename decltype(t)::DType d;
+    typename decltype(t)::NumberType d;
     TLDISP(d);
-    typename decltype(t)::EType e;
+    typename decltype(t)::ElementType e;
     TLDISP(e);
 
     MultiArray<Scalar<double>, 2> t2;
-    typename MultiArray<Scalar<double>, 2>::DType d2a;
+    typename MultiArray<Scalar<double>, 2>::NumberType d2a;
     TLDISP(d2a);
-    typename MultiArray<Scalar<double>, 2>::EType e2a;
+    typename MultiArray<Scalar<double>, 2>::ElementType e2a;
     TLDISP(e2a);
-    typename decltype(t2)::DType d2b;
+    typename decltype(t2)::NumberType d2b;
     TLDISP(d2b);
-    typename decltype(t2)::EType e2b;
+    typename decltype(t2)::ElementType e2b;
     TLDISP(e2b);
     t2 = -t;
     TLDISP(t2);

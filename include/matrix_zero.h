@@ -18,7 +18,7 @@ namespace mathq {
    */
 
    //, typename = EnableIf<NumberTrait<Number>::value>
-  template <class Number, int NR, int NC >
+  template <typename Number, int NR, int NC >
   class MatrixZero : public MArrayExpRW<MatrixZero<Number, NR, NC>, Number, Number, 1, 2> {
 
   public:
@@ -29,8 +29,8 @@ namespace mathq {
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
     typedef MatrixZero<Number, NR, NC> XType;
-    typedef Number EType;
-    typedef Number DType;
+    typedef Number ElementType;
+    typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
@@ -379,7 +379,7 @@ namespace mathq {
     }
 
 
-    //template <class Number>	
+    //template <typename Number>	
     friend inline std::istream& operator>>(const std::string s, MatrixZero<Number, NR, NC>& m2) {
       std::istringstream st(s);
       return (st >> m2);
