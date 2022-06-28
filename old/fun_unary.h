@@ -15,19 +15,19 @@ namespace mathq {
 
   
 #define FUNCTOR_UNARY(Function,ClassName)			\
-  template <class E, class D> class FUNCTOR_##ClassName {		\
+  template <class Element, class D> class FUNCTOR_##ClassName {		\
   public:								\
     typedef D DType;							\
     typedef D DoutType;						\
-    typedef E EType;							\
-    typedef E EoutType;						\
+    typedef Element EType;							\
+    typedef Element EoutType;						\
     static D apply(const D d) {					\
       return Function(d);						\
     }									\
-    template <class T=E>						\
-      static  typename std::enable_if<!std::is_same<T,D>::value, E& >::type \
-      apply(const E& e) {						\
-      E *e2 = new E();						\
+    template <class T=Element>						\
+      static  typename std::enable_if<!std::is_same<T,D>::value, Element& >::type \
+      apply(const Element& e) {						\
+      Element *e2 = new Element();						\
       *e2 = Function(e);						\
       return *e2;							\
     }									\
@@ -39,7 +39,7 @@ namespace mathq {
     }									\
     static std::string classname() {					\
       using namespace display;						\
-      E e;								\
+      Element e;								\
       return functor_namestyle.apply(stringify(FUNCTOR_##ClassName))+display::getBracketedTypeName(e); \
     }									\
   }
@@ -49,9 +49,9 @@ namespace mathq {
   // ************************************************************************
 
 #define FUNCTION_UNARY(Function,Functor)		\
-  template <class X, class E, class D, int M, int R>			\
-  inline auto Function(const MArrayExpR<X,E,D,M,R>& x) {		\
-    return  TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R, Functor<E,D> >(x); \
+  template <class X, class Element, class D, int M, int R>			\
+  inline auto Function(const MArrayExpR<X,Element,D,M,R>& x) {		\
+    return  TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R, Functor<Element,D> >(x); \
     }
 
 
@@ -217,18 +217,18 @@ namespace mathq {
 
   
 #define FUNCTOR_UNARY_TYPE2(Function,ClassName)		\
-  template <class E, class DIN, class DOUT> class FUNCTOR_##ClassName {		\
+  template <class Element, class DIN, class DOUT> class FUNCTOR_##ClassName {		\
   public:								\
     typedef DIN DType;							\
     typedef DOUT DoutType;						\
-    typedef E EType;							\
-    typedef typename NumberTrait<E,DOUT>::ReplaceTypeE EoutType;	      \
+    typedef Element EType;							\
+    typedef typename NumberTrait<Element,DOUT>::ReplaceTypeE EoutType;	      \
     static DOUT apply(const DIN d) {					\
       return Function(d);						\
     }									\
-    template <class T=E>						\
+    template <class T=Element>						\
       static  typename std::enable_if<!std::is_same<T,DIN>::value, EoutType& >::type \
-      apply(const E& e) {						\
+      apply(const Element& e) {						\
       EoutType *e2 = new EoutType();						\
       *e2 = Function(e);						\
       return *e2;							\
@@ -241,7 +241,7 @@ namespace mathq {
     }									\
     static std::string classname() {					\
       using namespace display;						\
-      E e;								\
+      Element e;								\
       return functor_namestyle.apply(stringify(FUNCTOR_##ClassName))+display::getBracketedTypeName(e); \
     }									\
   }
@@ -251,10 +251,10 @@ namespace mathq {
   // ************************************************************************
 
 #define FUNCTION_UNARY_TYPE2(Function,Functor,DIN,DOUT)			\
-  template <class X, class E, class D, int M, int R>			\
-  inline auto Function(const MArrayExpR<X,E,DIN,M,R>& x) {		\
-    typedef typename NumberTrait<E,DOUT>::ReplaceTypeE EOUT;		\
-    return  TER_Unary<MArrayExpR<X,E,DIN,M,R>,EOUT,DOUT,M,R, Functor<E,DIN,DOUT>>(x); \
+  template <class X, class Element, class D, int M, int R>			\
+  inline auto Function(const MArrayExpR<X,Element,DIN,M,R>& x) {		\
+    typedef typename NumberTrait<Element,DOUT>::ReplaceTypeE EOUT;		\
+    return  TER_Unary<MArrayExpR<X,Element,DIN,M,R>,EOUT,DOUT,M,R, Functor<Element,DIN,DOUT>>(x); \
     }
   
   // ************************************************************************
@@ -279,17 +279,17 @@ namespace mathq {
 
   // function: conj(x) x=real
 
-  template <class X, class E, class D, int M, int R> 
-    EnableMethodIf<std::is_arithmetic<D>::value,const MArrayExpR<X,E,D,M,R>&>  
-    conj(const MArrayExpR<X,E,D,M,R>& x) {
+  template <class X, class Element, class D, int M, int R> 
+    EnableMethodIf<std::is_arithmetic<D>::value,const MArrayExpR<X,Element,D,M,R>&>  
+    conj(const MArrayExpR<X,Element,D,M,R>& x) {
     return x;
   }
 
 
   // function: conj(y) y=imag
   
-  template <class X, class E, class D, int M, int R> 
-  inline const auto conj(const MArrayExpR<X,E,Imaginary<D>,M,R>& x) {
+  template <class X, class Element, class D, int M, int R> 
+  inline const auto conj(const MArrayExpR<X,Element,Imaginary<D>,M,R>& x) {
     return  -x; 
   }
   
@@ -298,10 +298,10 @@ namespace mathq {
 
   FUNCTOR_UNARY(std::conj,conj_complex);
 
-  template <class X, class E, class D, int M, int R> 
-    inline auto conj(const MArrayExpR<X,E,std::complex<D>,M,R>& x) {
+  template <class X, class Element, class D, int M, int R> 
+    inline auto conj(const MArrayExpR<X,Element,std::complex<D>,M,R>& x) {
     typedef std::complex<D> DIN;
-    return  TER_Unary<MArrayExpR<X,E,DIN,M,R>,E,DIN,M,R,FUNCTOR_conj_complex<E,DIN>>(x); 
+    return  TER_Unary<MArrayExpR<X,Element,DIN,M,R>,Element,DIN,M,R,FUNCTOR_conj_complex<Element,DIN>>(x); 
   }
 
 
@@ -311,8 +311,8 @@ namespace mathq {
 
   // function: real(x) x=real
   
-  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,const MArrayExpR<X,E,D,M,R>&>  
-    real(const MArrayExpR<X,E,D,M,R>& x) {
+  template <class X, class Element, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,const MArrayExpR<X,Element,D,M,R>&>  
+    real(const MArrayExpR<X,Element,D,M,R>& x) {
     return x;
   }
 
@@ -337,9 +337,9 @@ namespace mathq {
 
   // function: imag(x) x=real
 
-  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_zero<E,D>>>  
-    imag(const MArrayExpR<X,E,D,M,R>& x) {
-    return  TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_zero<E,D>>(x); 
+  template <class X, class Element, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_zero<Element,D>>>  
+    imag(const MArrayExpR<X,Element,D,M,R>& x) {
+    return  TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_zero<Element,D>>(x); 
   }
 
 
@@ -365,9 +365,9 @@ namespace mathq {
   
   FUNCTOR_UNARY(std::abs,abs_of_real);
 
-  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_abs_of_real<E,D>>>  
-    abs(const MArrayExpR<X,E,D,M,R>& x) {
-    return  TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_abs_of_real<E,D>>(x); 
+  template <class X, class Element, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_abs_of_real<Element,D>>>  
+    abs(const MArrayExpR<X,Element,D,M,R>& x) {
+    return  TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_abs_of_real<Element,D>>(x); 
   }
 
 
@@ -392,9 +392,9 @@ namespace mathq {
   
   FUNCTOR_UNARY(std::arg,arg_of_real);
 
-  template <class X, class E, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_arg_of_real<E,D>>>  
-    arg(const MArrayExpR<X,E,D,M,R>& x) {
-    return  TER_Unary<MArrayExpR<X,E,D,M,R>,E,D,M,R,FUNCTOR_arg_of_real<E,D>>(x); 
+  template <class X, class Element, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_arg_of_real<Element,D>>>  
+    arg(const MArrayExpR<X,Element,D,M,R>& x) {
+    return  TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_arg_of_real<Element,D>>(x); 
   }
 
 
@@ -419,11 +419,11 @@ namespace mathq {
  
   FUNCTOR_UNARY_TYPE2(std::proj,rproj_of_real);
 
-  template <class X, class E, class D, int M, int R,EnableIf<std::is_arithmetic<D>::value> = 0 > auto 
-    rproj(const MArrayExpR<X,E,D,M,R>& x) {
+  template <class X, class Element, class D, int M, int R,EnableIf<std::is_arithmetic<D>::value> = 0 > auto 
+    rproj(const MArrayExpR<X,Element,D,M,R>& x) {
      typedef std::complex<D> DOUT;
-     typedef typename NumberTrait<E,DOUT>::ReplaceTypeE EOUT;
-     return  TER_Unary<MArrayExpR<X,E,D,M,R>,EOUT,DOUT,M,R, FUNCTOR_rproj_of_real<E,D,DOUT> >(x); 
+     typedef typename NumberTrait<Element,DOUT>::ReplaceTypeE EOUT;
+     return  TER_Unary<MArrayExpR<X,Element,D,M,R>,EOUT,DOUT,M,R, FUNCTOR_rproj_of_real<Element,D,DOUT> >(x); 
   }
 
 
@@ -437,10 +437,10 @@ namespace mathq {
 
   FUNCTOR_UNARY(std::proj,rproj_of_complex);
 
-  template <class X, class E, class D, int M, int R> 
-    inline auto rproj(const MArrayExpR<X,E,std::complex<D>,M,R>& x) {
+  template <class X, class Element, class D, int M, int R> 
+    inline auto rproj(const MArrayExpR<X,Element,std::complex<D>,M,R>& x) {
     typedef std::complex<D> DIN;
-    return  TER_Unary<MArrayExpR<X,E,DIN,M,R>,E,DIN,M,R,FUNCTOR_rproj_of_complex<E,DIN>>(x); 
+    return  TER_Unary<MArrayExpR<X,Element,DIN,M,R>,Element,DIN,M,R,FUNCTOR_rproj_of_complex<Element,DIN>>(x); 
   }
 
 

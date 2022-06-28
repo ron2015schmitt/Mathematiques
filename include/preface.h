@@ -79,12 +79,12 @@ namespace mathq {
   class NumberTrait;
 
 
-  // E = element type (int, double, complex<double>, bool, Scalar<double>, Vector<double>, Matrix<double>, etc)
+  // Element = element type (int, double, complex<double>, bool, Scalar<double>, Vector<double>, Matrix<double>, etc)
   // D = underlying ordered field (orderable-number) type (int, double, complex<double>, bool, etc)
 
-  template <class X, class E, typename D, int M, int R>
+  template <class X, class Element, typename D, int M, int R>
   class MArrayExpR;
-  template <class X, class E, typename D, int M, int R>
+  template <class X, class Element, typename D, int M, int R>
   class MArrayExpRW;
 
 
@@ -97,19 +97,19 @@ namespace mathq {
 
 
 
-  template <class E, typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
+  template <class Element, typename D = typename NumberTrait<Element>::Type, int M = 1 + NumberTrait<Element>::depth()>
   class Scalar;
 
-  template <class E, int NE = 0>
+  template <class Element, int NE = 0>
   class Vector;
 
-  template <class E, int NR = 0, int NC = 0>
+  template <class Element, int NR = 0, int NC = 0>
   class Matrix;
 
-  template <class E, int R = 0, typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
+  template <class Element, int R = 0, typename D = typename NumberTrait<Element>::Type, int M = 1 + NumberTrait<Element>::depth()>
   class MultiArray;
 
-  // , typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
+  // , typename D = typename NumberTrait<Element>::Type, int M = 1 + NumberTrait<Element>::depth()>
   template <class Element, int rank, size_t... sizes>
   class MultiArrayNEW {
   public:
@@ -206,7 +206,7 @@ namespace mathq {
 
 
 
-  template <class X, class E, class D, int M, int R, class FUNC>
+  template <class X, class Element, class D, int M, int R, class FUNC>
   class
     TER_Unary;
 
@@ -218,19 +218,19 @@ namespace mathq {
   class
     TER_Ternary;
 
-  template <class A, class X, class E, class D, int M, int R>
+  template <class A, class X, class Element, class D, int M, int R>
   class TER_Series;
 
   template <class A, class B, class X, class D, class OP1, class OP2>
   class TER_Series2;
 
-  template <class X, class E, class D, int M, int R, class FUNC>
+  template <class X, class Element, class D, int M, int R, class FUNC>
   class TER_Transpose;
 
   template <class A, class D>
   class TER_Rep;
 
-  template <class X, class Y, class E, class D, int M>
+  template <class X, class Y, class Element, class D, int M>
   class TER_Join;
 
 
@@ -240,7 +240,7 @@ namespace mathq {
   template <class D>
   class TERW_Submask;
 
-  template <class X, class Y, class E, class D, int M>
+  template <class X, class Y, class Element, class D, int M>
   class TERW_Join;
 
   // *********************************************************************
@@ -251,32 +251,32 @@ namespace mathq {
   // Materialize - this returns a concrete tensor of type specified by paramters
   // ***************************************************************************
 
-  template <class E, class D, int M, int R, int N1 = 0, int N2 = 0>
+  template <class Element, class D, int M, int R, int N1 = 0, int N2 = 0>
   class Materialize {
   public:
-    typedef MultiArray<E, R, D, M> TEN;
-    typedef Matrix<E, 0, 0> MAT;
-    typedef Vector<E, 0> VEC;
-    typedef Scalar<E, D, M> SCA;
+    typedef MultiArray<Element, R, D, M> TEN;
+    typedef Matrix<Element, 0, 0> MAT;
+    typedef Vector<Element, 0> VEC;
+    typedef Scalar<Element, D, M> SCA;
     typedef typename std::conditional<R == 0, SCA, std::conditional<R == 1, VEC, std::conditional<R == 2, MAT, TEN>>>::type Type;
   };
 
-  template <class E, class D, int M>
-  class Materialize<E, D, M, 0> {
+  template <class Element, class D, int M>
+  class Materialize<Element, D, M, 0> {
   public:
-    typedef Scalar<E, D, M> Type;
+    typedef Scalar<Element, D, M> Type;
   };
 
-  template <class E, class D, int M, int N1>
-  class Materialize<E, D, M, 1, N1> {
+  template <class Element, class D, int M, int N1>
+  class Materialize<Element, D, M, 1, N1> {
   public:
-    typedef Vector<E, N1> Type;
+    typedef Vector<Element, N1> Type;
   };
 
-  template <class E, class D, int M, int N1, int N2>
-  class Materialize<E, D, M, 2, N1, N2> {
+  template <class Element, class D, int M, int N1, int N2>
+  class Materialize<Element, D, M, 2, N1, N2> {
   public:
-    typedef Matrix<E, N1, N2> Type;
+    typedef Matrix<Element, N1, N2> Type;
   };
 
 
@@ -322,11 +322,11 @@ namespace mathq {
   public:
     typedef D Type;
   };
-  template <typename X, typename E, typename D, int M, int R>
+  template <typename X, typename Element, typename D, int M, int R>
   class
-    ContainedType<MArrayExpR<X, E, D, M, R>> {
+    ContainedType<MArrayExpR<X, Element, D, M, R>> {
   public:
-    typedef E Type;
+    typedef Element Type;
   };
 
 
@@ -465,16 +465,16 @@ namespace mathq {
   };
 
 
-  template <class X, class E, typename D, int M, int R>
+  template <class X, class Element, typename D, int M, int R>
   class
-    IsMathqContainer<MArrayExpR<X, E, D, M, R>> {
+    IsMathqContainer<MArrayExpR<X, Element, D, M, R>> {
   public:
     constexpr static bool value = true;
     typedef D RealType;
   };
-  template <class X, class E, typename D, int M, int R>
+  template <class X, class Element, typename D, int M, int R>
   class
-    IsMathqContainer<MArrayExpRW<X, E, D, M, R>> {
+    IsMathqContainer<MArrayExpRW<X, Element, D, M, R>> {
   public:
     constexpr static bool value = true;
     typedef D RealType;
@@ -493,16 +493,16 @@ namespace mathq {
     constexpr static bool value = false;
     typedef void RealType;
   };
-  template <class X, class E, typename D, int M, int R>
+  template <class X, class Element, typename D, int M, int R>
   class
-    IsMArrayExpRW<MArrayExpRW<X, E, D, M, R>> {
+    IsMArrayExpRW<MArrayExpRW<X, Element, D, M, R>> {
   public:
     constexpr static bool value = true;
     typedef D RealType;
   };
-  template <class X, class E, typename D, int M, int R>
+  template <class X, class Element, typename D, int M, int R>
   class
-    IsMArrayExpRW<MArrayExpR<X, E, D, M, R>> {
+    IsMArrayExpRW<MArrayExpR<X, Element, D, M, R>> {
   public:
     constexpr static bool value = IsMArrayExpRW<X>::value;
     typedef D RealType;
@@ -526,142 +526,142 @@ namespace mathq {
     }
   };
 
-  template <class E, template <typename> class T>
+  template <class Element, template <typename> class T>
   class
-    OrderedNumberTrait<T<E>> {
+    OrderedNumberTrait<T<Element>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
-  template <class E>
+  template <class Element>
   class
-    OrderedNumberTrait<std::complex<E>> {
+    OrderedNumberTrait<std::complex<Element>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
-    }
-  };
-
-  template <class E>
-  class
-    OrderedNumberTrait<Imaginary<E>> {
-  public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
 
-  template <class E>
+  template <class Element>
   class
-    OrderedNumberTrait<Quaternion<E>> {
+    OrderedNumberTrait<Imaginary<Element>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
+    }
+  };
+
+  template <class Element>
+  class
+    OrderedNumberTrait<Quaternion<Element>> {
+  public:
+    typedef typename OrderedNumberTrait<Element>::Type Type;
+    constexpr static int depth() {
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
 
 
 
-  //  Scalar<E>
-  template <class E>
+  //  Scalar<Element>
+  template <class Element>
   class
-    OrderedNumberTrait<Scalar<E>> {
+    OrderedNumberTrait<Scalar<Element>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
 
-  //  Vector<E>
-  template <class E>
+  //  Vector<Element>
+  template <class Element>
   class
-    OrderedNumberTrait<Vector<E>> {
+    OrderedNumberTrait<Vector<Element>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
-  //  Vector<E,NE>
-  template <class E, int NE>
+  //  Vector<Element,NE>
+  template <class Element, int NE>
   class
-    OrderedNumberTrait<Vector<E, NE>> {
+    OrderedNumberTrait<Vector<Element, NE>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
-    }
-  };
-
-  //  Matrix<E>
-
-  template <class E>
-  class
-    OrderedNumberTrait<Matrix<E>> {
-  public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
 
-  //  Matrix<E,NR>
+  //  Matrix<Element>
 
-  template <class E, int NR>
+  template <class Element>
   class
-    OrderedNumberTrait<Matrix<E, NR>> {
+    OrderedNumberTrait<Matrix<Element>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
 
-  //  Matrix<E,NR,NC>
+  //  Matrix<Element,NR>
 
-  template <class E, int NR, int NC>
+  template <class Element, int NR>
   class
-    OrderedNumberTrait<Matrix<E, NR, NC>> {
+    OrderedNumberTrait<Matrix<Element, NR>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
 
-  //  MultiArray<E>
-  template <class E>
+  //  Matrix<Element,NR,NC>
+
+  template <class Element, int NR, int NC>
   class
-    OrderedNumberTrait<MultiArray<E>> {
+    OrderedNumberTrait<Matrix<Element, NR, NC>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
 
-  //  MultiArray<E,R>
-  template <class E, int R>
+  //  MultiArray<Element>
+  template <class Element>
   class
-    OrderedNumberTrait<MultiArray<E, R>> {
+    OrderedNumberTrait<MultiArray<Element>> {
   public:
-    typedef typename OrderedNumberTrait<E>::Type Type;
+    typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int depth() {
-      return 1 + OrderedNumberTrait<E>::depth();
+      return 1 + OrderedNumberTrait<Element>::depth();
     }
   };
 
-  //  MArrayExpR<X,E,D,M,R>
-
-  template <class X, class E, class D, int M, int R>
+  //  MultiArray<Element,R>
+  template <class Element, int R>
   class
-    OrderedNumberTrait<MArrayExpR<X, E, D, M, R>> {
+    OrderedNumberTrait<MultiArray<Element, R>> {
+  public:
+    typedef typename OrderedNumberTrait<Element>::Type Type;
+    constexpr static int depth() {
+      return 1 + OrderedNumberTrait<Element>::depth();
+    }
+  };
+
+  //  MArrayExpR<X,Element,D,M,R>
+
+  template <class X, class Element, class D, int M, int R>
+  class
+    OrderedNumberTrait<MArrayExpR<X, Element, D, M, R>> {
   public:
     typedef typename OrderedNumberTrait<D>::Type Type;
     constexpr static int depth() {
@@ -774,19 +774,19 @@ namespace mathq {
 
 
 
-  //  Scalar<E>
+  //  Scalar<Element>
 
-  template <class E, typename NewD>
+  template <class Element, typename NewD>
   class
-    NumberTrait<Scalar<E>, NewD> {
+    NumberTrait<Scalar<Element>, NewD> {
   public:
-    typedef Scalar<E> InputType;
-    typedef typename NumberTrait<E>::Type Type;
-    typedef Scalar<typename NumberTrait<E, NewD>::ReplaceTypeD> ReplaceTypeD;
+    typedef Scalar<Element> InputType;
+    typedef typename NumberTrait<Element>::Type Type;
+    typedef Scalar<typename NumberTrait<Element, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef Scalar<NewD> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberTrait<E, NewD>::depth();
+      return 1 + NumberTrait<Element, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -797,19 +797,19 @@ namespace mathq {
   };
 
 
-  //  Vector<E>
+  //  Vector<Element>
 
-  template <class E, typename NewD>
+  template <class Element, typename NewD>
   class
-    NumberTrait<Vector<E>, NewD> {
+    NumberTrait<Vector<Element>, NewD> {
   public:
-    typedef Vector<E> InputType;
-    typedef typename NumberTrait<E>::Type Type;
-    typedef Vector<typename NumberTrait<E, NewD>::ReplaceTypeD> ReplaceTypeD;
+    typedef Vector<Element> InputType;
+    typedef typename NumberTrait<Element>::Type Type;
+    typedef Vector<typename NumberTrait<Element, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef Vector<NewD> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberTrait<E, NewD>::depth();
+      return 1 + NumberTrait<Element, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -819,19 +819,19 @@ namespace mathq {
     }
   };
 
-  //  Vector<E,NE>
+  //  Vector<Element,NE>
 
-  template <class E, typename NewD, int NE>
+  template <class Element, typename NewD, int NE>
   class
-    NumberTrait<Vector<E, NE>, NewD> {
+    NumberTrait<Vector<Element, NE>, NewD> {
   public:
-    typedef Vector<E, NE> InputType;
-    typedef typename NumberTrait<E>::Type Type;
-    typedef Vector<typename NumberTrait<E, NewD>::ReplaceTypeD, NE> ReplaceTypeD;
+    typedef Vector<Element, NE> InputType;
+    typedef typename NumberTrait<Element>::Type Type;
+    typedef Vector<typename NumberTrait<Element, NewD>::ReplaceTypeD, NE> ReplaceTypeD;
     typedef Vector<NewD, NE> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberTrait<E, NewD>::depth();
+      return 1 + NumberTrait<Element, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -842,19 +842,19 @@ namespace mathq {
   };
 
 
-  //  Matrix<E>
+  //  Matrix<Element>
 
-  template <class E, typename NewD>
+  template <class Element, typename NewD>
   class
-    NumberTrait<Matrix<E>, NewD> {
+    NumberTrait<Matrix<Element>, NewD> {
   public:
-    typedef Matrix<E> InputType;
-    typedef typename NumberTrait<E>::Type Type;
-    typedef Matrix<typename NumberTrait<E, NewD>::ReplaceTypeD> ReplaceTypeD;
+    typedef Matrix<Element> InputType;
+    typedef typename NumberTrait<Element>::Type Type;
+    typedef Matrix<typename NumberTrait<Element, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef Matrix<NewD> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberTrait<E, NewD>::depth();
+      return 1 + NumberTrait<Element, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -864,19 +864,19 @@ namespace mathq {
     }
   };
 
-  //  Matrix<E,NR>
+  //  Matrix<Element,NR>
 
-  template <class E, typename NewD, int NR>
+  template <class Element, typename NewD, int NR>
   class
-    NumberTrait<Matrix<E, NR>, NewD> {
+    NumberTrait<Matrix<Element, NR>, NewD> {
   public:
-    typedef Matrix<E, NR> InputType;
-    typedef typename NumberTrait<E>::Type Type;
-    typedef Matrix<typename NumberTrait<E, NewD>::ReplaceTypeD, NR> ReplaceTypeD;
+    typedef Matrix<Element, NR> InputType;
+    typedef typename NumberTrait<Element>::Type Type;
+    typedef Matrix<typename NumberTrait<Element, NewD>::ReplaceTypeD, NR> ReplaceTypeD;
     typedef Matrix<NewD, NR> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberTrait<E, NewD>::depth();
+      return 1 + NumberTrait<Element, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -887,19 +887,19 @@ namespace mathq {
   };
 
 
-  //  Matrix<E,NR,NC>
+  //  Matrix<Element,NR,NC>
 
-  template <class E, typename NewD, int NR, int NC>
+  template <class Element, typename NewD, int NR, int NC>
   class
-    NumberTrait<Matrix<E, NR, NC>, NewD> {
+    NumberTrait<Matrix<Element, NR, NC>, NewD> {
   public:
-    typedef Matrix<E, NR, NC> InputType;
-    typedef typename NumberTrait<E>::Type Type;
-    typedef Matrix<typename NumberTrait<E, NewD>::ReplaceTypeD, NR, NC> ReplaceTypeD;
+    typedef Matrix<Element, NR, NC> InputType;
+    typedef typename NumberTrait<Element>::Type Type;
+    typedef Matrix<typename NumberTrait<Element, NewD>::ReplaceTypeD, NR, NC> ReplaceTypeD;
     typedef Matrix<NewD, NR, NC> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberTrait<E, NewD>::depth();
+      return 1 + NumberTrait<Element, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -911,19 +911,19 @@ namespace mathq {
 
 
 
-  //  MultiArray<E>
+  //  MultiArray<Element>
 
-  template <class E, typename NewD>
+  template <class Element, typename NewD>
   class
-    NumberTrait<MultiArray<E>, NewD> {
+    NumberTrait<MultiArray<Element>, NewD> {
   public:
-    typedef MultiArray<E> InputType;
-    typedef typename NumberTrait<E>::Type Type;
-    typedef MultiArray<typename NumberTrait<E, NewD>::ReplaceTypeD> ReplaceTypeD;
+    typedef MultiArray<Element> InputType;
+    typedef typename NumberTrait<Element>::Type Type;
+    typedef MultiArray<typename NumberTrait<Element, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef MultiArray<NewD> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberTrait<E, NewD>::depth();
+      return 1 + NumberTrait<Element, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -933,19 +933,19 @@ namespace mathq {
     }
   };
 
-  //  MultiArray<E,R>
+  //  MultiArray<Element,R>
 
-  template <class E, typename NewD, int R>
+  template <class Element, typename NewD, int R>
   class
-    NumberTrait<MultiArray<E, R>, NewD> {
+    NumberTrait<MultiArray<Element, R>, NewD> {
   public:
-    typedef MultiArray<E, R> InputType;
-    typedef typename NumberTrait<E>::Type Type;
-    typedef MultiArray<typename NumberTrait<E, NewD>::ReplaceTypeD, R> ReplaceTypeD;
+    typedef MultiArray<Element, R> InputType;
+    typedef typename NumberTrait<Element>::Type Type;
+    typedef MultiArray<typename NumberTrait<Element, NewD>::ReplaceTypeD, R> ReplaceTypeD;
     typedef MultiArray<NewD, R> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int depth() {
-      return 1 + NumberTrait<E, NewD>::depth();
+      return 1 + NumberTrait<Element, NewD>::depth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -957,15 +957,15 @@ namespace mathq {
 
 
 
-  //  MArrayExpR<X,E,D,M,R>
+  //  MArrayExpR<X,Element,D,M,R>
 
-  template <class X, class E, class D, int M, int R, typename NewD>
+  template <class X, class Element, class D, int M, int R, typename NewD>
   class
-    NumberTrait<MArrayExpR<X, E, D, M, R>, NewD> {
+    NumberTrait<MArrayExpR<X, Element, D, M, R>, NewD> {
   public:
-    typedef MArrayExpR<X, E, D, M, R> InputType;
+    typedef MArrayExpR<X, Element, D, M, R> InputType;
     typedef D Type;
-    typedef typename NumberTrait<E, NewD>::ReplaceTypeD NewE;
+    typedef typename NumberTrait<Element, NewD>::ReplaceTypeD NewE;
     typedef typename NumberTrait<X, NewD>::ReplaceTypeD NewX;
     typedef NewX ReplaceTypeD;
     typedef MArrayExpR<X, NewD, D, M, R> ReplaceTypeE;
@@ -981,15 +981,15 @@ namespace mathq {
     }
   };
 
-  //  MArrayExpRW<X,E,D,M,R>
+  //  MArrayExpRW<X,Element,D,M,R>
 
-  template <class X, class E, class D, int M, int R, typename NewD>
+  template <class X, class Element, class D, int M, int R, typename NewD>
   class
-    NumberTrait<MArrayExpRW<X, E, D, M, R>, NewD> {
+    NumberTrait<MArrayExpRW<X, Element, D, M, R>, NewD> {
   public:
-    typedef MArrayExpRW<X, E, D, M, R> InputType;
+    typedef MArrayExpRW<X, Element, D, M, R> InputType;
     typedef D Type;
-    typedef typename NumberTrait<E, NewD>::ReplaceTypeD NewE;
+    typedef typename NumberTrait<Element, NewD>::ReplaceTypeD NewE;
     typedef typename NumberTrait<X, NewD>::ReplaceTypeD NewX;
     typedef NewX ReplaceTypeD;
     typedef MArrayExpRW<X, NewD, D, M, R> ReplaceTypeE;
@@ -1055,97 +1055,97 @@ namespace mathq {
 
 
 
-  //  Scalar<E>
+  //  Scalar<Element>
 
-  template <class E, class C>
+  template <class Element, class C>
   class
-    InversionType<Scalar<E>, C> {
+    InversionType<Scalar<Element>, C> {
   public:
-    typedef typename NumberTrait<E>::Type D;
+    typedef typename NumberTrait<Element>::Type D;
     typedef Scalar<D> MultiArrayD;
     typedef Scalar<C> MultiArrayC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
-  //  Vector<E>
+  //  Vector<Element>
 
-  template <class E, class C>
+  template <class Element, class C>
   class
-    InversionType<Vector<E>, C> {
+    InversionType<Vector<Element>, C> {
   public:
-    typedef typename NumberTrait<E>::Type D;
+    typedef typename NumberTrait<Element>::Type D;
     typedef Vector<D> MultiArrayD;
     typedef Vector<C> MultiArrayC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
-  //  Vector<E,NE>
-  template <class E, int NE, class C>
+  //  Vector<Element,NE>
+  template <class Element, int NE, class C>
   class
-    InversionType<Vector<E, NE>, C> {
+    InversionType<Vector<Element, NE>, C> {
   public:
-    typedef typename NumberTrait<E>::Type D;
+    typedef typename NumberTrait<Element>::Type D;
     typedef Vector<D, NE> MultiArrayD;
     typedef Vector<C, NE> MultiArrayC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
-  //  Matrix<E>
+  //  Matrix<Element>
 
-  template <class E, class C>
+  template <class Element, class C>
   class
-    InversionType<Matrix<E>, C> {
+    InversionType<Matrix<Element>, C> {
   public:
-    typedef typename NumberTrait<E>::Type D;
+    typedef typename NumberTrait<Element>::Type D;
     typedef Matrix<D> MultiArrayD;
     typedef Matrix<C> MultiArrayC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
-  //  Matrix<E,NR>
+  //  Matrix<Element,NR>
 
-  template <class E, int NR, class C>
+  template <class Element, int NR, class C>
   class
-    InversionType<Matrix<E, NR>, C> {
+    InversionType<Matrix<Element, NR>, C> {
   public:
-    typedef typename NumberTrait<E>::Type D;
+    typedef typename NumberTrait<Element>::Type D;
     typedef Matrix<D, NR> MultiArrayD;
     typedef Matrix<C, NR> MultiArrayC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
-  //  Matrix<E,NR,NC>
+  //  Matrix<Element,NR,NC>
 
-  template <class E, int NR, int NC, class C>
+  template <class Element, int NR, int NC, class C>
   class
-    InversionType<Matrix<E, NR, NC>, C> {
+    InversionType<Matrix<Element, NR, NC>, C> {
   public:
-    typedef typename NumberTrait<E>::Type D;
+    typedef typename NumberTrait<Element>::Type D;
     typedef Matrix<D, NR, NC> MultiArrayD;
     typedef Matrix<C, NR, NC> MultiArrayC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
-  //  MultiArray<E>
-  template <class E, class C>
+  //  MultiArray<Element>
+  template <class Element, class C>
   class
-    InversionType<MultiArray<E>, C> {
+    InversionType<MultiArray<Element>, C> {
   public:
-    typedef typename NumberTrait<E>::Type D;
+    typedef typename NumberTrait<Element>::Type D;
     typedef MultiArray<D> MultiArrayD;
     typedef MultiArray<C> MultiArrayC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
-  //  MultiArray<E,R>
-  template <class E, int R, class C>
+  //  MultiArray<Element,R>
+  template <class Element, int R, class C>
   class
-    InversionType<MultiArray<E, R>, C> {
+    InversionType<MultiArray<Element, R>, C> {
   public:
-    typedef typename NumberTrait<E>::Type D;
+    typedef typename NumberTrait<Element>::Type D;
     typedef MultiArray<D, R> MultiArrayD;
     typedef MultiArray<C, R> MultiArrayC;
-    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<E, MultiArrayD>::Type, typename InversionType<E, MultiArrayC>::Type>::type Type;
+    typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
 
@@ -1380,28 +1380,28 @@ namespace mathq {
   // GridType 
   // ***************************************************************************
 
-  template <class E, class D, int M, int R>
+  template <class Element, class D, int M, int R>
   class GridType {
   public:
-    typedef MultiArray<E, R, D, M> Type;
+    typedef MultiArray<Element, R, D, M> Type;
   };
 
-  template <class E, class D, int M>
-  class GridType<E, D, M, 0> {
+  template <class Element, class D, int M>
+  class GridType<Element, D, M, 0> {
   public:
-    typedef Scalar<E, D, M> Type;
+    typedef Scalar<Element, D, M> Type;
   };
 
-  template <class E, class D, int M>
-  class GridType<E, D, M, 1> {
+  template <class Element, class D, int M>
+  class GridType<Element, D, M, 1> {
   public:
-    typedef Vector<E, 0> Type;
+    typedef Vector<Element, 0> Type;
   };
 
-  template <class E, class D, int M>
-  class GridType<E, D, M, 2> {
+  template <class Element, class D, int M>
+  class GridType<Element, D, M, 2> {
   public:
-    typedef Matrix<E, 0, 0> Type;
+    typedef Matrix<Element, 0, 0> Type;
   };
 
 
@@ -1534,9 +1534,9 @@ namespace mathq {
   class CurvilinearCoordinateSystem;
 
 
-  template <class E, size_t NDIMS, class CHILD> class CurvilinearCoords;
-  template <class E, size_t NDIMS> class CartCoords;
-  template <class E> class PolarCoords;
+  template <class Element, size_t NDIMS, class CHILD> class CurvilinearCoords;
+  template <class Element, size_t NDIMS> class CartCoords;
+  template <class Element> class PolarCoords;
 
 
 
@@ -1563,8 +1563,8 @@ namespace mathq {
   // In functions_misc.h
   ////////////////////////////////////////////////////////////
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<std::is_same<D, bool>::value, Vector<size_t>&> findtrue(const MArrayExpR<X, E, D, M, R>& v);
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<std::is_same<D, bool>::value, Vector<size_t>&> findtrue(const MArrayExpR<X, Element, D, M, R>& v);
 
 
 

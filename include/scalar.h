@@ -10,8 +10,8 @@ namespace mathq {
 
 
     /********************************************************************
-     * Scalar<E>    -- variable size vector (valarray)
-     *                 E  = type for elements
+     * Scalar<Element>    -- variable size vector (valarray)
+     *                 Element  = type for elements
      *
      * DO NOT SPECIFY: D,M
      *                 The defaults are defined in the declaration in
@@ -19,21 +19,21 @@ namespace mathq {
      *                 D = number type
      *                   = underlying algebraic field
      *                     ex. int, double, std::complex<double>
-     *                 M = tensor depth. if E=D, then M=1.
+     *                 M = tensor depth. if Element=D, then M=1.
     ********************************************************************
      */
 
 
-  template <class E, typename D, int M> class Scalar :
-    public MArrayExpRW< Scalar<E, D, M>, E, D, M, 0> {
+  template <class Element, typename D, int M> class Scalar :
+    public MArrayExpRW< Scalar<Element, D, M>, Element, D, M, 0> {
   public:
-    typedef Scalar<E, D, M> XType;
-    typedef E EType;
+    typedef Scalar<Element, D, M> XType;
+    typedef Element EType;
     typedef D DType;
     typedef typename OrderedNumberTrait<D>::Type FType;
     constexpr static int Rvalue = 0;
     constexpr static int Mvalue = M;
-    typedef typename std::conditional<M==1, E, E&>::type TypeA;
+    typedef typename std::conditional<M==1, Element, Element&>::type TypeA;
 
   private:
 
@@ -42,7 +42,7 @@ namespace mathq {
     // do NOT declare any other storage.
     // keep the instances lightweight
 
-    E data_;
+    Element data_;
 
 
 
@@ -55,19 +55,19 @@ namespace mathq {
 
 
     // -------------------  DEFAULT  CONSTRUCTOR: zero --------------------
-    Scalar<E, D, M>() {
+    Scalar<Element, D, M>() {
       if constexpr (M==1) {
         *this = 0;
       }
       else {
-        data_ = *(new E());
+        data_ = *(new Element());
       }
       constructorHelper();
     }
 
-    // --------------------- constant E CONSTRUCTOR ---------------------
+    // --------------------- constant Element CONSTRUCTOR ---------------------
 
-    Scalar<E, D, M>(const E e) {
+    Scalar<Element, D, M>(const Element e) {
 
       *this = e;
       constructorHelper();
@@ -77,7 +77,7 @@ namespace mathq {
 
     template<int M1 = M, EnableIf<(M1>1)> = 0>
 
-    Scalar<E, D, M>(const D d) {
+    Scalar<Element, D, M>(const D d) {
 
       *this = d;
       constructorHelper();
@@ -87,7 +87,7 @@ namespace mathq {
 
 
     template <class X>
-    Scalar<E, D, M>(const MArrayExpR<X, E, D, M, Rvalue>& x) {
+    Scalar<Element, D, M>(const MArrayExpR<X, Element, D, M, Rvalue>& x) {
 
       *this = x;
       constructorHelper();
@@ -95,7 +95,7 @@ namespace mathq {
 
 
     // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    Scalar<E, D, M>(const std::initializer_list<E>& mylist) {
+    Scalar<Element, D, M>(const std::initializer_list<Element>& mylist) {
       *this = mylist;
       constructorHelper();
     }
@@ -115,7 +115,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~Scalar<E, D, M>() {
+    ~Scalar<Element, D, M>() {
       //remove from MultiArrayPool
     }
 
@@ -204,7 +204,7 @@ namespace mathq {
     // TODO: should just pass an index and make deepdims const
 
 
-    Scalar<E, D, M>& resize(std::vector<Dimensions>& deepdims) {
+    Scalar<Element, D, M>& resize(std::vector<Dimensions>& deepdims) {
       if constexpr (M>1) {
         deepdims.erase(deepdims.begin());
         data_.resize(deepdims);
@@ -299,12 +299,12 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write": unsigned
-    E& operator[](const size_t n) {
+    Element& operator[](const size_t n) {
       return data_;
     }
 
     // "read/write": signed
-    const E& operator[](const size_t n)  const {
+    const Element& operator[](const size_t n)  const {
       return data_;
     }
 
@@ -316,12 +316,12 @@ namespace mathq {
 
 
     // "read/write"
-    E& operator()() {
+    Element& operator()() {
       return data_;
     }
 
     // "read only"
-    const E& operator()()  const {
+    const Element& operator()()  const {
       return data_;
     }
 
@@ -333,13 +333,13 @@ namespace mathq {
     //************************** ASSIGNMENT **************************************
     //**********************************************************************
 
-    Scalar<E, D, M>& operator=(const E e) {
+    Scalar<Element, D, M>& operator=(const Element e) {
       data_ = e;
       return *this;
     }
 
     template <int M1 = M>
-    typename std::enable_if<(M1>1), Scalar<E, D, M>& >::type operator=(const D& d) {
+    typename std::enable_if<(M1>1), Scalar<Element, D, M>& >::type operator=(const D& d) {
       for (size_t i = 0; i < deepsize(); i++) {
         (*this).dat(i) = d;
       }
@@ -347,7 +347,7 @@ namespace mathq {
     }
 
 
-    Scalar<E, D, M>& operator=(const Scalar<E, D, M>& s2) {
+    Scalar<Element, D, M>& operator=(const Scalar<Element, D, M>& s2) {
       if constexpr (M<=1) {
         data_ = s2();
       }
@@ -361,15 +361,15 @@ namespace mathq {
     }
 
 
-    Scalar<E, D, M>& operator=(const std::initializer_list<E>& mylist) {
-      typename std::initializer_list<E>::iterator it = mylist.begin();
+    Scalar<Element, D, M>& operator=(const std::initializer_list<Element>& mylist) {
+      typename std::initializer_list<Element>::iterator it = mylist.begin();
       data_ = *it;
       return *this;
     }
 
 
     template <class X>
-    Scalar<E, D, M>& operator=(const MArrayExpR<X, E, D, M, Rvalue>& x) {
+    Scalar<Element, D, M>& operator=(const MArrayExpR<X, Element, D, M, Rvalue>& x) {
       if constexpr (M<=1) {
         data_ = x[0];
       }
@@ -392,7 +392,7 @@ namespace mathq {
     // NOTE: in-place
 
 
-    Scalar<E, D, M>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    Scalar<Element, D, M>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       data_ = mathq::roundzero(data_, tolerance);
       return *this;
     }
@@ -419,7 +419,7 @@ namespace mathq {
       using namespace display;
       std::string s = "Scalar";
       s += StyledString::get(ANGLE1).get();
-      E e;
+      Element e;
       s += getTypeName(e);
       //if (M>1) {
       //  s += StyledString::get(COMMA).get();
@@ -440,7 +440,7 @@ namespace mathq {
 
     // stream << operator
 
-    friend std::ostream& operator<<(std::ostream& stream, const Scalar<E, D, M>& s) {
+    friend std::ostream& operator<<(std::ostream& stream, const Scalar<Element, D, M>& s) {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       stream << style.apply(FormatDataVector::string_opening);
@@ -452,7 +452,7 @@ namespace mathq {
 
 
     //template <class D>	
-    friend inline std::istream& operator>>(const std::string s, Scalar<E, D, M>& x) {
+    friend inline std::istream& operator>>(const std::string s, Scalar<Element, D, M>& x) {
       std::istringstream st(s);
       return (st >> x);
     }
@@ -461,7 +461,7 @@ namespace mathq {
     // stream >> operator
 
     // TODO: implement this
-    friend std::istream& operator>>(std::istream& stream, Scalar<E, D, M>& x) {
+    friend std::istream& operator>>(std::istream& stream, Scalar<Element, D, M>& x) {
       return stream;
     }
 

@@ -22,18 +22,18 @@ namespace mathq {
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_pos {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_pos {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return +(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = +(e);
     return *e2;
@@ -46,7 +46,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_pos")+display::getBracketedTypeName(e);
   }
 };
@@ -59,18 +59,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_neg {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_neg {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return -(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = -(e);
     return *e2;
@@ -83,7 +83,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_neg")+display::getBracketedTypeName(e);
   }
 };
@@ -96,18 +96,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_not {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_not {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return !(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = !(e);
     return *e2;
@@ -120,7 +120,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_not")+display::getBracketedTypeName(e);
   }
 };
@@ -133,18 +133,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_sin {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_sin {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::sin(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::sin(e);
     return *e2;
@@ -157,7 +157,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_sin")+display::getBracketedTypeName(e);
   }
 };
@@ -170,18 +170,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_cos {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_cos {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::cos(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::cos(e);
     return *e2;
@@ -194,7 +194,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_cos")+display::getBracketedTypeName(e);
   }
 };
@@ -207,18 +207,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_tan {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_tan {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::tan(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::tan(e);
     return *e2;
@@ -231,7 +231,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_tan")+display::getBracketedTypeName(e);
   }
 };
@@ -244,18 +244,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_asin {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_asin {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::asin(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::asin(e);
     return *e2;
@@ -268,7 +268,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_asin")+display::getBracketedTypeName(e);
   }
 };
@@ -281,18 +281,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_acos {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_acos {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::acos(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::acos(e);
     return *e2;
@@ -305,7 +305,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_acos")+display::getBracketedTypeName(e);
   }
 };
@@ -318,18 +318,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_atan {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_atan {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::atan(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::atan(e);
     return *e2;
@@ -342,7 +342,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_atan")+display::getBracketedTypeName(e);
   }
 };
@@ -355,18 +355,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_sinh {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_sinh {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::sinh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::sinh(e);
     return *e2;
@@ -379,7 +379,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_sinh")+display::getBracketedTypeName(e);
   }
 };
@@ -392,18 +392,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_cosh {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_cosh {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::cosh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::cosh(e);
     return *e2;
@@ -416,7 +416,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_cosh")+display::getBracketedTypeName(e);
   }
 };
@@ -429,18 +429,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_tanh {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_tanh {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::tanh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::tanh(e);
     return *e2;
@@ -453,7 +453,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_tanh")+display::getBracketedTypeName(e);
   }
 };
@@ -466,18 +466,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_asinh {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_asinh {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::asinh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::asinh(e);
     return *e2;
@@ -490,7 +490,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_asinh")+display::getBracketedTypeName(e);
   }
 };
@@ -503,18 +503,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_acosh {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_acosh {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::acosh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::acosh(e);
     return *e2;
@@ -527,7 +527,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_acosh")+display::getBracketedTypeName(e);
   }
 };
@@ -540,18 +540,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_atanh {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_atanh {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::atanh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::atanh(e);
     return *e2;
@@ -564,7 +564,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_atanh")+display::getBracketedTypeName(e);
   }
 };
@@ -577,18 +577,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_sqrt {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_sqrt {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::sqrt(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::sqrt(e);
     return *e2;
@@ -601,7 +601,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_sqrt")+display::getBracketedTypeName(e);
   }
 };
@@ -614,18 +614,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_cbrt {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_cbrt {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::cbrt(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::cbrt(e);
     return *e2;
@@ -638,7 +638,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_cbrt")+display::getBracketedTypeName(e);
   }
 };
@@ -651,18 +651,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_sqr {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_sqr {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::sqr(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::sqr(e);
     return *e2;
@@ -675,7 +675,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_sqr")+display::getBracketedTypeName(e);
   }
 };
@@ -688,18 +688,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_cube {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_cube {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::cube(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::cube(e);
     return *e2;
@@ -712,7 +712,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_cube")+display::getBracketedTypeName(e);
   }
 };
@@ -725,18 +725,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_exp {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_exp {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::exp(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::exp(e);
     return *e2;
@@ -749,7 +749,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_exp")+display::getBracketedTypeName(e);
   }
 };
@@ -762,18 +762,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_exp2 {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_exp2 {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::exp2(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::exp2(e);
     return *e2;
@@ -786,7 +786,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_exp2")+display::getBracketedTypeName(e);
   }
 };
@@ -799,18 +799,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_expm1 {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_expm1 {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::expm1(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::expm1(e);
     return *e2;
@@ -823,7 +823,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_expm1")+display::getBracketedTypeName(e);
   }
 };
@@ -836,18 +836,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_log {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_log {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::log(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::log(e);
     return *e2;
@@ -860,7 +860,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_log")+display::getBracketedTypeName(e);
   }
 };
@@ -873,18 +873,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_log10 {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_log10 {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::log10(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::log10(e);
     return *e2;
@@ -897,7 +897,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_log10")+display::getBracketedTypeName(e);
   }
 };
@@ -910,18 +910,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_log2 {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_log2 {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::log2(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::log2(e);
     return *e2;
@@ -934,7 +934,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_log2")+display::getBracketedTypeName(e);
   }
 };
@@ -947,18 +947,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_log1p {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_log1p {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::log1p(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::log1p(e);
     return *e2;
@@ -971,7 +971,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_log1p")+display::getBracketedTypeName(e);
   }
 };
@@ -984,18 +984,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_logb {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_logb {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::logb(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::logb(e);
     return *e2;
@@ -1008,7 +1008,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_logb")+display::getBracketedTypeName(e);
   }
 };
@@ -1021,18 +1021,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_sgn {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_sgn {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::sgn(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::sgn(e);
     return *e2;
@@ -1045,7 +1045,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_sgn")+display::getBracketedTypeName(e);
   }
 };
@@ -1058,18 +1058,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_ceil {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_ceil {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::ceil(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::ceil(e);
     return *e2;
@@ -1082,7 +1082,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_ceil")+display::getBracketedTypeName(e);
   }
 };
@@ -1095,18 +1095,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_floor {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_floor {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::floor(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::floor(e);
     return *e2;
@@ -1119,7 +1119,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_floor")+display::getBracketedTypeName(e);
   }
 };
@@ -1132,18 +1132,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_round {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_round {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::round(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::round(e);
     return *e2;
@@ -1156,7 +1156,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_round")+display::getBracketedTypeName(e);
   }
 };
@@ -1169,18 +1169,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_trunc {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_trunc {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::trunc(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::trunc(e);
     return *e2;
@@ -1193,7 +1193,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_trunc")+display::getBracketedTypeName(e);
   }
 };
@@ -1206,18 +1206,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_erf {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_erf {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::erf(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::erf(e);
     return *e2;
@@ -1230,7 +1230,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_erf")+display::getBracketedTypeName(e);
   }
 };
@@ -1243,18 +1243,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_erfc {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_erfc {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::erfc(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::erfc(e);
     return *e2;
@@ -1267,7 +1267,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_erfc")+display::getBracketedTypeName(e);
   }
 };
@@ -1280,18 +1280,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_tgamma {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_tgamma {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::tgamma(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::tgamma(e);
     return *e2;
@@ -1304,7 +1304,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_tgamma")+display::getBracketedTypeName(e);
   }
 };
@@ -1317,18 +1317,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_lgamma {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_lgamma {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::lgamma(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::lgamma(e);
     return *e2;
@@ -1341,7 +1341,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_lgamma")+display::getBracketedTypeName(e);
   }
 };
@@ -1354,18 +1354,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_expint {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_expint {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::expint(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::expint(e);
     return *e2;
@@ -1378,7 +1378,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_expint")+display::getBracketedTypeName(e);
   }
 };
@@ -1391,18 +1391,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_riemann_zeta {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_riemann_zeta {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::riemann_zeta(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::riemann_zeta(e);
     return *e2;
@@ -1415,7 +1415,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_riemann_zeta")+display::getBracketedTypeName(e);
   }
 };
@@ -1428,18 +1428,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_comp_ellint_1 {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_comp_ellint_1 {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::comp_ellint_1(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::comp_ellint_1(e);
     return *e2;
@@ -1452,7 +1452,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_comp_ellint_1")+display::getBracketedTypeName(e);
   }
 };
@@ -1465,18 +1465,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_comp_ellint_2 {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_comp_ellint_2 {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::comp_ellint_2(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::comp_ellint_2(e);
     return *e2;
@@ -1489,7 +1489,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_comp_ellint_2")+display::getBracketedTypeName(e);
   }
 };
@@ -1502,18 +1502,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_zero {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_zero {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::zero(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::zero(e);
     return *e2;
@@ -1526,7 +1526,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_zero")+display::getBracketedTypeName(e);
   }
 };
@@ -1539,18 +1539,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_ilogb {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_ilogb {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::ilogb(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::ilogb(e);
     return *e2;
@@ -1563,7 +1563,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_ilogb")+display::getBracketedTypeName(e);
   }
 };
@@ -1576,18 +1576,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_imaginary {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_imaginary {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::Imaginary(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::Imaginary(e);
     return *e2;
@@ -1600,7 +1600,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_imaginary")+display::getBracketedTypeName(e);
   }
 };
@@ -1613,18 +1613,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_conj_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_conj_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::conj(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::conj(e);
     return *e2;
@@ -1637,7 +1637,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_conj_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1650,18 +1650,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_real_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_real_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::real(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::real(e);
     return *e2;
@@ -1674,7 +1674,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_real_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1687,18 +1687,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_imag_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_imag_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::imag(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::imag(e);
     return *e2;
@@ -1711,7 +1711,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_imag_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1724,18 +1724,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_abs_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_abs_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::abs(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::abs(e);
     return *e2;
@@ -1748,7 +1748,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_abs_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1761,18 +1761,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_arg_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_arg_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::arg(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::arg(e);
     return *e2;
@@ -1785,7 +1785,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_arg_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1798,18 +1798,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_proj_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_proj_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::proj(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::proj(e);
     return *e2;
@@ -1822,7 +1822,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_proj_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1835,18 +1835,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_exp_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_exp_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::exp(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::exp(e);
     return *e2;
@@ -1859,7 +1859,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_exp_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1872,18 +1872,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_log_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_log_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::log(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::log(e);
     return *e2;
@@ -1896,7 +1896,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_log_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1909,18 +1909,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_log10_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_log10_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::log10(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::log10(e);
     return *e2;
@@ -1933,7 +1933,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_log10_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1946,18 +1946,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_sqrt_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_sqrt_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::sqrt(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::sqrt(e);
     return *e2;
@@ -1970,7 +1970,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_sqrt_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -1983,18 +1983,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_sin_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_sin_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::sin(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::sin(e);
     return *e2;
@@ -2007,7 +2007,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_sin_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2020,18 +2020,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_cos_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_cos_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::cos(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::cos(e);
     return *e2;
@@ -2044,7 +2044,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_cos_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2057,18 +2057,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_tan_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_tan_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::tan(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::tan(e);
     return *e2;
@@ -2081,7 +2081,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_tan_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2094,18 +2094,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_asin_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_asin_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::asin(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::asin(e);
     return *e2;
@@ -2118,7 +2118,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_asin_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2131,18 +2131,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_acos_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_acos_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::acos(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::acos(e);
     return *e2;
@@ -2155,7 +2155,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_acos_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2168,18 +2168,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_atan_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_atan_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::atan(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::atan(e);
     return *e2;
@@ -2192,7 +2192,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_atan_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2205,18 +2205,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_sinh_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_sinh_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::sinh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::sinh(e);
     return *e2;
@@ -2229,7 +2229,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_sinh_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2242,18 +2242,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_cosh_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_cosh_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::cosh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::cosh(e);
     return *e2;
@@ -2266,7 +2266,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_cosh_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2279,18 +2279,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_tanh_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_tanh_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::tanh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::tanh(e);
     return *e2;
@@ -2303,7 +2303,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_tanh_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2316,18 +2316,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_asinh_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_asinh_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::asinh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::asinh(e);
     return *e2;
@@ -2340,7 +2340,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_asinh_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2353,18 +2353,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_acosh_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_acosh_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::acosh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::acosh(e);
     return *e2;
@@ -2377,7 +2377,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_acosh_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2390,18 +2390,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_atanh_imag {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_atanh_imag {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::atanh(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::atanh(e);
     return *e2;
@@ -2414,7 +2414,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_atanh_imag")+display::getBracketedTypeName(e);
   }
 };
@@ -2427,18 +2427,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_conj_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_conj_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::conj(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::conj(e);
     return *e2;
@@ -2451,7 +2451,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_conj_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2464,18 +2464,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_real_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_real_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::real(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::real(e);
     return *e2;
@@ -2488,7 +2488,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_real_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2501,18 +2501,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_imag_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_imag_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::imag(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::imag(e);
     return *e2;
@@ -2525,7 +2525,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_imag_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2538,18 +2538,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_abs_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_abs_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::abs(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::abs(e);
     return *e2;
@@ -2562,7 +2562,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_abs_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2575,18 +2575,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_arg_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_arg_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::arg(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::arg(e);
     return *e2;
@@ -2599,7 +2599,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_arg_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2612,18 +2612,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_proj_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_proj_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::proj(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::proj(e);
     return *e2;
@@ -2636,7 +2636,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_proj_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2649,18 +2649,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_round_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_round_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::round(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::round(e);
     return *e2;
@@ -2673,7 +2673,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_round_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2686,18 +2686,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_log2_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_log2_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::log2(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::log2(e);
     return *e2;
@@ -2710,7 +2710,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_log2_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2723,18 +2723,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_floor_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_floor_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::floor(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::floor(e);
     return *e2;
@@ -2747,7 +2747,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_floor_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2760,18 +2760,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_ceil_complex {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_ceil_complex {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::ceil(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::ceil(e);
     return *e2;
@@ -2784,7 +2784,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_ceil_complex")+display::getBracketedTypeName(e);
   }
 };
@@ -2797,18 +2797,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_quaternion {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_quaternion {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::Quaternion(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::Quaternion(e);
     return *e2;
@@ -2821,7 +2821,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_quaternion")+display::getBracketedTypeName(e);
   }
 };
@@ -2834,18 +2834,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_conj_quat {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_conj_quat {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::conj(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::conj(e);
     return *e2;
@@ -2858,7 +2858,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_conj_quat")+display::getBracketedTypeName(e);
   }
 };
@@ -2871,18 +2871,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_real_quat {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_real_quat {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::real(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::real(e);
     return *e2;
@@ -2895,7 +2895,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_real_quat")+display::getBracketedTypeName(e);
   }
 };
@@ -2908,18 +2908,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_imag_quat {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_imag_quat {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::imag(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::imag(e);
     return *e2;
@@ -2932,7 +2932,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_imag_quat")+display::getBracketedTypeName(e);
   }
 };
@@ -2945,18 +2945,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_jmag_quat {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_jmag_quat {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::jmag(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::jmag(e);
     return *e2;
@@ -2969,7 +2969,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_jmag_quat")+display::getBracketedTypeName(e);
   }
 };
@@ -2982,18 +2982,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_kmag_quat {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_kmag_quat {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::kmag(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::kmag(e);
     return *e2;
@@ -3006,7 +3006,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_kmag_quat")+display::getBracketedTypeName(e);
   }
 };
@@ -3019,18 +3019,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_abs_quat {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_abs_quat {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::abs(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::abs(e);
     return *e2;
@@ -3043,7 +3043,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_abs_quat")+display::getBracketedTypeName(e);
   }
 };
@@ -3056,18 +3056,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_exp_quat {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_exp_quat {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::exp(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::exp(e);
     return *e2;
@@ -3080,7 +3080,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_exp_quat")+display::getBracketedTypeName(e);
   }
 };
@@ -3093,18 +3093,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_log_quat {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_log_quat {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::log(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::log(e);
     return *e2;
@@ -3117,7 +3117,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_log_quat")+display::getBracketedTypeName(e);
   }
 };
@@ -3130,18 +3130,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_conj_real {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_conj_real {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::conj(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::conj(e);
     return *e2;
@@ -3154,7 +3154,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_conj_real")+display::getBracketedTypeName(e);
   }
 };
@@ -3167,18 +3167,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_real_real {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_real_real {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::real(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::real(e);
     return *e2;
@@ -3191,7 +3191,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_real_real")+display::getBracketedTypeName(e);
   }
 };
@@ -3204,18 +3204,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_imag_real {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_imag_real {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return mathq::imag(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = mathq::imag(e);
     return *e2;
@@ -3228,7 +3228,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_imag_real")+display::getBracketedTypeName(e);
   }
 };
@@ -3241,18 +3241,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_abs_real {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_abs_real {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::abs(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::abs(e);
     return *e2;
@@ -3265,7 +3265,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_abs_real")+display::getBracketedTypeName(e);
   }
 };
@@ -3278,18 +3278,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_arg_real {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_arg_real {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::arg(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::arg(e);
     return *e2;
@@ -3302,7 +3302,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_arg_real")+display::getBracketedTypeName(e);
   }
 };
@@ -3315,18 +3315,18 @@ public:
 //          using Python script 'fun_unary.py'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_proj_real {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_proj_real {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return std::proj(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = std::proj(e);
     return *e2;
@@ -3339,7 +3339,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_proj_real")+display::getBracketedTypeName(e);
   }
 };
@@ -3368,10 +3368,10 @@ public:
 // pos 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto operator+(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_pos<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto operator+(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_pos<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3387,10 +3387,10 @@ auto operator+(const MArrayExpR<X, E, D, M, R>& x) {
 // neg 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto operator-(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_neg<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto operator-(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_neg<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3406,10 +3406,10 @@ auto operator-(const MArrayExpR<X, E, D, M, R>& x) {
 // not 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto operator!(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_not<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto operator!(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_not<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3425,10 +3425,10 @@ auto operator!(const MArrayExpR<X, E, D, M, R>& x) {
 // sin 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto sin(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sin<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto sin(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_sin<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3444,10 +3444,10 @@ auto sin(const MArrayExpR<X, E, D, M, R>& x) {
 // cos 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto cos(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_cos<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto cos(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_cos<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3463,10 +3463,10 @@ auto cos(const MArrayExpR<X, E, D, M, R>& x) {
 // tan 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto tan(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_tan<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto tan(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_tan<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3482,10 +3482,10 @@ auto tan(const MArrayExpR<X, E, D, M, R>& x) {
 // asin 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto asin(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_asin<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto asin(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_asin<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3501,10 +3501,10 @@ auto asin(const MArrayExpR<X, E, D, M, R>& x) {
 // acos 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto acos(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_acos<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto acos(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_acos<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3520,10 +3520,10 @@ auto acos(const MArrayExpR<X, E, D, M, R>& x) {
 // atan 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto atan(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_atan<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto atan(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_atan<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3539,10 +3539,10 @@ auto atan(const MArrayExpR<X, E, D, M, R>& x) {
 // sinh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto sinh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sinh<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto sinh(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_sinh<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3558,10 +3558,10 @@ auto sinh(const MArrayExpR<X, E, D, M, R>& x) {
 // cosh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto cosh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_cosh<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto cosh(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_cosh<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3577,10 +3577,10 @@ auto cosh(const MArrayExpR<X, E, D, M, R>& x) {
 // tanh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto tanh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_tanh<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto tanh(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_tanh<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3596,10 +3596,10 @@ auto tanh(const MArrayExpR<X, E, D, M, R>& x) {
 // asinh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto asinh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_asinh<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto asinh(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_asinh<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3615,10 +3615,10 @@ auto asinh(const MArrayExpR<X, E, D, M, R>& x) {
 // acosh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto acosh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_acosh<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto acosh(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_acosh<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3634,10 +3634,10 @@ auto acosh(const MArrayExpR<X, E, D, M, R>& x) {
 // atanh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto atanh(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_atanh<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto atanh(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_atanh<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3653,10 +3653,10 @@ auto atanh(const MArrayExpR<X, E, D, M, R>& x) {
 // sqrt 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto sqrt(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sqrt<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto sqrt(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_sqrt<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3672,10 +3672,10 @@ auto sqrt(const MArrayExpR<X, E, D, M, R>& x) {
 // cbrt 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto cbrt(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_cbrt<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto cbrt(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_cbrt<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3691,10 +3691,10 @@ auto cbrt(const MArrayExpR<X, E, D, M, R>& x) {
 // sqr 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto sqr(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sqr<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto sqr(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_sqr<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3710,10 +3710,10 @@ auto sqr(const MArrayExpR<X, E, D, M, R>& x) {
 // cube 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto cube(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_cube<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto cube(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_cube<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3729,10 +3729,10 @@ auto cube(const MArrayExpR<X, E, D, M, R>& x) {
 // exp 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto exp(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_exp<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto exp(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_exp<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3748,10 +3748,10 @@ auto exp(const MArrayExpR<X, E, D, M, R>& x) {
 // exp2 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto exp2(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_exp2<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto exp2(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_exp2<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3767,10 +3767,10 @@ auto exp2(const MArrayExpR<X, E, D, M, R>& x) {
 // expm1 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto expm1(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_expm1<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto expm1(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_expm1<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3786,10 +3786,10 @@ auto expm1(const MArrayExpR<X, E, D, M, R>& x) {
 // log 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto log(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_log<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto log(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_log<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3805,10 +3805,10 @@ auto log(const MArrayExpR<X, E, D, M, R>& x) {
 // log10 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto log10(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_log10<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto log10(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_log10<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3824,10 +3824,10 @@ auto log10(const MArrayExpR<X, E, D, M, R>& x) {
 // log2 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto log2(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_log2<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto log2(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_log2<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3843,10 +3843,10 @@ auto log2(const MArrayExpR<X, E, D, M, R>& x) {
 // log1p 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto log1p(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_log1p<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto log1p(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_log1p<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3862,10 +3862,10 @@ auto log1p(const MArrayExpR<X, E, D, M, R>& x) {
 // logb 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto logb(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_logb<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto logb(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_logb<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3881,10 +3881,10 @@ auto logb(const MArrayExpR<X, E, D, M, R>& x) {
 // sgn 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto sgn(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_sgn<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto sgn(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_sgn<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3900,10 +3900,10 @@ auto sgn(const MArrayExpR<X, E, D, M, R>& x) {
 // ceil 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto ceil(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_ceil<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto ceil(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_ceil<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3919,10 +3919,10 @@ auto ceil(const MArrayExpR<X, E, D, M, R>& x) {
 // floor 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto floor(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_floor<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto floor(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_floor<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3938,10 +3938,10 @@ auto floor(const MArrayExpR<X, E, D, M, R>& x) {
 // round 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto round(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_round<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto round(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_round<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3957,10 +3957,10 @@ auto round(const MArrayExpR<X, E, D, M, R>& x) {
 // trunc 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto trunc(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_trunc<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto trunc(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_trunc<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3976,10 +3976,10 @@ auto trunc(const MArrayExpR<X, E, D, M, R>& x) {
 // erf 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto erf(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_erf<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto erf(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_erf<Element, EOUT, D, D>>(x);
 }
 
 
@@ -3995,10 +3995,10 @@ auto erf(const MArrayExpR<X, E, D, M, R>& x) {
 // erfc 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto erfc(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_erfc<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto erfc(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_erfc<Element, EOUT, D, D>>(x);
 }
 
 
@@ -4014,10 +4014,10 @@ auto erfc(const MArrayExpR<X, E, D, M, R>& x) {
 // tgamma 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto tgamma(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_tgamma<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto tgamma(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_tgamma<Element, EOUT, D, D>>(x);
 }
 
 
@@ -4033,10 +4033,10 @@ auto tgamma(const MArrayExpR<X, E, D, M, R>& x) {
 // lgamma 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto lgamma(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_lgamma<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto lgamma(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_lgamma<Element, EOUT, D, D>>(x);
 }
 
 
@@ -4052,10 +4052,10 @@ auto lgamma(const MArrayExpR<X, E, D, M, R>& x) {
 // expint 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto expint(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_expint<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto expint(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_expint<Element, EOUT, D, D>>(x);
 }
 
 
@@ -4071,10 +4071,10 @@ auto expint(const MArrayExpR<X, E, D, M, R>& x) {
 // riemann_zeta 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto riemann_zeta(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_riemann_zeta<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto riemann_zeta(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_riemann_zeta<Element, EOUT, D, D>>(x);
 }
 
 
@@ -4090,10 +4090,10 @@ auto riemann_zeta(const MArrayExpR<X, E, D, M, R>& x) {
 // comp_ellint_1 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto comp_ellint_1(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_comp_ellint_1<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto comp_ellint_1(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_comp_ellint_1<Element, EOUT, D, D>>(x);
 }
 
 
@@ -4109,10 +4109,10 @@ auto comp_ellint_1(const MArrayExpR<X, E, D, M, R>& x) {
 // comp_ellint_2 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto comp_ellint_2(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_comp_ellint_2<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto comp_ellint_2(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_comp_ellint_2<Element, EOUT, D, D>>(x);
 }
 
 
@@ -4128,10 +4128,10 @@ auto comp_ellint_2(const MArrayExpR<X, E, D, M, R>& x) {
 // zero 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto zero(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_zero<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto zero(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_zero<Element, EOUT, D, D>>(x);
 }
 
 
@@ -4147,10 +4147,10 @@ auto zero(const MArrayExpR<X, E, D, M, R>& x) {
 // ilogb 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto ilogb(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, int>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, int, M, R, FUNCTOR_ilogb<E, EOUT, D, int>>(x);
+template <class X, class Element, class D, int M, int R>
+auto ilogb(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, int>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, int, M, R, FUNCTOR_ilogb<Element, EOUT, D, int>>(x);
 }
 
 
@@ -4166,10 +4166,10 @@ auto ilogb(const MArrayExpR<X, E, D, M, R>& x) {
 // imaginary 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto imaginary(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_imaginary<E, EOUT, D, mathq::Imaginary<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto imaginary(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_imaginary<Element, EOUT, D, mathq::Imaginary<D>>>(x);
 }
 
 
@@ -4185,10 +4185,10 @@ auto imaginary(const MArrayExpR<X, E, D, M, R>& x) {
 // conj 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto conj(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_conj_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto conj(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_conj_imag<Element, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
 
@@ -4204,10 +4204,10 @@ auto conj(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // real 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto real(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_real_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto real(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_real_imag<Element, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
 
@@ -4223,10 +4223,10 @@ auto real(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // imag 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto imag(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_imag_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto imag(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_imag_imag<Element, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
 
@@ -4242,10 +4242,10 @@ auto imag(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // abs 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto abs(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_abs_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto abs(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_abs_imag<Element, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
 
@@ -4261,10 +4261,10 @@ auto abs(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // arg 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto arg(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_arg_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto arg(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_arg_imag<Element, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
 
@@ -4280,10 +4280,10 @@ auto arg(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // proj 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto proj(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_proj_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto proj(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_proj_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4299,10 +4299,10 @@ auto proj(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // exp 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto exp(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_exp_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto exp(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_exp_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4318,10 +4318,10 @@ auto exp(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // log 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto log(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_log_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto log(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_log_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4337,10 +4337,10 @@ auto log(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // log10 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto log10(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_log10_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto log10(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_log10_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4356,10 +4356,10 @@ auto log10(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // sqrt 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto sqrt(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_sqrt_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto sqrt(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_sqrt_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4375,10 +4375,10 @@ auto sqrt(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // sin 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto sin(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_sin_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto sin(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_sin_imag<Element, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
 
@@ -4394,10 +4394,10 @@ auto sin(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // cos 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto cos(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_cos_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto cos(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_cos_imag<Element, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
 
@@ -4413,10 +4413,10 @@ auto cos(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // tan 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto tan(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_tan_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto tan(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_tan_imag<Element, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
 
@@ -4432,10 +4432,10 @@ auto tan(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // asin 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto asin(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_asin_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto asin(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_asin_imag<Element, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
 
@@ -4451,10 +4451,10 @@ auto asin(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // acos 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto acos(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_acos_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto acos(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_acos_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4470,10 +4470,10 @@ auto acos(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // atan 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto atan(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_atan_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto atan(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_atan_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4489,10 +4489,10 @@ auto atan(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // sinh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto sinh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_sinh_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto sinh(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_sinh_imag<Element, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
 
@@ -4508,10 +4508,10 @@ auto sinh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // cosh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto cosh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_cosh_imag<E, EOUT, mathq::Imaginary<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto cosh(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, D, M, R, FUNCTOR_cosh_imag<Element, EOUT, mathq::Imaginary<D>, D>>(x);
 }
 
 
@@ -4527,10 +4527,10 @@ auto cosh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // tanh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto tanh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_tanh_imag<E, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto tanh(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Imaginary<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, mathq::Imaginary<D>, M, R, FUNCTOR_tanh_imag<Element, EOUT, mathq::Imaginary<D>, mathq::Imaginary<D>>>(x);
 }
 
 
@@ -4546,10 +4546,10 @@ auto tanh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // asinh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto asinh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_asinh_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto asinh(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_asinh_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4565,10 +4565,10 @@ auto asinh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // acosh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto acosh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_acosh_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto acosh(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_acosh_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4584,10 +4584,10 @@ auto acosh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // atanh 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto atanh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_atanh_imag<E, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto atanh(const MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_atanh_imag<Element, EOUT, mathq::Imaginary<D>, std::complex<D>>>(x);
 }
 
 
@@ -4603,10 +4603,10 @@ auto atanh(const MArrayExpR<X, E, mathq::Imaginary<D>, M, R>& x) {
 // conj 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto conj(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_conj_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto conj(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_conj_complex<Element, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
 
@@ -4622,10 +4622,10 @@ auto conj(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // real 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto real(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_real_complex<E, EOUT, std::complex<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto real(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_real_complex<Element, EOUT, std::complex<D>, D>>(x);
 }
 
 
@@ -4641,10 +4641,10 @@ auto real(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // imag 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto imag(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_imag_complex<E, EOUT, std::complex<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto imag(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_imag_complex<Element, EOUT, std::complex<D>, D>>(x);
 }
 
 
@@ -4660,10 +4660,10 @@ auto imag(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // abs 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto abs(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_abs_complex<E, EOUT, std::complex<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto abs(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_abs_complex<Element, EOUT, std::complex<D>, D>>(x);
 }
 
 
@@ -4679,10 +4679,10 @@ auto abs(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // arg 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto arg(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_arg_complex<E, EOUT, std::complex<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto arg(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, D, M, R, FUNCTOR_arg_complex<Element, EOUT, std::complex<D>, D>>(x);
 }
 
 
@@ -4698,10 +4698,10 @@ auto arg(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // proj 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto proj(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_proj_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto proj(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_proj_complex<Element, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
 
@@ -4717,10 +4717,10 @@ auto proj(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // round 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto round(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_round_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto round(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_round_complex<Element, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
 
@@ -4736,10 +4736,10 @@ auto round(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // log2 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto log2(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_log2_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto log2(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_log2_complex<Element, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
 
@@ -4755,10 +4755,10 @@ auto log2(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // floor 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto floor(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_floor_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto floor(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_floor_complex<Element, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
 
@@ -4774,10 +4774,10 @@ auto floor(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // ceil 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto ceil(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_ceil_complex<E, EOUT, std::complex<D>, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto ceil(const MArrayExpR<X, Element, std::complex<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<D>, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_ceil_complex<Element, EOUT, std::complex<D>, std::complex<D>>>(x);
 }
 
 
@@ -4793,10 +4793,10 @@ auto ceil(const MArrayExpR<X, E, std::complex<D>, M, R>& x) {
 // quaternion 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto quaternion(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_quaternion<E, EOUT, D, mathq::Quaternion<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto quaternion(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_quaternion<Element, EOUT, D, mathq::Quaternion<D>>>(x);
 }
 
 
@@ -4812,10 +4812,10 @@ auto quaternion(const MArrayExpR<X, E, D, M, R>& x) {
 // conj 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto conj(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_conj_quat<E, EOUT, mathq::Quaternion<D>, mathq::Quaternion<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto conj(const MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_conj_quat<Element, EOUT, mathq::Quaternion<D>, mathq::Quaternion<D>>>(x);
 }
 
 
@@ -4831,10 +4831,10 @@ auto conj(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 // real 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto real(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_real_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto real(const MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_real_quat<Element, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
 
@@ -4850,10 +4850,10 @@ auto real(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 // imag 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto imag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_imag_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto imag(const MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_imag_quat<Element, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
 
@@ -4869,10 +4869,10 @@ auto imag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 // jmag 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto jmag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_jmag_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto jmag(const MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_jmag_quat<Element, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
 
@@ -4888,10 +4888,10 @@ auto jmag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 // kmag 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto kmag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_kmag_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto kmag(const MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_kmag_quat<Element, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
 
@@ -4907,10 +4907,10 @@ auto kmag(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 // abs 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto abs(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_abs_quat<E, EOUT, mathq::Quaternion<D>, D>>(x);
+template <class X, class Element, class D, int M, int R>
+auto abs(const MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>, EOUT, D, M, R, FUNCTOR_abs_quat<Element, EOUT, mathq::Quaternion<D>, D>>(x);
 }
 
 
@@ -4926,10 +4926,10 @@ auto abs(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 // exp 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto exp(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_exp_quat<E, EOUT, mathq::Quaternion<D>, mathq::Quaternion<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto exp(const MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_exp_quat<Element, EOUT, mathq::Quaternion<D>, mathq::Quaternion<D>>>(x);
 }
 
 
@@ -4945,10 +4945,10 @@ auto exp(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 // log 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R>
-auto log(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
-  typedef typename NumberTrait<E, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, mathq::Quaternion<D>, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_log_quat<E, EOUT, mathq::Quaternion<D>, mathq::Quaternion<D>>>(x);
+template <class X, class Element, class D, int M, int R>
+auto log(const MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>& x) {
+  typedef typename NumberTrait<Element, mathq::Quaternion<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<D>, M, R>, EOUT, mathq::Quaternion<D>, M, R, FUNCTOR_log_quat<Element, EOUT, mathq::Quaternion<D>, mathq::Quaternion<D>>>(x);
 }
 
 
@@ -4964,10 +4964,10 @@ auto log(const MArrayExpR<X, E, mathq::Quaternion<D>, M, R>& x) {
 // conj 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-inline auto conj(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_conj_real<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
+inline auto conj(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_conj_real<Element, EOUT, D, D>>(x);
 }
 
 
@@ -4983,10 +4983,10 @@ inline auto conj(const MArrayExpR<X, E, D, M, R>& x) {
 // real 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-inline auto real(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_real_real<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
+inline auto real(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_real_real<Element, EOUT, D, D>>(x);
 }
 
 
@@ -5002,10 +5002,10 @@ inline auto real(const MArrayExpR<X, E, D, M, R>& x) {
 // imag 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-inline auto imag(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_imag_real<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
+inline auto imag(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_imag_real<Element, EOUT, D, D>>(x);
 }
 
 
@@ -5021,10 +5021,10 @@ inline auto imag(const MArrayExpR<X, E, D, M, R>& x) {
 // abs 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-inline auto abs(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_abs_real<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
+inline auto abs(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_abs_real<Element, EOUT, D, D>>(x);
 }
 
 
@@ -5040,10 +5040,10 @@ inline auto abs(const MArrayExpR<X, E, D, M, R>& x) {
 // arg 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-inline auto arg(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, D>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D, M, R, FUNCTOR_arg_real<E, EOUT, D, D>>(x);
+template <class X, class Element, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
+inline auto arg(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, D>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D, M, R, FUNCTOR_arg_real<Element, EOUT, D, D>>(x);
 }
 
 
@@ -5059,10 +5059,10 @@ inline auto arg(const MArrayExpR<X, E, D, M, R>& x) {
 // proj 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-inline auto proj(const MArrayExpR<X, E, D, M, R>& x) {
-  typedef typename NumberTrait<E, std::complex<D>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_proj_real<E, EOUT, D, std::complex<D>>>(x);
+template <class X, class Element, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
+inline auto proj(const MArrayExpR<X, Element, D, M, R>& x) {
+  typedef typename NumberTrait<Element, std::complex<D>>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, std::complex<D>, M, R, FUNCTOR_proj_real<Element, EOUT, D, std::complex<D>>>(x);
 }
 }; // namespace mathq 
 #endif // MATHQ__FUN_UNARY_AUTO_H

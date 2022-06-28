@@ -555,17 +555,17 @@ namespace mathq {
   //*******************************************************
 
 
-  template<typename E, int L>
+  template<typename Element, int L>
   class NestedInitializerListDef {
   public:
     using type = std::initializer_list<
-      typename NestedInitializerListDef<E, L-1>::type
+      typename NestedInitializerListDef<Element, L-1>::type
     >;
     template <class D, int R, int M>
-    static void compute(MultiArray<E, R, D, M>& t, const type& list, int& i) {
+    static void compute(MultiArray<Element, R, D, M>& t, const type& list, int& i) {
 
       for (auto nlist : list) {
-        NestedInitializerListDef<E, L-1>::compute(t, nlist, i);
+        NestedInitializerListDef<Element, L-1>::compute(t, nlist, i);
       }
     }
 
@@ -580,20 +580,20 @@ namespace mathq {
         return dims;
       }
       else {
-        return NestedInitializerListDef<E, L-1>::dims(*(list.begin()), dims);
+        return NestedInitializerListDef<Element, L-1>::dims(*(list.begin()), dims);
       }
     }
 
 
   };
 
-  template<typename E>
-  class NestedInitializerListDef<E, 0> {
+  template<typename Element>
+  class NestedInitializerListDef<Element, 0> {
   public:
-    using type = E;
+    using type = Element;
 
     template <class D, int R, int M>
-    static void compute(MultiArray<E, R, D, M>& t, const type& item, int& i) {
+    static void compute(MultiArray<Element, R, D, M>& t, const type& item, int& i) {
       //TLDISP(item);
       t[i++] = item;
     }
@@ -623,8 +623,8 @@ namespace mathq {
   // -------------------------------------------------------------------
 
 
-  template <class X, class E, typename D, int M, int R>
-  auto& insideout(const MArrayExpRW<X, E, D, M, R>& t) {
+  template <class X, class Element, typename D, int M, int R>
+  auto& insideout(const MArrayExpRW<X, Element, D, M, R>& t) {
 
     typedef typename InversionType<X, Null>::Type Type;
     Type* tout = new Type();
@@ -724,11 +724,11 @@ namespace mathq {
 
 
 
-  template <class X, class E, class D, int M, int R>
-  std::ostream& printMultiArrayExpression(std::ostream& stream, const MArrayExpR<X, E, D, M, R>& te) {
+  template <class X, class Element, class D, int M, int R>
+  std::ostream& printMultiArrayExpression(std::ostream& stream, const MArrayExpR<X, Element, D, M, R>& te) {
 
     if constexpr (R==0) {
-      Scalar<E> s;
+      Scalar<Element> s;
       s = te;
       stream << "" +display::getTypeName(s)+" ";
       stream << s;
@@ -736,7 +736,7 @@ namespace mathq {
     }
     else
       if constexpr (R==1) {
-        Vector<E> v;
+        Vector<Element> v;
         v = te;
         stream << "" +display::getTypeName(v)+" ";
         stream << v;
@@ -744,7 +744,7 @@ namespace mathq {
       }
       else
         if constexpr (R==2) {
-          Matrix<E> m;
+          Matrix<Element> m;
           m = te;
           stream << "" +display::getTypeName(m)+" ";
           stream << m;
@@ -752,7 +752,7 @@ namespace mathq {
         }
         else
           if constexpr (R>=3) {
-            MultiArray<E, R> t;
+            MultiArray<Element, R> t;
             t = te;
             stream << "" +display::getTypeName(t)+" ";
             stream << t;
@@ -768,11 +768,11 @@ namespace mathq {
   //            either a tensor or a tensor expression that is "read only"
   // -------------------------------------------------------------------
 
-  template <class X, class E, typename D, int M, int R> class
+  template <class X, class Element, typename D, int M, int R> class
     MArrayExpR {
   public:
-    typedef Materialize<E, D, M, R> XType;
-    typedef E EType;
+    typedef Materialize<Element, D, M, R> XType;
+    typedef Element EType;
     typedef D DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
@@ -795,7 +795,7 @@ namespace mathq {
     //***************** Element ACCESS as an array *************************
     //**********************************************************************
 
-    const E operator[](const size_t i) const {
+    const Element operator[](const size_t i) const {
       return derived()[i];
     }
 
@@ -859,7 +859,7 @@ namespace mathq {
       return derived().classname();
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpR<X, E, D, M, R>& te) {
+    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpR<X, Element, D, M, R>& te) {
       const X& td = te.derived();
       if (td.isExpression()) {
         return printMultiArrayExpression(stream, te);
@@ -884,11 +884,11 @@ namespace mathq {
   // -------------------------------------------------------------------
 
 
-  template <class X, class E, typename D, int M, int R> class
-    MArrayExpRW : public MArrayExpR<MArrayExpRW<X, E, D, M, R>, E, D, M, R> {
+  template <class X, class Element, typename D, int M, int R> class
+    MArrayExpRW : public MArrayExpR<MArrayExpRW<X, Element, D, M, R>, Element, D, M, R> {
   public:
-    typedef Materialize<E, D, M, R> XType;
-    typedef E EType;
+    typedef Materialize<Element, D, M, R> XType;
+    typedef Element EType;
     typedef D DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
@@ -914,10 +914,10 @@ namespace mathq {
     //**********************************************************************
     //***************** Element ACCESS as an array *************************
     //**********************************************************************
-    const E operator[](const size_t i) const {
+    const Element operator[](const size_t i) const {
       return derived()[i];
     }
-    E& operator[](const size_t i) {
+    Element& operator[](const size_t i) {
       return derived()[i];
     }
 
@@ -980,7 +980,7 @@ namespace mathq {
       return derived().classname();
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpRW<X, E, D, M, R>& te) {
+    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpRW<X, Element, D, M, R>& te) {
       const X& td = te.derived();
       if (td.isExpression()) {
         return printMultiArrayExpression(stream, te);
@@ -993,7 +993,7 @@ namespace mathq {
 
 
     // Assign to constant value
-    X& equals(const E e) {
+    X& equals(const Element e) {
       for (size_t i = 0; i<size(); i++)
         (*this)[i] = e;
       return derived();
@@ -1003,7 +1003,7 @@ namespace mathq {
 
     // assign to vector or expression
     template <class Y>
-    X& equals(const MArrayExpR<Y, E, D, M, R>& rhs) {
+    X& equals(const MArrayExpR<Y, Element, D, M, R>& rhs) {
 
       const size_t N = size();
 
@@ -1033,7 +1033,7 @@ namespace mathq {
 
 
 
-  //  template <class X, class E, typename D, int M, int R> class MultiArrayObject {
+  //  template <class X, class Element, typename D, int M, int R> class MultiArrayObject {
   //  };
 
 

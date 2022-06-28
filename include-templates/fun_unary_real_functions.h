@@ -12,8 +12,8 @@
 // ##COMMENTNAME## 
 //----------------------------------------------
 
-template <class X, class E, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-inline auto ##FUNCTION##(const MArrayExpR<X, E, ##DIN##, M, R>& x) {
-  typedef typename NumberTrait<E, ##DOUT##>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, E, ##DIN##, M, R>, EOUT, ##DOUT##, M, R, ##FUNCTOR##<E, EOUT, ##DIN##, ##DOUT##>>(x);
+template <class X, class Element, class D, int M, int R, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
+inline auto ##FUNCTION##(const MArrayExpR<X, Element, ##DIN##, M, R>& x) {
+  typedef typename NumberTrait<Element, ##DOUT##>::ReplaceTypeD EOUT;
+  return  TER_Unary<MArrayExpR<X, Element, ##DIN##, M, R>, EOUT, ##DOUT##, M, R, ##FUNCTOR##<Element, EOUT, ##DIN##, ##DOUT##>>(x);
 }

@@ -9,14 +9,14 @@ namespace mathq {
   // TER_Unary    unary expressions
   //---------------------------------------------------------------------------
 
-  // NOTE: D and E are the output types!
+  // NOTE: D and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class E, class D, int M, int R, class FUNC>
-  class TER_Unary : public MArrayExpR<TER_Unary<X, E, D, M, R, FUNC>, E, D, M, R> {
+  template <class X, class Element, class D, int M, int R, class FUNC>
+  class TER_Unary : public MArrayExpR<TER_Unary<X, Element, D, M, R, FUNC>, Element, D, M, R> {
   public:
-    typedef Materialize<E, D, M, R> XType;
-    typedef E EType;
+    typedef Materialize<Element, D, M, R> XType;
+    typedef Element EType;
     typedef D DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
@@ -40,7 +40,7 @@ namespace mathq {
       return FUNC::apply(x_.dat(i));
     }
 
-    const E operator[](const size_t i) const {
+    const Element operator[](const size_t i) const {
       return FUNC::apply(x_[i]);
     }
 
@@ -115,14 +115,14 @@ namespace mathq {
   // TER_Unary_User    unary expressions
   //---------------------------------------------------------------------------
 
-  // NOTE: D and E are the output types!
+  // NOTE: D and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class E, class D, int M, int R>
-  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, E, D, M, R>, E, D, M, R> {
+  template <class X, class Element, class D, int M, int R>
+  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, D, M, R>, Element, D, M, R> {
   public:
-    typedef Materialize<E, D, M, R> XType;
-    typedef E EType;
+    typedef Materialize<Element, D, M, R> XType;
+    typedef Element EType;
     typedef D DType;
     typedef typename FunctionType1<D, D>::type FUNC;
     constexpr static int Rvalue = R;
@@ -148,7 +148,7 @@ namespace mathq {
       return f_(x_.dat(i));
     }
 
-    const E operator[](const size_t i) const {
+    const Element operator[](const size_t i) const {
       return f_(x_[i]);
     }
 
@@ -343,23 +343,23 @@ namespace mathq {
       }
     }
 
-    // helper for: T<E> + T
+    // helper for: T<Element> + T
     const D3 dat_top1(const size_t i) const {
       size_t j = i / a_.elsize();
       return OP::apply(a_.dat(i), b_.dat(j));
     }
-    // helper for: T<E> + E
+    // helper for: T<Element> + Element
     const D3 dat_el1(const size_t i) const {
       size_t j = i % b_.deepsize();
       return OP::apply(a_.dat(i), b_.dat(j));
     }
 
-    // helper for: T + T<E>
+    // helper for: T + T<Element>
     const D3 dat_top2(const size_t i) const {
       size_t j = i / b_.elsize();
       return OP::apply(a_.dat(j), b_.dat(i));
     }
-    // helper for: E + T<E>
+    // helper for: Element + T<Element>
     const D3 dat_el2(const size_t i) const {
       size_t j = i % a_.deepsize();
       return OP::apply(a_.dat(j), b_.dat(i));
@@ -448,20 +448,20 @@ namespace mathq {
       }
     }
 
-    // helper for: T<E> + T
+    // helper for: T<Element> + T
     const E3 top1(const size_t i) const {
       return OP::apply(a_[i], b_[i]);
     }
-    // helper for: T<E> + E
+    // helper for: T<Element> + Element
     const E3 el1(const size_t i) const {
       return OP::apply(a_[i], b_);
     }
 
-    // helper for: T + T<E>
+    // helper for: T + T<Element>
     const E3 top2(const size_t i) const {
       return OP::apply(a_[i], b_[i]);
     }
-    // helper for: E + T<E>
+    // helper for: Element + T<Element>
     const E3 el2(const size_t i) const {
       return OP::apply(a_, b_[i]);
     }
@@ -675,23 +675,23 @@ namespace mathq {
       }
     }
 
-    // helper for: T<E> + T
+    // helper for: T<Element> + T
     const D3 dat_top1(const size_t i) const {
       size_t j = i / a_.elsize();
       return f_(a_.dat(i), b_.dat(j));
     }
-    // helper for: T<E> + E
+    // helper for: T<Element> + Element
     const D3 dat_el1(const size_t i) const {
       size_t j = i % b_.deepsize();
       return f_(a_.dat(i), b_.dat(j));
     }
 
-    // helper for: T + T<E>
+    // helper for: T + T<Element>
     const D3 dat_top2(const size_t i) const {
       size_t j = i / b_.elsize();
       return f_(a_.dat(j), b_.dat(i));
     }
-    // helper for: E + T<E>
+    // helper for: Element + T<Element>
     const D3 dat_el2(const size_t i) const {
       size_t j = i % a_.deepsize();
       return f_(a_.dat(j), b_.dat(i));
@@ -780,20 +780,20 @@ namespace mathq {
       }
     }
 
-    // helper for: T<E> + T
+    // helper for: T<Element> + T
     const E3 top1(const size_t i) const {
       return f_(a_[i], b_[i]);
     }
-    // helper for: T<E> + E
+    // helper for: T<Element> + Element
     const E3 el1(const size_t i) const {
       return f_(a_[i], b_);
     }
 
-    // helper for: T + T<E>
+    // helper for: T + T<Element>
     const E3 top2(const size_t i) const {
       return f_(a_[i], b_[i]);
     }
-    // helper for: E + T<E>
+    // helper for: Element + T<Element>
     const E3 el2(const size_t i) const {
       return f_(a_, b_[i]);
     }
@@ -1106,11 +1106,11 @@ namespace mathq {
   // TER_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
-  template <class A, class X, class E, class D, int M, int R>
-  class TER_Series : public MArrayExpR<TER_Series<A, X, E, D, M, R>, E, D, M, R> {
+  template <class A, class X, class Element, class D, int M, int R>
+  class TER_Series : public MArrayExpR<TER_Series<A, X, Element, D, M, R>, Element, D, M, R> {
   public:
-    typedef Materialize<E, D, M, R> XType;
-    typedef E EType;
+    typedef Materialize<Element, D, M, R> XType;
+    typedef Element EType;
     typedef D DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
@@ -1159,11 +1159,11 @@ namespace mathq {
       return sum;
     }
 
-    const E operator[](const size_t i) const {
-      const E x = x_[i] - x0_;
-      E sum = 0;
+    const Element operator[](const size_t i) const {
+      const Element x = x_[i] - x0_;
+      Element sum = 0;
       // TODO: check a_.size >= N
-      E xpow = 1;
+      Element xpow = 1;
       for (size_t n = 0; n <= N_; n++) {
         D an = a_[n];
         if (an != D(0)) {
@@ -1378,11 +1378,11 @@ namespace mathq {
   // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template <class X, class E, class D, int M, int R, class FUNC>
-  class TER_Transpose : public MArrayExpR<TER_Transpose<X, E, D, M, R, FUNC>, E, D, M, R> {
+  template <class X, class Element, class D, int M, int R, class FUNC>
+  class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, D, M, R, FUNC>, Element, D, M, R> {
   public:
-    typedef Materialize<E, D, M, R> XType;
-    typedef E EType;
+    typedef Materialize<Element, D, M, R> XType;
+    typedef Element EType;
     typedef D DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
@@ -1415,7 +1415,7 @@ namespace mathq {
       }
     }
 
-    const E operator[](const size_t index1) const {
+    const Element operator[](const size_t index1) const {
       const Indices inds1 = rdims->indices(index1);
       const Indices inds2 = inds1.getReverse();
       const size_t index2 = x_.dims().index(inds2);
@@ -1480,13 +1480,13 @@ namespace mathq {
   // VER_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class E, class D, int M>
-  class TER_Join : public MArrayExpR<TER_Join<X, Y, E, D, M>, E, D, M, 1> {
+  template <class X, class Y, class Element, class D, int M>
+  class TER_Join : public MArrayExpR<TER_Join<X, Y, Element, D, M>, Element, D, M, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = M;
-    typedef Materialize<E, D, M, Rvalue> XType;
-    typedef E EType;
+    typedef Materialize<Element, D, M, Rvalue> XType;
+    typedef Element EType;
     typedef D DType;
 
   private:
@@ -1514,7 +1514,7 @@ namespace mathq {
         return y_.dat(i - x_.deepsize());
       }
     }
-    const E operator[](const size_t i) const {
+    const Element operator[](const size_t i) const {
       if (i < x_.size()) {
         return x_[i];
       }

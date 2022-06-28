@@ -6,18 +6,18 @@
 //          using Python script '##SCRIPTNAME##'
 // ----------------------------------------------------------------
 
-template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_##FUNCTORNAME## {
+template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_##FUNCTORNAME## {
 public:
   typedef DIN DType;
   typedef DOUT DoutType;
-  typedef E EType;
+  typedef Element EType;
   typedef EOUT EoutType;
   static DOUT apply(const DIN d) {
     return ##FUNCTION##(d);
   }
-  template <class T = E>
+  template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-    apply(const E& e) {
+    apply(const Element& e) {
     EOUT* e2 = new EOUT();
     *e2 = ##FUNCTION##(e);
     return *e2;
@@ -30,7 +30,7 @@ public:
   }
   static std::string classname() {
     using namespace display;
-    E e;
+    Element e;
     return functor_namestyle.apply("FUNCTOR_##FUNCTORNAME##")+display::getBracketedTypeName(e);
   }
 };

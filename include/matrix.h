@@ -8,41 +8,41 @@ namespace mathq {
 
 
   /********************************************************************
-   * Matrix<E>    -- variable size matrix (valarray)
-   *                 E  = type for elements
-   * Matrix<E,NR> -- fixed number of rows (valarray)
+   * Matrix<Element>    -- variable size matrix (valarray)
+   *                 Element  = type for elements
+   * Matrix<Element,NR> -- fixed number of rows (valarray)
    *                 NR = number of rows
-   * Matrix<E,NR,NC> -- fixed number of rows and cols (array)
+   * Matrix<Element,NR,NC> -- fixed number of rows and cols (array)
    *                 NC = number of cols
    *
    *                 Number = number type
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
-   *                 Mvalue = tensor depth. if E=Number, then Mvalue=1.
+   *                 Mvalue = tensor depth. if Element=Number, then Mvalue=1.
    *
    * ROW MAJOR CONVENTION
    ********************************************************************
    */
 
 
-  template <class E, int NR, int NC>
-  class Matrix : public MArrayExpRW<Matrix<E, NR, NC>, E, typename NumberTrait<E>::Type, 1 + NumberTrait<E>::depth(), 2> {
+  template <class Element, int NR, int NC>
+  class Matrix : public MArrayExpRW<Matrix<Element, NR, NC>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::depth(), 2> {
 
   public:
     constexpr static int R = 2;
     constexpr static int Rvalue = 2;
-    constexpr static int Mvalue = 1 + NumberTrait<E>::depth();
+    constexpr static int Mvalue = 1 + NumberTrait<Element>::depth();
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
-    typedef Matrix<E, NR, NC> XType;
-    typedef E EType;
-    typedef typename NumberTrait<E>::Type Number;
+    typedef Matrix<Element, NR, NC> XType;
+    typedef Element EType;
+    typedef typename NumberTrait<Element>::Type Number;
     typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
     // if either NR or NC is 0, then we use valarray
-    typedef typename ArrayType<E, NR* NC>::Type MyArrayType;
+    typedef typename ArrayType<Element, NR* NC>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
@@ -65,7 +65,7 @@ namespace mathq {
   public:
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    Matrix<E, NR, NC>() {
+    Matrix<Element, NR, NC>() {
       resize(NR, NC);
     }
 
@@ -73,7 +73,7 @@ namespace mathq {
     // --------------------- constant=0 CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit Matrix<E, NR, NC>(const size_t Nr, const size_t Nc) {
+    explicit Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
     }
 
@@ -81,7 +81,7 @@ namespace mathq {
     // --------------------- constant CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit Matrix<E, NR, NC>(const size_t Nr, const size_t Nc, const Number& val) {
+    explicit Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const Number& val) {
       resize(Nr, Nc);
       *this = val;
     }
@@ -89,7 +89,7 @@ namespace mathq {
     // --------------------- 2D array  CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    Matrix<E, NR, NC>(const size_t Nr, const size_t Nc, const Number** vals) {
+    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const Number** vals) {
       resize(Nr, Nc);
       *this = vals;
     }
@@ -98,7 +98,7 @@ namespace mathq {
 
     template<size_t NN = NR*NC, EnableIf<(NN > 0)> = 0>
 
-    explicit Matrix<E, NR, NC>(const E val) {
+    explicit Matrix<Element, NR, NC>(const Element val) {
       *this = val;
     }
 
@@ -106,13 +106,13 @@ namespace mathq {
 
     template<size_t NN = NR*NC, EnableIf<(NN > 0)&&(Mvalue>1)> = 0>
 
-    explicit Matrix<E, NR, NC>(const Number val) {
+    explicit Matrix<Element, NR, NC>(const Number val) {
       *this = val;
     }
 
 
     // ************* C++11 initializer_list 2D CONSTRUCTOR---------------------
-    Matrix<E, NR, NC>(const std::initializer_list<std::initializer_list<E> >& list1) {
+    Matrix<Element, NR, NC>(const std::initializer_list<std::initializer_list<Element> >& list1) {
       const int Nr = list1.size();
       const int Nc = (*(list1.begin())).size();
       resize(Nr, Nc);
@@ -121,7 +121,7 @@ namespace mathq {
 
 
 
-    Matrix<E, NR, NC>(const std::list<std::list<E> >& list1) {
+    Matrix<Element, NR, NC>(const std::list<std::list<Element> >& list1) {
       const int Nr = list1.size();
       const int Nc = (*(list1.begin())).size();
       resize(Nr, Nc);
@@ -134,7 +134,7 @@ namespace mathq {
     // --------------------- COPY CONSTRUCTOR --------------------
 
     template <int NR2, int NC2>
-    Matrix<E, NR, NC>(const Matrix<E, NR2, NC2>& m2) {
+    Matrix<Element, NR, NC>(const Matrix<Element, NR2, NC2>& m2) {
       resize(m2.Nrows(), m2.Ncols());
       *this = m2;
     }
@@ -144,7 +144,7 @@ namespace mathq {
 
 
     template <class X>
-    Matrix<E, NR, NC>(const MArrayExpR<X, E, Number, Mvalue, R>& x) {
+    Matrix<Element, NR, NC>(const MArrayExpR<X, Element, Number, Mvalue, R>& x) {
       resize(x.dims()[0], x.dims()[1]);
       *this = x;
     }
@@ -153,7 +153,7 @@ namespace mathq {
     // --------------------- 1D valarray CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    Matrix<E, NR, NC>(const size_t Nr, const size_t Nc, const std::valarray<E>& valar) {
+    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const std::valarray<Element>& valar) {
       resize(Nr, Nc);
       *this = valar;
     }
@@ -162,7 +162,7 @@ namespace mathq {
     // --------------------- 1D array[]  CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    Matrix<E, NR, NC>(const size_t Nr, const size_t Nc, const Number(vals)[]) {
+    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const Number(vals)[]) {
       resize(Nr, Nc);
       *this = vals;
     }
@@ -180,7 +180,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~Matrix<E, NR, NC>() {
+    ~Matrix<Element, NR, NC>() {
       //remove from directory
     }
 
@@ -303,7 +303,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    Matrix<E, NR, NC>& resize(const int Nr, const int Nc) {
+    Matrix<Element, NR, NC>& resize(const int Nr, const int Nc) {
       Nrows_ = NR;
       Ncols_ = NC;
       if constexpr (resizableRows) {
@@ -322,7 +322,7 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    Matrix<E, NR, NC>& resize(const Dimensions dims) {
+    Matrix<Element, NR, NC>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
@@ -330,7 +330,7 @@ namespace mathq {
 
     // TODO: should just pass an index and make deepdims const
 
-    Matrix<E, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
+    Matrix<Element, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> deepdims(deepdims_new);
       Dimensions newdims = deepdims[0];
       resize(newdims);
@@ -352,7 +352,7 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    Matrix<E, NR, NC>& reshape(const size_t nr, const size_t nc) {
+    Matrix<Element, NR, NC>& reshape(const size_t nr, const size_t nc) {
       const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
@@ -370,11 +370,11 @@ namespace mathq {
     // -------------------------- .reshape(N) --------------------------------
     // morph into a vector, pillaging this object of its data store.
     //
-    Vector<E>& reshape(const size_t N) {
+    Vector<Element>& reshape(const size_t N) {
       // TODO: check that N==size()
       // rob the data_
-      Vector<E> m = new Vector<E>(N, this->data_);
-      this->data_ = new std::valarray<E>(0);
+      Vector<Element> m = new Vector<Element>(N, this->data_);
+      this->data_ = new std::valarray<Element>(0);
       // return the new Matrix, while we live on at zero size...
       return *m;
     }
@@ -384,7 +384,7 @@ namespace mathq {
     // 1) For square matrices this operation is quick and easy.
     // 2) For non-square matrices, this changes the shape and operation is time-consuming
     //    Note: Transpose function is much quicker. only use this for when memory is critical
-    Matrix<E, NR, NC>& transpose(void) {
+    Matrix<Element, NR, NC>& transpose(void) {
       const size_t Nr = Nrows_;
       const size_t Nc = Ncols_;
       const size_t N = size();
@@ -633,7 +633,7 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write"
-    E& operator[](const size_t n) {
+    Element& operator[](const size_t n) {
       int k = n;
       if (k < 0) {
         k += size();
@@ -642,7 +642,7 @@ namespace mathq {
     }
 
     // read
-    const E& operator[](const size_t n)  const {
+    const Element& operator[](const size_t n)  const {
       int k = n;
       if (k < 0) {
         k += size();
@@ -654,10 +654,10 @@ namespace mathq {
 
     // matrix[slice]
 
-    TERW_Subset<E> operator[](const slc& slice) {
+    TERW_Subset<Element> operator[](const slc& slice) {
       return (*this)[slice.toIndexVector(size())];
     }
-    const TERW_Subset<E>  operator[](const slc& slice) const {
+    const TERW_Subset<Element>  operator[](const slc& slice) const {
       return (*this)[slice.toIndexVector(size())];
     }
 
@@ -665,11 +665,11 @@ namespace mathq {
 
     // matrix[Vector<size_t>]
 
-    TERW_Subset<E> operator[](const Vector<size_t>& ii) {
-      return TERW_Subset<E>(*this, ii);
+    TERW_Subset<Element> operator[](const Vector<size_t>& ii) {
+      return TERW_Subset<Element>(*this, ii);
     }
-    const TERW_Subset<E> operator[](const Vector<size_t>& ii) const {
-      return TERW_Subset<E>(*this, ii);
+    const TERW_Subset<Element> operator[](const Vector<size_t>& ii) const {
+      return TERW_Subset<Element>(*this, ii);
     }
 
 
@@ -677,22 +677,22 @@ namespace mathq {
 
     // matrix[mask]
 
-    TERW_Submask<E> operator[](const Matrix<bool>& mask) {
-      return  TERW_Submask<E>(*this, mask);
+    TERW_Submask<Element> operator[](const Matrix<bool>& mask) {
+      return  TERW_Submask<Element>(*this, mask);
     }
-    const TERW_Submask<E> operator[](const Matrix<bool>& mask)  const {
-      return  TERW_Submask<E>(*this, mask);
+    const TERW_Submask<Element> operator[](const Matrix<bool>& mask)  const {
+      return  TERW_Submask<Element>(*this, mask);
     }
 
 
 
     // matrix[initializer_list]
 
-    TERW_Subset<E> operator[](const std::initializer_list<size_t>& list) {
-      return  TERW_Subset<E>(*this, list);
+    TERW_Subset<Element> operator[](const std::initializer_list<size_t>& list) {
+      return  TERW_Subset<Element>(*this, list);
     }
-    const TERW_Subset<E> operator[](const std::initializer_list<size_t>& list) const {
-      return  TERW_Subset<E>(*this, list);
+    const TERW_Subset<Element> operator[](const std::initializer_list<size_t>& list) const {
+      return  TERW_Subset<Element>(*this, list);
     }
 
 
@@ -729,10 +729,10 @@ namespace mathq {
 
 
     // ----------------- matrix(r,c) ----------------
-    E& operator()(const size_t r, const size_t c) {
+    Element& operator()(const size_t r, const size_t c) {
       return data_[index(r, c)];
     }
-    const E operator()(const size_t r, const size_t c) const {
+    const Element operator()(const size_t r, const size_t c) const {
       return data_[index(r, c)];
     }
 
@@ -749,8 +749,8 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // ----------------- matrix = e ----------------
-    Matrix<E, NR, NC>&
-      operator=(const E& e) {
+    Matrix<Element, NR, NC>&
+      operator=(const Element& e) {
       for (size_t i = 0; i < size(); i++) {
         data_[i] = e;
       }
@@ -758,8 +758,8 @@ namespace mathq {
     }
 
     // ----------------- matrix = d ----------------
-    template <class T = E>
-    typename std::enable_if<!std::is_same<T, Number>::value, Matrix<E, NR, NC>& >::type operator=(const Number& d) {
+    template <class T = Element>
+    typename std::enable_if<!std::is_same<T, Number>::value, Matrix<Element, NR, NC>& >::type operator=(const Number& d) {
 
       for (size_t i = 0; i < deepsize(); i++) {
         data_.dat(i) = d;
@@ -767,10 +767,10 @@ namespace mathq {
       return *this;
     }
 
-    // ----------------------Matrix = Matrix<E,NR2,NC2,Number,Mvalue> ----------------
+    // ----------------------Matrix = Matrix<Element,NR2,NC2,Number,Mvalue> ----------------
 
     template<int NR2, int NC2>
-    Matrix<E, NR, NC>& operator=(const Matrix<E, NR2, NC2>& m) {
+    Matrix<Element, NR, NC>& operator=(const Matrix<Element, NR2, NC2>& m) {
       if constexpr (Mvalue<=1) {
         TLDISP(m.dims());
         resize(m.dims());
@@ -788,9 +788,9 @@ namespace mathq {
     }
 
 
-    // ----------------- matrix = MArrayExpR<X,E,Number,Mvalue,R> ----------------
-    template <class X> Matrix<E, NR, NC>&
-      operator=(const MArrayExpR<X, E, Number, Mvalue, R>& x) {
+    // ----------------- matrix = MArrayExpR<X,Element,Number,Mvalue,R> ----------------
+    template <class X> Matrix<Element, NR, NC>&
+      operator=(const MArrayExpR<X, Element, Number, Mvalue, R>& x) {
 
       if constexpr (Mvalue<=1) {
         resize(x.dims());
@@ -812,8 +812,8 @@ namespace mathq {
 
 
     // ----------------- matrix = Number[][] ----------------
-    Matrix<E, NR, NC>&
-      operator=(const E** array) {
+    Matrix<Element, NR, NC>&
+      operator=(const Element** array) {
       size_t k = 0;
       for (size_t r = 0; r < Nrows_; r++) {
         for (size_t c = 0; c < Ncols_; c++) {
@@ -827,18 +827,18 @@ namespace mathq {
 
 
     // ----------------- matrix = initializer_list<initializer_list>  ----------------
-    Matrix<E, NR, NC>&
-      operator=(const std::initializer_list<std::initializer_list<E> >& mylist) {
+    Matrix<Element, NR, NC>&
+      operator=(const std::initializer_list<std::initializer_list<Element> >& mylist) {
       const int Nr = mylist.size();
       const int Nc = (*(mylist.begin())).size();
       resize(Nr, Nc);
       // TODO: size check
       size_t i = 0;
-      typename std::initializer_list<std::initializer_list<E> >::iterator itR;
+      typename std::initializer_list<std::initializer_list<Element> >::iterator itR;
       for (itR = mylist.begin(); itR != mylist.end(); ++itR) {
-        const std::initializer_list<E>& row = *itR;
+        const std::initializer_list<Element>& row = *itR;
         // TODO: check that each row has same # cols
-        typename std::initializer_list<E>::iterator itC;
+        typename std::initializer_list<Element>::iterator itC;
         for (itC = row.begin(); itC != row.end(); ++itC) {
           (*this)[i++] = *itC;
         }
@@ -853,7 +853,7 @@ namespace mathq {
 
     // ------------------------ matrix = valarray[] ----------------
 
-    Matrix<E, NR, NC>& operator=(const std::valarray<E>& valar) {
+    Matrix<Element, NR, NC>& operator=(const std::valarray<Element>& valar) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = valar[i];
       }
@@ -861,8 +861,8 @@ namespace mathq {
     }
 
     // ------------------------ matrix = array[] ----------------
-    Matrix<E, NR, NC>&
-      operator=(const E array1[]) {
+    Matrix<Element, NR, NC>&
+      operator=(const Element array1[]) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = array1[i];
       }
@@ -871,12 +871,12 @@ namespace mathq {
 
 
     // --------------- matrix = initializer_list ------------------
-    Matrix<E, NR, NC>&
-      operator=(const std::initializer_list<E>& mylist) {
+    Matrix<Element, NR, NC>&
+      operator=(const std::initializer_list<Element>& mylist) {
 
       // TODO: bound scheck 
       size_t i = 0;
-      typename std::initializer_list<E>::iterator it;
+      typename std::initializer_list<Element>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it) {
         (*this)[i++] = *it;
       }
@@ -899,13 +899,13 @@ namespace mathq {
 
     // get C pointer to raw data
     // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-    E* data() {
+    Element* data() {
       if constexpr ((NR == 0) && (NC == 0)) {
-        // valarray<E>
+        // valarray<Element>
         return &(data_[0]);
       }
       else {
-        // array<E>
+        // array<Element>
         return data_.data();
       }
     }
@@ -918,7 +918,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    Matrix<E, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    Matrix<Element, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       for (size_t i = size(); i--;) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
@@ -947,7 +947,7 @@ namespace mathq {
       using namespace display;
       std::string s = "Matrix";
       s += StyledString::get(ANGLE1).get();
-      E e;
+      Element e;
       s += getTypeName(e);
       if (NR!=0) {
         s += StyledString::get(COMMA).get();
@@ -981,7 +981,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const Matrix<E, NR, NC>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const Matrix<Element, NR, NC>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -1017,7 +1017,7 @@ namespace mathq {
 
 
     //template <class Number>	
-    friend inline std::istream& operator>>(const std::string s, Matrix<E, NR, NC>& m2) {
+    friend inline std::istream& operator>>(const std::string s, Matrix<Element, NR, NC>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -1025,7 +1025,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, Matrix<E, NR, NC>& m2) {
+    friend std::istream& operator>>(std::istream& stream, Matrix<Element, NR, NC>& m2) {
       return stream;
     }
 

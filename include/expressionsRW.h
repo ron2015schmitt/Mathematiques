@@ -290,13 +290,13 @@ namespace mathq {
   // VERW_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class E, class D, int M>
-  class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, E, D, M>, E, D, M, 1> {
+  template <class X, class Y, class Element, class D, int M>
+  class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, Element, D, M>, Element, D, M, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = M;
-    typedef Materialize<E, D, M, Rvalue> XType;
-    typedef E EType;
+    typedef Materialize<Element, D, M, Rvalue> XType;
+    typedef Element EType;
     typedef D DType;
 
   private:
@@ -336,7 +336,7 @@ namespace mathq {
         return y_.dat(i-x_.deepsize());
       }
     }
-    const E operator[](const size_t i) const {
+    const Element operator[](const size_t i) const {
       if (i < x_.size()) {
         return x_[i];
       }
@@ -344,7 +344,7 @@ namespace mathq {
         return y_[i-x_.size()];
       }
     }
-    E& operator[](const size_t i) {
+    Element& operator[](const size_t i) {
       if (i < x_.size()) {
         return x_[i];
       }
@@ -354,14 +354,14 @@ namespace mathq {
     }
 
     template <class Z>
-    TERW_Join<X, Y, E, D, M>& operator=(const MArrayExpR<Z, E, D, M, 1>& rhs) {
+    TERW_Join<X, Y, Element, D, M>& operator=(const MArrayExpR<Z, Element, D, M, 1>& rhs) {
       return this->equals(rhs);
     }
 
-    TERW_Join<X, Y, E, D, M>& operator=(const D d) {
+    TERW_Join<X, Y, Element, D, M>& operator=(const D d) {
       return this->equals(d);
     }
-    TERW_Join<X, Y, E, D, M>& operator=(const E& e) {
+    TERW_Join<X, Y, Element, D, M>& operator=(const Element& e) {
       return this->equals(e);
     }
 

@@ -59,10 +59,10 @@ namespace mathq {
   //   typedef std::complex<FType> CType;
   //   typedef typename NumberTrait<T,CType>::ReplaceTypeE Type;
   // };
-  // template <typename E, typename A, typename D, int M, int R> class
-  //   Complexify<MArrayExpR<E,A,D,M,R> > {
+  // template <typename Element, typename A, typename D, int M, int R> class
+  //   Complexify<MArrayExpR<Element,A,D,M,R> > {
   // public:
-  //   typedef MArrayExpR<typename Complexify<E>::Type,A,typename Complexify<D>::Type, M,R> Type;
+  //   typedef MArrayExpR<typename Complexify<Element>::Type,A,typename Complexify<D>::Type, M,R> Type;
   // };
 
 
@@ -72,10 +72,10 @@ namespace mathq {
   //   typedef typename OrderedNumberTrait<T>::Type FType;
   //   typedef typename NumberTrait<T,FType>::ReplaceTypeE Type;
   // };
-  // template <typename E, typename A, typename D, int M, int R> class
-  //   Realify<MArrayExpR<E,A,D,M,R> > {
+  // template <typename Element, typename A, typename D, int M, int R> class
+  //   Realify<MArrayExpR<Element,A,D,M,R> > {
   // public:
-  //   typedef MArrayExpR<typename Realify<E>::Type,A,typename Realify<D>::Type,M,R> Type;
+  //   typedef MArrayExpR<typename Realify<Element>::Type,A,typename Realify<D>::Type,M,R> Type;
   // };
 
 
@@ -87,10 +87,10 @@ namespace mathq {
   //   typedef Imaginary<FType> IType;
   //   typedef typename NumberTrait<T,IType>::ReplaceTypeE Type;
   // };
-  // template <typename E, typename A, typename D, int M, int R> class
-  //   Imaginarify<MArrayExpR<E,A,D,M,R> > {
+  // template <typename Element, typename A, typename D, int M, int R> class
+  //   Imaginarify<MArrayExpR<Element,A,D,M,R> > {
   // public:
-  //   typedef MArrayExpR<typename Imaginarify<E>::Type,A,typename Imaginarify<D>::Type, M,R> Type;
+  //   typedef MArrayExpR<typename Imaginarify<Element>::Type,A,typename Imaginarify<D>::Type, M,R> Type;
   // };
 
 

@@ -13,10 +13,10 @@ namespace matricks {
   // TER_Unary    unary expressions
   //---------------------------------------------------------------------------
     
-    template <class E, class A, class D, int M, FUNC> 
+    template <class Element, class A, class D, int M, FUNC> 
       class TER_Unary  : public  MArrayExpR<D,TER_Unary<D,A,FUNC,M>> {
     public:
-      typedef MArrayExpR<E,A,D,M> TIN;
+      typedef MArrayExpR<Element,A,D,M> TIN;
   
   private:
     const TIN& a_;
@@ -40,7 +40,7 @@ namespace matricks {
     return FUNC::apply(a_.dat(i));
   }
   
-  const E operator[](const size_t i) const {
+  const Element operator[](const size_t i) const {
     return FUNC::apply(a_[i]);
   }
 

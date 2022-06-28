@@ -74,7 +74,7 @@ namespace mathq
    // EnableMethodIf<R == 1, typename MultType<D1, D2>::Type &> dot(const MArrayExpR<A, E1, D1, M, R> &a, const MArrayExpR<B, E2, D2, M, R> &b)
    // {
 
-   //   // MArrayExpRW<Matrix<E,NR,NC,D,M>,E,D,M,2> x;
+   //   // MArrayExpRW<Matrix<Element,NR,NC,D,M>,Element,D,M,2> x;
 
    //   typedef typename MultType<D1, D2>::Type D3;
    //   typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above

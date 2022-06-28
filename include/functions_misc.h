@@ -4,6 +4,36 @@
 
 namespace mathq {
 
+
+
+
+  //----------------------------------------------
+  // zeros
+  //----------------------------------------------
+
+  template <class Element>
+  inline auto& zeros() {
+    Element& e = *(new Element());
+    e = 0 * e;
+    return e;
+  }
+
+
+  //----------------------------------------------
+  // ones
+  //----------------------------------------------
+
+  template <class Element>
+  inline auto& ones() {
+    Element& e = *(new Element());
+    e = 0 * e + 1;
+    return e;
+  }
+
+
+
+
+
   /****************************************************************************
    * casting
    ****************************************************************************
@@ -13,18 +43,18 @@ namespace mathq {
    // FUNCTOR_numbercast
    // ----------------------------------------------------------------
 
-  template <class E, class EOUT, class DIN, class DOUT> class FUNCTOR_numbercast {
+  template <class Element, class EOUT, class DIN, class DOUT> class FUNCTOR_numbercast {
   public:
     typedef DIN DType;
     typedef DOUT DoutType;
-    typedef E EType;
+    typedef Element EType;
     typedef EOUT EoutType;
     static DOUT apply(const DIN d) {
       return numbercast<DOUT>(d);
     }
-    template <class T = E>
+    template <class T = Element>
     static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
-      apply(const E& e) {
+      apply(const Element& e) {
       EOUT* e2 = new EOUT();
       *e2 = numbercast<DOUT>(e);
       return *e2;
@@ -38,7 +68,7 @@ namespace mathq {
     }
     static std::string classname() {
       using namespace display;
-      E e;
+      Element e;
       return functor_namestyle.apply("FUNCTOR_numbercast")+display::getBracketedTypeName(e);
     }
   };
@@ -48,10 +78,10 @@ namespace mathq {
   // numbercast 
   //----------------------------------------------
 
-  template <class D2, class X, class E, class D, int M, int R>
-  auto numbercast(const MArrayExpR<X, E, D, M, R>& x) {
-    typedef typename NumberTrait<E, D2>::ReplaceTypeD EOUT;
-    return  TER_Unary<MArrayExpR<X, E, D, M, R>, EOUT, D2, M, R, FUNCTOR_numbercast<E, EOUT, D, D2>>(x);
+  template <class D2, class X, class Element, class D, int M, int R>
+  auto numbercast(const MArrayExpR<X, Element, D, M, R>& x) {
+    typedef typename NumberTrait<Element, D2>::ReplaceTypeD EOUT;
+    return  TER_Unary<MArrayExpR<X, Element, D, M, R>, EOUT, D2, M, R, FUNCTOR_numbercast<Element, EOUT, D, D2>>(x);
   }
 
 
@@ -66,16 +96,16 @@ namespace mathq {
  // ----------------------------------------------------------------
 
 
-  template <class E, class D> class FUNCTOR_roundzero {
+  template <class Element, class D> class FUNCTOR_roundzero {
   public:
     typedef typename OrderedNumberTrait<D>::Type DTOL;
     static D apply(const D d, const DTOL tol) {
       return mathq::roundzero(d, tol);
     }
-    template <class T = E>
-    static typename std::enable_if<!std::is_same<T, D>::value, E& >::type
-      apply(const E& e, const DTOL tol) {
-      E* e2 = new E();
+    template <class T = Element>
+    static typename std::enable_if<!std::is_same<T, D>::value, Element& >::type
+      apply(const Element& e, const DTOL tol) {
+      Element* e2 = new Element();
       *e2 = roundzero(e, tol);
       return *e2;
     }
@@ -87,7 +117,7 @@ namespace mathq {
     }
     static std::string classname() {
       using namespace display;
-      E e;
+      Element e;
       D d;
       std::string comma = StyledString::get(COMMA).get();
       std::string s = functor_namestyle.apply(stringify(FUNCTOR_roundzero));
@@ -103,14 +133,14 @@ namespace mathq {
   // roundzero 
   //         
   // -------------------------------------------------------------------
-  template <class X, class E, class D, int M, int R>
-  auto roundzero(const MArrayExpR<X, E, D, M, R>& x, const typename OrderedNumberTrait<D>::Type& tol = Functions<typename OrderedNumberTrait<D>::Type>::tolerance) {
+  template <class X, class Element, class D, int M, int R>
+  auto roundzero(const MArrayExpR<X, Element, D, M, R>& x, const typename OrderedNumberTrait<D>::Type& tol = Functions<typename OrderedNumberTrait<D>::Type>::tolerance) {
 
     typedef typename OrderedNumberTrait<D>::Type DTOL;
-    return  TER_Binary<MArrayExpR<X, E, D, M, R>,
+    return  TER_Binary<MArrayExpR<X, Element, D, M, R>,
       DTOL,
-      E, DTOL, E, D, DTOL, D, M, 0, M, R, 0, R,
-      FUNCTOR_roundzero<E, D>>(x, tol);
+      Element, DTOL, Element, D, DTOL, D, M, 0, M, R, 0, R,
+      FUNCTOR_roundzero<Element, D>>(x, tol);
   }
 
 
@@ -278,8 +308,8 @@ namespace mathq {
 
    // alltrue(a)
 
-  template <class X, class E, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
-  bool alltrue(const MArrayExpR<X, E, D, M, R>& x) {
+  template <class X, class Element, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
+  bool alltrue(const MArrayExpR<X, Element, D, M, R>& x) {
 
     for (size_t i = 0; i< x.deepsize(); i++) {
       if (!x.dat(i)) {
@@ -293,8 +323,8 @@ namespace mathq {
 
   // anytrue(a)
 
-  template <class X, class E, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
-  bool anytrue(const MArrayExpR<X, E, D, M, R>& x) {
+  template <class X, class Element, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
+  bool anytrue(const MArrayExpR<X, Element, D, M, R>& x) {
 
     for (size_t i = 0; i< x.deepsize(); i++) {
       if (x.dat(i)) {
@@ -308,8 +338,8 @@ namespace mathq {
 
   // numtrue(a)
 
-  template <class X, class E, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
-  size_t numtrue(const MArrayExpR<X, E, D, M, R>& x) {
+  template <class X, class Element, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
+  size_t numtrue(const MArrayExpR<X, Element, D, M, R>& x) {
 
     size_t result = 0;
 
@@ -328,9 +358,9 @@ namespace mathq {
 
   // NOTE: declaration in preface.h
 
-  template <class X, class E, class D, int M, int R>
+  template <class X, class Element, class D, int M, int R>
   EnableMethodIf<std::is_same<D, bool>::value, Vector<size_t>&>
-    findtrue(const MArrayExpR<X, E, D, M, R>& x) {
+    findtrue(const MArrayExpR<X, Element, D, M, R>& x) {
     size_t N = numtrue(x);
     Vector<size_t>* y = new Vector<size_t>(N);
 
@@ -350,15 +380,15 @@ namespace mathq {
 
    // sum(a)
 
-  template <class X, class E, class D, int M, int R >
-  E sum(const MArrayExpR<X, E, D, M, R>& v) {
+  template <class X, class Element, class D, int M, int R >
+  Element sum(const MArrayExpR<X, Element, D, M, R>& v) {
 
 
     const size_t N = v.size();
     if (N==0)
       return 0;
 
-    E result = v[0];
+    Element result = v[0];
 
     for (size_t i = 1; i < N; i++) {
       result += v[i];
@@ -372,15 +402,15 @@ namespace mathq {
 
   // prod(a)
 
-  template <class X, class E, class D, int M, int R >
-  E prod(const MArrayExpR<X, E, D, M, R>& v) {
+  template <class X, class Element, class D, int M, int R >
+  Element prod(const MArrayExpR<X, Element, D, M, R>& v) {
 
 
     const size_t N = v.size();
     if (N==0)
       return 0;
 
-    E result = v[0];
+    Element result = v[0];
 
     for (size_t i = 1; i < N; i++) {
       result *= v[i];
@@ -399,8 +429,8 @@ namespace mathq {
 
   // min(a)
 
-  template <class X, class E, class D, int M, int R>
-  D min(const MArrayExpR<X, E, D, M, R>& v) {
+  template <class X, class Element, class D, int M, int R>
+  D min(const MArrayExpR<X, Element, D, M, R>& v) {
 
     const size_t N = v.deepsize();
     if (N==0) {
@@ -421,8 +451,8 @@ namespace mathq {
 
   // max(a)
 
-  template <class X, class E, class D, int M, int R>
-  D max(const MArrayExpR<X, E, D, M, R>& v) {
+  template <class X, class Element, class D, int M, int R>
+  D max(const MArrayExpR<X, Element, D, M, R>& v) {
 
     const size_t N = v.deepsize();
     if (N==0) {
@@ -440,8 +470,8 @@ namespace mathq {
 
   // sumofsqrs(a)
 
-  template <class X, class E, class D, int M, int R>
-  D sumofsqrs(const MArrayExpR<X, E, D, M, R>& v) {
+  template <class X, class Element, class D, int M, int R>
+  D sumofsqrs(const MArrayExpR<X, Element, D, M, R>& v) {
     D result = D();
     for (size_t i = 0; i < v.size(); i++) {
       result += normsqr(v[i]);
@@ -451,8 +481,8 @@ namespace mathq {
 
   // norm(a)  - L2 norm
 
-  template <class X, class E, class D, int M, int R>
-  D norm(const MArrayExpR<X, E, D, M, R>& v) {
+  template <class X, class Element, class D, int M, int R>
+  D norm(const MArrayExpR<X, Element, D, M, R>& v) {
     return std::sqrt(sumofsqrs(v));
   }
 
@@ -1044,11 +1074,11 @@ namespace mathq {
   // * CurvilinearCoords<D, NDIMS>
   // ***************************************************************************
 
-  template <class E, size_t NDIMS, class CHILD>
-  class CurvilinearCoords : public Vector<E, NDIMS> {
+  template <class Element, size_t NDIMS, class CHILD>
+  class CurvilinearCoords : public Vector<Element, NDIMS> {
   public:
-    typedef CurvilinearCoords<E, NDIMS, CHILD> CLASS;
-    typedef Vector<E, NDIMS> PARENT;
+    typedef CurvilinearCoords<Element, NDIMS, CHILD> CLASS;
+    typedef Vector<Element, NDIMS> PARENT;
 
     CHILD& child() {
       return static_cast<CHILD&>(*this);
@@ -1059,21 +1089,21 @@ namespace mathq {
 
 
     // Jacobian 
-    E J() const {
+    Element J() const {
       return child().J();
     }
 
     // metric tensor g^{ij} 
-    Matrix<E, NDIMS, NDIMS> g() const {
+    Matrix<Element, NDIMS, NDIMS> g() const {
       return child().g();
     }
-    CartCoords<E, NDIMS>& pos() const {
+    CartCoords<Element, NDIMS>& pos() const {
       return child().pos();
     }
-    CartCoords<E, NDIMS>& toCartesian() const {
+    CartCoords<Element, NDIMS>& toCartesian() const {
       return child().toCartesian();
     }
-    Vector<E, NDIMS>& basis_vec(size_t n) const {
+    Vector<Element, NDIMS>& basis_vec(size_t n) const {
       return child().basis_vec();
     }
 
@@ -1104,34 +1134,34 @@ namespace mathq {
   // * CartCoords<D, NDIMS>
   // ***************************************************************************
 
-  template <class E, size_t NDIMS>
-  class CartCoords : public CurvilinearCoords<E, NDIMS, CartCoords<E, NDIMS>> {
+  template <class Element, size_t NDIMS>
+  class CartCoords : public CurvilinearCoords<Element, NDIMS, CartCoords<Element, NDIMS>> {
   public:
-    typedef CartCoords<E, NDIMS> CLASS;
-    typedef CurvilinearCoords<E, NDIMS, CLASS> PARENT;
+    typedef CartCoords<Element, NDIMS> CLASS;
+    typedef CurvilinearCoords<Element, NDIMS, CLASS> PARENT;
     typedef typename PARENT::PARENT BASE;
     static int ron() {
       return NDIMS;
     }
 
     template<size_t TEMP = NDIMS>
-    static EnableMethodIf<TEMP==2, CartCoords<E, NDIMS>> fromPolar(const E& r, const E& phi) {
-      E x = r * std::cos(phi);
-      E y = r * std::sin(phi);
-      return CartCoords<E, NDIMS>(x, y);
+    static EnableMethodIf<TEMP==2, CartCoords<Element, NDIMS>> fromPolar(const Element& r, const Element& phi) {
+      Element x = r * std::cos(phi);
+      Element y = r * std::sin(phi);
+      return CartCoords<Element, NDIMS>(x, y);
     }
     template<size_t TEMP = NDIMS>
-    EnableMethodIf<TEMP==2, PolarCoords<E>> toPolar() {
-      return PolarCoords<E>(*this);
+    EnableMethodIf<TEMP==2, PolarCoords<Element>> toPolar() {
+      return PolarCoords<Element>(*this);
     }
 
 
-    explicit CartCoords(const std::initializer_list<E>& mylist) {
+    explicit CartCoords(const std::initializer_list<Element>& mylist) {
       BASE& me = *this;
       me = mylist;
     }
 
-    explicit CartCoords(const CartCoords<E, NDIMS>& v2) {
+    explicit CartCoords(const CartCoords<Element, NDIMS>& v2) {
       BASE& me = *this;
       me = v2;
     }
@@ -1152,15 +1182,15 @@ namespace mathq {
 
 
     // Jacobian 
-    E& J() const {
-      E* jacob = new E();
+    Element& J() const {
+      Element* jacob = new Element();
       *jacob = 1;
       return *jacob;
     }
 
     // metric tensor g^{ij} 
-    Matrix<E, NDIMS, NDIMS> g() const {
-      Matrix<E, NDIMS, NDIMS> metric;
+    Matrix<Element, NDIMS, NDIMS> g() const {
+      Matrix<Element, NDIMS, NDIMS> metric;
       for (size_t r = 0; r < NDIMS; r++) {
         for (size_t c = 0; c < NDIMS; c++) {
           metric(r, c) = (r==c) ? 1 : 0;
@@ -1169,15 +1199,15 @@ namespace mathq {
       return metric;
     }
 
-    CartCoords<E, NDIMS>& pos() const {
+    CartCoords<Element, NDIMS>& pos() const {
       return toCartesian();
     }
-    CartCoords<E, NDIMS>& toCartesian() const {
-      return *(new CartCoords<E, NDIMS>(*this));
+    CartCoords<Element, NDIMS>& toCartesian() const {
+      return *(new CartCoords<Element, NDIMS>(*this));
     }
 
-    Vector<E, NDIMS>& basis_vec(size_t n) const {
-      Vector<E, NDIMS>* vec = new Vector<E, NDIMS>(0);
+    Vector<Element, NDIMS>& basis_vec(size_t n) const {
+      Vector<Element, NDIMS>* vec = new Vector<Element, NDIMS>(0);
       (*vec)[n] = 1;
       return *vec;
     }
@@ -1187,7 +1217,7 @@ namespace mathq {
       using namespace display;
       std::string s = "CartCoords";
       s += StyledString::get(ANGLE1).get();
-      E d;
+      Element d;
       s += getTypeName(d);
       s += StyledString::get(COMMA).get();
       s += std::to_string(NDIMS);
@@ -1196,7 +1226,7 @@ namespace mathq {
     }
 
 
-    inline friend std::ostream& operator<<(std::ostream& stream, const CartCoords<E, NDIMS>& var) {
+    inline friend std::ostream& operator<<(std::ostream& stream, const CartCoords<Element, NDIMS>& var) {
       stream << "(";
       for (size_t c = 0; c < NDIMS; c++) {
         if (c>0) stream << ", ";
@@ -1211,65 +1241,65 @@ namespace mathq {
 
 
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=1)> = 0>
-    E& x1() const {
+    Element& x1() const {
       return (*this)[0];
     }
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=1)> = 0>
-    CartCoords<E, NDIMS>& x1(const E& x1) const {
+    CartCoords<Element, NDIMS>& x1(const Element& x1) const {
       (*this)[0] = x1;
       return *this;
     }
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=1)> = 0>
-    E& x() const {
+    Element& x() const {
       return (*this)[0];
     }
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=1)> = 0>
-    CartCoords<E, NDIMS>& x(const E& x) const {
+    CartCoords<Element, NDIMS>& x(const Element& x) const {
       (*this)[0] = x;
       return *this;
     }
 
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=2)> = 0>
-    E& x2() const {
+    Element& x2() const {
       return (*this)[1];
     }
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=2)> = 0>
-    CartCoords<E, NDIMS>& x2(const E& x2) const {
+    CartCoords<Element, NDIMS>& x2(const Element& x2) const {
       (*this)[1] = x2;
       return *this;
     }
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=2)> = 0>
-    E& y() const {
+    Element& y() const {
       return (*this)[1];
     }
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=2)> = 0>
-    CartCoords<E, NDIMS>& y(const E& y) const {
+    CartCoords<Element, NDIMS>& y(const Element& y) const {
       (*this)[1] = y;
       return *this;
     }
 
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=3)> = 0>
-    E& x3() const {
+    Element& x3() const {
       return (*this)[2];
     }
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=3)> = 0>
-    CartCoords<E, NDIMS>& x3(const E& x3) const {
+    CartCoords<Element, NDIMS>& x3(const Element& x3) const {
       (*this)[2] = x3;
       return *this;
     }
 
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=3)> = 0>
-    E& z() const {
+    Element& z() const {
       return (*this)[2];
     }
     template<size_t TEMP = NDIMS, EnableIf<(TEMP>=3)> = 0>
-    CartCoords<E, NDIMS>& z(const E& z) const {
+    CartCoords<Element, NDIMS>& z(const Element& z) const {
       (*this)[2] = z;
       return *this;
     }
 
     template<size_t TEMP = NDIMS, EnableIf<(TEMP==2)> = 0>
-    explicit CartCoords<E, NDIMS>(const PolarCoords<E>& v2) {
+    explicit CartCoords<Element, NDIMS>(const PolarCoords<Element>& v2) {
       (*this)[0] = v2.r() * std::cos(v2.phi());
       (*this)[1] = v2.r() * std::sin(v2.phi());
     }
@@ -1278,8 +1308,8 @@ namespace mathq {
 
 
 
-  template <class E, size_t NDIMS>
-  auto dot(const CartCoords<E, NDIMS>& v1, const CartCoords<E, NDIMS>& v2) {
+  template <class Element, size_t NDIMS>
+  auto dot(const CartCoords<Element, NDIMS>& v1, const CartCoords<Element, NDIMS>& v2) {
     return v1 | v2;
   }
 
@@ -1290,32 +1320,32 @@ namespace mathq {
   // * PolarCoords<D>(r, phi)
   // ***************************************************************************
 
-  template <class E>
-  class PolarCoords : public CurvilinearCoords<E, 2, PolarCoords<E>> {
+  template <class Element>
+  class PolarCoords : public CurvilinearCoords<Element, 2, PolarCoords<Element>> {
   public:
-    typedef PolarCoords<E> CLASS;
-    typedef CurvilinearCoords<E, 2, CLASS> PARENT;
+    typedef PolarCoords<Element> CLASS;
+    typedef CurvilinearCoords<Element, 2, CLASS> PARENT;
     typedef typename PARENT::PARENT BASE;
 
-    static PolarCoords<E> fromCartesian(E x, E y) {
-      return PolarCoords<E>(std::sqrt(x*x + y*y), std::atan2(y, x));
+    static PolarCoords<Element> fromCartesian(Element x, Element y) {
+      return PolarCoords<Element>(std::sqrt(x*x + y*y), std::atan2(y, x));
     }
 
-    PolarCoords(const E r, const E phi) {
+    PolarCoords(const Element r, const Element phi) {
       (*this)[0] = r;
       (*this)[1] = phi;
     }
-    PolarCoords(const std::initializer_list<E>& mylist) {
+    PolarCoords(const std::initializer_list<Element>& mylist) {
       BASE& me = *this;
       me = mylist;
     }
 
-    PolarCoords(const PolarCoords<E>& v2) {
+    PolarCoords(const PolarCoords<Element>& v2) {
       BASE& me = *this;
       me = v2;
     }
 
-    PolarCoords(const CartCoords<E, 2>& v2) {
+    PolarCoords(const CartCoords<Element, 2>& v2) {
       (*this)[0] = std::sqrt(x*x + y*y);
       (*this)[1] = std::atan2(y, x);
     }
@@ -1337,63 +1367,63 @@ namespace mathq {
     }
 
 
-    E& r() const {
+    Element& r() const {
       return (*this)[0];
     }
-    E& phi() const {
+    Element& phi() const {
       return (*this)[1];
     }
 
-    PolarCoords<E>& r(const E& r) const {
+    PolarCoords<Element>& r(const Element& r) const {
       (*this)[0] = r;
       return *this;
     }
-    PolarCoords<E>& phi(const E& phi) const {
+    PolarCoords<Element>& phi(const Element& phi) const {
       (*this)[1] = phi;
       return *this;
     }
 
 
-    E x() const {
-      const E& r = (*this)[0];
-      const E& phi = (*this)[1];
+    Element x() const {
+      const Element& r = (*this)[0];
+      const Element& phi = (*this)[1];
       return r * std::cos(phi);
     }
-    E x1() const {
+    Element x1() const {
       return x();
     }
 
-    E y() const {
-      const E& r = (*this)[0];
-      const E& phi = (*this)[1];
+    Element y() const {
+      const Element& r = (*this)[0];
+      const Element& phi = (*this)[1];
       return r * std::sin(phi);
     }
-    E x2() const {
+    Element x2() const {
       return y();
     }
 
 
-    CartCoords<E, 2>& pos() const {
+    CartCoords<Element, 2>& pos() const {
       return toCartesian();
     }
-    CartCoords<E, 2>& toCartesian() const {
-      return *(new CartCoords<E, 2>({ x(), y() }));
+    CartCoords<Element, 2>& toCartesian() const {
+      return *(new CartCoords<Element, 2>({ x(), y() }));
     }
 
 
     // unit vectors
-    Vector<E, 2>& basis_r() const {
-      const E& r = (*this)[0];
-      const E& phi = (*this)[1];
-      return *(new Vector<E, 2>{ std::cos(phi), std::sin(phi) });
+    Vector<Element, 2>& basis_r() const {
+      const Element& r = (*this)[0];
+      const Element& phi = (*this)[1];
+      return *(new Vector<Element, 2>{ std::cos(phi), std::sin(phi) });
     }
-    Vector<E, 2>& basis_phi() const {
-      const E& r = (*this)[0];
-      const E& phi = (*this)[1];
-      return *(new Vector<E, 2>{ -std::sin(phi), std::cos(phi) });
+    Vector<Element, 2>& basis_phi() const {
+      const Element& r = (*this)[0];
+      const Element& phi = (*this)[1];
+      return *(new Vector<Element, 2>{ -std::sin(phi), std::cos(phi) });
     }
 
-    Vector<E, 2>& basis_vec(size_t n) const {
+    Vector<Element, 2>& basis_vec(size_t n) const {
       if (n == 0) {
         return basis_r();
       }
@@ -1404,18 +1434,18 @@ namespace mathq {
 
 
     // Jacobian 
-    E J() const {
-      const E& r = (*this)[0];
-      const E& phi = (*this)[1];
+    Element J() const {
+      const Element& r = (*this)[0];
+      const Element& phi = (*this)[1];
       return r;
     }
 
     // metric tensor g^{ij} 
-    Matrix<E, 2, 2> g() const {
-      const E& r = (*this)[0];
-      const E& phi = (*this)[1];
-      Matrix<E, 2, 2> metric;
-      metric = { ones<E>(), zeros<E>(), zeros<E>(), r*r };
+    Matrix<Element, 2, 2> g() const {
+      const Element& r = (*this)[0];
+      const Element& phi = (*this)[1];
+      Matrix<Element, 2, 2> metric;
+      metric = { ones<Element>(), zeros<Element>(), zeros<Element>(), r*r };
       return metric;
     }
 
@@ -1423,16 +1453,16 @@ namespace mathq {
       using namespace display;
       std::string s = "PolarCoords";
       s += StyledString::get(ANGLE1).get();
-      E d;
+      Element d;
       s += getTypeName(d);
       s += StyledString::get(ANGLE2).get();
       return s;
     }
 
 
-    inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords<E>& var) {
-      const E& r = var[0];
-      const E& phi = var[1];
+    inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords<Element>& var) {
+      const Element& r = var[0];
+      const Element& phi = var[1];
       stream << "(r=";
       stream << r;
       stream << ", φ=";
@@ -1445,14 +1475,14 @@ namespace mathq {
   };
 
 
-  template <class E>
-  auto dot(const PolarCoords<E>& v1, const PolarCoords<E>& v2) {
+  template <class Element>
+  auto dot(const PolarCoords<Element>& v1, const PolarCoords<Element>& v2) {
     return v1[0] * v2[0] * std::cos(v1[1] - v2[1]);
   }
 
-  // template <class E>
-  // auto& addpts(const PolarCoords<E>& v1, const PolarCoords<E>& v2) {
-  //   const Vector<E, 2> p = v1.toCartesian() + v2.toCartesian();
+  // template <class Element>
+  // auto& addpts(const PolarCoords<Element>& v1, const PolarCoords<Element>& v2) {
+  //   const Vector<Element, 2> p = v1.toCartesian() + v2.toCartesian();
   //   return p.toPolar();
   // }
 
@@ -1739,9 +1769,9 @@ namespace mathq {
 
   // reverse
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> reverse(const MArrayExpR<X, E, D, M, R>& f) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&> reverse(const MArrayExpR<X, Element, D, M, R>& f) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->reverse();
     return *g;
@@ -1750,9 +1780,9 @@ namespace mathq {
 
   // cumsum() -- cumulative sum
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumsum(const MArrayExpR<X, E, D, M, R>& f) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&> cumsum(const MArrayExpR<X, Element, D, M, R>& f) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumsum();
     return *g;
@@ -1760,9 +1790,9 @@ namespace mathq {
 
   // cumprod()  --  cumulative product
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumprod(const MArrayExpR<X, E, D, M, R>& f) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&> cumprod(const MArrayExpR<X, Element, D, M, R>& f) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumprod();
     return *g;
@@ -1771,9 +1801,9 @@ namespace mathq {
 
   // cumtrapz() -- cumulative trapezoidal summation
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumtrapz(const MArrayExpR<X, E, D, M, R>& f) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&> cumtrapz(const MArrayExpR<X, Element, D, M, R>& f) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumtrapz();
     return *g;
@@ -1783,9 +1813,9 @@ namespace mathq {
   // order  name
   //     0  rectangular
   //     1  trapazoidal
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> integrate_a2x(const MArrayExpR<X, E, D, M, R>& f, const D a, const D b, const int order = 1) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&> integrate_a2x(const MArrayExpR<X, Element, D, M, R>& f, const D a, const D b, const int order = 1) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->integrate_a2x(a, b, order);
     return *g;
@@ -1794,9 +1824,9 @@ namespace mathq {
 
   // cumsumrev() -- cumulative sum -- from last to first
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumsum_rev(const MArrayExpR<X, E, D, M, R>& f) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&> cumsum_rev(const MArrayExpR<X, Element, D, M, R>& f) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumsum_rev();
     return *g;
@@ -1804,9 +1834,9 @@ namespace mathq {
 
   // cumprodrev()  --  cumulative product  -- from last to first
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumprod_rev(const MArrayExpR<X, E, D, M, R>& f) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&> cumprod_rev(const MArrayExpR<X, Element, D, M, R>& f) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumprod_rev();
     return *g;
@@ -1815,9 +1845,9 @@ namespace mathq {
 
   // cumtrapz() -- cumulative trapezoidal summation -- from last to first
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> cumtrapz_rev(const MArrayExpR<X, E, D, M, R>& f) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&> cumtrapz_rev(const MArrayExpR<X, Element, D, M, R>& f) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumtrapz_rev();
     return *g;
@@ -1829,9 +1859,9 @@ namespace mathq {
   // order  name
   //     0  rectangular
   //     1  trapazoidal
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&> integrate_x2b(const MArrayExpR<X, E, D, M, R>& f, const D a, const D b, const int order = 1) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&> integrate_x2b(const MArrayExpR<X, Element, D, M, R>& f, const D a, const D b, const int order = 1) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->integrate_x2b(a, b, order);
     return *g;
@@ -1840,18 +1870,18 @@ namespace mathq {
 
 
   // diff   (v[n] = v[n] - v[n-1])
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&>  diff(const MArrayExpR<X, E, D, M, R>& f, const bool periodic = false) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&>  diff(const MArrayExpR<X, Element, D, M, R>& f, const bool periodic = false) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->diff(periodic);
     return *g;
   }
 
   // diff_rev   (v[n] = v[n+1] - v[n])
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&>  diff_rev(const MArrayExpR<X, E, D, M, R>& f, const bool periodic = false) {
-    Vector<E>* g = new Vector<E>(f.size());
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&>  diff_rev(const MArrayExpR<X, Element, D, M, R>& f, const bool periodic = false) {
+    Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->diff_rev(periodic);
     return *g;
@@ -1861,10 +1891,10 @@ namespace mathq {
   // derivative
   // any change in the default parameters must be likewise made in Vector.deriv(...)
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<R==1, Vector<E>&>  deriv(const MArrayExpR<X, E, D, M, R>& f, const D a, const D b, const int n = 1, int Dpts = 7, const bool periodic = false) {
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<R==1, Vector<Element>&>  deriv(const MArrayExpR<X, Element, D, M, R>& f, const D a, const D b, const int n = 1, int Dpts = 7, const bool periodic = false) {
     //    MDISP(a,b,n,Dpts,periodic,f.size());
-    Vector<E>* df = new Vector<E>(f.size());
+    Vector<Element>* df = new Vector<Element>(f.size());
     //    TLDISP(*df);
     *df = f;
     df->deriv(a, b, n, Dpts, periodic);
@@ -1879,8 +1909,8 @@ namespace mathq {
   //     3  simpson 3/8
   //     4  Boole
 
-  template <class X, class E, class D, int M, int R>
-  EnableMethodIf<(M==1)&&(R==1), D> integrate_a2b(const MArrayExpR<X, E, D, M, R>& v, const D a, const D b, const int order = 1) {
+  template <class X, class Element, class D, int M, int R>
+  EnableMethodIf<(M==1)&&(R==1), D> integrate_a2b(const MArrayExpR<X, Element, D, M, R>& v, const D a, const D b, const int order = 1) {
 
 
     const size_t N = v.size();
@@ -1955,7 +1985,7 @@ namespace mathq {
     case 4:
       if (N%4!=1) {
         MOUT << "integrate_a2b: N-1 must be divisible by 4, N="<<N<<std::endl;
-      }
+    }
       {
         D s1 = 0;
         D s2 = 0;
@@ -1986,10 +2016,10 @@ namespace mathq {
       std::cerr << "integrate_a2b: bad order parameter order="<<order<<std::endl;
 #endif
       break;
-    }
+  }
 
     return result;
-  }
+}
 
 
 
@@ -2000,16 +2030,16 @@ namespace mathq {
 
   // maclaurin(vector coefs, vector vals, max N, x0)
 
-  template <class A, class X, class E, class D, int M1, int M2, int R1, int R2, typename = EnableIf<(M1==1)&&(R1==1)>>
-  auto maclaurin(const MArrayExpR<A, D, D, M1, R1>& a, const MArrayExpR<X, E, D, M2, R2>& x, const int N, const D x0) {
-    return TER_Series<MArrayExpR<A, D, D, M1, R1>, MArrayExpR<X, E, D, M2, R2>, E, D, M2, R2>(a, x, N, x0);
+  template <class A, class X, class Element, class D, int M1, int M2, int R1, int R2, typename = EnableIf<(M1==1)&&(R1==1)>>
+  auto maclaurin(const MArrayExpR<A, D, D, M1, R1>& a, const MArrayExpR<X, Element, D, M2, R2>& x, const int N, const D x0) {
+    return TER_Series<MArrayExpR<A, D, D, M1, R1>, MArrayExpR<X, Element, D, M2, R2>, Element, D, M2, R2>(a, x, N, x0);
   }
 
   // // taylor(vector coefs, vector vals, max N)
 
-  template <class A, class X, class E, class D, int M1, int M2, int R1, int R2, typename = EnableIf<(M1==1)&&(R1==1)>>
-  auto taylor(const MArrayExpR<A, D, D, M1, R1>& a, const MArrayExpR<X, E, D, M2, R2>& x, const int N) {
-    return TER_Series<MArrayExpR<A, D, D, M1, R1>, MArrayExpR<X, E, D, M2, R2>, E, D, M2, R2>(a, x, N);
+  template <class A, class X, class Element, class D, int M1, int M2, int R1, int R2, typename = EnableIf<(M1==1)&&(R1==1)>>
+  auto taylor(const MArrayExpR<A, D, D, M1, R1>& a, const MArrayExpR<X, Element, D, M2, R2>& x, const int N) {
+    return TER_Series<MArrayExpR<A, D, D, M1, R1>, MArrayExpR<X, Element, D, M2, R2>, Element, D, M2, R2>(a, x, N);
   }
 
   // // ifourier(vector cos coefs, vector sin coefs, vector vals, max N, k1=2pi/wavelength or 2pi/period)

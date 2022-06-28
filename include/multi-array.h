@@ -5,59 +5,34 @@ namespace mathq {
 
 
 
-  //----------------------------------------------
-  // zeros
-  //----------------------------------------------
-
-  template <class E>
-  inline auto& zeros() {
-    E* e = new E();
-    *e = 0 * *e;
-    return *e;
-  }
-
-
-  //----------------------------------------------
-  // ones
-  //----------------------------------------------
-
-  template <class E>
-  inline auto& ones() {
-    E* e = new E();
-    *e = 0 * *e + 1;
-    return *e;
-  }
-
-
 
 
   /********************************************************************
-   * MultiArray<E>      -- MultiArray of 0 rank (scalar)
-   *                   E  = type for elements
-   * MultiArray<E,R> -- MultiArray of R rank
+   * MultiArray<Element>      -- MultiArray of 0 rank (scalar)
+   *                   Element  = type for elements
+   * MultiArray<Element,R> -- MultiArray of R rank
    *                   R = number of rank (0=scalar,1=vector,2=matrix,etc)
    *
-   * DO NOT SPECIFY: D,M
    *                 The defaults are defined in the declaration in
    *                 preface.h
    *                 D = number type
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
-   *                 M = tensor depth. if E=D, then M=1.
+   *                 M = tensor depth. if Element=D, then M=1.
    ********************************************************************
    */
 
-  template <class E, int R, typename D, int M>
+  template <class Element, int R, typename D, int M>
   class
-    MultiArray : public MArrayExpRW<MultiArray<E, R, D, M>, E, D, M, R> {
+    MultiArray : public MArrayExpRW<MultiArray<Element, R, D, M>, Element, D, M, R> {
   public:
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
 
-    typedef MultiArray<E, R, D, M> XType;
-    typedef E EType;
+    typedef MultiArray<Element, R, D, M> XType;
+    typedef Element EType;
     typedef D DType;
     typedef typename OrderedNumberTrait<D>::Type FType;
 
@@ -65,7 +40,7 @@ namespace mathq {
     constexpr static int Mvalue = M;
 
     // always use valarray
-    typedef typename ArrayType<E, 0>::Type MyArrayType;
+    typedef typename ArrayType<Element, 0>::Type MyArrayType;
 
   private:
     MyArrayType data_;
@@ -78,7 +53,7 @@ namespace mathq {
 
     // --------------------- default CONSTRUCTOR ---------------------
 
-    explicit MultiArray<E, R, D, M>() {
+    explicit MultiArray<Element, R, D, M>() {
       std::vector<size_t> dv(R);
       resize(new Dimensions(dv));
       constructorHelper();
@@ -86,31 +61,31 @@ namespace mathq {
 
     // --------------------- constant=0 CONSTRUCTOR ---------------------
 
-    explicit MultiArray<E, R, D, M>(const Dimensions& dims) {
+    explicit MultiArray<Element, R, D, M>(const Dimensions& dims) {
       resize(dims);
       constructorHelper();
     }
 
-    // --------------------- constant E CONSTRUCTOR ---------------------
+    // --------------------- constant Element CONSTRUCTOR ---------------------
 
-    explicit MultiArray<E, R, D, M>(const Dimensions& dims, const E& e) {
+    explicit MultiArray<Element, R, D, M>(const Dimensions& dims, const Element& e) {
       resize(dims);
       constructorHelper();
       *this = e;
     }
 
-    // --------------------- constant E CONSTRUCTOR ---------------------
+    // --------------------- constant Element CONSTRUCTOR ---------------------
 
     template <size_t M1 = M, EnableIf<(M1 > 0)> = 0>
 
-    explicit MultiArray<E, R, D, M>(const Dimensions& dims, const D d) {
+    explicit MultiArray<Element, R, D, M>(const Dimensions& dims, const D d) {
       resize(dims);
       constructorHelper();
       *this = d;
     }
 
     // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    MultiArray<E, R, D, M>(const NestedInitializerList<E, R>& mylist) {
+    MultiArray<Element, R, D, M>(const NestedInitializerList<Element, R>& mylist) {
       *this = mylist;
       constructorHelper();
     }
@@ -118,7 +93,7 @@ namespace mathq {
     // ************* Expression CONSTRUCTOR---------------------
 
     template <class X>
-    MultiArray<E, R, D, M>(const MArrayExpR<X, E, D, M, R>& x) {
+    MultiArray<Element, R, D, M>(const MArrayExpR<X, Element, D, M, R>& x) {
       *this = x;
       constructorHelper();
     }
@@ -126,7 +101,7 @@ namespace mathq {
 
     // ************* Vector Constructor---------------------
     template <int NE>
-    MultiArray<E, R, D, M>(const Vector<E, NE>& v) {
+    MultiArray<Element, R, D, M>(const Vector<Element, NE>& v) {
       resize(v.deepdims());
       for (int c = 0; c < v.deepsize(); c++) {
         (*this)[c] = v[c];
@@ -144,7 +119,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MultiArray<E, R, D, M>() {
+    ~MultiArray<Element, R, D, M>() {
       // remove from directory
     }
 
@@ -266,7 +241,7 @@ namespace mathq {
 
     // TODO: should just pass an index and make deepdims const
 
-    MultiArray<E, R, D, M>& resize(const std::vector<Dimensions>& deepdims_in) {
+    MultiArray<Element, R, D, M>& resize(const std::vector<Dimensions>& deepdims_in) {
       std::vector<Dimensions> deepdims(deepdims_in);
       Dimensions newdims = deepdims[0];
       resize(newdims);
@@ -292,8 +267,8 @@ namespace mathq {
 
     // get C pointer to raw data
     // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-    E* data() {
-      // MutltiArrays are always wrap avalarray<E>
+    Element* data() {
+      // MutltiArrays are always wrap avalarray<Element>
       return &(data_[0]);
     }
 
@@ -434,7 +409,7 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write"
-    E& operator[](const size_t n) {
+    Element& operator[](const size_t n) {
       int k = n;
       if (k < 0) {
         k += size();
@@ -443,7 +418,7 @@ namespace mathq {
     }
 
     // read
-    const E& operator[](const size_t n) const {
+    const Element& operator[](const size_t n) const {
       int k = n;
       if (k < 0) {
         k += size();
@@ -514,11 +489,11 @@ namespace mathq {
     //**********************************************************************
 
     // ---------------- tensor(Indices)--------------
-    E& operator()(const Indices& inds) {
+    Element& operator()(const Indices& inds) {
       size_t k = this->indexOf(inds);
       return (*this)[k];
     }
-    const E operator()(const Indices& inds) const {
+    const Element operator()(const Indices& inds) const {
       size_t k = this->indexOf(inds);
       return (*this)[k];
     }
@@ -527,7 +502,7 @@ namespace mathq {
 
 
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, E&>::type operator()(const U... args) {
+    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, Element&>::type operator()(const U... args) {
 
       // const int size = sizeof...(args);
       // int argarray[size] = {args...};
@@ -536,16 +511,16 @@ namespace mathq {
       return (*this)[k];
     }
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, const E>::type operator()(const U... args) const {
+    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, const Element>::type operator()(const U... args) const {
       return (*this)(args...);
     }
 
     // ---------------- tensor({i,j,...})--------------
-    E& operator()(const std::initializer_list<size_t>& mylist) {
+    Element& operator()(const std::initializer_list<size_t>& mylist) {
       size_t k = this->index(mylist);
       return (*this)[k];
     }
-    const E operator()(const std::initializer_list<size_t>& mylist) const {
+    const Element operator()(const std::initializer_list<size_t>& mylist) const {
       size_t k = this->index(mylist);
       return (*this)[k];
     }
@@ -559,15 +534,15 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // ----------------- tensor = e ----------------
-    MultiArray<E, R, D, M>&
-      operator=(const E e) {
+    MultiArray<Element, R, D, M>&
+      operator=(const Element e) {
       for (size_t i = size(); i--;)
         data_[i] = e;
       return *this;
     }
 
     // ----------------- tensor = d ----------------
-    template <class T = E>
+    template <class T = Element>
     typename std::enable_if<!std::is_same<T, D>::value, MultiArray<T, R, D, M>&>::type operator=(const D& d) {
 
       for (size_t i = 0; i < deepsize(); i++) {
@@ -577,20 +552,20 @@ namespace mathq {
     }
 
     // ----------------- tensor = C++11 init list
-    MultiArray<E, R, D, M>& operator=(const NestedInitializerList<E, R>& mylist) {
+    MultiArray<Element, R, D, M>& operator=(const NestedInitializerList<Element, R>& mylist) {
       // MOUT << "operator=: ";
       // TLDISP(mylist);
       int i = 0;
-      Dimensions dims = NestedInitializerListDef<E, R>::dims(mylist);
+      Dimensions dims = NestedInitializerListDef<Element, R>::dims(mylist);
       resize(dims);
-      NestedInitializerListDef<E, R>::compute(*this, mylist, i);
+      NestedInitializerListDef<Element, R>::compute(*this, mylist, i);
       return *this;
     }
 
-    // ----------------- tensor = MultiArray<E,R,D,M> ----------------
+    // ----------------- tensor = MultiArray<Element,R,D,M> ----------------
     template <int R1>
-    MultiArray<E, R, D, M>&
-      operator=(const MultiArray<E, R1, D, M>& x) {
+    MultiArray<Element, R, D, M>&
+      operator=(const MultiArray<Element, R1, D, M>& x) {
       // TODO: issue warning
       // TRDISP(x);
       resize(x.dims());
@@ -600,10 +575,10 @@ namespace mathq {
       return *this;
     }
 
-    // ----------------- tensor = MArrayExpR<X,E,D,M,R> ----------------
+    // ----------------- tensor = MArrayExpR<X,Element,D,M,R> ----------------
     template <class X>
-    MultiArray<E, R, D, M>&
-      operator=(const MArrayExpR<X, E, D, M, R>& x) {
+    MultiArray<Element, R, D, M>&
+      operator=(const MArrayExpR<X, Element, D, M, R>& x) {
 
       if constexpr (M <= 1) {
         resize(x.dims());
@@ -626,8 +601,8 @@ namespace mathq {
 
     // ------------- tensor = array[] ----------------
 
-    MultiArray<E, R, D, M>&
-      operator=(const E array1[]) {
+    MultiArray<Element, R, D, M>&
+      operator=(const Element array1[]) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = array1[i];
       }
@@ -641,7 +616,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MultiArray<E, R, D, M>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MultiArray<Element, R, D, M>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       for (size_t i = size(); i--;) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
@@ -667,7 +642,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MultiArray";
       s += StyledString::get(ANGLE1).get();
-      E d;
+      Element d;
       s += getTypeName(d);
       if (R != 0) {
         s += StyledString::get(COMMA).get();
@@ -739,7 +714,7 @@ namespace mathq {
 
     // TODO: implement format
 
-    friend std::ostream& operator<<(std::ostream& stream, const MultiArray<E, R, D, M>& t) {
+    friend std::ostream& operator<<(std::ostream& stream, const MultiArray<Element, R, D, M>& t) {
       using namespace display;
       size_t n = 0;
       t.send(stream, n, t.dims());
@@ -747,7 +722,7 @@ namespace mathq {
     }
 
     // template <class D>
-    friend inline std::istream& operator>>(const std::string s, MultiArray<E, R, D, M>& x) {
+    friend inline std::istream& operator>>(const std::string s, MultiArray<Element, R, D, M>& x) {
       std::istringstream st(s);
       return (st >> x);
     }
@@ -755,7 +730,7 @@ namespace mathq {
     // stream >> operator
     // TODO: implement
 
-    friend std::istream& operator>>(std::istream& stream, MultiArray<E, R, D, M>& x) {
+    friend std::istream& operator>>(std::istream& stream, MultiArray<Element, R, D, M>& x) {
       return stream;
     }
 
