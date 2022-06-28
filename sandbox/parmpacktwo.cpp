@@ -8,6 +8,7 @@
 #include <variant>
 #include <cmath>
 #include <cassert>
+#include <numeric>
 #include "mathq.h"
 
 
@@ -272,16 +273,24 @@ using DimensionsKindEnum = DimensionsKinds::Type;
 // }
 
 // // put in a namespace so that the enums don't clash
-namespace Dimensions_space {
-  enum Type { dynamic = 0 };
-};
-using DimensionsEnum = Dimensions_space::Type;
+// namespace Dimensions_space {
+//   enum Type { dynamic = 0 };
+// };
+// using DimensionsEnum = Dimensions_space::Type;
 
 
-constexpr static size_t dynamic = 0;
+
+
+
+
+// constexpr static size_t dynamic = 0;
 // template<bool...> struct bool_pack;
 // template<bool... bs> 
 // using all_true = std::is_same<bool_pack<bs..., true>, bool_pack<true, bs...>>;
+
+template<size_t Rank, typename Derived> class BaseDims;
+template<size_t... dims> class FixedDims;
+template<size_t Rank> class DynamicDims;
 
 
 template<size_t Rank, typename Derived>
@@ -305,19 +314,110 @@ public:
     return static_cast<const Derived&>(*this);
   }
 
-  // "read/write"
-  // std::enable_if<is_dynamic(), size_t&> operator[](const size_t n) {
-  size_t& operator[](const size_t n) {
-    return derived[n];
-  }
-
   // read
   const size_t& operator[](const size_t n) const {
-    return derived[n];
+    return derived()[n];
+  }
+
+  size_t index(const mathq::Indices& inds) const {
+    const size_t M = this->rank();
+    size_t k = 0;
+    for (size_t n = 0; n < M; n++) {
+      size_t N = (*this)[n];
+      size_t j = inds[n];
+      k = N*k + j;
+    }
+    return k;
+  }
+
+
+  inline mathq::Indices& indices(const size_t k) const {
+    mathq::Indices& myinds = *(new mathq::Indices(rank()));
+    size_t prev = k;
+    // This loop must go in reverse order.  Do NOT change.
+    for (size_t n = rank()-1; n > 0; n--) {
+      size_t N = (*this)[n];
+      size_t temp = prev/N;
+      myinds[n] = prev - N*temp;
+      prev = temp;
+    }
+    if (rank()>0) {
+      myinds[0] = prev;
+    }
+    return myinds;
+  }
+
+
+  size_t datasize() const {
+    return derived().datasize();
+  }
+
+  std::vector<size_t>& reduce() const {
+    std::vector<size_t>& v = *(new std::vector<size_t>{});
+    for (size_t i = 0; i < this->rank(); i++) {
+      if ((*this)[i] != 1) {
+        v.push_back((*this)[i]);
+      }
+    }
+    return v;
+  }
+
+  template <size_t rank2, typename T2>
+  bool equiv(const BaseDims<rank2, T2>& dims2) const {
+    return (this->reduce() == dims2.reduce());
+  }
+
+  DynamicDims<Rank>& getReverse() const {
+    DynamicDims<Rank>& dims2 = *(new DynamicDims<Rank>{});
+    // reverse order
+    size_t ii = 0;
+    for (size_t k = this->rank()-1; k >= 0; k--) {
+      dims2[ii++] = (*this)[k];
+    }
+    return dims2;
+  }
+
+  explicit operator DynamicDims<Rank>() const {
+    DynamicDims<Rank>& dims2 = *(new DynamicDims<Rank>{});
+    // reverse order
+    for (size_t k = 0; k < rank(); k++) {
+      dims2[k] = (*this)[k];
+    }
+    return dims2;
+  }
+
+  inline std::string classname() const {
+    using namespace display;
+    std::string s = "BaseDims";
+    s += StyledString::get(ANGLE1).get();
+    s += num2string(Rank);
+    s += StyledString::get(COMMA).get();
+    s += derived().classname();
+    s += StyledString::get(ANGLE2).get();
+    return s;
+  }
+
+  inline friend std::ostream& operator<<(std::ostream& stream, const Type& dims2) {
+    using namespace display;
+    stream << "{";
+    for (size_t ii = 0; ii < dims2.rank(); ii++) {
+      if (ii>0)  stream << ", ";
+      dispval_strm(stream, dims2[ii]);
+    }
+    stream << "}";
+    return stream;
   }
 
 
 };
+
+
+template <size_t rank1, typename T1, size_t rank2, typename T2>
+inline bool equiv(const BaseDims<rank1, T1>& dims1, const BaseDims<rank2, T2>& dims2) {
+  return dims1.equiv(dims2);
+}
+
+
 
 
 template<size_t... dims>
@@ -328,6 +428,7 @@ public:
 
   constexpr static size_t size = sizeof...(dims);
   constexpr static std::array<size_t, size> data = { (static_cast<size_t>(dims))... };
+  const static size_t numElements = mathq::compile_time_product(data);
 
   constexpr static size_t rank() noexcept {
     return size;
@@ -336,15 +437,12 @@ public:
     return false;
   }
 
-
-
   // --- instance ---
 
   // Default constructor
 
   explicit FixedDims() {
   }
-
 
   // read
   const size_t& operator[](const size_t n) const {
@@ -355,7 +453,9 @@ public:
     return data[k];
   }
 
-
+  size_t datasize() const {
+    return numElements;
+  }
 
   inline std::string classname() const {
     using namespace display;
@@ -370,18 +470,6 @@ public:
     return s;
   }
 
-
-  inline friend std::ostream& operator<<(std::ostream& stream, const FixedDims& dims2) {
-    using namespace display;
-    stream << "{";
-    for (size_t ii = 0; ii < dims2.rank(); ii++) {
-      if (ii>0)  stream << ", ";
-      dispval_strm(stream, dims2[ii]);
-    }
-    stream << "}";
-    return stream;
-
-  }
 
 };
 
@@ -408,7 +496,7 @@ public:
 
   std::array<size_t, Rank> data;
 
-  // Default constructor
+  // Default constructor: all zeroes
 
   explicit DynamicDims() {
     for (size_t n = 0; n < rank(); n++) {
@@ -416,11 +504,53 @@ public:
     }
   }
 
-  // Dynamic init constructor
+  // Dynamic constructor
 
   template<typename...T, size_t DUMMY = 0, mathq::EnableIf<(DUMMY == 0) && (sizeof...(T) == Rank) && (std::conjunction<std::is_integral<T>...>::value)> = 0>
   DynamicDims(T... dynamic_dims) {
     data = { (static_cast<size_t>(dynamic_dims))... };
+  }
+
+  template<typename T>
+  DynamicDims(const BaseDims<Rank, T>& dims2) {
+    *this = dims2;
+  }
+
+  DynamicDims(const std::initializer_list<size_t>& list) {
+    // const size_t N = list.size();
+    size_t i = 0;
+    typename std::initializer_list<size_t>::iterator it;
+    for (it = list.begin(); it != list.end(); ++it) {
+      (*this)[i++] = *it;
+    }
+  }
+
+  DynamicDims(const std::list<size_t>& mylist) {
+    // const size_t N = mylist.size();
+    size_t i = 0;
+    for (auto it = mylist.begin(); it != mylist.end(); ++it) {
+      (*this)[i++] = *it;
+    }
+  }
+
+  DynamicDims(const std::vector<size_t>& vec) {
+    for (int k = 0; k < vec.size(); k++) {
+      (*this)[k] = vec[k];
+    }
+  }
+
+  template<typename T>
+  DynamicDims(const mathq::Vector<T, rank()>& vec) {
+    for (int k = 0; k < vec.size(); k++) {
+      (*this)[k] = vec[k];
+    }
+  }
+
+  template<typename T>
+  DynamicDims(const mathq::Vector<T, 0>& vec) {
+    for (int k = 0; k < vec.size(); k++) {
+      (*this)[k] = vec[k];
+    }
   }
 
 
@@ -444,6 +574,18 @@ public:
   }
 
 
+  size_t datasize() const {
+    return std::accumulate(data.begin(), data.end(), 1, std::multiplies<size_t>());
+  }
+
+  template<typename T>
+  DynamicDims<Rank>& operator=(const BaseDims<Rank, T>& dims2) {
+    for (size_t k = 0; k < rank(); k++) {
+      (*this)[k] = dims2[k];
+    }
+    return *this;
+  }
+
 
   inline std::string classname() const {
     using namespace display;
@@ -452,20 +594,6 @@ public:
     s += num2string(Rank);
     s += StyledString::get(ANGLE2).get();
     return s;
-  }
-
-
-  inline friend std::ostream& operator<<(std::ostream& stream, const DynamicDims<Rank>& dims2) {
-    using namespace display;
-
-    stream << "{";
-    for (size_t ii = 0; ii < dims2.rank(); ii++) {
-      if (ii>0)  stream << ", ";
-      dispval_strm(stream, dims2[ii]);
-    }
-    stream << "}";
-    return stream;
-
   }
 
 };
@@ -585,6 +713,7 @@ int main(int argc, char* argv[]) {
   TRDISP(dims.rank());
   TRDISP(dims.data);
   TRDISP(dims.data[1]);
+  TRDISP(dims.datasize());
   TRDISP(dims);
 
   // dims.data[1] = 42;  // should cause compile error
@@ -596,6 +725,7 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(DynamicDims<1> dims2);
   TRDISP(dims2.is_dynamic());
   TRDISP(dims2.rank());
+  TRDISP(dims2.datasize());
   TRDISP(dims2);
 
   ECHO_CODE(dims2.data[0] = 42);
@@ -605,6 +735,7 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(std::array<size_t, 1> a = std::array<size_t, 1>{56});
   TRDISP(a);
   ECHO_CODE(dims2.data = a);
+  TRDISP(dims2.datasize());
   TRDISP(dims2);
 
 
@@ -612,12 +743,14 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(DynamicDims<2> dims3);
   TRDISP(dims3.is_dynamic());
   TRDISP(dims3.rank());
+  TRDISP(dims3.datasize());
   TRDISP(dims3);
 
   CR();
   ECHO_CODE(DynamicDims<3> dims4);
   TRDISP(dims4.is_dynamic());
   TRDISP(dims4.rank());
+  TRDISP(dims4.datasize());
   TRDISP(dims4);
 
 
@@ -625,18 +758,21 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(DynamicDims<2> dims5);
   TRDISP(dims5.is_dynamic());
   TRDISP(dims5.rank());
+  TRDISP(dims5.datasize());
   TRDISP(dims5);
 
   CR();
   ECHO_CODE(DynamicDims<2> dims6(5, 2));
   TRDISP(dims6.is_dynamic());
   TRDISP(dims6.rank());
+  TRDISP(dims6.datasize());
   TRDISP(dims6);
 
   CR();
   ECHO_CODE(DynamicDims<1> dims7(42));
   TRDISP(dims7.is_dynamic());
   TRDISP(dims7.rank());
+  TRDISP(dims7.datasize());
   TRDISP(dims7);
 
 
@@ -645,8 +781,16 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(DynamicDims<2> dims8(42, 13));
   TRDISP(dims8.is_dynamic());
   TRDISP(dims8.rank());
+  TRDISP(dims8.datasize());
   TRDISP(dims8);
 
+
+  CR();
+  ECHO_CODE(DynamicDims<3> dims9({ 12, 5, 81 }));
+  TRDISP(dims9.is_dynamic());
+  TRDISP(dims9.rank());
+  TRDISP(dims9.datasize());
+  TRDISP(dims9);
 
 
   // generates an error via static_assert

@@ -90,6 +90,9 @@ namespace mathq {
   class MArrayExpRW;
 
 
+
+
+
   // *********************************************************************
   // * Concrete MultiArrays
   // ********************************************************************
@@ -1308,6 +1311,25 @@ namespace mathq {
 
   template <typename T, typename ...Ts>
   using areT = std::conjunction<std::is_same<T, Ts>...>;
+
+
+  template<typename T, std::size_t N>
+  constexpr T compile_time_summation(const std::array<T, N>& A) {
+    T sum(T(0));
+    for (int i = 0; i < N; ++i) {
+      sum += A[i];
+    }
+    return sum;
+  }
+
+  template<typename T, std::size_t N>
+  constexpr T compile_time_product(const std::array<T, N>& A) {
+    T product(T(1));
+    for (int i = 0; i < N; ++i) {
+      product *= A[i];
+    }
+    return product;
+  }
 
   //***********************************************************************
   //  EnableIf - used for enabling constructors or methods
