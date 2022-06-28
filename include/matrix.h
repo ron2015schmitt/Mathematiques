@@ -29,7 +29,7 @@ namespace mathq {
   class Matrix : public MArrayExpRW<Matrix<Element, NR, NC>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 2> {
 
   public:
-    typedef Matrix<Element, NR, NC> XType;
+    typedef Matrix<Element, NR, NC> ConcreteType;
 
     typedef Element ElementType;
     typedef typename NumberTrait<Element>::Type NumberType;

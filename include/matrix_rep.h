@@ -23,7 +23,7 @@ namespace mathq {
     constexpr static int rank = 2;
     constexpr static int rank_value = 2;
     constexpr static int Mvalue = 1;
-    typedef MatrixRep<Number> XType;
+    typedef MatrixRep<Number> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;

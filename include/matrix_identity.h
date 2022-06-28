@@ -28,7 +28,7 @@ namespace mathq {
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
-    typedef MatrixIdentity<Number, NR, NC> XType;
+    typedef MatrixIdentity<Number, NR, NC> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;

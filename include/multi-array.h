@@ -26,12 +26,8 @@ namespace mathq {
   class
     MultiArray : public MArrayExpRW<MultiArray<Element, rank, Number, depth>, Element, Number, depth, rank> {
   public:
-    // *********************** OBJECT DATA ***********************************
-    //
-    // do NOT declare any other storage.
-    // keep the instances lightweight
 
-    typedef MultiArray<Element, rank, Number, depth> XType;
+    typedef MultiArray<Element, rank, Number, depth> ConcreteType;
 
     typedef Element ElementType;
     typedef Number NumberType;
@@ -44,6 +40,10 @@ namespace mathq {
 
 
   private:
+    // *********************** OBJECT DATA ***********************************
+    //
+    // do NOT declare any other storage.
+    // keep the instances lightweight
     MyArrayType data_;
     Dimensions* dimensions_;
 

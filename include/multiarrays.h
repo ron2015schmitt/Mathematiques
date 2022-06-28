@@ -771,7 +771,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank> class
     MArrayExpR {
   public:
-    typedef Materialize<Element, Number, depth, rank> XType;
+    typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;
@@ -887,7 +887,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank> class
     MArrayExpRW : public MArrayExpR<MArrayExpRW<X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
-    typedef Materialize<Element, Number, depth, rank> XType;
+    typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;

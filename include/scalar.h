@@ -27,7 +27,7 @@ namespace mathq {
   template <class Element, typename Number, int depth> class Scalar :
     public MArrayExpRW< Scalar<Element, Number, depth>, Element, Number, depth, 0> {
   public:
-    typedef Scalar<Element, Number, depth> XType;
+    typedef Scalar<Element, Number, depth> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;

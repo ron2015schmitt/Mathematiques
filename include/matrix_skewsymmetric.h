@@ -26,7 +26,7 @@ namespace mathq {
     constexpr static int NR = N;
     constexpr static int NC = N;
     static constexpr bool resizable = (N==0) ? true : false;
-    typedef MatrixSkewSymmetric<Number, N> XType;
+    typedef MatrixSkewSymmetric<Number, N> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;

@@ -101,7 +101,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
 auto operator+(const MArrayExpR<A,E1,D1,M1,rank>& x1, const MArrayExpR<B,D2,D2,M2,rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B,D2,D2,M2,rank> E2;  
 
@@ -126,7 +126,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
 	  EnableIf<(M1==1)&&(M2>=2)&&(std::is_base_of<MultiArrayAbstract,E2>::value)> = 0  >
 auto operator+(const MArrayExpR<A,D1,D1,M1,rank>& x1, const MArrayExpR<B,E2,D2,M2,rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A,D1,D1,M1,rank> E1;  
   typedef typename AddType<D1,D2>::Type D3;

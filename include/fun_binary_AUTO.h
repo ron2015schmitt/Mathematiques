@@ -1901,7 +1901,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator+(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -1927,7 +1927,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator+(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename AddType<D1, D2>::Type D3;
@@ -2055,7 +2055,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator-(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -2081,7 +2081,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator-(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename SubType<D1, D2>::Type D3;
@@ -2209,7 +2209,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator*(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -2235,7 +2235,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator*(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -2363,7 +2363,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator/(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -2389,7 +2389,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator/(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename DivType<D1, D2>::Type D3;
@@ -2517,7 +2517,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator==(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -2543,7 +2543,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator==(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename RelType<D1, D2>::Type D3;
@@ -2671,7 +2671,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator!=(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -2697,7 +2697,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator!=(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename RelType<D1, D2>::Type D3;
@@ -2825,7 +2825,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator>(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -2851,7 +2851,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator>(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename RelType<D1, D2>::Type D3;
@@ -2979,7 +2979,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator>=(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -3005,7 +3005,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator>=(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename RelType<D1, D2>::Type D3;
@@ -3133,7 +3133,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator<(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -3159,7 +3159,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator<(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename RelType<D1, D2>::Type D3;
@@ -3287,7 +3287,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator<=(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -3313,7 +3313,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator<=(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename RelType<D1, D2>::Type D3;
@@ -3441,7 +3441,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator&&(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -3467,7 +3467,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator&&(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename AndType<D1, D2>::Type D3;
@@ -3595,7 +3595,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto operator||(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -3621,7 +3621,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto operator||(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename OrType<D1, D2>::Type D3;
@@ -3749,7 +3749,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto atan2(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -3775,7 +3775,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto atan2(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -3903,7 +3903,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto pow(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -3929,7 +3929,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto pow(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -4057,7 +4057,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto beta(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -4083,7 +4083,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto beta(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -4211,7 +4211,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto legendre(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -4237,7 +4237,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto legendre(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -4365,7 +4365,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto laguerre(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -4391,7 +4391,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto laguerre(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -4519,7 +4519,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto hermite(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -4545,7 +4545,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto hermite(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -4673,7 +4673,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto sph_bessel(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -4699,7 +4699,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto sph_bessel(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -4827,7 +4827,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto sph_neumann(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -4853,7 +4853,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto sph_neumann(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -4981,7 +4981,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto cyl_bessel_i(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -5007,7 +5007,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto cyl_bessel_i(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -5135,7 +5135,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto cyl_bessel_j(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -5161,7 +5161,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto cyl_bessel_j(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -5289,7 +5289,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto cyl_bessel_k(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -5315,7 +5315,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto cyl_bessel_k(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -5443,7 +5443,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto cyl_neumann(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -5469,7 +5469,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto cyl_neumann(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -5597,7 +5597,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto ellint_1(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -5623,7 +5623,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto ellint_1(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -5751,7 +5751,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto ellint_2(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -5777,7 +5777,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto ellint_2(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename MultType<D1, D2>::Type D3;
@@ -5905,7 +5905,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto Complex(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -5931,7 +5931,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto Complex(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename ComplexType<D1, D2>::Type D3;
@@ -6059,7 +6059,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int ra
   auto polar(const MArrayExpR<A, E1, D1, M1, rank>& x1, const MArrayExpR<B, D2, D2, M2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename B::XType E2;  
+  //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
 
@@ -6085,7 +6085,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int ra
   EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
   auto polar(const MArrayExpR<A, D1, D1, M1, rank>& x1, const MArrayExpR<B, E2, D2, M2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
-  //    typedef typename A::XType E1;  
+  //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
   typedef typename ComplexType<D1, D2>::Type D3;

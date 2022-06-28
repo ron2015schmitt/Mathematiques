@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
     typename decltype(v)::NumberType d = 0.;
     TLDISP(d);
 
-    typename decltype(v)::XType v2;
+    typename decltype(v)::ConcreteType v2;
     TLDISP(v2);
 
     TLDISP(decltype(v)::Mvalue);

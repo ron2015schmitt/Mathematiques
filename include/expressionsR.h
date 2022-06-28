@@ -15,7 +15,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank, class FUNC>
   class TER_Unary : public MArrayExpR<TER_Unary<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
   public:
-    typedef Materialize<Element, Number, depth, rank> XType;
+    typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;
@@ -121,7 +121,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank>
   class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
-    typedef Materialize<Element, Number, depth, rank> XType;
+    typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
     typedef typename FunctionType1<Number, Number>::type FUNC;
@@ -228,9 +228,9 @@ namespace mathq {
   public:
     typedef E3 ElementType;
     typedef D3 NumberType;
-    typedef typename std::conditional<M1 == 0, B, A>::type::XType TempA;
-    typedef typename std::conditional<M2 == 0, A, B>::type::XType TempB;
-    typedef Materialize<E3, D3, M3, R3> XType;
+    typedef typename std::conditional<M1 == 0, B, A>::type::ConcreteType TempA;
+    typedef typename std::conditional<M2 == 0, A, B>::type::ConcreteType TempB;
+    typedef Materialize<E3, D3, M3, R3> ConcreteType;
     constexpr static int Mvalue = M3;
     constexpr static int rank_value = R3;
 
@@ -562,9 +562,9 @@ namespace mathq {
   public:
     typedef E3 ElementType;
     typedef D3 NumberType;
-    typedef typename std::conditional<M1 == 0, B, A>::type::XType TempA;
-    typedef typename std::conditional<M2 == 0, A, B>::type::XType TempB;
-    typedef Materialize<E3, D3, M3, R3> XType;
+    typedef typename std::conditional<M1 == 0, B, A>::type::ConcreteType TempA;
+    typedef typename std::conditional<M2 == 0, A, B>::type::ConcreteType TempB;
+    typedef Materialize<E3, D3, M3, R3> ConcreteType;
     constexpr static int Mvalue = M3;
     constexpr static int rank_value = R3;
 
@@ -894,7 +894,7 @@ namespace mathq {
   public:
     typedef E4 ElementType;
     typedef D4 NumberType;
-    typedef Materialize<E4, D4, M4, R4> XType;
+    typedef Materialize<E4, D4, M4, R4> ConcreteType;
     constexpr static int Mvalue = M4;
     constexpr static int rank_value = R4;
 
@@ -1109,7 +1109,7 @@ namespace mathq {
   template <class A, class X, class Element, typename Number, int depth, int rank>
   class TER_Series : public MArrayExpR<TER_Series<A, X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
-    typedef Materialize<Element, Number, depth, rank> XType;
+    typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;
@@ -1251,7 +1251,7 @@ namespace mathq {
   template <class A, class B, class X, typename Number, class OP1, class OP2>
   class TER_Series2 : public MArrayExpR<TER_Series2<A, B, X, Number, OP1, OP2>, Number, Number, 1, 1> {
   public:
-    typedef Materialize<Number, Number, 1, 1> XType;
+    typedef Materialize<Number, Number, 1, 1> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = 1;
@@ -1381,7 +1381,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank, class FUNC>
   class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
   public:
-    typedef Materialize<Element, Number, depth, rank> XType;
+    typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;
@@ -1485,7 +1485,7 @@ namespace mathq {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = depth;
-    typedef Materialize<Element, Number, depth, rank_value> XType;
+    typedef Materialize<Element, Number, depth, rank_value> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
 
@@ -1604,7 +1604,7 @@ namespace mathq {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = 1;
-    typedef Materialize<Number, Number, 1, 1> XType;
+    typedef Materialize<Number, Number, 1, 1> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
 

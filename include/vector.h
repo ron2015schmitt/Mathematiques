@@ -26,7 +26,7 @@ namespace mathq {
     public MArrayExpRW<Vector<Element, N1>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 1> {
 
   public:
-    typedef Vector<Element, N1> XType;
+    typedef Vector<Element, N1> ConcreteType;
 
     typedef Element ElementType;
     typedef typename NumberTrait<Element>::Type NumberType;

@@ -15,7 +15,7 @@ namespace mathq {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = 1;
-    typedef Materialize<Number, Number, Mvalue, rank_value> XType;
+    typedef Materialize<Number, Number, Mvalue, rank_value> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
 
@@ -163,7 +163,7 @@ namespace mathq {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = 1;
-    typedef Materialize<Number, Number, Mvalue, rank_value> XType;
+    typedef Materialize<Number, Number, Mvalue, rank_value> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
 
@@ -295,7 +295,7 @@ namespace mathq {
   public:
     constexpr static int rank_value = 1;
     constexpr static int Mvalue = depth;
-    typedef Materialize<Element, Number, depth, rank_value> XType;
+    typedef Materialize<Element, Number, depth, rank_value> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
 
