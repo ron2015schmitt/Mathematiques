@@ -13,10 +13,10 @@ namespace matricks {
   // TER_Unary    unary expressions
   //---------------------------------------------------------------------------
     
-    template <class Element, class A, class Number, int M, FUNC> 
-      class TER_Unary  : public  MArrayExpR<Number,TER_Unary<Number,A,FUNC,M>> {
+    template <class Element, class A, class Number, int Depth, FUNC> 
+      class TER_Unary  : public  MArrayExpR<Number,TER_Unary<Number,A,FUNC,Depth>> {
     public:
-      typedef MArrayExpR<Element,A,Number,M> TIN;
+      typedef MArrayExpR<Element,A,Number,Depth> TIN;
   
   private:
     const TIN& a_;
@@ -64,24 +64,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
   size_t deepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return this->size();
     } else {
       return (this->size())*(this->eldeepsize());
@@ -430,8 +430,8 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TERW_Subset   Subset Expression
   //---------------------------------------------------------------------------
-  template<class Number, int M>
-    class TERW_Subset :  public  MArrayExpRW<Number,TERW_Subset<Number,M> > {
+  template<class Number, int Depth>
+    class TERW_Subset :  public  MArrayExpRW<Number,TERW_Subset<Number,Depth> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<Number>& a_;
@@ -507,24 +507,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());
@@ -569,8 +569,8 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TERW_Submask   subset of a tensor from a mask
   //---------------------------------------------------------------------------
-  template<class Number, int M>
-    class TERW_Submask :  public  MArrayExpRW<Number,TERW_Submask<Number,M> > {
+  template<class Number, int Depth>
+    class TERW_Submask :  public  MArrayExpRW<Number,TERW_Submask<Number,Depth> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<Number>& a_;
@@ -628,24 +628,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());
@@ -689,8 +689,8 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //---------------------------------------------------------------------------
-  template <class Number, class OP, int M>
-    class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,M> > {
+  template <class Number, class OP, int Depth>
+    class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,Depth> > {
   private:
     Vector<std::complex<Number> >& a_;
     VectorofPtrs *vptrs;
@@ -740,24 +740,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());
@@ -769,11 +769,11 @@ namespace matricks {
 
 
     template <class D2, class B>
-      TERW_RealFromComplex<Number,OP,M>& operator=(const MArrayExpR<D2,B>& rhs) { 
+      TERW_RealFromComplex<Number,OP,Depth>& operator=(const MArrayExpR<D2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_RealFromComplex<Number,OP,M>& operator=(const MyNumberType d) { 
+    TERW_RealFromComplex<Number,OP,Depth>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -794,8 +794,8 @@ namespace matricks {
   // TER_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
-  template<class Number, class A, class X, int M>
-    class TER_Series : public  MArrayExpR<Number,TER_Series<Number,A,X,M> > {
+  template<class Number, class A, class X, int Depth>
+    class TER_Series : public  MArrayExpR<Number,TER_Series<Number,A,X,Depth> > {
 
   private:
     const A& a_;
@@ -861,24 +861,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());
@@ -913,7 +913,7 @@ namespace matricks {
   // TER_Series2    used for fourier series
   //---------------------------------------------------------------------------
   
-  template<class Number, class A, class B, class X, class OP1, class OP2, int M>
+  template<class Number, class A, class B, class X, class OP1, class OP2, int Depth>
     class TER_Series2 : public  MArrayExpR<Number,TER_Series2< Number, A, B, X, OP1, OP2> > {
 
   private:
@@ -982,24 +982,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());
@@ -1047,8 +1047,8 @@ namespace matricks {
   // TERW_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template<class Number, class A, class FUNC, int M>
-    class TERW_Transpose  : public  MArrayExpRW<Number,TERW_Transpose<Number,A,FUNC,M> > {
+  template<class Number, class A, class FUNC, int Depth>
+    class TERW_Transpose  : public  MArrayExpRW<Number,TERW_Transpose<Number,A,FUNC,Depth> > {
   
   private:
     A& a_;
@@ -1101,24 +1101,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());
@@ -1157,8 +1157,8 @@ namespace matricks {
   // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template<class Number, class A, class FUNC, int M>
-    class TER_Transpose  : public  MArrayExpR<Number,TER_Transpose<Number,A,FUNC,M> > {
+  template<class Number, class A, class FUNC, int Depth>
+    class TER_Transpose  : public  MArrayExpR<Number,TER_Transpose<Number,A,FUNC,Depth> > {
   
   private:
     const A& a_;
@@ -1204,24 +1204,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());
@@ -1248,8 +1248,8 @@ namespace matricks {
   // VER_Join   joining two MultiArrays (RHS only)
   //---------------------------------------------------------------------------
 
-  template<class Number, class A, class B, int M>
-    class VER_Join : public  MArrayExpR<Number,VER_Join<Number,A,B,M> > {
+  template<class Number, class A, class B, int Depth>
+    class VER_Join : public  MArrayExpR<Number,VER_Join<Number,A,B,Depth> > {
 
   private:
     const A& a_;
@@ -1297,24 +1297,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());
@@ -1340,8 +1340,8 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
 
-  template<class Number, class A, class B, int M>
-    class VERW_Join : public  MArrayExpRW<Number,VERW_Join<Number,A,B,M> > {
+  template<class Number, class A, class B, int Depth>
+    class VERW_Join : public  MArrayExpRW<Number,VERW_Join<Number,A,B,Depth> > {
 
   private:
     A& a_;
@@ -1395,24 +1395,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());
@@ -1462,8 +1462,8 @@ namespace matricks {
   // VER_Rep  repeat a tensor
   //---------------------------------------------------------------------------
 
-  template<class Number, class A, int M>
-    class VER_Rep : public  MArrayExpR<Number,VER_Rep<Number,A,M> > {
+  template<class Number, class A, int Depth>
+    class VER_Rep : public  MArrayExpR<Number,VER_Rep<Number,A,Depth> > {
 
   private:
     const A& a_;
@@ -1510,24 +1510,24 @@ namespace matricks {
       return true;
     }
   size_t depth(void) const {
-      return M;
+      return Depth;
     }
   size_t elsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
   size_t eldeepsize(void) const {
-    if constexpr(M<2) {
+    if constexpr(Depth<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
     size_t deepsize(void) const {
-      if constexpr(M<2) {
+      if constexpr(Depth<2) {
 	  return this->size();
 	} else {
 	return (this->size())*(this->eldeepsize());

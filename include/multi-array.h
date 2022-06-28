@@ -18,26 +18,26 @@ namespace mathq {
    *                 Number = number type
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
-   *                 M = tensor depth. if Element=Number, then M=1.
+   *                 Depth = tensor depth. if Element=Number, then Depth=1.
    ********************************************************************
    */
 
-  template <class Element, int R, typename Number, int M>
+  template <class Element, int R, typename Number, int Depth>
   class
-    MultiArray : public MArrayExpRW<MultiArray<Element, R, Number, M>, Element, Number, M, R> {
+    MultiArray : public MArrayExpRW<MultiArray<Element, R, Number, Depth>, Element, Number, Depth, R> {
   public:
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
 
-    typedef MultiArray<Element, R, Number, M> XType;
+    typedef MultiArray<Element, R, Number, Depth> XType;
     typedef Element EType;
     typedef Number DType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
 
     constexpr static int Rvalue = R;
-    constexpr static int Mvalue = M;
+    constexpr static int Mvalue = Depth;
 
     // always use valarray
     typedef typename ArrayType<Element, 0>::Type MyArrayType;
@@ -53,7 +53,7 @@ namespace mathq {
 
     // --------------------- default CONSTRUCTOR ---------------------
 
-    explicit MultiArray<Element, R, Number, M>() {
+    explicit MultiArray<Element, R, Number, Depth>() {
       std::vector<size_t> dv(R);
       resize(new Dimensions(dv));
       constructorHelper();
@@ -61,14 +61,14 @@ namespace mathq {
 
     // --------------------- constant=0 CONSTRUCTOR ---------------------
 
-    explicit MultiArray<Element, R, Number, M>(const Dimensions& dims) {
+    explicit MultiArray<Element, R, Number, Depth>(const Dimensions& dims) {
       resize(dims);
       constructorHelper();
     }
 
     // --------------------- constant Element CONSTRUCTOR ---------------------
 
-    explicit MultiArray<Element, R, Number, M>(const Dimensions& dims, const Element& e) {
+    explicit MultiArray<Element, R, Number, Depth>(const Dimensions& dims, const Element& e) {
       resize(dims);
       constructorHelper();
       *this = e;
@@ -76,16 +76,16 @@ namespace mathq {
 
     // --------------------- constant Element CONSTRUCTOR ---------------------
 
-    template <size_t M1 = M, EnableIf<(M1 > 0)> = 0>
+    template <size_t M1 = Depth, EnableIf<(M1 > 0)> = 0>
 
-    explicit MultiArray<Element, R, Number, M>(const Dimensions& dims, const Number d) {
+    explicit MultiArray<Element, R, Number, Depth>(const Dimensions& dims, const Number d) {
       resize(dims);
       constructorHelper();
       *this = d;
     }
 
     // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    MultiArray<Element, R, Number, M>(const NestedInitializerList<Element, R>& mylist) {
+    MultiArray<Element, R, Number, Depth>(const NestedInitializerList<Element, R>& mylist) {
       *this = mylist;
       constructorHelper();
     }
@@ -93,7 +93,7 @@ namespace mathq {
     // ************* Expression CONSTRUCTOR---------------------
 
     template <class X>
-    MultiArray<Element, R, Number, M>(const MArrayExpR<X, Element, Number, M, R>& x) {
+    MultiArray<Element, R, Number, Depth>(const MArrayExpR<X, Element, Number, Depth, R>& x) {
       *this = x;
       constructorHelper();
     }
@@ -101,7 +101,7 @@ namespace mathq {
 
     // ************* Vector Constructor---------------------
     template <int NE>
-    MultiArray<Element, R, Number, M>(const Vector<Element, NE>& v) {
+    MultiArray<Element, R, Number, Depth>(const Vector<Element, NE>& v) {
       resize(v.deepdims());
       for (int c = 0; c < v.deepsize(); c++) {
         (*this)[c] = v[c];
@@ -119,7 +119,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MultiArray<Element, R, Number, M>() {
+    ~MultiArray<Element, R, Number, Depth>() {
       // remove from directory
     }
 
@@ -153,12 +153,12 @@ namespace mathq {
     }
 
     inline size_t depth(void) const {
-      return M;
+      return Depth;
     }
 
     Dimensions eldims(void) const {
       Dimensions dimensions();
-      if constexpr (M > 1) {
+      if constexpr (Depth > 1) {
         if (size() > 0) {
           return data_[0].dims();
         }
@@ -168,7 +168,7 @@ namespace mathq {
 
     // the size of each element
     inline size_t elsize(void) const {
-      if constexpr (M < 2) {
+      if constexpr (Depth < 2) {
         return 1;
       }
       else {
@@ -184,7 +184,7 @@ namespace mathq {
 
     // the deep size of an element: the total number of numbers in an element
     inline size_t eldeepsize(void) const {
-      if constexpr (M < 2) {
+      if constexpr (Depth < 2) {
         return 1;
       }
       else {
@@ -200,7 +200,7 @@ namespace mathq {
 
     // the total number of numbers in this data structure
     size_t deepsize(void) const {
-      if constexpr (M < 2) {
+      if constexpr (Depth < 2) {
         return this->size();
       }
       else {
@@ -213,7 +213,7 @@ namespace mathq {
     }
     std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
-      if constexpr (M > 1) {
+      if constexpr (Depth > 1) {
         if (size() > 0) {
           data_[0].deepdims(parentdims);
         }
@@ -241,11 +241,11 @@ namespace mathq {
 
     // TODO: should just pass an index and make deepdims const
 
-    MultiArray<Element, R, Number, M>& resize(const std::vector<Dimensions>& deepdims_in) {
+    MultiArray<Element, R, Number, Depth>& resize(const std::vector<Dimensions>& deepdims_in) {
       std::vector<Dimensions> deepdims(deepdims_in);
       Dimensions newdims = deepdims[0];
       resize(newdims);
-      if constexpr (M > 1) {
+      if constexpr (Depth > 1) {
         deepdims.erase(deepdims.begin());
         for (size_t i = 0; i < size(); i++) {
           std::vector<Dimensions> ddims(deepdims);
@@ -282,7 +282,7 @@ namespace mathq {
     Number& dat(const size_t n) {
       using namespace ::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
-      if constexpr (M < 2) {
+      if constexpr (Depth < 2) {
         int k = n;
         if (k < 0) {
           k += size();
@@ -301,7 +301,7 @@ namespace mathq {
     const Number& dat(const size_t n) const {
       using namespace ::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
-      if constexpr (M < 2) {
+      if constexpr (Depth < 2) {
         int k = n;
         if (k < 0) {
           k += size();
@@ -339,7 +339,7 @@ namespace mathq {
       // TLDISP(mine);
       // MOUT << "  ";
       // TLDISP(inds_next);
-      if constexpr (M > 1) {
+      if constexpr (Depth > 1) {
         return (*this)(mine).dat(inds_next);
       }
       else {
@@ -367,7 +367,7 @@ namespace mathq {
       // TLDISP(mine);
       // MOUT << "  ";
       // TLDISP(inds_next);
-      if constexpr (M > 1) {
+      if constexpr (Depth > 1) {
         return (*this)(mine).dat(inds_next);
       }
       else {
@@ -381,9 +381,9 @@ namespace mathq {
     // "read/write": x.dat(DeepIndices)
     Number& dat(const DeepIndices& dinds) {
       const size_t depth = dinds.size();
-      const Indices& inds = dinds[depth - M];
+      const Indices& inds = dinds[depth - Depth];
 
-      if constexpr (M > 1) {
+      if constexpr (Depth > 1) {
         return (*this)(inds).dat(dinds);
       }
       else {
@@ -394,9 +394,9 @@ namespace mathq {
     // "read": x.dat(DeepIndices)
     const Number dat(const DeepIndices& dinds) const {
       const size_t depth = dinds.size();
-      const Indices& inds = dinds[depth - M];
+      const Indices& inds = dinds[depth - Depth];
 
-      if constexpr (M > 1) {
+      if constexpr (Depth > 1) {
         return (*this)(inds).dat(dinds);
       }
       else {
@@ -438,9 +438,9 @@ namespace mathq {
     /* const int size = sizeof...(args); */
     /* int argarray[size] = {args...}; */
     /*   Indices& inds = *(new Indices(ndims())); */
-    /*   const size_t M = this->ndims(); */
+    /*   const size_t Depth = this->ndims(); */
     /*   inds[0] = i;  */
-    /*   for(size_t n = 1; n < M; n++) { */
+    /*   for(size_t n = 1; n < Depth; n++) { */
     /* 	inds[n] = argarray[n];  */
     /*   } */
     /*   size_t k = this->index(inds); */
@@ -534,7 +534,7 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // ----------------- tensor = e ----------------
-    MultiArray<Element, R, Number, M>&
+    MultiArray<Element, R, Number, Depth>&
       operator=(const Element e) {
       for (size_t i = size(); i--;)
         data_[i] = e;
@@ -543,7 +543,7 @@ namespace mathq {
 
     // ----------------- tensor = d ----------------
     template <class T = Element>
-    typename std::enable_if<!std::is_same<T, Number>::value, MultiArray<T, R, Number, M>&>::type operator=(const Number& d) {
+    typename std::enable_if<!std::is_same<T, Number>::value, MultiArray<T, R, Number, Depth>&>::type operator=(const Number& d) {
 
       for (size_t i = 0; i < deepsize(); i++) {
         data_.dat(i) = d;
@@ -552,7 +552,7 @@ namespace mathq {
     }
 
     // ----------------- tensor = C++11 init list
-    MultiArray<Element, R, Number, M>& operator=(const NestedInitializerList<Element, R>& mylist) {
+    MultiArray<Element, R, Number, Depth>& operator=(const NestedInitializerList<Element, R>& mylist) {
       // MOUT << "operator=: ";
       // TLDISP(mylist);
       int i = 0;
@@ -562,10 +562,10 @@ namespace mathq {
       return *this;
     }
 
-    // ----------------- tensor = MultiArray<Element,R,Number,M> ----------------
+    // ----------------- tensor = MultiArray<Element,R,Number,Depth> ----------------
     template <int R1>
-    MultiArray<Element, R, Number, M>&
-      operator=(const MultiArray<Element, R1, Number, M>& x) {
+    MultiArray<Element, R, Number, Depth>&
+      operator=(const MultiArray<Element, R1, Number, Depth>& x) {
       // TODO: issue warning
       // TRDISP(x);
       resize(x.dims());
@@ -575,12 +575,12 @@ namespace mathq {
       return *this;
     }
 
-    // ----------------- tensor = MArrayExpR<X,Element,Number,M,R> ----------------
+    // ----------------- tensor = MArrayExpR<X,Element,Number,Depth,R> ----------------
     template <class X>
-    MultiArray<Element, R, Number, M>&
-      operator=(const MArrayExpR<X, Element, Number, M, R>& x) {
+    MultiArray<Element, R, Number, Depth>&
+      operator=(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         resize(x.dims());
         for (size_t i = 0; i < size(); i++) {
           (*this)[i] = x[i];
@@ -601,7 +601,7 @@ namespace mathq {
 
     // ------------- tensor = array[] ----------------
 
-    MultiArray<Element, R, Number, M>&
+    MultiArray<Element, R, Number, Depth>&
       operator=(const Element array1[]) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = array1[i];
@@ -616,7 +616,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MultiArray<Element, R, Number, M>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MultiArray<Element, R, Number, Depth>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       for (size_t i = size(); i--;) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
@@ -714,7 +714,7 @@ namespace mathq {
 
     // TODO: implement format
 
-    friend std::ostream& operator<<(std::ostream& stream, const MultiArray<Element, R, Number, M>& t) {
+    friend std::ostream& operator<<(std::ostream& stream, const MultiArray<Element, R, Number, Depth>& t) {
       using namespace display;
       size_t n = 0;
       t.send(stream, n, t.dims());
@@ -722,7 +722,7 @@ namespace mathq {
     }
 
     // template <class Number>
-    friend inline std::istream& operator>>(const std::string s, MultiArray<Element, R, Number, M>& x) {
+    friend inline std::istream& operator>>(const std::string s, MultiArray<Element, R, Number, Depth>& x) {
       std::istringstream st(s);
       return (st >> x);
     }
@@ -730,7 +730,7 @@ namespace mathq {
     // stream >> operator
     // TODO: implement
 
-    friend std::istream& operator>>(std::istream& stream, MultiArray<Element, R, Number, M>& x) {
+    friend std::istream& operator>>(std::istream& stream, MultiArray<Element, R, Number, Depth>& x) {
       return stream;
     }
 

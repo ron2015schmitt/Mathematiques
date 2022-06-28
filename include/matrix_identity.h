@@ -359,10 +359,10 @@ namespace mathq {
         s += "NC=";
         s += num2string(NC);
       }
-      //    if (M>1) {
+      //    if (Depth>1) {
       //      s += StyledString::get(COMMA).get();
-      //      s += "M=";
-      //      s += num2string(M);
+      //      s += "Depth=";
+      //      s += num2string(Depth);
       //    }
       s += StyledString::get(ANGLE2).get();
       return s;

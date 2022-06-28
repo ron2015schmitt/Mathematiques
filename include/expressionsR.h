@@ -12,14 +12,14 @@ namespace mathq {
   // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class Element, class Number, int M, int R, class FUNC>
-  class TER_Unary : public MArrayExpR<TER_Unary<X, Element, Number, M, R, FUNC>, Element, Number, M, R> {
+  template <class X, class Element, class Number, int Depth, int R, class FUNC>
+  class TER_Unary : public MArrayExpR<TER_Unary<X, Element, Number, Depth, R, FUNC>, Element, Number, Depth, R> {
   public:
-    typedef Materialize<Element, Number, M, R> XType;
+    typedef Materialize<Element, Number, Depth, R> XType;
     typedef Element EType;
     typedef Number DType;
     constexpr static int Rvalue = R;
-    constexpr static int Mvalue = M;
+    constexpr static int Mvalue = Depth;
 
   private:
     const X& x_;
@@ -69,13 +69,13 @@ namespace mathq {
       return true;
     }
     size_t depth(void) const {
-      return M;
+      return Depth;
     }
     Dimensions eldims(void) const {
       return x_.eldims();
     }
     size_t elsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return 1;
       }
       else {
@@ -83,7 +83,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return 1;
       }
       else {
@@ -91,7 +91,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return this->size();
       }
       else {
@@ -118,15 +118,15 @@ namespace mathq {
   // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class Element, class Number, int M, int R>
-  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, Number, M, R>, Element, Number, M, R> {
+  template <class X, class Element, class Number, int Depth, int R>
+  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, Number, Depth, R>, Element, Number, Depth, R> {
   public:
-    typedef Materialize<Element, Number, M, R> XType;
+    typedef Materialize<Element, Number, Depth, R> XType;
     typedef Element EType;
     typedef Number DType;
     typedef typename FunctionType1<Number, Number>::type FUNC;
     constexpr static int Rvalue = R;
-    constexpr static int Mvalue = M;
+    constexpr static int Mvalue = Depth;
 
   private:
     const X& x_;
@@ -177,13 +177,13 @@ namespace mathq {
       return true;
     }
     size_t depth(void) const {
-      return M;
+      return Depth;
     }
     Dimensions eldims(void) const {
       return x_.eldims();
     }
     size_t elsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return 1;
       }
       else {
@@ -191,7 +191,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return 1;
       }
       else {
@@ -199,7 +199,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return this->size();
       }
       else {
@@ -1106,14 +1106,14 @@ namespace mathq {
   // TER_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
-  template <class A, class X, class Element, class Number, int M, int R>
-  class TER_Series : public MArrayExpR<TER_Series<A, X, Element, Number, M, R>, Element, Number, M, R> {
+  template <class A, class X, class Element, class Number, int Depth, int R>
+  class TER_Series : public MArrayExpR<TER_Series<A, X, Element, Number, Depth, R>, Element, Number, Depth, R> {
   public:
-    typedef Materialize<Element, Number, M, R> XType;
+    typedef Materialize<Element, Number, Depth, R> XType;
     typedef Element EType;
     typedef Number DType;
     constexpr static int Rvalue = R;
-    constexpr static int Mvalue = M;
+    constexpr static int Mvalue = Depth;
 
   private:
     const A& a_;
@@ -1202,13 +1202,13 @@ namespace mathq {
       return true;
     }
     size_t depth(void) const {
-      return M;
+      return Depth;
     }
     Dimensions eldims(void) const {
       return x_.eldims();
     }
     size_t elsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return 1;
       }
       else {
@@ -1216,7 +1216,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return 1;
       }
       else {
@@ -1224,7 +1224,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return this->size();
       }
       else {
@@ -1378,14 +1378,14 @@ namespace mathq {
   // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template <class X, class Element, class Number, int M, int R, class FUNC>
-  class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, Number, M, R, FUNC>, Element, Number, M, R> {
+  template <class X, class Element, class Number, int Depth, int R, class FUNC>
+  class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, Number, Depth, R, FUNC>, Element, Number, Depth, R> {
   public:
-    typedef Materialize<Element, Number, M, R> XType;
+    typedef Materialize<Element, Number, Depth, R> XType;
     typedef Element EType;
     typedef Number DType;
     constexpr static int Rvalue = R;
-    constexpr static int Mvalue = M;
+    constexpr static int Mvalue = Depth;
 
   private:
     const X& x_;
@@ -1405,7 +1405,7 @@ namespace mathq {
     }
 
     const Number dat(const size_t i) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return (*this[i]);
       }
       else {
@@ -1438,10 +1438,10 @@ namespace mathq {
       return true;
     }
     size_t depth(void) const {
-      return M;
+      return Depth;
     }
     size_t elsize(void) const {
-      if constexpr (M < 2) {
+      if constexpr (Depth < 2) {
         return 1;
       }
       else {
@@ -1449,7 +1449,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (M < 2) {
+      if constexpr (Depth < 2) {
         return 1;
       }
       else {
@@ -1457,7 +1457,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (M < 2) {
+      if constexpr (Depth < 2) {
         return this->size();
       }
       else {
@@ -1480,12 +1480,12 @@ namespace mathq {
   // VER_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class Element, class Number, int M>
-  class TER_Join : public MArrayExpR<TER_Join<X, Y, Element, Number, M>, Element, Number, M, 1> {
+  template <class X, class Y, class Element, class Number, int Depth>
+  class TER_Join : public MArrayExpR<TER_Join<X, Y, Element, Number, Depth>, Element, Number, Depth, 1> {
   public:
     constexpr static int Rvalue = 1;
-    constexpr static int Mvalue = M;
-    typedef Materialize<Element, Number, M, Rvalue> XType;
+    constexpr static int Mvalue = Depth;
+    typedef Materialize<Element, Number, Depth, Rvalue> XType;
     typedef Element EType;
     typedef Number DType;
 
@@ -1553,13 +1553,13 @@ namespace mathq {
       return true;
     }
     size_t depth(void) const {
-      return M;
+      return Depth;
     }
     Dimensions eldims(void) const {
       return x_.eldims();
     }
     size_t elsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return 1;
       }
       else {
@@ -1567,7 +1567,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return 1;
       }
       else {
@@ -1575,7 +1575,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (M <= 1) {
+      if constexpr (Depth <= 1) {
         return this->size();
       }
       else {

@@ -99,24 +99,24 @@ namespace mathq {
 
     explicit MatrixLowerTriangle<Number, N>(const Vector<Number>& v) {
       const size_t len = v.size();
-      const size_t M = (std::sqrt(1+8*len) - 1)/2;
-      resize(M);
+      const size_t Depth = (std::sqrt(1+8*len) - 1)/2;
+      resize(Depth);
       *this = v;
     }
 
     // --------------------- variable-size zero-CONSTRUCTOR---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixLowerTriangle<Number, N>(const size_t M) {
-      resize(M);
+    explicit MatrixLowerTriangle<Number, N>(const size_t Depth) {
+      resize(Depth);
       *this = 0;
     }
 
     // --------------------- variable-size value CONSTRUCTOR ---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixLowerTriangle<Number, N>(const size_t M, const Number& value) {
-      resize(M);
+    explicit MatrixLowerTriangle<Number, N>(const size_t Depth, const Number& value) {
+      resize(Depth);
       *this = value;
     }
 
@@ -125,9 +125,9 @@ namespace mathq {
     template<class X, size_t NN = N, EnableIf<NN == 0> = 0>
 
     explicit MatrixLowerTriangle<Number, N>(const MArrayExpR<X, Number, Number, 1, 2> A) {
-      const size_t M = A.Nrows();
+      const size_t Depth = A.Nrows();
       // TODO: chekc that A is square
-      resize(M);
+      resize(Depth);
       *this = A;
     }
 
@@ -223,11 +223,11 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixLowerTriangle<Number, N>& resize(const int M) {
+    MatrixLowerTriangle<Number, N>& resize(const int Depth) {
       N_ = N;
       if constexpr (resizable) {
-        N_ = M;
-        const size_t sz = (M*M+M)/2;
+        N_ = Depth;
+        const size_t sz = (Depth*Depth+Depth)/2;
         data_.resize(sz);
       }
       return *this;
@@ -476,10 +476,10 @@ namespace mathq {
         s += "N=";
         s += num2string(N);
       }
-      //    if (M>1) {
+      //    if (Depth>1) {
       //      s += StyledString::get(COMMA).get();
-      //      s += "M=";
-      //      s += num2string(M);
+      //      s += "Depth=";
+      //      s += num2string(Depth);
       //    }
       s += StyledString::get(ANGLE2).get();
       return s;

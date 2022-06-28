@@ -290,12 +290,12 @@ namespace mathq {
   // VERW_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class Element, class Number, int M>
-  class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, Element, Number, M>, Element, Number, M, 1> {
+  template <class X, class Y, class Element, class Number, int Depth>
+  class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, Element, Number, Depth>, Element, Number, Depth, 1> {
   public:
     constexpr static int Rvalue = 1;
-    constexpr static int Mvalue = M;
-    typedef Materialize<Element, Number, M, Rvalue> XType;
+    constexpr static int Mvalue = Depth;
+    typedef Materialize<Element, Number, Depth, Rvalue> XType;
     typedef Element EType;
     typedef Number DType;
 
@@ -354,14 +354,14 @@ namespace mathq {
     }
 
     template <class Z>
-    TERW_Join<X, Y, Element, Number, M>& operator=(const MArrayExpR<Z, Element, Number, M, 1>& rhs) {
+    TERW_Join<X, Y, Element, Number, Depth>& operator=(const MArrayExpR<Z, Element, Number, Depth, 1>& rhs) {
       return this->equals(rhs);
     }
 
-    TERW_Join<X, Y, Element, Number, M>& operator=(const Number d) {
+    TERW_Join<X, Y, Element, Number, Depth>& operator=(const Number d) {
       return this->equals(d);
     }
-    TERW_Join<X, Y, Element, Number, M>& operator=(const Element& e) {
+    TERW_Join<X, Y, Element, Number, Depth>& operator=(const Element& e) {
       return this->equals(e);
     }
 
@@ -396,13 +396,13 @@ namespace mathq {
       return true;
     }
     size_t depth(void) const {
-      return M;
+      return Depth;
     }
     Dimensions eldims(void) const {
       return x_.eldims();
     }
     size_t elsize(void) const {
-      if constexpr (M<=1) {
+      if constexpr (Depth<=1) {
         return 1;
       }
       else {
@@ -410,7 +410,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (M<=1) {
+      if constexpr (Depth<=1) {
         return 1;
       }
       else {
@@ -418,7 +418,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (M<=1) {
+      if constexpr (Depth<=1) {
         return this->size();
       }
       else {
@@ -449,8 +449,8 @@ namespace mathq {
   //   //---------------------------------------------------------------------------
   //   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //   //---------------------------------------------------------------------------
-  //   template <class Number, class OP, int M>
-  //     class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,M> > {
+  //   template <class Number, class OP, int Depth>
+  //     class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,Depth> > {
   //   private:
     // can't be constant since we alow to be on left hand side
   //     Vector<std::complex<Number> >& a_;
@@ -501,24 +501,24 @@ namespace mathq {
   //       return true;
   //     }
   //   size_t depth(void) const {
-  //       return M;
+  //       return Depth;
   //     }
   //   size_t elsize(void) const {
-  //     if constexpr(M<2) {
+  //     if constexpr(Depth<2) {
   //       return 1;
   //     } else {
   //       return a_.elsize();
   //     }
   //   }
   //   size_t eldeepsize(void) const {
-  //     if constexpr(M<2) {
+  //     if constexpr(Depth<2) {
   //       return 1;
   //     } else {
   //       return a_.eldeepsize();
   //     }
   //   }
   //     size_t deepsize(void) const {
-  //       if constexpr(M<2) {
+  //       if constexpr(Depth<2) {
   // 	  return this->size();
   // 	} else {
   // 	return (this->size())*(this->eldeepsize());
@@ -530,11 +530,11 @@ namespace mathq {
 
 
   //     template <class D2, class B>
-  //       TERW_RealFromComplex<Number,OP,M>& operator=(const MArrayExpR<D2,B>& rhs) { 
+  //       TERW_RealFromComplex<Number,OP,Depth>& operator=(const MArrayExpR<D2,B>& rhs) { 
   //       return this->equals(rhs);
   //     }
 
-  //     TERW_RealFromComplex<Number,OP,M>& operator=(const MyNumberType d) { 
+  //     TERW_RealFromComplex<Number,OP,Depth>& operator=(const MyNumberType d) { 
   //       return this->equals(d);
   //     }
 
