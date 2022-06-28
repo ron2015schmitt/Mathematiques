@@ -22,7 +22,7 @@ namespace mathq {
   class MatrixRepRow : public MArrayExpRW<MatrixRepRow<Number, NR, NC>, Number, Number, 1, 2> {
 
   public:
-    constexpr static int R = 2;
+    constexpr static int rank = 2;
     constexpr static int Rvalue = 2;
     constexpr static int Mvalue = 1;
     static constexpr bool resizable = (NR*NC==0) ? true : false;

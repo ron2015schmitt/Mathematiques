@@ -12,13 +12,13 @@ namespace mathq {
   // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class Element, class Number, int depth, int R, class FUNC>
-  class TER_Unary : public MArrayExpR<TER_Unary<X, Element, Number, depth, R, FUNC>, Element, Number, depth, R> {
+  template <class X, class Element, class Number, int depth, int rank, class FUNC>
+  class TER_Unary : public MArrayExpR<TER_Unary<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
   public:
-    typedef Materialize<Element, Number, depth, R> XType;
+    typedef Materialize<Element, Number, depth, rank> XType;
     typedef Element EType;
     typedef Number DType;
-    constexpr static int Rvalue = R;
+    constexpr static int Rvalue = rank;
     constexpr static int Mvalue = depth;
 
   private:
@@ -51,7 +51,7 @@ namespace mathq {
       return x_.size();
     }
     size_t ndims(void) const {
-      return R;
+      return rank;
     }
     Dimensions dims(void) const {
       return x_.dims();
@@ -118,14 +118,14 @@ namespace mathq {
   // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class Element, class Number, int depth, int R>
-  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, Number, depth, R>, Element, Number, depth, R> {
+  template <class X, class Element, class Number, int depth, int rank>
+  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
-    typedef Materialize<Element, Number, depth, R> XType;
+    typedef Materialize<Element, Number, depth, rank> XType;
     typedef Element EType;
     typedef Number DType;
     typedef typename FunctionType1<Number, Number>::type FUNC;
-    constexpr static int Rvalue = R;
+    constexpr static int Rvalue = rank;
     constexpr static int Mvalue = depth;
 
   private:
@@ -159,7 +159,7 @@ namespace mathq {
       return x_.size();
     }
     size_t ndims(void) const {
-      return R;
+      return rank;
     }
     Dimensions dims(void) const {
       return x_.dims();
@@ -1106,13 +1106,13 @@ namespace mathq {
   // TER_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
-  template <class A, class X, class Element, class Number, int depth, int R>
-  class TER_Series : public MArrayExpR<TER_Series<A, X, Element, Number, depth, R>, Element, Number, depth, R> {
+  template <class A, class X, class Element, class Number, int depth, int rank>
+  class TER_Series : public MArrayExpR<TER_Series<A, X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
-    typedef Materialize<Element, Number, depth, R> XType;
+    typedef Materialize<Element, Number, depth, rank> XType;
     typedef Element EType;
     typedef Number DType;
-    constexpr static int Rvalue = R;
+    constexpr static int Rvalue = rank;
     constexpr static int Mvalue = depth;
 
   private:
@@ -1184,7 +1184,7 @@ namespace mathq {
       return x_.size();
     }
     size_t ndims(void) const {
-      return R;
+      return rank;
     }
     Dimensions dims(void) const {
       return x_.dims();
@@ -1378,13 +1378,13 @@ namespace mathq {
   // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template <class X, class Element, class Number, int depth, int R, class FUNC>
-  class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, Number, depth, R, FUNC>, Element, Number, depth, R> {
+  template <class X, class Element, class Number, int depth, int rank, class FUNC>
+  class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
   public:
-    typedef Materialize<Element, Number, depth, R> XType;
+    typedef Materialize<Element, Number, depth, rank> XType;
     typedef Element EType;
     typedef Number DType;
-    constexpr static int Rvalue = R;
+    constexpr static int Rvalue = rank;
     constexpr static int Mvalue = depth;
 
   private:

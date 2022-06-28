@@ -12,8 +12,8 @@
 // ##COMMENTNAME## 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int depth, int R>
-auto ##FUNCTION##(const MArrayExpR<X, Element, ##DIN##, depth, R>& x) {
+template <class X, class Element, class Number, int depth, int rank>
+auto ##FUNCTION##(const MArrayExpR<X, Element, ##DIN##, depth, rank>& x) {
   typedef typename NumberTrait<Element, ##DOUT##>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, ##DIN##, depth, R>, EOUT, ##DOUT##, depth, R, ##FUNCTOR##<Element, EOUT, ##DIN##, ##DOUT##>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, ##DIN##, depth, rank>, EOUT, ##DOUT##, depth, rank, ##FUNCTOR##<Element, EOUT, ##DIN##, ##DOUT##>>(x);
 }

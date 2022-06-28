@@ -309,15 +309,15 @@ int main() {
 
 
   // std::function<double(double, double)> fradius = [](double x, double y) {  return std::sqrt(x*x + y*y); };
-  // auto R = fgrid(fradius, gridXY);
-  // TRDISP(R);
+  // auto rank = fgrid(fradius, gridXY);
+  // TRDISP(rank);
   // auto R2 = fgrid(fradius2, gridXY);
   // TRDISP(R2);
 
-  // auto gradXY = grad(R, x_interval, y_interval);
+  // auto gradXY = grad(rank, x_interval, y_interval);
   // TRDISP(gradXY(0));
   // TRDISP(gradXY(1));
-  // gradXY = nabla_old & std::make_tuple(R, x_interval, y_interval);
+  // gradXY = nabla_old & std::make_tuple(rank, x_interval, y_interval);
   // TRDISP(gradXY(0));
   // TRDISP(gradXY(1));
 

@@ -20,7 +20,7 @@ namespace mathq {
   class MatrixSymmetric : public MArrayExpRW<MatrixSymmetric<Number, N>, Number, Number, 1, 2> {
 
   public:
-    constexpr static int R = 2;
+    constexpr static int rank = 2;
     constexpr static int Rvalue = 2;
     constexpr static int Mvalue = 1;
     constexpr static int NR = N;

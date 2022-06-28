@@ -82,9 +82,9 @@ namespace mathq {
   // Element = element type (int, double, complex<double>, bool, Scalar<double>, Vector<double>, Matrix<double>, etc)
   // Number = underlying ordered field (orderable-number) type (int, double, complex<double>, bool, etc)
 
-  template <class X, class Element, typename Number, int depth, int R>
+  template <class X, class Element, typename Number, int depth, int rank>
   class MArrayExpR;
-  template <class X, class Element, typename Number, int depth, int R>
+  template <class X, class Element, typename Number, int depth, int rank>
   class MArrayExpRW;
 
 
@@ -106,7 +106,7 @@ namespace mathq {
   template <class Element, int NR = 0, int NC = 0>
   class Matrix;
 
-  template <class Element, int R = 0, typename Number = typename NumberTrait<Element>::Type, int depth = 1 + NumberTrait<Element>::getDepth()>
+  template <class Element, int rank = 0, typename Number = typename NumberTrait<Element>::Type, int depth = 1 + NumberTrait<Element>::getDepth()>
   class MultiArray;
 
   // , typename Number = typename NumberTrait<Element>::Type, int depth = 1 + NumberTrait<Element>::getDepth()>
@@ -206,7 +206,7 @@ namespace mathq {
 
 
 
-  template <class X, class Element, class Number, int depth, int R, class FUNC>
+  template <class X, class Element, class Number, int depth, int rank, class FUNC>
   class
     TER_Unary;
 
@@ -218,13 +218,13 @@ namespace mathq {
   class
     TER_Ternary;
 
-  template <class A, class X, class Element, class Number, int depth, int R>
+  template <class A, class X, class Element, class Number, int depth, int rank>
   class TER_Series;
 
   template <class A, class B, class X, class Number, class OP1, class OP2>
   class TER_Series2;
 
-  template <class X, class Element, class Number, int depth, int R, class FUNC>
+  template <class X, class Element, class Number, int depth, int rank, class FUNC>
   class TER_Transpose;
 
   template <class A, class Number>
@@ -251,14 +251,14 @@ namespace mathq {
   // Materialize - this returns a concrete tensor of type specified by paramters
   // ***************************************************************************
 
-  template <class Element, class Number, int depth, int R, int N1 = 0, int N2 = 0>
+  template <class Element, class Number, int depth, int rank, int N1 = 0, int N2 = 0>
   class Materialize {
   public:
-    typedef MultiArray<Element, R, Number, depth> TEN;
+    typedef MultiArray<Element, rank, Number, depth> TEN;
     typedef Matrix<Element, 0, 0> MAT;
     typedef Vector<Element, 0> VEC;
     typedef Scalar<Element, Number, depth> SCA;
-    typedef typename std::conditional<R == 0, SCA, std::conditional<R == 1, VEC, std::conditional<R == 2, MAT, TEN>>>::type Type;
+    typedef typename std::conditional<rank == 0, SCA, std::conditional<rank == 1, VEC, std::conditional<rank == 2, MAT, TEN>>>::type Type;
   };
 
   template <class Element, class Number, int depth>
@@ -322,9 +322,9 @@ namespace mathq {
   public:
     typedef Number Type;
   };
-  template <typename X, typename Element, typename Number, int depth, int R>
+  template <typename X, typename Element, typename Number, int depth, int rank>
   class
-    ContainedType<MArrayExpR<X, Element, Number, depth, R>> {
+    ContainedType<MArrayExpR<X, Element, Number, depth, rank>> {
   public:
     typedef Element Type;
   };
@@ -456,25 +456,25 @@ namespace mathq {
     constexpr static bool value = true;
     typedef Number RealType;
   };
-  template <typename Number, int R>
+  template <typename Number, int rank>
   class
-    IsMathqContainer<MultiArray<Number, R>> {
+    IsMathqContainer<MultiArray<Number, rank>> {
   public:
     constexpr static bool value = true;
     typedef Number RealType;
   };
 
 
-  template <class X, class Element, typename Number, int depth, int R>
+  template <class X, class Element, typename Number, int depth, int rank>
   class
-    IsMathqContainer<MArrayExpR<X, Element, Number, depth, R>> {
+    IsMathqContainer<MArrayExpR<X, Element, Number, depth, rank>> {
   public:
     constexpr static bool value = true;
     typedef Number RealType;
   };
-  template <class X, class Element, typename Number, int depth, int R>
+  template <class X, class Element, typename Number, int depth, int rank>
   class
-    IsMathqContainer<MArrayExpRW<X, Element, Number, depth, R>> {
+    IsMathqContainer<MArrayExpRW<X, Element, Number, depth, rank>> {
   public:
     constexpr static bool value = true;
     typedef Number RealType;
@@ -493,16 +493,16 @@ namespace mathq {
     constexpr static bool value = false;
     typedef void RealType;
   };
-  template <class X, class Element, typename Number, int depth, int R>
+  template <class X, class Element, typename Number, int depth, int rank>
   class
-    IsMArrayExpRW<MArrayExpRW<X, Element, Number, depth, R>> {
+    IsMArrayExpRW<MArrayExpRW<X, Element, Number, depth, rank>> {
   public:
     constexpr static bool value = true;
     typedef Number RealType;
   };
-  template <class X, class Element, typename Number, int depth, int R>
+  template <class X, class Element, typename Number, int depth, int rank>
   class
-    IsMArrayExpRW<MArrayExpR<X, Element, Number, depth, R>> {
+    IsMArrayExpRW<MArrayExpR<X, Element, Number, depth, rank>> {
   public:
     constexpr static bool value = IsMArrayExpRW<X>::value;
     typedef Number RealType;
@@ -646,10 +646,10 @@ namespace mathq {
     }
   };
 
-  //  MultiArray<Element,R>
-  template <class Element, int R>
+  //  MultiArray<Element,rank>
+  template <class Element, int rank>
   class
-    OrderedNumberTrait<MultiArray<Element, R>> {
+    OrderedNumberTrait<MultiArray<Element, rank>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
     constexpr static int getDepth() {
@@ -657,11 +657,11 @@ namespace mathq {
     }
   };
 
-  //  MArrayExpR<X,Element,Number,depth,R>
+  //  MArrayExpR<X,Element,Number,depth,rank>
 
-  template <class X, class Element, class Number, int depth, int R>
+  template <class X, class Element, class Number, int depth, int rank>
   class
-    OrderedNumberTrait<MArrayExpR<X, Element, Number, depth, R>> {
+    OrderedNumberTrait<MArrayExpR<X, Element, Number, depth, rank>> {
   public:
     typedef typename OrderedNumberTrait<Number>::Type Type;
     constexpr static int getDepth() {
@@ -933,16 +933,16 @@ namespace mathq {
     }
   };
 
-  //  MultiArray<Element,R>
+  //  MultiArray<Element,rank>
 
-  template <class Element, typename NewD, int R>
+  template <class Element, typename NewD, int rank>
   class
-    NumberTrait<MultiArray<Element, R>, NewD> {
+    NumberTrait<MultiArray<Element, rank>, NewD> {
   public:
-    typedef MultiArray<Element, R> InputType;
+    typedef MultiArray<Element, rank> InputType;
     typedef typename NumberTrait<Element>::Type Type;
-    typedef MultiArray<typename NumberTrait<Element, NewD>::ReplaceTypeD, R> ReplaceTypeD;
-    typedef MultiArray<NewD, R> ReplaceTypeE;
+    typedef MultiArray<typename NumberTrait<Element, NewD>::ReplaceTypeD, rank> ReplaceTypeD;
+    typedef MultiArray<NewD, rank> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int getDepth() {
       return 1 + NumberTrait<Element, NewD>::getDepth();
@@ -957,18 +957,18 @@ namespace mathq {
 
 
 
-  //  MArrayExpR<X,Element,Number,depth,R>
+  //  MArrayExpR<X,Element,Number,depth,rank>
 
-  template <class X, class Element, class Number, int depth, int R, typename NewD>
+  template <class X, class Element, class Number, int depth, int rank, typename NewD>
   class
-    NumberTrait<MArrayExpR<X, Element, Number, depth, R>, NewD> {
+    NumberTrait<MArrayExpR<X, Element, Number, depth, rank>, NewD> {
   public:
-    typedef MArrayExpR<X, Element, Number, depth, R> InputType;
+    typedef MArrayExpR<X, Element, Number, depth, rank> InputType;
     typedef Number Type;
     typedef typename NumberTrait<Element, NewD>::ReplaceTypeD NewE;
     typedef typename NumberTrait<X, NewD>::ReplaceTypeD NewX;
     typedef NewX ReplaceTypeD;
-    typedef MArrayExpR<X, NewD, Number, depth, R> ReplaceTypeE;
+    typedef MArrayExpR<X, NewD, Number, depth, rank> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int getDepth() {
       return depth;
@@ -981,18 +981,18 @@ namespace mathq {
     }
   };
 
-  //  MArrayExpRW<X,Element,Number,depth,R>
+  //  MArrayExpRW<X,Element,Number,depth,rank>
 
-  template <class X, class Element, class Number, int depth, int R, typename NewD>
+  template <class X, class Element, class Number, int depth, int rank, typename NewD>
   class
-    NumberTrait<MArrayExpRW<X, Element, Number, depth, R>, NewD> {
+    NumberTrait<MArrayExpRW<X, Element, Number, depth, rank>, NewD> {
   public:
-    typedef MArrayExpRW<X, Element, Number, depth, R> InputType;
+    typedef MArrayExpRW<X, Element, Number, depth, rank> InputType;
     typedef Number Type;
     typedef typename NumberTrait<Element, NewD>::ReplaceTypeD NewE;
     typedef typename NumberTrait<X, NewD>::ReplaceTypeD NewX;
     typedef NewX ReplaceTypeD;
-    typedef MArrayExpRW<X, NewD, Number, depth, R> ReplaceTypeE;
+    typedef MArrayExpRW<X, NewD, Number, depth, rank> ReplaceTypeE;
     constexpr static bool value = false;
     constexpr static int getDepth() {
       return depth;
@@ -1137,14 +1137,14 @@ namespace mathq {
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
-  //  MultiArray<Element,R>
-  template <class Element, int R, class C>
+  //  MultiArray<Element,rank>
+  template <class Element, int rank, class C>
   class
-    InversionType<MultiArray<Element, R>, C> {
+    InversionType<MultiArray<Element, rank>, C> {
   public:
     typedef typename NumberTrait<Element>::Type Number;
-    typedef MultiArray<Number, R> MultiArrayD;
-    typedef MultiArray<C, R> MultiArrayC;
+    typedef MultiArray<Number, rank> MultiArrayD;
+    typedef MultiArray<C, rank> MultiArrayC;
     typedef typename std::conditional<std::is_same<C, Null>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type>::type Type;
   };
 
@@ -1380,10 +1380,10 @@ namespace mathq {
   // GridType 
   // ***************************************************************************
 
-  template <class Element, class Number, int depth, int R>
+  template <class Element, class Number, int depth, int rank>
   class GridType {
   public:
-    typedef MultiArray<Element, R, Number, depth> Type;
+    typedef MultiArray<Element, rank, Number, depth> Type;
   };
 
   template <class Element, class Number, int depth>
@@ -1563,8 +1563,8 @@ namespace mathq {
   // In functions_misc.h
   ////////////////////////////////////////////////////////////
 
-  template <class X, class Element, class Number, int depth, int R>
-  EnableMethodIf<std::is_same<Number, bool>::value, Vector<size_t>&> findtrue(const MArrayExpR<X, Element, Number, depth, R>& v);
+  template <class X, class Element, class Number, int depth, int rank>
+  EnableMethodIf<std::is_same<Number, bool>::value, Vector<size_t>&> findtrue(const MArrayExpR<X, Element, Number, depth, rank>& v);
 
 
 

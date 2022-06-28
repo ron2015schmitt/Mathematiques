@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.57-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.58-c++17</h1>
 
 <details>
 
@@ -118,7 +118,7 @@ RealMultiSet<double, 3> setXYZ({ rx, ry, rz });
 ☀ hasInflatedGrids_() ➜ bool 0;
 inflategrids
 ☀ gdims ➜ Dimensions {3, 5, 4};
-☀ X ➜ MultiArray<double,R=3> 
+☀ X ➜ MultiArray<double,rank=3> 
 {
   {
     {-10, -10, -10, -10},
@@ -142,7 +142,7 @@ inflategrids
     {10, 10, 10, 10}
   }
 };
-☀ Y ➜ MultiArray<double,R=3> 
+☀ Y ➜ MultiArray<double,rank=3> 
 {
   {
     {-20, -20, -20, -20},
@@ -166,7 +166,7 @@ inflategrids
     {20, 20, 20, 20}
   }
 };
-☀ Z ➜ MultiArray<double,R=3> 
+☀ Z ➜ MultiArray<double,rank=3> 
 {
   {
     {30, 31, 32, 33},

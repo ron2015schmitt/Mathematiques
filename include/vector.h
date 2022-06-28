@@ -30,7 +30,7 @@ namespace mathq {
     typedef typename OrderedNumberTrait<Number>::Type OrderedNumber;
 
     typedef typename ArrayType<Element, N1>::Type MyArrayType;
-    constexpr static int R = 1;
+    constexpr static int rank = 1;
     constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
 
     // rename these
@@ -480,7 +480,7 @@ namespace mathq {
     //***************MultiArray cast *********************
     //**********************************************************************
 
-    operator MultiArray<Element, R, Number, depth>() const {
+    operator MultiArray<Element, rank, Number, depth>() const {
       MultiArray<Element, 1, Number, depth> ma(*this);
     }
 

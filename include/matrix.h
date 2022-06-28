@@ -29,7 +29,7 @@ namespace mathq {
   class Matrix : public MArrayExpRW<Matrix<Element, NR, NC>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 2> {
 
   public:
-    constexpr static int R = 2;
+    constexpr static int rank = 2;
     constexpr static int Rvalue = 2;
     constexpr static int Mvalue = 1 + NumberTrait<Element>::getDepth();
     static constexpr bool resizable = (NR*NC==0) ? true : false;
@@ -144,7 +144,7 @@ namespace mathq {
 
 
     template <class X>
-    Matrix<Element, NR, NC>(const MArrayExpR<X, Element, Number, Mvalue, R>& x) {
+    Matrix<Element, NR, NC>(const MArrayExpR<X, Element, Number, Mvalue, rank>& x) {
       resize(x.dims()[0], x.dims()[1]);
       *this = x;
     }
@@ -190,7 +190,7 @@ namespace mathq {
     //**********************************************************************
 
     size_t ndims(void)  const {
-      return R;
+      return rank;
     }
 
 
@@ -788,9 +788,9 @@ namespace mathq {
     }
 
 
-    // ----------------- matrix = MArrayExpR<X,Element,Number,Mvalue,R> ----------------
+    // ----------------- matrix = MArrayExpR<X,Element,Number,Mvalue,rank> ----------------
     template <class X> Matrix<Element, NR, NC>&
-      operator=(const MArrayExpR<X, Element, Number, Mvalue, R>& x) {
+      operator=(const MArrayExpR<X, Element, Number, Mvalue, rank>& x) {
 
       if constexpr (Mvalue<=1) {
         resize(x.dims());
