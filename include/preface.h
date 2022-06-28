@@ -97,7 +97,7 @@ namespace mathq {
 
 
 
-  template <class Element, typename Number = typename NumberTrait<Element>::Type, int Depth = 1 + NumberTrait<Element>::depth()>
+  template <class Element, typename Number = typename NumberTrait<Element>::Type, int Depth = 1 + NumberTrait<Element>::getDepth()>
   class Scalar;
 
   template <class Element, int NE = 0>
@@ -106,15 +106,15 @@ namespace mathq {
   template <class Element, int NR = 0, int NC = 0>
   class Matrix;
 
-  template <class Element, int R = 0, typename Number = typename NumberTrait<Element>::Type, int Depth = 1 + NumberTrait<Element>::depth()>
+  template <class Element, int R = 0, typename Number = typename NumberTrait<Element>::Type, int Depth = 1 + NumberTrait<Element>::getDepth()>
   class MultiArray;
 
-  // , typename Number = typename NumberTrait<Element>::Type, int Depth = 1 + NumberTrait<Element>::depth()>
+  // , typename Number = typename NumberTrait<Element>::Type, int Depth = 1 + NumberTrait<Element>::getDepth()>
   template <class Element, int rank, size_t... sizes>
   class MultiArrayNEW {
   public:
     typedef typename NumberTrait<Element>::Type Number;
-    static constexpr int Depth = 1 + NumberTrait<Element>::depth();
+    static constexpr int Depth = 1 + NumberTrait<Element>::getDepth();
   };
 
 
@@ -521,7 +521,7 @@ namespace mathq {
     OrderedNumberTrait {
   public:
     typedef T Type;
-    constexpr static int depth() {
+    constexpr static int getDepth() {
       return 0;
     }
   };
@@ -531,8 +531,8 @@ namespace mathq {
     OrderedNumberTrait<T<Element>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
   template <class Element>
@@ -540,8 +540,8 @@ namespace mathq {
     OrderedNumberTrait<std::complex<Element>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -550,8 +550,8 @@ namespace mathq {
     OrderedNumberTrait<Imaginary<Element>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -560,8 +560,8 @@ namespace mathq {
     OrderedNumberTrait<Quaternion<Element>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -573,8 +573,8 @@ namespace mathq {
     OrderedNumberTrait<Scalar<Element>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -584,8 +584,8 @@ namespace mathq {
     OrderedNumberTrait<Vector<Element>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
   //  Vector<Element,NE>
@@ -594,8 +594,8 @@ namespace mathq {
     OrderedNumberTrait<Vector<Element, NE>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -606,8 +606,8 @@ namespace mathq {
     OrderedNumberTrait<Matrix<Element>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -618,8 +618,8 @@ namespace mathq {
     OrderedNumberTrait<Matrix<Element, NR>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -630,8 +630,8 @@ namespace mathq {
     OrderedNumberTrait<Matrix<Element, NR, NC>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -641,8 +641,8 @@ namespace mathq {
     OrderedNumberTrait<MultiArray<Element>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -652,8 +652,8 @@ namespace mathq {
     OrderedNumberTrait<MultiArray<Element, R>> {
   public:
     typedef typename OrderedNumberTrait<Element>::Type Type;
-    constexpr static int depth() {
-      return 1 + OrderedNumberTrait<Element>::depth();
+    constexpr static int getDepth() {
+      return 1 + OrderedNumberTrait<Element>::getDepth();
     }
   };
 
@@ -664,7 +664,7 @@ namespace mathq {
     OrderedNumberTrait<MArrayExpR<X, Element, Number, Depth, R>> {
   public:
     typedef typename OrderedNumberTrait<Number>::Type Type;
-    constexpr static int depth() {
+    constexpr static int getDepth() {
       return Depth;
     }
   };
@@ -687,7 +687,7 @@ namespace mathq {
     typedef NewD ReplaceTypeD;
     typedef NewD ReplaceTypeE; // DONT modify this
     constexpr static bool value = true;
-    constexpr static int depth() {
+    constexpr static int getDepth() {
       return 0;
     }
     inline static int size(Null x) {
@@ -706,7 +706,7 @@ namespace mathq {
     typedef NewD ReplaceTypeD;
     typedef NewD ReplaceTypeE; // DONT modify this
     constexpr static bool value = true;
-    constexpr static int depth() {
+    constexpr static int getDepth() {
       return 0;
     }
     inline static int size(const T x) {
@@ -725,7 +725,7 @@ namespace mathq {
     typedef NewD ReplaceTypeD;
     typedef NewD ReplaceTypeE; // DONT modify this
     constexpr static bool value = true;
-    constexpr static int depth() {
+    constexpr static int getDepth() {
       return 0;
     }
     inline static int size(const std::complex<Number> x) {
@@ -743,7 +743,7 @@ namespace mathq {
     typedef NewD ReplaceTypeD;
     typedef NewD ReplaceTypeE; // DONT modify this (use OrderedNumberTrait to change
     constexpr static bool value = true;
-    constexpr static int depth() {
+    constexpr static int getDepth() {
       return 0;
     }
     inline static int size(const Imaginary<Number> x) {
@@ -761,7 +761,7 @@ namespace mathq {
     typedef NewD ReplaceTypeD;
     typedef NewD ReplaceTypeE; // DONT modify this (use OrderedNumberTrait to change
     constexpr static bool value = true;
-    constexpr static int depth() {
+    constexpr static int getDepth() {
       return 0;
     }
     inline static int size(const Quaternion<Number> x) {
@@ -785,8 +785,8 @@ namespace mathq {
     typedef Scalar<typename NumberTrait<Element, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef Scalar<NewD> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
-      return 1 + NumberTrait<Element, NewD>::depth();
+    constexpr static int getDepth() {
+      return 1 + NumberTrait<Element, NewD>::getDepth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -808,8 +808,8 @@ namespace mathq {
     typedef Vector<typename NumberTrait<Element, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef Vector<NewD> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
-      return 1 + NumberTrait<Element, NewD>::depth();
+    constexpr static int getDepth() {
+      return 1 + NumberTrait<Element, NewD>::getDepth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -830,8 +830,8 @@ namespace mathq {
     typedef Vector<typename NumberTrait<Element, NewD>::ReplaceTypeD, NE> ReplaceTypeD;
     typedef Vector<NewD, NE> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
-      return 1 + NumberTrait<Element, NewD>::depth();
+    constexpr static int getDepth() {
+      return 1 + NumberTrait<Element, NewD>::getDepth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -853,8 +853,8 @@ namespace mathq {
     typedef Matrix<typename NumberTrait<Element, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef Matrix<NewD> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
-      return 1 + NumberTrait<Element, NewD>::depth();
+    constexpr static int getDepth() {
+      return 1 + NumberTrait<Element, NewD>::getDepth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -875,8 +875,8 @@ namespace mathq {
     typedef Matrix<typename NumberTrait<Element, NewD>::ReplaceTypeD, NR> ReplaceTypeD;
     typedef Matrix<NewD, NR> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
-      return 1 + NumberTrait<Element, NewD>::depth();
+    constexpr static int getDepth() {
+      return 1 + NumberTrait<Element, NewD>::getDepth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -898,8 +898,8 @@ namespace mathq {
     typedef Matrix<typename NumberTrait<Element, NewD>::ReplaceTypeD, NR, NC> ReplaceTypeD;
     typedef Matrix<NewD, NR, NC> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
-      return 1 + NumberTrait<Element, NewD>::depth();
+    constexpr static int getDepth() {
+      return 1 + NumberTrait<Element, NewD>::getDepth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -922,8 +922,8 @@ namespace mathq {
     typedef MultiArray<typename NumberTrait<Element, NewD>::ReplaceTypeD> ReplaceTypeD;
     typedef MultiArray<NewD> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
-      return 1 + NumberTrait<Element, NewD>::depth();
+    constexpr static int getDepth() {
+      return 1 + NumberTrait<Element, NewD>::getDepth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -944,8 +944,8 @@ namespace mathq {
     typedef MultiArray<typename NumberTrait<Element, NewD>::ReplaceTypeD, R> ReplaceTypeD;
     typedef MultiArray<NewD, R> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
-      return 1 + NumberTrait<Element, NewD>::depth();
+    constexpr static int getDepth() {
+      return 1 + NumberTrait<Element, NewD>::getDepth();
     }
     inline static int size(const InputType& x) {
       return x.size();
@@ -970,7 +970,7 @@ namespace mathq {
     typedef NewX ReplaceTypeD;
     typedef MArrayExpR<X, NewD, Number, Depth, R> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
+    constexpr static int getDepth() {
       return Depth;
     }
     inline static int size(const InputType& x) {
@@ -994,7 +994,7 @@ namespace mathq {
     typedef NewX ReplaceTypeD;
     typedef MArrayExpRW<X, NewD, Number, Depth, R> ReplaceTypeE;
     constexpr static bool value = false;
-    constexpr static int depth() {
+    constexpr static int getDepth() {
       return Depth;
     }
     inline static int size(const InputType& x) {
@@ -1015,7 +1015,7 @@ namespace mathq {
   class
     DeeperType {
   public:
-    typedef typename std::conditional<NumberTrait<T1>::depth() >= NumberTrait<T2>::depth(), T1, T2>::type Type;
+    typedef typename std::conditional<NumberTrait<T1>::getDepth() >= NumberTrait<T2>::getDepth(), T1, T2>::type Type;
   };
 
 
@@ -1265,7 +1265,7 @@ namespace mathq {
   public:
     typedef typename DeeperType<A, B>::Type DeeperType;
     typedef typename NumberTrait<DeeperType, NewD>::ReplaceTypeD MultiArrayType;
-    constexpr static bool isprim = (NumberTrait<A>::depth() == 0) && (NumberTrait<B>::depth() == 0);
+    constexpr static bool isprim = (NumberTrait<A>::getDepth() == 0) && (NumberTrait<B>::getDepth() == 0);
     typedef typename std::conditional<isprim, NewD, MultiArrayType>::type Type;
   };
 

@@ -141,7 +141,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t1.dims());
     TLDISP(t1.deepdims());
     TLDISP(t1.deepsize());
-    TLDISP(t1.depth());
+    TLDISP(t1.getDepth());
     TLDISP(t1);
     Dimensions dims(3, 2, 5);
     MultiArray<double, 3> t2(dims);
@@ -262,7 +262,7 @@ int main(int argc, char *argv[]) {
     TLDISP(s.dims());
     TLDISP(s.size());
     TLDISP(s().dims());
-    TLDISP(s.depth());
+    TLDISP(s.getDepth());
     TLDISP(s.deepdims());
 
     Scalar<MultiArray<double, 2>> s2;

@@ -128,7 +128,7 @@ namespace mathq {
     inline size_t size(void) const {
       return 1;
     }
-    inline size_t depth(void) const {
+    inline size_t getDepth(void) const {
       return Depth;
     }
 

@@ -68,7 +68,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Depth;
     }
     Dimensions eldims(void) const {
@@ -176,7 +176,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Depth;
     }
     Dimensions eldims(void) const {
@@ -507,7 +507,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       if constexpr (M1 >= M2) {
         return M1;
       }
@@ -839,7 +839,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       if constexpr (M1 >= M2) {
         return M1;
       }
@@ -1043,15 +1043,15 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       if constexpr (M1 > 0) {
-        return a_.depth();
+        return a_.getDepth();
       }
       else if constexpr (M2 > 0) {
-        return b_.depth();
+        return b_.getDepth();
       }
       else {
-        return c_.depth();
+        return c_.getDepth();
       }
     }
     size_t elsize(void) const {
@@ -1201,7 +1201,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Depth;
     }
     Dimensions eldims(void) const {
@@ -1331,7 +1331,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Mvalue;
     }
     Dimensions eldims(void) const {
@@ -1437,7 +1437,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Depth;
     }
     size_t elsize(void) const {
@@ -1552,7 +1552,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Depth;
     }
     Dimensions eldims(void) const {
@@ -1655,7 +1655,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Mvalue;
     }
     size_t elsize(void) const {

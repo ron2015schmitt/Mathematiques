@@ -26,12 +26,12 @@ namespace mathq {
 
 
   template <class Element, int NR, int NC>
-  class Matrix : public MArrayExpRW<Matrix<Element, NR, NC>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::depth(), 2> {
+  class Matrix : public MArrayExpRW<Matrix<Element, NR, NC>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 2> {
 
   public:
     constexpr static int R = 2;
     constexpr static int Rvalue = 2;
-    constexpr static int Mvalue = 1 + NumberTrait<Element>::depth();
+    constexpr static int Mvalue = 1 + NumberTrait<Element>::getDepth();
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
@@ -227,7 +227,7 @@ namespace mathq {
     }
 
 
-    constexpr size_t depth(void) const {
+    constexpr size_t getDepth(void) const {
       return Mvalue;
     }
     Dimensions eldims(void) const {

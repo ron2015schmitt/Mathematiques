@@ -141,7 +141,7 @@ namespace mathq {
     }
 
 
-    constexpr size_t depth(void) const {
+    constexpr size_t getDepth(void) const {
       return Mvalue;
     }
     Dimensions eldims(void) const {

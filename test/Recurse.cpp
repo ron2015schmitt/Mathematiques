@@ -101,10 +101,10 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // depth()
+    // getDepth()
     printStart(++testnum);
     expected = 2;
-    testcode(result = s.depth());
+    testcode(result = s.getDepth());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -244,10 +244,10 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // depth()
+    // getDepth()
     printStart(++testnum);
     expected = 2;
-    testcode(result = s.depth());
+    testcode(result = s.getDepth());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -398,10 +398,10 @@ int main(int argc, char* argv[]) {
   //   allpass = allpass && pass;
   //   failnum += (!pass);
 
-  //   // depth()
+  //   // getDepth()
   //   printStart(++testnum);
   //   expected = 2;
-  //   testcode( result = s.depth() );
+  //   testcode( result = s.getDepth() );
   //   pass = (result==expected);
   //   printEnd(pass,result,expected);
   //   allpass = allpass && pass;

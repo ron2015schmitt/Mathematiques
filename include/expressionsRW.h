@@ -113,7 +113,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Mvalue;
     }
     size_t elsize(void) const {
@@ -242,7 +242,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Mvalue;
     }
     size_t elsize(void) const {
@@ -395,7 +395,7 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       return Depth;
     }
     Dimensions eldims(void) const {
@@ -500,7 +500,7 @@ namespace mathq {
   //     bool isExpression(void) const {
   //       return true;
   //     }
-  //   size_t depth(void) const {
+  //   size_t getDepth(void) const {
   //       return Depth;
   //     }
   //   size_t elsize(void) const {

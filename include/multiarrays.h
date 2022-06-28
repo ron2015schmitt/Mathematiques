@@ -824,8 +824,8 @@ namespace mathq {
       // return T_EXPRESSION_R;
       return derived().getEnum();
     }
-    size_t depth(void) const {
-      return derived().depth();
+    size_t getDepth(void) const {
+      return derived().getDepth();
     }
     Dimensions eldims(void) const {
       return derived().eldims();
@@ -945,8 +945,8 @@ namespace mathq {
       return derived().getEnum();
       // return T_EXPRESSION_RW;
     }
-    size_t depth(void) const {
-      return derived().depth();
+    size_t getDepth(void) const {
+      return derived().getDepth();
     }
     Dimensions eldims(void) const {
       return derived().eldims();

@@ -934,7 +934,7 @@ namespace mathq {
       Dimensions dimensions(NDIMS);
       return dimensions;
     }
-    inline size_t depth(void) const {
+    inline size_t getDepth(void) const {
       return 1;
     }
 

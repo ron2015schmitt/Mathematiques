@@ -63,7 +63,7 @@ namespace matricks {
   bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -204,7 +204,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       if constexpr(M1>=M2) {
         return M1;
       } else {
@@ -370,7 +370,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t getDepth(void) const {
       if constexpr(M1>=M2) {
         return M1;
       } else {
@@ -506,7 +506,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -627,7 +627,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -739,7 +739,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -860,7 +860,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -981,7 +981,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -1100,7 +1100,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -1203,7 +1203,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -1296,7 +1296,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -1394,7 +1394,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {
@@ -1509,7 +1509,7 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t depth(void) const {
+  size_t getDepth(void) const {
       return Depth;
     }
   size_t elsize(void) const {

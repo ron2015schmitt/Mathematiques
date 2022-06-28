@@ -23,7 +23,7 @@ namespace mathq {
    */
 
   template <class Element, int N1> class Vector :
-    public MArrayExpRW<Vector<Element, N1>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::depth(), 1> {
+    public MArrayExpRW<Vector<Element, N1>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 1> {
 
   public:
     typedef typename NumberTrait<Element>::Type Number;
@@ -31,7 +31,7 @@ namespace mathq {
 
     typedef typename ArrayType<Element, N1>::Type MyArrayType;
     constexpr static int R = 1;
-    constexpr static int Depth = 1 + NumberTrait<Element>::depth();
+    constexpr static int Depth = 1 + NumberTrait<Element>::getDepth();
 
     // rename these
     typedef typename NumberTrait<Element>::Type DType;
@@ -230,7 +230,7 @@ namespace mathq {
     }
 
 
-    inline size_t depth(void) const {
+    inline size_t getDepth(void) const {
       return Depth;
     }
 
