@@ -26,6 +26,8 @@ _Back to [Table of Contents](../README.md)_
 
 ### TO-DO:
  
+* support [uBLAS types](https://www.boost.org/doc/libs/1_60_0/libs/numeric/ublas/doc/index.html)
+* https://en.wikipedia.org/wiki/Packed_storage_matrix
 * write `diag(Matrix)`, which presents the diagonal of a matrix as a vector (via TERW expression Rin=2, Rout=1)
 * write `diag(Vector)`, which presents a vector as the digonal of a matrix (via TERW expression Rin=1, Rout=2))
 * implement `constructor(constMultiArray<X,D,D,1,2>& x)` and `operator=(constMultiArray<X,D,D,1,2>& x)`

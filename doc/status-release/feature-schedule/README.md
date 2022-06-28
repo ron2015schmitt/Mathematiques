@@ -161,7 +161,7 @@
    *  best way to re-use code?
 
 ### Matrix Math via Lapack/Blas
-1. [Special matrices](topics/diagonal.md)
+1. [Special matrices](topics/sparse_matrices_vectors.md)
   * use python script to generate matrix code
 1. [Matrix operations](topics/matrixlapack.md)
 1. openblas multi-threading support?

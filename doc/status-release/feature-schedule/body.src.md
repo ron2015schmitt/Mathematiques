@@ -4,8 +4,19 @@
 ### v0.40 Multi-Array Refactoring and Vector Calculus started
 1. add variable for the C++ version used, currently C++17.  append to version string. 
 1. upgrade to c++20a(g++10.4)
-1. refactored all multi-arrays to simplifly the templates. Scalar, Vector and Matrix are now just typre aliases
-1. started CurvilinearCoords anf CurvilinearFields
+1. Refactor `Dimensions` class
+1. Refactor all multi-arrays
+  * simplifly the templates to only have `Element` type and (top level) `Dimensions`
+  * Renamed `Tensor` -> `MultiArray`
+  * Refactor `Scalar`, `Vector` and `Matrix` to be type aliases for `MultiArray`
+1. `Vector` calculus
+  * create `RealSet` and `MultiSet` classes
+  * create Grid classes
+  * Start `CurvilinearCoords` and `CurvilinearField` classes
+
+### Vector Calculus
+1. [2D and 3D Curvilinear Coordinate Systems](topics/coordsystems.md)
+1. [Functions: R^n -> R^m](topics/functions.md)
 
 
 ## Future work
@@ -124,6 +135,7 @@
   * use copious #ifdefs so that order of inclusion matters
   * use [C++20 modules](https://en.cppreference.com/w/cpp/language/modules)?
 * reformat all files using VSCode plugin: all done except sandbox
+* constant `MultiArray`, ie every element is the same.  Matrix and Vector versions should inherit
 * Grid stuff
   * 2D
     * Change GridType to use MatRep 
@@ -133,11 +145,8 @@
   * 3D
     * create MultiArray4 for xyzt: (rows,columns, floors, moments)
     * MArray4Rep
-* get rid of typename usage in templates?
+*  `class` -> `typename` usage in templates?
 * formalize template notation for the following: types with ordering (ints and reals), division algebras, Multiarrays, Tensors
-* use of variable templates to simplify variadics like Dimension?
-  * use list for DeepDimensions
-  * Deep -> Nested
 * use https://github.com/cheshirekow/kwargs for named arguments?
 * replace std::enable_if<std::is_arithmetic<D>::value, D>::type> with mathq version that accepts Imaginary and Quaternions
 * cast method for const std::initializer_list<E>?  is this possible
@@ -187,7 +196,6 @@
 
 * MultiArray<D> constructed from MultiArray<D,N> as well as equals
   * WHy does Vector<MultiArray<D,2>> create MultiArray<D> (R=0)?
-    
 * Refactor `NumberTrait` etc to use constexpr fields instead of static methods
 * overload `^` as exponentiation for vectors and matrices?
 * pow(container, scalar)
@@ -236,8 +244,10 @@
 1. Integrals and derivatives along each dimension of Matrix or Tenspr
    *  best way to re-use code?
 
-### Matrix Math via Lapack/Blas
-1. [Special matrices](topics/diagonal.md)
+### Matrix Math via uBlas (transition from LAPACK)
+1. [Boost libs](https://www.boost.org/doc/libs/)
+1. [ublas](https://www.boost.org/doc/libs/1_60_0/libs/numeric/ublas/doc/index.html)
+1. [Special matrices](topics/sparse_matrices_vectors.md)
   * use python script to generate matrix code
   * constant vector
   * constant MultiArray
@@ -251,15 +261,13 @@
 1. [MultiArray dot product](topics/dotproduct.md)
 1. [Outer Product and Wedge Product](topics/outerwedge.md)
 1. [Add Benchmarks](topics/benchmarks.md)
-
-
-### Vector Calculus
-1. [2D and 3D Curvilinear Coordinate Systems](topics/coordsystems.md)
-1. [Functions: R^n -> R^m](topics/functions.md)
+1. define grassman p-vectors?
+1. levi-cevita symbol
 
 
 
-### MultiArray Calculus 
+
+### Tensor Fields and Calculus in general coordinates 
 1. contravariant and covariant vectors
    * define Rank0: 
       * Vector<NE=1>
@@ -271,14 +279,18 @@
       * MultiArray<R=4> with dimenions (N,1,1,N) for <true,false> 
       * MultiArray<R=4> with dimenions (1,N,N,1) for <false,true> 
       * MultiArray<R=4> with dimenions (1,N,1,N) for <false,false>  
-1. Use compomnent-free notation  for inner products (Misner, Wheeler, Thorne; Frankel)
-     
+1. Use compomnent-free notation  for inner products (Carroll; Misner, Wheeler, Thorne; Frankel)
+1. `g(o,v)` notation
+1. `contract(t1,t2,{i1,i2})`
 1. generalized coordinate systems
    * basis vectors
    * metric tensor
    * index contraction / dot products
    * raising and lowering operations using the metric tensor
    * currying
+1. Define k-vector fields 
+  * wedge product
+  * Hodge dual
 
 ### FFT Support via FFTW
 
