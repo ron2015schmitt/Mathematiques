@@ -22,20 +22,20 @@ namespace mathq {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<D>& x_;
-    const Vector<index_type>& ii_;
+    const Vector<size_t>& ii_;
     const bool delete_ii_;
     VectorofPtrs* vptrs;
   public:
     typedef typename NumberTrait<D>::Type MyNumberType;
 
-    TERW_Subset(Vector<D>& x, const Vector<index_type>& ii)
+    TERW_Subset(Vector<D>& x, const Vector<size_t>& ii)
       : x_(x), ii_(ii), delete_ii_(false) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
       vptrs->add(&ii_);
     }
-    TERW_Subset(Vector<D>& x, const std::initializer_list<index_type>& list)
-      : x_(x), ii_(*(new Vector<index_type>(list))), delete_ii_(true) {
+    TERW_Subset(Vector<D>& x, const std::initializer_list<size_t>& list)
+      : x_(x), ii_(*(new Vector<size_t>(list))), delete_ii_(true) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
       vptrs->add(&ii_);
@@ -47,30 +47,30 @@ namespace mathq {
     }
 
 
-    const D dat(const index_type i) const {
-      index_type ind = ii_[i];
+    const D dat(const size_t i) const {
+      size_t ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
       }
       return x_.dat(ind);
     }
-    MyNumberType& dat(const index_type i) {
-      index_type ind = ii_[i];
+    MyNumberType& dat(const size_t i) {
+      size_t ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
       }
       return x_.dat(ind);
     }
 
-    const D operator[](const index_type i) const {
-      index_type ind = ii_[i];
+    const D operator[](const size_t i) const {
+      size_t ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
       }
       return x_[ind];
     }
-    D& operator[](const index_type i) {
-      index_type ind = ii_[i];
+    D& operator[](const size_t i) {
+      size_t ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
       }
@@ -91,10 +91,10 @@ namespace mathq {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return ii_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return x_.ndims();
     }
     Dimensions dims(void) const {
@@ -113,10 +113,10 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_type depth(void) const {
+    size_t depth(void) const {
       return Mvalue;
     }
-    size_type elsize(void) const {
+    size_t elsize(void) const {
       if constexpr (Mvalue<=1) {
         return 1;
       }
@@ -124,7 +124,7 @@ namespace mathq {
         return x_.elsize();
       }
     }
-    size_type eldeepsize(void) const {
+    size_t eldeepsize(void) const {
       if constexpr (Mvalue<=1) {
         return 1;
       }
@@ -132,7 +132,7 @@ namespace mathq {
         return x_.eldeepsize();
       }
     }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr (Mvalue<=1) {
         return this->size();
       }
@@ -170,14 +170,14 @@ namespace mathq {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<D>& x_;
-    const Vector<index_type>& ii_;
+    const Vector<size_t>& ii_;
     VectorofPtrs* vptrs;
 
   public:
     typedef typename NumberTrait<D>::Type MyNumberType;
 
     TERW_Submask(Vector<D>& x, const Vector<bool>& mask)
-      : x_(x), ii_(*(new Vector<index_type>(findtrue(mask)))) {
+      : x_(x), ii_(*(new Vector<size_t>(findtrue(mask)))) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
       vptrs->add(&ii_);
@@ -188,21 +188,21 @@ namespace mathq {
     }
 
 
-    const D dat(const index_type i) const {
-      index_type ind = ii_[i];
+    const D dat(const size_t i) const {
+      size_t ind = ii_[i];
       return x_.dat(ind);
     }
-    MyNumberType& dat(const index_type i) {
-      index_type ind = ii_[i];
+    MyNumberType& dat(const size_t i) {
+      size_t ind = ii_[i];
       return x_.dat(ind);
     }
 
-    const D operator[](const index_type i) const {
-      index_type ind = ii_[i];
+    const D operator[](const size_t i) const {
+      size_t ind = ii_[i];
       return x_[ind];
     }
-    D& operator[](const index_type i) {
-      index_type ind = ii_[i];
+    D& operator[](const size_t i) {
+      size_t ind = ii_[i];
       return x_[ind];
     }
 
@@ -220,10 +220,10 @@ namespace mathq {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return ii_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return x_.ndims();
     }
     Dimensions dims(void) const {
@@ -242,10 +242,10 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_type depth(void) const {
+    size_t depth(void) const {
       return Mvalue;
     }
-    size_type elsize(void) const {
+    size_t elsize(void) const {
       if constexpr (Mvalue<=1) {
         return 1;
       }
@@ -253,7 +253,7 @@ namespace mathq {
         return x_.elsize();
       }
     }
-    size_type eldeepsize(void) const {
+    size_t eldeepsize(void) const {
       if constexpr (Mvalue<=1) {
         return 1;
       }
@@ -261,7 +261,7 @@ namespace mathq {
         return x_.eldeepsize();
       }
     }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr (Mvalue<=1) {
         return this->size();
       }
@@ -320,7 +320,7 @@ namespace mathq {
       delete vptrs;
     }
 
-    const D dat(const index_type i) const {
+    const D dat(const size_t i) const {
       if (i < x_.deepsize()) {
         return x_.dat(i);
       }
@@ -328,7 +328,7 @@ namespace mathq {
         return y_.dat(i-x_.deepsize());
       }
     }
-    D& dat(const index_type i) {
+    D& dat(const size_t i) {
       if (i < x_.deepsize()) {
         return x_.dat(i);
       }
@@ -336,7 +336,7 @@ namespace mathq {
         return y_.dat(i-x_.deepsize());
       }
     }
-    const E operator[](const index_type i) const {
+    const E operator[](const size_t i) const {
       if (i < x_.size()) {
         return x_[i];
       }
@@ -344,7 +344,7 @@ namespace mathq {
         return y_[i-x_.size()];
       }
     }
-    E& operator[](const index_type i) {
+    E& operator[](const size_t i) {
       if (i < x_.size()) {
         return x_[i];
       }
@@ -369,10 +369,10 @@ namespace mathq {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return x_.size()+y_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return Rvalue;
     }
     Dimensions dims(void) const {
@@ -395,13 +395,13 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_type depth(void) const {
+    size_t depth(void) const {
       return M;
     }
     Dimensions eldims(void) const {
       return x_.eldims();
     }
-    size_type elsize(void) const {
+    size_t elsize(void) const {
       if constexpr (M<=1) {
         return 1;
       }
@@ -409,7 +409,7 @@ namespace mathq {
         return x_.elsize();
       }
     }
-    size_type eldeepsize(void) const {
+    size_t eldeepsize(void) const {
       if constexpr (M<=1) {
         return 1;
       }
@@ -417,7 +417,7 @@ namespace mathq {
         return x_.eldeepsize();
       }
     }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr (M<=1) {
         return this->size();
       }
@@ -470,16 +470,16 @@ namespace mathq {
   //       delete vptrs;
   //     }
 
-  //     const D operator[](index_type i) const{
+  //     const D operator[](size_t i) const{
   //       return OP::give(a_[i]);
   //     }
-  //     D& operator[](index_type i) {
+  //     D& operator[](size_t i) {
   //       return OP::give(a_[i]);
   //     }
-  //     const MyNumberType dat(const index_type i) const {
+  //     const MyNumberType dat(const size_t i) const {
   //       return OP::give(a_.dat(i));
   //     }
-  //     MyNumberType& dat(const index_type i)  {
+  //     MyNumberType& dat(const size_t i)  {
   //       return OP::give(a_.dat(i));
   //     }
 
@@ -488,10 +488,10 @@ namespace mathq {
   //     VectorofPtrs getAddresses(void) const {
   //       return *vptrs;
   //     }
-  //     size_type size(void) const {
+  //     size_t size(void) const {
   //       return a_.size();
   //     }
-  //     size_type ndims(void) const {
+  //     size_t ndims(void) const {
   //       return a_.ndims();
   //     }
   //     Dimensions dims(void) const {
@@ -500,24 +500,24 @@ namespace mathq {
   //     bool isExpression(void) const {
   //       return true;
   //     }
-  //   size_type depth(void) const {
+  //   size_t depth(void) const {
   //       return M;
   //     }
-  //   size_type elsize(void) const {
+  //   size_t elsize(void) const {
   //     if constexpr(M<2) {
   //       return 1;
   //     } else {
   //       return a_.elsize();
   //     }
   //   }
-  //   size_type eldeepsize(void) const {
+  //   size_t eldeepsize(void) const {
   //     if constexpr(M<2) {
   //       return 1;
   //     } else {
   //       return a_.eldeepsize();
   //     }
   //   }
-  //     size_type deepsize(void) const {
+  //     size_t deepsize(void) const {
   //       if constexpr(M<2) {
   // 	  return this->size();
   // 	} else {

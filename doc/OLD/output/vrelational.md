@@ -112,9 +112,9 @@ v[(v < 0)] = 0.;
 
 * The function `anytrue(v)` returns a `bool`: true if any element of `v` is true, otherwise it returns false
 
-* The function `numtrue(v)` returns a `size_type` equal to the number of elements of `v` that are true. 
+* The function `numtrue(v)` returns a `size_t` equal to the number of elements of `v` that are true. 
 
-* The function `findtrue(v)` returns a `Vector<index_type>` which contains the indices of the true elements of `v`. 
+* The function `findtrue(v)` returns a `Vector<size_t>` which contains the indices of the true elements of `v`. 
 
 
 **EXAMPLE 5**: The functions `alltrue`, `anytrue`, `numtrue`, and `findtrue`

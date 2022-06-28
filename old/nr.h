@@ -29,8 +29,8 @@ namespace mathq_nr {
 		 Matrix<double>& A, 
 		 Matrix<double>& U, Vector<double>& W, Matrix<double>& V )
   {
-    const size_type M = A.Nrows();
-    const size_type N = A.Ncols();       // Dimensions of matrix.
+    const size_t M = A.Nrows();
+    const size_t N = A.Ncols();       // Dimensions of matrix.
 
     /*
       assert(m >= n);
@@ -44,8 +44,8 @@ namespace mathq_nr {
     double *w = numrec::dvector(1,N);
 
     // Copy the input matrix.
-    for (size_type i = 1; i <= M; ++i) {
-      for (size_type j = 1; j <= N; ++j) {
+    for (size_t i = 1; i <= M; ++i) {
+      for (size_t j = 1; j <= N; ++j) {
 	aandu[i][j] = A(i-1,j-1);
       }
     }

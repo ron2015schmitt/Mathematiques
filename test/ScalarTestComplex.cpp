@@ -1226,7 +1226,7 @@ int main(int argc, char* argv[]) {
   // }
 
   // /****************************************************************************
-  //  * Unary Functions/Operators that bools or index_type MultiArrays
+  //  * Unary Functions/Operators that bools or size_t MultiArrays
   //  ****************************************************************************
   //  */
 
@@ -1313,8 +1313,8 @@ int main(int argc, char* argv[]) {
   //   printStart(++testnum);
   //   Scalar<ComplexInt> s1 = 42;
   //   Scalar<ComplexInt> s2 = 42;
-  //   Vector<index_type> expected(1,0);
-  //   Vector<index_type> result;
+  //   Vector<size_t> expected(1,0);
+  //   Vector<size_t> result;
   //   testcode( result = findtrue(s1>=s2) );
   //   bool pass = equal(result,expected);
   //   printEnd(pass,result,expected);
@@ -1326,8 +1326,8 @@ int main(int argc, char* argv[]) {
   //   printStart(++testnum);
   //   Scalar<ComplexInt> s1 = 42;
   //   Scalar<ComplexInt> s2 = 42;
-  //   Vector<index_type> expected(0);
-  //   Vector<index_type> result;
+  //   Vector<size_t> expected(0);
+  //   Vector<size_t> result;
   //   testcode( result = findtrue(s1>s2) );
   //   bool pass = equal(result,expected);
   //   printEnd(pass,result,expected);

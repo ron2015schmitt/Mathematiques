@@ -12,7 +12,7 @@ using namespace mathq;
 //  }
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 
   const double pi = M_PI;
   std::string myname = argv[0];
@@ -51,7 +51,6 @@ int main(int argc, char *argv[]) {
   CR();
   CR();
   MOUT << blue.apply("4- deep tests") << endl;
-
   {
     CR();
     MOUT << bold.apply("Scalar<Vector<Matrix<MultiArray<double,3>,3,2>,4>>") << endl;
@@ -62,15 +61,15 @@ int main(int argc, char *argv[]) {
     TLDISP(x.deepdims());
     Dimensions tdims(2, 1, 2);
 
-    for (int h = 0; h < x().size(); h++) {
-      const index_type NR = x()(h).Nrows();
-      const index_type NC = x()(h).Ncols();
-      for (int i = 0; i < NR; i++) {
-        for (int j = 0; j < NC; j++) {
+    for (size_t h = 0; h < x().size(); h++) {
+      const size_t NR = x()(h).Nrows();
+      const size_t NC = x()(h).Ncols();
+      for (size_t i = 0; i < NR; i++) {
+        for (size_t j = 0; j < NC; j++) {
           x()(h)(i, j).resize(tdims);
-          for (int k = 0; k < tdims[0]; k++) {
-            for (int l = 0; l < tdims[1]; l++) {
-              for (int m = 0; m < tdims[2]; m++) {
+          for (size_t k = 0; k < tdims[0]; k++) {
+            for (size_t l = 0; l < tdims[1]; l++) {
+              for (size_t m = 0; m < tdims[2]; m++) {
                 x()(h)(i, j)(k, l, m) = double(100000 * h) + double(10000 * i) + double(1000 * j) + double(100 * k) + double(10 * l) + double(m);
               }
             }
@@ -89,7 +88,7 @@ int main(int argc, char *argv[]) {
     CR();
 
     MOUT << "set via initializer_list" << endl;
-    Scalar<Vector<Matrix<MultiArray<double, 3>, 3, 2>, 4>> x{{{{{{{0, 1}},
+    Scalar<Vector<Matrix<MultiArray<double, 3>, 3, 2>, 4>> x{ {{{{{{0, 1}},
                                                              {{100, 101}}},
                                                             {{{1000, 1001}},
                                                              {{1100, 1101}}}},
@@ -136,8 +135,7 @@ int main(int argc, char *argv[]) {
                                                            {{{{320000, 320001}},
                                                              {{320100, 320101}}},
                                                             {{{321000, 321001}},
-                                                             {{321100, 321101}}}}}}};
-
+                                                             {{321100, 321101}}}}}} };
     TLDISP(x);
     TLDISP(x.dims());
     TLDISP(x.size());
@@ -156,14 +154,15 @@ int main(int argc, char *argv[]) {
     t = x()(1)(2, 1);
     TLDISP(t);
     TLDISP(t.dims());
-    TLDISP(t(1, 0, 0));
+    TLDISP(t(1u, 0u, 0u));
 
-    TLDISP(x()(1)(2, 1)(1, 0, 0));
+    TLDISP(x()(1)(2, 1)(1u, 0u, 0u));
 
-    Indices inds({1, 2, 1, 1, 0, 0});
+    Indices inds({ 1, 2, 1, 1, 0, 0 });
     TLDISP(inds);
     double y = x.dat(inds);
     TLDISP(y);
+
 
     Vector<Scalar<double>, 4> g1;
     TLDISP(g1);
@@ -174,21 +173,26 @@ int main(int argc, char *argv[]) {
 
     MultiArray<Matrix<Vector<Scalar<double>, 4>, 3, 2>, 3> g3;
     TLDISP(g3);
+    TLDISP(x.deepdims());
     g3 = insideout(x);
     TLDISP(g3.deepdims());
-    //   TLDISP(g3);
+    TLDISP(g3);
 
-    for (int h = 0; h < x().size(); h++) {
-      const index_type NR = x()(h).Nrows();
-      const index_type NC = x()(h).Ncols();
-      for (int i = 0; i < NR; i++) {
-        for (int j = 0; j < NC; j++) {
+    for (size_t h = 0; h < x().size(); h++) {
+      const size_t NR = x()(h).Nrows();
+      const size_t NC = x()(h).Ncols();
+      for (size_t i = 0; i < NR; i++) {
+        for (size_t j = 0; j < NC; j++) {
           Dimensions tdims = x()(h)(i, j).dims();
-          for (int k = 0; k < tdims[0]; k++) {
-            for (int l = 0; l < tdims[1]; l++) {
-              for (int m = 0; m < tdims[2]; m++) {
-                // MDISP(h,i,j,k,l,m, x()(h)(i,j)(k,l,m) );
-                MDISP(h, i, j, k, l, m, x()(h)(i, j)(k, l, m), g3(k, l, m)(i, j)(h)());
+          for (size_t k = 0; k < tdims[0]; k++) {
+            for (size_t l = 0; l < tdims[1]; l++) {
+              for (size_t m = 0; m < tdims[2]; m++) {
+                // MDISP(h, i, j, k, l, m, x()(h)(i, j)(k, l, m), g3(k, l, m)(i, j)(h)()); // this for checking by hand
+                if (x()(h)(i, j)(k, l, m) != g3(k, l, m)(i, j)(h)()) {
+                  OUTPUT("FAILED!!!");
+                  MDISP(h, i, j, k, l, m, x()(h)(i, j)(k, l, m), g3(k, l, m)(i, j)(h)()); 
+                  return (1);
+                }
               }
             }
           }
@@ -202,6 +206,7 @@ int main(int argc, char *argv[]) {
   MOUT << "done: " << bold.apply(myname) << std::endl;
   MOUT << StyledString::get(HORLINE);
   CR();
+
 
   return 0;
 }

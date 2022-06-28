@@ -424,12 +424,12 @@ int main(int argc, char *argv[]) {
     double x11 = q(1);
     MDISP(x10, x11);
     CR();
-    x10 = q((size_type)0);
+    x10 = q((size_t)0);
   }
 
 
-  DISP(sizeof(size_type));
-  DISP(sizeof(index_type));
+  DISP(sizeof(size_t));
+  DISP(sizeof(size_t));
 
   {
     AddType<double, float>::Type x;

@@ -427,7 +427,7 @@ namespace mathq {
     bool result = true;
     
  
-    for (register size_type i = 0; i< a.size(); i++)
+    for (register size_t i = 0; i< a.size(); i++)
       result = result && a(i);
     
     return result;
@@ -439,14 +439,14 @@ namespace mathq {
   template <class A> 
   inline Vector<bool> alltruebyrow( const MorE<bool,A>& a ) {
     
-    const size_type NR = a.Nrows();
-    const size_type NC = a.Ncols();
+    const size_t NR = a.Nrows();
+    const size_t NC = a.Ncols();
     Vector<bool> y(NR);
 
-    size_type i = 0;
-    for(size_type r = 0; r<NR; r++) {
+    size_t i = 0;
+    for(size_t r = 0; r<NR; r++) {
       bool temp=true;
-      for(size_type c = 0; c<NC; c++,i++) {
+      for(size_t c = 0; c<NC; c++,i++) {
 	temp = temp && a(i);
       }
       y[r] = temp;
@@ -458,14 +458,14 @@ namespace mathq {
   template <class A> 
   inline Vector<bool> alltruebycol( const MorE<bool,A>& a ) {
     
-    const size_type NR = a.Nrows();
-    const size_type NC = a.Ncols();
+    const size_t NR = a.Nrows();
+    const size_t NC = a.Ncols();
     Vector<bool> y(NC);
 
-    for(size_type c = 0; c<NC; c++) {
-      size_type LIMIT = NR*NC-NC+c+1;
+    for(size_t c = 0; c<NC; c++) {
+      size_t LIMIT = NR*NC-NC+c+1;
       bool temp=true;
-      for(size_type i = c; i<LIMIT; i+=NC) {
+      for(size_t i = c; i<LIMIT; i+=NC) {
 	temp = temp && a(i);
       }
       y[c] = temp;
@@ -488,7 +488,7 @@ namespace mathq {
     bool result = false;
     
  
-    for (register size_type i = 0; i< a.size(); i++)
+    for (register size_t i = 0; i< a.size(); i++)
       result = result || a(i);
     
     return result;
@@ -501,14 +501,14 @@ namespace mathq {
   template <class A> 
   inline Vector<bool> anytruebyrow( const MorE<bool,A>& a ) {
     
-    const size_type NR = a.Nrows();
-    const size_type NC = a.Ncols();
+    const size_t NR = a.Nrows();
+    const size_t NC = a.Ncols();
     Vector<bool> y(NR);
 
-    size_type i = 0;
-    for(size_type r = 0; r<NR; r++) {
+    size_t i = 0;
+    for(size_t r = 0; r<NR; r++) {
       bool temp=false;
-      for(size_type c = 0; c<NC; c++,i++) {
+      for(size_t c = 0; c<NC; c++,i++) {
 	temp = temp || a(i);
       }
       y[r] = temp;
@@ -520,14 +520,14 @@ namespace mathq {
   template <class A> 
   inline Vector<bool> anytruebycol( const MorE<bool,A>& a ) {
     
-    const size_type NR = a.Nrows();
-    const size_type NC = a.Ncols();
+    const size_t NR = a.Nrows();
+    const size_t NC = a.Ncols();
     Vector<bool> y(NC);
 
-    for(size_type c = 0; c<NC; c++) {
-      size_type LIMIT = NR*NC-NC+c+1;
+    for(size_t c = 0; c<NC; c++) {
+      size_t LIMIT = NR*NC-NC+c+1;
       bool temp=false;
-      for(size_type i = c; i<LIMIT; i+=NC) {
+      for(size_t i = c; i<LIMIT; i+=NC) {
 	temp = temp || a(i);
       }
       y[c] = temp;
@@ -540,10 +540,10 @@ namespace mathq {
 
   template <class A> 
   inline int numtrue( const MorE<bool,A>& a ) {
-    size_type result = 0;
+    size_t result = 0;
     
  
-    for (register size_type i = 0; i< a.size(); i++)
+    for (register size_t i = 0; i< a.size(); i++)
       result += static_cast<int>(a(i));
     
     return result;
@@ -554,17 +554,17 @@ namespace mathq {
   // numtruebyrow(a)
 
   template <class A> 
-  inline Vector<index_type> numtruebyrow( const MorE<bool,A>& a ) {
+  inline Vector<size_t> numtruebyrow( const MorE<bool,A>& a ) {
     
-    const size_type NR = a.Nrows();
-    const size_type NC = a.Ncols();
-    Vector< size_type> y(NR);
+    const size_t NR = a.Nrows();
+    const size_t NC = a.Ncols();
+    Vector< size_t> y(NR);
 
-    size_type i = 0;
-    for(size_type r = 0; r<NR; r++) {
-       size_type temp=0;
-      for(size_type c = 0; c<NC; c++,i++) {
-	temp  += static_cast<index_type>(a(i));
+    size_t i = 0;
+    for(size_t r = 0; r<NR; r++) {
+       size_t temp=0;
+      for(size_t c = 0; c<NC; c++,i++) {
+	temp  += static_cast<size_t>(a(i));
       }
       y[r] = temp;
     }
@@ -573,17 +573,17 @@ namespace mathq {
 
   // numtruebycol(a)
   template <class A> 
-  inline Vector< size_type> numtruebycol( const MorE<bool,A>& a ) {
+  inline Vector< size_t> numtruebycol( const MorE<bool,A>& a ) {
     
-    const size_type NR = a.Nrows();
-    const size_type NC = a.Ncols();
-    Vector< size_type> y(NC);
+    const size_t NR = a.Nrows();
+    const size_t NC = a.Ncols();
+    Vector< size_t> y(NC);
 
-    for(size_type c = 0; c<NC; c++) {
-      size_type LIMIT = NR*NC-NC+c+1;
-      size_type temp=0;
-      for(size_type i = c; i<LIMIT; i+=NC) {
-	temp  += static_cast<index_type>(a(i));
+    for(size_t c = 0; c<NC; c++) {
+      size_t LIMIT = NR*NC-NC+c+1;
+      size_t temp=0;
+      for(size_t i = c; i<LIMIT; i+=NC) {
+	temp  += static_cast<size_t>(a(i));
       }
       y[c] = temp;
     }
@@ -598,19 +598,19 @@ namespace mathq {
   // findtrue(a)
 
   template <class A> 
-  inline Matrix<index_type> findtrue( const MorE<bool,A>& a ) {
-    size_type N = 0;
+  inline Matrix<size_t> findtrue( const MorE<bool,A>& a ) {
+    size_t N = 0;
     
  
-    for (register size_type i = 0; i< a.size(); i++)
-      N += static_cast<index_type>(a(i));
+    for (register size_t i = 0; i< a.size(); i++)
+      N += static_cast<size_t>(a(i));
  
-    Matrix<index_type> y(N,2);
+    Matrix<size_t> y(N,2);
 
-   size_type i = 0;
-   size_type j = 0;
-    for(size_type r = 0; r<a.Nrows(); r++) {
-       for(size_type c = 0; c<a.Ncols(); c++,i++) {
+   size_t i = 0;
+   size_t j = 0;
+    for(size_t r = 0; r<a.Nrows(); r++) {
+       for(size_t c = 0; c<a.Ncols(); c++,i++) {
 	 if (a(i)) {
 	   y(j,0) = r;
 	   y(j,1) = c;
@@ -628,17 +628,17 @@ namespace mathq {
   // findtruesi(a) -- return in single index format
 
   template <class A> 
-  inline Vector<index_type> findtruesi( const MorE<bool,A>& a ) {
-    size_type N = 0;
+  inline Vector<size_t> findtruesi( const MorE<bool,A>& a ) {
+    size_t N = 0;
     
  
-    for (register size_type i = 0; i< a.size(); i++)
-      N += static_cast<index_type>(a(i));
+    for (register size_t i = 0; i< a.size(); i++)
+      N += static_cast<size_t>(a(i));
  
-    Vector<index_type> y(N);
+    Vector<size_t> y(N);
 
-    size_type j = 0;
-    for (register size_type i = 0; i< a.size(); i++) {
+    size_t j = 0;
+    for (register size_t i = 0; i< a.size(); i++) {
       if (a(i)) {
 	y[j] = i;
 	j++;
@@ -653,19 +653,19 @@ namespace mathq {
   // findtruebyrow(a)
 
   template <class A> 
-  inline Vector<index_type> findtruebyrow( const MorE<bool,A>& a ) {
-    size_type N = 0;
+  inline Vector<size_t> findtruebyrow( const MorE<bool,A>& a ) {
+    size_t N = 0;
     
  
-    for (register size_type i = 0; i< a.size(); i++)
-      N += static_cast<index_type>(a(i));
+    for (register size_t i = 0; i< a.size(); i++)
+      N += static_cast<size_t>(a(i));
  
-    Vector<index_type> y(N,2);
+    Vector<size_t> y(N,2);
 
-   size_type i = 0;
-   size_type j = 0;
-    for(size_type r = 0; r<a.Nrows(); r++) {
-       for(size_type c = 0; c<a.Ncols(); c++,i++) {
+   size_t i = 0;
+   size_t j = 0;
+    for(size_t r = 0; r<a.Nrows(); r++) {
+       for(size_t c = 0; c<a.Ncols(); c++,i++) {
 	 if (a(i)) {
 	   y[r] = 1;
 	 }

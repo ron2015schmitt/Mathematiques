@@ -79,7 +79,7 @@ namespace mathq {
     // --------------------- default CONSTRUCTOR ---------------------
 
     explicit MultiArray<E, R, D, M>() {
-      std::vector<size_type> dv(R);
+      std::vector<size_t> dv(R);
       resize(new Dimensions(dv));
       constructorHelper();
     }
@@ -152,10 +152,10 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    inline size_type size(void) const {
+    inline size_t size(void) const {
       return data_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return dimensions_->ndims();
     }
     Dimensions dims(void) const {
@@ -173,11 +173,11 @@ namespace mathq {
       return myaddr;
     }
 
-    size_type tdims(void) const {
+    size_t tdims(void) const {
       return dims();
     }
 
-    inline size_type depth(void) const {
+    inline size_t depth(void) const {
       return M;
     }
 
@@ -192,12 +192,12 @@ namespace mathq {
     }
 
     // the size of each element
-    inline size_type elsize(void) const {
+    inline size_t elsize(void) const {
       if constexpr (M < 2) {
         return 1;
       }
       else {
-        const size_type Nelements = this->size();
+        const size_t Nelements = this->size();
         if (Nelements == 0) {
           return 0;
         }
@@ -208,12 +208,12 @@ namespace mathq {
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_type eldeepsize(void) const {
+    inline size_t eldeepsize(void) const {
       if constexpr (M < 2) {
         return 1;
       }
       else {
-        const size_type Nelements = this->size();
+        const size_t Nelements = this->size();
         if (Nelements == 0) {
           return 0;
         }
@@ -224,7 +224,7 @@ namespace mathq {
     }
 
     // the total number of numbers in this data structure
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr (M < 2) {
         return this->size();
       }
@@ -272,7 +272,7 @@ namespace mathq {
       resize(newdims);
       if constexpr (M > 1) {
         deepdims.erase(deepdims.begin());
-        for (index_type i = 0; i < size(); i++) {
+        for (size_t i = 0; i < size(); i++) {
           std::vector<Dimensions> ddims(deepdims);
           data_[i].resize(ddims);
         }
@@ -304,7 +304,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // "read/write"
-    D& dat(const index_type n) {
+    D& dat(const size_t n) {
       using namespace ::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
       if constexpr (M < 2) {
@@ -323,7 +323,7 @@ namespace mathq {
     }
 
     // read
-    const D& dat(const index_type n) const {
+    const D& dat(const size_t n) const {
       using namespace ::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
       if constexpr (M < 2) {
@@ -405,7 +405,7 @@ namespace mathq {
 
     // "read/write": x.dat(DeepIndices)
     D& dat(const DeepIndices& dinds) {
-      const index_type depth = dinds.size();
+      const size_t depth = dinds.size();
       const Indices& inds = dinds[depth - M];
 
       if constexpr (M > 1) {
@@ -418,7 +418,7 @@ namespace mathq {
 
     // "read": x.dat(DeepIndices)
     const D dat(const DeepIndices& dinds) const {
-      const index_type depth = dinds.size();
+      const size_t depth = dinds.size();
       const Indices& inds = dinds[depth - M];
 
       if constexpr (M > 1) {
@@ -434,7 +434,7 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write"
-    E& operator[](const index_type n) {
+    E& operator[](const size_t n) {
       int k = n;
       if (k < 0) {
         k += size();
@@ -443,7 +443,7 @@ namespace mathq {
     }
 
     // read
-    const E& operator[](const index_type n) const {
+    const E& operator[](const size_t n) const {
       int k = n;
       if (k < 0) {
         k += size();
@@ -455,47 +455,47 @@ namespace mathq {
     //*******MultiArray-style Element Access: A(i,j,k,...) *********************
     //**********************************************************************
 
-    index_type indexOf(const Indices& inds) const {
+    size_t indexOf(const Indices& inds) const {
       return dimensions_->index(inds);
     }
 
-    /* template<typename... Ts> index_type index(int i, const Ts... args){ */
+    /* template<typename... Ts> size_t index(int i, const Ts... args){ */
     /* const int size = sizeof...(args); */
     /* int argarray[size] = {args...}; */
     /*   Indices& inds = *(new Indices(ndims())); */
-    /*   const index_type M = this->ndims(); */
+    /*   const size_t M = this->ndims(); */
     /*   inds[0] = i;  */
-    /*   for(index_type n = 1; n < M; n++) { */
+    /*   for(size_t n = 1; n < M; n++) { */
     /* 	inds[n] = argarray[n];  */
     /*   } */
-    /*   index_type k = this->index(inds); */
+    /*   size_t k = this->index(inds); */
     /*   return k; */
     /* } */
 
     template <typename... U>
-    typename std::enable_if<(std::is_same<U, index_type>::value && ...), index_type>::type index(const U... args) {
+    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, size_t>::type index(const U... args) {
 
-      const int size = sizeof...(args);
-      int argarray[size] = { args... };
+      const size_t size = sizeof...(args);
+      size_t argarray[size] = {  std::make_unsigned<int>::type(args)... };
       Indices& inds = *(new Indices(ndims()));
-      const index_type NN = this->ndims();
-      for (index_type n = 0; n < NN; n++) {
+      const size_t NN = this->ndims();
+      for (size_t n = 0; n < NN; n++) {
         inds[n] = argarray[n];
       }
-      index_type k = this->indexOf(inds);
+      size_t k = this->indexOf(inds);
       return k;
     }
 
-    index_type index(const std::initializer_list<size_type>& mylist) const {
+    size_t index(const std::initializer_list<size_t>& mylist) const {
       // TODO: check size
-      const index_type NN = this->ndims();
-      const size_type N = mylist.size();
-      index_type k = 0;
-      index_type n = 0;
-      typename std::initializer_list<size_type>::iterator it;
+      const size_t NN = this->ndims();
+      const size_t N = mylist.size();
+      size_t k = 0;
+      size_t n = 0;
+      typename std::initializer_list<size_t>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it, n++) {
-        size_type N = (*dimensions_)[n];
-        index_type j = *it;
+        size_t N = (*dimensions_)[n];
+        size_t j = *it;
         k = N * k + j;
       }
       return k;
@@ -505,7 +505,7 @@ namespace mathq {
     // TODO: test this code
     // TODO: bounds check on k
 
-    inline Indices& indices(const index_type k) const {
+    inline Indices& indices(const size_t k) const {
       return dimensions_->indices(k);
     }
 
@@ -515,37 +515,38 @@ namespace mathq {
 
     // ---------------- tensor(Indices)--------------
     E& operator()(const Indices& inds) {
-      index_type k = this->indexOf(inds);
+      size_t k = this->indexOf(inds);
       return (*this)[k];
     }
     const E operator()(const Indices& inds) const {
-      index_type k = this->indexOf(inds);
+      size_t k = this->indexOf(inds);
       return (*this)[k];
     }
 
     // ---------------- tensor(i,j,...)--------------
 
+
     template <typename... U>
-    typename std::enable_if<(std::is_same<U, index_type>::value && ...), E&>::type operator()(const U... args) {
+    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, E&>::type operator()(const U... args) {
 
       // const int size = sizeof...(args);
       // int argarray[size] = {args...};
-      index_type k = this->index(args...);
+      size_t k = this->index(args...);
 
       return (*this)[k];
     }
     template <typename... U>
-    typename std::enable_if<(std::is_same<U, index_type>::value && ...), const E>::type operator()(const U... args) const {
+    typename std::enable_if<std::conjunction<std::is_convertible<U,size_t>...>::value, const E>::type operator()(const U... args) const {
       return (*this)(args...);
     }
 
     // ---------------- tensor({i,j,...})--------------
-    E& operator()(const std::initializer_list<size_type>& mylist) {
-      index_type k = this->index(mylist);
+    E& operator()(const std::initializer_list<size_t>& mylist) {
+      size_t k = this->index(mylist);
       return (*this)[k];
     }
-    const E operator()(const std::initializer_list<size_type>& mylist) const {
-      index_type k = this->index(mylist);
+    const E operator()(const std::initializer_list<size_t>& mylist) const {
+      size_t k = this->index(mylist);
       return (*this)[k];
     }
 
@@ -560,7 +561,7 @@ namespace mathq {
     // ----------------- tensor = e ----------------
     MultiArray<E, R, D, M>&
       operator=(const E e) {
-      for (index_type i = size(); i--;)
+      for (size_t i = size(); i--;)
         data_[i] = e;
       return *this;
     }
@@ -569,7 +570,7 @@ namespace mathq {
     template <class T = E>
     typename std::enable_if<!std::is_same<T, D>::value, MultiArray<T, R, D, M>&>::type operator=(const D& d) {
 
-      for (index_type i = 0; i < deepsize(); i++) {
+      for (size_t i = 0; i < deepsize(); i++) {
         data_.dat(i) = d;
       }
       return *this;
@@ -593,7 +594,7 @@ namespace mathq {
       // TODO: issue warning
       // TRDISP(x);
       resize(x.dims());
-      for (index_type i = size(); i--;) {
+      for (size_t i = size(); i--;) {
         data_[i] = x[i]; // Inlined expression
       }
       return *this;
@@ -606,13 +607,13 @@ namespace mathq {
 
       if constexpr (M <= 1) {
         resize(x.dims());
-        for (index_type i = 0; i < size(); i++) {
+        for (size_t i = 0; i < size(); i++) {
           (*this)[i] = x[i];
         }
       }
       else {
         resize(x.deepdims());
-        for (index_type i = 0; i < deepsize(); i++) {
+        for (size_t i = 0; i < deepsize(); i++) {
           this->dat(i) = x.dat(i);
         }
       }
@@ -627,7 +628,7 @@ namespace mathq {
 
     MultiArray<E, R, D, M>&
       operator=(const E array1[]) {
-      for (index_type i = 0; i < size(); i++) {
+      for (size_t i = 0; i < size(); i++) {
         (*this)[i] = array1[i];
       }
       return *this;
@@ -641,7 +642,7 @@ namespace mathq {
     // NOTE: in-place
 
     MultiArray<E, R, D, M>& roundzero(FType tolerance = Functions<FType>::tolerance) {
-      for (index_type i = size(); i--;) {
+      for (size_t i = size(); i--;) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
       return *this;
@@ -652,7 +653,7 @@ namespace mathq {
 
     template <typename T = D>
     typename std::enable_if<is_complex<T>{}, MultiArray<T>&>::type conj() {
-      for (index_type i = size(); i--;) {
+      for (size_t i = size(); i--;) {
         data_[i] = std::conj(data_[i]);
       }
       return *this;
@@ -683,7 +684,7 @@ namespace mathq {
     }
 #endif
 
-    std::ostream& send(std::ostream& stream, index_type& n, const Dimensions& dim) const {
+    std::ostream& send(std::ostream& stream, size_t& n, const Dimensions& dim) const {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       //      MDISP(n,dim);
@@ -692,7 +693,7 @@ namespace mathq {
         stream << std::endl;
       }
       std::string indent = "";
-      for (index_type j = 0; j < delta; j++) {
+      for (size_t j = 0; j < delta; j++) {
         indent += "  ";
       }
       stream << indent << style.apply("{");
@@ -703,7 +704,7 @@ namespace mathq {
       if (dim.ndims() > 0) {
         Dimensions newdim(dim);
         newdim.erase(newdim.begin());
-        for (index_type j = 0; j < dim[0]; j++) {
+        for (size_t j = 0; j < dim[0]; j++) {
           if (dim.ndims() > 1) {
             Dimensions newdim(dim);
             newdim.erase(newdim.begin());
@@ -740,7 +741,7 @@ namespace mathq {
 
     friend std::ostream& operator<<(std::ostream& stream, const MultiArray<E, R, D, M>& t) {
       using namespace display;
-      index_type n = 0;
+      size_t n = 0;
       t.send(stream, n, t.dims());
       return stream;
     }

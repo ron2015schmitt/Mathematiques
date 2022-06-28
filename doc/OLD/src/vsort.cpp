@@ -27,7 +27,7 @@ int main()
   GMD_HEADER2("Sorting");
   OUTPUT("* sorting is performed _in place_ via the `.sort()` method");
   CR();
-  OUTPUT("* the indices for the sort are returned in a `Vector<index_type>`");
+  OUTPUT("* the indices for the sort are returned in a `Vector<size_t>`");
   CR();
   
   {
@@ -37,7 +37,7 @@ int main()
     GMD_CODE_START("C++");
     ECHO_CODE( Vector<double> t( {23,-1,100,7}) );
     ECHO_CODE( Vector<double> y( {30,10,20,40} ) );
-    ECHO_CODE( Vector<index_type> vindex );
+    ECHO_CODE( Vector<size_t> vindex );
     ECHO_CODE( vindex = t.sort() );
     ECHO_CODE( y = y[vindex] );
     GMD_CODE_END();
@@ -54,7 +54,7 @@ int main()
   GMD_HEADER3("The `.uniq()` method");
   OUTPUT("* The `.uniq()` method operates _in place_, removing all duplicate values.");
   CR();
-  OUTPUT("* The indices for the unique elements are returned in a `Vector<index_type>`");
+  OUTPUT("* The indices for the unique elements are returned in a `Vector<size_t>`");
   CR();
   
   {
@@ -63,7 +63,7 @@ int main()
     EXAMPLE(Nex++,"The `.uniq()` method");
     GMD_CODE_START("C++");
     ECHO_CODE( Vector<double> t( {23,-1,23,4,4,4,-1,3,3}) );
-    ECHO_CODE( Vector<index_type> vindex );
+    ECHO_CODE( Vector<size_t> vindex );
     ECHO_CODE( vindex = t.uniq() );
     GMD_CODE_END();
     CR();
@@ -77,7 +77,7 @@ int main()
   GMD_HEADER3("The `.quniq()` method");
   OUTPUT("* The `.quniq()` method operates _in place_, removing all _adjacent_ duplicate values.");
   CR();
-  OUTPUT("* The indices for the unique elements are returned in a `Vector<index_type>`");
+  OUTPUT("* The indices for the unique elements are returned in a `Vector<size_t>`");
   CR();
   
   {
@@ -86,7 +86,7 @@ int main()
     EXAMPLE(Nex++,"The `.quniq()` method");
     GMD_CODE_START("C++");
     ECHO_CODE( Vector<double> t( {23,-1,23,4,4,4,-1,3,3}) );
-    ECHO_CODE( Vector<index_type> vindex );
+    ECHO_CODE( Vector<size_t> vindex );
     ECHO_CODE( vindex = t.quniq() );
     GMD_CODE_END();
     CR();

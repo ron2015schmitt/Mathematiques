@@ -16,9 +16,9 @@ You can ccess avector elements using a `Vector` of indices or a C++11 `initializ
 **EXAMPLE 1**: Access via a Vector of indices
 ```C++
 Vector<double> v( linspace<double>(0,1,11) );
-Vector<index_type> veven( range<index_type>(0,10,2) );
-Vector<index_type> vodd( range<index_type>(1,10,2) );
-Vector<index_type> vconst(15,1 );
+Vector<size_t> veven( range<size_t>(0,10,2) );
+Vector<size_t> vodd( range<size_t>(1,10,2) );
+Vector<size_t> vconst(15,1 );
 ```
 
 **The result is**

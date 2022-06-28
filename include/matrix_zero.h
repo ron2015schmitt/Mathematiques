@@ -42,8 +42,8 @@ namespace mathq {
   private:
     const D data_ = 0;
 
-    index_type Nrows_;
-    index_type Ncols_;
+    size_t Nrows_;
+    size_t Ncols_;
 
     static_assert(NumberTrait<D>::value,
       "class MatrixZero can only have numbers as elements, ie not vectors, matrices etc.");
@@ -65,7 +65,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixZero<D, NR, NC>(const size_type Nr, const size_type Nc) {
+    explicit MatrixZero<D, NR, NC>(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
     }
 
@@ -85,18 +85,18 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    size_type ndims(void)  const {
+    size_t ndims(void)  const {
       return Rvalue;
     }
 
 
-    inline size_type size(void) const {
+    inline size_t size(void) const {
       return Nrows()*Ncols();
     }
-    inline size_type Nrows(void) const {
+    inline size_t Nrows(void) const {
       return Nrows_;
     }
-    inline size_type Ncols(void) const {
+    inline size_t Ncols(void) const {
       return Ncols_;
     }
     Dimensions dims(void) const {
@@ -123,7 +123,7 @@ namespace mathq {
     }
 
 
-    constexpr size_type depth(void) const {
+    constexpr size_t depth(void) const {
       return Mvalue;
     }
     Dimensions eldims(void) const {
@@ -132,17 +132,17 @@ namespace mathq {
     }
 
     // the size of each element
-    inline size_type elsize(void) const {
+    inline size_t elsize(void) const {
       return 1;
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_type eldeepsize(void) const {
+    inline size_t eldeepsize(void) const {
       return 1;
     }
 
     // the total number of numbers in this data structure
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       return this->size();
     }
     std::vector<Dimensions>& deepdims(void) const {
@@ -198,8 +198,8 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    MatrixZero<D, NR, NC>& reshape(const size_type nr, const size_type nc) {
-      const size_type nn = nr*nc;
+    MatrixZero<D, NR, NC>& reshape(const size_t nr, const size_t nc) {
+      const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
           Nrows_ = 0;
@@ -231,7 +231,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // read
-    const D dat(const index_type n)  const {
+    const D dat(const size_t n)  const {
       return data_;
     }
 
@@ -260,7 +260,7 @@ namespace mathq {
     //**********************************************************************
 
     // read
-    const D& operator[](const index_type n)  const {
+    const D& operator[](const size_t n)  const {
       return data_;
     }
 
@@ -273,7 +273,7 @@ namespace mathq {
     //**********************************************************************
 
 
-    const D operator()(const index_type r, const index_type c) const {
+    const D operator()(const size_t r, const size_t c) const {
       return data_;
     }
 
@@ -349,12 +349,12 @@ namespace mathq {
 
       Style& style = FormatDataMatrix::style_for_punctuation;
       stream << style.apply(FormatDataMatrix::string_opening);
-      const mathq::index_type N = FormatDataMatrix::max_elements_per_line;
+      const size_t N = FormatDataMatrix::max_elements_per_line;
 
-      for (mathq::index_type r = 0; r < m.Nrows(); r++) {
+      for (size_t r = 0; r < m.Nrows(); r++) {
         stream << style.apply(FormatDataMatrix::string_row_opening);
-        mathq::index_type k = 0;
-        for (mathq::index_type c = 0; c < m.Ncols(); c++, k++) {
+        size_t k = 0;
+        for (size_t c = 0; c < m.Ncols(); c++, k++) {
           if (k >= N) {
             stream << style.apply(FormatDataMatrix::string_endofline);
             k = 0;

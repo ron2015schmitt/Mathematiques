@@ -201,7 +201,6 @@ int main(int argc, char *argv[]) {
 
   MOUT << blue.apply("Two-level tests") << endl;
 
-
   // -------------------------------------------------
   // two level tests
   // -------------------------------------------------
@@ -228,7 +227,10 @@ int main(int argc, char *argv[]) {
     CR();
     Scalar<Vector<double>> s{{1., 2., 3.}};
     TLDISP(s);
+    TLDISP(s());
+    TLDISP(s[0]);
     TLDISP(s()(2));
+    TLDISP(s.dat(2));
     TLDISP(s.dims());
     TLDISP(s.size());
     TLDISP(s.deepdims());
@@ -267,6 +269,7 @@ int main(int argc, char *argv[]) {
     s2 = -s;
     TLDISP(s2);
   }
+
 
   CR();
   CR();

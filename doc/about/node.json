@@ -3,7 +3,7 @@
   "name": "about",
   "skip-readme": false,
   "title": "About",
-  "version": "v0.40.47-c++17",
+  "version": "v0.40.48-c++17",
   "prefix": "2.",
   "src": "about/template.md",
   "dest": "about/README.md",
@@ -12,10 +12,10 @@
     "title": "Documentation",
     "prefix": "",
     "level": 1,
-    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.47-c++17</h1>"
+    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.48-c++17</h1>"
   },
   "prev": "license",
   "next": "status-release",
-  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.47-c++17</h1>\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../README.md)<br>\n1. [License](../license/README.md)<br>\n2. _About_ <br>\n3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>\n4. [Description and Example Usage](../overview/README.md)<br>\n5. [Installation](../installation/README.md)<br>\n6. [Your First Math\u00e9matiques Project](../first-project/README.md)<br>\n7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>\n8. [Benchmarks](../benchmarks/README.md)<br>\n9. [Tests](../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
+  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.40.48-c++17</h1>\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../README.md)<br>\n1. [License](../license/README.md)<br>\n2. _About_ <br>\n3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>\n4. [Description and Example Usage](../overview/README.md)<br>\n5. [Installation](../installation/README.md)<br>\n6. [Your First Math\u00e9matiques Project](../first-project/README.md)<br>\n7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>\n8. [Benchmarks](../benchmarks/README.md)<br>\n9. [Tests](../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
   "footer": "\n\n| \u21e6 <br />[License](../license/README.md)  | [Documentation](../README.md)<br />About<br /><img width=1000/> | \u21e8 <br />[Status, Planned Work & Release Notes](../status-release/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
 }

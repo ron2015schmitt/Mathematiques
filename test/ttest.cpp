@@ -28,18 +28,18 @@ int main() {
     Dimensions dims(2, 3, 4);
     MultiArray<int> t1(dims);
     int c = 0;
-    for (index_type i = 0; i < t1.dims()[0]; i++) {
-      for (index_type j = 0; j < t1.dims()[1]; j++) {
-        for (index_type k = 0; k < t1.dims()[2]; k++) {
+    for (size_t i = 0; i < t1.dims()[0]; i++) {
+      for (size_t j = 0; j < t1.dims()[1]; j++) {
+        for (size_t k = 0; k < t1.dims()[2]; k++) {
           t1(i, j, k) = 100 + c++;
         }
       }
     }
     MultiArray<int> t2(dims);
     c = 0;
-    for (index_type i = 0; i < t2.dims()[0]; i++) {
-      for (index_type j = 0; j < t2.dims()[1]; j++) {
-        for (index_type k = 0; k < t2.dims()[2]; k++) {
+    for (size_t i = 0; i < t2.dims()[0]; i++) {
+      for (size_t j = 0; j < t2.dims()[1]; j++) {
+        for (size_t k = 0; k < t2.dims()[2]; k++) {
           t2(i, j, k) = -100 + 9 * c++;
         }
       }

@@ -502,19 +502,19 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline  Matrix<std::complex<D> >  operator|( const MorE<D,A>& a, const  MorE<std::complex<D>,B>& b ) {
-    const size_type NR = a.Nrows();
-    const size_type NC = b.Ncols();
-    const size_type M = a.Ncols();
-    const size_type C1 = NR*M;
+    const size_t NR = a.Nrows();
+    const size_t NC = b.Ncols();
+    const size_t M = a.Ncols();
+    const size_t C1 = NR*M;
 
     Matrix<std::complex<D> > y(NR,NC);
 
-    register index_type i = 0;
-    for(register index_type n=0; n < C1; n+=M) 
-      for(register index_type c=0; c < NC; c++,i++) {
-	index_type j = n;
-	index_type k = c;
-	const index_type C2 = n+M-1;
+    register size_t i = 0;
+    for(register size_t n=0; n < C1; n+=M) 
+      for(register size_t c=0; c < NC; c++,i++) {
+	size_t j = n;
+	size_t k = c;
+	const size_t C2 = n+M-1;
 	// using a local variable for the accumation saves a lot of CPU Time!!
 	std::complex<D> result = a(j) * b(k);
 	while (j<C2){
@@ -527,20 +527,20 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline  Matrix<std::complex<D> >  operator|( const MorE<std::complex<D>,A>& a, const  MorE<D,B>& b ) {
-    const size_type NR = a.Nrows();
-    const size_type NC = b.Ncols();
-    const size_type M = a.Ncols();
-    const size_type C1 = NR*M;
+    const size_t NR = a.Nrows();
+    const size_t NC = b.Ncols();
+    const size_t M = a.Ncols();
+    const size_t C1 = NR*M;
 
     Matrix<std::complex<D> > y(NR,NC);
 
 
-    register index_type i = 0;
-    for(register index_type n=0; n < C1; n+=M) 
-      for(register index_type c=0; c < NC; c++,i++) {
-	index_type j = n;
-	index_type k = c;
-	const index_type C2 = n+M-1;
+    register size_t i = 0;
+    for(register size_t n=0; n < C1; n+=M) 
+      for(register size_t c=0; c < NC; c++,i++) {
+	size_t j = n;
+	size_t k = c;
+	const size_t C2 = n+M-1;
 	// using a local variable for the accumation saves a lot of CPU Time!!
 	std::complex<D> result = a(j) * b(k);
 	while (j<C2){
@@ -565,17 +565,17 @@ namespace mathq {
   inline Matrix<std::complex<D> >
   adj(const MorE<std::complex<D>,A>& a)
   {
-    const size_type NR = a.Nrows();
-    const size_type NC = a.Ncols();
-    const size_type NN = a.size();
-    const size_type C1 = NN-NC;
+    const size_t NR = a.Nrows();
+    const size_t NC = a.Ncols();
+    const size_t NN = a.size();
+    const size_t C1 = NN-NC;
 
 
     Matrix<std::complex<D> > y(NC,NR);
 
-    register index_type i = 0;
-    for(register index_type c = 0; c < NC; c++, i++) {
-      register index_type k = c;
+    register size_t i = 0;
+    for(register size_t c = 0; c < NC; c++, i++) {
+      register size_t k = c;
       y(i) = conj(a(k));
       do {
         y((i+=1)) = conj(a((k+=NC)));

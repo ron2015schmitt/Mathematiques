@@ -66,8 +66,6 @@ namespace mathq {
   //          Typedefs
   //*******************************************************
 
-  typedef std::vector<double>::size_type size_type;
-  typedef int index_type;
   typedef long double extended;
 
 
@@ -1164,19 +1162,19 @@ namespace mathq {
   // ***************************************************************************
 
   template <class D>
-  inline D&& At(D&& x, index_type n) {
+  inline D&& At(D&& x, size_t n) {
     return x;
   }
   template <class D>
-  inline const D&& At(const D&& x, index_type n) {
+  inline const D&& At(const D&& x, size_t n) {
     return x;
   }
   template <template <class> class T, class D>
-  inline D&& At(T<D>&& x, index_type n) {
+  inline D&& At(T<D>&& x, size_t n) {
     return x[n];
   }
   template <template <class> class T, class D>
-  inline const D&& At(const T<D>&& x, index_type n) {
+  inline const D&& At(const T<D>&& x, size_t n) {
     return x[n];
   }
 
@@ -1570,7 +1568,7 @@ namespace mathq {
   ////////////////////////////////////////////////////////////
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<std::is_same<D, bool>::value, Vector<index_type>&> findtrue(const MArrayExpR<X, E, D, M, R>& v);
+  EnableMethodIf<std::is_same<D, bool>::value, Vector<size_t>&> findtrue(const MArrayExpR<X, E, D, M, R>& v);
 
 
 

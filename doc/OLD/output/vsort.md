@@ -5,7 +5,7 @@ _This document was automatically generated from file_ **`vsort.cpp`** (Mathémat
 ## Sorting
 * sorting is performed _in place_ via the `.sort()` method
 
-* the indices for the sort are returned in a `Vector<index_type>`
+* the indices for the sort are returned in a `Vector<size_t>`
 
 
 
@@ -13,7 +13,7 @@ _This document was automatically generated from file_ **`vsort.cpp`** (Mathémat
 ```C++
 Vector<double> t( {23,-1,100,7});
 Vector<double> y( {30,10,20,40} );
-Vector<index_type> vindex;
+Vector<size_t> vindex;
 vindex = t.sort();
 y = y[vindex];
 ```
@@ -29,14 +29,14 @@ y = y[vindex];
 ### The `.uniq()` method
 * The `.uniq()` method operates _in place_, removing all duplicate values.
 
-* The indices for the unique elements are returned in a `Vector<index_type>`
+* The indices for the unique elements are returned in a `Vector<size_t>`
 
 
 
 **EXAMPLE 2**: The `.uniq()` method
 ```C++
 Vector<double> t( {23,-1,23,4,4,4,-1,3,3});
-Vector<index_type> vindex;
+Vector<size_t> vindex;
 vindex = t.uniq();
 ```
 
@@ -49,14 +49,14 @@ vindex = t.uniq();
 ### The `.quniq()` method
 * The `.quniq()` method operates _in place_, removing all _adjacent_ duplicate values.
 
-* The indices for the unique elements are returned in a `Vector<index_type>`
+* The indices for the unique elements are returned in a `Vector<size_t>`
 
 
 
 **EXAMPLE 3**: The `.quniq()` method
 ```C++
 Vector<double> t( {23,-1,23,4,4,4,-1,3,3});
-Vector<index_type> vindex;
+Vector<size_t> vindex;
 vindex = t.quniq();
 ```
 

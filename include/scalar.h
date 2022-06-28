@@ -125,10 +125,10 @@ namespace mathq {
     //**********************************************************************
 
 
-    inline size_type size(void) const {
+    inline size_t size(void) const {
       return 1;
     }
-    inline size_type depth(void) const {
+    inline size_t depth(void) const {
       return M;
     }
 
@@ -141,7 +141,7 @@ namespace mathq {
         return *(new Dimensions());
       }
     }
-    inline size_type elsize(void) const {
+    inline size_t elsize(void) const {
       if constexpr (M<2) {
         return 1;
       }
@@ -149,7 +149,7 @@ namespace mathq {
         return data_.size();
       }
     }
-    inline size_type eldeepsize(void) const {
+    inline size_t eldeepsize(void) const {
       if constexpr (M<2) {
         return 1;
       }
@@ -157,7 +157,7 @@ namespace mathq {
         return data_.deepsize();
       }
     }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr (M<2) {
         return this->size();
       }
@@ -178,11 +178,12 @@ namespace mathq {
     }
 
 
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return 0;
     }
     Dimensions dims(void) const {
       Dimensions dimensions;
+      TRDISP(dimensions);
       return dimensions;
     }
     Dimensions tdims(void) const {
@@ -221,7 +222,7 @@ namespace mathq {
     // -------------------------------------------------------------
 
     // "read/write": unsigned
-    D& dat(const index_type n) {
+    D& dat(const size_t n) {
       if constexpr (M <= 1) {
         return data_;
       }
@@ -231,7 +232,7 @@ namespace mathq {
     }
 
     // "read/write": signed
-    const D& dat(const index_type n)  const {
+    const D& dat(const size_t n)  const {
       if constexpr (M <= 1) {
         return data_;
       }
@@ -299,12 +300,12 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write": unsigned
-    E& operator[](const index_type n) {
+    E& operator[](const size_t n) {
       return data_;
     }
 
     // "read/write": signed
-    const E& operator[](const index_type n)  const {
+    const E& operator[](const size_t n)  const {
       return data_;
     }
 
@@ -340,7 +341,7 @@ namespace mathq {
 
     template <int M1 = M>
     typename std::enable_if<(M1>1), Scalar<E, D, M>& >::type operator=(const D& d) {
-      for (index_type i = 0; i < deepsize(); i++) {
+      for (size_t i = 0; i < deepsize(); i++) {
         (*this).dat(i) = d;
       }
       return *this;
@@ -353,7 +354,7 @@ namespace mathq {
       }
       else {
         resize(s2.deepdims());
-        for (index_type i = 0; i < deepsize(); i++) {
+        for (size_t i = 0; i < deepsize(); i++) {
           (*this).dat(i) = s2.dat(i);
         }
       }
@@ -375,7 +376,7 @@ namespace mathq {
       }
       else {
         resize(x.deepdims());
-        for (index_type i = 0; i < deepsize(); i++) {
+        for (size_t i = 0; i < deepsize(); i++) {
           this->dat(i) = x.dat(i);
         }
       }

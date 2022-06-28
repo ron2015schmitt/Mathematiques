@@ -270,7 +270,7 @@ namespace mathq {
 
 
   /****************************************************************************
-   * Unary Functions/Operators that bools or index_type MultiArrays
+   * Unary Functions/Operators that bools or size_t MultiArrays
    ****************************************************************************
    */
 
@@ -281,7 +281,7 @@ namespace mathq {
   template <class X, class E, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
   bool alltrue(const MArrayExpR<X, E, D, M, R>& x) {
 
-    for (index_type i = 0; i< x.deepsize(); i++) {
+    for (size_t i = 0; i< x.deepsize(); i++) {
       if (!x.dat(i)) {
         return false;
       }
@@ -296,7 +296,7 @@ namespace mathq {
   template <class X, class E, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
   bool anytrue(const MArrayExpR<X, E, D, M, R>& x) {
 
-    for (index_type i = 0; i< x.deepsize(); i++) {
+    for (size_t i = 0; i< x.deepsize(); i++) {
       if (x.dat(i)) {
         return true;
       }
@@ -309,12 +309,12 @@ namespace mathq {
   // numtrue(a)
 
   template <class X, class E, class D, int M, int R, typename = EnableIf<std::is_same<D, bool>::value> >
-  index_type numtrue(const MArrayExpR<X, E, D, M, R>& x) {
+  size_t numtrue(const MArrayExpR<X, E, D, M, R>& x) {
 
-    index_type result = 0;
+    size_t result = 0;
 
-    for (index_type i = 0; i< x.deepsize(); i++) {
-      result += static_cast<index_type>(x.dat(i));
+    for (size_t i = 0; i< x.deepsize(); i++) {
+      result += static_cast<size_t>(x.dat(i));
     }
 
     return result;
@@ -329,13 +329,13 @@ namespace mathq {
   // NOTE: declaration in preface.h
 
   template <class X, class E, class D, int M, int R>
-  EnableMethodIf<std::is_same<D, bool>::value, Vector<index_type>&>
+  EnableMethodIf<std::is_same<D, bool>::value, Vector<size_t>&>
     findtrue(const MArrayExpR<X, E, D, M, R>& x) {
-    index_type N = numtrue(x);
-    Vector<index_type>* y = new Vector<index_type>(N);
+    size_t N = numtrue(x);
+    Vector<size_t>* y = new Vector<size_t>(N);
 
-    index_type j = 0;
-    for (index_type i = 0; i< x.deepsize(); i++)
+    size_t j = 0;
+    for (size_t i = 0; i< x.deepsize(); i++)
       if (x.dat(i))
         (*y)[j++] = i;
 
@@ -354,13 +354,13 @@ namespace mathq {
   E sum(const MArrayExpR<X, E, D, M, R>& v) {
 
 
-    const size_type N = v.size();
+    const size_t N = v.size();
     if (N==0)
       return 0;
 
     E result = v[0];
 
-    for (index_type i = 1; i < N; i++) {
+    for (size_t i = 1; i < N; i++) {
       result += v[i];
     }
 
@@ -376,13 +376,13 @@ namespace mathq {
   E prod(const MArrayExpR<X, E, D, M, R>& v) {
 
 
-    const size_type N = v.size();
+    const size_t N = v.size();
     if (N==0)
       return 0;
 
     E result = v[0];
 
-    for (index_type i = 1; i < N; i++) {
+    for (size_t i = 1; i < N; i++) {
       result *= v[i];
     }
 
@@ -402,14 +402,14 @@ namespace mathq {
   template <class X, class E, class D, int M, int R>
   D min(const MArrayExpR<X, E, D, M, R>& v) {
 
-    const size_type N = v.deepsize();
+    const size_t N = v.deepsize();
     if (N==0) {
       return 0;
     }
 
     D result = v.dat(0);
 
-    for (index_type i = 1; i < N; i++) {
+    for (size_t i = 1; i < N; i++) {
       result = std::min(result, v.dat(i));
     }
 
@@ -424,14 +424,14 @@ namespace mathq {
   template <class X, class E, class D, int M, int R>
   D max(const MArrayExpR<X, E, D, M, R>& v) {
 
-    const size_type N = v.deepsize();
+    const size_t N = v.deepsize();
     if (N==0) {
       return 0;
     }
 
     D result = v.dat(0);
 
-    for (index_type i = 1; i < N; i++) {
+    for (size_t i = 1; i < N; i++) {
       result = std::max(result, v.dat(i));
     }
 
@@ -443,7 +443,7 @@ namespace mathq {
   template <class X, class E, class D, int M, int R>
   D sumofsqrs(const MArrayExpR<X, E, D, M, R>& v) {
     D result = D();
-    for (index_type i = 0; i < v.size(); i++) {
+    for (size_t i = 0; i < v.size(); i++) {
       result += normsqr(v[i]);
     }
     return result;
@@ -467,7 +467,7 @@ namespace mathq {
   template <class D>
   Vector<D>& range(D start, D end, D step) {
     // determine size
-    size_type N = 0;
+    size_t N = 0;
     if (step > 0) {
       for (D x = start; x<=end; x += step)
         N += 1;
@@ -479,7 +479,7 @@ namespace mathq {
     Vector<D>* y = new Vector<D>(N);
 
     (*y)[0] = start;
-    for (size_type i = 1; i<N; i++)
+    for (size_t i = 1; i<N; i++)
       (*y)[i] = (*y)[i-1] + step;
 
     return *y;
@@ -503,14 +503,14 @@ namespace mathq {
   // linspace function [a,b]
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  Vector<D>& linspace(D start, D end, size_type N) {
+  Vector<D>& linspace(D start, D end, size_t N) {
     Vector<D>* y = new Vector<D>(N);
 
 
     const D step = (end-start)/static_cast<D>(N-1);
 
     (*y)[0] = start;
-    for (size_type i = 1; i<(N-1); i++) {
+    for (size_t i = 1; i<(N-1); i++) {
       (*y)[i] = start + static_cast<D>(i)*step;
     }
     (*y)[N-1] = end;
@@ -524,7 +524,7 @@ namespace mathq {
   // with spacing delta, spanning from a+delta to b
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  Vector<D>& linspace_a(D start, D end, size_type N) {
+  Vector<D>& linspace_a(D start, D end, size_t N) {
     Vector<D>* y = new Vector<D>(N);
 
 
@@ -538,7 +538,7 @@ namespace mathq {
   // with spacing delta, spanning from a to b-delta
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  Vector<D>& linspace_b(D start, D end, size_type N) {
+  Vector<D>& linspace_b(D start, D end, size_t N) {
     Vector<D>* y = new Vector<D>(N);
 
 
@@ -551,7 +551,7 @@ namespace mathq {
   // with spacing delta, spanning from a+delta to b-delta
 
   template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
-  Vector<D>& linspace_ab(D start, D end, size_type N) {
+  Vector<D>& linspace_ab(D start, D end, size_t N) {
     Vector<D>* y = new Vector<D>(N);
 
 
@@ -964,8 +964,8 @@ namespace mathq {
         const size_t Ny = gridDims()[1];
         X.resize(Nx, Ny);
         Y.resize(Nx, Ny);
-        for (size_type r = 0; r < Nx; r++) {
-          for (size_type c = 0; c < Ny; c++) {
+        for (size_t r = 0; r < Nx; r++) {
+          for (size_t c = 0; c < Ny; c++) {
             X(r, c) = xgrid[r];
             Y(r, c) = ygrid[c];
           }
@@ -1656,7 +1656,7 @@ namespace mathq {
 
   // template <class D, typename = typename std::enable_if<std::is_arithmetic<D>::value, D>::type>
   // auto grad(const Vector<D>& gridfunc, const Interval<D>& range, const int Dpts = 7, const bool periodic = false) {
-  //   const size_type N = gridfunc.size();
+  //   const size_t N = gridfunc.size();
   //   Vector<D>* df = new Vector<D>(N);
   //   *df = gridfunc;
   //   df->deriv(range.a, range.b, 1, Dpts, periodic);
@@ -1688,8 +1688,8 @@ namespace mathq {
 
   //   // TODO: rewrite with slices
 
-  //   const size_type NR = gridfunc.Nrows();
-  //   const size_type NC = gridfunc.Ncols();
+  //   const size_t NR = gridfunc.Nrows();
+  //   const size_t NC = gridfunc.Ncols();
   //   Vector<Matrix<D>, 2>* df = new Vector<Matrix<D>, 2>();
   //   // starts off with empty matrices
   //   // TRDISP(*df);
@@ -1883,7 +1883,7 @@ namespace mathq {
   EnableMethodIf<(M==1)&&(R==1), D> integrate_a2b(const MArrayExpR<X, E, D, M, R>& v, const D a, const D b, const int order = 1) {
 
 
-    const size_type N = v.size();
+    const size_t N = v.size();
     if (N==0) {
       return 0;
     }
@@ -1895,14 +1895,14 @@ namespace mathq {
 
     switch (order) {
     case 0:
-      for (index_type j = 0; j < N; j++) {
+      for (size_t j = 0; j < N; j++) {
         result += v[j];
       }
       result = result * (b-a)/D(N);
       break;
     case 1:
       result += (v[0]+v[N-1])/2;
-      for (index_type j = 1; j < N-1; j++) {
+      for (size_t j = 1; j < N-1; j++) {
         result += v[j];
       }
       result = result * (b-a)/D(N-1);
@@ -1915,7 +1915,7 @@ namespace mathq {
         D sodd = 0;
         D seven = 0;
         result += v[0]+v[N-1];
-        for (index_type j = 1; j < N-1; j++) {
+        for (size_t j = 1; j < N-1; j++) {
           if (j%2==1) {
             sodd += v[j];
           }
@@ -1937,7 +1937,7 @@ namespace mathq {
         D s3 = 0;
 
         result += v[0]+v[N-1];
-        for (index_type j = 1; j < N-1; j++) {
+        for (size_t j = 1; j < N-1; j++) {
           if (j%3==1) {
             s1 += v[j];
           }
@@ -1963,7 +1963,7 @@ namespace mathq {
         D s4 = 0;
 
         result += 7*(v[0]+v[N-1]);
-        for (index_type j = 1; j < N-1; j++) {
+        for (size_t j = 1; j < N-1; j++) {
           if (j%4==1) {
             s1 += v[j];
           }

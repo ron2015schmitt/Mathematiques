@@ -57,7 +57,7 @@ int main()
 
     
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_type N = 20 );
+    ECHO_CODE( const size_t N = 20 );
     ECHO_CODE( Vector<double> k = range<double>(0,N-1)  );
     ECHO_CODE( Vector<double> An = 1/k );
     ECHO_CODE( An[0] = 0. );
@@ -135,7 +135,7 @@ int main()
 
     
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_type N = 20 );
+    ECHO_CODE( const size_t N = 20 );
     ECHO_CODE( Vector<double> k = range<double>(0,N-1)  );
     ECHO_CODE( Vector<double> An = Vector<double>(N,0.) );
     ECHO_CODE( Vector<double> Bn = 1./sqr(k) );

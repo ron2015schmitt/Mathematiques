@@ -64,8 +64,8 @@
   + [Index class and new indexing methodology](topics/index.md)
   + slcies to get row or col of matrix
 1. use std::size_t instead of these  (searc and replace everywhere)
-  * typedef std::vector<double>::size_type size_type;
-  * typedef int index_type;
+  * typedef std::vector<double>::size_t size_t;
+  * typedef int size_t;
   * typedef long double extended;  -> quad?
 1. use [C++20 Ranges](https://en.cppreference.com/w/cpp/ranges)
 1. add vararg constructor for Dimensions or parameter pack 

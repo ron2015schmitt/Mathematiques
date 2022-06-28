@@ -248,7 +248,7 @@ int main() {
   // TRDISP(gridX0);
 
   // Vector<double, 5> g;
-  // for (size_type i = 0; i<5; i++) {
+  // for (size_t i = 0; i<5; i++) {
   //   g(i) = x_interval.get(i);
   // }
   // TRDISP(g);

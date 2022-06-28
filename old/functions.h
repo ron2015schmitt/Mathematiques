@@ -332,7 +332,7 @@ namespace matricks {
     D operator|( const Vector<D>& a, const  Vector<D>& b ) {
 
     D result = D(0);
-    for (index_type i = a.deepsize(); i--;) {
+    for (size_t i = a.deepsize(); i--;) {
       result += a[i]*b[i];
     }
     return result;
@@ -390,7 +390,7 @@ namespace matricks {
     // (Vector|Vector)
     if ((a.ndims() == 1) && (b.ndims() == 1)) {
       D result = D(0);
-      for (index_type i = a.deepsize(); i--;) {
+      for (size_t i = a.deepsize(); i--;) {
 	result += a[i]*b[i];
       }
       return result;
@@ -1231,13 +1231,13 @@ namespace matricks {
     D sum( const MArrayExpR<D,A>& a ) {
     
  
-    const size_type N = a.deepsize();
+    const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
     D result = a[0];
 
-    for (index_type i = 1; i < N ; i++ )
+    for (size_t i = 1; i < N ; i++ )
       result += a[i];
     
     return result;
@@ -1252,13 +1252,13 @@ namespace matricks {
     D prod( const MArrayExpR<D,A>& a ) {
     
  
-    const size_type N = a.deepsize();
+    const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
     D result = a[0];
 
-    for (index_type i = 1; i < N ; i++ )
+    for (size_t i = 1; i < N ; i++ )
       result *= a[i];
     
     return result;
@@ -1274,13 +1274,13 @@ namespace matricks {
     D norm( const MArrayExpR<D,A>& a ) {
     
  
-    const size_type N = a.deepsize();
+    const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
     D result = a[0]*a[0];
 
-    for (index_type i = 1; i < N ; i++ )
+    for (size_t i = 1; i < N ; i++ )
       result += a[i]*a[i];
     
     return std::sqrt(result);
@@ -1295,13 +1295,13 @@ namespace matricks {
     D min( const MArrayExpR<D,A>& a ) {
     
  
-    const size_type N = a.deepsize();
+    const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
     D result = a[0];
 
-    for (index_type i = 1; i < N ; i++ )
+    for (size_t i = 1; i < N ; i++ )
       result = std::min(result,a[i]);
     
     return result;
@@ -1315,13 +1315,13 @@ namespace matricks {
   template <class D, class A> 
     D max( const MArrayExpR<D,A>& a ) {
     
-    const size_type N = a.deepsize();
+    const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
     D result = a[0];
 
-    for (index_type i = 1; i < N ; i++ )
+    for (size_t i = 1; i < N ; i++ )
       result = std::max(result,a[i]);
     
     return result;
@@ -1335,7 +1335,7 @@ namespace matricks {
 
   
   /****************************************************************************
-   * Unary Functions/Operators that bools or index_type MultiArrays
+   * Unary Functions/Operators that bools or size_t MultiArrays
    ****************************************************************************
    */
 
@@ -1348,7 +1348,7 @@ namespace matricks {
     bool result = true;
     
  
-    for (index_type i = 0; i< a.deepsize(); i++)
+    for (size_t i = 0; i< a.deepsize(); i++)
       result = result && a.dat(i);
     
     return result;
@@ -1362,7 +1362,7 @@ namespace matricks {
     bool result = false;
     
  
-    for (index_type i = 0; i< a.deepsize(); i++)
+    for (size_t i = 0; i< a.deepsize(); i++)
       result = result || a.dat(i);
     
     return result;
@@ -1372,12 +1372,12 @@ namespace matricks {
   // numtrue(a)
 
   template <class D, class A> 
-    inline size_type numtrue( const MArrayExpR<D,A>& a ) {
-    size_type result = 0;
+    inline size_t numtrue( const MArrayExpR<D,A>& a ) {
+    size_t result = 0;
     
  
-    for (index_type i = 0; i< a.deepsize(); i++)
-      result += static_cast<index_type>(a.dat(i));
+    for (size_t i = 0; i< a.deepsize(); i++)
+      result += static_cast<size_t>(a.dat(i));
     
     return result;
   }
@@ -1391,17 +1391,17 @@ namespace matricks {
   // NOTE: declaration in preface.h
   
   template <class A> 
-    inline Vector<index_type>& findtrue( const MArrayExpR<bool,A>& a ) {
+    inline Vector<size_t>& findtrue( const MArrayExpR<bool,A>& a ) {
     int N = 0;
     TLDISP(a);
 
-    for (index_type i = 0; i< a.size(); i++)
+    for (size_t i = 0; i< a.size(); i++)
       N += int(a[i]);
  
-    Vector<index_type> *y = new Vector<index_type>(N);
+    Vector<size_t> *y = new Vector<size_t>(N);
 
-    index_type j =0;
-    for (index_type i = 0; i< a.size(); i++)
+    size_t j =0;
+    for (size_t i = 0; i< a.size(); i++)
       if (a[i])
 	(*y)[j++] = i;
     
@@ -1564,7 +1564,7 @@ namespace matricks {
   // rep(v,m)
 
   template <class D, class A> 
-    inline auto rep(const MArrayExpR<D,A>& a, const size_type m) {
+    inline auto rep(const MArrayExpR<D,A>& a, const size_t m) {
     return VER_Rep<D,MArrayExpR<D,A> >(a,m);
   }
 
@@ -1584,9 +1584,9 @@ namespace matricks {
 
   template <class D2, class D1, class A> 
     inline D2* toCarray(const MArrayExpR<D1,A>& v) {
-    const size_type N = v.size();
+    const size_t N = v.size();
     D2* dptr = new D2[N];
-    for(index_type i = 0; i<N; i++) 
+    for(size_t i = 0; i<N; i++) 
       dptr[i] = static_cast<D2>(v[i]);
     return  dptr;
   }
@@ -1598,9 +1598,9 @@ namespace matricks {
   template <class D2, class D1, class A> 
     inline std::vector<D2>
     tostdvector(const MArrayExpR<D1,A>& v) {
-    const size_type N = v.size();
+    const size_t N = v.size();
     std::vector<D2> y(N);
-    for(index_type i = 0; i<N; i++) 
+    for(size_t i = 0; i<N; i++) 
       y[i] = static_cast<D2>(v[i]);
     return y;
   }
@@ -1612,9 +1612,9 @@ namespace matricks {
   template <class D2, class D1, class A> 
     inline std::valarray<D2>
     tovalarray(const MArrayExpR<D1,A>& v) {
-    const size_type N = v.size();
+    const size_t N = v.size();
     std::valarray<D2> y(N);
-    for(index_type i = 0; i<N; i++) 
+    for(size_t i = 0; i<N; i++) 
       y[i] = static_cast<D2>(v[i]);
     return y;
   }

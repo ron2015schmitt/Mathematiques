@@ -20,7 +20,7 @@ Implement code necessary so that mathematical operations work for recursive tens
        1. have alternate version of binary operators `addr` that uses recursion. This is faster in certain cases.
        1. convert all functors in `functors.h` to the new methodlogy of `New_Fun_Add` and delete old versions
        1. add test cases for math of recursive Vectors and scalars
-       1. add access operator `(size_type...)` etc to expressions. This will allow e.g. Matrix expresssion to be used in dot products
+       1. add access operator `(size_t...)` etc to expressions. This will allow e.g. Matrix expresssion to be used in dot products
        1. Use type traits to determine ideal qualifier types for paramters and return values? not needed when using visitor pattern
        1. asVector, asMatrix wrapper function expressions
        1. Benchmark a large vector of 3D vectors (of both types): see recursiveadd branch

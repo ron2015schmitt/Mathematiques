@@ -7,12 +7,12 @@
 
 namespace mathq {
 
-  slc::slc(const index_type start, const index_type end, const index_type step)
+  slc::slc(const size_t start, const size_t end, const size_t step)
     : start_(start), end_(end), step_(step) {
     //PRINTF3("slc::slc(start=%d, end=%d, step=%d)\n",start, end, step);
   }
 
-  slc::slc(const index_type start, const index_type end)
+  slc::slc(const size_t start, const size_t end)
     : start_(start), end_(end), step_(1) {
     //PRINTF3("slc::slc(start=%d, end=%d)\n",start, end);
   }
@@ -20,34 +20,34 @@ namespace mathq {
 
 
 
-  index_type slc::start(void) const {
+  size_t slc::start(void) const {
     return start_;
   }
-  index_type slc::end(void) const {
+  size_t slc::end(void) const {
     return end_;
   }
-  index_type slc::step(void) const {
+  size_t slc::step(void) const {
     return step_;
   }
 
-  Vector<index_type>& slc::toIndexVector(const size_type N) const {
+  Vector<size_t>& slc::toIndexVector(const size_t N) const {
     //    PRINTF3("slc::toIndexVector(N=%lu)\n",N);
-    index_type mystart = start_;
+    size_t mystart = start_;
     if (mystart < 0) {
       mystart += N;
     }
-    index_type myend = end_;
+    size_t myend = end_;
     if (myend < 0) {
       myend += N;
     }
 
-    index_type mystep = step_;
+    size_t mystep = step_;
 
-    std::queue<index_type> indices;
+    std::queue<size_t> indices;
 
     if (myend-mystart >= 0) {
       if (mystep > 0) {
-        for (index_type k = mystart; k <= myend; k += mystep) {
+        for (size_t k = mystart; k <= myend; k += mystep) {
           if (k < 0) continue;
           if (k >= N) break;
           indices.push(k);
@@ -56,7 +56,7 @@ namespace mathq {
     }
     else {
       if (mystep < 0) {
-        for (index_type k = mystart; k >= myend; k += mystep) {
+        for (size_t k = mystart; k >= myend; k += mystep) {
           if (k >= N) continue;
           if (k < 0)  break;
           indices.push(k);
@@ -64,9 +64,9 @@ namespace mathq {
       }
     }
 
-    const size_type Nnew = indices.size();
-    Vector<index_type>& indexvec = *(new Vector<index_type>(Nnew));
-    for (index_type i = 0; i < Nnew; i++) {
+    const size_t Nnew = indices.size();
+    Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
+    for (size_t i = 0; i < Nnew; i++) {
       indexvec[i] = indices.front();
       indices.pop();
     }

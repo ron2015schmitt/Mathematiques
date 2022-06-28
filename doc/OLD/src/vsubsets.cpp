@@ -42,9 +42,9 @@ int main()
     EXAMPLE(Nex++,"Access via a Vector of indices");
     GMD_CODE_START("C++");
     ECHO_CODE( Vector<double> v( linspace<double>(0,1,11) ) );
-    ECHO_CODE( Vector<index_type> veven( range<index_type>(0,10,2) ) );
-    ECHO_CODE( Vector<index_type> vodd( range<index_type>(1,10,2) ) );
-    ECHO_CODE( Vector<index_type> vconst(15,1 ) );
+    ECHO_CODE( Vector<size_t> veven( range<size_t>(0,10,2) ) );
+    ECHO_CODE( Vector<size_t> vodd( range<size_t>(1,10,2) ) );
+    ECHO_CODE( Vector<size_t> vconst(15,1 ) );
     GMD_CODE_END();
     CR();
     resultstart();

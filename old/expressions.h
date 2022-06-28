@@ -36,11 +36,11 @@ namespace matricks {
       delete vptrs;
     }
 
-  const D dat(const index_type i) const {
+  const D dat(const size_t i) const {
     return FUNC::apply(a_.dat(i));
   }
   
-  const E operator[](const index_type i) const {
+  const E operator[](const size_t i) const {
     return FUNC::apply(a_[i]);
   }
 
@@ -48,10 +48,10 @@ namespace matricks {
   VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-  size_type size(void) const {
+  size_t size(void) const {
       return a_.size();
     }
-  size_type ndims(void) const {
+  size_t ndims(void) const {
       return a_.ndims();
     }
   Dimensions dims(void) const {
@@ -63,24 +63,24 @@ namespace matricks {
   bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-  size_type deepsize(void) const {
+  size_t deepsize(void) const {
     if constexpr(M<2) {
       return this->size();
     } else {
@@ -140,7 +140,7 @@ namespace matricks {
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    const NumTypeOut dat(const index_type i) const {
+    const NumTypeOut dat(const size_t i) const {
       if constexpr((M1==0)&&(M2==0)) {
 	return OP::apply(a_, b_);
       } else if constexpr((M1==0)&&(M2>0)) {
@@ -151,10 +151,10 @@ namespace matricks {
 	if constexpr(M1==M2) {
 	  return OP::apply(a_.dat(i), b_.dat(i));
 	} else if constexpr(M1==M2+1) {
-	  index_type j = i % b_.deepsize();
+	  size_t j = i % b_.deepsize();
 	  return OP::apply(a_.dat(i), b_.dat(j));
 	} else if constexpr(M2==M1+1) {
-	  index_type j = i % a_.deepsize();
+	  size_t j = i % a_.deepsize();
 	  return OP::apply(a_.dat(j), b_.dat(i));
 	}
       }
@@ -163,7 +163,7 @@ namespace matricks {
     //**********************************************************************
     //************* Array-style Element Access: x[n] ***********************
     //**********************************************************************
-    const NumTypeOut operator[](const index_type i) const {
+    const NumTypeOut operator[](const size_t i) const {
       if constexpr((M1==0)&&(M2==0)) {
 	return OP::apply(a_, b_);
       } else if constexpr((M1==0)&&(M2==1)) {
@@ -184,14 +184,14 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       if constexpr(M1>=M2) {
         return a_.size();
       } else {
         return b_.size();
       }
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return dims().size();
     }
     Dimensions dims(void) const {
@@ -204,28 +204,28 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-    size_type depth(void) const {
+    size_t depth(void) const {
       if constexpr(M1>=M2) {
         return M1;
       } else {
         return M2;
       }
     }
-    size_type elsize(void) const {
+    size_t elsize(void) const {
       if constexpr(M1>=M2) {
         return a_.elsize();
       } else {
         return b_.elsize();
       }
     }
-    size_type eldeepsize(void) const {
+    size_t eldeepsize(void) const {
       if constexpr(M1>=M2) {
         return a_.eldeepsize();
       } else {
         return b_.eldeepsize();
       }
     }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M1>=M2) {
         return a_.deepsize();
       } else {
@@ -299,7 +299,7 @@ namespace matricks {
 
     // TODO: below assumes c_ is a scalar. add other cases as needed
     
-    const NumTypeOut dat(const index_type i) const {
+    const NumTypeOut dat(const size_t i) const {
       if constexpr((M1==0)&&(M2==0)) {
 	  return OP::apply(a_, b_, c_);
       } else if constexpr((M1==0)&&(M2>0)) {
@@ -310,10 +310,10 @@ namespace matricks {
 	if constexpr(M1==M2) {
 	    return OP::apply(a_.dat(i), b_.dat(i), c_);
 	} else if constexpr(M1==M2+1) {
-	  index_type j = i % b_.deepsize();
+	  size_t j = i % b_.deepsize();
 	  return OP::apply(a_.dat(i), b_.dat(j), c_);
 	} else if constexpr(M2==M1+1) {
-	  index_type j = i % a_.deepsize();
+	  size_t j = i % a_.deepsize();
 	  return OP::apply(a_.dat(j), b_.dat(i), c_);
 	}
       }
@@ -324,7 +324,7 @@ namespace matricks {
     //**********************************************************************
     // TODO: below assumes c_ is a scalar. add other cases as needed
 
-    const NumTypeOut operator[](const index_type i) const {
+    const NumTypeOut operator[](const size_t i) const {
       if constexpr((M1==0)&&(M2==0)) {
 	  return OP::apply(a_, b_, c_);
       } else if constexpr((M1==0)&&(M2==1)) {
@@ -346,14 +346,14 @@ namespace matricks {
 
     // TODO: below assumes c_ is a scalar. add other cases as needed
 
-    size_type size(void) const {
+    size_t size(void) const {
       if constexpr(M1>=M2) {
         return a_.size();
       } else {
         return b_.size();
       }
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       if constexpr(M1>=M2) {
         return a_.ndims();
       } else {
@@ -370,28 +370,28 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-    size_type depth(void) const {
+    size_t depth(void) const {
       if constexpr(M1>=M2) {
         return M1;
       } else {
         return M2;
       }
     }
-    size_type elsize(void) const {
+    size_t elsize(void) const {
       if constexpr(M1>=M2) {
         return a_.elsize();
       } else {
         return b_.elsize();
       }
     }
-    size_type eldeepsize(void) const {
+    size_t eldeepsize(void) const {
       if constexpr(M1>=M2) {
         return a_.eldeepsize();
       } else {
         return b_.eldeepsize();
       }
     }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M1>=M2) {
         return a_.deepsize();
       } else {
@@ -435,20 +435,20 @@ namespace matricks {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<D>& a_;
-    const Vector<index_type>& ii_;
+    const Vector<size_t>& ii_;
     const bool delete_ii_;
     VectorofPtrs *vptrs;
   public:
     typedef typename NumberTrait<D>::Type MyNumberType;
 
-  TERW_Subset(Vector<D>& a, const Vector<index_type>& ii)
+  TERW_Subset(Vector<D>& a, const Vector<size_t>& ii)
     : a_(a), ii_(ii), delete_ii_(false) {
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
       vptrs->add(&ii_);
   }
-  TERW_Subset(Vector<D>& a, const std::initializer_list<index_type>& list)
-    : a_(a), ii_(*(new Vector<index_type>(list))), delete_ii_(true) {
+  TERW_Subset(Vector<D>& a, const std::initializer_list<size_t>& list)
+    : a_(a), ii_(*(new Vector<size_t>(list))), delete_ii_(true) {
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
       vptrs->add(&ii_);
@@ -460,30 +460,30 @@ namespace matricks {
     }
 
 
-    const MyNumberType dat(const index_type i) const {
-      index_type ind = ii_[i];
+    const MyNumberType dat(const size_t i) const {
+      size_t ind = ii_[i];
       if (ind < 0) {
 	ind = a_.deepsize() + ind;
       }
       return a_.dat(ind);
     }
-    MyNumberType& dat(const index_type i)  {
-      index_type ind = ii_[i];
+    MyNumberType& dat(const size_t i)  {
+      size_t ind = ii_[i];
       if (ind < 0) {
 	ind = a_.deepsize() + ind;
       }
       return a_.dat(ind);
     }
   
-    const D operator[](const index_type i) const {
-      index_type ind = ii_[i];
+    const D operator[](const size_t i) const {
+      size_t ind = ii_[i];
       if (ind < 0) {
 	ind = a_.size() + ind;
       }
       return a_[ind];
     }
-    D& operator[](const index_type i)  {
-      index_type ind = ii_[i];
+    D& operator[](const size_t i)  {
+      size_t ind = ii_[i];
       if (ind < 0) {
 	ind = a_.size() + ind;
       }
@@ -494,10 +494,10 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return ii_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return a_.ndims();
     }
     Dimensions dims(void) const {
@@ -506,24 +506,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {
@@ -574,7 +574,7 @@ namespace matricks {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<D>& a_;
-    const Vector<index_type>* ii_;
+    const Vector<size_t>* ii_;
     VectorofPtrs *vptrs;
 
   public:
@@ -582,7 +582,7 @@ namespace matricks {
 
 
   TERW_Submask(Vector<D>& a, const Vector<bool>& mask)
-    : a_(a), ii_(new Vector<index_type>(findtrue(mask))) { 
+    : a_(a), ii_(new Vector<size_t>(findtrue(mask))) { 
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
       vptrs->add(&ii_);
@@ -594,20 +594,20 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const index_type i) const{
-      index_type ind = (*ii_)[i];
+    const D operator[](const size_t i) const{
+      size_t ind = (*ii_)[i];
       return a_[ind];
     }
-     D& operator[](const index_type i) {
-      index_type ind = (*ii_)[i];
+     D& operator[](const size_t i) {
+      size_t ind = (*ii_)[i];
       return a_[ind];
     }
-     const MyNumberType dat(const index_type i) const {
-       index_type ind = (*ii_)[i];
+     const MyNumberType dat(const size_t i) const {
+       size_t ind = (*ii_)[i];
        return a_.dat(ind);
      }
-     MyNumberType& dat(const index_type i)  {
-       index_type ind = (*ii_)[i];
+     MyNumberType& dat(const size_t i)  {
+       size_t ind = (*ii_)[i];
        return a_.dat(ind);
      }
   
@@ -615,10 +615,10 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return ii_->size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return a_.ndims();
     }
     Dimensions dims(void) const {
@@ -627,24 +627,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {
@@ -709,16 +709,16 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](index_type i) const{
+    const D operator[](size_t i) const{
       return OP::give(a_[i]);
     }
-    D& operator[](index_type i) {
+    D& operator[](size_t i) {
       return OP::give(a_[i]);
     }
-    const MyNumberType dat(const index_type i) const {
+    const MyNumberType dat(const size_t i) const {
       return OP::give(a_.dat(i));
     }
-    MyNumberType& dat(const index_type i)  {
+    MyNumberType& dat(const size_t i)  {
       return OP::give(a_.dat(i));
     }
 
@@ -727,10 +727,10 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return a_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return a_.ndims();
     }
     Dimensions dims(void) const {
@@ -739,24 +739,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {
@@ -825,7 +825,7 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const index_type i) const {
+    const D operator[](const size_t i) const {
       const D x = x_[i] - x0_;
       D sum = 0;
       // TODO: check a_.size >= N
@@ -846,12 +846,12 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return x_.size();
       // TODO: check a_.size >= N
     }
 
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return a_.ndims();
     }
     Dimensions dims(void) const {
@@ -860,24 +860,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {
@@ -948,7 +948,7 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const index_type i) const {
+    const D operator[](const size_t i) const {
       D sum = 0;
       // TODO: check a_.size >= N
       for (int n = 0; n < N_ ; n++) {
@@ -969,10 +969,10 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return x_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return x_.ndims();
     }
     Dimensions dims(void) const {
@@ -981,24 +981,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {
@@ -1070,16 +1070,16 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const index_type index1) const {
+    const D operator[](const size_t index1) const {
       const Indices inds1 = rdims->indices(index1);
       const Indices inds2 = inds1.getReverse();
-      const index_type index2 = a_.dims().index(inds2);
+      const size_t index2 = a_.dims().index(inds2);
       return FUNC::apply(a_[index2]);
     }
-    D& operator[](const index_type index1) {
+    D& operator[](const size_t index1) {
       const Indices inds1 = rdims->indices(index1);
       const Indices inds2 = inds1.getReverse();
-      const index_type index2 = a_.dims().index(inds2);
+      const size_t index2 = a_.dims().index(inds2);
       return FUNC::apply(a_[index2]);
     }
 
@@ -1088,10 +1088,10 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return rdims->datasize();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return rdims->ndims();
     }
     Dimensions dims(void) const {
@@ -1100,24 +1100,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {
@@ -1181,20 +1181,20 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const index_type index1) const {
+    const D operator[](const size_t index1) const {
       const Indices inds1 = rdims->indices(index1);
       const Indices inds2 = inds1.getReverse();
-      const index_type index2 = a_.dims().index(inds2);
+      const size_t index2 = a_.dims().index(inds2);
       return FUNC::apply(a_[index2]);
     }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return rdims->datasize();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return rdims->ndims();
     }
     Dimensions dims(void) const {
@@ -1203,24 +1203,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {
@@ -1273,7 +1273,7 @@ namespace matricks {
       delete vptrs;
     }
     
-    const D operator[](const index_type i) const{
+    const D operator[](const size_t i) const{
       if ( i < a_.size() ) {
 	return a_[i];
       } else {
@@ -1284,10 +1284,10 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return a_.size() +b_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return a_.ndims();
     }
     Dimensions dims(void) const {
@@ -1296,24 +1296,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {
@@ -1364,14 +1364,14 @@ namespace matricks {
     }
 
 
-    const D operator[](const index_type i) const{
+    const D operator[](const size_t i) const{
       if ( i < a_.size() ) {
 	return a_[i];
       } else {
 	return b_[i-a_.size()];
       }
     }
-     D& operator[](const index_type i) {
+     D& operator[](const size_t i) {
       if ( i < a_.size() ) {
 	return a_[i];
       } else {
@@ -1382,10 +1382,10 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return a_.size() +b_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return a_.ndims();
     }
     Dimensions dims(void) const {
@@ -1394,24 +1394,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {
@@ -1467,15 +1467,15 @@ namespace matricks {
 
   private:
     const A& a_;
-    const size_type m_;
-    const size_type N_;
+    const size_t m_;
+    const size_t N_;
     VectorofPtrs *vptrs;
 
   public:
     typedef typename NumberTrait<D>::Type MyNumberType;
 
 
-  VER_Rep(const A& a, const size_type m)
+  VER_Rep(const A& a, const size_t m)
     : a_(a), m_(m), N_(a_.size()) { 
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
@@ -1487,8 +1487,8 @@ namespace matricks {
     }
 
 
-    const D operator[](const index_type i) const{
-      index_type index = index_type(i % N_);
+    const D operator[](const size_t i) const{
+      size_t index = size_t(i % N_);
       //      PRINTF3("  i=%d, m_=%lu, i%%N_=%d\n",i,m_,index);
       return a_[index];
     }
@@ -1497,10 +1497,10 @@ namespace matricks {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_type size(void) const {
+    size_t size(void) const {
       return m_*a_.size();
     }
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return a_.ndims();
     }
     Dimensions dims(void) const {
@@ -1509,24 +1509,24 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_type depth(void) const {
+  size_t depth(void) const {
       return M;
     }
-  size_type elsize(void) const {
+  size_t elsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.elsize();
     }
   }
-  size_type eldeepsize(void) const {
+  size_t eldeepsize(void) const {
     if constexpr(M<2) {
       return 1;
     } else {
       return a_.eldeepsize();
     }
   }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr(M<2) {
 	  return this->size();
 	} else {

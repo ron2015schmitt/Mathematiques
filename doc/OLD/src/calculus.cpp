@@ -39,7 +39,7 @@ int main()
     CR();
     EXAMPLE(Nex++,"Definite integrals");
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_type N = 100000 );
+    ECHO_CODE( const size_t N = 100000 );
     ECHO_CODE( const double a = 0 );
     ECHO_CODE( const double b = 1 );
     ECHO_CODE( Vector<double> x(linspace_ab<double>(a,b,N)) );
@@ -98,7 +98,7 @@ int main()
     CR();
     OUTPUT("![ErrorFunction](ErrorFunction.png)");
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_type N = 101 );
+    ECHO_CODE( const size_t N = 101 );
     ECHO_CODE( const double a = 0 );
     ECHO_CODE( const double b = 4 );
     ECHO_CODE( const double pi = M_PI );
@@ -161,7 +161,7 @@ int main()
     GMD_CODE_START("C++");
     ECHO_CODE( set_default_format() );
     ECHO_CODE( const double pi = M_PI );
-    ECHO_CODE( const size_type N = 11 );
+    ECHO_CODE( const size_t N = 11 );
     ECHO_CODE( const double a = 0 );
     ECHO_CODE( const double b = 1 );
     ECHO_CODE( Vector<double> x( linspace<double>(a,b,N) ) );
@@ -212,7 +212,7 @@ int main()
     GMD_CODE_START("C++");
     ECHO_CODE( set_mathematica_var_format() );
     ECHO_CODE( const double pi = M_PI );
-    ECHO_CODE( const size_type N = 25 );
+    ECHO_CODE( const size_t N = 25 );
     ECHO_CODE( Vector<double> x( linspace_b<double>(0,2*pi,N) ) );
     ECHO_CODE( const double a = min(x) );
     ECHO_CODE( const double b = max(x) );

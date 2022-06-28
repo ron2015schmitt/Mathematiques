@@ -151,9 +151,9 @@ int main()
     CR();
     OUTPUT("* The function `anytrue(v)` returns a `bool`: true if any element of `v` is true, otherwise it returns false");
     CR();
-    OUTPUT("* The function `numtrue(v)` returns a `size_type` equal to the number of elements of `v` that are true. ");
+    OUTPUT("* The function `numtrue(v)` returns a `size_t` equal to the number of elements of `v` that are true. ");
     CR();
-    OUTPUT("* The function `findtrue(v)` returns a `Vector<index_type>` which contains the indices of the true elements of `v`. ");
+    OUTPUT("* The function `findtrue(v)` returns a `Vector<size_t>` which contains the indices of the true elements of `v`. ");
     CR();
     CR();
     EXAMPLE(Nex++,"The functions `alltrue`, `anytrue`, `numtrue`, and `findtrue`");

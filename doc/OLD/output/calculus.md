@@ -14,7 +14,7 @@ Integrating over an interval (a,b) yields a single number--the area under the cu
 
 **EXAMPLE 1**: Definite integrals
 ```C++
-const size_type N = 100000;
+const size_t N = 100000;
 const double a = 0;
 const double b = 1;
 Vector<double> x(linspace_ab<double>(a,b,N));
@@ -70,7 +70,7 @@ The [error function](http://mathworld.wolfram.com/Erf.html) is the following sem
 
 ![ErrorFunction](ErrorFunction.png)
 ```C++
-const size_type N = 101;
+const size_t N = 101;
 const double a = 0;
 const double b = 4;
 const double pi = 3.14159265358979323846;
@@ -165,7 +165,7 @@ The derivative of the function _f_(_x_) = is the constant 5
 ```C++
 set_default_format();
 const double pi = 3.14159265358979323846;
-const size_type N = 11;
+const size_t N = 11;
 const double a = 0;
 const double b = 1;
 Vector<double> x( linspace<double>(a,b,N) );
@@ -200,7 +200,7 @@ We also set `periodic=true` since sin _x_ is periodic over [0,2pi)
 ```C++
 set_mathematica_var_format();
 const double pi = 3.14159265358979323846;
-const size_type N = 25;
+const size_t N = 25;
 Vector<double> x( linspace_b<double>(0,2*pi,N) );
 const double a = min(x);
 const double b = max(x);

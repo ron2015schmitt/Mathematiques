@@ -817,7 +817,7 @@ int main(int argc, char* argv[]) {
   }
 
 
-
+  
 
   // ************************************************************************
   // *              Relational ops (return a bool from two Ds)
@@ -1226,7 +1226,7 @@ int main(int argc, char* argv[]) {
   }
 
   /****************************************************************************
-   * Unary Functions/Operators that bools or index_type MultiArrays
+   * Unary Functions/Operators that bools or size_t MultiArrays
    ****************************************************************************
    */
 
@@ -1313,28 +1313,21 @@ int main(int argc, char* argv[]) {
     printStart(++testnum);
     Scalar<int> s1 = 42;
     Scalar<int> s2 = 42;
-    Vector<index_type> expected(1, 0);
-    TLDISP(expected);
-    Vector<index_type> result;
+    Vector<size_t> expected{0};  // index = 0
+    Vector<size_t> result(1);
     testcode(result = findtrue(s1 >= s2));
     bool pass = equal(result, expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
     failnum += (!pass);
   }
-
-  {
-    Scalar<bool> s2 = true;
-    Vector<index_type> result;
-    result = findtrue(s2);
-  }
   {
     // findtrue(s)
     printStart(++testnum);
     Scalar<int> s1 = 42;
     Scalar<int> s2 = 42;
-    Vector<index_type> expected(0);
-    Vector<index_type> result;
+    Vector<size_t> expected(0);
+    Vector<size_t> result(0);
     testcode(result = findtrue(s1 > s2));
     bool pass = equal(result, expected);
     printEnd(pass, result, expected);

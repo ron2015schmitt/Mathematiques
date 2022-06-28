@@ -81,7 +81,7 @@ namespace mathq
 
    //   E3 *result = new E3;
    //   *result = 0;
-   //   for (index_type i = 0; i < a.deepsize(); i++)
+   //   for (size_t i = 0; i < a.deepsize(); i++)
    //   {
    //     *result += a[i] * b[i];
    //   }
@@ -120,7 +120,7 @@ namespace mathq
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
     E3* result = new E3;
     *result = 0;
-    for (index_type i = 0; i < v1.deepsize(); i++) {
+    for (size_t i = 0; i < v1.deepsize(); i++) {
       *result += v1[i] * v2[i];
     }
     return *result;
@@ -135,15 +135,15 @@ namespace mathq
     typedef typename AddType<D1, D2>::Type D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
 
-    index_type Nrows = m1.dims()[0];
-    index_type Ncols = m1.dims()[1];
-    index_type i = 0;
+    size_t Nrows = m1.dims()[0];
+    size_t Ncols = m1.dims()[1];
+    size_t i = 0;
     Vector<E3> vout(Nrows);
     E3* temp = new E3;
     // row major
-    for (index_type r = 0; r < Nrows; r++) {
+    for (size_t r = 0; r < Nrows; r++) {
       *temp = 0;
-      for (index_type c = 0; c < Ncols; c++) {
+      for (size_t c = 0; c < Ncols; c++) {
         *temp += m1[i++] * v2[c];
       }
       vout[r] = *temp;
@@ -160,16 +160,16 @@ namespace mathq
     typedef typename AddType<D1, D2>::Type D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
 
-    index_type Nrows = m2.dims()[0];
-    index_type Ncols = m2.dims()[1];
-    index_type i = 0;
+    size_t Nrows = m2.dims()[0];
+    size_t Ncols = m2.dims()[1];
+    size_t i = 0;
     Vector<E3> vout(Ncols);
     E3* temp = new E3;
     // row major
-    for (index_type c = 0; c < Ncols; c++) {
+    for (size_t c = 0; c < Ncols; c++) {
       *temp = 0;
       i = c;
-      for (index_type r = 0; r < Nrows; r++) {
+      for (size_t r = 0; r < Nrows; r++) {
         *temp += v1[r] * m2[i];
         i += Ncols;
       }
@@ -186,21 +186,21 @@ namespace mathq
     typedef typename AddType<D1, D2>::Type D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
 
-    index_type Nrows = m1.dims()[0];
-    index_type Nsum = m1.dims()[1];
-    index_type Ncols = m2.dims()[1];
-    index_type i = 0;
-    index_type j = 0;
-    index_type k = 0;
+    size_t Nrows = m1.dims()[0];
+    size_t Nsum = m1.dims()[1];
+    size_t Ncols = m2.dims()[1];
+    size_t i = 0;
+    size_t j = 0;
+    size_t k = 0;
     Matrix<E3> m3(Nrows, Ncols);
     E3* temp = new E3;
     // row major
-    for (index_type r = 0; r < Nrows; r++) {
-      for (index_type c = 0; c < Ncols; c++) {
+    for (size_t r = 0; r < Nrows; r++) {
+      for (size_t c = 0; c < Ncols; c++) {
         *temp = 0;
         i = Nsum * r;
         j = c;
-        for (index_type n = 0; n < Nsum; n++) {
+        for (size_t n = 0; n < Nsum; n++) {
           *temp += m1[i++] * m2[j];
           j += Ncols;
         }
@@ -313,7 +313,7 @@ namespace mathq
      //     // (Vector|Vector)
      //     if ((a.ndims() == 1) && (b.ndims() == 1)) {
      //       D result = D(0);
-     //       for (index_type i = a.deepsize(); i--;) {
+     //       for (size_t i = a.deepsize(); i--;) {
      // 	result += a[i]*b[i];
      //       }
      //       return result;

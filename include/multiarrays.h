@@ -86,7 +86,7 @@ namespace mathq {
     // true if this vector and another share an element in common (ie same value)
 
     inline bool common(const VectorofPtrs& addrs) const {
-      for (size_type i = 0; i < addrs.size(); i++) {
+      for (size_t i = 0; i < addrs.size(); i++) {
         const void* addr = addrs[i];
         if (std::find(this->begin(), this->end(), addr) != this->end()) {
           return true;
@@ -103,7 +103,7 @@ namespace mathq {
       using namespace display;
 
       stream << "{";
-      for (size_type ii = 0; ii < vptrs.size(); ii++) {
+      for (size_t ii = 0; ii < vptrs.size(); ii++) {
         if (ii>0)  stream << ", ";
         dispval_strm(stream, vptrs[ii]);
       }
@@ -131,9 +131,9 @@ namespace mathq {
 
   template <class DAT> class Pair {
   public:
-    index_type index;
+    size_t index;
     DAT data;
-    Pair(index_type index_, DAT data_) : index(index_), data(data_) {}
+    Pair(size_t index_, DAT data_) : index(index_), data(data_) {}
     Pair() : index(0), data(DAT(0)) {}
     bool operator<(const Pair<DAT>& pair2) const {
       return ((*this).data < pair2.data);
@@ -161,10 +161,10 @@ namespace mathq {
 
 
 
-  class Indices : public std::vector<index_type> {
+  class Indices : public std::vector<size_t> {
   private:
   public:
-    typedef typename std::vector<index_type> Parent;
+    typedef typename std::vector<size_t> Parent;
     typedef typename Parent::iterator Iterator;
     Indices(const Indices& inds) {
       resize(inds.size(), 0);
@@ -175,7 +175,7 @@ namespace mathq {
     Indices() {
       resize(0, 0);
     }
-    Indices(const index_type n) {
+    Indices(const size_t n) {
       resize(n, 0);
     }
     // arbitrary size. can alos use "push_back"
@@ -187,21 +187,21 @@ namespace mathq {
     }
 
     // use C++11 init list for arbitrary rank
-    Indices(const std::initializer_list<index_type> list) {
-      const index_type N = list.size();
+    Indices(const std::initializer_list<size_t> list) {
+      const size_t N = list.size();
       resize(N, 0);
-      index_type i = 0;
-      typename std::initializer_list<index_type>::iterator it;
+      size_t i = 0;
+      typename std::initializer_list<size_t>::iterator it;
       for (it = list.begin(); it != list.end(); ++it) {
         (*this)[i++] = *it;
       }
     }
 
-    Indices(const std::list<index_type>& mylist) {
-      const index_type N = mylist.size();
+    Indices(const std::list<size_t>& mylist) {
+      const size_t N = mylist.size();
       resize(N, 0);
-      index_type i = 0;
-      std::list<int>::const_iterator it;
+      size_t i = 0;
+      std::list<size_t>::const_iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it) {
         (*this)[i++] = *it;
       }
@@ -230,7 +230,7 @@ namespace mathq {
       using namespace display;
 
       stream << "{";
-      for (index_type ii = 0; ii < inds.size(); ii++) {
+      for (size_t ii = 0; ii < inds.size(); ii++) {
         if (ii>0)  stream << ", ";
         dispval_strm(stream, inds[ii]);
       }
@@ -253,14 +253,14 @@ namespace mathq {
   // Dimensions - class to hold (top-level, M=1) dimensions of a MultiArray
   // -------------------------------------------------------------------
 
-  class Dimensions : public std::vector<size_type> {
+  class Dimensions : public std::vector<size_t> {
   private:
-    size_type datasize_;
+    size_t datasize_;
 
   public:
-    typedef typename std::vector<size_type> Parent;
+    typedef typename std::vector<size_t> Parent;
     typedef typename Parent::iterator Iterator;
-    typedef size_type ElementType;
+    typedef size_t ElementType;
     Dimensions(const Dimensions& dims) {
       resize(dims.rank(), 0);
       for (int k = 0; k < dims.rank(); k++) {
@@ -274,18 +274,18 @@ namespace mathq {
       resize(0, 0);
       calcSize();
     }
-    Dimensions(const size_type dim1) {
+    Dimensions(const size_t dim1) {
       resize(1, 0);
       (*this)[0] = dim1;
       calcSize();
     }
-    Dimensions(const size_type dim1, const size_type dim2) {
+    Dimensions(const size_t dim1, const size_t dim2) {
       resize(2, 0);
       (*this)[0] = dim1;
       (*this)[1] = dim2;
       calcSize();
     }
-    Dimensions(const size_type dim1, const size_type dim2, const size_type dim3) {
+    Dimensions(const size_t dim1, const size_t dim2, const size_t dim3) {
       //      MDISP3(dim1,dim2,dim3);
       resize(3, 0);
       //      DISP3(size());
@@ -294,7 +294,7 @@ namespace mathq {
       (*this)[2] = dim3;
       calcSize();
     }
-    Dimensions(const size_type dim1, const size_type dim2, const size_type dim3, const size_type dim4) {
+    Dimensions(const size_t dim1, const size_t dim2, const size_t dim3, const size_t dim4) {
       //      MDISP3(dim1,dim2,dim3);
       resize(4, 0);
       //      DISP3(size());
@@ -306,11 +306,11 @@ namespace mathq {
     }
 
     // C++11 init list 
-    Dimensions(const std::initializer_list<size_type>& list) {
-      const size_type N = list.size();
+    Dimensions(const std::initializer_list<size_t>& list) {
+      const size_t N = list.size();
       resize(N, 0);
-      index_type i = 0;
-      typename std::initializer_list<size_type>::iterator it;
+      size_t i = 0;
+      typename std::initializer_list<size_t>::iterator it;
       for (it = list.begin(); it != list.end(); ++it) {
         (*this)[i++] = *it;
       }
@@ -318,10 +318,10 @@ namespace mathq {
     }
 
 
-    Dimensions(const std::list<size_type>& mylist) {
-      const size_type N = mylist.size();
+    Dimensions(const std::list<size_t>& mylist) {
+      const size_t N = mylist.size();
       resize(N, 0);
-      index_type i = 0;
+      size_t i = 0;
       for (auto it = mylist.begin(); it != mylist.end(); ++it) {
         (*this)[i++] = *it;
       }
@@ -341,7 +341,7 @@ namespace mathq {
 
     Dimensions& reduce() const {
       Dimensions* v = new Dimensions();
-      for (size_type i = 0; i < this->rank(); i++) {
+      for (size_t i = 0; i < this->rank(); i++) {
         if ((*this)[i] != 1) {
           v->push_back((*this)[i]);
         }
@@ -353,36 +353,37 @@ namespace mathq {
       return (this->reduce() == dims.reduce());
     }
 
-    size_type rank() const {
+    size_t rank() const {
       return Parent::size();
     }
-    size_type ndims() const {
+    size_t ndims() const {
       return Parent::size();
     }
-    size_type datasize() const {
+    size_t datasize() const {
       return datasize_;
     }
 
 
-    index_type index(const Indices& inds) const {
-      const index_type M = this->ndims();
-      index_type k = 0;
-      for (index_type n = 0; n < M; n++) {
-        size_type N = (*this)[n];
-        index_type j = inds[n];
+    size_t index(const Indices& inds) const {
+      const size_t M = this->ndims();
+      size_t k = 0;
+      for (size_t n = 0; n < M; n++) {
+        size_t N = (*this)[n];
+        size_t j = inds[n];
         k = N*k + j;
       }
       return k;
     }
 
 
-    inline Indices& indices(const index_type k) const {
+    inline Indices& indices(const size_t k) const {
       Indices& myinds = *(new Indices(ndims()));
-      index_type prev = k;
+      if (ndims() == 0) return myinds;
+      size_t prev = k;
       // This loop must go in reverse order.  Do NOT change.
-      for (index_type n = ndims()-1; n > 0; n--) {
-        size_type N = (*this)[n];
-        index_type temp = prev/N;
+      for (size_t n = ndims()-1; n > 0; n--) {
+        size_t N = (*this)[n];
+        size_t temp = prev/N;
         myinds[n] = prev - N*temp;
         prev = temp;
       }
@@ -397,6 +398,7 @@ namespace mathq {
 
     Dimensions& getReverse() const {
       Dimensions* tdims = new Dimensions();
+      if (ndims() == 0) return *tdims;
       // reverse order
       for (int k = this->ndims()-1; k >= 0; k--) {
         tdims->push_back((*this)[k]);
@@ -404,10 +406,10 @@ namespace mathq {
       return *tdims;
     }
 
-    Dimensions& operator=(const Dimensions& dims) {
-      resize(dims.size(), 0);
+    Dimensions& operator=(const Dimensions& dims2) {
+      resize(dims2.size(), 0);
       for (int k = 0; k < ndims(); k++) {
-        (*this)[k] = dims[k];
+        (*this)[k] = dims2[k];
       }
       calcSize();
       return *this;
@@ -444,7 +446,7 @@ namespace mathq {
     inline friend std::ostream& operator<<(std::ostream& stream, const Dimensions& dims) {
       using namespace display;
       stream << "{";
-      for (size_type ii = 0; ii < dims.rank(); ii++) {
+      for (size_t ii = 0; ii < dims.rank(); ii++) {
         if (ii>0)  stream << ", ";
         dispval_strm(stream, dims[ii]);
       }
@@ -472,36 +474,35 @@ namespace mathq {
 
     DeepIndices(const std::vector<Dimensions>& deepdims) : deepdims_(deepdims) {
       this->resize(deepdims.size());
-      for (index_type i = 0; i < deepdims.size(); i++) {
+      for (size_t i = 0; i < deepdims.size(); i++) {
         (*this)[i].resize(deepdims[i].size());
       }
     }
 
 
     DeepIndices& operator++(int dum) {
-      const index_type N = deepdims_.size();
-      index_type m = N;
+      const size_t N = deepdims_.size();
+      size_t m = N;
       while (true) {
-        m--;
-        if (m<0) {
+        if (m == 0) {
           this->clear();
           return *this;
         }
+        m--;
         while ((*this)[m].size() == 0) {
-          m--;
-          if (m<0) {
+          if (m == 0) {
             this->clear();
             return *this;
           }
+          m--;
         }
         Dimensions& dims = deepdims_[m];
         Indices& inds = (*this)[m];
-        index_type n = dims.size();
-
-        index_type d = 0;
-        index_type sz = dims[n-d-1];
-        index_type ind = ++(inds[n-d-1]);
-        //MDISP(m,n,d,sz,ind,inds[n-d-1]);
+        size_t n = dims.size();
+        size_t d = 0;
+        size_t sz = dims[n-d-1];
+        size_t ind = ++(inds[n-d-1]);
+        // MDISP(m, n, d, sz, ind, inds[n-d-1]);
         while (ind >= sz) {
           inds[n-d-1] = 0;
           d++;
@@ -515,12 +516,12 @@ namespace mathq {
           return *this;
         }
       } // while true
-      return *this;  // not needed
+      return *this;  // should never get here
     }
 
 
     DeepIndices& getReverse() const {
-      const index_type N = size();
+      const size_t N = size();
       std::vector<Dimensions> rddims(N);
       for (int k = 0; k < N; k++) {
         rddims[k] = deepdims_[N-k-1];
@@ -536,7 +537,7 @@ namespace mathq {
     inline friend std::ostream& operator<<(std::ostream& stream, const DeepIndices& dinds) {
       using namespace display;
       stream << "{";
-      for (size_type ii = 0; ii < dinds.size(); ii++) {
+      for (size_t ii = 0; ii < dinds.size(); ii++) {
         if (ii>0)  stream << ", ";
         dispval_strm(stream, dinds[ii]);
       }
@@ -630,17 +631,16 @@ namespace mathq {
     const X& tin = t.derived();
     std::vector<Dimensions> ddims = t.deepdims();
     std::vector<Dimensions> rdims;
-
     // need to create the reverse dimensions
     for (int j = 0; j < ddims.size(); j++) {
       rdims.push_back(ddims[ddims.size()-j-1]);
     }
     tout->resize(rdims);
 
-    const index_type Ndeep = tout->deepsize();
+    const size_t Ndeep = tout->deepsize();
 
     //  flatten sizes into one vector
-    std::vector<index_type> flatdims;
+    std::vector<size_t> flatdims;
     for (int i = 0; i < M; i++) {
       Dimensions dims = ddims[i];
       for (int j = 0; j < dims.size(); j++) {
@@ -648,22 +648,22 @@ namespace mathq {
       }
     }
     //  flatten sizes into one vector
-    std::vector<index_type> flatrdims;
+    std::vector<size_t> flatrdims;
     for (int i = 0; i < M; i++) {
       Dimensions dims = rdims[i];
       for (int j = 0; j < dims.size(); j++) {
         flatrdims.push_back(dims[j]);
       }
     }
-    std::vector<index_type> flatrinds(flatrdims.size());
+    std::vector<size_t> flatrinds(flatrdims.size());
 
-    index_type depth = 0;
-    index_type dim = 0;
-    index_type index = 0;
+    size_t depth = 0;
+    size_t dim = 0;
+    size_t index = 0;
     DeepIndices dinds(ddims);
-    for (index_type i = 0; i < Ndeep; i++) {
+    for (size_t i = 0; i < Ndeep; i++) {
       // set equal
-      //MDISP(i,dinds,tin.dat(i),tin.dat(dinds));
+      // MDISP(i, dinds, tin.dat(i), tin.dat(dinds));  // LEAVE THIS HERE BUT COMMENTED OUT!!!
       DeepIndices rinds = dinds.getReverse();
       tout->dat(rinds) = tin.dat(dinds);
       dinds++;
@@ -787,7 +787,7 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const D dat(const index_type i) const {
+    const D dat(const size_t i) const {
       return derived().dat(i);
     }
 
@@ -795,17 +795,17 @@ namespace mathq {
     //***************** Element ACCESS as an array *************************
     //**********************************************************************
 
-    const E operator[](const index_type i) const {
+    const E operator[](const size_t i) const {
       return derived()[i];
     }
 
 
 
-    size_type size(void) const {
+    size_t size(void) const {
       return derived().size();
     }
 
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return derived().ndims();
     }
     Dimensions dims(void) const {
@@ -824,27 +824,27 @@ namespace mathq {
       // return T_EXPRESSION_R;
       return derived().getEnum();
     }
-    size_type depth(void) const {
+    size_t depth(void) const {
       return derived().depth();
     }
     Dimensions eldims(void) const {
       return derived().eldims();
     }
 
-    size_type elsize(void) const {
+    size_t elsize(void) const {
       return derived().elsize();
     }
-    size_type eldeepsize(void) const {
+    size_t eldeepsize(void) const {
       return derived().eldeepsize();
     }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       return derived().deepsize();
     }
 
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return derived().expression();
-    }
+  }
 #else
     std::string expression(void) const {
       return "";
@@ -870,7 +870,7 @@ namespace mathq {
       }
     }
 
-  };
+};
 
 
 
@@ -904,29 +904,29 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const D dat(const index_type i) const {
+    const D dat(const size_t i) const {
       return derived().dat(i);
     }
-    D& dat(const index_type i) {
+    D& dat(const size_t i) {
       return derived().dat(i);
     }
 
     //**********************************************************************
     //***************** Element ACCESS as an array *************************
     //**********************************************************************
-    const E operator[](const index_type i) const {
+    const E operator[](const size_t i) const {
       return derived()[i];
     }
-    E& operator[](const index_type i) {
+    E& operator[](const size_t i) {
       return derived()[i];
     }
 
 
-    size_type size(void) const {
+    size_t size(void) const {
       return derived().size();
     }
 
-    size_type ndims(void) const {
+    size_t ndims(void) const {
       return derived().ndims();
     }
     Dimensions dims(void) const {
@@ -945,19 +945,19 @@ namespace mathq {
       return derived().getEnum();
       // return T_EXPRESSION_RW;
     }
-    size_type depth(void) const {
+    size_t depth(void) const {
       return derived().depth();
     }
     Dimensions eldims(void) const {
       return derived().eldims();
     }
-    size_type elsize(void) const {
+    size_t elsize(void) const {
       return derived().elsize();
     }
-    size_type eldeepsize(void) const {
+    size_t eldeepsize(void) const {
       return derived().eldeepsize();
     }
-    size_type deepsize(void) const {
+    size_t deepsize(void) const {
       return derived().deepsize();
     }
 
@@ -965,7 +965,7 @@ namespace mathq {
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return derived().expression();
-    }
+  }
 #else
     std::string expression(void) const {
       return "";
@@ -994,7 +994,7 @@ namespace mathq {
 
     // Assign to constant value
     X& equals(const E e) {
-      for (size_type i = 0; i<size(); i++)
+      for (size_t i = 0; i<size(); i++)
         (*this)[i] = e;
       return derived();
     }
@@ -1005,7 +1005,7 @@ namespace mathq {
     template <class Y>
     X& equals(const MArrayExpR<Y, E, D, M, R>& rhs) {
 
-      const size_type N = size();
+      const size_t N = size();
 
 
       if (common(*this, rhs)) {
@@ -1013,13 +1013,13 @@ namespace mathq {
         // we need to make a copy of the rhs first
         Vector<D> y(N);
 
-        for (size_type i = 0; i<N; i++)
+        for (size_t i = 0; i<N; i++)
           y[i] = rhs[i];
-        for (size_type i = 0; i<N; i++)
+        for (size_t i = 0; i<N; i++)
           derived()[i] = y[i];
       }
       else {
-        for (size_type i = 0; i<N; i++)
+        for (size_t i = 0; i<N; i++)
           derived()[i] = rhs[i];
       }
       return derived();

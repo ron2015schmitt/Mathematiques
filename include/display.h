@@ -1260,7 +1260,7 @@ namespace display {
   // Vector
   class FormatDataVector {
   public:
-    static mathq::index_type max_elements_per_line;
+    static size_t max_elements_per_line;
     static Style style_for_punctuation;
     static std::string string_opening;
     static std::string string_delimeter;
@@ -1271,7 +1271,7 @@ namespace display {
   // Matrix
   class FormatDataMatrix {
   public:
-    static mathq::index_type max_elements_per_line;
+    static size_t max_elements_per_line;
     static Style style_for_punctuation;
     static std::string string_opening;
     static std::string string_delimeter;

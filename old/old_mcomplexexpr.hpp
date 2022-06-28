@@ -31,23 +31,23 @@ namespace mathq {
       : a_(a), val_(b)
     { }
 
-    inline const std::complex<D> operator()(const index_type i) const { 
+    inline const std::complex<D> operator()(const size_t i) const { 
       return OP::apply(a_(i), val_); 
     }
 
-   inline const std::complex<D> operator()(const index_type r, const index_type c) const {
+   inline const std::complex<D> operator()(const size_t r, const size_t c) const {
       return OP::apply(a_(r,c), val_);
     }
 
-    inline size_type Nrows(void) const {
+    inline size_t Nrows(void) const {
       return a_.Nrows();
     }
 
-    inline size_type Ncols(void) const {
+    inline size_t Ncols(void) const {
       return a_.Ncols();
     }
 
-    inline size_type size(void) const {
+    inline size_t size(void) const {
       return a_.size();
     }
 
@@ -99,24 +99,24 @@ namespace mathq {
       :  val_(a), b_(b)
     { }
 
-    inline const std::complex<D> operator()(const index_type i) const { 
+    inline const std::complex<D> operator()(const size_t i) const { 
       return OP::apply(val_,b_(i)); 
     }
 
-   inline const std::complex<D> operator()(const index_type r, const index_type c) const {
+   inline const std::complex<D> operator()(const size_t r, const size_t c) const {
       return OP::apply(val_,b_(r,c));
     }
 
-   inline size_type Nrows(void) const {
+   inline size_t Nrows(void) const {
       return b_.Nrows();
     }
 
-    inline size_type Ncols(void) const {
+    inline size_t Ncols(void) const {
       return b_.Ncols();
     }
 
 
-    inline size_type size(void) const {
+    inline size_t size(void) const {
       return b_.size();
     }
 
