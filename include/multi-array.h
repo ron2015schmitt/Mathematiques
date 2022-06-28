@@ -33,7 +33,7 @@ namespace mathq {
     typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
 
-    typedef typename ArrayType<Element, 0>::Type MyArrayType;
+    typedef typename ArrayTypeTrait<Element, 0>::Type MyArrayType;
 
     constexpr static int rank_value = rank;
     constexpr static int depth_value = depth;

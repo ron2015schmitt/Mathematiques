@@ -35,7 +35,7 @@ namespace mathq {
 
 
     // if either NR or NC is 0, then we use valarray
-    typedef typename ArrayType<Number, ((NR+NC-1)* (NR>0)* (NC>0))>::Type MyArrayType;
+    typedef typename ArrayTypeTrait<Number, ((NR+NC-1)* (NR>0)* (NC>0))>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //

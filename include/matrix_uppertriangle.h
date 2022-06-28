@@ -33,7 +33,7 @@ namespace mathq {
 
 
     // if N is 0, then we use valarray
-    typedef typename ArrayType<Number, ((N* N+N)/2)>::Type MyArrayType;
+    typedef typename ArrayTypeTrait<Number, ((N* N+N)/2)>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //

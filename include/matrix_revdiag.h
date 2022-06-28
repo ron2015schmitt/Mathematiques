@@ -35,7 +35,7 @@ namespace mathq {
 
 
     // if either NR or NC is 0, then we use valarray
-    typedef typename ArrayType<Number, std::min(NR, NC)>::Type MyArrayType;
+    typedef typename ArrayTypeTrait<Number, std::min(NR, NC)>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //

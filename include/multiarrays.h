@@ -22,12 +22,12 @@ namespace mathq {
   // * std::vector related functions
   // ************************************************************************** 
 
-  template <typename Number, int NN> class ArrayType {
+  template <typename Number, int NN> class ArrayTypeTrait {
   public:
     typedef std::array<Number, NN> Type;
   };
 
-  template <typename Number> class ArrayType<Number, 0> {
+  template <typename Number> class ArrayTypeTrait<Number, 0> {
   public:
     typedef std::valarray<Number> Type;
   };
