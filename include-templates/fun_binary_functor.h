@@ -7,9 +7,9 @@
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_##NAME## {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_##NAME## {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return ##FUNCTION##(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -46,7 +46,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_##NAME##));
     s += StyledString::get(BRACKET1).get();

@@ -1174,10 +1174,10 @@ namespace matricks {
 
   // approxel(a,b,tol) - element wise
   
-  template <class NT1, class NT2, class D3, class A, class B> 
-    inline auto approxel(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b, const D3 tol = MatricksHelper<D3>::tolerance)
+  template <class NT1, class NT2, class NT3, class A, class B> 
+    inline auto approxel(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b, const NT3 tol = MatricksHelper<NT3>::tolerance)
   {
-    return  TER_Ternary< MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,D3, NT1,NT2,D3, Fun_Approx<NT1,NT2,D3> >(a,b,tol);
+    return  TER_Ternary< MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT3, NT1,NT2,NT3, Fun_Approx<NT1,NT2,NT3> >(a,b,tol);
   }
 
 

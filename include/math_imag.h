@@ -196,8 +196,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline Imaginary<typename AddType<NT1, NT2>::Type>
     operator+(const Imaginary<NT1>& x1, const Imaginary<NT2>& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    return Imaginary<D3>(x1.value() + x2.value());
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    return Imaginary<NT3>(x1.value() + x2.value());
   }
 
   // Imaginary<NT1> - Imaginary<NT2>
@@ -205,8 +205,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline Imaginary<typename SubType<NT1, NT2>::Type>
     operator-(const Imaginary<NT1>& x1, const Imaginary<NT2>& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    return Imaginary<D3>(x1.value() - x2.value());
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    return Imaginary<NT3>(x1.value() - x2.value());
   }
 
   // Imaginary<NT1> * Imaginary<NT2>
@@ -215,8 +215,8 @@ namespace mathq {
   inline
     typename MultType<NT1, NT2>::Type
     operator*(const Imaginary<NT1>& x1, const Imaginary<NT2>& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    return -D3(x1.value() * x2.value());
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    return -NT3(x1.value() * x2.value());
   }
 
 
@@ -226,8 +226,8 @@ namespace mathq {
   inline
     typename DivType<NT1, NT2>::Type
     operator/(const Imaginary<NT1>& x1, const Imaginary<NT2>& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    return D3(x1.value() / x2.value());
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    return NT3(x1.value() / x2.value());
   }
 
 
@@ -245,8 +245,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline std::complex<typename AddType<NT1, NT2>::Type>
     operator+(const Imaginary<NT1>& xi, const NT2& xr) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(xr, xi.value());
   }
 
@@ -255,8 +255,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value>>
   inline std::complex<typename AddType<NT1, NT2>::Type>
     operator+(const NT1& xr, const Imaginary<NT2>& xi) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(xr, xi.value());
   }
 
@@ -266,8 +266,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline std::complex<typename SubType<NT1, NT2>::Type>
     operator-(const Imaginary<NT1>& xi, const NT2& xr) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(-xr, xi.value());
   }
 
@@ -276,8 +276,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value>>
   inline std::complex<typename AddType<NT1, NT2>::Type>
     operator-(const NT1& xr, const Imaginary<NT2>& xi) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(xr, -xi.value());
   }
 
@@ -287,8 +287,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline Imaginary<typename MultType<NT1, NT2>::Type>
     operator*(const Imaginary<NT1>& x1, const NT2& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef Imaginary<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef Imaginary<NT3> T3;
     return T3(x1.value() * x2);
   }
 
@@ -297,8 +297,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline Imaginary<typename MultType<NT1, NT2>::Type>
     operator*(const NT1& x1, const Imaginary<NT2>& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef Imaginary<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef Imaginary<NT3> T3;
     return T3(x1 * x2.value());
   }
 
@@ -308,8 +308,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline Imaginary<typename DivType<NT1, NT2>::Type>
     operator/(const Imaginary<NT1>& x1, const NT2& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef Imaginary<D3> T3;
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef Imaginary<NT3> T3;
     return T3(x1.value() / x2);
   }
 
@@ -318,8 +318,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline Imaginary<typename DivType<NT1, NT2>::Type>
     operator/(const NT1& x1, const Imaginary<NT2>& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef Imaginary<D3> T3;
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef Imaginary<NT3> T3;
     return T3(-x1 / x2.value());
   }
 
@@ -334,8 +334,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline std::complex<typename AddType<NT1, NT2>::Type>
     operator+(const Imaginary<NT1>& xi, const std::complex<NT2>& z) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(real(z), xi.value() + imag(z));
   }
 
@@ -343,8 +343,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline std::complex<typename AddType<NT1, NT2>::Type>
     operator+(const std::complex<NT2>& z, const Imaginary<NT1>& xi) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(real(z), imag(z) + xi.value());
   }
 
@@ -354,8 +354,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline std::complex<typename SubType<NT1, NT2>::Type>
     operator-(const Imaginary<NT1>& xi, const std::complex<NT2>& z) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(-real(z), xi.value() - imag(z));
   }
 
@@ -364,8 +364,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline std::complex<typename SubType<NT1, NT2>::Type>
     operator-(const std::complex<NT2>& z, const Imaginary<NT1>& xi) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(real(z), imag(z) - xi.value());
   }
 
@@ -375,8 +375,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline std::complex<typename MultType<NT1, NT2>::Type>
     operator*(const Imaginary<NT1>& xi, const std::complex<NT2>& z) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(-xi.value() * imag(z), xi.value() * real(z));
   }
 
@@ -386,8 +386,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline std::complex<typename MultType<NT1, NT2>::Type>
     operator*(const std::complex<NT2>& z, const Imaginary<NT1>& xi) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(-imag(z) * xi.value(), real(z) * xi.value());
   }
 
@@ -397,8 +397,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline std::complex<typename DivType<NT1, NT2>::Type>
     operator/(const Imaginary<NT1>& xi, const std::complex<NT2>& z) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
     return T3(-xi.value() * imag(z), xi.value() * real(z));
   }
 
@@ -407,11 +407,11 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline std::complex<typename DivType<NT1, NT2>::Type>
     operator/(const std::complex<NT2>& z, const Imaginary<NT1>& xi) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 topR = xi.value() * imag(z);
-    D3 topI = xi.value() * real(z);
-    D3 bot = real(z) * real(z) + imag(z) * imag(z);
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 topR = xi.value() * imag(z);
+    NT3 topI = xi.value() * real(z);
+    NT3 bot = real(z) * real(z) + imag(z) * imag(z);
     return T3(topR / bot, topI / bot);
   }
 
@@ -575,10 +575,10 @@ namespace mathq {
   inline std::complex<typename MultType<NT1, NT2>::Type>
     pow(const Imaginary<NT1>& x1, const Imaginary<NT2>& x2) {
     using std::pow;
-    typedef typename MultType<NT1, NT2>::Type D3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
     return pow(
-      Complex(numbercast<Imaginary<D3>>(x1)),
-      Complex(numbercast<Imaginary<D3>>(x2)));
+      Complex(numbercast<Imaginary<NT3>>(x1)),
+      Complex(numbercast<Imaginary<NT3>>(x2)));
   }
 
 
@@ -587,10 +587,10 @@ namespace mathq {
   inline std::complex<typename MultType<NT1, NT2>::Type>
     pow(const Imaginary<NT1>& x1, const NT2& x2) {
     using std::pow;
-    typedef typename MultType<NT1, NT2>::Type D3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
     return pow(
-      Complex(numbercast<Imaginary<D3>>(x1)),
-      numbercast<D3>(x2));
+      Complex(numbercast<Imaginary<NT3>>(x1)),
+      numbercast<NT3>(x2));
   }
 
   // pow(R1,I2)
@@ -598,10 +598,10 @@ namespace mathq {
   inline std::complex<typename MultType<NT1, NT2>::Type>
     pow(const NT1& x1, const Imaginary<NT2>& x2) {
     using std::pow;
-    typedef typename MultType<NT1, NT2>::Type D3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
     return pow(
-      numbercast<D3>(x1),
-      Complex(numbercast<Imaginary<D3>>(x2)));
+      numbercast<NT3>(x1),
+      Complex(numbercast<Imaginary<NT3>>(x2)));
   }
 
 
@@ -610,10 +610,10 @@ namespace mathq {
   inline std::complex<typename MultType<NT1, NT2>::Type>
     pow(const Imaginary<NT1>& x1, const std::complex<NT2>& x2) {
     using std::pow;
-    typedef typename MultType<NT1, NT2>::Type D3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
     return pow(
-      Complex(numbercast<Imaginary<D3>>(x1)),
-      numbercast<std::complex<D3>>(x2));
+      Complex(numbercast<Imaginary<NT3>>(x1)),
+      numbercast<std::complex<NT3>>(x2));
   }
 
   // pow(C1,I2)
@@ -621,10 +621,10 @@ namespace mathq {
   inline std::complex<typename MultType<NT1, NT2>::Type>
     pow(const std::complex<NT1>& x1, const Imaginary<NT2>& x2) {
     using std::pow;
-    typedef typename MultType<NT1, NT2>::Type D3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
     return pow(
-      numbercast<std::complex<D3>>(x1),
-      Complex(numbercast<Imaginary<D3>>(x2)));
+      numbercast<std::complex<NT3>>(x1),
+      Complex(numbercast<Imaginary<NT3>>(x2)));
   }
 
 

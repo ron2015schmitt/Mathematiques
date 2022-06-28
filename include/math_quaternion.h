@@ -396,8 +396,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator+(const Quaternion<NT1>& x1, const Quaternion<NT2>& x2) {
-    typedef typename mathq::AddType<NT1, NT2>::Type D3;
-    return mathq::Quaternion<D3>(
+    typedef typename mathq::AddType<NT1, NT2>::Type NT3;
+    return mathq::Quaternion<NT3>(
       x1.real() + x2.real(),
       x1.imag() + x2.imag(),
       x1.jmag() + x2.jmag(),
@@ -410,8 +410,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator-(const Quaternion<NT1>& x1, const Quaternion<NT2>& x2) {
-    typedef typename mathq::AddType<NT1, NT2>::Type D3;
-    return mathq::Quaternion<D3>(
+    typedef typename mathq::AddType<NT1, NT2>::Type NT3;
+    return mathq::Quaternion<NT3>(
       x1.real() - x2.real(),
       x1.imag() - x2.imag(),
       x1.jmag() - x2.jmag(),
@@ -424,8 +424,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator*(const Quaternion<NT1>& x1, const Quaternion<NT2>& x2) {
-    typedef typename mathq::AddType<NT1, NT2>::Type D3;
-    return mathq::Quaternion<D3>(
+    typedef typename mathq::AddType<NT1, NT2>::Type NT3;
+    return mathq::Quaternion<NT3>(
       x1.real() * x2.real() - x1.imag() * x2.imag() - x1.jmag() * x2.jmag() - x1.kmag() * x2.kmag(),
       x1.real() * x2.imag() + x1.imag() * x2.real() + x1.jmag() * x2.kmag() - x1.kmag() * x2.jmag(),
       x1.real() * x2.jmag() - x1.imag() * x2.kmag() + x1.jmag() * x2.real() + x1.kmag() * x2.imag(),
@@ -439,9 +439,9 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator/(const Quaternion<NT1>& x1, const Quaternion<NT2>& x2) {
-    typedef typename mathq::AddType<NT1, NT2>::Type D3;
-    const D3 k = 1 / normsqr(x2);
-    return mathq::Quaternion<D3>(
+    typedef typename mathq::AddType<NT1, NT2>::Type NT3;
+    const NT3 k = 1 / normsqr(x2);
+    return mathq::Quaternion<NT3>(
       k * (x1.real() * x2.real() + x1.imag() * x2.imag() + x1.jmag() * x2.jmag() + x1.kmag() * x2.kmag()),
       k * (-x1.real() * x2.imag() + x1.imag() * x2.real() - x1.jmag() * x2.kmag() + x1.kmag() * x2.jmag()),
       k * (-x1.real() * x2.jmag() + x1.imag() * x2.kmag() + x1.jmag() * x2.real() - x1.kmag() * x2.imag()),
@@ -464,8 +464,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline auto
     operator+(const Quaternion<NT1>& x1, const NT2& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef Quaternion<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef Quaternion<NT3> T3;
     return T3(
       x1.real() + x2,
       x1.imag(),
@@ -478,8 +478,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value>>
   inline auto
     operator+(const NT1& x1, const Quaternion<NT2>& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef Quaternion<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef Quaternion<NT3> T3;
     return T3(
       x1 + x2.real(),
       x2.imag(),
@@ -493,8 +493,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline auto
     operator-(const Quaternion<NT1>& x1, const NT2& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef Quaternion<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef Quaternion<NT3> T3;
     return T3(
       x1.real() - x2,
       x1.imag(),
@@ -507,8 +507,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value>>
   inline auto
     operator-(const NT1& x1, const Quaternion<NT2>& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef Quaternion<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef Quaternion<NT3> T3;
     return T3(
       x1 - x2.real(),
       -x2.imag(),
@@ -522,8 +522,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline auto
     operator*(const Quaternion<NT1>& x1, const NT2& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef Quaternion<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef Quaternion<NT3> T3;
     return T3(
       x1.real() * x2,
       x1.imag() * x2,
@@ -536,8 +536,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value>>
   inline auto
     operator*(const NT1& x1, const Quaternion<NT2>& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef Quaternion<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef Quaternion<NT3> T3;
     return T3(
       x1 * x2.real(),
       x1 * x2.imag(),
@@ -550,8 +550,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value>>
   inline auto
     operator/(const Quaternion<NT1>& x1, const NT2& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef Quaternion<D3> T3;
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef Quaternion<NT3> T3;
     NT2 k = 1 / x2;
     return x1 * k;
   }
@@ -561,8 +561,8 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value>>
   inline auto
     operator/(const NT1& x1, const Quaternion<NT2>& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef Quaternion<D3> T3;
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef Quaternion<NT3> T3;
     return x1 * inv(x2);
   }
 
@@ -580,8 +580,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator+(const Quaternion<NT1>& x1, const Imaginary<NT2>& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       x1.real(),
       x1.imag() + x2.value(),
@@ -595,8 +595,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator+(const Imaginary<NT2>& x1, const Quaternion<NT1>& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       x2.real(),
       x1.value() + x2.imag(),
@@ -610,8 +610,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator-(const Quaternion<NT1>& x1, const Imaginary<NT2>& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       x1.real(),
       x1.imag() - x2.value(),
@@ -625,8 +625,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator-(const Imaginary<NT2>& x1, const Quaternion<NT1>& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       -x2.real(),
       x1.value() - x2.imag(),
@@ -640,8 +640,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator*(const Quaternion<NT1>& x1, const Imaginary<NT2>& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       -x1.imag() * x2.value(),
       x1.real() * x2.value(),
@@ -655,8 +655,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator*(const Imaginary<NT2>& x1, const Quaternion<NT1>& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       x1.value() * x2.imag(),
       -x1.value() * x2.real(),
@@ -670,9 +670,9 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator/(const Quaternion<NT1>& x1, const Imaginary<NT2>& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
-    const D3 k = -1 / x2.value();
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
+    const NT3 k = -1 / x2.value();
     return T3(
       -x1.imag() * k,
       x1.real() * k,
@@ -686,9 +686,9 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator/(const Imaginary<NT2>& x1, const Quaternion<NT1>& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
-    const D3 k = -1 / x1.value();
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
+    const NT3 k = -1 / x1.value();
     return T3(
       k * x2.imag(),
       -k * x2.real(),
@@ -710,8 +710,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator+(const Quaternion<NT1>& x1, const std::complex<NT2>& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       x1.real() + x2.real(),
       x1.imag() + x2.imag(),
@@ -725,8 +725,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator+(const std::complex<NT2>& x1, const Quaternion<NT1>& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       x1.real() + x2.real(),
       x1.imag() + x2.imag(),
@@ -740,8 +740,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator-(const Quaternion<NT1>& x1, const std::complex<NT2>& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       x1.real() - x2.real(),
       x1.imag() - x2.imag(),
@@ -755,8 +755,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator-(const std::complex<NT2>& x1, const Quaternion<NT1>& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return T3(
       x1.real() - x2.real(),
       x1.imag() - x2.imag(),
@@ -770,8 +770,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator*(const Quaternion<NT1>& x1, const std::complex<NT2>& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return x1 * x2.real() + x1 * Imaginary<NT2>(x2.imag());
   }
 
@@ -781,8 +781,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator*(const std::complex<NT2>& x1, const Quaternion<NT1>& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return x1.real() * x2 + Imaginary<NT2>(x1.imag()) * x2;
   }
 
@@ -792,8 +792,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator/(const Quaternion<NT1>& x1, const std::complex<NT2>& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return x1 / x2.real() + x1 / Imaginary<NT2>(x2.imag());
   }
 
@@ -803,8 +803,8 @@ namespace mathq {
   template <typename NT1, typename NT2>
   inline auto
     operator/(const std::complex<NT2>& x1, const Quaternion<NT1>& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef typename mathq::Quaternion<D3> T3;
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef typename mathq::Quaternion<NT3> T3;
     return x1.real() / x2 + Imaginary<NT2>(x1.imag()) / x2;
   }
 
@@ -988,10 +988,10 @@ namespace mathq {
   // inline std::complex<typename MultType<NT1, NT2>::Type>
   // pow(const Quaternion<NT1> &x1, const Quaternion<NT2> &x2) {
   //   using std::pow;
-  //   typedef typename MultType<NT1, NT2>::Type D3;
+  //   typedef typename MultType<NT1, NT2>::Type NT3;
   //   return pow(
-  //       Complex(numbercast<Quaternion<D3>>(x1)),
-  //       Complex(numbercast<Quaternion<D3>>(x2)));
+  //       Complex(numbercast<Quaternion<NT3>>(x1)),
+  //       Complex(numbercast<Quaternion<NT3>>(x2)));
   // }
 
 
@@ -1002,13 +1002,13 @@ namespace mathq {
     using std::cos;
     using std::pow;
     using std::sin;
-    typedef typename MultType<NT1, NT2>::Type D3;
-    const D3 k = pow(q.abs(), x);
-    const D3 c = 1 / q.vabs();
-    const D3 nx = c * q.imag();
-    const D3 ny = c * q.jmag();
-    const D3 nz = c * q.kmag();
-    const D3 phi = q.angle();
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    const NT3 k = pow(q.abs(), x);
+    const NT3 c = 1 / q.vabs();
+    const NT3 nx = c * q.imag();
+    const NT3 ny = c * q.jmag();
+    const NT3 nz = c * q.kmag();
+    const NT3 phi = q.angle();
     return Quaternion<NT1>(
       k * cos(x * phi),
       k * sin(x * phi) * nx,
@@ -1021,10 +1021,10 @@ namespace mathq {
   // inline std::complex<typename MultType<NT1, NT2>::Type>
   // pow(const NT1 &x1, const Quaternion<NT2> &x2) {
   //   using std::pow;
-  //   typedef typename MultType<NT1, NT2>::Type D3;
+  //   typedef typename MultType<NT1, NT2>::Type NT3;
   //   return pow(
-  //       numbercast<D3>(x1),
-  //       Complex(numbercast<Quaternion<D3>>(x2)));
+  //       numbercast<NT3>(x1),
+  //       Complex(numbercast<Quaternion<NT3>>(x2)));
   // }
 
 
@@ -1033,10 +1033,10 @@ namespace mathq {
   // inline std::complex<typename MultType<NT1, NT2>::Type>
   // pow(const Quaternion<NT1> &x1, const std::complex<NT2> &x2) {
   //   using std::pow;
-  //   typedef typename MultType<NT1, NT2>::Type D3;
+  //   typedef typename MultType<NT1, NT2>::Type NT3;
   //   return pow(
-  //       Complex(numbercast<Quaternion<D3>>(x1)),
-  //       numbercast<std::complex<D3>>(x2));
+  //       Complex(numbercast<Quaternion<NT3>>(x1)),
+  //       numbercast<std::complex<NT3>>(x2));
   // }
 
   // // pow(C1,I2)
@@ -1044,10 +1044,10 @@ namespace mathq {
   // inline std::complex<typename MultType<NT1, NT2>::Type>
   // pow(const std::complex<NT1> &x1, const Quaternion<NT2> &x2) {
   //   using std::pow;
-  //   typedef typename MultType<NT1, NT2>::Type D3;
+  //   typedef typename MultType<NT1, NT2>::Type NT3;
   //   return pow(
-  //       numbercast<std::complex<D3>>(x1),
-  //       Complex(numbercast<Quaternion<D3>>(x2)));
+  //       numbercast<std::complex<NT3>>(x1),
+  //       Complex(numbercast<Quaternion<NT3>>(x2)));
   // }
 
 

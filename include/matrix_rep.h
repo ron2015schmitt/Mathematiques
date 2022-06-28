@@ -22,7 +22,7 @@ namespace mathq {
   public:
     constexpr static int rank = 2;
     constexpr static int rank_value = 2;
-    constexpr static int Mvalue = 1;
+    constexpr static int depth_value = 1;
     typedef MatrixRep<Number> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
@@ -127,7 +127,7 @@ namespace mathq {
 
 
     constexpr size_t getDepth(void) const {
-      return Mvalue;
+      return depth_value;
     }
     Dimensions eldims(void) const {
       Dimensions dimensions();
@@ -228,7 +228,7 @@ namespace mathq {
     // "read": x.dat(DeepIndices)
     const Number dat(const DeepIndices& dinds)  const {
       const size_t mydepth = dinds.size();
-      const Indices& inds = dinds[mydepth -Mvalue];
+      const Indices& inds = dinds[mydepth -depth_value];
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);

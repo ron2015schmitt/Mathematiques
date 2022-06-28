@@ -32,7 +32,7 @@ namespace mathq {
     typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
     constexpr static int rank_value = 0;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
     typedef typename std::conditional<depth==1, Element, Element&>::type TypeA;
 
   private:
@@ -75,7 +75,7 @@ namespace mathq {
 
     // --------------------- constant Number CONSTRUCTOR ---------------------
 
-    template<int M1 = depth, EnableIf<(M1>1)> = 0>
+    template<int D1 = depth, EnableIf<(D1>1)> = 0>
 
     Scalar<Element, Number, depth>(const Number d) {
 
@@ -338,8 +338,8 @@ namespace mathq {
       return *this;
     }
 
-    template <int M1 = depth>
-    typename std::enable_if<(M1>1), Scalar<Element, Number, depth>& >::type operator=(const Number& d) {
+    template <int D1 = depth>
+    typename std::enable_if<(D1>1), Scalar<Element, Number, depth>& >::type operator=(const Number& d) {
       for (size_t i = 0; i < deepsize(); i++) {
         (*this).dat(i) = d;
       }

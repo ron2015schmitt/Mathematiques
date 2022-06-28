@@ -23,55 +23,55 @@ namespace mathq {
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class E4, class NT1, class NT2, class D3, class D4> class FUNCTOR_sph_legendre {
+template <class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4> class FUNCTOR_sph_legendre {
 public:
-  static D4 apply(const NT1 d1, const NT2 d2, const D3 d3) {
+  static D4 apply(const NT1 d1, const NT2 d2, const NT3 d3) {
     return std::sph_legendre(d1, d2, d3);
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::sph_legendre(e1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::sph_legendre(e1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::sph_legendre(e1, d2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const NT2 d2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const NT2 d2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::sph_legendre(e1, d2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::sph_legendre(d1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const NT1 d1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const NT1 d1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::sph_legendre(d1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::sph_legendre(d1, d2, e3);
@@ -91,7 +91,7 @@ public:
     E4 e4;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     D4 d4;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_sph_legendre));
@@ -118,55 +118,55 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class E4, class NT1, class NT2, class D3, class D4> class FUNCTOR_assoc_legendre {
+template <class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4> class FUNCTOR_assoc_legendre {
 public:
-  static D4 apply(const NT1 d1, const NT2 d2, const D3 d3) {
+  static D4 apply(const NT1 d1, const NT2 d2, const NT3 d3) {
     return std::assoc_legendre(d1, d2, d3);
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::assoc_legendre(e1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::assoc_legendre(e1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::assoc_legendre(e1, d2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const NT2 d2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const NT2 d2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::assoc_legendre(e1, d2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::assoc_legendre(d1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const NT1 d1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const NT1 d1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::assoc_legendre(d1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::assoc_legendre(d1, d2, e3);
@@ -186,7 +186,7 @@ public:
     E4 e4;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     D4 d4;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_assoc_legendre));
@@ -213,55 +213,55 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class E4, class NT1, class NT2, class D3, class D4> class FUNCTOR_assoc_laguerre {
+template <class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4> class FUNCTOR_assoc_laguerre {
 public:
-  static D4 apply(const NT1 d1, const NT2 d2, const D3 d3) {
+  static D4 apply(const NT1 d1, const NT2 d2, const NT3 d3) {
     return std::assoc_laguerre(d1, d2, d3);
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::assoc_laguerre(e1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::assoc_laguerre(e1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::assoc_laguerre(e1, d2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const NT2 d2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const NT2 d2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::assoc_laguerre(e1, d2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::assoc_laguerre(d1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const NT1 d1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const NT1 d1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::assoc_laguerre(d1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::assoc_laguerre(d1, d2, e3);
@@ -281,7 +281,7 @@ public:
     E4 e4;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     D4 d4;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_assoc_laguerre));
@@ -308,55 +308,55 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class E4, class NT1, class NT2, class D3, class D4> class FUNCTOR_ellint_3 {
+template <class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4> class FUNCTOR_ellint_3 {
 public:
-  static D4 apply(const NT1 d1, const NT2 d2, const D3 d3) {
+  static D4 apply(const NT1 d1, const NT2 d2, const NT3 d3) {
     return std::ellint_3(d1, d2, d3);
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::ellint_3(e1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::ellint_3(e1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::ellint_3(e1, d2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const NT2 d2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const NT2 d2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::ellint_3(e1, d2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::ellint_3(d1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const NT1 d1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const NT1 d1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::ellint_3(d1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::ellint_3(d1, d2, e3);
@@ -376,7 +376,7 @@ public:
     E4 e4;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     D4 d4;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_ellint_3));
@@ -403,55 +403,55 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class E4, class NT1, class NT2, class D3, class D4> class FUNCTOR_comp_ellint_3 {
+template <class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4> class FUNCTOR_comp_ellint_3 {
 public:
-  static D4 apply(const NT1 d1, const NT2 d2, const D3 d3) {
+  static D4 apply(const NT1 d1, const NT2 d2, const NT3 d3) {
     return std::comp_ellint_3(d1, d2, d3);
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::comp_ellint_3(e1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::comp_ellint_3(e1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const E1& e1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::comp_ellint_3(e1, d2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const E1& e1, const NT2 d2, const D3 d3) {
+  static typename std::enable_if<!std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const E1& e1, const NT2 d2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::comp_ellint_3(e1, d2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const E2& e2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::comp_ellint_3(d1, e2, e3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, D3>::value, E4& >::type
-    apply(const NT1 d1, const E2& e2, const D3 d3) {
+  static typename std::enable_if<std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value&& std::is_same<T3, NT3>::value, E4& >::type
+    apply(const NT1 d1, const E2& e2, const NT3 d3) {
     E4* e4 = new E4();
     *e4 = std::comp_ellint_3(d1, e2, d3);
     return *e4;
   }
   template <class T1 = E1, class T2 = E2, class T3 = E3>
-  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, D3>::value, E4& >::type
+  static typename std::enable_if<std::is_same<T1, NT1>::value&& std::is_same<T2, NT2>::value&&!std::is_same<T3, NT3>::value, E4& >::type
     apply(const NT1 d1, const NT2 d2, const E3& e3) {
     E4* e4 = new E4();
     *e4 = std::comp_ellint_3(d1, d2, e3);
@@ -471,7 +471,7 @@ public:
     E4 e4;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     D4 d4;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_comp_ellint_3));
@@ -519,98 +519,98 @@ public:
 
 
 
-// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
 
-template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank>
-auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
+auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, E2, E3, E4, NT1, NT2, D3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_sph_legendre<E1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, E2, E3, E4, NT1, NT2, NT3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_sph_legendre<E1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
 
-// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , D3
+// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , NT3
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<D3>::value>>
-auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
+auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    E1, E2, D3, E4, NT1, NT2, D3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_sph_legendre<E1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    E1, E2, NT3, E4, NT1, NT2, NT3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_sph_legendre<E1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(D3)>
+// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(NT3)>
 
-template <class A, class C, class E1, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
-auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
-  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
-    NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, NT2, E3, E4, NT1, NT2, D3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_sph_legendre<E1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
-}
-
-// (100) MultiArray<E1(NT1)> , NT2 , D3
-
-template <class A, class E1, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<D3>::value>>
-auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
+auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
-    D3,
-    E1, NT2, D3, E4, NT1, NT2, D3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_sph_legendre<E1, NT2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, NT2, E3, E4, NT1, NT2, NT3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_sph_legendre<E1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (100) MultiArray<E1(NT1)> , NT2 , NT3
 
-template <class B, class C, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
-auto sph_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
+auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
+  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
+    NT2,
+    NT3,
+    E1, NT2, NT3, E4, NT1, NT2, NT3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_sph_legendre<E1, NT2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
+}
+
+// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
+
+template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
+auto sph_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, E2, E3, E4, NT1, NT2, D3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_sph_legendre<NT1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, E2, E3, E4, NT1, NT2, NT3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_sph_legendre<NT1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
-// (010) NT1, MultiArray<E2(NT2)> , D3
+// (010) NT1, MultiArray<E2(NT2)> , NT3
 
-template <class B, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<D3>::value>>
-auto sph_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
+auto sph_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    NT1, E2, D3, E4, NT1, NT2, D3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_sph_legendre<NT1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    NT1, E2, NT3, E4, NT1, NT2, NT3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_sph_legendre<NT1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (001) NT1 , NT2 , MultiArray<E3(D3)>
+// (001) NT1 , NT2 , MultiArray<E3(NT3)>
 
-template <class C, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
-auto sph_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
+auto sph_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, NT2, E3, E4, NT1, NT2, D3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_sph_legendre<NT1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, NT2, E3, E4, NT1, NT2, NT3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_sph_legendre<NT1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
@@ -632,98 +632,98 @@ auto sph_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, D3, dept
 
 
 
-// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
 
-template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank>
-auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
+auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, E2, E3, E4, NT1, NT2, D3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_legendre<E1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, E2, E3, E4, NT1, NT2, NT3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_legendre<E1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
 
-// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , D3
+// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , NT3
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<D3>::value>>
-auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
+auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    E1, E2, D3, E4, NT1, NT2, D3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_legendre<E1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    E1, E2, NT3, E4, NT1, NT2, NT3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_legendre<E1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(D3)>
+// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(NT3)>
 
-template <class A, class C, class E1, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
-auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
-  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
-    NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, NT2, E3, E4, NT1, NT2, D3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_legendre<E1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
-}
-
-// (100) MultiArray<E1(NT1)> , NT2 , D3
-
-template <class A, class E1, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<D3>::value>>
-auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
+auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
-    D3,
-    E1, NT2, D3, E4, NT1, NT2, D3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_legendre<E1, NT2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, NT2, E3, E4, NT1, NT2, NT3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_legendre<E1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (100) MultiArray<E1(NT1)> , NT2 , NT3
 
-template <class B, class C, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
-auto assoc_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
+auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
+  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
+    NT2,
+    NT3,
+    E1, NT2, NT3, E4, NT1, NT2, NT3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_legendre<E1, NT2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
+}
+
+// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
+
+template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
+auto assoc_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, E2, E3, E4, NT1, NT2, D3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_legendre<NT1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, E2, E3, E4, NT1, NT2, NT3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_legendre<NT1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
-// (010) NT1, MultiArray<E2(NT2)> , D3
+// (010) NT1, MultiArray<E2(NT2)> , NT3
 
-template <class B, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<D3>::value>>
-auto assoc_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
+auto assoc_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    NT1, E2, D3, E4, NT1, NT2, D3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_legendre<NT1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    NT1, E2, NT3, E4, NT1, NT2, NT3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_legendre<NT1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (001) NT1 , NT2 , MultiArray<E3(D3)>
+// (001) NT1 , NT2 , MultiArray<E3(NT3)>
 
-template <class C, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
-auto assoc_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
+auto assoc_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, NT2, E3, E4, NT1, NT2, D3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_legendre<NT1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, NT2, E3, E4, NT1, NT2, NT3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_legendre<NT1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
@@ -745,98 +745,98 @@ auto assoc_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, D3, de
 
 
 
-// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
 
-template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank>
-auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
+auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, E2, E3, E4, NT1, NT2, D3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_laguerre<E1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, E2, E3, E4, NT1, NT2, NT3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_laguerre<E1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
 
-// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , D3
+// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , NT3
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<D3>::value>>
-auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
+auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    E1, E2, D3, E4, NT1, NT2, D3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_laguerre<E1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    E1, E2, NT3, E4, NT1, NT2, NT3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_laguerre<E1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(D3)>
+// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(NT3)>
 
-template <class A, class C, class E1, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
-auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
-  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
-    NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, NT2, E3, E4, NT1, NT2, D3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_laguerre<E1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
-}
-
-// (100) MultiArray<E1(NT1)> , NT2 , D3
-
-template <class A, class E1, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<D3>::value>>
-auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
+auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
-    D3,
-    E1, NT2, D3, E4, NT1, NT2, D3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_laguerre<E1, NT2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, NT2, E3, E4, NT1, NT2, NT3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_laguerre<E1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (100) MultiArray<E1(NT1)> , NT2 , NT3
 
-template <class B, class C, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
-auto assoc_laguerre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
+auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
+  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
+    NT2,
+    NT3,
+    E1, NT2, NT3, E4, NT1, NT2, NT3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_laguerre<E1, NT2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
+}
+
+// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
+
+template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
+auto assoc_laguerre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, E2, E3, E4, NT1, NT2, D3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_laguerre<NT1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, E2, E3, E4, NT1, NT2, NT3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_laguerre<NT1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
-// (010) NT1, MultiArray<E2(NT2)> , D3
+// (010) NT1, MultiArray<E2(NT2)> , NT3
 
-template <class B, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<D3>::value>>
-auto assoc_laguerre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
+auto assoc_laguerre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    NT1, E2, D3, E4, NT1, NT2, D3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_laguerre<NT1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    NT1, E2, NT3, E4, NT1, NT2, NT3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_laguerre<NT1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (001) NT1 , NT2 , MultiArray<E3(D3)>
+// (001) NT1 , NT2 , MultiArray<E3(NT3)>
 
-template <class C, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
-auto assoc_laguerre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
+auto assoc_laguerre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, NT2, E3, E4, NT1, NT2, D3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_assoc_laguerre<NT1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, NT2, E3, E4, NT1, NT2, NT3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_assoc_laguerre<NT1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
@@ -858,98 +858,98 @@ auto assoc_laguerre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, D3, de
 
 
 
-// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
 
-template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank>
-auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
+auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, E2, E3, E4, NT1, NT2, D3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_ellint_3<E1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, E2, E3, E4, NT1, NT2, NT3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_ellint_3<E1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
 
-// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , D3
+// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , NT3
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<D3>::value>>
-auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
+auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    E1, E2, D3, E4, NT1, NT2, D3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_ellint_3<E1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    E1, E2, NT3, E4, NT1, NT2, NT3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_ellint_3<E1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(D3)>
+// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(NT3)>
 
-template <class A, class C, class E1, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
-auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
-  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
-    NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, NT2, E3, E4, NT1, NT2, D3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_ellint_3<E1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
-}
-
-// (100) MultiArray<E1(NT1)> , NT2 , D3
-
-template <class A, class E1, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<D3>::value>>
-auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
+auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
-    D3,
-    E1, NT2, D3, E4, NT1, NT2, D3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_ellint_3<E1, NT2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, NT2, E3, E4, NT1, NT2, NT3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_ellint_3<E1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (100) MultiArray<E1(NT1)> , NT2 , NT3
 
-template <class B, class C, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
-auto ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
+auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
+  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
+    NT2,
+    NT3,
+    E1, NT2, NT3, E4, NT1, NT2, NT3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_ellint_3<E1, NT2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
+}
+
+// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
+
+template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
+auto ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, E2, E3, E4, NT1, NT2, D3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_ellint_3<NT1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, E2, E3, E4, NT1, NT2, NT3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_ellint_3<NT1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
-// (010) NT1, MultiArray<E2(NT2)> , D3
+// (010) NT1, MultiArray<E2(NT2)> , NT3
 
-template <class B, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<D3>::value>>
-auto ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
+auto ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    NT1, E2, D3, E4, NT1, NT2, D3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_ellint_3<NT1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    NT1, E2, NT3, E4, NT1, NT2, NT3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_ellint_3<NT1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (001) NT1 , NT2 , MultiArray<E3(D3)>
+// (001) NT1 , NT2 , MultiArray<E3(NT3)>
 
-template <class C, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
-auto ellint_3(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
+auto ellint_3(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, NT2, E3, E4, NT1, NT2, D3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_ellint_3<NT1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, NT2, E3, E4, NT1, NT2, NT3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_ellint_3<NT1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
@@ -971,98 +971,98 @@ auto ellint_3(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, r
 
 
 
-// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (111) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
 
-template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank>
-auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
+auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, E2, E3, E4, NT1, NT2, D3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_comp_ellint_3<E1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, E2, E3, E4, NT1, NT2, NT3, D4, depth, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_comp_ellint_3<E1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
 
-// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , D3
+// (110) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> , NT3
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<D3>::value>>
-auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
+auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    E1, E2, D3, E4, NT1, NT2, D3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_comp_ellint_3<E1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    E1, E2, NT3, E4, NT1, NT2, NT3, D4, depth, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_comp_ellint_3<E1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(D3)>
+// (101) MultiArray<E1(NT1)> , NT2 , MultiArray<E3(NT3)>
 
-template <class A, class C, class E1, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
-auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
-  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
-    NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    E1, NT2, E3, E4, NT1, NT2, D3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_comp_ellint_3<E1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
-}
-
-// (100) MultiArray<E1(NT1)> , NT2 , D3
-
-template <class A, class E1, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<D3>::value>>
-auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
+auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
-    D3,
-    E1, NT2, D3, E4, NT1, NT2, D3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_comp_ellint_3<E1, NT2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    E1, NT2, E3, E4, NT1, NT2, NT3, D4, depth, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_comp_ellint_3<E1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(D3)>
+// (100) MultiArray<E1(NT1)> , NT2 , NT3
 
-template <class B, class C, class E2, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
-auto comp_ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
+auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
+  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
+    NT2,
+    NT3,
+    E1, NT2, NT3, E4, NT1, NT2, NT3, D4, depth, 0, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_comp_ellint_3<E1, NT2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
+}
+
+// (011) NT1 , MultiArray<E2(NT2)> , MultiArray<E3(NT3)>
+
+template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
+auto comp_ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, E2, E3, E4, NT1, NT2, D3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_comp_ellint_3<NT1, E2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, E2, E3, E4, NT1, NT2, NT3, D4, 0, depth, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_comp_ellint_3<NT1, E2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
 
-// (010) NT1, MultiArray<E2(NT2)> , D3
+// (010) NT1, MultiArray<E2(NT2)> , NT3
 
-template <class B, class E2, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<D3>::value>>
-auto comp_ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const D3& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
+auto comp_ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    D3,
-    NT1, E2, D3, E4, NT1, NT2, D3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
-    FUNCTOR_comp_ellint_3<NT1, E2, D3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    NT3,
+    NT1, E2, NT3, E4, NT1, NT2, NT3, D4, 0, depth, 0, depth, rank, rank, rank, rank,
+    FUNCTOR_comp_ellint_3<NT1, E2, NT3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 
-// (001) NT1 , NT2 , MultiArray<E3(D3)>
+// (001) NT1 , NT2 , MultiArray<E3(NT3)>
 
-template <class C, class E3, class NT1, class NT2, class D3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
-auto comp_ellint_3(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, D3, depth, rank>& x3) {
-  typedef typename MultType<typename MultType<NT1, NT2>::Type, D3>::Type D4;
+template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
+auto comp_ellint_3(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
+  typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
   typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
-    MArrayExpR<C, E3, D3, depth, rank>,
-    NT1, NT2, E3, E4, NT1, NT2, D3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
-    FUNCTOR_comp_ellint_3<NT1, NT2, E3, E4, NT1, NT2, D3, D4> >(x1, x2, x3);
+    MArrayExpR<C, E3, NT3, depth, rank>,
+    NT1, NT2, E3, E4, NT1, NT2, NT3, D4, 0, 0, depth, depth, rank, rank, rank, rank,
+    FUNCTOR_comp_ellint_3<NT1, NT2, E3, E4, NT1, NT2, NT3, D4> >(x1, x2, x3);
 }
 }; // namespace mathq 
 #endif // MATHQ__FUN_TERNARY_AUTO_H

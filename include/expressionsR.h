@@ -19,7 +19,7 @@ namespace mathq {
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
 
   private:
     const X& x_;
@@ -126,7 +126,7 @@ namespace mathq {
     typedef Number NumberType;
     typedef typename FunctionType1<Number, Number>::type FUNC;
     constexpr static int rank_value = rank;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
 
   private:
     const X& x_;
@@ -223,19 +223,19 @@ namespace mathq {
   // TER_Binary    binary expressions
   //---------------------------------------------------------------------------
 
-  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class D3, int M1, int M2, int M3, int R1, int R2, int R3, class OP>
-  class TER_Binary : public MArrayExpR<TER_Binary<A, B, E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3, OP>, E3, D3, M3, R3> {
+  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, int D1, int D2, int D3, int R1, int R2, int R3, class OP>
+  class TER_Binary : public MArrayExpR<TER_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>, E3, NT3, D3, R3> {
   public:
     typedef E3 ElementType;
-    typedef D3 NumberType;
-    typedef typename std::conditional<M1 == 0, B, A>::type::ConcreteType TempA;
-    typedef typename std::conditional<M2 == 0, A, B>::type::ConcreteType TempB;
-    typedef Materialize<E3, D3, M3, R3> ConcreteType;
-    constexpr static int Mvalue = M3;
+    typedef NT3 NumberType;
+    typedef typename std::conditional<D1 == 0, B, A>::type::ConcreteType TempA;
+    typedef typename std::conditional<D2 == 0, A, B>::type::ConcreteType TempB;
+    typedef Materialize<E3, NT3, D3, R3> ConcreteType;
+    constexpr static int depth_value = D3;
     constexpr static int rank_value = R3;
 
-    typedef typename std::conditional<M1 == 0, const A, const A&>::type TypeA;
-    typedef typename std::conditional<M2 == 0, const B, const B&>::type TypeB;
+    typedef typename std::conditional<D1 == 0, const A, const A&>::type TypeA;
+    typedef typename std::conditional<D2 == 0, const B, const B&>::type TypeB;
 
   private:
     TypeA a_;
@@ -245,18 +245,18 @@ namespace mathq {
   public:
     TER_Binary(const A& a, const B& b) : a_(a), b_(b) {
       vptrs = new VectorofPtrs();
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         vptrs->add(a_.getAddresses());
       }
-      if constexpr (M2 > 0) {
+      if constexpr (D2 > 0) {
         vptrs->add(b_.getAddresses());
       }
       // DISP3(a);
       // DISP3(b);
       // DISP3(vptrs);
       // TLDISP3(E3());
-      // TLDISP3(D3());
-      // MDISP3(M3, R3);
+      // TLDISP3(NT3());
+      // MDISP3(D3, R3);
     }
 
     ~TER_Binary() {
@@ -268,22 +268,22 @@ namespace mathq {
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
 
-    const D3 dat(const size_t i) const {
-      if constexpr ((M1 == 0) && (M2 == 0)) {
+    const NT3 dat(const size_t i) const {
+      if constexpr ((D1 == 0) && (D2 == 0)) {
         return OP::apply(a_, b_);
       }
-      else if constexpr ((M1 == 0) && (M2 > 0)) {
+      else if constexpr ((D1 == 0) && (D2 > 0)) {
         return OP::apply(a_, b_.dat(i));
       }
-      else if constexpr ((M1 > 0) && (M2 == 0)) {
+      else if constexpr ((D1 > 0) && (D2 == 0)) {
         return OP::apply(a_.dat(i), b_);
       }
       else {
-        if constexpr (M1 == M2) {
+        if constexpr (D1 == D2) {
           return OP::apply(a_.dat(i), b_.dat(i));
         }
-        else if constexpr (M1 == M2 + 1) {
-          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
+        else if constexpr (D1 == D2 + 1) {
+          if constexpr ((D2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.elsize() == b_.size())) {
               return dat_el1(i); // note this is chosen by fiat
             }
@@ -298,7 +298,7 @@ namespace mathq {
               return 0;
             }
           }
-          else if constexpr ((M2 == 1) && (R2 == R1)) {
+          else if constexpr ((D2 == 1) && (R2 == R1)) {
             return dat_top1(i);
           }
           else if constexpr (R2 == E1::rank_value) {
@@ -309,8 +309,8 @@ namespace mathq {
             return 0;
           }
         }
-        else if constexpr (M2 == M1 + 1) {
-          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
+        else if constexpr (D2 == D1 + 1) {
+          if constexpr ((D1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.size() == b_.elsize())) {
               return dat_top2(i); // note this is chosen by fiat
             }
@@ -325,7 +325,7 @@ namespace mathq {
               return 0;
             }
           }
-          else if constexpr ((M1 == 1) && (R1 == R2)) {
+          else if constexpr ((D1 == 1) && (R1 == R2)) {
             return dat_top2(i);
           }
           else if constexpr (R1 == E2::rank_value) {
@@ -344,23 +344,23 @@ namespace mathq {
     }
 
     // helper for: T<Element> + T
-    const D3 dat_top1(const size_t i) const {
+    const NT3 dat_top1(const size_t i) const {
       size_t j = i / a_.elsize();
       return OP::apply(a_.dat(i), b_.dat(j));
     }
     // helper for: T<Element> + Element
-    const D3 dat_el1(const size_t i) const {
+    const NT3 dat_el1(const size_t i) const {
       size_t j = i % b_.deepsize();
       return OP::apply(a_.dat(i), b_.dat(j));
     }
 
     // helper for: T + T<Element>
-    const D3 dat_top2(const size_t i) const {
+    const NT3 dat_top2(const size_t i) const {
       size_t j = i / b_.elsize();
       return OP::apply(a_.dat(j), b_.dat(i));
     }
     // helper for: Element + T<Element>
-    const D3 dat_el2(const size_t i) const {
+    const NT3 dat_el2(const size_t i) const {
       size_t j = i % a_.deepsize();
       return OP::apply(a_.dat(j), b_.dat(i));
     }
@@ -369,21 +369,21 @@ namespace mathq {
     //************* Array-style Element Access: x[n] ***********************
     //**********************************************************************
     const E3 operator[](const size_t i) const {
-      if constexpr ((M1 == 0) && (M2 == 0)) {
+      if constexpr ((D1 == 0) && (D2 == 0)) {
         return OP::apply(a_, b_);
       }
-      else if constexpr ((M1 == 0) && (M2 > 0)) {
+      else if constexpr ((D1 == 0) && (D2 > 0)) {
         return OP::apply(a_, b_[i]);
       }
-      else if constexpr ((M1 > 0) && (M2 == 0)) {
+      else if constexpr ((D1 > 0) && (D2 == 0)) {
         return OP::apply(a_[i], b_);
       }
       else {
-        if constexpr (M1 == M2) {
+        if constexpr (D1 == D2) {
           return OP::apply(a_[i], b_[i]);
         }
-        else if constexpr (M1 == M2 + 1) {
-          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
+        else if constexpr (D1 == D2 + 1) {
+          if constexpr ((D2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.elsize() == b_.size())) {
               return el1(i); // note this is chosen by fiat
             }
@@ -399,7 +399,7 @@ namespace mathq {
               return *e;
             }
           }
-          else if constexpr ((M2 == 1) && (R2 == R1)) {
+          else if constexpr ((D2 == 1) && (R2 == R1)) {
             return top1(i);
           }
           else if constexpr (R2 == E1::rank_value) {
@@ -411,8 +411,8 @@ namespace mathq {
             return *e;
           }
         }
-        else if constexpr (M2 == M1 + 1) {
-          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
+        else if constexpr (D2 == D1 + 1) {
+          if constexpr ((D1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.size() == b_.elsize())) {
               return top2(i); // note this is chosen by fiat
             }
@@ -428,7 +428,7 @@ namespace mathq {
               return *e;
             }
           }
-          else if constexpr ((M1 == 1) && (R1 == R2)) {
+          else if constexpr ((D1 == 1) && (R1 == R2)) {
             return top2(i);
           }
           else if constexpr (R1 == E2::rank_value) {
@@ -470,7 +470,7 @@ namespace mathq {
       return *vptrs;
     }
     size_t size(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.size();
       }
       else {
@@ -481,7 +481,7 @@ namespace mathq {
       return dims().size();
     }
     Dimensions dims(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.dims();
       }
       else {
@@ -489,7 +489,7 @@ namespace mathq {
       }
     }
     std::vector<Dimensions>& deepdims(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.deepdims();
       }
       else {
@@ -497,7 +497,7 @@ namespace mathq {
       }
     }
     std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.deepdims(parentdims);
       }
       else {
@@ -508,15 +508,15 @@ namespace mathq {
       return true;
     }
     size_t getDepth(void) const {
-      if constexpr (M1 >= M2) {
-        return M1;
+      if constexpr (D1 >= D2) {
+        return D1;
       }
       else {
-        return M2;
+        return D2;
       }
     }
     size_t elsize(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.elsize();
       }
       else {
@@ -524,7 +524,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.eldeepsize();
       }
       else {
@@ -532,7 +532,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.deepsize();
       }
       else {
@@ -557,21 +557,21 @@ namespace mathq {
   // TER_Binary_User    binary expressions
   //---------------------------------------------------------------------------
 
-  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class D3, int M1, int M2, int M3, int R1, int R2, int R3>
-  class TER_Binary_User : public MArrayExpR<TER_Binary_User<A, B, E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3>, E3, D3, M3, R3> {
+  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, int D1, int D2, int D3, int R1, int R2, int R3>
+  class TER_Binary_User : public MArrayExpR<TER_Binary_User<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3>, E3, NT3, D3, R3> {
   public:
     typedef E3 ElementType;
-    typedef D3 NumberType;
-    typedef typename std::conditional<M1 == 0, B, A>::type::ConcreteType TempA;
-    typedef typename std::conditional<M2 == 0, A, B>::type::ConcreteType TempB;
-    typedef Materialize<E3, D3, M3, R3> ConcreteType;
-    constexpr static int Mvalue = M3;
+    typedef NT3 NumberType;
+    typedef typename std::conditional<D1 == 0, B, A>::type::ConcreteType TempA;
+    typedef typename std::conditional<D2 == 0, A, B>::type::ConcreteType TempB;
+    typedef Materialize<E3, NT3, D3, R3> ConcreteType;
+    constexpr static int depth_value = D3;
     constexpr static int rank_value = R3;
 
-    typedef typename std::conditional<M1 == 0, const A, const A&>::type TypeA;
-    typedef typename std::conditional<M2 == 0, const B, const B&>::type TypeB;
+    typedef typename std::conditional<D1 == 0, const A, const A&>::type TypeA;
+    typedef typename std::conditional<D2 == 0, const B, const B&>::type TypeB;
 
-    typedef typename FunctionType2<NT1, NT2, D3>::type FUNC;
+    typedef typename FunctionType2<NT1, NT2, NT3>::type FUNC;
 
   private:
     TypeA a_;
@@ -582,10 +582,10 @@ namespace mathq {
   public:
     TER_Binary_User(const FUNC& f, const A& a, const B& b) : f_(f), a_(a), b_(b) {
       vptrs = new VectorofPtrs();
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         vptrs->add(a_.getAddresses());
       }
-      if constexpr (M2 > 0) {
+      if constexpr (D2 > 0) {
         vptrs->add(b_.getAddresses());
       }
       // DISP3(a);
@@ -600,22 +600,22 @@ namespace mathq {
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
 
-    const D3 dat(const size_t i) const {
-      if constexpr ((M1 == 0) && (M2 == 0)) {
+    const NT3 dat(const size_t i) const {
+      if constexpr ((D1 == 0) && (D2 == 0)) {
         return f_(a_, b_);
       }
-      else if constexpr ((M1 == 0) && (M2 > 0)) {
+      else if constexpr ((D1 == 0) && (D2 > 0)) {
         return f_(a_, b_.dat(i));
       }
-      else if constexpr ((M1 > 0) && (M2 == 0)) {
+      else if constexpr ((D1 > 0) && (D2 == 0)) {
         return f_(a_.dat(i), b_);
       }
       else {
-        if constexpr (M1 == M2) {
+        if constexpr (D1 == D2) {
           return f_(a_.dat(i), b_.dat(i));
         }
-        else if constexpr (M1 == M2 + 1) {
-          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
+        else if constexpr (D1 == D2 + 1) {
+          if constexpr ((D2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.elsize() == b_.size())) {
               return dat_el1(i); // note this is chosen by fiat
             }
@@ -630,7 +630,7 @@ namespace mathq {
               return 0;
             }
           }
-          else if constexpr ((M2 == 1) && (R2 == R1)) {
+          else if constexpr ((D2 == 1) && (R2 == R1)) {
             return dat_top1(i);
           }
           else if constexpr (R2 == E1::rank_value) {
@@ -641,8 +641,8 @@ namespace mathq {
             return 0;
           }
         }
-        else if constexpr (M2 == M1 + 1) {
-          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
+        else if constexpr (D2 == D1 + 1) {
+          if constexpr ((D1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.size() == b_.elsize())) {
               return dat_top2(i); // note this is chosen by fiat
             }
@@ -657,7 +657,7 @@ namespace mathq {
               return 0;
             }
           }
-          else if constexpr ((M1 == 1) && (R1 == R2)) {
+          else if constexpr ((D1 == 1) && (R1 == R2)) {
             return dat_top2(i);
           }
           else if constexpr (R1 == E2::rank_value) {
@@ -676,23 +676,23 @@ namespace mathq {
     }
 
     // helper for: T<Element> + T
-    const D3 dat_top1(const size_t i) const {
+    const NT3 dat_top1(const size_t i) const {
       size_t j = i / a_.elsize();
       return f_(a_.dat(i), b_.dat(j));
     }
     // helper for: T<Element> + Element
-    const D3 dat_el1(const size_t i) const {
+    const NT3 dat_el1(const size_t i) const {
       size_t j = i % b_.deepsize();
       return f_(a_.dat(i), b_.dat(j));
     }
 
     // helper for: T + T<Element>
-    const D3 dat_top2(const size_t i) const {
+    const NT3 dat_top2(const size_t i) const {
       size_t j = i / b_.elsize();
       return f_(a_.dat(j), b_.dat(i));
     }
     // helper for: Element + T<Element>
-    const D3 dat_el2(const size_t i) const {
+    const NT3 dat_el2(const size_t i) const {
       size_t j = i % a_.deepsize();
       return f_(a_.dat(j), b_.dat(i));
     }
@@ -701,21 +701,21 @@ namespace mathq {
     //************* Array-style Element Access: x[n] ***********************
     //**********************************************************************
     const E3 operator[](const size_t i) const {
-      if constexpr ((M1 == 0) && (M2 == 0)) {
+      if constexpr ((D1 == 0) && (D2 == 0)) {
         return f_(a_, b_);
       }
-      else if constexpr ((M1 == 0) && (M2 > 0)) {
+      else if constexpr ((D1 == 0) && (D2 > 0)) {
         return f_(a_, b_[i]);
       }
-      else if constexpr ((M1 > 0) && (M2 == 0)) {
+      else if constexpr ((D1 > 0) && (D2 == 0)) {
         return f_(a_[i], b_);
       }
       else {
-        if constexpr (M1 == M2) {
+        if constexpr (D1 == D2) {
           return f_(a_[i], b_[i]);
         }
-        else if constexpr (M1 == M2 + 1) {
-          if constexpr ((M2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
+        else if constexpr (D1 == D2 + 1) {
+          if constexpr ((D2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.elsize() == b_.size())) {
               return el1(i); // note this is chosen by fiat
             }
@@ -731,7 +731,7 @@ namespace mathq {
               return *e;
             }
           }
-          else if constexpr ((M2 == 1) && (R2 == R1)) {
+          else if constexpr ((D2 == 1) && (R2 == R1)) {
             return top1(i);
           }
           else if constexpr (R2 == E1::rank_value) {
@@ -743,8 +743,8 @@ namespace mathq {
             return *e;
           }
         }
-        else if constexpr (M2 == M1 + 1) {
-          if constexpr ((M1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
+        else if constexpr (D2 == D1 + 1) {
+          if constexpr ((D1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
             if ((a_.size() == b_.size()) && (a_.size() == b_.elsize())) {
               return top2(i); // note this is chosen by fiat
             }
@@ -760,7 +760,7 @@ namespace mathq {
               return *e;
             }
           }
-          else if constexpr ((M1 == 1) && (R1 == R2)) {
+          else if constexpr ((D1 == 1) && (R1 == R2)) {
             return top2(i);
           }
           else if constexpr (R1 == E2::rank_value) {
@@ -802,7 +802,7 @@ namespace mathq {
       return *vptrs;
     }
     size_t size(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.size();
       }
       else {
@@ -813,7 +813,7 @@ namespace mathq {
       return dims().size();
     }
     Dimensions dims(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.dims();
       }
       else {
@@ -821,7 +821,7 @@ namespace mathq {
       }
     }
     std::vector<Dimensions>& deepdims(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.deepdims();
       }
       else {
@@ -829,7 +829,7 @@ namespace mathq {
       }
     }
     std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.deepdims(parentdims);
       }
       else {
@@ -840,15 +840,15 @@ namespace mathq {
       return true;
     }
     size_t getDepth(void) const {
-      if constexpr (M1 >= M2) {
-        return M1;
+      if constexpr (D1 >= D2) {
+        return D1;
       }
       else {
-        return M2;
+        return D2;
       }
     }
     size_t elsize(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.elsize();
       }
       else {
@@ -856,7 +856,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.eldeepsize();
       }
       else {
@@ -864,7 +864,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (M1 >= M2) {
+      if constexpr (D1 >= D2) {
         return a_.deepsize();
       }
       else {
@@ -889,18 +889,18 @@ namespace mathq {
   // TER_Ternary    ternary expressions
   //---------------------------------------------------------------------------
 
-  template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class D3, class D4, int M1, int M2, int M3, int M4, int R1, int R2, int R3, int R4, class OP>
-  class TER_Ternary : public MArrayExpR<TER_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, D3, D4, M1, M2, M3, M4, R1, R2, R3, R4, OP>, E4, D4, M4, R4> {
+  template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4, int D1, int D2, int D3, int M4, int R1, int R2, int R3, int R4, class OP>
+  class TER_Ternary : public MArrayExpR<TER_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, NT3, D4, D1, D2, D3, M4, R1, R2, R3, R4, OP>, E4, D4, M4, R4> {
   public:
     typedef E4 ElementType;
     typedef D4 NumberType;
     typedef Materialize<E4, D4, M4, R4> ConcreteType;
-    constexpr static int Mvalue = M4;
+    constexpr static int depth_value = M4;
     constexpr static int rank_value = R4;
 
-    typedef typename std::conditional<M1 == 0, const A, const A&>::type TypeA;
-    typedef typename std::conditional<M2 == 0, const B, const B&>::type TypeB;
-    typedef typename std::conditional<M3 == 0, const C, const C&>::type TypeC;
+    typedef typename std::conditional<D1 == 0, const A, const A&>::type TypeA;
+    typedef typename std::conditional<D2 == 0, const B, const B&>::type TypeB;
+    typedef typename std::conditional<D3 == 0, const C, const C&>::type TypeC;
 
   private:
     TypeA a_;
@@ -911,13 +911,13 @@ namespace mathq {
   public:
     TER_Ternary(const A& a, const B& b, const C& c) : a_(a), b_(b), c_(c) {
       vptrs = new VectorofPtrs();
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         vptrs->add(a_.getAddresses());
       }
-      if constexpr (M2 > 0) {
+      if constexpr (D2 > 0) {
         vptrs->add(b_.getAddresses());
       }
-      if constexpr (M3 > 0) {
+      if constexpr (D3 > 0) {
         // vptrs->add(c_.getAddresses());
       }
       // DISP3(a);
@@ -934,28 +934,28 @@ namespace mathq {
     //**********************************************************************
 
     const D4 dat(const size_t i) const {
-      if constexpr ((M1 == 0) && (M2 == 0) && (M3 == 0)) {
+      if constexpr ((D1 == 0) && (D2 == 0) && (D3 == 0)) {
         return OP::apply(a_, b_, c_);
       }
-      else if constexpr ((M1 == 0) && (M2 == 0) && (M3 > 0)) {
+      else if constexpr ((D1 == 0) && (D2 == 0) && (D3 > 0)) {
         return OP::apply(a_, b_, c_.dat(i));
       }
-      else if constexpr ((M1 == 0) && (M2 > 0) && (M3 == 0)) {
+      else if constexpr ((D1 == 0) && (D2 > 0) && (D3 == 0)) {
         return OP::apply(a_, b_.dat(i), c_);
       }
-      else if constexpr ((M1 == 0) && (M2 > 0) && (M3 > 0)) {
+      else if constexpr ((D1 == 0) && (D2 > 0) && (D3 > 0)) {
         return OP::apply(a_, b_.dat(i), c_.dat(i));
       }
-      else if constexpr ((M1 > 0) && (M2 == 0) && (M3 == 0)) {
+      else if constexpr ((D1 > 0) && (D2 == 0) && (D3 == 0)) {
         return OP::apply(a_.dat(i), b_, c_);
       }
-      else if constexpr ((M1 > 0) && (M2 == 0) && (M3 > 0)) {
+      else if constexpr ((D1 > 0) && (D2 == 0) && (D3 > 0)) {
         return OP::apply(a_.dat(i), b_, c_.dat(i));
       }
-      else if constexpr ((M1 > 0) && (M2 > 0) && (M3 == 0)) {
+      else if constexpr ((D1 > 0) && (D2 > 0) && (D3 == 0)) {
         return OP::apply(a_.dat(i), b_.dat(i), c_);
       }
-      else if constexpr ((M1 > 0) && (M2 > 0) && (M3 > 0)) {
+      else if constexpr ((D1 > 0) && (D2 > 0) && (D3 > 0)) {
         return OP::apply(a_.dat(i), b_.dat(i), c_.dat(i));
       }
     }
@@ -964,28 +964,28 @@ namespace mathq {
     //************* Array-style Element Access: x[n] ***********************
     //**********************************************************************
     const E4 operator[](const size_t i) const {
-      if constexpr ((M1 == 0) && (M2 == 0) && (M3 == 0)) {
+      if constexpr ((D1 == 0) && (D2 == 0) && (D3 == 0)) {
         return OP::apply(a_, b_, c_);
       }
-      else if constexpr ((M1 == 0) && (M2 == 0) && (M3 > 0)) {
+      else if constexpr ((D1 == 0) && (D2 == 0) && (D3 > 0)) {
         return OP::apply(a_, b_, c_[i]);
       }
-      else if constexpr ((M1 == 0) && (M2 > 0) && (M3 == 0)) {
+      else if constexpr ((D1 == 0) && (D2 > 0) && (D3 == 0)) {
         return OP::apply(a_, b_[i], c_);
       }
-      else if constexpr ((M1 == 0) && (M2 > 0) && (M3 > 0)) {
+      else if constexpr ((D1 == 0) && (D2 > 0) && (D3 > 0)) {
         return OP::apply(a_, b_[i], c_[i]);
       }
-      else if constexpr ((M1 > 0) && (M2 == 0) && (M3 == 0)) {
+      else if constexpr ((D1 > 0) && (D2 == 0) && (D3 == 0)) {
         return OP::apply(a_[i], b_, c_);
       }
-      else if constexpr ((M1 > 0) && (M2 == 0) && (M3 > 0)) {
+      else if constexpr ((D1 > 0) && (D2 == 0) && (D3 > 0)) {
         return OP::apply(a_[i], b_, c_[i]);
       }
-      else if constexpr ((M1 > 0) && (M2 > 0) && (M3 == 0)) {
+      else if constexpr ((D1 > 0) && (D2 > 0) && (D3 == 0)) {
         return OP::apply(a_[i], b_[i], c_);
       }
-      else if constexpr ((M1 > 0) && (M2 > 0) && (M3 > 0)) {
+      else if constexpr ((D1 > 0) && (D2 > 0) && (D3 > 0)) {
         return OP::apply(a_[i], b_[i], c_[i]);
       }
     }
@@ -994,10 +994,10 @@ namespace mathq {
       return *vptrs;
     }
     size_t size(void) const {
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         return a_.size();
       }
-      else if constexpr (M2 > 0) {
+      else if constexpr (D2 > 0) {
         return b_.size();
       }
       else {
@@ -1008,10 +1008,10 @@ namespace mathq {
       return dims().size();
     }
     Dimensions dims(void) const {
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         return a_.dims();
       }
-      else if constexpr (M2 > 0) {
+      else if constexpr (D2 > 0) {
         return b_.dims();
       }
       else {
@@ -1019,10 +1019,10 @@ namespace mathq {
       }
     }
     std::vector<Dimensions>& deepdims(void) const {
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         return a_.deepdims();
       }
-      else if constexpr (M2 > 0) {
+      else if constexpr (D2 > 0) {
         return b_.deepdims();
       }
       else {
@@ -1030,10 +1030,10 @@ namespace mathq {
       }
     }
     std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         return a_.deepdims(parentdims);
       }
-      else if constexpr (M2 > 0) {
+      else if constexpr (D2 > 0) {
         return b_.deepdims(parentdims);
       }
       else {
@@ -1044,10 +1044,10 @@ namespace mathq {
       return true;
     }
     size_t getDepth(void) const {
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         return a_.getDepth();
       }
-      else if constexpr (M2 > 0) {
+      else if constexpr (D2 > 0) {
         return b_.getDepth();
       }
       else {
@@ -1055,10 +1055,10 @@ namespace mathq {
       }
     }
     size_t elsize(void) const {
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         return a_.elsize();
       }
-      else if constexpr (M2 > 0) {
+      else if constexpr (D2 > 0) {
         return b_.elsize();
       }
       else {
@@ -1066,10 +1066,10 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         return a_.eldeepsize();
       }
-      else if constexpr (M2 > 0) {
+      else if constexpr (D2 > 0) {
         return b_.eldeepsize();
       }
       else {
@@ -1077,10 +1077,10 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (M1 > 0) {
+      if constexpr (D1 > 0) {
         return a_.deepsize();
       }
-      else if constexpr (M2 > 0) {
+      else if constexpr (D2 > 0) {
         return b_.deepsize();
       }
       else {
@@ -1113,7 +1113,7 @@ namespace mathq {
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
 
   private:
     const A& a_;
@@ -1255,7 +1255,7 @@ namespace mathq {
     typedef Number ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = 1;
-    constexpr static int Mvalue = 1;
+    constexpr static int depth_value = 1;
 
   private:
     const A& a_;
@@ -1332,13 +1332,13 @@ namespace mathq {
       return true;
     }
     size_t getDepth(void) const {
-      return Mvalue;
+      return depth_value;
     }
     Dimensions eldims(void) const {
       return x_.eldims();
     }
     size_t elsize(void) const {
-      if constexpr (Mvalue <= 1) {
+      if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
@@ -1346,7 +1346,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (Mvalue <= 1) {
+      if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
@@ -1354,7 +1354,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (Mvalue <= 1) {
+      if constexpr (depth_value <= 1) {
         return this->size();
       }
       else {
@@ -1385,7 +1385,7 @@ namespace mathq {
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
 
   private:
     const X& x_;
@@ -1484,7 +1484,7 @@ namespace mathq {
   class TER_Join : public MArrayExpR<TER_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
   public:
     constexpr static int rank_value = 1;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
     typedef Materialize<Element, Number, depth, rank_value> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;
@@ -1603,7 +1603,7 @@ namespace mathq {
   class TER_Rep : public MArrayExpR<TER_Rep<A, Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
-    constexpr static int Mvalue = 1;
+    constexpr static int depth_value = 1;
     typedef Materialize<Number, Number, 1, 1> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
@@ -1656,10 +1656,10 @@ namespace mathq {
       return true;
     }
     size_t getDepth(void) const {
-      return Mvalue;
+      return depth_value;
     }
     size_t elsize(void) const {
-      if constexpr (Mvalue <= 1) {
+      if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
@@ -1667,7 +1667,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (Mvalue <= 1) {
+      if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
@@ -1675,7 +1675,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (Mvalue <= 1) {
+      if constexpr (depth_value <= 1) {
         return this->size();
       }
       else {

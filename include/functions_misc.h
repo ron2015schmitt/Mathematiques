@@ -167,11 +167,11 @@ namespace mathq {
 // ----------------------------------------------------------------
 
 
-  template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_approx {
+  template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_approx {
   public:
     typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
 
-    static D3 apply(const NT1 d1, const NT2 d2, const DTOL tol) {
+    static NT3 apply(const NT1 d1, const NT2 d2, const DTOL tol) {
       return mathq::approx(d1, d2, tol);
     }
     template <class T1 = E1, class T2 = E2>
@@ -209,7 +209,7 @@ namespace mathq {
       E3 e3;
       NT1 d1;
       NT2 d2;
-      D3 d3;
+      NT3 d3;
       std::string comma = StyledString::get(COMMA).get();
       std::string s = functor_namestyle.apply(stringify(FUNCTOR_approx));
       s += StyledString::get(BRACKET1).get();
@@ -241,13 +241,13 @@ namespace mathq {
   auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
-    typedef bool D3;
-    typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;
+    typedef bool NT3;
+    typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;
     return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
       MArrayExpR<B, E2, NT2, depth, rank>,
       DTOL,
-      E1, E2, DTOL, E3, NT1, NT2, DTOL, D3, depth, depth, 0, depth, rank, rank, 0, rank,
-      FUNCTOR_approx<E1, E2, E3, NT1, NT2, D3> >(x1, x2, tol);
+      E1, E2, DTOL, E3, NT1, NT2, DTOL, NT3, depth, depth, 0, depth, rank, rank, 0, rank,
+      FUNCTOR_approx<E1, E2, E3, NT1, NT2, NT3> >(x1, x2, tol);
   }
 
   // (10) MultiArray<E1(NT1)> , NT2 
@@ -256,13 +256,13 @@ namespace mathq {
   auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
-    typedef bool D3;
-    typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;
+    typedef bool NT3;
+    typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;
     return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
       NT2,
       DTOL,
-      E1, NT2, DTOL, E3, NT1, NT2, DTOL, D3, depth, 0, 0, depth, rank, 0, 0, rank,
-      FUNCTOR_approx<E1, NT2, E3, NT1, NT2, D3> >(x1, x2, tol);
+      E1, NT2, DTOL, E3, NT1, NT2, DTOL, NT3, depth, 0, 0, depth, rank, 0, 0, rank,
+      FUNCTOR_approx<E1, NT2, E3, NT1, NT2, NT3> >(x1, x2, tol);
   }
 
 
@@ -273,13 +273,13 @@ namespace mathq {
   auto approx(NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
-    typedef bool D3;
-    typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;
+    typedef bool NT3;
+    typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;
     return  TER_Ternary<NT1,
       MArrayExpR<B, E2, NT2, depth, rank>,
       DTOL,
-      NT1, E2, DTOL, E3, NT1, NT2, DTOL, D3, 0, depth, 0, depth, 0, rank, 0, rank,
-      FUNCTOR_approx<NT1, E2, E3, NT1, NT2, D3> >(x1, x2, tol);
+      NT1, E2, DTOL, E3, NT1, NT2, DTOL, NT3, 0, depth, 0, depth, 0, rank, 0, rank,
+      FUNCTOR_approx<NT1, E2, E3, NT1, NT2, NT3> >(x1, x2, tol);
   }
 
 
@@ -2030,16 +2030,16 @@ namespace mathq {
 
   // maclaurin(vector coefs, vector vals, max N, x0)
 
-  template <class A, class X, class Element, typename Number, int M1, int M2, int R1, int R2, typename = EnableIf<(M1==1)&&(R1==1)>>
-  auto maclaurin(const MArrayExpR<A, Number, Number, M1, R1>& a, const MArrayExpR<X, Element, Number, M2, R2>& x, const int N, const Number x0) {
-    return TER_Series<MArrayExpR<A, Number, Number, M1, R1>, MArrayExpR<X, Element, Number, M2, R2>, Element, Number, M2, R2>(a, x, N, x0);
+  template <class A, class X, class Element, typename Number, int D1, int D2, int R1, int R2, typename = EnableIf<(D1==1)&&(R1==1)>>
+  auto maclaurin(const MArrayExpR<A, Number, Number, D1, R1>& a, const MArrayExpR<X, Element, Number, D2, R2>& x, const int N, const Number x0) {
+    return TER_Series<MArrayExpR<A, Number, Number, D1, R1>, MArrayExpR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N, x0);
   }
 
   // // taylor(vector coefs, vector vals, max N)
 
-  template <class A, class X, class Element, typename Number, int M1, int M2, int R1, int R2, typename = EnableIf<(M1==1)&&(R1==1)>>
-  auto taylor(const MArrayExpR<A, Number, Number, M1, R1>& a, const MArrayExpR<X, Element, Number, M2, R2>& x, const int N) {
-    return TER_Series<MArrayExpR<A, Number, Number, M1, R1>, MArrayExpR<X, Element, Number, M2, R2>, Element, Number, M2, R2>(a, x, N);
+  template <class A, class X, class Element, typename Number, int D1, int D2, int R1, int R2, typename = EnableIf<(D1==1)&&(R1==1)>>
+  auto taylor(const MArrayExpR<A, Number, Number, D1, R1>& a, const MArrayExpR<X, Element, Number, D2, R2>& x, const int N) {
+    return TER_Series<MArrayExpR<A, Number, Number, D1, R1>, MArrayExpR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N);
   }
 
   // // ifourier(vector cos coefs, vector sin coefs, vector vals, max N, k1=2pi/wavelength or 2pi/period)

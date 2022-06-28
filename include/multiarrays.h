@@ -775,7 +775,7 @@ namespace mathq {
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
 
     X& derived() {
       return static_cast<X&>(*this);
@@ -891,7 +891,7 @@ namespace mathq {
     typedef Element ElementType;
     typedef Number NumberType;
     constexpr static int rank_value = rank;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
 
     X& derived() {
       return static_cast<X&>(*this);

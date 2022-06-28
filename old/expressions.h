@@ -109,11 +109,11 @@ namespace matricks {
   //               note that there is no easy way to define the first template
   //               of MArrayExpR<> below so use NT1
   //---------------------------------------------------------------------------
-  template<class A, class B, class NT1, class NT2, class OP, int M1, int M2>
-    class TER_Binary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Binary<A,B,NT1,NT2,OP,M1,M2> > {
+  template<class A, class B, class NT1, class NT2, class OP, int D1, int D2>
+    class TER_Binary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Binary<A,B,NT1,NT2,OP,D1,D2> > {
   public:
-    typedef typename std::conditional<M1==0,const A,const A&>::type TypeA;
-    typedef typename std::conditional<M2==0,const B,const B&>::type TypeB;
+    typedef typename std::conditional<D1==0,const A,const A&>::type TypeA;
+    typedef typename std::conditional<D2==0,const B,const B&>::type TypeB;
 
   private:
     TypeA a_;
@@ -141,19 +141,19 @@ namespace matricks {
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
     const NumTypeOut dat(const size_t i) const {
-      if constexpr((M1==0)&&(M2==0)) {
+      if constexpr((D1==0)&&(D2==0)) {
 	return OP::apply(a_, b_);
-      } else if constexpr((M1==0)&&(M2>0)) {
+      } else if constexpr((D1==0)&&(D2>0)) {
 	  return OP::apply(a_, b_.dat(i));
-      } else if constexpr((M1>0)&&(M2==0)) {
+      } else if constexpr((D1>0)&&(D2==0)) {
 	  return OP::apply(a_.dat(i), b_);
       } else {
-	if constexpr(M1==M2) {
+	if constexpr(D1==D2) {
 	  return OP::apply(a_.dat(i), b_.dat(i));
-	} else if constexpr(M1==M2+1) {
+	} else if constexpr(D1==D2+1) {
 	  size_t j = i % b_.deepsize();
 	  return OP::apply(a_.dat(i), b_.dat(j));
-	} else if constexpr(M2==M1+1) {
+	} else if constexpr(D2==D1+1) {
 	  size_t j = i % a_.deepsize();
 	  return OP::apply(a_.dat(j), b_.dat(i));
 	}
@@ -164,14 +164,14 @@ namespace matricks {
     //************* Array-style Element Access: x[n] ***********************
     //**********************************************************************
     const NumTypeOut operator[](const size_t i) const {
-      if constexpr((M1==0)&&(M2==0)) {
+      if constexpr((D1==0)&&(D2==0)) {
 	return OP::apply(a_, b_);
-      } else if constexpr((M1==0)&&(M2==1)) {
+      } else if constexpr((D1==0)&&(D2==1)) {
 	  return OP::apply(a_, b_[i]);
-      } else if constexpr((M1==1)&&(M2==0)) {
+      } else if constexpr((D1==1)&&(D2==0)) {
 	  return OP::apply(a_[i], b_);
       } else {
-	if constexpr((M1==1)&&(M2==1)) {
+	if constexpr((D1==1)&&(D2==1)) {
 	    return OP::apply(a_[i], b_[i]);
 	} 
       }
@@ -185,7 +185,7 @@ namespace matricks {
       return *vptrs;
     }
     size_t size(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.size();
       } else {
         return b_.size();
@@ -195,7 +195,7 @@ namespace matricks {
       return dims().size();
     }
     Dimensions dims(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.dims();
       } else {
         return b_.dims();
@@ -205,28 +205,28 @@ namespace matricks {
       return true;
     }
     size_t getDepth(void) const {
-      if constexpr(M1>=M2) {
-        return M1;
+      if constexpr(D1>=D2) {
+        return D1;
       } else {
-        return M2;
+        return D2;
       }
     }
     size_t elsize(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.elsize();
       } else {
         return b_.elsize();
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.eldeepsize();
       } else {
         return b_.eldeepsize();
       }
     }
     size_t deepsize(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.deepsize();
       } else {
         return b_.deepsize();
@@ -262,12 +262,12 @@ namespace matricks {
   //               note that there is no easy way to define the first template
   //               of MArrayExpR<> below so use NT1
   //---------------------------------------------------------------------------
-  template<class A, class B, class C, class NT1, class NT2, class D3, class OP, int M1, int M2, int M3>
-    class TER_Ternary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Ternary<A,B,C,NT1,NT2,D3,OP,M1,M2,M3> > {
+  template<class A, class B, class C, class NT1, class NT2, class NT3, class OP, int D1, int D2, int D3>
+    class TER_Ternary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Ternary<A,B,C,NT1,NT2,NT3,OP,D1,D2,D3> > {
   public:
-    typedef typename std::conditional<M1==0,const A,const A&>::type TypeA;
-    typedef typename std::conditional<M2==0,const B,const B&>::type TypeB;
-    typedef typename std::conditional<M3==0,const C,const C&>::type TypeC;
+    typedef typename std::conditional<D1==0,const A,const A&>::type TypeA;
+    typedef typename std::conditional<D2==0,const B,const B&>::type TypeB;
+    typedef typename std::conditional<D3==0,const C,const C&>::type TypeC;
 
     
   private:
@@ -279,7 +279,7 @@ namespace matricks {
   public:
     typedef typename NumberTrait<NT1>::Type NumType1;
     typedef typename NumberTrait<NT2>::Type NumType2;
-    typedef typename NumberTrait<D3>::Type NumType3;
+    typedef typename NumberTrait<NT3>::Type NumType3;
     typedef typename OP::Type NumTypeOut;
     
 
@@ -300,19 +300,19 @@ namespace matricks {
     // TODO: below assumes c_ is a scalar. add other cases as needed
     
     const NumTypeOut dat(const size_t i) const {
-      if constexpr((M1==0)&&(M2==0)) {
+      if constexpr((D1==0)&&(D2==0)) {
 	  return OP::apply(a_, b_, c_);
-      } else if constexpr((M1==0)&&(M2>0)) {
+      } else if constexpr((D1==0)&&(D2>0)) {
 	  return OP::apply(a_, b_.dat(i), c_);
-      } else if constexpr((M1>0)&&(M2==0)) {
+      } else if constexpr((D1>0)&&(D2==0)) {
 	  return OP::apply(a_.dat(i), b_, c_);
       } else {
-	if constexpr(M1==M2) {
+	if constexpr(D1==D2) {
 	    return OP::apply(a_.dat(i), b_.dat(i), c_);
-	} else if constexpr(M1==M2+1) {
+	} else if constexpr(D1==D2+1) {
 	  size_t j = i % b_.deepsize();
 	  return OP::apply(a_.dat(i), b_.dat(j), c_);
-	} else if constexpr(M2==M1+1) {
+	} else if constexpr(D2==D1+1) {
 	  size_t j = i % a_.deepsize();
 	  return OP::apply(a_.dat(j), b_.dat(i), c_);
 	}
@@ -325,14 +325,14 @@ namespace matricks {
     // TODO: below assumes c_ is a scalar. add other cases as needed
 
     const NumTypeOut operator[](const size_t i) const {
-      if constexpr((M1==0)&&(M2==0)) {
+      if constexpr((D1==0)&&(D2==0)) {
 	  return OP::apply(a_, b_, c_);
-      } else if constexpr((M1==0)&&(M2==1)) {
+      } else if constexpr((D1==0)&&(D2==1)) {
 	  return OP::apply(a_, b_[i], c_);
-      } else if constexpr((M1==1)&&(M2==0)) {
+      } else if constexpr((D1==1)&&(D2==0)) {
 	  return OP::apply(a_[i], b_, c_);
       } else {
-	if constexpr((M1==1)&&(M2==1)) {
+	if constexpr((D1==1)&&(D2==1)) {
 	    return OP::apply(a_[i], b_[i], c_);
 	} 
       }
@@ -347,21 +347,21 @@ namespace matricks {
     // TODO: below assumes c_ is a scalar. add other cases as needed
 
     size_t size(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.size();
       } else {
         return b_.size();
       }
     }
     size_t ndims(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.ndims();
       } else {
         return b_.ndims();
       }
     }
     Dimensions dims(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.dims();
       } else {
         return b_.dims();
@@ -371,28 +371,28 @@ namespace matricks {
       return true;
     }
     size_t getDepth(void) const {
-      if constexpr(M1>=M2) {
-        return M1;
+      if constexpr(D1>=D2) {
+        return D1;
       } else {
-        return M2;
+        return D2;
       }
     }
     size_t elsize(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.elsize();
       } else {
         return b_.elsize();
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.eldeepsize();
       } else {
         return b_.eldeepsize();
       }
     }
     size_t deepsize(void) const {
-      if constexpr(M1>=M2) {
+      if constexpr(D1>=D2) {
         return a_.deepsize();
       } else {
         return b_.deepsize();

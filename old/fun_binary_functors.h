@@ -13,9 +13,9 @@ namespace mathq {
 // ----------------------------------------------------------------
 
   
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_add { 
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_add { 
 public:								
-  static D3 apply(const NT1 d1, const NT2 d2) {				
+  static NT3 apply(const NT1 d1, const NT2 d2) {				
     return d1 + d2;							
   }									
   template <class T1=E1, class T2=E2>						
@@ -52,7 +52,7 @@ public:
     E3 e3;								
     NT1 d1;								
     NT2 d2;								
-    D3 d3;								
+    NT3 d3;								
     std::string comma =  StyledString::get(COMMA).get();		
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_add)); 
     s += StyledString::get(BRACKET1).get();				
@@ -76,9 +76,9 @@ public:
 // ----------------------------------------------------------------
 
   
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_subtract { 
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_subtract { 
 public:								
-  static D3 apply(const NT1 d1, const NT2 d2) {				
+  static NT3 apply(const NT1 d1, const NT2 d2) {				
     return d1 - d2;							
   }									
   template <class T1=E1, class T2=E2>						
@@ -115,7 +115,7 @@ public:
     E3 e3;								
     NT1 d1;								
     NT2 d2;								
-    D3 d3;								
+    NT3 d3;								
     std::string comma =  StyledString::get(COMMA).get();		
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_subtract)); 
     s += StyledString::get(BRACKET1).get();				
@@ -139,9 +139,9 @@ public:
 // ----------------------------------------------------------------
 
   
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_multiply { 
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_multiply { 
 public:								
-  static D3 apply(const NT1 d1, const NT2 d2) {				
+  static NT3 apply(const NT1 d1, const NT2 d2) {				
     return d1 * d2;							
   }									
   template <class T1=E1, class T2=E2>						
@@ -178,7 +178,7 @@ public:
     E3 e3;								
     NT1 d1;								
     NT2 d2;								
-    D3 d3;								
+    NT3 d3;								
     std::string comma =  StyledString::get(COMMA).get();		
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_multiply)); 
     s += StyledString::get(BRACKET1).get();				
@@ -202,9 +202,9 @@ public:
 // ----------------------------------------------------------------
 
   
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_divide { 
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_divide { 
 public:								
-  static D3 apply(const NT1 d1, const NT2 d2) {				
+  static NT3 apply(const NT1 d1, const NT2 d2) {				
     return d1 / d2;							
   }									
   template <class T1=E1, class T2=E2>						
@@ -241,7 +241,7 @@ public:
     E3 e3;								
     NT1 d1;								
     NT2 d2;								
-    D3 d3;								
+    NT3 d3;								
     std::string comma =  StyledString::get(COMMA).get();		
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_divide)); 
     s += StyledString::get(BRACKET1).get();				

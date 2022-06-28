@@ -211,7 +211,7 @@ int main(int argc, char *argv[]) {
     TLDISP(e);
     TLDISP(d);
     TLDISP(decltype(v3)::rank_value);
-    TLDISP(decltype(v3)::Mvalue);
+    TLDISP(decltype(v3)::depth_value);
   }
 
 

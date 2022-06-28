@@ -195,8 +195,8 @@ namespace mathq {
 
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value&& std::is_arithmetic<NT2>::value>> auto
     Complex(const NT1& xr, const NT2& xi) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    return std::complex<D3>((D3)xr, (D3)xi);
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    return std::complex<NT3>((NT3)xr, (NT3)xi);
   }
 
 
@@ -204,8 +204,8 @@ namespace mathq {
 
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value&& std::is_arithmetic<NT2>::value>> auto
     polar(const NT1& r, const NT2& theta) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    return std::polar<D3>((D3)r, (D3)theta);
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    return std::polar<NT3>((NT3)r, (NT3)theta);
   }
 
   // ***************************************************************************
@@ -217,10 +217,10 @@ namespace mathq {
   template <typename NT1, typename NT2> inline
     std::complex<typename AddType<NT1, NT2>::Type>
     operator+(const std::complex<NT1>& x1, const std::complex<NT2>& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = real(x1)+real(x2);
-    D3 yI = imag(x1)+imag(x2);
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = real(x1)+real(x2);
+    NT3 yI = imag(x1)+imag(x2);
     T3 y(yR, yI);
     return y;
   }
@@ -230,10 +230,10 @@ namespace mathq {
   template <typename NT1, typename NT2> inline
     std::complex<typename SubType<NT1, NT2>::Type>
     operator-(const std::complex<NT1>& x1, const std::complex<NT2>& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = real(x1)-real(x2);
-    D3 yI = imag(x1)-imag(x2);
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = real(x1)-real(x2);
+    NT3 yI = imag(x1)-imag(x2);
     T3 y(yR, yI);
     return y;
   }
@@ -243,10 +243,10 @@ namespace mathq {
   template <typename NT1, typename NT2> inline
     std::complex<typename MultType<NT1, NT2>::Type>
     operator*(const std::complex<NT1>& x1, const std::complex<NT2>& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = real(x1)*real(x2)-imag(x1)*imag(x2);
-    D3 yI = real(x1)*imag(x2)+imag(x1)*real(x2);
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = real(x1)*real(x2)-imag(x1)*imag(x2);
+    NT3 yI = real(x1)*imag(x2)+imag(x1)*real(x2);
     T3 y(yR, yI);
     return y;
   }
@@ -257,11 +257,11 @@ namespace mathq {
   template <typename NT1, typename NT2> inline
     std::complex<typename DivType<NT1, NT2>::Type>
     operator/(const std::complex<NT1>& x1, const std::complex<NT2>& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 topR = real(x1)*real(x2)+imag(x1)*imag(x2);
-    D3 topI = -real(x1)*imag(x2)+imag(x1)*real(x2);
-    D3 bot = real(x2)*real(x2)+imag(x2)*imag(x2);
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 topR = real(x1)*real(x2)+imag(x1)*imag(x2);
+    NT3 topI = -real(x1)*imag(x2)+imag(x1)*real(x2);
+    NT3 bot = real(x2)*real(x2)+imag(x2)*imag(x2);
     return T3(topR/bot, topI/bot);
   }
 
@@ -276,10 +276,10 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >inline
     std::complex<typename AddType<NT1, NT2>::Type>
     operator+(const std::complex<NT1>& x1, const NT2& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = real(x1)+x2;
-    D3 yI = imag(x1);
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = real(x1)+x2;
+    NT3 yI = imag(x1);
     return T3(yR, yI);
   }
 
@@ -288,10 +288,10 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value> >inline
     std::complex<typename AddType<NT1, NT2>::Type>
     operator+(const NT1& x1, const std::complex<NT2>& x2) {
-    typedef typename AddType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = x1+real(x2);
-    D3 yI = imag(x2);
+    typedef typename AddType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = x1+real(x2);
+    NT3 yI = imag(x2);
     return T3(yR, yI);
   }
 
@@ -301,10 +301,10 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >inline
     std::complex<typename SubType<NT1, NT2>::Type>
     operator-(const std::complex<NT1>& x1, const NT2& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = real(x1)-x2;
-    D3 yI = imag(x1);
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = real(x1)-x2;
+    NT3 yI = imag(x1);
     return T3(yR, yI);
   }
 
@@ -313,10 +313,10 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value> >inline
     std::complex<typename SubType<NT1, NT2>::Type>
     operator-(const NT1& x1, const std::complex<NT2>& x2) {
-    typedef typename SubType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = x1-real(x2);
-    D3 yI = -imag(x2);
+    typedef typename SubType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = x1-real(x2);
+    NT3 yI = -imag(x2);
     return T3(yR, yI);
   }
 
@@ -326,10 +326,10 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >inline
     std::complex<typename MultType<NT1, NT2>::Type>
     operator*(const std::complex<NT1>& x1, const NT2& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = real(x1)*x2;
-    D3 yI = imag(x1)*x2;
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = real(x1)*x2;
+    NT3 yI = imag(x1)*x2;
     return T3(yR, yI);
   }
 
@@ -338,10 +338,10 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value> >inline
     std::complex<typename MultType<NT1, NT2>::Type>
     operator*(const NT1& x1, const std::complex<NT2>& x2) {
-    typedef typename MultType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = x1*real(x2);
-    D3 yI = x1*imag(x2);
+    typedef typename MultType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = x1*real(x2);
+    NT3 yI = x1*imag(x2);
     return T3(yR, yI);
   }
 
@@ -351,10 +351,10 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >inline
     std::complex<typename DivType<NT1, NT2>::Type>
     operator/(const std::complex<NT1>& x1, const NT2& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 yR = real(x1)/x2;
-    D3 yI = imag(x1)/x2;
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 yR = real(x1)/x2;
+    NT3 yI = imag(x1)/x2;
     return T3(yR, yI);
   }
 
@@ -363,11 +363,11 @@ namespace mathq {
   template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value> >inline
     std::complex<typename DivType<NT1, NT2>::Type>
     operator/(const NT1& x1, const std::complex<NT2>& x2) {
-    typedef typename DivType<NT1, NT2>::Type D3;
-    typedef typename std::complex<D3> T3;
-    D3 topR = x1*real(x2);
-    D3 topI = -x1*imag(x2);
-    D3 bot = real(x2)*real(x2)+imag(x2)*imag(x2);
+    typedef typename DivType<NT1, NT2>::Type NT3;
+    typedef typename std::complex<NT3> T3;
+    NT3 topR = x1*real(x2);
+    NT3 topI = -x1*imag(x2);
+    NT3 bot = real(x2)*real(x2)+imag(x2)*imag(x2);
     return T3(topR/bot, topI/bot);
   }
 

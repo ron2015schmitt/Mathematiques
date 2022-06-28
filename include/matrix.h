@@ -18,7 +18,7 @@ namespace mathq {
    *                 NumberType = number type
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
-   *                 Mvalue = tensor depth. if Element=NumberType, then Mvalue=1.
+   *                 depth_value = tensor depth. if Element=NumberType, then depth_value=1.
    *
    * ROW MAJOR CONVENTION
    ********************************************************************
@@ -39,7 +39,7 @@ namespace mathq {
 
     constexpr static int rank = 2;
     constexpr static int rank_value = 2;
-    constexpr static int Mvalue = 1 + NumberTrait<Element>::getDepth();
+    constexpr static int depth_value = 1 + NumberTrait<Element>::getDepth();
 
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
@@ -108,7 +108,7 @@ namespace mathq {
 
     // --------------------- Matrix(NumberType value)  ---------------------
 
-    template<size_t NN = NR*NC, EnableIf<(NN > 0)&&(Mvalue>1)> = 0>
+    template<size_t NN = NR*NC, EnableIf<(NN > 0)&&(depth_value>1)> = 0>
 
     explicit Matrix<Element, NR, NC>(const NumberType val) {
       *this = val;
@@ -148,7 +148,7 @@ namespace mathq {
 
 
     template <class X>
-    Matrix<Element, NR, NC>(const MArrayExpR<X, Element, NumberType, Mvalue, rank>& x) {
+    Matrix<Element, NR, NC>(const MArrayExpR<X, Element, NumberType, depth_value, rank>& x) {
       resize(x.dims()[0], x.dims()[1]);
       *this = x;
     }
@@ -232,11 +232,11 @@ namespace mathq {
 
 
     constexpr size_t getDepth(void) const {
-      return Mvalue;
+      return depth_value;
     }
     Dimensions eldims(void) const {
       Dimensions dimensions();
-      if constexpr (Mvalue>1) {
+      if constexpr (depth_value>1) {
         if (size()>0) {
           return data_[0].dims();
         }
@@ -246,7 +246,7 @@ namespace mathq {
 
     // the size of each element
     inline size_t elsize(void) const {
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         return 1;
       }
       else {
@@ -262,7 +262,7 @@ namespace mathq {
 
     // the deep size of an element: the total number of numbers in an element
     inline size_t eldeepsize(void) const {
-      if constexpr (Mvalue<2) {
+      if constexpr (depth_value<2) {
         return 1;
       }
       else {
@@ -278,7 +278,7 @@ namespace mathq {
 
     // the total number of numbers in this data structure
     size_t deepsize(void) const {
-      if constexpr (Mvalue<2) {
+      if constexpr (depth_value<2) {
         return this->size();
       }
       else {
@@ -291,7 +291,7 @@ namespace mathq {
     }
     std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
-      if constexpr (Mvalue>1) {
+      if constexpr (depth_value>1) {
         if (size()>0) {
           data_[0].deepdims(parentdims);
         }
@@ -338,7 +338,7 @@ namespace mathq {
       std::vector<Dimensions> deepdims(deepdims_new);
       Dimensions newdims = deepdims[0];
       resize(newdims);
-      if constexpr (Mvalue>1) {
+      if constexpr (depth_value>1) {
         deepdims.erase(deepdims.begin());
         for (size_t i = 0; i < size(); i++) {
           std::vector<Dimensions> ddims(deepdims);
@@ -521,7 +521,7 @@ namespace mathq {
     NumberType& dat(const size_t n) {
       using namespace::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         int k = n;
         if (k < 0) {
           k += size();
@@ -540,7 +540,7 @@ namespace mathq {
     const NumberType& dat(const size_t n)  const {
       using namespace::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         int k = n;
         if (k < 0) {
           k += size();
@@ -573,7 +573,7 @@ namespace mathq {
       //MOUT << "  ";
       //TLDISP(inds_next);
 
-      if constexpr (Mvalue>1) {
+      if constexpr (depth_value>1) {
         return (*this)(n, m).dat(inds_next);
       }
       else {
@@ -589,7 +589,7 @@ namespace mathq {
       inds_next.erase(inds_next.begin());
       size_t m = inds_next[0];
       inds_next.erase(inds_next.begin());
-      if constexpr (Mvalue>1) {
+      if constexpr (depth_value>1) {
         return (*this)(n, m).dat(inds_next);
       }
       else {
@@ -604,11 +604,11 @@ namespace mathq {
     // "read/write": x.dat(DeepIndices)
     NumberType& dat(const DeepIndices& dinds) {
       const size_t mydepth = dinds.size();
-      const Indices& inds = dinds[mydepth -Mvalue];
+      const Indices& inds = dinds[mydepth -depth_value];
       size_t n = inds[0];
       size_t m = inds[1];
 
-      if constexpr (Mvalue>1) {
+      if constexpr (depth_value>1) {
         return (*this)(n, m).dat(dinds);
       }
       else {
@@ -619,11 +619,11 @@ namespace mathq {
     // "read": x.dat(DeepIndices)
     const NumberType dat(const DeepIndices& dinds)  const {
       const size_t mydepth = dinds.size();
-      const Indices& inds = dinds[mydepth -Mvalue];
+      const Indices& inds = dinds[mydepth -depth_value];
       size_t n = inds[0];
       size_t m = inds[1];
 
-      if constexpr (Mvalue>1) {
+      if constexpr (depth_value>1) {
         return (*this)(n, m).dat(dinds);
       }
       else {
@@ -771,11 +771,11 @@ namespace mathq {
       return *this;
     }
 
-    // ----------------------Matrix = Matrix<Element,NR2,NC2,NumberType,Mvalue> ----------------
+    // ----------------------Matrix = Matrix<Element,NR2,NC2,NumberType,depth_value> ----------------
 
     template<int NR2, int NC2>
     Matrix<Element, NR, NC>& operator=(const Matrix<Element, NR2, NC2>& m) {
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         TLDISP(m.dims());
         resize(m.dims());
         for (size_t i = 0; i < size(); i++) {
@@ -792,11 +792,11 @@ namespace mathq {
     }
 
 
-    // ----------------- matrix = MArrayExpR<X,Element,NumberType,Mvalue,rank> ----------------
+    // ----------------- matrix = MArrayExpR<X,Element,NumberType,depth_value,rank> ----------------
     template <class X> Matrix<Element, NR, NC>&
-      operator=(const MArrayExpR<X, Element, NumberType, Mvalue, rank>& x) {
+      operator=(const MArrayExpR<X, Element, NumberType, depth_value, rank>& x) {
 
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         resize(x.dims());
         // TODO: use (r,c) instead
         for (size_t i = 0; i < size(); i++) {
@@ -963,10 +963,10 @@ namespace mathq {
         s += "NC=";
         s += num2string(NC);
       }
-      //    if (Mvalue>1) {
+      //    if (depth_value>1) {
       //      s += StyledString::get(COMMA).get();
-      //      s += "Mvalue=";
-      //      s += num2string(Mvalue);
+      //      s += "depth_value=";
+      //      s += num2string(depth_value);
       //    }
       s += StyledString::get(ANGLE2).get();
       return s;

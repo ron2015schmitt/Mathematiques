@@ -210,11 +210,11 @@ namespace mathq {
   class
     TER_Unary;
 
-  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class D3, int M1, int M2, int M3, int R1, int R2, int R3, class OP>
+  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, int D1, int D2, int D3, int R1, int R2, int R3, class OP>
   class
     TER_Binary;
 
-  template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class D3, class D4, int M1, int M2, int M3, int M4, int R1, int R2, int R3, int R4, class OP>
+  template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4, int D1, int D2, int D3, int M4, int R1, int R2, int R3, int R4, class OP>
   class
     TER_Ternary;
 
@@ -1356,10 +1356,10 @@ namespace mathq {
   public:
     typedef DOUT(type)(NT1, NT2);
   };
-  template <typename NT1, typename NT2, typename D3, typename DOUT>
+  template <typename NT1, typename NT2, typename NT3, typename DOUT>
   class FunctionType3 {
   public:
-    typedef DOUT(type)(NT1, NT2, D3);
+    typedef DOUT(type)(NT1, NT2, NT3);
   };
 
 

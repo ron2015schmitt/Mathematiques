@@ -14,8 +14,8 @@ namespace mathq {
   class TERW_Subset : public  MArrayExpRW<TERW_Subset<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
-    constexpr static int Mvalue = 1;
-    typedef Materialize<Number, Number, Mvalue, rank_value> ConcreteType;
+    constexpr static int depth_value = 1;
+    typedef Materialize<Number, Number, depth_value, rank_value> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
 
@@ -78,7 +78,7 @@ namespace mathq {
     }
 
     template <class Y, class NT2>
-    TERW_Subset<Number>& operator=(const MArrayExpR<Y, NT2, NT2, Mvalue, rank_value>& rhs) {
+    TERW_Subset<Number>& operator=(const MArrayExpR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
       return this->equals(rhs);
     }
 
@@ -114,10 +114,10 @@ namespace mathq {
       return true;
     }
     size_t getDepth(void) const {
-      return Mvalue;
+      return depth_value;
     }
     size_t elsize(void) const {
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         return 1;
       }
       else {
@@ -125,7 +125,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         return 1;
       }
       else {
@@ -133,7 +133,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         return this->size();
       }
       else {
@@ -162,8 +162,8 @@ namespace mathq {
   class TERW_Submask : public  MArrayExpRW<TERW_Submask<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
-    constexpr static int Mvalue = 1;
-    typedef Materialize<Number, Number, Mvalue, rank_value> ConcreteType;
+    constexpr static int depth_value = 1;
+    typedef Materialize<Number, Number, depth_value, rank_value> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
 
@@ -207,7 +207,7 @@ namespace mathq {
     }
 
     template <class Y, class NT2>
-    TERW_Submask<Number>& operator=(const MArrayExpR<Y, NT2, NT2, Mvalue, rank_value>& rhs) {
+    TERW_Submask<Number>& operator=(const MArrayExpR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
       return this->equals(rhs);
     }
 
@@ -243,10 +243,10 @@ namespace mathq {
       return true;
     }
     size_t getDepth(void) const {
-      return Mvalue;
+      return depth_value;
     }
     size_t elsize(void) const {
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         return 1;
       }
       else {
@@ -254,7 +254,7 @@ namespace mathq {
       }
     }
     size_t eldeepsize(void) const {
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         return 1;
       }
       else {
@@ -262,7 +262,7 @@ namespace mathq {
       }
     }
     size_t deepsize(void) const {
-      if constexpr (Mvalue<=1) {
+      if constexpr (depth_value<=1) {
         return this->size();
       }
       else {
@@ -294,7 +294,7 @@ namespace mathq {
   class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
   public:
     constexpr static int rank_value = 1;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
     typedef Materialize<Element, Number, depth, rank_value> ConcreteType;
     typedef Element ElementType;
     typedef Number NumberType;

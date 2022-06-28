@@ -23,9 +23,9 @@ namespace mathq {
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_add {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_add {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 + d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -62,7 +62,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_add));
     s += StyledString::get(BRACKET1).get();
@@ -86,9 +86,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_subtract {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_subtract {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 - d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -125,7 +125,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_subtract));
     s += StyledString::get(BRACKET1).get();
@@ -149,9 +149,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_multiply {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_multiply {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 * d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -188,7 +188,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_multiply));
     s += StyledString::get(BRACKET1).get();
@@ -212,9 +212,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_divide {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_divide {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 / d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -251,7 +251,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_divide));
     s += StyledString::get(BRACKET1).get();
@@ -275,9 +275,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_equals {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_equals {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 == d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -314,7 +314,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_equals));
     s += StyledString::get(BRACKET1).get();
@@ -338,9 +338,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_notequals {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_notequals {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 != d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -377,7 +377,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_notequals));
     s += StyledString::get(BRACKET1).get();
@@ -401,9 +401,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_greater {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_greater {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 > d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -440,7 +440,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_greater));
     s += StyledString::get(BRACKET1).get();
@@ -464,9 +464,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_greatereq {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_greatereq {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 >= d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -503,7 +503,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_greatereq));
     s += StyledString::get(BRACKET1).get();
@@ -527,9 +527,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_less {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_less {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 < d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -566,7 +566,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_less));
     s += StyledString::get(BRACKET1).get();
@@ -590,9 +590,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_lesseq {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_lesseq {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 <= d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -629,7 +629,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_lesseq));
     s += StyledString::get(BRACKET1).get();
@@ -653,9 +653,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_and {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_and {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 && d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -692,7 +692,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_and));
     s += StyledString::get(BRACKET1).get();
@@ -716,9 +716,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_or {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_or {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return d1 || d2;
   }
   template <class T1 = E1, class T2 = E2>
@@ -755,7 +755,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_or));
     s += StyledString::get(BRACKET1).get();
@@ -779,9 +779,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_atan2 {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_atan2 {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::atan2(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -818,7 +818,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_atan2));
     s += StyledString::get(BRACKET1).get();
@@ -842,9 +842,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_pow {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_pow {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::pow(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -881,7 +881,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_pow));
     s += StyledString::get(BRACKET1).get();
@@ -905,9 +905,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_beta {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_beta {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::beta(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -944,7 +944,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_beta));
     s += StyledString::get(BRACKET1).get();
@@ -968,9 +968,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_legendre {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_legendre {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::legendre(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1007,7 +1007,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_legendre));
     s += StyledString::get(BRACKET1).get();
@@ -1031,9 +1031,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_laguerre {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_laguerre {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::laguerre(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1070,7 +1070,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_laguerre));
     s += StyledString::get(BRACKET1).get();
@@ -1094,9 +1094,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_hermite {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_hermite {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::hermite(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1133,7 +1133,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_hermite));
     s += StyledString::get(BRACKET1).get();
@@ -1157,9 +1157,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_sph_bessel {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_sph_bessel {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::sph_bessel(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1196,7 +1196,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_sph_bessel));
     s += StyledString::get(BRACKET1).get();
@@ -1220,9 +1220,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_sph_neumann {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_sph_neumann {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::sph_neumann(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1259,7 +1259,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_sph_neumann));
     s += StyledString::get(BRACKET1).get();
@@ -1283,9 +1283,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_cyl_bessel_i {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_cyl_bessel_i {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::cyl_bessel_i(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1322,7 +1322,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_cyl_bessel_i));
     s += StyledString::get(BRACKET1).get();
@@ -1346,9 +1346,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_cyl_bessel_j {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_cyl_bessel_j {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::cyl_bessel_j(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1385,7 +1385,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_cyl_bessel_j));
     s += StyledString::get(BRACKET1).get();
@@ -1409,9 +1409,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_cyl_bessel_k {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_cyl_bessel_k {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::cyl_bessel_k(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1448,7 +1448,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_cyl_bessel_k));
     s += StyledString::get(BRACKET1).get();
@@ -1472,9 +1472,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_cyl_neumann {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_cyl_neumann {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::cyl_neumann(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1511,7 +1511,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_cyl_neumann));
     s += StyledString::get(BRACKET1).get();
@@ -1535,9 +1535,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_ellint_1 {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_ellint_1 {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::ellint_1(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1574,7 +1574,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_ellint_1));
     s += StyledString::get(BRACKET1).get();
@@ -1598,9 +1598,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_ellint_2 {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_ellint_2 {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return std::ellint_2(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1637,7 +1637,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_ellint_2));
     s += StyledString::get(BRACKET1).get();
@@ -1661,9 +1661,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_Complex {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_Complex {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return mathq::Complex(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1700,7 +1700,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_Complex));
     s += StyledString::get(BRACKET1).get();
@@ -1724,9 +1724,9 @@ public:
 // ----------------------------------------------------------------
 
 
-template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_polar {
+template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_polar {
 public:
-  static D3 apply(const NT1 d1, const NT2 d2) {
+  static NT3 apply(const NT1 d1, const NT2 d2) {
     return mathq::polar(d1, d2);
   }
   template <class T1 = E1, class T2 = E2>
@@ -1763,7 +1763,7 @@ public:
     E3 e3;
     NT1 d1;
     NT2 d2;
-    D3 d3;
+    NT3 d3;
     std::string comma = StyledString::get(COMMA).get();
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_polar));
     s += StyledString::get(BRACKET1).get();
@@ -1808,12 +1808,12 @@ public:
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator+(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename AddType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename AddType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_add<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -1823,12 +1823,12 @@ auto operator+(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator+(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename AddType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename AddType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_add<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_add<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -1837,12 +1837,12 @@ auto operator+(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator+(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename AddType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename AddType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_add<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_add<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -1852,19 +1852,19 @@ auto operator+(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator+(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename AddType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator+(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename AddType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_add<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_add<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -1872,72 +1872,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator+(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename AddType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator+(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename AddType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_add<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_add<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> + MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Addition
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator+(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator+(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename AddType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename AddType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_add<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> + MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Addition
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator+(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator+(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename AddType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename AddType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_add<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -1962,12 +1962,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator-(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename SubType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename SubType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_subtract<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_subtract<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -1977,12 +1977,12 @@ auto operator-(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator-(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename SubType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename SubType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_subtract<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_subtract<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -1991,12 +1991,12 @@ auto operator-(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator-(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename SubType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename SubType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_subtract<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_subtract<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2006,19 +2006,19 @@ auto operator-(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator-(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename SubType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator-(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename SubType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_subtract<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_subtract<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2026,72 +2026,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator-(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename SubType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator-(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename SubType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_subtract<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_subtract<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> - MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Subtraction
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator-(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator-(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename SubType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename SubType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_subtract<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_subtract<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> - MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Subtraction
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator-(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator-(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename SubType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename SubType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_subtract<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_subtract<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2116,12 +2116,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator*(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_multiply<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_multiply<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2131,12 +2131,12 @@ auto operator*(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator*(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_multiply<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_multiply<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2145,12 +2145,12 @@ auto operator*(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator*(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_multiply<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_multiply<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2160,19 +2160,19 @@ auto operator*(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator*(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator*(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_multiply<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_multiply<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2180,72 +2180,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator*(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator*(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_multiply<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_multiply<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> * MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Multiplication
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator*(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator*(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_multiply<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_multiply<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> * MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Multiplication
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator*(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator*(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_multiply<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_multiply<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2270,12 +2270,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator/(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename DivType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename DivType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_divide<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_divide<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2285,12 +2285,12 @@ auto operator/(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator/(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename DivType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename DivType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_divide<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_divide<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2299,12 +2299,12 @@ auto operator/(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator/(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename DivType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename DivType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_divide<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_divide<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2314,19 +2314,19 @@ auto operator/(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator/(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename DivType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator/(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename DivType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_divide<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_divide<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2334,72 +2334,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator/(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename DivType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator/(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename DivType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_divide<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_divide<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> / MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Division
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator/(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator/(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename DivType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename DivType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_divide<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_divide<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> / MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Division
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator/(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator/(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename DivType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename DivType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_divide<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_divide<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2424,12 +2424,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator==(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_equals<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_equals<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2439,12 +2439,12 @@ auto operator==(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator==(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_equals<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_equals<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2453,12 +2453,12 @@ auto operator==(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator==(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_equals<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_equals<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2468,19 +2468,19 @@ auto operator==(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator==(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator==(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_equals<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_equals<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2488,72 +2488,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator==(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator==(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_equals<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_equals<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> == MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Equal to
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator==(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator==(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_equals<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_equals<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> == MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Equal to
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator==(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator==(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_equals<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_equals<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2578,12 +2578,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator!=(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_notequals<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_notequals<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2593,12 +2593,12 @@ auto operator!=(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator!=(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_notequals<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_notequals<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2607,12 +2607,12 @@ auto operator!=(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator!=(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_notequals<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_notequals<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2622,19 +2622,19 @@ auto operator!=(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator!=(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator!=(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_notequals<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_notequals<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2642,72 +2642,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator!=(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator!=(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_notequals<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_notequals<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> != MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Not equal to
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator!=(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator!=(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_notequals<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_notequals<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> != MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Not equal to
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator!=(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator!=(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_notequals<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_notequals<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2732,12 +2732,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator>(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_greater<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_greater<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2747,12 +2747,12 @@ auto operator>(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator>(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_greater<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_greater<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2761,12 +2761,12 @@ auto operator>(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator>(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_greater<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_greater<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2776,19 +2776,19 @@ auto operator>(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator>(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator>(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_greater<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_greater<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2796,72 +2796,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator>(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator>(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_greater<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_greater<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> > MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Greater than
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator>(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator>(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_greater<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_greater<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> > MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Greater than
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator>(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator>(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_greater<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_greater<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2886,12 +2886,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator>=(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_greatereq<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_greatereq<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2901,12 +2901,12 @@ auto operator>=(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator>=(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_greatereq<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_greatereq<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2915,12 +2915,12 @@ auto operator>=(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator>=(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_greatereq<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_greatereq<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2930,19 +2930,19 @@ auto operator>=(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator>=(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator>=(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_greatereq<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_greatereq<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -2950,72 +2950,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator>=(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator>=(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_greatereq<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_greatereq<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> >= MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Greater than or equal to
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator>=(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator>=(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_greatereq<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_greatereq<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> >= MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Greater than or equal to
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator>=(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator>=(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_greatereq<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_greatereq<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3040,12 +3040,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator<(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_less<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_less<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3055,12 +3055,12 @@ auto operator<(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator<(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_less<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_less<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3069,12 +3069,12 @@ auto operator<(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator<(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_less<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_less<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3084,19 +3084,19 @@ auto operator<(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator<(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator<(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_less<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_less<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3104,72 +3104,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator<(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator<(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_less<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_less<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> < MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Less than
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator<(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator<(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_less<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_less<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> < MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Less than
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator<(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator<(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_less<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_less<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3194,12 +3194,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator<=(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_lesseq<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_lesseq<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3209,12 +3209,12 @@ auto operator<=(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator<=(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_lesseq<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_lesseq<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3223,12 +3223,12 @@ auto operator<=(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator<=(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_lesseq<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_lesseq<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3238,19 +3238,19 @@ auto operator<=(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator<=(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator<=(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_lesseq<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_lesseq<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3258,72 +3258,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator<=(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename RelType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator<=(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_lesseq<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_lesseq<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> <= MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Less than or equal to
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator<=(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator<=(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_lesseq<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_lesseq<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> <= MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Less than or equal to
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator<=(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator<=(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename RelType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename RelType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_lesseq<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_lesseq<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3348,12 +3348,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator&&(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename AndType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename AndType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_and<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_and<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3363,12 +3363,12 @@ auto operator&&(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator&&(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename AndType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename AndType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_and<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_and<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3377,12 +3377,12 @@ auto operator&&(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator&&(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename AndType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename AndType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_and<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_and<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3392,19 +3392,19 @@ auto operator&&(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator&&(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename AndType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator&&(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename AndType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_and<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_and<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3412,72 +3412,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator&&(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename AndType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator&&(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename AndType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_and<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_and<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> && MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise And
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator&&(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator&&(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename AndType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename AndType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_and<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_and<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> && MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise And
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator&&(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator&&(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename AndType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename AndType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_and<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_and<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3502,12 +3502,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto operator||(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename OrType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename OrType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_or<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_or<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3517,12 +3517,12 @@ auto operator||(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator||(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename OrType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename OrType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_or<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_or<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3531,12 +3531,12 @@ auto operator||(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator||(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename OrType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename OrType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_or<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_or<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3546,19 +3546,19 @@ auto operator||(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator||(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename OrType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto operator||(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename OrType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_or<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_or<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3566,72 +3566,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator||(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename OrType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto operator||(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename OrType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_or<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_or<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> || MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Or
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto operator||(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto operator||(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename OrType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename OrType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_or<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_or<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> || MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Or
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto operator||(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto operator||(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename OrType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename OrType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_or<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_or<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3656,12 +3656,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto atan2(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_atan2<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_atan2<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3671,12 +3671,12 @@ auto atan2(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto atan2(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_atan2<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_atan2<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3685,12 +3685,12 @@ auto atan2(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto atan2(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_atan2<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_atan2<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3700,19 +3700,19 @@ auto atan2(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto atan2(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto atan2(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_atan2<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_atan2<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3720,72 +3720,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto atan2(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto atan2(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_atan2<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_atan2<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> atan2 MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise atan2
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto atan2(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto atan2(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_atan2<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_atan2<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> atan2 MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise atan2
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto atan2(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto atan2(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_atan2<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_atan2<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3810,12 +3810,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto pow(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_pow<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_pow<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3825,12 +3825,12 @@ auto pow(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, 
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto pow(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_pow<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_pow<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3839,12 +3839,12 @@ auto pow(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto pow(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_pow<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_pow<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3854,19 +3854,19 @@ auto pow(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto pow(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto pow(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_pow<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_pow<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3874,72 +3874,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto pow(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto pow(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_pow<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_pow<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> pow MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise pow
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto pow(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto pow(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_pow<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_pow<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> pow MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise pow
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto pow(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto pow(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_pow<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_pow<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3964,12 +3964,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto beta(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_beta<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_beta<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3979,12 +3979,12 @@ auto beta(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2,
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto beta(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_beta<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_beta<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -3993,12 +3993,12 @@ auto beta(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto beta(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_beta<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_beta<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4008,19 +4008,19 @@ auto beta(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto beta(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto beta(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_beta<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_beta<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4028,72 +4028,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto beta(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto beta(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_beta<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_beta<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> beta MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise beta
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto beta(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto beta(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_beta<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_beta<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> beta MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise beta
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto beta(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto beta(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_beta<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_beta<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4118,12 +4118,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_legendre<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_legendre<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4133,12 +4133,12 @@ auto legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B,
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto legendre(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_legendre<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_legendre<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4147,12 +4147,12 @@ auto legendre(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2)
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto legendre(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_legendre<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_legendre<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4162,19 +4162,19 @@ auto legendre(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2)
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto legendre(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto legendre(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_legendre<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_legendre<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4182,72 +4182,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto legendre(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto legendre(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_legendre<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_legendre<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> legendre MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise legendre
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto legendre(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto legendre(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_legendre<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_legendre<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> legendre MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise legendre
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto legendre(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto legendre(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_legendre<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_legendre<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4272,12 +4272,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_laguerre<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_laguerre<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4287,12 +4287,12 @@ auto laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B,
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto laguerre(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_laguerre<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_laguerre<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4301,12 +4301,12 @@ auto laguerre(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2)
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto laguerre(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_laguerre<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_laguerre<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4316,19 +4316,19 @@ auto laguerre(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2)
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto laguerre(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto laguerre(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_laguerre<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_laguerre<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4336,72 +4336,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto laguerre(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto laguerre(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_laguerre<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_laguerre<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> laguerre MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise laguerre
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto laguerre(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto laguerre(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_laguerre<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_laguerre<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> laguerre MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise laguerre
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto laguerre(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto laguerre(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_laguerre<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_laguerre<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4426,12 +4426,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto hermite(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_hermite<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_hermite<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4441,12 +4441,12 @@ auto hermite(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, 
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto hermite(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_hermite<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_hermite<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4455,12 +4455,12 @@ auto hermite(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) 
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto hermite(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_hermite<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_hermite<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4470,19 +4470,19 @@ auto hermite(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) 
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto hermite(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto hermite(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_hermite<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_hermite<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4490,72 +4490,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto hermite(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto hermite(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_hermite<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_hermite<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> hermite MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise hermite
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto hermite(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto hermite(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_hermite<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_hermite<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> hermite MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise hermite
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto hermite(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto hermite(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_hermite<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_hermite<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4580,12 +4580,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto sph_bessel(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_sph_bessel<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_sph_bessel<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4595,12 +4595,12 @@ auto sph_bessel(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto sph_bessel(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_sph_bessel<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_sph_bessel<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4609,12 +4609,12 @@ auto sph_bessel(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto sph_bessel(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_sph_bessel<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_sph_bessel<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4624,19 +4624,19 @@ auto sph_bessel(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto sph_bessel(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto sph_bessel(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_sph_bessel<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_sph_bessel<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4644,72 +4644,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto sph_bessel(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto sph_bessel(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_sph_bessel<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_sph_bessel<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> sph_bessel MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise sph_bessel
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto sph_bessel(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto sph_bessel(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_sph_bessel<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_sph_bessel<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> sph_bessel MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise sph_bessel
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto sph_bessel(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto sph_bessel(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_sph_bessel<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_sph_bessel<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4734,12 +4734,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto sph_neumann(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_sph_neumann<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_sph_neumann<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4749,12 +4749,12 @@ auto sph_neumann(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto sph_neumann(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_sph_neumann<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_sph_neumann<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4763,12 +4763,12 @@ auto sph_neumann(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& 
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto sph_neumann(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_sph_neumann<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_sph_neumann<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4778,19 +4778,19 @@ auto sph_neumann(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& 
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto sph_neumann(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto sph_neumann(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_sph_neumann<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_sph_neumann<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4798,72 +4798,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto sph_neumann(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto sph_neumann(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_sph_neumann<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_sph_neumann<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> sph_neumann MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise sph_neumann
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto sph_neumann(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto sph_neumann(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_sph_neumann<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_sph_neumann<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> sph_neumann MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise sph_neumann
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto sph_neumann(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto sph_neumann(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_sph_neumann<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_sph_neumann<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4888,12 +4888,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto cyl_bessel_i(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_cyl_bessel_i<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_cyl_bessel_i<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4903,12 +4903,12 @@ auto cyl_bessel_i(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExp
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto cyl_bessel_i(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_cyl_bessel_i<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_cyl_bessel_i<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4917,12 +4917,12 @@ auto cyl_bessel_i(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2&
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto cyl_bessel_i(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_cyl_bessel_i<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_cyl_bessel_i<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4932,19 +4932,19 @@ auto cyl_bessel_i(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>&
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto cyl_bessel_i(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto cyl_bessel_i(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_cyl_bessel_i<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_cyl_bessel_i<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -4952,72 +4952,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto cyl_bessel_i(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto cyl_bessel_i(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_cyl_bessel_i<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_cyl_bessel_i<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> cyl_bessel_i MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise cyl_bessel_i
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto cyl_bessel_i(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto cyl_bessel_i(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_cyl_bessel_i<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_cyl_bessel_i<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> cyl_bessel_i MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise cyl_bessel_i
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto cyl_bessel_i(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto cyl_bessel_i(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_cyl_bessel_i<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_cyl_bessel_i<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5042,12 +5042,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto cyl_bessel_j(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_cyl_bessel_j<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_cyl_bessel_j<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5057,12 +5057,12 @@ auto cyl_bessel_j(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExp
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto cyl_bessel_j(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_cyl_bessel_j<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_cyl_bessel_j<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5071,12 +5071,12 @@ auto cyl_bessel_j(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2&
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto cyl_bessel_j(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_cyl_bessel_j<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_cyl_bessel_j<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5086,19 +5086,19 @@ auto cyl_bessel_j(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>&
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto cyl_bessel_j(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto cyl_bessel_j(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_cyl_bessel_j<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_cyl_bessel_j<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5106,72 +5106,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto cyl_bessel_j(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto cyl_bessel_j(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_cyl_bessel_j<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_cyl_bessel_j<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> cyl_bessel_j MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise cyl_bessel_j
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto cyl_bessel_j(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto cyl_bessel_j(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_cyl_bessel_j<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_cyl_bessel_j<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> cyl_bessel_j MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise cyl_bessel_j
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto cyl_bessel_j(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto cyl_bessel_j(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_cyl_bessel_j<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_cyl_bessel_j<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5196,12 +5196,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto cyl_bessel_k(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_cyl_bessel_k<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_cyl_bessel_k<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5211,12 +5211,12 @@ auto cyl_bessel_k(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExp
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto cyl_bessel_k(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_cyl_bessel_k<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_cyl_bessel_k<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5225,12 +5225,12 @@ auto cyl_bessel_k(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2&
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto cyl_bessel_k(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_cyl_bessel_k<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_cyl_bessel_k<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5240,19 +5240,19 @@ auto cyl_bessel_k(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>&
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto cyl_bessel_k(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto cyl_bessel_k(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_cyl_bessel_k<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_cyl_bessel_k<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5260,72 +5260,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto cyl_bessel_k(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto cyl_bessel_k(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_cyl_bessel_k<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_cyl_bessel_k<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> cyl_bessel_k MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise cyl_bessel_k
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto cyl_bessel_k(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto cyl_bessel_k(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_cyl_bessel_k<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_cyl_bessel_k<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> cyl_bessel_k MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise cyl_bessel_k
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto cyl_bessel_k(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto cyl_bessel_k(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_cyl_bessel_k<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_cyl_bessel_k<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5350,12 +5350,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto cyl_neumann(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_cyl_neumann<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_cyl_neumann<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5365,12 +5365,12 @@ auto cyl_neumann(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto cyl_neumann(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_cyl_neumann<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_cyl_neumann<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5379,12 +5379,12 @@ auto cyl_neumann(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& 
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto cyl_neumann(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_cyl_neumann<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_cyl_neumann<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5394,19 +5394,19 @@ auto cyl_neumann(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& 
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto cyl_neumann(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto cyl_neumann(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_cyl_neumann<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_cyl_neumann<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5414,72 +5414,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto cyl_neumann(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto cyl_neumann(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_cyl_neumann<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_cyl_neumann<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> cyl_neumann MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise cyl_neumann
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto cyl_neumann(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto cyl_neumann(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_cyl_neumann<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_cyl_neumann<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> cyl_neumann MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise cyl_neumann
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto cyl_neumann(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto cyl_neumann(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_cyl_neumann<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_cyl_neumann<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5504,12 +5504,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto ellint_1(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_ellint_1<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_ellint_1<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5519,12 +5519,12 @@ auto ellint_1(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B,
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto ellint_1(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_ellint_1<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_ellint_1<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5533,12 +5533,12 @@ auto ellint_1(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2)
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto ellint_1(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_ellint_1<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_ellint_1<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5548,19 +5548,19 @@ auto ellint_1(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2)
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto ellint_1(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto ellint_1(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_ellint_1<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_ellint_1<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5568,72 +5568,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto ellint_1(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto ellint_1(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_ellint_1<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_ellint_1<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> ellint_1 MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise ellint_1
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto ellint_1(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto ellint_1(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_ellint_1<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_ellint_1<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> ellint_1 MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise ellint_1
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto ellint_1(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto ellint_1(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_ellint_1<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_ellint_1<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5658,12 +5658,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto ellint_2(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_ellint_2<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_ellint_2<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5673,12 +5673,12 @@ auto ellint_2(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B,
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto ellint_2(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_ellint_2<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_ellint_2<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5687,12 +5687,12 @@ auto ellint_2(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2)
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto ellint_2(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_ellint_2<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_ellint_2<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5702,19 +5702,19 @@ auto ellint_2(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2)
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto ellint_2(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto ellint_2(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_ellint_2<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_ellint_2<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5722,72 +5722,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto ellint_2(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename MultType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto ellint_2(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_ellint_2<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_ellint_2<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> ellint_2 MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise ellint_2
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto ellint_2(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto ellint_2(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_ellint_2<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_ellint_2<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> ellint_2 MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise ellint_2
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto ellint_2(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto ellint_2(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename MultType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename MultType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_ellint_2<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_ellint_2<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5812,12 +5812,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto Complex(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_Complex<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_Complex<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5827,12 +5827,12 @@ auto Complex(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, 
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto Complex(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_Complex<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_Complex<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5841,12 +5841,12 @@ auto Complex(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) 
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto Complex(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_Complex<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_Complex<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5856,19 +5856,19 @@ auto Complex(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) 
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto Complex(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto Complex(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_Complex<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_Complex<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5876,72 +5876,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto Complex(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto Complex(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_Complex<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_Complex<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> Complex MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise Complex
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto Complex(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto Complex(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_Complex<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_Complex<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> Complex MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise Complex
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto Complex(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto Complex(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_Complex<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_Complex<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5966,12 +5966,12 @@ template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
 auto polar(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
-    E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
-    FUNCTOR_polar<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+    E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
+    FUNCTOR_polar<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5981,12 +5981,12 @@ auto polar(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2
 
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto polar(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<MArrayExpR<A, Element, NT1, depth, rank>,
     NT2,
-    Element, NT2, E3, NT1, NT2, D3, depth, 0, depth, rank, rank, rank,
-    FUNCTOR_polar<Element, NT2, E3, NT1, NT2, D3> >(x1, x2);
+    Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
+    FUNCTOR_polar<Element, NT2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -5995,12 +5995,12 @@ auto polar(const MArrayExpR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
 
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto polar(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   return  TER_Binary<NT1,
     MArrayExpR<B, Element, NT2, depth, rank>,
-    NT1, Element, E3, NT1, NT2, D3, 0, depth, depth, rank, rank, rank,
-    FUNCTOR_polar<NT1, Element, E3, NT1, NT2, D3> >(x1, x2);
+    NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
+    FUNCTOR_polar<NT1, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -6010,19 +6010,19 @@ auto polar(const NT1& x1, const MArrayExpR<B, Element, NT2, depth, rank>& x2) {
 // TODO: run-time check (deep dimensions of E1 == deepdimensions of x2)
 
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1==M2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto polar(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1==D2+1)&&(IsMathqContainer<E1>::value)&&(E1::rank_value==R2)> = 0 >
+  auto polar(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
-  constexpr int M3 = M1;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D1;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "A" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_polar<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_polar<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
@@ -6030,72 +6030,72 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, in
 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
-template <class A, class B, class E1, class E2, class NT1, class NT2, int M1, int M2, int R1, int R2,
-  EnableIf<(M1+1==M2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto polar(const MArrayExpR<A, E1, NT1, M1, R1>& x1, const MArrayExpR<B, E2, NT2, M2, R2>& x2) {
-  typedef typename ComplexType<NT1, NT2>::Type D3;
+template <class A, class B, class E1, class E2, class NT1, class NT2, int D1, int D2, int R1, int R2,
+  EnableIf<(D1+1==D2)&&(IsMathqContainer<E2>::value)&&(E2::rank_value==R1)> = 0 >
+  auto polar(const MArrayExpR<A, E1, NT1, D1, R1>& x1, const MArrayExpR<B, E2, NT2, D2, R2>& x2) {
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
-  constexpr int M3 = M2;
-  typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
+  constexpr int D3 = D2;
+  typedef typename NumberTrait<Element, NT3>::ReplaceTypeD E3;
   //    MOUT << "B" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, R1>,
-    MArrayExpR<B, E2, NT2, M2, R2>,
-    E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3,
-    FUNCTOR_polar<Element, Element, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, R1>,
+    MArrayExpR<B, E2, NT2, D2, R2>,
+    E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3,
+    FUNCTOR_polar<Element, Element, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 
 // (4A) MultiArray<NT1,rank,depth> polar MultiArray<NT2,rank,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise polar
-// Note: M2==1 -> E2==NT2
+// Note: D2==1 -> E2==NT2
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1>=2)&&(M2==1)&&(IsMathqContainer<E1>::value)> = 0  >
-  auto polar(const MArrayExpR<A, E1, NT1, M1, rank>& x1, const MArrayExpR<B, NT2, NT2, M2, rank>& x2) {
+template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1>=2)&&(D2==1)&&(IsMathqContainer<E1>::value)> = 0  >
+  auto polar(const MArrayExpR<A, E1, NT1, D1, rank>& x1, const MArrayExpR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
   //    typedef B E2;  
-  typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
+  typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
 
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M1;
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
-    MArrayExpR<B, NT2, NT2, M2, rank>,
-    E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_polar<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
+    MArrayExpR<B, NT2, NT2, D2, rank>,
+    E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_polar<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 // (4B) MultiArray<NT1,rank,1> polar MultiArray<NT2,rank,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise polar
-// Note: M1==1 -> E1==NT1
+// Note: D1==1 -> E1==NT1
 
 // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
-  EnableIf<(M1==1)&&(M2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
-  auto polar(const MArrayExpR<A, NT1, NT1, M1, rank>& x1, const MArrayExpR<B, E2, NT2, M2, rank>& x2) {
+template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  EnableIf<(D1==1)&&(D2>=2)&&(IsMathqContainer<E2>::value)> = 0  >
+  auto polar(const MArrayExpR<A, NT1, NT1, D1, rank>& x1, const MArrayExpR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
-  typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
-  typedef typename ComplexType<NT1, NT2>::Type D3;
-  typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
-  constexpr int M3 = M2;
+  typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  typedef typename ComplexType<NT1, NT2>::Type NT3;
+  typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;   // see TODO note above
+  constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
-    MArrayExpR<B, E2, NT2, M2, rank>,
-    NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
-    FUNCTOR_polar<E1, E2, E3, NT1, NT2, D3> >(x1, x2);
+  return  TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
+    MArrayExpR<B, E2, NT2, D2, rank>,
+    NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
+    FUNCTOR_polar<E1, E2, E3, NT1, NT2, NT3> >(x1, x2);
 }
 
 

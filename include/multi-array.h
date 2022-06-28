@@ -36,7 +36,7 @@ namespace mathq {
     typedef typename ArrayType<Element, 0>::Type MyArrayType;
 
     constexpr static int rank_value = rank;
-    constexpr static int Mvalue = depth;
+    constexpr static int depth_value = depth;
 
 
   private:
@@ -77,7 +77,7 @@ namespace mathq {
 
     // --------------------- constant Element CONSTRUCTOR ---------------------
 
-    template <size_t M1 = depth, EnableIf<(M1 > 0)> = 0>
+    template <size_t D1 = depth, EnableIf<(D1 > 0)> = 0>
 
     explicit MultiArray<Element, rank, Number, depth>(const Dimensions& dims, const Number d) {
       resize(dims);

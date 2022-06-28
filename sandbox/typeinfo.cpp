@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
     typename decltype(v)::ConcreteType v2;
     TLDISP(v2);
 
-    TLDISP(decltype(v)::Mvalue);
+    TLDISP(decltype(v)::depth_value);
     TLDISP(decltype(v)::rank_value);
   }
 
