@@ -106,7 +106,7 @@ namespace mathq {
   template <class Element, int NR = 0, int NC = 0>
   class Matrix;
 
-  template <class Element, int rank = 0, typename Number = typename NumberTrait<Element>::Type, int depth = 1 + NumberTrait<Element>::getDepth()>
+  template <class Element, int rank = 0>
   class MultiArray;
 
   // , typename Number = typename NumberTrait<Element>::Type, int depth = 1 + NumberTrait<Element>::getDepth()>
@@ -254,7 +254,7 @@ namespace mathq {
   template <class Element, typename Number, int depth, int rank, int N1 = 0, int N2 = 0>
   class Materialize {
   public:
-    typedef MultiArray<Element, rank, Number, depth> TEN;
+    typedef MultiArray<Element, rank> TEN;
     typedef Matrix<Element, 0, 0> MAT;
     typedef Vector<Element, 0> VEC;
     typedef Scalar<Element, Number, depth> SCA;
@@ -1383,7 +1383,7 @@ namespace mathq {
   template <class Element, typename Number, int depth, int rank>
   class GridType {
   public:
-    typedef MultiArray<Element, rank, Number, depth> Type;
+    typedef MultiArray<Element, rank> Type;
   };
 
   template <class Element, typename Number, int depth>

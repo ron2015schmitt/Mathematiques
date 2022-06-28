@@ -38,8 +38,9 @@ namespace mathq {
     typedef typename ArrayTypeTrait<Element, NR* NC>::Type MyArrayType;
 
     constexpr static int rank = 2;
-    constexpr static int rank_value = 2;
-    constexpr static int depth_value = 1 + NumberTrait<Element>::getDepth();
+    constexpr static int rank_value = rank;
+    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
+    constexpr static int depth_value = depth;
 
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
@@ -55,8 +56,8 @@ namespace mathq {
   private:
     MyArrayType data_;
 
-    size_t Nrows_;
-    size_t Ncols_;
+    size_t Nrows_;  // TODO: make type trait so that this is static const for FixedDims
+    size_t Ncols_;  // TODO: make type trait so that this is static const for FixedDims
 
 
 

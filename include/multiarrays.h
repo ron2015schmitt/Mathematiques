@@ -561,8 +561,8 @@ namespace mathq {
     using type = std::initializer_list<
       typename NestedInitializerListDef<Element, L-1>::type
     >;
-    template <typename Number, int rank, int depth>
-    static void compute(MultiArray<Element, rank, Number, depth>& t, const type& list, int& i) {
+    template <int rank>
+    static void compute(MultiArray<Element, rank>& t, const type& list, int& i) {
 
       for (auto nlist : list) {
         NestedInitializerListDef<Element, L-1>::compute(t, nlist, i);
@@ -592,8 +592,8 @@ namespace mathq {
   public:
     using type = Element;
 
-    template <typename Number, int rank, int depth>
-    static void compute(MultiArray<Element, rank, Number, depth>& t, const type& item, int& i) {
+    template <int rank>
+    static void compute(MultiArray<Element, rank>& t, const type& item, int& i) {
       //TLDISP(item);
       t[i++] = item;
     }

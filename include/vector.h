@@ -35,8 +35,9 @@ namespace mathq {
     typedef typename ArrayTypeTrait<Element, N1>::Type MyArrayType;
 
     constexpr static int rank = 1;
-    constexpr static int rank_value = 1;
+    constexpr static int rank_value = rank;
     constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
+    constexpr static int depth_value = depth;
 
 
     // *********************** OBJECT DATA ***********************************
@@ -478,8 +479,8 @@ namespace mathq {
     //***************MultiArray cast *********************
     //**********************************************************************
 
-    operator MultiArray<Element, rank, NumberType, depth>() const {
-      MultiArray<Element, 1, NumberType, depth> ma(*this);
+    operator MultiArray<Element, rank>() const {
+      MultiArray<Element, 1> ma(*this);
     }
 
       //**********************************************************************
