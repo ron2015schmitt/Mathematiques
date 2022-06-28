@@ -1,13 +1,21 @@
 ## Planned Releases
 
 
-### v3.5 Documentation Refactoring
+### v0.40 Multi-Array Refactoring and Vector Calculus started
 1. add variable for the C++ version used, currently C++17.  append to version string. 
+1. upgrade to c++20a(g++10.4)
+1. refactored all multi-arrays to simplifly the templates. Scalar, Vector and Matrix are now just typre aliases
+1. started CurvilinearCoords anf CurvilinearFields
+
+
+## Future work
+
+### Documentation Refactoring
 2. Complete _User Manual_
 2. Complete _Usage Guide_ covering all the functionality
 3. New in-depth _Developer Guide_
 
-### v3.6 Display Refactoring
+### Display Refactoring
 1. This is includes files:
   * display.h
   * display.cpp
@@ -49,15 +57,10 @@
    2. python
 1. move the SPECIALIZE_getTypeName into .h file and python script
 
-### v3.7 I/O Refactoring
-1. [Save tensor to file](topics/filesave.md)
-1. [Implement >> operators](topics/inputstreams.md)
-1. [Load tensor from file](topics/fileload.md)
-
-### v3.8 Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary
+### Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary
 1. create benchmarks, include display of memory sizes
 
-### v3.9 Indexing Refactoring
+### Indexing Refactoring
 1. Rename MultiArray, MArrayExpR and MArrayExpRW to Array or MArray
 1. Refactor of vector/matrix/tensor indexing, including
   + new index/iterator types such as slices similar to C++ stdlib, Fortran, and Python, including negative indices
@@ -72,9 +75,16 @@
 1. change deepdims from std::vector<Dimensions> to initlist<Dimensions>. define a class deepdims
 1. allow VEctor, Matrix, MultiArray to be initialized from deep dims
 1. create a Array3 type
+1. consts: `o` and `all`
 
 
-### v3.10 Debug Refactoring
+### I/O Refactoring
+1. [Save tensor to file](topics/filesave.md)
+1. [Implement >> operators](topics/inputstreams.md)
+1. [Load tensor from file](topics/fileload.md)
+
+
+### Debug Refactoring
 1. put example.cpp::printoptsfile  into  print_mathq_info by grabbing (or passing) the file_name
   * handle when no filename
   * handle when no .g++_copts file
@@ -210,7 +220,6 @@
 * add latex helper functions for disp?
 * https://www.gccxml.org/HTML/Index.html
 
-## Futrue work
 
 ### Unit testing
 1. [Unit Testing](unittesting.md)
