@@ -32,15 +32,16 @@ namespace mathq {
     // keep the instances lightweight
 
     typedef MultiArray<Element, rank, Number, depth> XType;
+
     typedef Element ElementType;
     typedef Number NumberType;
     typedef typename OrderedNumberTrait<Number>::Type FType;
 
+    typedef typename ArrayType<Element, 0>::Type MyArrayType;
+
     constexpr static int rank_value = rank;
     constexpr static int Mvalue = depth;
 
-    // always use valarray
-    typedef typename ArrayType<Element, 0>::Type MyArrayType;
 
   private:
     MyArrayType data_;

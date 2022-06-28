@@ -26,18 +26,18 @@ namespace mathq {
     public MArrayExpRW<Vector<Element, N1>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 1> {
 
   public:
+    typedef Vector<Element, N1> XType;
+
+    typedef Element ElementType;
     typedef typename NumberTrait<Element>::Type NumberType;
     typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumber;
+    typedef typename OrderedNumberTrait<NumberType>::Type FType;
 
     typedef typename ArrayType<Element, N1>::Type MyArrayType;
-    constexpr static int rank = 1;
-    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
 
-    // rename these
-    typedef typename OrderedNumberTrait<NumberType>::Type FType;
-    typedef Vector<Element, N1> XType;
-    typedef Element ElementType;
+    constexpr static int rank = 1;
     constexpr static int rank_value = 1;
+    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
 
 
     // *********************** OBJECT DATA ***********************************

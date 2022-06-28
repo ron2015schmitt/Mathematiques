@@ -29,20 +29,24 @@ namespace mathq {
   class Matrix : public MArrayExpRW<Matrix<Element, NR, NC>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 2> {
 
   public:
-    constexpr static int rank = 2;
-    constexpr static int rank_value = 2;
-    constexpr static int Mvalue = 1 + NumberTrait<Element>::getDepth();
-    static constexpr bool resizable = (NR*NC==0) ? true : false;
-    static constexpr bool resizableRows = (NR==0) ? true : false;
-    static constexpr bool resizableCols = (NC==0) ? true : false;
     typedef Matrix<Element, NR, NC> XType;
+
     typedef Element ElementType;
     typedef typename NumberTrait<Element>::Type NumberType;
     typedef typename OrderedNumberTrait<NumberType>::Type FType;
 
+    typedef typename ArrayType<Element, NR* NC>::Type MyArrayType;
+
+    constexpr static int rank = 2;
+    constexpr static int rank_value = 2;
+    constexpr static int Mvalue = 1 + NumberTrait<Element>::getDepth();
+
+    static constexpr bool resizable = (NR*NC==0) ? true : false;
+    static constexpr bool resizableRows = (NR==0) ? true : false;
+    static constexpr bool resizableCols = (NC==0) ? true : false;
+
 
     // if either NR or NC is 0, then we use valarray
-    typedef typename ArrayType<Element, NR* NC>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
