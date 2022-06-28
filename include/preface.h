@@ -98,20 +98,16 @@ namespace mathq {
 
 
   template <class E, typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
-  class
-    Scalar;
+  class Scalar;
 
   template <class E, int NE = 0>
-  class
-    Vector;
+  class Vector;
 
-  template <class E, int NR = 0, int NC = 0, typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
-  class
-    Matrix;
+  template <class E, int NR = 0, int NC = 0>
+  class Matrix;
 
   template <class E, int R = 0, typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
-  class
-    MultiArray;
+  class MultiArray;
 
   // , typename D = typename NumberTrait<E>::Type, int M = 1 + NumberTrait<E>::depth()>
   template <class Element, int rank, size_t... sizes>
@@ -259,7 +255,7 @@ namespace mathq {
   class Materialize {
   public:
     typedef MultiArray<E, R, D, M> TEN;
-    typedef Matrix<E, 0, 0, D, M> MAT;
+    typedef Matrix<E, 0, 0> MAT;
     typedef Vector<E, 0> VEC;
     typedef Scalar<E, D, M> SCA;
     typedef typename std::conditional<R == 0, SCA, std::conditional<R == 1, VEC, std::conditional<R == 2, MAT, TEN>>>::type Type;
@@ -280,7 +276,7 @@ namespace mathq {
   template <class E, class D, int M, int N1, int N2>
   class Materialize<E, D, M, 2, N1, N2> {
   public:
-    typedef Matrix<E, N1, N2, D, M> Type;
+    typedef Matrix<E, N1, N2> Type;
   };
 
 
@@ -1405,7 +1401,7 @@ namespace mathq {
   template <class E, class D, int M>
   class GridType<E, D, M, 2> {
   public:
-    typedef Matrix<E, 0, 0, D, M> Type;
+    typedef Matrix<E, 0, 0> Type;
   };
 
 
