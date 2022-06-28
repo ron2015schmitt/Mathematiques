@@ -29,7 +29,7 @@ namespace mathq {
     typedef MatrixHermitian<Number, N> XType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type FType;
+    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
 
 
     // if N is 0, then we use valarray
@@ -449,7 +449,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixHermitian<Number, N>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixHermitian<Number, N>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
       return *this;
     }
 

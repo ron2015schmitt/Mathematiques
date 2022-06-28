@@ -31,7 +31,7 @@ namespace mathq {
     typedef Element ElementType;
     typedef typename NumberTrait<Element>::Type NumberType;
     typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumber;
-    typedef typename OrderedNumberTrait<NumberType>::Type FType;
+    typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumberType;
 
     typedef typename ArrayType<Element, N1>::Type MyArrayType;
 

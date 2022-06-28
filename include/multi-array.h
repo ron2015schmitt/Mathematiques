@@ -35,7 +35,7 @@ namespace mathq {
 
     typedef Element ElementType;
     typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type FType;
+    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
 
     typedef typename ArrayType<Element, 0>::Type MyArrayType;
 
@@ -617,7 +617,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MultiArray<Element, rank, Number, depth>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MultiArray<Element, rank, Number, depth>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
       for (size_t i = size(); i--;) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }

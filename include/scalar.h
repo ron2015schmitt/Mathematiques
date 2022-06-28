@@ -30,7 +30,7 @@ namespace mathq {
     typedef Scalar<Element, Number, depth> XType;
     typedef Element ElementType;
     typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type FType;
+    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
     constexpr static int rank_value = 0;
     constexpr static int Mvalue = depth;
     typedef typename std::conditional<depth==1, Element, Element&>::type TypeA;
@@ -392,7 +392,7 @@ namespace mathq {
     // NOTE: in-place
 
 
-    Scalar<Element, Number, depth>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    Scalar<Element, Number, depth>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
       data_ = mathq::roundzero(data_, tolerance);
       return *this;
     }

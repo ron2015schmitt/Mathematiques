@@ -26,7 +26,7 @@ namespace mathq {
     typedef MatrixRep<Number> XType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type FType;
+    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
 
 
     typedef typename std::valarray<Number> MyArrayType;
@@ -362,7 +362,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixRep<Number>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixRep<Number>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
       return *this;
     }
 

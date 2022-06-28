@@ -31,7 +31,7 @@ namespace mathq {
     typedef MatrixRepCol<Number, NR, NC> XType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type FType;
+    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
 
 
     // if either NR or NC is 0, then we use valarray
@@ -424,7 +424,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixRepCol<Number, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixRepCol<Number, NR, NC>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
       return *this;
     }
 

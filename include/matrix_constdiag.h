@@ -31,7 +31,7 @@ namespace mathq {
     typedef MatrixConstDiag<Number, NR, NC> XType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type FType;
+    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
 
 
 
@@ -352,7 +352,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixConstDiag<Number, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixConstDiag<Number, NR, NC>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
       return *this;
     }
 

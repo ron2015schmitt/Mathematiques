@@ -55,8 +55,8 @@ namespace mathq {
   // template <typename T> class
   //   Complexify {
   // public:
-  //   typedef typename OrderedNumberTrait<T>::Type FType;
-  //   typedef std::complex<FType> CType;
+  //   typedef typename OrderedNumberTrait<T>::Type OrderedNumberType;
+  //   typedef std::complex<OrderedNumberType> CType;
   //   typedef typename NumberTrait<T,CType>::ReplaceTypeE Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
@@ -69,8 +69,8 @@ namespace mathq {
   // template <typename T> class
   //   Realify {
   // public:
-  //   typedef typename OrderedNumberTrait<T>::Type FType;
-  //   typedef typename NumberTrait<T,FType>::ReplaceTypeE Type;
+  //   typedef typename OrderedNumberTrait<T>::Type OrderedNumberType;
+  //   typedef typename NumberTrait<T,OrderedNumberType>::ReplaceTypeE Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
   //   Realify<MArrayExpR<Element,A,Number,depth,rank> > {
@@ -83,8 +83,8 @@ namespace mathq {
   // template <typename T> class
   //   Imaginarify {
   // public:
-  //   typedef typename OrderedNumberTrait<T>::Type FType;
-  //   typedef Imaginary<FType> IType;
+  //   typedef typename OrderedNumberTrait<T>::Type OrderedNumberType;
+  //   typedef Imaginary<OrderedNumberType> IType;
   //   typedef typename NumberTrait<T,IType>::ReplaceTypeE Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
