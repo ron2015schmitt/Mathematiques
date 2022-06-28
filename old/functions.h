@@ -21,10 +21,10 @@ namespace matricks {
 
   // +(MultiArray)
 
-  template <class Element, class A, class Number, int Depth> 
-    inline auto operator+(const MArrayExpR<Element,A,Number,Depth>& a)
+  template <class Element, class A, class Number, int depth> 
+    inline auto operator+(const MArrayExpR<Element,A,Number,depth>& a)
   {
-    return  TER_Unary< MArrayExpR<Element,A,Number,Depth>, Fun_Plus<Number> >(a);
+    return  TER_Unary< MArrayExpR<Element,A,Number,depth>, Fun_Plus<Number> >(a);
   }
 
 

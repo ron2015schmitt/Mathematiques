@@ -59,10 +59,10 @@ namespace mathq {
   //   typedef std::complex<FType> CType;
   //   typedef typename NumberTrait<T,CType>::ReplaceTypeE Type;
   // };
-  // template <typename Element, typename A, typename Number, int Depth, int R> class
-  //   Complexify<MArrayExpR<Element,A,Number,Depth,R> > {
+  // template <typename Element, typename A, typename Number, int depth, int R> class
+  //   Complexify<MArrayExpR<Element,A,Number,depth,R> > {
   // public:
-  //   typedef MArrayExpR<typename Complexify<Element>::Type,A,typename Complexify<Number>::Type, Depth,R> Type;
+  //   typedef MArrayExpR<typename Complexify<Element>::Type,A,typename Complexify<Number>::Type, depth,R> Type;
   // };
 
 
@@ -72,10 +72,10 @@ namespace mathq {
   //   typedef typename OrderedNumberTrait<T>::Type FType;
   //   typedef typename NumberTrait<T,FType>::ReplaceTypeE Type;
   // };
-  // template <typename Element, typename A, typename Number, int Depth, int R> class
-  //   Realify<MArrayExpR<Element,A,Number,Depth,R> > {
+  // template <typename Element, typename A, typename Number, int depth, int R> class
+  //   Realify<MArrayExpR<Element,A,Number,depth,R> > {
   // public:
-  //   typedef MArrayExpR<typename Realify<Element>::Type,A,typename Realify<Number>::Type,Depth,R> Type;
+  //   typedef MArrayExpR<typename Realify<Element>::Type,A,typename Realify<Number>::Type,depth,R> Type;
   // };
 
 
@@ -87,10 +87,10 @@ namespace mathq {
   //   typedef Imaginary<FType> IType;
   //   typedef typename NumberTrait<T,IType>::ReplaceTypeE Type;
   // };
-  // template <typename Element, typename A, typename Number, int Depth, int R> class
-  //   Imaginarify<MArrayExpR<Element,A,Number,Depth,R> > {
+  // template <typename Element, typename A, typename Number, int depth, int R> class
+  //   Imaginarify<MArrayExpR<Element,A,Number,depth,R> > {
   // public:
-  //   typedef MArrayExpR<typename Imaginarify<Element>::Type,A,typename Imaginarify<Number>::Type, Depth,R> Type;
+  //   typedef MArrayExpR<typename Imaginarify<Element>::Type,A,typename Imaginarify<Number>::Type, depth,R> Type;
   // };
 
 

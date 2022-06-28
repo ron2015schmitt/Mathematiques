@@ -465,10 +465,10 @@ namespace mathq {
         s += "NC=";
         s += num2string(NC);
       }
-      //    if (Depth>1) {
+      //    if (depth>1) {
       //      s += StyledString::get(COMMA).get();
-      //      s += "Depth=";
-      //      s += num2string(Depth);
+      //      s += "depth=";
+      //      s += num2string(depth);
       //    }
       s += StyledString::get(ANGLE2).get();
       return s;

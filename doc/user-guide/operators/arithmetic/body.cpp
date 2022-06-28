@@ -146,7 +146,7 @@ int main() {
   GMD_CODE_END();
   CR();
 
-  GMD_HEADER4("Mixed Depth Math");
+  GMD_HEADER4("Mixed depth Math");
   CR();
   GMD_CODE_START("C++");
   GMD_CODE_END();

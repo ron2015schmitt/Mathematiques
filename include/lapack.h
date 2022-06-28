@@ -62,7 +62,7 @@ namespace mathq_lapack {
   //
   // A = MxN complex input matrix
   // U = MxM complex unitary matrix
-  // S = MxN diagonal real matrix, represented using min(Depth,N) real vector
+  // S = MxN diagonal real matrix, represented using min(depth,N) real vector
   // V = NxN complex unitary matrix
 
   inline int svd(
@@ -73,16 +73,16 @@ namespace mathq_lapack {
     // place checks here
 
 
-    const size_t Depth = A.Nrows();
+    const size_t depth = A.Nrows();
     const size_t N = A.Ncols();       // Dimensions of matrix.
-    const size_t minMN = std::min(Depth, N);
+    const size_t minMN = std::min(depth, N);
 
-    Matrix<ComplexDouble > Atemp(N, Depth, "Atemp");
+    Matrix<ComplexDouble > Atemp(N, depth, "Atemp");
     // need to pass transpose because lapack uses col major form
     Atemp = ~A;
 
-    if ((U.Nrows()!=Depth) || (U.Ncols()!=Depth)) {
-      U.resize(Depth, Depth);
+    if ((U.Nrows()!=depth) || (U.Ncols()!=depth)) {
+      U.resize(depth, depth);
     }
     if (S.size()!=minMN) {
       S.resize(minMN);
@@ -91,7 +91,7 @@ namespace mathq_lapack {
       V.resize(N, N);
     }
 
-    const FINT Mfint = static_cast<FINT>(Depth);
+    const FINT Mfint = static_cast<FINT>(depth);
     const FINT Nfint = static_cast<FINT>(N);
     const FINT NRwork = 5*static_cast<FINT>(minMN);
     Vector<double> Rwork(NRwork, "Rwork");
@@ -123,7 +123,7 @@ namespace mathq_lapack {
     workptr = &Work[0];
 
     /*
-      print(jobu);print(jobvt);print(Depth);printcr(N);
+      print(jobu);print(jobvt);print(depth);printcr(N);
       print(aptr);print(lda); print(sptr); printcr(uptr);
       print(ldu);print(vtptr);print(ldvt);printcr(workptr);
       print(lwork);print(rworkptr);printcr(info);

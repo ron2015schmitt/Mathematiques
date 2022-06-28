@@ -16,13 +16,13 @@
 
 // TODO: realtime check that deep dimensions of E1 and E2 are the same
 
-template <class A, class B, class E1, class E2, class D1, class D2, int Depth, int R>
-auto ##FUNCTION##(const MArrayExpR<A, E1, D1, Depth, R>& x1, const MArrayExpR<B, E2, D2, Depth, R>& x2) {
+template <class A, class B, class E1, class E2, class D1, class D2, int depth, int R>
+auto ##FUNCTION##(const MArrayExpR<A, E1, D1, depth, R>& x1, const MArrayExpR<B, E2, D2, depth, R>& x2) {
   typedef typename ##TYPECLASS##<D1, D2>::Type D3;
   typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-  return  TER_Binary<MArrayExpR<A, E1, D1, Depth, R>,
-    MArrayExpR<B, E2, D2, Depth, R>,
-    E1, E2, E3, D1, D2, D3, Depth, Depth, Depth, R, R, R,
+  return  TER_Binary<MArrayExpR<A, E1, D1, depth, R>,
+    MArrayExpR<B, E2, D2, depth, R>,
+    E1, E2, E3, D1, D2, D3, depth, depth, depth, R, R, R,
     FUNCTOR_##NAME##<E1, E2, E3, D1, D2, D3> >(x1, x2);
 }
 
@@ -31,13 +31,13 @@ auto ##FUNCTION##(const MArrayExpR<A, E1, D1, Depth, R>& x1, const MArrayExpR<B,
 
 // (2A) MultiArray<Element(D1)> ##OP## D2
 
-template <class A, class D2, class Element, class D1, int Depth, int R, typename = std::enable_if_t<NumberTrait<D2>::value>>
-auto ##FUNCTION##(const MArrayExpR<A, Element, D1, Depth, R>& x1, const D2& x2) {
+template <class A, class D2, class Element, class D1, int depth, int R, typename = std::enable_if_t<NumberTrait<D2>::value>>
+auto ##FUNCTION##(const MArrayExpR<A, Element, D1, depth, R>& x1, const D2& x2) {
   typedef typename ##TYPECLASS##<D1, D2>::Type D3;
   typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
-  return  TER_Binary<MArrayExpR<A, Element, D1, Depth, R>,
+  return  TER_Binary<MArrayExpR<A, Element, D1, depth, R>,
     D2,
-    Element, D2, E3, D1, D2, D3, Depth, 0, Depth, R, R, R,
+    Element, D2, E3, D1, D2, D3, depth, 0, depth, R, R, R,
     FUNCTOR_##NAME##<Element, D2, E3, D1, D2, D3> >(x1, x2);
 }
 
@@ -45,13 +45,13 @@ auto ##FUNCTION##(const MArrayExpR<A, Element, D1, Depth, R>& x1, const D2& x2) 
 
 // (2B) D1 ##OP## MultiArray<Element(D2)>
 
-template <class D1, class B, class Element, class D2, int Depth, int R, typename = std::enable_if_t<NumberTrait<D1>::value>>
-auto ##FUNCTION##(const D1& x1, const MArrayExpR<B, Element, D2, Depth, R>& x2) {
+template <class D1, class B, class Element, class D2, int depth, int R, typename = std::enable_if_t<NumberTrait<D1>::value>>
+auto ##FUNCTION##(const D1& x1, const MArrayExpR<B, Element, D2, depth, R>& x2) {
   typedef typename ##TYPECLASS##<D1, D2>::Type D3;
   typedef typename NumberTrait<Element, D3>::ReplaceTypeD E3;
   return  TER_Binary<D1,
-    MArrayExpR<B, Element, D2, Depth, R>,
-    D1, Element, E3, D1, D2, D3, 0, Depth, Depth, R, R, R,
+    MArrayExpR<B, Element, D2, depth, R>,
+    D1, Element, E3, D1, D2, D3, 0, depth, depth, R, R, R,
     FUNCTOR_##NAME##<D1, Element, E3, D1, D2, D3> >(x1, x2);
 }
 
@@ -98,7 +98,7 @@ template <class A, class B, class E1, class E2, class D1, class D2, int M1, int 
 }
 
 
-// (4A) MultiArray<D1,R,Depth> ##OP## MultiArray<D2,R,1>
+// (4A) MultiArray<D1,R,depth> ##OP## MultiArray<D2,R,1>
 
 // Depending on rank and dimensions, this may be top-level or element wise ##COMMENTNAME##
 // Note: M2==1 -> E2==D2
@@ -125,7 +125,7 @@ template <class A, class B, class E1, class D1, class D2, int M1, int M2, int R,
     FUNCTOR_##NAME##<E1, E2, E3, D1, D2, D3> >(x1, x2);
 }
 
-// (4B) MultiArray<D1,R,1> ##OP## MultiArray<D2,R,Depth>
+// (4B) MultiArray<D1,R,1> ##OP## MultiArray<D2,R,depth>
 
 // Depending on rank and dimensions, this may be top-level or element wise ##COMMENTNAME##
 // Note: M1==1 -> E1==D1

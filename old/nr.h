@@ -29,7 +29,7 @@ namespace mathq_nr {
 		 Matrix<double>& A, 
 		 Matrix<double>& U, Vector<double>& W, Matrix<double>& V )
   {
-    const size_t Depth = A.Nrows();
+    const size_t depth = A.Nrows();
     const size_t N = A.Ncols();       // Dimensions of matrix.
 
     /*
@@ -39,24 +39,24 @@ namespace mathq_nr {
     */
 
     // Allocate NRC-style matrices and vectors.
-    double **aandu = numrec::dmatrix(1,Depth,1,N);
+    double **aandu = numrec::dmatrix(1,depth,1,N);
     double **v = numrec::dmatrix(1,N,1,N);
     double *w = numrec::dvector(1,N);
 
     // Copy the input matrix.
-    for (size_t i = 1; i <= Depth; ++i) {
+    for (size_t i = 1; i <= depth; ++i) {
       for (size_t j = 1; j <= N; ++j) {
 	aandu[i][j] = A(i-1,j-1);
       }
     }
 
 
-    numrec::svdcmp(aandu,Depth,N,w,v);
-    numrec::svdsrt(aandu,Depth,N,w,v);
+    numrec::svdcmp(aandu,depth,N,w,v);
+    numrec::svdsrt(aandu,depth,N,w,v);
 
 
     // Copy the results
-    for (int i = 1; i <= Depth; ++i) {
+    for (int i = 1; i <= depth; ++i) {
       for (int j = 1; j <= N; ++j) {
 	U(i-1,j-1) = aandu[i][j];
       }

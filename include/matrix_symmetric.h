@@ -99,24 +99,24 @@ namespace mathq {
 
     explicit MatrixSymmetric<Number, N>(const Vector<Number>& v) {
       const size_t len = v.size();
-      const size_t Depth = (std::sqrt(1+8*len) - 1)/2;
-      resize(Depth);
+      const size_t depth = (std::sqrt(1+8*len) - 1)/2;
+      resize(depth);
       *this = v;
     }
 
     // --------------------- variable-size zero-CONSTRUCTOR---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSymmetric<Number, N>(const size_t Depth) {
-      resize(Depth);
+    explicit MatrixSymmetric<Number, N>(const size_t depth) {
+      resize(depth);
       *this = 0;
     }
 
     // --------------------- variable-size value CONSTRUCTOR ---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSymmetric<Number, N>(const size_t Depth, const Number& value) {
-      resize(Depth);
+    explicit MatrixSymmetric<Number, N>(const size_t depth, const Number& value) {
+      resize(depth);
       *this = value;
     }
 
@@ -125,9 +125,9 @@ namespace mathq {
     template<class X, size_t NN = N, EnableIf<NN == 0> = 0>
 
     explicit MatrixSymmetric<Number, N>(const MArrayExpR<X, Number, Number, 1, 2> A) {
-      const size_t Depth = A.Nrows();
+      const size_t depth = A.Nrows();
       // TODO: chekc that A is square
-      resize(Depth);
+      resize(depth);
       *this = A;
     }
 
@@ -223,11 +223,11 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixSymmetric<Number, N>& resize(const int Depth) {
+    MatrixSymmetric<Number, N>& resize(const int depth) {
       N_ = N;
       if constexpr (resizable) {
-        N_ = Depth;
-        const size_t sz = (Depth*Depth+Depth)/2;
+        N_ = depth;
+        const size_t sz = (depth*depth+depth)/2;
         data_.resize(sz);
       }
       return *this;
@@ -407,9 +407,9 @@ namespace mathq {
 
     template <class X>
     MatrixSymmetric<Number, N>& operator=(const MArrayExpR<X, Number, Number, 1, 2>& A) {
-      const size_t Depth = A.Nrows();
+      const size_t depth = A.Nrows();
       // TODO: check that A is square
-      resize(Depth);
+      resize(depth);
       for (size_t c = 0; c < N_; c++) {
         for (size_t r = 0; r <= c; r++) {
           data_(r, c) = A(r, c);
@@ -478,10 +478,10 @@ namespace mathq {
         s += "N=";
         s += num2string(N);
       }
-      //    if (Depth>1) {
+      //    if (depth>1) {
       //      s += StyledString::get(COMMA).get();
-      //      s += "Depth=";
-      //      s += num2string(Depth);
+      //      s += "depth=";
+      //      s += num2string(depth);
       //    }
       s += StyledString::get(ANGLE2).get();
       return s;

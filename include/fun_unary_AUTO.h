@@ -3368,10 +3368,10 @@ public:
 // pos 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto operator+(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto operator+(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_pos<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_pos<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3387,10 +3387,10 @@ auto operator+(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // neg 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto operator-(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto operator-(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_neg<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_neg<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3406,10 +3406,10 @@ auto operator-(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // not 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto operator!(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto operator!(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_not<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_not<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3425,10 +3425,10 @@ auto operator!(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // sin 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto sin(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto sin(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_sin<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_sin<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3444,10 +3444,10 @@ auto sin(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // cos 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto cos(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto cos(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_cos<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_cos<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3463,10 +3463,10 @@ auto cos(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // tan 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto tan(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto tan(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_tan<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_tan<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3482,10 +3482,10 @@ auto tan(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // asin 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto asin(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto asin(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_asin<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_asin<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3501,10 +3501,10 @@ auto asin(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // acos 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto acos(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto acos(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_acos<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_acos<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3520,10 +3520,10 @@ auto acos(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // atan 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto atan(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto atan(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_atan<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_atan<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3539,10 +3539,10 @@ auto atan(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // sinh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto sinh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto sinh(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_sinh<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_sinh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3558,10 +3558,10 @@ auto sinh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // cosh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto cosh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto cosh(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_cosh<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_cosh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3577,10 +3577,10 @@ auto cosh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // tanh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto tanh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto tanh(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_tanh<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_tanh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3596,10 +3596,10 @@ auto tanh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // asinh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto asinh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto asinh(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_asinh<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_asinh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3615,10 +3615,10 @@ auto asinh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // acosh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto acosh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto acosh(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_acosh<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_acosh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3634,10 +3634,10 @@ auto acosh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // atanh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto atanh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto atanh(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_atanh<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_atanh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3653,10 +3653,10 @@ auto atanh(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // sqrt 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto sqrt(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto sqrt(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_sqrt<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_sqrt<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3672,10 +3672,10 @@ auto sqrt(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // cbrt 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto cbrt(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto cbrt(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_cbrt<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_cbrt<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3691,10 +3691,10 @@ auto cbrt(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // sqr 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto sqr(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto sqr(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_sqr<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_sqr<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3710,10 +3710,10 @@ auto sqr(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // cube 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto cube(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto cube(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_cube<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_cube<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3729,10 +3729,10 @@ auto cube(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // exp 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto exp(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto exp(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_exp<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_exp<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3748,10 +3748,10 @@ auto exp(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // exp2 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto exp2(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto exp2(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_exp2<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_exp2<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3767,10 +3767,10 @@ auto exp2(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // expm1 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto expm1(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto expm1(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_expm1<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_expm1<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3786,10 +3786,10 @@ auto expm1(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // log 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto log(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto log(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_log<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_log<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3805,10 +3805,10 @@ auto log(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // log10 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto log10(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto log10(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_log10<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_log10<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3824,10 +3824,10 @@ auto log10(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // log2 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto log2(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto log2(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_log2<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_log2<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3843,10 +3843,10 @@ auto log2(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // log1p 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto log1p(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto log1p(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_log1p<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_log1p<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3862,10 +3862,10 @@ auto log1p(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // logb 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto logb(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto logb(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_logb<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_logb<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3881,10 +3881,10 @@ auto logb(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // sgn 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto sgn(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto sgn(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_sgn<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_sgn<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3900,10 +3900,10 @@ auto sgn(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // ceil 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto ceil(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto ceil(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_ceil<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_ceil<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3919,10 +3919,10 @@ auto ceil(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // floor 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto floor(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto floor(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_floor<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_floor<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3938,10 +3938,10 @@ auto floor(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // round 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto round(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto round(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_round<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_round<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3957,10 +3957,10 @@ auto round(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // trunc 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto trunc(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto trunc(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_trunc<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_trunc<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3976,10 +3976,10 @@ auto trunc(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // erf 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto erf(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto erf(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_erf<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_erf<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3995,10 +3995,10 @@ auto erf(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // erfc 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto erfc(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto erfc(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_erfc<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_erfc<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4014,10 +4014,10 @@ auto erfc(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // tgamma 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto tgamma(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto tgamma(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_tgamma<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_tgamma<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4033,10 +4033,10 @@ auto tgamma(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // lgamma 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto lgamma(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto lgamma(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_lgamma<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_lgamma<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4052,10 +4052,10 @@ auto lgamma(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // expint 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto expint(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto expint(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_expint<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_expint<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4071,10 +4071,10 @@ auto expint(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // riemann_zeta 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto riemann_zeta(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto riemann_zeta(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_riemann_zeta<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_riemann_zeta<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4090,10 +4090,10 @@ auto riemann_zeta(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // comp_ellint_1 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto comp_ellint_1(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto comp_ellint_1(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_comp_ellint_1<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_comp_ellint_1<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4109,10 +4109,10 @@ auto comp_ellint_1(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // comp_ellint_2 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto comp_ellint_2(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto comp_ellint_2(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_comp_ellint_2<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_comp_ellint_2<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4128,10 +4128,10 @@ auto comp_ellint_2(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // zero 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto zero(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto zero(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_zero<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_zero<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4147,10 +4147,10 @@ auto zero(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // ilogb 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto ilogb(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto ilogb(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, int>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, int, Depth, R, FUNCTOR_ilogb<Element, EOUT, Number, int>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, int, depth, R, FUNCTOR_ilogb<Element, EOUT, Number, int>>(x);
 }
 
 
@@ -4166,10 +4166,10 @@ auto ilogb(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // imaginary 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto imaginary(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto imaginary(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, mathq::Imaginary<Number>, Depth, R, FUNCTOR_imaginary<Element, EOUT, Number, mathq::Imaginary<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, mathq::Imaginary<Number>, depth, R, FUNCTOR_imaginary<Element, EOUT, Number, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4185,10 +4185,10 @@ auto imaginary(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // conj 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto conj(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto conj(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, mathq::Imaginary<Number>, Depth, R, FUNCTOR_conj_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, mathq::Imaginary<Number>, depth, R, FUNCTOR_conj_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4204,10 +4204,10 @@ auto conj(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // real 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto real(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto real(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_real_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_real_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4223,10 +4223,10 @@ auto real(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // imag 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto imag(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto imag(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_imag_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_imag_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4242,10 +4242,10 @@ auto imag(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // abs 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto abs(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto abs(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_abs_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_abs_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4261,10 +4261,10 @@ auto abs(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // arg 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto arg(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto arg(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_arg_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_arg_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4280,10 +4280,10 @@ auto arg(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // proj 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto proj(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto proj(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_proj_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_proj_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4299,10 +4299,10 @@ auto proj(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // exp 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto exp(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto exp(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_exp_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_exp_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4318,10 +4318,10 @@ auto exp(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // log 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto log(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto log(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_log_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_log_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4337,10 +4337,10 @@ auto log(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // log10 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto log10(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto log10(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_log10_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_log10_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4356,10 +4356,10 @@ auto log10(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) 
 // sqrt 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto sqrt(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto sqrt(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_sqrt_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_sqrt_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4375,10 +4375,10 @@ auto sqrt(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // sin 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto sin(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto sin(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, mathq::Imaginary<Number>, Depth, R, FUNCTOR_sin_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, mathq::Imaginary<Number>, depth, R, FUNCTOR_sin_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4394,10 +4394,10 @@ auto sin(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // cos 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto cos(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto cos(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_cos_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_cos_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4413,10 +4413,10 @@ auto cos(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // tan 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto tan(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto tan(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, mathq::Imaginary<Number>, Depth, R, FUNCTOR_tan_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, mathq::Imaginary<Number>, depth, R, FUNCTOR_tan_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4432,10 +4432,10 @@ auto tan(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // asin 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto asin(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto asin(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, mathq::Imaginary<Number>, Depth, R, FUNCTOR_asin_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, mathq::Imaginary<Number>, depth, R, FUNCTOR_asin_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4451,10 +4451,10 @@ auto asin(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // acos 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto acos(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto acos(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_acos_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_acos_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4470,10 +4470,10 @@ auto acos(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // atan 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto atan(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto atan(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_atan_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_atan_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4489,10 +4489,10 @@ auto atan(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // sinh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto sinh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto sinh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, mathq::Imaginary<Number>, Depth, R, FUNCTOR_sinh_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, mathq::Imaginary<Number>, depth, R, FUNCTOR_sinh_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4508,10 +4508,10 @@ auto sinh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // cosh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto cosh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto cosh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_cosh_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_cosh_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4527,10 +4527,10 @@ auto cosh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // tanh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto tanh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto tanh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, mathq::Imaginary<Number>, Depth, R, FUNCTOR_tanh_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, mathq::Imaginary<Number>, depth, R, FUNCTOR_tanh_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4546,10 +4546,10 @@ auto tanh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
 // asinh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto asinh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto asinh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_asinh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_asinh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4565,10 +4565,10 @@ auto asinh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) 
 // acosh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto acosh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto acosh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_acosh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_acosh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4584,10 +4584,10 @@ auto acosh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) 
 // atanh 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto atanh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto atanh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_atanh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Imaginary<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_atanh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4603,10 +4603,10 @@ auto atanh(const MArrayExpR<X, Element, mathq::Imaginary<Number>, Depth, R>& x) 
 // conj 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto conj(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto conj(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_conj_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_conj_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4622,10 +4622,10 @@ auto conj(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // real 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto real(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto real(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_real_complex<Element, EOUT, std::complex<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_real_complex<Element, EOUT, std::complex<Number>, Number>>(x);
 }
 
 
@@ -4641,10 +4641,10 @@ auto real(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // imag 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto imag(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto imag(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_imag_complex<Element, EOUT, std::complex<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_imag_complex<Element, EOUT, std::complex<Number>, Number>>(x);
 }
 
 
@@ -4660,10 +4660,10 @@ auto imag(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // abs 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto abs(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto abs(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_abs_complex<Element, EOUT, std::complex<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_abs_complex<Element, EOUT, std::complex<Number>, Number>>(x);
 }
 
 
@@ -4679,10 +4679,10 @@ auto abs(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // arg 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto arg(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto arg(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_arg_complex<Element, EOUT, std::complex<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_arg_complex<Element, EOUT, std::complex<Number>, Number>>(x);
 }
 
 
@@ -4698,10 +4698,10 @@ auto arg(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // proj 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto proj(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto proj(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_proj_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_proj_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4717,10 +4717,10 @@ auto proj(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // round 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto round(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto round(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_round_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_round_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4736,10 +4736,10 @@ auto round(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // log2 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto log2(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto log2(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_log2_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_log2_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4755,10 +4755,10 @@ auto log2(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // floor 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto floor(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto floor(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_floor_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_floor_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4774,10 +4774,10 @@ auto floor(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // ceil 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto ceil(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto ceil(const MArrayExpR<X, Element, std::complex<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_ceil_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, std::complex<Number>, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_ceil_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4793,10 +4793,10 @@ auto ceil(const MArrayExpR<X, Element, std::complex<Number>, Depth, R>& x) {
 // quaternion 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto quaternion(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto quaternion(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Quaternion<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, mathq::Quaternion<Number>, Depth, R, FUNCTOR_quaternion<Element, EOUT, Number, mathq::Quaternion<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, mathq::Quaternion<Number>, depth, R, FUNCTOR_quaternion<Element, EOUT, Number, mathq::Quaternion<Number>>>(x);
 }
 
 
@@ -4812,10 +4812,10 @@ auto quaternion(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // conj 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto conj(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto conj(const MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Quaternion<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>, EOUT, mathq::Quaternion<Number>, Depth, R, FUNCTOR_conj_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>, EOUT, mathq::Quaternion<Number>, depth, R, FUNCTOR_conj_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
 }
 
 
@@ -4831,10 +4831,10 @@ auto conj(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) 
 // real 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto real(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto real(const MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_real_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_real_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4850,10 +4850,10 @@ auto real(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) 
 // imag 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto imag(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto imag(const MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_imag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_imag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4869,10 +4869,10 @@ auto imag(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) 
 // jmag 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto jmag(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto jmag(const MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_jmag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_jmag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4888,10 +4888,10 @@ auto jmag(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) 
 // kmag 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto kmag(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto kmag(const MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_kmag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_kmag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4907,10 +4907,10 @@ auto kmag(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) 
 // abs 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto abs(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto abs(const MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_abs_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>, EOUT, Number, depth, R, FUNCTOR_abs_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4926,10 +4926,10 @@ auto abs(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
 // exp 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto exp(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto exp(const MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Quaternion<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>, EOUT, mathq::Quaternion<Number>, Depth, R, FUNCTOR_exp_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>, EOUT, mathq::Quaternion<Number>, depth, R, FUNCTOR_exp_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
 }
 
 
@@ -4945,10 +4945,10 @@ auto exp(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
 // log 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R>
-auto log(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R>
+auto log(const MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>& x) {
   typedef typename NumberTrait<Element, mathq::Quaternion<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>, EOUT, mathq::Quaternion<Number>, Depth, R, FUNCTOR_log_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, mathq::Quaternion<Number>, depth, R>, EOUT, mathq::Quaternion<Number>, depth, R, FUNCTOR_log_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
 }
 
 
@@ -4964,10 +4964,10 @@ auto log(const MArrayExpR<X, Element, mathq::Quaternion<Number>, Depth, R>& x) {
 // conj 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-inline auto conj(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+inline auto conj(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_conj_real<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_conj_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4983,10 +4983,10 @@ inline auto conj(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // real 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-inline auto real(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+inline auto real(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_real_real<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_real_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -5002,10 +5002,10 @@ inline auto real(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // imag 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-inline auto imag(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+inline auto imag(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_imag_real<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_imag_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -5021,10 +5021,10 @@ inline auto imag(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // abs 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-inline auto abs(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+inline auto abs(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_abs_real<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_abs_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -5040,10 +5040,10 @@ inline auto abs(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // arg 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-inline auto arg(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+inline auto arg(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, Number>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, Number, Depth, R, FUNCTOR_arg_real<Element, EOUT, Number, Number>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, Number, depth, R, FUNCTOR_arg_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -5059,10 +5059,10 @@ inline auto arg(const MArrayExpR<X, Element, Number, Depth, R>& x) {
 // proj 
 //----------------------------------------------
 
-template <class X, class Element, class Number, int Depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-inline auto proj(const MArrayExpR<X, Element, Number, Depth, R>& x) {
+template <class X, class Element, class Number, int depth, int R, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+inline auto proj(const MArrayExpR<X, Element, Number, depth, R>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplaceTypeD EOUT;
-  return  TER_Unary<MArrayExpR<X, Element, Number, Depth, R>, EOUT, std::complex<Number>, Depth, R, FUNCTOR_proj_real<Element, EOUT, Number, std::complex<Number>>>(x);
+  return  TER_Unary<MArrayExpR<X, Element, Number, depth, R>, EOUT, std::complex<Number>, depth, R, FUNCTOR_proj_real<Element, EOUT, Number, std::complex<Number>>>(x);
 }
 }; // namespace mathq 
 #endif // MATHQ__FUN_UNARY_AUTO_H

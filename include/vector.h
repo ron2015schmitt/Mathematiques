@@ -12,13 +12,13 @@ namespace mathq {
    * Vector<Element,N1> -- fixed size vector (array)
    *                 N1 = size = number of elements
    *
-   * DO NOT SPECIFY: Number,Depth
+   * DO NOT SPECIFY: Number,depth
    *                 The defaults are defined in the declaration in
    *                 preface.h
    *                 Number = number type
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
-   *                 Depth = tensor depth. if Element=Number, then Depth=1.
+   *                 depth = tensor depth. if Element=Number, then depth=1.
   ********************************************************************
    */
 
@@ -31,7 +31,7 @@ namespace mathq {
 
     typedef typename ArrayType<Element, N1>::Type MyArrayType;
     constexpr static int R = 1;
-    constexpr static int Depth = 1 + NumberTrait<Element>::getDepth();
+    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
 
     // rename these
     typedef typename NumberTrait<Element>::Type DType;
@@ -119,7 +119,7 @@ namespace mathq {
 
     // --------------------- Vector(Number value)  ---------------------
 
-    template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(Depth>1)> = 0>
+    template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth>1)> = 0>
 
     explicit Vector<Element, N1>(const Number val) {
       *this = val;
@@ -156,7 +156,7 @@ namespace mathq {
     // --------------------- EXPRESSION CONSTRUCTOR --------------------
 
     template <class X>
-    Vector<Element, N1>(const MArrayExpR<X, Element, Number, Depth, Rvalue>& x) {
+    Vector<Element, N1>(const MArrayExpR<X, Element, Number, depth, Rvalue>& x) {
       if constexpr (N1==0) {
         this->resize(x.size());
       }
@@ -231,12 +231,12 @@ namespace mathq {
 
 
     inline size_t getDepth(void) const {
-      return Depth;
+      return depth;
     }
 
     Dimensions eldims(void) const {
       Dimensions dimensions();
-      if constexpr (Depth>1) {
+      if constexpr (depth>1) {
         if (size()>0) {
           return data_[0].dims();
         }
@@ -246,7 +246,7 @@ namespace mathq {
 
     // the size of each element
     inline size_t elsize(void) const {
-      if constexpr (Depth<2) {
+      if constexpr (depth<2) {
         return 1;
       }
       else {
@@ -262,7 +262,7 @@ namespace mathq {
 
     // the deep size of an element: the total number of numbers in an element
     inline size_t eldeepsize(void) const {
-      if constexpr (Depth<2) {
+      if constexpr (depth<2) {
         return 1;
       }
       else {
@@ -278,7 +278,7 @@ namespace mathq {
 
     // the total number of numbers in this data structure
     size_t deepsize(void) const {
-      if constexpr (Depth<2) {
+      if constexpr (depth<2) {
         return this->size();
       }
       else {
@@ -292,7 +292,7 @@ namespace mathq {
     }
     std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
-      if constexpr (Depth>1) {
+      if constexpr (depth>1) {
         if (size()>0) {
           data_[0].deepdims(parentdims);
         }
@@ -338,7 +338,7 @@ namespace mathq {
       if constexpr (N1==0) {
         resize(Nnew);
       }
-      if constexpr (Depth>1) {
+      if constexpr (depth>1) {
         deepdims.erase(deepdims.begin());
         for (size_t i = 0; i < size(); i++) {
           std::vector<Dimensions> ddims(deepdims);
@@ -357,7 +357,7 @@ namespace mathq {
     // "read/write"
     Number& dat(const size_t n) {
       using namespace::display;
-      if constexpr (Depth < 2) {
+      if constexpr (depth < 2) {
         int k = n;
         if (k < 0) {
           k += size();
@@ -375,7 +375,7 @@ namespace mathq {
     // read
     const Number& dat(const size_t n)  const {
       using namespace::display;
-      if constexpr (Depth < 2) {
+      if constexpr (depth < 2) {
         int k = n;
         if (k < 0) {
           k += size();
@@ -396,9 +396,9 @@ namespace mathq {
     // "read/write": x.dat(DeepIndices)
     Number& dat(const DeepIndices& dinds) {
       const size_t mydepth = dinds.size();
-      size_t n = dinds[mydepth -Depth][0];
+      size_t n = dinds[mydepth -depth][0];
 
-      if constexpr (Depth>1) {
+      if constexpr (depth>1) {
         return (*this)(n).dat(dinds);
       }
       else {
@@ -409,9 +409,9 @@ namespace mathq {
     // "read": x.dat(DeerIndices)
     const Number dat(const DeepIndices& dinds)  const {
       const size_t mydepth = dinds.size();
-      size_t n = dinds[mydepth -Depth][0];
+      size_t n = dinds[mydepth -depth][0];
 
-      if constexpr (Depth>1) {
+      if constexpr (depth>1) {
         return (*this)(n).dat(dinds);
       }
       else {
@@ -431,7 +431,7 @@ namespace mathq {
       size_t n = inds_next[0];
       // MOUT << "  ";
       inds_next.erase(inds_next.begin());
-      if constexpr (Depth>1) {
+      if constexpr (depth>1) {
         return (*this)(n).dat(inds_next);
       }
       else {
@@ -445,7 +445,7 @@ namespace mathq {
       // error if (inds.size() != sum deepdims[i].rank
       size_t n = inds_next[0];
       inds_next.erase(inds_next.begin());
-      if constexpr (Depth>1) {
+      if constexpr (depth>1) {
         return (*this)(n).dat(inds_next);
       }
       else {
@@ -480,8 +480,8 @@ namespace mathq {
     //***************MultiArray cast *********************
     //**********************************************************************
 
-    operator MultiArray<Element, R, Number, Depth>() const {
-      MultiArray<Element, 1, Number, Depth> ma(*this);
+    operator MultiArray<Element, R, Number, depth>() const {
+      MultiArray<Element, 1, Number, depth> ma(*this);
     }
 
       //**********************************************************************
@@ -599,11 +599,11 @@ namespace mathq {
 
 
 
-    // ------------------------ Vector = Vector<Element,NE2,Number,Depth> ----------------
+    // ------------------------ Vector = Vector<Element,NE2,Number,depth> ----------------
 
     template <int NE2>
     Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
-      if constexpr (Depth<=1) {
+      if constexpr (depth<=1) {
         if constexpr (N1==0) {
           if (this->size() != v.size()) {
             resize(v.size());
@@ -626,9 +626,9 @@ namespace mathq {
     // ------------------------ Vector = MArrayExpR ----------------
 
     template <class X>
-    Vector<Element, N1>& operator=(const MArrayExpR<X, Element, Number, Depth, Rvalue>& x) {
+    Vector<Element, N1>& operator=(const MArrayExpR<X, Element, Number, depth, Rvalue>& x) {
 
-      if constexpr (Depth<=1) {
+      if constexpr (depth<=1) {
         if constexpr (N1==0) {
           if (this->size() != x.size()) {
             resize(x.size());
@@ -1266,10 +1266,10 @@ namespace mathq {
         s += "N1=";
         s += num2string(N1);
       }
-      //    if (Depth>1) {
+      //    if (depth>1) {
       //      s += StyledString::get(COMMA).get();
-      //      s += "Depth=";
-      //      s += num2string(Depth);
+      //      s += "depth=";
+      //      s += num2string(depth);
       //    }
       s += StyledString::get(ANGLE2).get();
       return s;
