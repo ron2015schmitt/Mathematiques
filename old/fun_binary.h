@@ -52,30 +52,30 @@ namespace mathq {
 
 
   
-  // // MultiArray<D1> && MultiArray<D2>
+  // // MultiArray<NT1> && MultiArray<NT2>
 
-  // template <class D1, class D2, class A, class B> 
-  //   inline auto operator&&(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  // template <class NT1, class NT2, class A, class B> 
+  //   inline auto operator&&(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   // {
-  //   return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_And<D1,D2>>(a,b);
+  //   return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_And<NT1,NT2>>(a,b);
   // }
 
 
-  // // MultiArray<D1> && bool
+  // // MultiArray<NT1> && bool
 
-  // template <class D1, class A> 
-  //   inline auto operator&&(const MArrayExpR<D1,A>& a, const bool& b)
+  // template <class NT1, class A> 
+  //   inline auto operator&&(const MArrayExpR<NT1,A>& a, const bool& b)
   //   {
-  //     return  TER_Binary<MArrayExpR<D1,A>,bool,D1,bool,Fun_And<D1,bool>>(a,b);
+  //     return  TER_Binary<MArrayExpR<NT1,A>,bool,NT1,bool,Fun_And<NT1,bool>>(a,b);
   //   }
 
   
-  // // bool && MultiArray<D2>
+  // // bool && MultiArray<NT2>
 
-  // template <class D2, class B>
-  //   inline auto operator&&(const bool& a, const MArrayExpR<D2,B>& b)
+  // template <class NT2, class B>
+  //   inline auto operator&&(const bool& a, const MArrayExpR<NT2,B>& b)
   //   {
-  //     return  TER_Binary<bool,MArrayExpR<D2,B>,bool,D2,Fun_And<bool,D2>>(a,b);
+  //     return  TER_Binary<bool,MArrayExpR<NT2,B>,bool,NT2,Fun_And<bool,NT2>>(a,b);
   //   }
 
     

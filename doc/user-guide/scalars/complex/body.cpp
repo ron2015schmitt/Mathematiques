@@ -135,8 +135,8 @@ int main() {
   OUTPUT("**Without Mathématiques, all of the above expressions will fail to compile!**\n");
 
   OUTPUT("Let `OP` be `+`, `-`, `*`, or `/`.\n");
-  OUTPUT("1. `complex<D1> OP complex<D2>` will fail to compile without Mathématiques unless D1==D2\n");
-  OUTPUT("1. `complex<D1> OP D2` will fail to compile without Mathématiques unless D1==D2\n");
+  OUTPUT("1. `complex<NT1> OP complex<NT2>` will fail to compile without Mathématiques unless NT1==NT2\n");
+  OUTPUT("1. `complex<NT1> OP NT2` will fail to compile without Mathématiques unless NT1==NT2\n");
   CR();
   OUTPUT("The philosophy behind Mathématiques is that the user would rather be concerned with math and algorithms than overly-rigid syntax.\n");
 

@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.65-c++17</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.66-c++17</h1>
 
 <details>
 
@@ -157,9 +157,9 @@ Mathématiques extends the C++ functionality so that mixed math (ints, floating 
 
 Let `OP` be `+`, `-`, `*`, or `/`.
 
-1. `complex<D1> OP complex<D2>` will fail to compile without Mathématiques unless D1==D2
+1. `complex<NT1> OP complex<NT2>` will fail to compile without Mathématiques unless NT1==NT2
 
-1. `complex<D1> OP D2` will fail to compile without Mathématiques unless D1==D2
+1. `complex<NT1> OP NT2` will fail to compile without Mathématiques unless NT1==NT2
 
 
 The philosophy behind Mathématiques is that the user would rather be concerned with math and algorithms than overly-rigid syntax.

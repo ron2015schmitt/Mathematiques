@@ -30,13 +30,13 @@ namespace mathq {
   // op2: binary user function
   // ----------------------------------------------------------------
 
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-  auto op2(const typename FunctionType2<D1, D2, typename AddType<D1, D2>::Type>::type& f, const MArrayExpR<A, E1, D1, depth, rank>& x1, const MArrayExpR<B, E2, D2, depth, rank>& x2) {
-    typedef typename AddType<D1, D2>::Type D3;
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+  auto op2(const typename FunctionType2<NT1, NT2, typename AddType<NT1, NT2>::Type>::type& f, const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
+    typedef typename AddType<NT1, NT2>::Type D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;   // see TODO note above
-    return  TER_Binary_User<MArrayExpR<A, E1, D1, depth, rank>,
-      MArrayExpR<B, E2, D2, depth, rank>,
-      E1, E2, E3, D1, D2, D3, depth, depth, depth, rank, rank, rank>(f, x1, x2);
+    return  TER_Binary_User<MArrayExpR<A, E1, NT1, depth, rank>,
+      MArrayExpR<B, E2, NT2, depth, rank>,
+      E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank>(f, x1, x2);
   }
 
 

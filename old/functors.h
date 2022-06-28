@@ -80,15 +80,15 @@ namespace matricks {
   };
 
 
-  // cast - from D1 to D2
+  // cast - from NT1 to NT2
 
-  template <class D2, class D1> class Fun_Cast {
+  template <class NT2, class NT1> class Fun_Cast {
     Fun_Cast() { }
   public:
-    typedef typename NumberTrait<D1>::Type TypeIn;
-    typedef typename NumberTrait<D2>::Type Type;
-    typedef typename OrderedNumberTrait<D1>::Type FTypeIn;
-    typedef typename OrderedNumberTrait<D2>::Type OrderedNumberType;
+    typedef typename NumberTrait<NT1>::Type TypeIn;
+    typedef typename NumberTrait<NT2>::Type Type;
+    typedef typename OrderedNumberTrait<NT1>::Type FTypeIn;
+    typedef typename OrderedNumberTrait<NT2>::Type OrderedNumberType;
 
     static inline Type apply(const TypeIn a) { 
       return numbercast<OrderedNumberType,FTypeIn>(a); 
@@ -98,15 +98,15 @@ namespace matricks {
 #if MATRICKS_DEBUG>=1
     static inline std::string expression(const std::string& sa) {
       using namespace display;
-      D2 d2;
+      NT2 d2;
       std::string sout = functor_style.apply("numbercast")+"<" + getTypeName(d2) + ">(" + sa + ")";
       return sout;
     }
 
     static std::string classname() {
       using namespace display;
-      D1 d1;
-      D2 d2;
+      NT1 d1;
+      NT2 d2;
       std::string s = functor_namestyle.apply("Fun_Cast");
       s += StyledString::get(ANGLE1).get() + getTypeName(d1);
       s += StyledString::get(COMMA).get() + getTypeName(d2);

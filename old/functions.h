@@ -42,30 +42,30 @@ namespace matricks {
   // Addition (+)
   //----------------------------------------------
 
-  // MultiArray<D1> + MultiArray<D2>
+  // MultiArray<NT1> + MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator+(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator+(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Add<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Add<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> + D2
+  // MultiArray<NT1> + NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator+(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator+(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_Add<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_Add<NT1,NT2>>(a,b);
     }
 
   
-  // D1 + MultiArray<D2>
+  // NT1 + MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator+(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator+(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_Add<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_Add<NT1,NT2>>(a,b);
     }
 
     
@@ -93,30 +93,30 @@ namespace matricks {
   //----------------------------------------------
 
 
-  // MultiArray<D1> - MultiArray<D2>
+  // MultiArray<NT1> - MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator-(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator-(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Subtract<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Subtract<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> - D2
+  // MultiArray<NT1> - NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator-(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator-(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_Subtract<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_Subtract<NT1,NT2>>(a,b);
     }
 
   
-  // D1 - MultiArray<D2>
+  // NT1 - MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator-(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator-(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_Subtract<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_Subtract<NT1,NT2>>(a,b);
     }
 
     
@@ -146,30 +146,30 @@ namespace matricks {
   // Multiplication (*)
   //----------------------------------------------
 
-  // MultiArray<D1> * MultiArray<D2>
+  // MultiArray<NT1> * MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator*(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator*(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Multiply<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Multiply<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> * D2
+  // MultiArray<NT1> * NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator*(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator*(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_Multiply<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_Multiply<NT1,NT2>>(a,b);
     }
 
   
-  // D1 * MultiArray<D2>
+  // NT1 * MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator*(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator*(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_Multiply<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_Multiply<NT1,NT2>>(a,b);
     }
 
     
@@ -195,30 +195,30 @@ namespace matricks {
   // Division (/)
   //----------------------------------------------
 
-  // MultiArray<D1> / MultiArray<D2>
+  // MultiArray<NT1> / MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator/(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator/(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Divide<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Divide<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> / D2
+  // MultiArray<NT1> / NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator/(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator/(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_Divide<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_Divide<NT1,NT2>>(a,b);
     }
 
   
-  // D1 / MultiArray<D2>
+  // NT1 / MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator/(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator/(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_Divide<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_Divide<NT1,NT2>>(a,b);
     }
 
     
@@ -244,13 +244,13 @@ namespace matricks {
 
 
   //**************************************************************************
-  // numbercast: cast data from D1 to D2
+  // numbercast: cast data from NT1 to NT2
   //**************************************************************************
 
-  template <class D2, class D1, class A> 
-    inline auto numbercast(const MArrayExpR<D1,A>& a)
+  template <class NT2, class NT1, class A> 
+    inline auto numbercast(const MArrayExpR<NT1,A>& a)
   {
-    return  TER_Unary<D2,MArrayExpR<D1,A>,Fun_Cast<D2,D1> >(a);
+    return  TER_Unary<NT2,MArrayExpR<NT1,A>,Fun_Cast<NT2,NT1> >(a);
   }
 
 
@@ -451,30 +451,30 @@ namespace matricks {
   // ************************************************************************
 
 
-  // pow(MultiArray<D1>,MultiArray<D2>)
+  // pow(MultiArray<NT1>,MultiArray<NT2>)
 
-  template <class D1, class D2, class A, class B> 
-    inline auto pow(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto pow(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Pow<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Pow<NT1,NT2>>(a,b);
   }
   
   
-  // pow(MultiArray<D1> , D2)
+  // pow(MultiArray<NT1> , NT2)
   
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto pow(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto pow(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_Pow<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_Pow<NT1,NT2>>(a,b);
     }
   
   
-  // pow(D1 , MultiArray<D2>)
+  // pow(NT1 , MultiArray<NT2>)
   
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto pow(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto pow(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_Pow<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_Pow<NT1,NT2>>(a,b);
     }
   
   
@@ -624,12 +624,12 @@ namespace matricks {
 
   // atan2(MultiArray,MultiArray)
 
-  // MultiArray<D1> + MultiArray<D2>
+  // MultiArray<NT1> + MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto atan2(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto atan2(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Atan2<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Atan2<NT1,NT2>>(a,b);
   }
   
 
@@ -715,11 +715,11 @@ namespace matricks {
 
   // roundzero(MultiArray)
 
-  template <class D1, class A>
-     auto roundzero(const MArrayExpR<D1,A>& a, const typename OrderedNumberTrait<D1>::Type tolerance = MatricksHelper< typename OrderedNumberTrait<D1>::Type >::tolerance)
+  template <class NT1, class A>
+     auto roundzero(const MArrayExpR<NT1,A>& a, const typename OrderedNumberTrait<NT1>::Type tolerance = MatricksHelper< typename OrderedNumberTrait<NT1>::Type >::tolerance)
     {
-      typedef typename OrderedNumberTrait<D1>::Type TOL;
-      return  TER_Binary< MArrayExpR<D1,A>,TOL, D1,TOL, Fun_Roundzero<D1,TOL> >(a, tolerance);
+      typedef typename OrderedNumberTrait<NT1>::Type TOL;
+      return  TER_Binary< MArrayExpR<NT1,A>,TOL, NT1,TOL, Fun_Roundzero<NT1,TOL> >(a, tolerance);
     }
   
 
@@ -770,30 +770,30 @@ namespace matricks {
   // logical AND (&&)
   //----------------------------------------------
   
-  // MultiArray<D1> && MultiArray<D2>
+  // MultiArray<NT1> && MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator&&(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator&&(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_And<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_And<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> && bool
+  // MultiArray<NT1> && bool
 
-  template <class D1, class A> 
-    inline auto operator&&(const MArrayExpR<D1,A>& a, const bool& b)
+  template <class NT1, class A> 
+    inline auto operator&&(const MArrayExpR<NT1,A>& a, const bool& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,bool,D1,bool,Fun_And<D1,bool>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,bool,NT1,bool,Fun_And<NT1,bool>>(a,b);
     }
 
   
-  // bool && MultiArray<D2>
+  // bool && MultiArray<NT2>
 
-  template <class D2, class B>
-    inline auto operator&&(const bool& a, const MArrayExpR<D2,B>& b)
+  template <class NT2, class B>
+    inline auto operator&&(const bool& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<bool,MArrayExpR<D2,B>,bool,D2,Fun_And<bool,D2>>(a,b);
+      return  TER_Binary<bool,MArrayExpR<NT2,B>,bool,NT2,Fun_And<bool,NT2>>(a,b);
     }
 
     
@@ -823,30 +823,30 @@ namespace matricks {
   //----------------------------------------------
     
   
-  // MultiArray<D1> || MultiArray<D2>
+  // MultiArray<NT1> || MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator||(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator||(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Or<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Or<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> || bool
+  // MultiArray<NT1> || bool
 
-  template <class D1, class A> 
-    inline auto operator||(const MArrayExpR<D1,A>& a, const bool& b)
+  template <class NT1, class A> 
+    inline auto operator||(const MArrayExpR<NT1,A>& a, const bool& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,bool,D1,bool,Fun_Or<D1,bool>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,bool,NT1,bool,Fun_Or<NT1,bool>>(a,b);
     }
 
   
-  // bool || MultiArray<D2>
+  // bool || MultiArray<NT2>
 
-  template <class D2, class B>
-    inline auto operator||(const bool& a, const MArrayExpR<D2,B>& b)
+  template <class NT2, class B>
+    inline auto operator||(const bool& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<bool,MArrayExpR<D2,B>,bool,D2,Fun_Or<bool,D2>>(a,b);
+      return  TER_Binary<bool,MArrayExpR<NT2,B>,bool,NT2,Fun_Or<bool,NT2>>(a,b);
     }
 
     
@@ -878,30 +878,30 @@ namespace matricks {
   // equal (==)
   //----------------------------------------------
 
-  // MultiArray<D1> == MultiArray<D2>
+  // MultiArray<NT1> == MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator==(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator==(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Equal<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Equal<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> == D2
+  // MultiArray<NT1> == NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator==(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator==(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_Equal<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_Equal<NT1,NT2>>(a,b);
     }
 
   
-  // D1 == MultiArray<D2>
+  // NT1 == MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator==(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator==(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_Equal<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_Equal<NT1,NT2>>(a,b);
     }
 
     
@@ -926,30 +926,30 @@ namespace matricks {
   // not equal (!=)
   //----------------------------------------------
 
-  // MultiArray<D1> != MultiArray<D2>
+  // MultiArray<NT1> != MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator!=(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator!=(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_NotEqual<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_NotEqual<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> != D2
+  // MultiArray<NT1> != NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator!=(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator!=(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_NotEqual<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_NotEqual<NT1,NT2>>(a,b);
     }
 
   
-  // D1 != MultiArray<D2>
+  // NT1 != MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator!=(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator!=(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_NotEqual<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_NotEqual<NT1,NT2>>(a,b);
     }
 
     
@@ -975,30 +975,30 @@ namespace matricks {
   // less than or equal (<=)
   //----------------------------------------------
 
-  // MultiArray<D1> <= MultiArray<D2>
+  // MultiArray<NT1> <= MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator<=(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator<=(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_LessOrEqual<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_LessOrEqual<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> <= D2
+  // MultiArray<NT1> <= NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator<=(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator<=(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_LessOrEqual<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_LessOrEqual<NT1,NT2>>(a,b);
     }
 
   
-  // D1 <= MultiArray<D2>
+  // NT1 <= MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator<=(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator<=(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_LessOrEqual<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_LessOrEqual<NT1,NT2>>(a,b);
     }
 
     
@@ -1024,30 +1024,30 @@ namespace matricks {
   // less than or equal (>=)
   //----------------------------------------------
 
-  // MultiArray<D1> >= MultiArray<D2>
+  // MultiArray<NT1> >= MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator>=(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator>=(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_GreaterOrEqual<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_GreaterOrEqual<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> >= D2
+  // MultiArray<NT1> >= NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator>=(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator>=(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_GreaterOrEqual<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_GreaterOrEqual<NT1,NT2>>(a,b);
     }
 
   
-  // D1 >= MultiArray<D2>
+  // NT1 >= MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator>=(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator>=(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_GreaterOrEqual<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_GreaterOrEqual<NT1,NT2>>(a,b);
     }
 
     
@@ -1073,30 +1073,30 @@ namespace matricks {
   // less than (<)
   //----------------------------------------------
 
-  // MultiArray<D1> < MultiArray<D2>
+  // MultiArray<NT1> < MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator<(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator<(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Less<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Less<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> < D2
+  // MultiArray<NT1> < NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator<(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator<(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_Less<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_Less<NT1,NT2>>(a,b);
     }
 
   
-  // D1 < MultiArray<D2>
+  // NT1 < MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator<(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator<(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_Less<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_Less<NT1,NT2>>(a,b);
     }
 
     
@@ -1121,30 +1121,30 @@ namespace matricks {
   // greater than (>)
   //----------------------------------------------
 
-  // MultiArray<D1> > MultiArray<D2>
+  // MultiArray<NT1> > MultiArray<NT2>
 
-  template <class D1, class D2, class A, class B> 
-    inline auto operator>(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class A, class B> 
+    inline auto operator>(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D1,A>,MArrayExpR<D2,B>,D1,D2,Fun_Greater<D1,D2>>(a,b);
+    return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_Greater<NT1,NT2>>(a,b);
   }
 
 
-  // MultiArray<D1> > D2
+  // MultiArray<NT1> > NT2
 
-  template <class D1, class D2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D2>::value> > 
-    inline auto operator>(const MArrayExpR<D1,A>& a, const D2& b)
+  template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
+    inline auto operator>(const MArrayExpR<NT1,A>& a, const NT2& b)
     {
-      return  TER_Binary<MArrayExpR<D1,A>,D2,D1,D2,Fun_Greater<D1,D2>>(a,b);
+      return  TER_Binary<MArrayExpR<NT1,A>,NT2,NT1,NT2,Fun_Greater<NT1,NT2>>(a,b);
     }
 
   
-  // D1 > MultiArray<D2>
+  // NT1 > MultiArray<NT2>
 
-  template <class D1, class D2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,D1>::value> > 
-    inline auto operator>(const D1& a, const MArrayExpR<D2,B>& b)
+  template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
+    inline auto operator>(const NT1& a, const MArrayExpR<NT2,B>& b)
     {
-      return  TER_Binary<D1,MArrayExpR<D2,B>,D1,D2,Fun_Greater<D1,D2>>(a,b);
+      return  TER_Binary<NT1,MArrayExpR<NT2,B>,NT1,NT2,Fun_Greater<NT1,NT2>>(a,b);
     }
 
     
@@ -1174,10 +1174,10 @@ namespace matricks {
 
   // approxel(a,b,tol) - element wise
   
-  template <class D1, class D2, class D3, class A, class B> 
-    inline auto approxel(const MArrayExpR<D1,A>& a, const MArrayExpR<D2,B>& b, const D3 tol = MatricksHelper<D3>::tolerance)
+  template <class NT1, class NT2, class D3, class A, class B> 
+    inline auto approxel(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b, const D3 tol = MatricksHelper<D3>::tolerance)
   {
-    return  TER_Ternary< MArrayExpR<D1,A>,MArrayExpR<D2,B>,D3, D1,D2,D3, Fun_Approx<D1,D2,D3> >(a,b,tol);
+    return  TER_Ternary< MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,D3, NT1,NT2,D3, Fun_Approx<NT1,NT2,D3> >(a,b,tol);
   }
 
 
@@ -1582,12 +1582,12 @@ namespace matricks {
 
   // toCarray(v)
 
-  template <class D2, class D1, class A> 
-    inline D2* toCarray(const MArrayExpR<D1,A>& v) {
+  template <class NT2, class NT1, class A> 
+    inline NT2* toCarray(const MArrayExpR<NT1,A>& v) {
     const size_t N = v.size();
-    D2* dptr = new D2[N];
+    NT2* dptr = new NT2[N];
     for(size_t i = 0; i<N; i++) 
-      dptr[i] = static_cast<D2>(v[i]);
+      dptr[i] = static_cast<NT2>(v[i]);
     return  dptr;
   }
 
@@ -1595,13 +1595,13 @@ namespace matricks {
 
   // tostdvector(v)
 
-  template <class D2, class D1, class A> 
-    inline std::vector<D2>
-    tostdvector(const MArrayExpR<D1,A>& v) {
+  template <class NT2, class NT1, class A> 
+    inline std::vector<NT2>
+    tostdvector(const MArrayExpR<NT1,A>& v) {
     const size_t N = v.size();
-    std::vector<D2> y(N);
+    std::vector<NT2> y(N);
     for(size_t i = 0; i<N; i++) 
-      y[i] = static_cast<D2>(v[i]);
+      y[i] = static_cast<NT2>(v[i]);
     return y;
   }
 
@@ -1609,13 +1609,13 @@ namespace matricks {
 
   // tovalarray(v)
 
-  template <class D2, class D1, class A> 
-    inline std::valarray<D2>
-    tovalarray(const MArrayExpR<D1,A>& v) {
+  template <class NT2, class NT1, class A> 
+    inline std::valarray<NT2>
+    tovalarray(const MArrayExpR<NT1,A>& v) {
     const size_t N = v.size();
-    std::valarray<D2> y(N);
+    std::valarray<NT2> y(N);
     for(size_t i = 0; i<N; i++) 
-      y[i] = static_cast<D2>(v[i]);
+      y[i] = static_cast<NT2>(v[i]);
     return y;
   }
 

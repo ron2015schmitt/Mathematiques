@@ -38,17 +38,17 @@ class yabba {
   T values[D];
 
 public:
-  template <size_t D1 = D, EnableIfB<D1 == 1> = 0>
+  template <size_t NT1 = D, EnableIfB<NT1 == 1> = 0>
   yabba(T t1) {
     values[0] = t1;
   }
-  template <size_t D1 = D, EnableIfB<D1 == 2> = 0>
+  template <size_t NT1 = D, EnableIfB<NT1 == 2> = 0>
   yabba(T t1, T t2) {
     values[0] = t1;
     values[1] = t2;
   }
 
-  template <size_t D1 = D, EnableIfB<D1 == 3> = 0>
+  template <size_t NT1 = D, EnableIfB<NT1 == 3> = 0>
   yabba(T t1, T t2, T t3) {
     values[0] = t1;
     values[1] = t2;

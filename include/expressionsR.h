@@ -223,8 +223,8 @@ namespace mathq {
   // TER_Binary    binary expressions
   //---------------------------------------------------------------------------
 
-  template <class A, class B, class E1, class E2, class E3, class D1, class D2, class D3, int M1, int M2, int M3, int R1, int R2, int R3, class OP>
-  class TER_Binary : public MArrayExpR<TER_Binary<A, B, E1, E2, E3, D1, D2, D3, M1, M2, M3, R1, R2, R3, OP>, E3, D3, M3, R3> {
+  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class D3, int M1, int M2, int M3, int R1, int R2, int R3, class OP>
+  class TER_Binary : public MArrayExpR<TER_Binary<A, B, E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3, OP>, E3, D3, M3, R3> {
   public:
     typedef E3 ElementType;
     typedef D3 NumberType;
@@ -557,8 +557,8 @@ namespace mathq {
   // TER_Binary_User    binary expressions
   //---------------------------------------------------------------------------
 
-  template <class A, class B, class E1, class E2, class E3, class D1, class D2, class D3, int M1, int M2, int M3, int R1, int R2, int R3>
-  class TER_Binary_User : public MArrayExpR<TER_Binary_User<A, B, E1, E2, E3, D1, D2, D3, M1, M2, M3, R1, R2, R3>, E3, D3, M3, R3> {
+  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class D3, int M1, int M2, int M3, int R1, int R2, int R3>
+  class TER_Binary_User : public MArrayExpR<TER_Binary_User<A, B, E1, E2, E3, NT1, NT2, D3, M1, M2, M3, R1, R2, R3>, E3, D3, M3, R3> {
   public:
     typedef E3 ElementType;
     typedef D3 NumberType;
@@ -571,7 +571,7 @@ namespace mathq {
     typedef typename std::conditional<M1 == 0, const A, const A&>::type TypeA;
     typedef typename std::conditional<M2 == 0, const B, const B&>::type TypeB;
 
-    typedef typename FunctionType2<D1, D2, D3>::type FUNC;
+    typedef typename FunctionType2<NT1, NT2, D3>::type FUNC;
 
   private:
     TypeA a_;
@@ -889,8 +889,8 @@ namespace mathq {
   // TER_Ternary    ternary expressions
   //---------------------------------------------------------------------------
 
-  template <class A, class B, class C, class E1, class E2, class E3, class E4, class D1, class D2, class D3, class D4, int M1, int M2, int M3, int M4, int R1, int R2, int R3, int R4, class OP>
-  class TER_Ternary : public MArrayExpR<TER_Ternary<A, B, C, E1, E2, E3, E4, D1, D2, D3, D4, M1, M2, M3, M4, R1, R2, R3, R4, OP>, E4, D4, M4, R4> {
+  template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class D3, class D4, int M1, int M2, int M3, int M4, int R1, int R2, int R3, int R4, class OP>
+  class TER_Ternary : public MArrayExpR<TER_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, D3, D4, M1, M2, M3, M4, R1, R2, R3, R4, OP>, E4, D4, M4, R4> {
   public:
     typedef E4 ElementType;
     typedef D4 NumberType;

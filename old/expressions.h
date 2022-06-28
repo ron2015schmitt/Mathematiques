@@ -107,10 +107,10 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TER_Binary    binary operator expressions
   //               note that there is no easy way to define the first template
-  //               of MArrayExpR<> below so use D1
+  //               of MArrayExpR<> below so use NT1
   //---------------------------------------------------------------------------
-  template<class A, class B, class D1, class D2, class OP, int M1, int M2>
-    class TER_Binary : public  MArrayExpR<typename ResultType<D1,D2,typename OP::Type>::Type,TER_Binary<A,B,D1,D2,OP,M1,M2> > {
+  template<class A, class B, class NT1, class NT2, class OP, int M1, int M2>
+    class TER_Binary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Binary<A,B,NT1,NT2,OP,M1,M2> > {
   public:
     typedef typename std::conditional<M1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<M2==0,const B,const B&>::type TypeB;
@@ -121,10 +121,10 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberTrait<D1>::Type NumType1;
-    typedef typename NumberTrait<D2>::Type NumType2;
+    typedef typename NumberTrait<NT1>::Type NumType1;
+    typedef typename NumberTrait<NT2>::Type NumType2;
     typedef typename OP::Type NumTypeOut;
-    typedef typename ResultType<D1,D2,typename OP::Type>::Type MultiArrayTypeOut;
+    typedef typename ResultType<NT1,NT2,typename OP::Type>::Type MultiArrayTypeOut;
     
 
   TER_Binary(TypeA a, TypeB b)
@@ -260,10 +260,10 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TER_Ternary    ternary operator expressions
   //               note that there is no easy way to define the first template
-  //               of MArrayExpR<> below so use D1
+  //               of MArrayExpR<> below so use NT1
   //---------------------------------------------------------------------------
-  template<class A, class B, class C, class D1, class D2, class D3, class OP, int M1, int M2, int M3>
-    class TER_Ternary : public  MArrayExpR<typename ResultType<D1,D2,typename OP::Type>::Type,TER_Ternary<A,B,C,D1,D2,D3,OP,M1,M2,M3> > {
+  template<class A, class B, class C, class NT1, class NT2, class D3, class OP, int M1, int M2, int M3>
+    class TER_Ternary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Ternary<A,B,C,NT1,NT2,D3,OP,M1,M2,M3> > {
   public:
     typedef typename std::conditional<M1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<M2==0,const B,const B&>::type TypeB;
@@ -277,8 +277,8 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberTrait<D1>::Type NumType1;
-    typedef typename NumberTrait<D2>::Type NumType2;
+    typedef typename NumberTrait<NT1>::Type NumType1;
+    typedef typename NumberTrait<NT2>::Type NumType2;
     typedef typename NumberTrait<D3>::Type NumType3;
     typedef typename OP::Type NumTypeOut;
     
@@ -535,8 +535,8 @@ namespace matricks {
     }
 
 
-    template <class D2, class B>
-      TERW_Subset<Number>& operator=(const MArrayExpR<D2,B>& rhs) { 
+    template <class NT2, class B>
+      TERW_Subset<Number>& operator=(const MArrayExpR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -657,8 +657,8 @@ namespace matricks {
 
 
 
-    template <class D2, class B>
-      TERW_Submask<Number>& operator=(const MArrayExpR<D2,B>& rhs) { 
+    template <class NT2, class B>
+      TERW_Submask<Number>& operator=(const MArrayExpR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -768,8 +768,8 @@ namespace matricks {
     }
 
 
-    template <class D2, class B>
-      TERW_RealFromComplex<Number,OP,depth>& operator=(const MArrayExpR<D2,B>& rhs) { 
+    template <class NT2, class B>
+      TERW_RealFromComplex<Number,OP,depth>& operator=(const MArrayExpR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -1128,8 +1128,8 @@ namespace matricks {
       return "TERW_Transpose";
     }
 
-    template <class D2, class B>
-      TERW_Submask<Number>& operator=(const MArrayExpR<D2,B>& rhs) { 
+    template <class NT2, class B>
+      TERW_Submask<Number>& operator=(const MArrayExpR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -1433,8 +1433,8 @@ namespace matricks {
     }
 
 
-    template <class D2, class C>
-      VERW_Join<Number,A,B>& operator=(const MArrayExpR<D2,C>& rhs) { 
+    template <class NT2, class C>
+      VERW_Join<Number,A,B>& operator=(const MArrayExpR<NT2,C>& rhs) { 
       return this->equals(rhs);
     }
     

@@ -702,13 +702,13 @@ namespace mathq {
 
 
 
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-  bool dimequiv(const MArrayExpR<A, E1, D1, depth, rank>& x1, const MArrayExpR<B, E2, D2, depth, rank>& x2) {
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+  bool dimequiv(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
     return equiv(x1.dims(), x2.dims());
   }
 
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-  bool common(const MArrayExpR<A, E1, D1, depth, rank>& x1, const MArrayExpR<B, E2, D2, depth, rank>& x2) {
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+  bool common(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
     // PRINTF3("in common");
     return common(x1.getAddresses(), x2.getAddresses());
   }

@@ -78,10 +78,10 @@ namespace mathq {
   // numbercast 
   //----------------------------------------------
 
-  template <class D2, class X, class Element, typename Number, int depth, int rank>
+  template <class NT2, class X, class Element, typename Number, int depth, int rank>
   auto numbercast(const MArrayExpR<X, Element, Number, depth, rank>& x) {
-    typedef typename NumberTrait<Element, D2>::ReplaceTypeD EOUT;
-    return  TER_Unary<MArrayExpR<X, Element, Number, depth, rank>, EOUT, D2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Number, D2>>(x);
+    typedef typename NumberTrait<Element, NT2>::ReplaceTypeD EOUT;
+    return  TER_Unary<MArrayExpR<X, Element, Number, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Number, NT2>>(x);
   }
 
 
@@ -150,8 +150,8 @@ namespace mathq {
   // equal - if two tensors are equal. returns a single bool
   //         checks dimensions first
   // -------------------------------------------------------------------
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-  bool equal(const MArrayExpR<A, E1, D1, depth, rank>& x1, const MArrayExpR<B, E2, D2, depth, rank>& x2) {
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+  bool equal(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
     if (!dimequiv(x1, x2)) {
       return false;
     }
@@ -167,30 +167,30 @@ namespace mathq {
 // ----------------------------------------------------------------
 
 
-  template <class E1, class E2, class E3, class D1, class D2, class D3> class FUNCTOR_approx {
+  template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_approx {
   public:
-    typedef typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type DTOL;
+    typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
 
-    static D3 apply(const D1 d1, const D2 d2, const DTOL tol) {
+    static D3 apply(const NT1 d1, const NT2 d2, const DTOL tol) {
       return mathq::approx(d1, d2, tol);
     }
     template <class T1 = E1, class T2 = E2>
-    static typename std::enable_if<!std::is_same<T1, D1>::value&&!std::is_same<T2, D2>::value, E3& >::type
+    static typename std::enable_if<!std::is_same<T1, NT1>::value&&!std::is_same<T2, NT2>::value, E3& >::type
       apply(const E1& e1, const E2& e2, const DTOL tol) {
       E3* e3 = new E3();
       *e3 = mathq::approx(e1, e2, tol);
       return *e3;
     }
     template <class T1 = E1>
-    static typename std::enable_if<!std::is_same<T1, D1>::value, E3& >::type
-      apply(const E1& e1, const D2 d2, const DTOL tol) {
+    static typename std::enable_if<!std::is_same<T1, NT1>::value, E3& >::type
+      apply(const E1& e1, const NT2 d2, const DTOL tol) {
       E3* e3 = new E3();
       *e3 = mathq::approx(e1, d2, tol);
       return *e3;
     }
     template <class T2 = E2>
-    static typename std::enable_if<!std::is_same<T2, D2>::value, E3& >::type
-      apply(const D1 d1, const E2& e2, const DTOL tol) {
+    static typename std::enable_if<!std::is_same<T2, NT2>::value, E3& >::type
+      apply(const NT1 d1, const E2& e2, const DTOL tol) {
       E3* e3 = new E3();
       *e3 = mathq::approx(d1, e2, tol);
       return *e3;
@@ -207,8 +207,8 @@ namespace mathq {
       E1 e1;
       E2 e2;
       E3 e3;
-      D1 d1;
-      D2 d2;
+      NT1 d1;
+      NT2 d2;
       D3 d3;
       std::string comma = StyledString::get(COMMA).get();
       std::string s = functor_namestyle.apply(stringify(FUNCTOR_approx));
@@ -235,51 +235,51 @@ namespace mathq {
 
 
 
-  // (11) MultiArray<E1(D1)> , MultiArray<E2(D2)> 
+  // (11) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> 
 
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-  auto approx(const MArrayExpR<A, E1, D1, depth, rank>& x1, const MArrayExpR<B, E2, D2, depth, rank>& x2, const typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+  auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
-    typedef typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type DTOL;
+    typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;
-    return  TER_Ternary<MArrayExpR<A, E1, D1, depth, rank>,
-      MArrayExpR<B, E2, D2, depth, rank>,
+    return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
+      MArrayExpR<B, E2, NT2, depth, rank>,
       DTOL,
-      E1, E2, DTOL, E3, D1, D2, DTOL, D3, depth, depth, 0, depth, rank, rank, 0, rank,
-      FUNCTOR_approx<E1, E2, E3, D1, D2, D3> >(x1, x2, tol);
+      E1, E2, DTOL, E3, NT1, NT2, DTOL, D3, depth, depth, 0, depth, rank, rank, 0, rank,
+      FUNCTOR_approx<E1, E2, E3, NT1, NT2, D3> >(x1, x2, tol);
   }
 
-  // (10) MultiArray<E1(D1)> , D2 
+  // (10) MultiArray<E1(NT1)> , NT2 
 
-  template <class A, class E1, class D1, class D2, int depth, int rank>
-  auto approx(const MArrayExpR<A, E1, D1, depth, rank>& x1, const D2& x2, const typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  template <class A, class E1, class NT1, class NT2, int depth, int rank>
+  auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
-    typedef typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type DTOL;
+    typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3;
-    return  TER_Ternary<MArrayExpR<A, E1, D1, depth, rank>,
-      D2,
+    return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
+      NT2,
       DTOL,
-      E1, D2, DTOL, E3, D1, D2, DTOL, D3, depth, 0, 0, depth, rank, 0, 0, rank,
-      FUNCTOR_approx<E1, D2, E3, D1, D2, D3> >(x1, x2, tol);
+      E1, NT2, DTOL, E3, NT1, NT2, DTOL, D3, depth, 0, 0, depth, rank, 0, 0, rank,
+      FUNCTOR_approx<E1, NT2, E3, NT1, NT2, D3> >(x1, x2, tol);
   }
 
 
 
-  // (01) D1, MultiArray<E2(D2)> 
+  // (01) NT1, MultiArray<E2(NT2)> 
 
-  template <class B, class E2, class D1, class D2, int depth, int rank>
-  auto approx(D1& x1, const MArrayExpR<B, E2, D2, depth, rank>& x2, const typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  template <class B, class E2, class NT1, class NT2, int depth, int rank>
+  auto approx(NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
-    typedef typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type DTOL;
+    typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool D3;
     typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;
-    return  TER_Ternary<D1,
-      MArrayExpR<B, E2, D2, depth, rank>,
+    return  TER_Ternary<NT1,
+      MArrayExpR<B, E2, NT2, depth, rank>,
       DTOL,
-      D1, E2, DTOL, E3, D1, D2, DTOL, D3, 0, depth, 0, depth, 0, rank, 0, rank,
-      FUNCTOR_approx<D1, E2, E3, D1, D2, D3> >(x1, x2, tol);
+      NT1, E2, DTOL, E3, NT1, NT2, DTOL, D3, 0, depth, 0, depth, 0, rank, 0, rank,
+      FUNCTOR_approx<NT1, E2, E3, NT1, NT2, D3> >(x1, x2, tol);
   }
 
 
@@ -288,8 +288,8 @@ namespace mathq {
   // equal_approx - if two tensors are approximately equal, returns a single bool
   //          checks dimensions first
   // -------------------------------------------------------------------
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-  bool equal_approx(const MArrayExpR<A, E1, D1, depth, rank>& x1, const MArrayExpR<B, E2, D2, depth, rank>& x2, const  typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type tol = Functions< typename OrderedNumberTrait<typename AddType<D1, D2>::Type>::Type>::tolerance) {
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+  bool equal_approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const  typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type tol = Functions< typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     if (!dimequiv(x1, x2)) {
       return false;

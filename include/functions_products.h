@@ -70,13 +70,13 @@ namespace mathq
    // (a|b)
    // TODO: rewrite for only floating point base types
 
-   // template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-   // EnableMethodIf<rank == 1, typename MultType<D1, D2>::Type &> dot(const MArrayExpR<A, E1, D1, depth, rank> &a, const MArrayExpR<B, E2, D2, depth, rank> &b)
+   // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+   // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> dot(const MArrayExpR<A, E1, NT1, depth, rank> &a, const MArrayExpR<B, E2, NT2, depth, rank> &b)
    // {
 
    //   // MArrayExpRW<Matrix<Element,NR,NC,Number,depth>,Element,Number,depth,2> x;
 
-   //   typedef typename MultType<D1, D2>::Type D3;
+   //   typedef typename MultType<NT1, NT2>::Type D3;
    //   typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
 
    //   E3 *result = new E3;
@@ -90,33 +90,33 @@ namespace mathq
 
    // // dot(a,b)
 
-   // template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-   // EnableMethodIf<rank == 1, typename MultType<D1, D2>::Type &> operator|(const MArrayExpR<A, E1, D1, depth, rank> &a, const MArrayExpR<B, E2, D2, depth, rank> &b)
+   // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+   // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> operator|(const MArrayExpR<A, E1, NT1, depth, rank> &a, const MArrayExpR<B, E2, NT2, depth, rank> &b)
    // {
    //   return dot(a, b);
    // }
 
    // TODO: realtime check (in debug mode) that deep dimensions of E1 and E2 are compatible
 
-   // (1A: T • T) MultiArray<E1(D1)> | MultiArray<E2(D2)>
+   // (1A: T • T) MultiArray<E1(NT1)> | MultiArray<E2(NT2)>
    // TODO: implement this
 
-   // template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-   // auto operator|(const MArrayExpR<A, E1, D1, depth, rank> &x1, const MArrayExpR<B, E2, D2, depth, rank> &x2)
+   // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+   // auto operator|(const MArrayExpR<A, E1, NT1, depth, rank> &x1, const MArrayExpR<B, E2, NT2, depth, rank> &x2)
    // {
-   //   typedef typename AddType<D1, D2>::Type D3;
+   //   typedef typename AddType<NT1, NT2>::Type D3;
    //   typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
-   //   return TER_Binary<MArrayExpR<A, E1, D1, depth, rank>,
-   //                     MArrayExpR<B, E2, D2, depth, rank>,
-   //                     E1, E2, E3, D1, D2, D3, depth, depth, depth, rank, rank, rank,
-   //                     FUNCTOR_add<E1, E2, E3, D1, D2, D3>>(x1, x2);
+   //   return TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
+   //                     MArrayExpR<B, E2, NT2, depth, rank>,
+   //                     E1, E2, E3, NT1, NT2, D3, depth, depth, depth, rank, rank, rank,
+   //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, D3>>(x1, x2);
    // }
 
-   // (1B: V • V) Vector<E1(D1)> | Vector<E2(D2)>
+   // (1B: V • V) Vector<E1(NT1)> | Vector<E2(NT2)>
 
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth>
-  auto operator|(const MArrayExpR<A, E1, D1, depth, 1>& v1, const MArrayExpR<B, E2, D2, depth, 1>& v2) {
-    typedef typename AddType<D1, D2>::Type D3;
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
+  auto operator|(const MArrayExpR<A, E1, NT1, depth, 1>& v1, const MArrayExpR<B, E2, NT2, depth, 1>& v2) {
+    typedef typename AddType<NT1, NT2>::Type D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
     E3* result = new E3;
     *result = 0;
@@ -126,13 +126,13 @@ namespace mathq
     return *result;
   }
 
-  // (1C: depth • V) Matrix<E1(D1)> | Vector<E2(D2)>
+  // (1C: depth • V) Matrix<E1(NT1)> | Vector<E2(NT2)>
   //             Matrix -> rank = 2
   //             Vector -> rank = 1
 
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth>
-  auto operator|(const MArrayExpR<A, E1, D1, depth, 2>& m1, const MArrayExpR<B, E2, D2, depth, 1>& v2) {
-    typedef typename AddType<D1, D2>::Type D3;
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
+  auto operator|(const MArrayExpR<A, E1, NT1, depth, 2>& m1, const MArrayExpR<B, E2, NT2, depth, 1>& v2) {
+    typedef typename AddType<NT1, NT2>::Type D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
 
     size_t Nrows = m1.dims()[0];
@@ -151,13 +151,13 @@ namespace mathq
     return vout;
   }
 
-  // (1D: V • depth) Vector<E1(D1)> | Matrix<E2(D2)>
+  // (1D: V • depth) Vector<E1(NT1)> | Matrix<E2(NT2)>
   //             Vector -> rank = 1
   //             Matrix -> rank = 2
 
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth>
-  auto operator|(const MArrayExpR<A, E1, D1, depth, 1>& v1, const MArrayExpR<B, E2, D2, depth, 2>& m2) {
-    typedef typename AddType<D1, D2>::Type D3;
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
+  auto operator|(const MArrayExpR<A, E1, NT1, depth, 1>& v1, const MArrayExpR<B, E2, NT2, depth, 2>& m2) {
+    typedef typename AddType<NT1, NT2>::Type D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
 
     size_t Nrows = m2.dims()[0];
@@ -178,12 +178,12 @@ namespace mathq
     return vout;
   }
 
-  // (1E: depth • depth) Vector<E1(D1)> | Matrix<E2(D2)>
+  // (1E: depth • depth) Vector<E1(NT1)> | Matrix<E2(NT2)>
   //             Matrix -> rank = 2
 
-  template <class A, class B, class E1, class E2, class D1, class D2, int depth>
-  auto operator|(const MArrayExpR<A, E1, D1, depth, 2>& m1, const MArrayExpR<B, E2, D2, depth, 2>& m2) {
-    typedef typename AddType<D1, D2>::Type D3;
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
+  auto operator|(const MArrayExpR<A, E1, NT1, depth, 2>& m1, const MArrayExpR<B, E2, NT2, depth, 2>& m2) {
+    typedef typename AddType<NT1, NT2>::Type D3;
     typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
 
     size_t Nrows = m1.dims()[0];
@@ -210,61 +210,61 @@ namespace mathq
     return m3;
   }
 
-  // (4A) MultiArray<D1,rank,depth> + MultiArray<D2,rank,1>
+  // (4A) MultiArray<NT1,rank,depth> + MultiArray<NT2,rank,1>
 
   // Depending on rank and dimensions, this may be top-level or element wise Addition
-  // Note: M2==1 -> E2==D2
+  // Note: M2==1 -> E2==NT2
 
   // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
   // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
   // TODO: implement
-  // template <class A, class B, class E1, class D1, class D2, int M1, int M2, int rank,
+  // template <class A, class B, class E1, class NT1, class NT2, int M1, int M2, int rank,
   //           EnableIf<(M1 >= 2) && (M2 == 1) && (IsMathqContainer< E1>::value)> = 0>
-  // auto operator|(const MArrayExpR<A, E1, D1, M1, rank> &x1, const MArrayExpR<B, D2, D2, M2, rank> &x2)
+  // auto operator|(const MArrayExpR<A, E1, NT1, M1, rank> &x1, const MArrayExpR<B, NT2, NT2, M2, rank> &x2)
   // {
 
   //   // NOT SURE WHICH OF THE THREE IS BEST
   //   //    typedef typename B::ConcreteType E2;
   //   //    typedef B E2;
-  //   typedef MArrayExpR<B, D2, D2, M2, rank> E2;
+  //   typedef MArrayExpR<B, NT2, NT2, M2, rank> E2;
 
-  //   typedef typename AddType<D1, D2>::Type D3;
+  //   typedef typename AddType<NT1, NT2>::Type D3;
   //   typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
   //   constexpr int M3 = M1;
   //   //    MOUT << "C" <<std::endl;
-  //   return TER_Binary<MArrayExpR<A, E1, D1, M1, rank>,
-  //                     MArrayExpR<B, D2, D2, M2, rank>,
-  //                     E1, D2, E3, D1, D2, D3, M1, M2, M3, rank, rank, rank,
-  //                     FUNCTOR_add<E1, E2, E3, D1, D2, D3>>(x1, x2);
+  //   return TER_Binary<MArrayExpR<A, E1, NT1, M1, rank>,
+  //                     MArrayExpR<B, NT2, NT2, M2, rank>,
+  //                     E1, NT2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
+  //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, D3>>(x1, x2);
   // }
 
-  // (4B) MultiArray<D1,rank,1> + MultiArray<D2,rank,depth>
+  // (4B) MultiArray<NT1,rank,1> + MultiArray<NT2,rank,depth>
 
   // Depending on rank and dimensions, this may be top-level or element wise Addition
-  // Note: M1==1 -> E1==D1
+  // Note: M1==1 -> E1==NT1
 
   // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
   // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
   // TODO: implement
 
-  // template <class A, class B, class E2, class D1, class D2, int M1, int M2, int rank,
+  // template <class A, class B, class E2, class NT1, class NT2, int M1, int M2, int rank,
   //           EnableIf<(M1 == 1) && (M2 >= 2) && (IsMathqContainer< E2>::value)> = 0>
-  // auto operator|(const MArrayExpR<A, D1, D1, M1, rank> &x1, const MArrayExpR<B, E2, D2, M2, rank> &x2)
+  // auto operator|(const MArrayExpR<A, NT1, NT1, M1, rank> &x1, const MArrayExpR<B, E2, NT2, M2, rank> &x2)
   // {
   //   // NOT SURE WHICH OF THE THREE IS BEST
   //   //    typedef typename A::ConcreteType E1;
   //   //    typedef A E1;
-  //   typedef MArrayExpR<A, D1, D1, M1, rank> E1;
-  //   typedef typename AddType<D1, D2>::Type D3;
+  //   typedef MArrayExpR<A, NT1, NT1, M1, rank> E1;
+  //   typedef typename AddType<NT1, NT2>::Type D3;
   //   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3; // see TODO note above
   //   constexpr int M3 = M2;
   //   //    MOUT << "Number" <<std::endl;
-  //   return TER_Binary<MArrayExpR<A, D1, D1, M1, rank>,
-  //                     MArrayExpR<B, E2, D2, M2, rank>,
-  //                     D1, E2, E3, D1, D2, D3, M1, M2, M3, rank, rank, rank,
-  //                     FUNCTOR_add<E1, E2, E3, D1, D2, D3>>(x1, x2);
+  //   return TER_Binary<MArrayExpR<A, NT1, NT1, M1, rank>,
+  //                     MArrayExpR<B, E2, NT2, M2, rank>,
+  //                     NT1, E2, E3, NT1, NT2, D3, M1, M2, M3, rank, rank, rank,
+  //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, D3>>(x1, x2);
   // }
 
   // --------------------  tensor (outer) product --------------------------------
@@ -300,9 +300,9 @@ namespace mathq
 
      //   // (a|b)
 
-     // template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-     // auto operator|(const MArrayExpR<A,E1,D1,depth,rank>& a, const MArrayExpR<B,E2,D2,depth,rank>& b) {
-     //   typedef typename MultType<D1,D2>::Type D3;
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // auto operator|(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
+     //   typedef typename MultType<NT1,NT2>::Type D3;
      //   typedef typename NumberTrait<E1,D3>::ReplaceTypeD E3;   // see TODO note above
 
      //     // (Scalar|Scalar)
@@ -322,8 +322,8 @@ namespace mathq
 
      //   // dot(a,b)
 
-     // template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-     // auto dot(const MArrayExpR<A,E1,D1,depth,rank>& a, const MArrayExpR<B,E2,D2,depth,rank>& b) {
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // auto dot(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
      //     return (a|b);
      //   }
 
@@ -331,9 +331,9 @@ namespace mathq
 
      //   // (a&b)
 
-     // template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-     // auto operator&(const MArrayExpR<A,E1,D1,depth,rank>& a, const MArrayExpR<B,E2,D2,depth,rank>& b) {
-     //   typedef typename MultType<D1,D2>::Type D3;
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // auto operator&(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
+     //   typedef typename MultType<NT1,NT2>::Type D3;
      //   typedef typename NumberTrait<E1,D3>::ReplaceTypeD E3;   // see TODO note above
 
      //     // (Scalar&Scalar)
@@ -345,8 +345,8 @@ namespace mathq
 
      //   // prodt(a,b)
 
-     // template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-     // auto prodt(const MArrayExpR<A,E1,D1,depth,rank>& a, const MArrayExpR<B,E2,D2,depth,rank>& b) {
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // auto prodt(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
      //     return (a&b);
      //   }
 
@@ -354,9 +354,9 @@ namespace mathq
 
      //   // (a^b)
 
-     // template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-     // auto operator^(const MArrayExpR<A,E1,D1,depth,rank>& a, const MArrayExpR<B,E2,D2,depth,rank>& b) {
-     //   typedef typename MultType<D1,D2>::Type D3;
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // auto operator^(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
+     //   typedef typename MultType<NT1,NT2>::Type D3;
      //   typedef typename NumberTrait<E1,D3>::ReplaceTypeD E3;   // see TODO note above
 
      //     // (Scalar^Scalar)
@@ -368,8 +368,8 @@ namespace mathq
 
      //   // prodw(a,b)
 
-     // template <class A, class B, class E1, class E2, class D1, class D2, int depth, int rank>
-     // auto prodw(const MArrayExpR<A,E1,D1,depth,rank>& a, const MArrayExpR<B,E2,D2,depth,rank>& b) {
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // auto prodw(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
      //     return (a^b);
      //   }
 };

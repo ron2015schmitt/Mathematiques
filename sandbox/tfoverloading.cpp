@@ -254,11 +254,11 @@ D bin(D x1, D x2) {
 }
 
 
-template <class D1, class D2>
-typename ArithmeticType<D1, D2>::Type bin(D1 x1, D2 x2) {
-  typedef typename ArithmeticType<D1, D2>::Type D3;
+template <class NT1, class NT2>
+typename ArithmeticType<NT1, NT2>::Type bin(NT1 x1, NT2 x2) {
+  typedef typename ArithmeticType<NT1, NT2>::Type D3;
   D3 y = x1 + x2;
-  cout << "ArithmeticType<D1,D2>::Type  bin(D1 x1, D2 x2) = ";
+  cout << "ArithmeticType<NT1,NT2>::Type  bin(NT1 x1, NT2 x2) = ";
   cout << x1 << "+" << x2 << " = ";
   return y;
 }

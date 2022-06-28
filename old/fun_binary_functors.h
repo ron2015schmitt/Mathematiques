@@ -13,28 +13,28 @@ namespace mathq {
 // ----------------------------------------------------------------
 
   
-template <class E1, class E2, class E3, class D1, class D2, class D3> class FUNCTOR_add { 
+template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_add { 
 public:								
-  static D3 apply(const D1 d1, const D2 d2) {				
+  static D3 apply(const NT1 d1, const NT2 d2) {				
     return d1 + d2;							
   }									
   template <class T1=E1, class T2=E2>						
-  static typename std::enable_if<!std::is_same<T1,D1>::value&&!std::is_same<T2,D2>::value, E3& >::type 
+  static typename std::enable_if<!std::is_same<T1,NT1>::value&&!std::is_same<T2,NT2>::value, E3& >::type 
   apply(const E1& e1, const E2& e2) {					
     E3 *e3 = new E3();							
     *e3 = e1 + e2;							
     return *e3;								
   }									
   template <class T1=E1>						
-  static typename std::enable_if<!std::is_same<T1,D1>::value, E3& >::type 
-  apply(const E1& e1, const D2 d2) {					
+  static typename std::enable_if<!std::is_same<T1,NT1>::value, E3& >::type 
+  apply(const E1& e1, const NT2 d2) {					
     E3 *e3 = new E3();							
     *e3 = e1 + d2;							
     return *e3;								
   }									
   template <class T2=E2>						
-  static typename std::enable_if<!std::is_same<T2,D2>::value, E3& >::type 
-  apply(const D1 d1, const E2& e2) {					
+  static typename std::enable_if<!std::is_same<T2,NT2>::value, E3& >::type 
+  apply(const NT1 d1, const E2& e2) {					
     E3 *e3 = new E3();							
     *e3 = d1 + e2;							
     return *e3;								
@@ -50,8 +50,8 @@ public:
     E1 e1;								
     E2 e2;								
     E3 e3;								
-    D1 d1;								
-    D2 d2;								
+    NT1 d1;								
+    NT2 d2;								
     D3 d3;								
     std::string comma =  StyledString::get(COMMA).get();		
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_add)); 
@@ -76,28 +76,28 @@ public:
 // ----------------------------------------------------------------
 
   
-template <class E1, class E2, class E3, class D1, class D2, class D3> class FUNCTOR_subtract { 
+template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_subtract { 
 public:								
-  static D3 apply(const D1 d1, const D2 d2) {				
+  static D3 apply(const NT1 d1, const NT2 d2) {				
     return d1 - d2;							
   }									
   template <class T1=E1, class T2=E2>						
-  static typename std::enable_if<!std::is_same<T1,D1>::value&&!std::is_same<T2,D2>::value, E3& >::type 
+  static typename std::enable_if<!std::is_same<T1,NT1>::value&&!std::is_same<T2,NT2>::value, E3& >::type 
   apply(const E1& e1, const E2& e2) {					
     E3 *e3 = new E3();							
     *e3 = e1 - e2;							
     return *e3;								
   }									
   template <class T1=E1>						
-  static typename std::enable_if<!std::is_same<T1,D1>::value, E3& >::type 
-  apply(const E1& e1, const D2 d2) {					
+  static typename std::enable_if<!std::is_same<T1,NT1>::value, E3& >::type 
+  apply(const E1& e1, const NT2 d2) {					
     E3 *e3 = new E3();							
     *e3 = e1 - d2;							
     return *e3;								
   }									
   template <class T2=E2>						
-  static typename std::enable_if<!std::is_same<T2,D2>::value, E3& >::type 
-  apply(const D1 d1, const E2& e2) {					
+  static typename std::enable_if<!std::is_same<T2,NT2>::value, E3& >::type 
+  apply(const NT1 d1, const E2& e2) {					
     E3 *e3 = new E3();							
     *e3 = d1 - e2;							
     return *e3;								
@@ -113,8 +113,8 @@ public:
     E1 e1;								
     E2 e2;								
     E3 e3;								
-    D1 d1;								
-    D2 d2;								
+    NT1 d1;								
+    NT2 d2;								
     D3 d3;								
     std::string comma =  StyledString::get(COMMA).get();		
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_subtract)); 
@@ -139,28 +139,28 @@ public:
 // ----------------------------------------------------------------
 
   
-template <class E1, class E2, class E3, class D1, class D2, class D3> class FUNCTOR_multiply { 
+template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_multiply { 
 public:								
-  static D3 apply(const D1 d1, const D2 d2) {				
+  static D3 apply(const NT1 d1, const NT2 d2) {				
     return d1 * d2;							
   }									
   template <class T1=E1, class T2=E2>						
-  static typename std::enable_if<!std::is_same<T1,D1>::value&&!std::is_same<T2,D2>::value, E3& >::type 
+  static typename std::enable_if<!std::is_same<T1,NT1>::value&&!std::is_same<T2,NT2>::value, E3& >::type 
   apply(const E1& e1, const E2& e2) {					
     E3 *e3 = new E3();							
     *e3 = e1 * e2;							
     return *e3;								
   }									
   template <class T1=E1>						
-  static typename std::enable_if<!std::is_same<T1,D1>::value, E3& >::type 
-  apply(const E1& e1, const D2 d2) {					
+  static typename std::enable_if<!std::is_same<T1,NT1>::value, E3& >::type 
+  apply(const E1& e1, const NT2 d2) {					
     E3 *e3 = new E3();							
     *e3 = e1 * d2;							
     return *e3;								
   }									
   template <class T2=E2>						
-  static typename std::enable_if<!std::is_same<T2,D2>::value, E3& >::type 
-  apply(const D1 d1, const E2& e2) {					
+  static typename std::enable_if<!std::is_same<T2,NT2>::value, E3& >::type 
+  apply(const NT1 d1, const E2& e2) {					
     E3 *e3 = new E3();							
     *e3 = d1 * e2;							
     return *e3;								
@@ -176,8 +176,8 @@ public:
     E1 e1;								
     E2 e2;								
     E3 e3;								
-    D1 d1;								
-    D2 d2;								
+    NT1 d1;								
+    NT2 d2;								
     D3 d3;								
     std::string comma =  StyledString::get(COMMA).get();		
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_multiply)); 
@@ -202,28 +202,28 @@ public:
 // ----------------------------------------------------------------
 
   
-template <class E1, class E2, class E3, class D1, class D2, class D3> class FUNCTOR_divide { 
+template <class E1, class E2, class E3, class NT1, class NT2, class D3> class FUNCTOR_divide { 
 public:								
-  static D3 apply(const D1 d1, const D2 d2) {				
+  static D3 apply(const NT1 d1, const NT2 d2) {				
     return d1 / d2;							
   }									
   template <class T1=E1, class T2=E2>						
-  static typename std::enable_if<!std::is_same<T1,D1>::value&&!std::is_same<T2,D2>::value, E3& >::type 
+  static typename std::enable_if<!std::is_same<T1,NT1>::value&&!std::is_same<T2,NT2>::value, E3& >::type 
   apply(const E1& e1, const E2& e2) {					
     E3 *e3 = new E3();							
     *e3 = e1 / e2;							
     return *e3;								
   }									
   template <class T1=E1>						
-  static typename std::enable_if<!std::is_same<T1,D1>::value, E3& >::type 
-  apply(const E1& e1, const D2 d2) {					
+  static typename std::enable_if<!std::is_same<T1,NT1>::value, E3& >::type 
+  apply(const E1& e1, const NT2 d2) {					
     E3 *e3 = new E3();							
     *e3 = e1 / d2;							
     return *e3;								
   }									
   template <class T2=E2>						
-  static typename std::enable_if<!std::is_same<T2,D2>::value, E3& >::type 
-  apply(const D1 d1, const E2& e2) {					
+  static typename std::enable_if<!std::is_same<T2,NT2>::value, E3& >::type 
+  apply(const NT1 d1, const E2& e2) {					
     E3 *e3 = new E3();							
     *e3 = d1 / e2;							
     return *e3;								
@@ -239,8 +239,8 @@ public:
     E1 e1;								
     E2 e2;								
     E3 e3;								
-    D1 d1;								
-    D2 d2;								
+    NT1 d1;								
+    NT2 d2;								
     D3 d3;								
     std::string comma =  StyledString::get(COMMA).get();		
     std::string s = functor_namestyle.apply(stringify(FUNCTOR_divide)); 

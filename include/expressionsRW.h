@@ -77,8 +77,8 @@ namespace mathq {
       return x_[ind];
     }
 
-    template <class Y, class D2>
-    TERW_Subset<Number>& operator=(const MArrayExpR<Y, D2, D2, Mvalue, rank_value>& rhs) {
+    template <class Y, class NT2>
+    TERW_Subset<Number>& operator=(const MArrayExpR<Y, NT2, NT2, Mvalue, rank_value>& rhs) {
       return this->equals(rhs);
     }
 
@@ -206,8 +206,8 @@ namespace mathq {
       return x_[ind];
     }
 
-    template <class Y, class D2>
-    TERW_Submask<Number>& operator=(const MArrayExpR<Y, D2, D2, Mvalue, rank_value>& rhs) {
+    template <class Y, class NT2>
+    TERW_Submask<Number>& operator=(const MArrayExpR<Y, NT2, NT2, Mvalue, rank_value>& rhs) {
       return this->equals(rhs);
     }
 
@@ -529,8 +529,8 @@ namespace mathq {
   //     }
 
 
-  //     template <class D2, class B>
-  //       TERW_RealFromComplex<Number,OP,depth>& operator=(const MArrayExpR<D2,B>& rhs) { 
+  //     template <class NT2, class B>
+  //       TERW_RealFromComplex<Number,OP,depth>& operator=(const MArrayExpR<NT2,B>& rhs) { 
   //       return this->equals(rhs);
   //     }
 

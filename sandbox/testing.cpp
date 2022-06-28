@@ -612,7 +612,7 @@ int main(int argc, char *argv[]) {
   }
 
 
-  // complex<D1> + D2
+  // complex<NT1> + NT2
 
   {
     CR();

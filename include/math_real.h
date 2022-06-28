@@ -187,20 +187,20 @@ namespace mathq {
 
   // TODO: use std::frexp() instead ?
 
-  template <typename D1, typename D2>
-  bool approx(const D1& x, const D2& y, typename AddType<D1, D2>::Type tol = Functions<typename AddType<D1, D2>::Type>::tolerance) {
-    typename AddType<D1, D2>::Type d = std::max(x, y);
+  template <typename NT1, typename NT2>
+  bool approx(const NT1& x, const NT2& y, typename AddType<NT1, NT2>::Type tol = Functions<typename AddType<NT1, NT2>::Type>::tolerance) {
+    typename AddType<NT1, NT2>::Type d = std::max(x, y);
     tol *= d;
     return (roundzero(std::abs(x-y), tol) == 0);
   }
 
   // numbercast
 
-  template <typename D2, typename D1,
-    typename = std::enable_if_t<std::is_arithmetic<D1>::value>,
-    typename = std::enable_if_t<std::is_arithmetic<D2>::value> >
-    D2 numbercast(const D1 x) {
-    return static_cast<D2>(x);
+  template <typename NT2, typename NT1,
+    typename = std::enable_if_t<std::is_arithmetic<NT1>::value>,
+    typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >
+    NT2 numbercast(const NT1 x) {
+    return static_cast<NT2>(x);
   }
 
 
