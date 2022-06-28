@@ -657,7 +657,7 @@ namespace mathq {
     }
     std::vector<size_t> flatrinds(flatrdims.size());
 
-    size_t depth = 0;
+    size_t mydepth = 0;
     size_t dim = 0;
     size_t index = 0;
     DeepIndices dinds(ddims);

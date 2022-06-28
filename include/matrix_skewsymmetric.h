@@ -296,8 +296,8 @@ namespace mathq {
 
     // "read": x.dat(DeepIndices)
     const Number dat(const DeepIndices& dinds)  const {
-      const size_t depth = dinds.size();
-      const Indices& inds = dinds[depth-Mvalue];
+      const size_t mydepth = dinds.size();
+      const Indices& inds = dinds[mydepth -Mvalue];
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);

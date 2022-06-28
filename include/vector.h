@@ -395,8 +395,8 @@ namespace mathq {
 
     // "read/write": x.dat(DeepIndices)
     Number& dat(const DeepIndices& dinds) {
-      const size_t depth = dinds.size();
-      size_t n = dinds[depth-Depth][0];
+      const size_t mydepth = dinds.size();
+      size_t n = dinds[mydepth -Depth][0];
 
       if constexpr (Depth>1) {
         return (*this)(n).dat(dinds);
@@ -408,8 +408,8 @@ namespace mathq {
 
     // "read": x.dat(DeerIndices)
     const Number dat(const DeepIndices& dinds)  const {
-      const size_t depth = dinds.size();
-      size_t n = dinds[depth-Depth][0];
+      const size_t mydepth = dinds.size();
+      size_t n = dinds[mydepth -Depth][0];
 
       if constexpr (Depth>1) {
         return (*this)(n).dat(dinds);
