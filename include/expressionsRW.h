@@ -10,31 +10,31 @@ namespace mathq {
   //---------------------------------------------------------------------------
   // TERW_Subset   Subset Expression
   //---------------------------------------------------------------------------
-  template<class D>
-  class TERW_Subset : public  MArrayExpRW<TERW_Subset<D>, D, D, 1, 1> {
+  template<class Number>
+  class TERW_Subset : public  MArrayExpRW<TERW_Subset<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = 1;
-    typedef Materialize<D, D, Mvalue, Rvalue> XType;
-    typedef D EType;
-    typedef D DType;
+    typedef Materialize<Number, Number, Mvalue, Rvalue> XType;
+    typedef Number EType;
+    typedef Number DType;
 
   private:
     // can't be constant since we alow to be on left hand side
-    Vector<D>& x_;
+    Vector<Number>& x_;
     const Vector<size_t>& ii_;
     const bool delete_ii_;
     VectorofPtrs* vptrs;
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
-    TERW_Subset(Vector<D>& x, const Vector<size_t>& ii)
+    TERW_Subset(Vector<Number>& x, const Vector<size_t>& ii)
       : x_(x), ii_(ii), delete_ii_(false) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
       vptrs->add(&ii_);
     }
-    TERW_Subset(Vector<D>& x, const std::initializer_list<size_t>& list)
+    TERW_Subset(Vector<Number>& x, const std::initializer_list<size_t>& list)
       : x_(x), ii_(*(new Vector<size_t>(list))), delete_ii_(true) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
@@ -47,7 +47,7 @@ namespace mathq {
     }
 
 
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       size_t ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
@@ -62,14 +62,14 @@ namespace mathq {
       return x_.dat(ind);
     }
 
-    const D operator[](const size_t i) const {
+    const Number operator[](const size_t i) const {
       size_t ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
       }
       return x_[ind];
     }
-    D& operator[](const size_t i) {
+    Number& operator[](const size_t i) {
       size_t ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
@@ -78,11 +78,11 @@ namespace mathq {
     }
 
     template <class Y, class D2>
-    TERW_Subset<D>& operator=(const MArrayExpR<Y, D2, D2, Mvalue, Rvalue>& rhs) {
+    TERW_Subset<Number>& operator=(const MArrayExpR<Y, D2, D2, Mvalue, Rvalue>& rhs) {
       return this->equals(rhs);
     }
 
-    TERW_Subset<D>& operator=(const D d) {
+    TERW_Subset<Number>& operator=(const Number d) {
       return this->equals(d);
     }
 
@@ -158,25 +158,25 @@ namespace mathq {
   //--------------------------------------------------------------------------
   // TERW_Submask   Submask Expression
   //--------------------------------------------------------------------------
-  template<class D>
-  class TERW_Submask : public  MArrayExpRW<TERW_Submask<D>, D, D, 1, 1> {
+  template<class Number>
+  class TERW_Submask : public  MArrayExpRW<TERW_Submask<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = 1;
-    typedef Materialize<D, D, Mvalue, Rvalue> XType;
-    typedef D EType;
-    typedef D DType;
+    typedef Materialize<Number, Number, Mvalue, Rvalue> XType;
+    typedef Number EType;
+    typedef Number DType;
 
   private:
     // can't be constant since we alow to be on left hand side
-    Vector<D>& x_;
+    Vector<Number>& x_;
     const Vector<size_t>& ii_;
     VectorofPtrs* vptrs;
 
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
-    TERW_Submask(Vector<D>& x, const Vector<bool>& mask)
+    TERW_Submask(Vector<Number>& x, const Vector<bool>& mask)
       : x_(x), ii_(*(new Vector<size_t>(findtrue(mask)))) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
@@ -188,7 +188,7 @@ namespace mathq {
     }
 
 
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       size_t ind = ii_[i];
       return x_.dat(ind);
     }
@@ -197,21 +197,21 @@ namespace mathq {
       return x_.dat(ind);
     }
 
-    const D operator[](const size_t i) const {
+    const Number operator[](const size_t i) const {
       size_t ind = ii_[i];
       return x_[ind];
     }
-    D& operator[](const size_t i) {
+    Number& operator[](const size_t i) {
       size_t ind = ii_[i];
       return x_[ind];
     }
 
     template <class Y, class D2>
-    TERW_Submask<D>& operator=(const MArrayExpR<Y, D2, D2, Mvalue, Rvalue>& rhs) {
+    TERW_Submask<Number>& operator=(const MArrayExpR<Y, D2, D2, Mvalue, Rvalue>& rhs) {
       return this->equals(rhs);
     }
 
-    TERW_Submask<D>& operator=(const D d) {
+    TERW_Submask<Number>& operator=(const Number d) {
       return this->equals(d);
     }
 
@@ -290,14 +290,14 @@ namespace mathq {
   // VERW_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class Element, class D, int M>
-  class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, Element, D, M>, Element, D, M, 1> {
+  template <class X, class Y, class Element, class Number, int M>
+  class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, Element, Number, M>, Element, Number, M, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = M;
-    typedef Materialize<Element, D, M, Rvalue> XType;
+    typedef Materialize<Element, Number, M, Rvalue> XType;
     typedef Element EType;
-    typedef D DType;
+    typedef Number DType;
 
   private:
     // can't be constant since we alow to be on left hand side
@@ -320,7 +320,7 @@ namespace mathq {
       delete vptrs;
     }
 
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       if (i < x_.deepsize()) {
         return x_.dat(i);
       }
@@ -328,7 +328,7 @@ namespace mathq {
         return y_.dat(i-x_.deepsize());
       }
     }
-    D& dat(const size_t i) {
+    Number& dat(const size_t i) {
       if (i < x_.deepsize()) {
         return x_.dat(i);
       }
@@ -354,14 +354,14 @@ namespace mathq {
     }
 
     template <class Z>
-    TERW_Join<X, Y, Element, D, M>& operator=(const MArrayExpR<Z, Element, D, M, 1>& rhs) {
+    TERW_Join<X, Y, Element, Number, M>& operator=(const MArrayExpR<Z, Element, Number, M, 1>& rhs) {
       return this->equals(rhs);
     }
 
-    TERW_Join<X, Y, Element, D, M>& operator=(const D d) {
+    TERW_Join<X, Y, Element, Number, M>& operator=(const Number d) {
       return this->equals(d);
     }
-    TERW_Join<X, Y, Element, D, M>& operator=(const Element& e) {
+    TERW_Join<X, Y, Element, Number, M>& operator=(const Element& e) {
       return this->equals(e);
     }
 
@@ -449,18 +449,18 @@ namespace mathq {
   //   //---------------------------------------------------------------------------
   //   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //   //---------------------------------------------------------------------------
-  //   template <class D, class OP, int M>
-  //     class TERW_RealFromComplex : public  MArrayExpRW<D,TERW_RealFromComplex<D,OP,M> > {
+  //   template <class Number, class OP, int M>
+  //     class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,M> > {
   //   private:
     // can't be constant since we alow to be on left hand side
-  //     Vector<std::complex<D> >& a_;
+  //     Vector<std::complex<Number> >& a_;
   //     VectorofPtrs *vptrs;
 
   //   public:
-  //     typedef typename NumberTrait<D>::Type MyNumberType;
+  //     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  //   TERW_RealFromComplex(Vector<std::complex<D> >& a)
+  //   TERW_RealFromComplex(Vector<std::complex<Number> >& a)
   //     :   a_(a) { 
   //       vptrs = new VectorofPtrs();
   //       vptrs->add(&a_);
@@ -470,10 +470,10 @@ namespace mathq {
   //       delete vptrs;
   //     }
 
-  //     const D operator[](size_t i) const{
+  //     const Number operator[](size_t i) const{
   //       return OP::give(a_[i]);
   //     }
-  //     D& operator[](size_t i) {
+  //     Number& operator[](size_t i) {
   //       return OP::give(a_[i]);
   //     }
   //     const MyNumberType dat(const size_t i) const {
@@ -530,11 +530,11 @@ namespace mathq {
 
 
   //     template <class D2, class B>
-  //       TERW_RealFromComplex<D,OP,M>& operator=(const MArrayExpR<D2,B>& rhs) { 
+  //       TERW_RealFromComplex<Number,OP,M>& operator=(const MArrayExpR<D2,B>& rhs) { 
   //       return this->equals(rhs);
   //     }
 
-  //     TERW_RealFromComplex<D,OP,M>& operator=(const MyNumberType d) { 
+  //     TERW_RealFromComplex<Number,OP,M>& operator=(const MyNumberType d) { 
   //       return this->equals(d);
   //     }
 

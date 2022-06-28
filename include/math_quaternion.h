@@ -10,95 +10,95 @@ namespace mathq {
   // ***************************************************************************
   // *                   Quaternion Number
   // ***************************************************************************
-  template <typename D>
+  template <typename Number>
   class Quaternion {
   private:
-    D r_;
-    D i_;
-    D j_;
-    D k_;
+    Number r_;
+    Number i_;
+    Number j_;
+    Number k_;
 
   public:
     Quaternion() : r_(1), i_(1), j_(1), k_(1) {
     }
-    Quaternion(const D r, const D i, const D j, const D k) : r_(r), i_(i), j_(j), k_(k) {
+    Quaternion(const Number r, const Number i, const Number j, const Number k) : r_(r), i_(i), j_(j), k_(k) {
     }
 
-    D real() const {
+    Number real() const {
       return r_;
     }
 
-    D imag() const {
+    Number imag() const {
       return i_;
     }
 
-    D jmag() const {
+    Number jmag() const {
       return j_;
     }
 
-    D kmag() const {
+    Number kmag() const {
       return k_;
     }
 
-    D scalar() const {
+    Number scalar() const {
       return r_;
     }
 
-    D normsqr() const {
+    Number normsqr() const {
       return r_ * r_ + i_ * i_ + j_ * j_ + k_ * k_;
     }
 
-    D abs() const {
+    Number abs() const {
       return std::sqrt(this->normsqr());
     }
 
-    Quaternion<D> normalized() const {
-      Quaternion<D> y = *this;
+    Quaternion<Number> normalized() const {
+      Quaternion<Number> y = *this;
       return y / y.abs();
     }
 
 
-    D vnormsqr() const {
+    Number vnormsqr() const {
       return i_ * i_ + j_ * j_ + k_ * k_;
     }
-    D vabs() const {
+    Number vabs() const {
       return std::sqrt(this->vnormsqr());
     }
 
 
-    D angle() const {
+    Number angle() const {
       return std::acos(r_ / this->abs());
     }
 
 
 
-    Vector<D, 3> vector() const {
-      Vector<D, 3>* vector = new Vector<D, 3>({ i_, j_, k_ });
+    Vector<Number, 3> vector() const {
+      Vector<Number, 3>* vector = new Vector<Number, 3>({ i_, j_, k_ });
       return *vector;
     }
-    Vector<D, 3> unitvector() const {
-      const D vnorm = this->vabs();
-      Vector<D, 3>* vector = new Vector<D, 3>({ i_ / vnorm, j_ / vnorm, k_ / vnorm });
+    Vector<Number, 3> unitvector() const {
+      const Number vnorm = this->vabs();
+      Vector<Number, 3>* vector = new Vector<Number, 3>({ i_ / vnorm, j_ / vnorm, k_ / vnorm });
       return *vector;
     }
-    std::tuple<D, D, Vector<D, 3>> polar() const {
+    std::tuple<Number, Number, Vector<Number, 3>> polar() const {
       return std::make_tuple(this->abs(), this->angle(), this->unitvector());
     }
 
-    Matrix<std::complex<D>, 2, 2> matrix2by2() const {
-      auto A = Matrix<std::complex<D>, 2, 2>();
-      A(0, 0) = std::complex<D>(r_, i_);
-      A(0, 1) = std::complex<D>(j_, k_);
-      A(1, 0) = std::complex<D>(-j_, k_);
-      A(1, 1) = std::complex<D>(r_, -i_);
+    Matrix<std::complex<Number>, 2, 2> matrix2by2() const {
+      auto A = Matrix<std::complex<Number>, 2, 2>();
+      A(0, 0) = std::complex<Number>(r_, i_);
+      A(0, 1) = std::complex<Number>(j_, k_);
+      A(1, 0) = std::complex<Number>(-j_, k_);
+      A(1, 1) = std::complex<Number>(r_, -i_);
       return A;
     }
 
 
     // methods that modify *this!!
 
-    Quaternion<D>& invert() {
-      D k = 1 / this->normsqr();
+    Quaternion<Number>& invert() {
+      Number k = 1 / this->normsqr();
       r_ = k * r_;
       i_ = -k * i_;
       j_ = -k * j_;
@@ -106,7 +106,7 @@ namespace mathq {
       return *this;
     }
 
-    Quaternion<D>& negate() {
+    Quaternion<Number>& negate() {
       r_ = -r_;
       i_ = -i_;
       j_ = -j_;
@@ -114,7 +114,7 @@ namespace mathq {
       return *this;
     }
 
-    Quaternion<D>& conj() {
+    Quaternion<Number>& conj() {
       r_ = r_;
       i_ = -i_;
       j_ = -j_;
@@ -123,28 +123,28 @@ namespace mathq {
     }
 
 
-    Quaternion<D>& operator=(const Quaternion<D>& y) {
+    Quaternion<Number>& operator=(const Quaternion<Number>& y) {
       r_ = y.r_;
       i_ = y.i_;
       j_ = y.j_;
       k_ = y.k_;
       return *this;
     }
-    Quaternion<D>& operator=(const D& y) {
+    Quaternion<Number>& operator=(const Number& y) {
       r_ = y;
       i_ = 0;
       j_ = 0;
       k_ = 0;
       return *this;
     }
-    Quaternion<D>& operator=(const Imaginary<D>& y) {
+    Quaternion<Number>& operator=(const Imaginary<Number>& y) {
       r_ = 0;
       i_ = y.value();
       j_ = 0;
       k_ = 0;
       return *this;
     }
-    Quaternion<D>& operator=(const std::complex<D>& y) {
+    Quaternion<Number>& operator=(const std::complex<Number>& y) {
       r_ = y.real();
       i_ = y.imag();
       j_ = 0;
@@ -154,84 +154,84 @@ namespace mathq {
 
 
     // arithmetic operators
-    Quaternion<D>& operator+=(const Quaternion<D>& y) {
+    Quaternion<Number>& operator+=(const Quaternion<Number>& y) {
       *this = *this + y;
       return *this;
     }
-    Quaternion<D>& operator+=(const D& y) {
+    Quaternion<Number>& operator+=(const Number& y) {
       r_ += y;
       return *this;
     }
-    Quaternion<D>& operator+=(const Imaginary<D>& y) {
+    Quaternion<Number>& operator+=(const Imaginary<Number>& y) {
       i_ += y.value();
       return *this;
     }
-    Quaternion<D>& operator+=(const std::complex<D>& y) {
+    Quaternion<Number>& operator+=(const std::complex<Number>& y) {
       *this = *this + y;
       return *this;
     }
 
-    Quaternion<D>& operator-=(const Quaternion<D>& y) {
+    Quaternion<Number>& operator-=(const Quaternion<Number>& y) {
       *this = *this - y;
       return *this;
     }
-    Quaternion<D>& operator-=(const D& y) {
+    Quaternion<Number>& operator-=(const Number& y) {
       r_ -= y;
       return *this;
     }
-    Quaternion<D>& operator-=(const Imaginary<D>& y) {
+    Quaternion<Number>& operator-=(const Imaginary<Number>& y) {
       i_ -= y.value();
       return *this;
     }
-    Quaternion<D>& operator-=(const std::complex<D>& y) {
+    Quaternion<Number>& operator-=(const std::complex<Number>& y) {
       *this = *this - y;
       return *this;
     }
 
 
-    Quaternion<D>& operator*=(const Quaternion<D>& y) {
+    Quaternion<Number>& operator*=(const Quaternion<Number>& y) {
       *this = *this * y;
       return *this;
     }
-    Quaternion<D>& operator*=(const D& y) {
+    Quaternion<Number>& operator*=(const Number& y) {
       r_ *= y;
       i_ *= y;
       j_ *= y;
       k_ *= y;
       return *this;
     }
-    Quaternion<D>& operator*=(const Imaginary<D>& y) {
+    Quaternion<Number>& operator*=(const Imaginary<Number>& y) {
       *this = *this * y;
       return *this;
     }
-    Quaternion<D>& operator*=(const std::complex<D>& y) {
+    Quaternion<Number>& operator*=(const std::complex<Number>& y) {
       *this = *this * y;
       return *this;
     }
 
-    Quaternion<D>& operator/=(const Quaternion<D>& y) {
+    Quaternion<Number>& operator/=(const Quaternion<Number>& y) {
       *this = *this / y;
       return *this;
     }
-    Quaternion<D>& operator/=(const D& y) {
+    Quaternion<Number>& operator/=(const Number& y) {
       r_ /= y;
       i_ /= y;
       j_ /= y;
       k_ /= y;
       return *this;
     }
-    Quaternion<D>& operator/=(const Imaginary<D>& y) {
+    Quaternion<Number>& operator/=(const Imaginary<Number>& y) {
       *this = *this / y;
       return *this;
     }
-    Quaternion<D>& operator/=(const std::complex<D>& y) {
+    Quaternion<Number>& operator/=(const std::complex<Number>& y) {
       *this = *this / y;
       return *this;
     }
 
 
     inline static std::string classname() {
-      D d;
+      Number d;
       return "Quaternion" + display::getBracketedTypeName(d);
     }
 
@@ -239,7 +239,7 @@ namespace mathq {
 
     // stream << operator
 
-    friend std::ostream& operator<<(std::ostream& stream, const Quaternion<D>& w) {
+    friend std::ostream& operator<<(std::ostream& stream, const Quaternion<Number>& w) {
 
       /// TODO: create style for the i,j,k
 
@@ -312,8 +312,8 @@ namespace mathq {
     }
 
 
-    // template <class D>
-    friend inline std::istream& operator>>(const std::string s, Quaternion<D>& w) {
+    // template <class Number>
+    friend inline std::istream& operator>>(const std::string s, Quaternion<Number>& w) {
       std::istringstream st(s);
       return (st >> w);
     }
@@ -322,7 +322,7 @@ namespace mathq {
     // stream >> operator
 
     // TODO: implement this
-    friend std::istream& operator>>(std::istream& stream, Quaternion<D>& w) {
+    friend std::istream& operator>>(std::istream& stream, Quaternion<Number>& w) {
       return stream;
     }
   };
@@ -365,23 +365,23 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // * Quaternion arithmetic: Quaternion<D>
+  // * Quaternion arithmetic: Quaternion<Number>
   // ***************************************************************************
 
-  // +Quaternion<D>
+  // +Quaternion<Number>
 
-  template <typename D>
+  template <typename Number>
   inline auto
-    operator+(const Quaternion<D>& x) {
+    operator+(const Quaternion<Number>& x) {
     return x;
   }
 
-  // -Quaternion<D>
+  // -Quaternion<Number>
 
-  template <typename D>
+  template <typename Number>
   inline auto
-    operator-(const Quaternion<D>& x) {
-    Quaternion<D> y = x;
+    operator-(const Quaternion<Number>& x) {
+    Quaternion<Number> y = x;
     return y.negate();
   }
 
@@ -838,29 +838,29 @@ namespace mathq {
 
   // real(z)
 
-  template <typename D>
-  inline D real(const Quaternion<D>& z) {
+  template <typename Number>
+  inline Number real(const Quaternion<Number>& z) {
     return z.real();
   }
 
   // imag(z)
 
-  template <typename D>
-  inline D imag(const Quaternion<D>& z) {
+  template <typename Number>
+  inline Number imag(const Quaternion<Number>& z) {
     return z.imag();
   }
 
   // jmag(z)
 
-  template <typename D>
-  inline D jmag(const Quaternion<D>& z) {
+  template <typename Number>
+  inline Number jmag(const Quaternion<Number>& z) {
     return z.jmag();
   }
 
   // kmag(z)
 
-  template <typename D>
-  inline D kmag(const Quaternion<D>& z) {
+  template <typename Number>
+  inline Number kmag(const Quaternion<Number>& z) {
     return z.kmag();
   }
 
@@ -868,49 +868,49 @@ namespace mathq {
 
   // abs(z)
 
-  template <typename D>
-  inline D abs(const Quaternion<D>& z) {
+  template <typename Number>
+  inline Number abs(const Quaternion<Number>& z) {
     return z.abs();
   }
 
   // normsqr(z) -
 
-  template <typename D>
-  inline D normsqr(const Quaternion<D>& z) {
+  template <typename Number>
+  inline Number normsqr(const Quaternion<Number>& z) {
     return z.normsqr();
   }
 
 
   // conj(z)  - we go against C++  convention
 
-  template <typename D>
-  inline auto conj(const Quaternion<D>& z) {
-    Quaternion<D> y = z;
+  template <typename Number>
+  inline auto conj(const Quaternion<Number>& z) {
+    Quaternion<Number> y = z;
     return y.conj();
   }
 
 
   // inv(z)
 
-  template <typename D>
-  inline auto inv(const Quaternion<D>& z) {
-    Quaternion<D> y = z;
+  template <typename Number>
+  inline auto inv(const Quaternion<Number>& z) {
+    Quaternion<Number> y = z;
     return y.invert();
   }
 
   // neg(z)
 
-  template <typename D>
-  inline Quaternion<D> neg(const Quaternion<D>& z) {
-    Quaternion<D> y = z;
+  template <typename Number>
+  inline Quaternion<Number> neg(const Quaternion<Number>& z) {
+    Quaternion<Number> y = z;
     return y.negate();
   }
 
 
   // complex conjugate OPERTOR ~
 
-  template <typename D, typename = std::enable_if_t<std::is_floating_point<D>::value>>
-  inline auto operator~(const Quaternion<D>& z) {
+  template <typename Number, typename = std::enable_if_t<std::is_floating_point<Number>::value>>
+  inline auto operator~(const Quaternion<Number>& z) {
     return conj(z);
   }
 
@@ -919,15 +919,15 @@ namespace mathq {
 
   // exp(q)
 
-  template <typename D>
-  inline Quaternion<D>
-    exp(const Quaternion<D>& q) {
+  template <typename Number>
+  inline Quaternion<Number>
+    exp(const Quaternion<Number>& q) {
     using std::cos;
     using std::exp;
     using std::sin;
-    const D k = exp(q.scalar());
-    const D vabs = q.vabs();
-    return Quaternion<D>(
+    const Number k = exp(q.scalar());
+    const Number vabs = q.vabs();
+    return Quaternion<Number>(
       k * cos(vabs),
       k * sin(vabs) * q.imag() / vabs,
       k * sin(vabs) * q.jmag() / vabs,
@@ -946,16 +946,16 @@ namespace mathq {
   // We could improve the answer for the v=0 case via
   // https://math.stackexchange.com/questions/2527630/logarithm-and-exponent-of-real-quaternions
 
-  template <typename D>
-  inline Quaternion<D>
-    log(const Quaternion<D>& q) {
+  template <typename Number>
+  inline Quaternion<Number>
+    log(const Quaternion<Number>& q) {
     // using std::acos;
     using std::log, std::acos;
-    const D a = q.scalar();
-    const D abs = q.abs();
-    const D vabs = q.vabs();
-    const D k = acos(a / abs) / vabs;
-    return Quaternion<D>(
+    const Number a = q.scalar();
+    const Number abs = q.abs();
+    const Number vabs = q.vabs();
+    const Number k = acos(a / abs) / vabs;
+    return Quaternion<Number>(
       log(abs),
       k * q.imag(),
       k * q.jmag(),
@@ -964,21 +964,21 @@ namespace mathq {
 
 
   // // log10
-  // template <typename D>
-  // std::complex<D>
-  // log10(const Quaternion<D> &z) {
+  // template <typename Number>
+  // std::complex<Number>
+  // log10(const Quaternion<Number> &z) {
   //   using std::log;
-  //   const D A0 = 1 / log(D(10));
+  //   const Number A0 = 1 / log(Number(10));
   //   return A0 * log(z);
   // }
 
 
   // // log2
-  // template <typename D>
-  // std::complex<D>
-  // log2(const Quaternion<D> &z) {
+  // template <typename Number>
+  // std::complex<Number>
+  // log2(const Quaternion<Number> &z) {
   //   using std::log;
-  //   const D A0 = 1 / log(D(2));
+  //   const Number A0 = 1 / log(Number(2));
   //   return A0 * log(z);
   // }
 
@@ -1052,81 +1052,81 @@ namespace mathq {
 
 
   // // sqrt
-  // template <typename D>
-  // std::complex<D>
-  // sqrt(const Quaternion<D> &z) {
+  // template <typename Number>
+  // std::complex<Number>
+  // sqrt(const Quaternion<Number> &z) {
   //   using std::sqrt;
-  //   const D A0 = sqrt(z.value() / 2);
-  //   return A0 * std::complex<D>(1, 1);
+  //   const Number A0 = sqrt(z.value() / 2);
+  //   return A0 * std::complex<Number>(1, 1);
   // }
 
 
   // // sqr
-  // template <typename D>
-  // D sqr(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Number sqr(const Quaternion<Number> &z) {
   //   return -z.value() * z.value();
   // }
 
   // // cube
-  // template <typename D>
-  // Quaternion<D> cube(const Quaternion<D> &z) {
-  //   return Quaternion<D>(-z.value() * z.value() * z.value());
+  // template <typename Number>
+  // Quaternion<Number> cube(const Quaternion<Number> &z) {
+  //   return Quaternion<Number>(-z.value() * z.value() * z.value());
   // }
 
 
 
 
   // // sin
-  // template <typename D>
-  // Quaternion<D>
-  // sin(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Quaternion<Number>
+  // sin(const Quaternion<Number> &z) {
   //   using std::sin;
-  //   return Quaternion<D>(sin(z.value()));
+  //   return Quaternion<Number>(sin(z.value()));
   // }
 
   // // cos
-  // template <typename D>
-  // D cos(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Number cos(const Quaternion<Number> &z) {
   //   using std::cos;
   //   return cos(z.value());
   // }
 
   // // tan
-  // template <typename D>
-  // Quaternion<D>
-  // tan(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Quaternion<Number>
+  // tan(const Quaternion<Number> &z) {
   //   using std::tan;
-  //   return Quaternion<D>(tan(z.value()));
+  //   return Quaternion<Number>(tan(z.value()));
   // }
 
   // // asin
-  // template <typename D>
-  // Quaternion<D>
-  // asin(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Quaternion<Number>
+  // asin(const Quaternion<Number> &z) {
   //   using std::asin;
-  //   return Quaternion<D>(asin(z.value()));
+  //   return Quaternion<Number>(asin(z.value()));
   // }
 
   // // acos
-  // template <typename D>
-  // std::complex<D>
-  // acos(const Quaternion<D> &z) {
+  // template <typename Number>
+  // std::complex<Number>
+  // acos(const Quaternion<Number> &z) {
   //   using std::acos;
   //   return acos(Complex(z));
   // }
 
   // // atan
-  // template <typename D>
-  // std::complex<D>
-  // atan(const Quaternion<D> &z) {
+  // template <typename Number>
+  // std::complex<Number>
+  // atan(const Quaternion<Number> &z) {
   //   using std::atan;
   //   return atan(Complex(z));
   // }
 
   // // atan2
-  // template <typename D>
-  // std::complex<D>
-  // atan2(const Quaternion<D> &z) {
+  // template <typename Number>
+  // std::complex<Number>
+  // atan2(const Quaternion<Number> &z) {
   //   using std::atan2;
   //   return atan2(z.value(), 0);
   // }
@@ -1134,49 +1134,49 @@ namespace mathq {
 
 
   // // sinh
-  // template <typename D>
-  // Quaternion<D>
-  // sinh(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Quaternion<Number>
+  // sinh(const Quaternion<Number> &z) {
   //   using std::sinh;
-  //   return Quaternion<D>(sinh(z.value()));
+  //   return Quaternion<Number>(sinh(z.value()));
   // }
 
   // // cosh
-  // template <typename D>
-  // D cosh(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Number cosh(const Quaternion<Number> &z) {
   //   using std::cosh;
   //   return cosh(z.value());
   // }
 
   // // tanh
-  // template <typename D>
-  // Quaternion<D>
-  // tanh(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Quaternion<Number>
+  // tanh(const Quaternion<Number> &z) {
   //   using std::tanh;
-  //   return Quaternion<D>(tanh(z.value()));
+  //   return Quaternion<Number>(tanh(z.value()));
   // }
 
 
   // // asinh
-  // template <typename D>
-  // std::complex<D>
-  // asinh(const Quaternion<D> &z) {
+  // template <typename Number>
+  // std::complex<Number>
+  // asinh(const Quaternion<Number> &z) {
   //   using std::asinh;
   //   return asinh(Complex(z));
   // }
 
   // // acosh
-  // template <typename D>
-  // std::complex<D>
-  // acosh(const Quaternion<D> &z) {
+  // template <typename Number>
+  // std::complex<Number>
+  // acosh(const Quaternion<Number> &z) {
   //   using std::acosh;
   //   return acosh(Complex(z));
   // }
 
   // // atanh
-  // template <typename D>
-  // std::complex<D>
-  // atanh(const Quaternion<D> &z) {
+  // template <typename Number>
+  // std::complex<Number>
+  // atanh(const Quaternion<Number> &z) {
   //   using std::atanh;
   //   return atanh(Complex(z));
   // }
@@ -1186,38 +1186,38 @@ namespace mathq {
 
   // // imaginary rounding
 
-  // template <typename D>
-  // Quaternion<D> round(const Quaternion<D> &x) {
+  // template <typename Number>
+  // Quaternion<Number> round(const Quaternion<Number> &x) {
   //   using std::round;
-  //   return Quaternion<D>(round(x.value()));
+  //   return Quaternion<Number>(round(x.value()));
   // }
 
   // // Quaternion - sgn
-  // template <typename D>
-  // Quaternion<D> sgn(const Quaternion<D> &z) {
-  //   return Quaternion<D>(sgn(z.value()));
+  // template <typename Number>
+  // Quaternion<Number> sgn(const Quaternion<Number> &z) {
+  //   return Quaternion<Number>(sgn(z.value()));
   // }
 
   // // Quaternion - floor
-  // template <typename D>
-  // Quaternion<D> floor(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Quaternion<Number> floor(const Quaternion<Number> &z) {
   //   using std::floor;
-  //   return Quaternion<D>(floor(z.value()));
+  //   return Quaternion<Number>(floor(z.value()));
   // }
 
   // // Quaternion - ceil
-  // template <typename D>
-  // Quaternion<D> ceil(const Quaternion<D> &z) {
+  // template <typename Number>
+  // Quaternion<Number> ceil(const Quaternion<Number> &z) {
   //   using std::ceil;
-  //   return Quaternion<D>(ceil(z.value()));
+  //   return Quaternion<Number>(ceil(z.value()));
   // }
 
 
 
   // // Quaternion - roundzero
-  // template <typename D>
-  // Quaternion<D> roundzero(const Quaternion<D> &z, const D tolerance = Functions<D>::tolerance) {
-  //   return Quaternion<D>(roundzero(z.value(), tolerance));
+  // template <typename Number>
+  // Quaternion<Number> roundzero(const Quaternion<Number> &z, const Number tolerance = Functions<Number>::tolerance) {
+  //   return Quaternion<Number>(roundzero(z.value(), tolerance));
   // }
 
   // // Quaternion - approx

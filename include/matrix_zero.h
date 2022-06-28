@@ -8,18 +8,18 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixZero<D        -- variable size matrix (valarray)
-   *                        D  = type for elements
-   * MatrixZero<D,NR>    -- fixed number of rows (valarray)
+   * MatrixZero<Number        -- variable size matrix (valarray)
+   *                        Number  = type for elements
+   * MatrixZero<Number,NR>    -- fixed number of rows (valarray)
    *                        NR = number of rows
-   * MatrixZero<D,NR,NC> -- fixed number of rows and cols (array)
+   * MatrixZero<Number,NR,NC> -- fixed number of rows and cols (array)
    *                        NC = number of cols
    ********************************************************************
    */
 
-   //, typename = EnableIf<NumberTrait<D>::value>
-  template <class D, int NR, int NC >
-  class MatrixZero : public MArrayExpRW<MatrixZero<D, NR, NC>, D, D, 1, 2> {
+   //, typename = EnableIf<NumberTrait<Number>::value>
+  template <class Number, int NR, int NC >
+  class MatrixZero : public MArrayExpRW<MatrixZero<Number, NR, NC>, Number, Number, 1, 2> {
 
   public:
     constexpr static int R = 2;
@@ -28,10 +28,10 @@ namespace mathq {
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
-    typedef MatrixZero<D, NR, NC> XType;
-    typedef D EType;
-    typedef D DType;
-    typedef typename OrderedNumberTrait<D>::Type FType;
+    typedef MatrixZero<Number, NR, NC> XType;
+    typedef Number EType;
+    typedef Number DType;
+    typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
 
@@ -40,12 +40,12 @@ namespace mathq {
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const D data_ = 0;
+    const Number data_ = 0;
 
     size_t Nrows_;
     size_t Ncols_;
 
-    static_assert(NumberTrait<D>::value,
+    static_assert(NumberTrait<Number>::value,
       "class MatrixZero can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -57,7 +57,7 @@ namespace mathq {
   public:
 
     // -------------------  DEFAULT  CONSTRUCTOR: empty --------------------
-    explicit MatrixZero<D, NR, NC>() {
+    explicit MatrixZero<Number, NR, NC>() {
       size_t NN = NR*NC;
       resize(NR, NC);
     }
@@ -65,7 +65,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixZero<D, NR, NC>(const size_t Nr, const size_t Nc) {
+    explicit MatrixZero<Number, NR, NC>(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
     }
 
@@ -76,7 +76,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixZero<D, NR, NC>() {
+    ~MatrixZero<Number, NR, NC>() {
       //remove from directory
     }
 
@@ -162,7 +162,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixZero<D, NR, NC>& resize(const int Nr, const int Nc) {
+    MatrixZero<Number, NR, NC>& resize(const int Nr, const int Nc) {
       Nrows_ = NR;
       Ncols_ = NC;
       if constexpr (resizableRows) {
@@ -178,14 +178,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixZero<D, NR, NC>& resize(const Dimensions dims) {
+    MatrixZero<Number, NR, NC>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixZero<D, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixZero<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> deepdims(deepdims_new);
       Dimensions newdims = deepdims[0];
       resize(newdims);
@@ -198,7 +198,7 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    MatrixZero<D, NR, NC>& reshape(const size_t nr, const size_t nc) {
+    MatrixZero<Number, NR, NC>& reshape(const size_t nr, const size_t nc) {
       const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
@@ -214,14 +214,14 @@ namespace mathq {
     }
 
 
-    MatrixZero<D, NR, NC>& transpose(void) {
+    MatrixZero<Number, NR, NC>& transpose(void) {
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixZero<D, NR, NC>& >::type adjoint() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixZero<Number, NR, NC>& >::type adjoint() {
       return *this;
     }
 
@@ -231,7 +231,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // read
-    const D dat(const size_t n)  const {
+    const Number dat(const size_t n)  const {
       return data_;
     }
 
@@ -240,7 +240,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const D dat(const Indices& inds)  const {
+    const Number dat(const Indices& inds)  const {
       return data_;
     }
 
@@ -250,7 +250,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const D dat(const DeepIndices& dinds)  const {
+    const Number dat(const DeepIndices& dinds)  const {
       return data_;
     }
 
@@ -260,7 +260,7 @@ namespace mathq {
     //**********************************************************************
 
     // read
-    const D& operator[](const size_t n)  const {
+    const Number& operator[](const size_t n)  const {
       return data_;
     }
 
@@ -273,7 +273,7 @@ namespace mathq {
     //**********************************************************************
 
 
-    const D operator()(const size_t r, const size_t c) const {
+    const Number operator()(const size_t r, const size_t c) const {
       return data_;
     }
 
@@ -288,7 +288,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixZero<D, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixZero<Number, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       return *this;
     }
 
@@ -296,8 +296,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixZero<D, NR, NC>& >::type conj() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixZero<Number, NR, NC>& >::type conj() {
       return *this;
     }
 
@@ -311,7 +311,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixZero";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(D());
+      s += getTypeName(Number());
       if (NR!=0) {
         s += StyledString::get(COMMA).get();
         s += "NR=";
@@ -344,7 +344,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixZero<D, NR, NC>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixZero<Number, NR, NC>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -379,8 +379,8 @@ namespace mathq {
     }
 
 
-    //template <class D>	
-    friend inline std::istream& operator>>(const std::string s, MatrixZero<D, NR, NC>& m2) {
+    //template <class Number>	
+    friend inline std::istream& operator>>(const std::string s, MatrixZero<Number, NR, NC>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -388,7 +388,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixZero<D, NR, NC>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixZero<Number, NR, NC>& m2) {
       return stream;
     }
 

@@ -21,9 +21,9 @@ namespace mathq {
     ****************************************************************************
     */
 
-  template <typename D> struct Functions {
+  template <typename Number> struct Functions {
   public:
-    static D tolerance = D(0);
+    static Number tolerance = Number(0);
   };
   template <> struct Functions<long double> {
   public:
@@ -100,24 +100,24 @@ namespace mathq {
 
   // roundzero
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-  D roundzero(const D& x, const D tolerance = Functions<D>::tolerance) {
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+  Number roundzero(const Number& x, const Number tolerance = Functions<Number>::tolerance) {
     return (std::abs(x) < std::abs(tolerance) ? 0 : x);
   }
 
 
   // zero
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-  D zero(const D& x) {
-    return D(0);
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+  Number zero(const Number& x) {
+    return Number(0);
   }
 
   // one
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-  D one(const D& x) {
-    return D(1);
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+  Number one(const Number& x) {
+    return Number(1);
   }
 
   // conj
@@ -125,61 +125,61 @@ namespace mathq {
   //                    note this is different from std::conj,
   //                    which returns a complex number
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value> > D
-    conj(const D& x) {
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > Number
+    conj(const Number& x) {
     return x;
   }
 
   // complex conjugate OPERTOR ~
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value> > D
-    operator~(D& x) {
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > Number
+    operator~(Number& x) {
     return x;
   }
 
 
   // imag
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value> > D
-    real(const D& x) {
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > Number
+    real(const Number& x) {
     return x;
   }
 
   // imag
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-  D imag(const D& x) {
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+  Number imag(const Number& x) {
     return 0;
   }
 
 
   // sqr(x)
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-  D sqr(const D& x) {
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+  Number sqr(const Number& x) {
     return x*x;
   }
 
   // normsqr(x)
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-  D normsqr(const D& x) {
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+  Number normsqr(const Number& x) {
     return x*x;
   }
 
 
   // cube(x)
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-  D cube(const D& x) {
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+  Number cube(const Number& x) {
     return x*x*x;
   }
 
 
  // logN(x, N)
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value>>
-  D logN(const D& x, unsigned int N) {
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
+  Number logN(const Number& x, unsigned int N) {
     return std::log(x)/std::log(N);
   }
 
@@ -209,8 +209,8 @@ namespace mathq {
   //       sgn(x) function
   //***********************************************************************
 
-#define SGN_MACRO(D)  inline D sgn(const D x) {if (x>0) return static_cast<D>(1); else if (x<0) return static_cast<D>(-1); else return static_cast<D>(0);}
-#define SGN_MACRO_US(D)  inline D sgn(const D x) {if (x>0) return static_cast<D>(1);else return static_cast<D>(0);}
+#define SGN_MACRO(Number)  inline Number sgn(const Number x) {if (x>0) return static_cast<Number>(1); else if (x<0) return static_cast<Number>(-1); else return static_cast<Number>(0);}
+#define SGN_MACRO_US(Number)  inline Number sgn(const Number x) {if (x>0) return static_cast<Number>(1);else return static_cast<Number>(0);}
 
   SGN_MACRO(float);
   SGN_MACRO(double);

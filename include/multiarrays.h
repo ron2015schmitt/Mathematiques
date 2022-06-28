@@ -22,14 +22,14 @@ namespace mathq {
   // * std::vector related functions
   // ************************************************************************** 
 
-  template <class D, int NN> class ArrayType {
+  template <class Number, int NN> class ArrayType {
   public:
-    typedef std::array<D, NN> Type;
+    typedef std::array<Number, NN> Type;
   };
 
-  template <class D> class ArrayType<D, 0> {
+  template <class Number> class ArrayType<Number, 0> {
   public:
-    typedef std::valarray<D> Type;
+    typedef std::valarray<Number> Type;
   };
 
 
@@ -561,8 +561,8 @@ namespace mathq {
     using type = std::initializer_list<
       typename NestedInitializerListDef<Element, L-1>::type
     >;
-    template <class D, int R, int M>
-    static void compute(MultiArray<Element, R, D, M>& t, const type& list, int& i) {
+    template <class Number, int R, int M>
+    static void compute(MultiArray<Element, R, Number, M>& t, const type& list, int& i) {
 
       for (auto nlist : list) {
         NestedInitializerListDef<Element, L-1>::compute(t, nlist, i);
@@ -592,8 +592,8 @@ namespace mathq {
   public:
     using type = Element;
 
-    template <class D, int R, int M>
-    static void compute(MultiArray<Element, R, D, M>& t, const type& item, int& i) {
+    template <class Number, int R, int M>
+    static void compute(MultiArray<Element, R, Number, M>& t, const type& item, int& i) {
       //TLDISP(item);
       t[i++] = item;
     }
@@ -623,8 +623,8 @@ namespace mathq {
   // -------------------------------------------------------------------
 
 
-  template <class X, class Element, typename D, int M, int R>
-  auto& insideout(const MArrayExpRW<X, Element, D, M, R>& t) {
+  template <class X, class Element, typename Number, int M, int R>
+  auto& insideout(const MArrayExpRW<X, Element, Number, M, R>& t) {
 
     typedef typename InversionType<X, Null>::Type Type;
     Type* tout = new Type();
@@ -724,8 +724,8 @@ namespace mathq {
 
 
 
-  template <class X, class Element, class D, int M, int R>
-  std::ostream& printMultiArrayExpression(std::ostream& stream, const MArrayExpR<X, Element, D, M, R>& te) {
+  template <class X, class Element, class Number, int M, int R>
+  std::ostream& printMultiArrayExpression(std::ostream& stream, const MArrayExpR<X, Element, Number, M, R>& te) {
 
     if constexpr (R==0) {
       Scalar<Element> s;
@@ -768,12 +768,12 @@ namespace mathq {
   //            either a tensor or a tensor expression that is "read only"
   // -------------------------------------------------------------------
 
-  template <class X, class Element, typename D, int M, int R> class
+  template <class X, class Element, typename Number, int M, int R> class
     MArrayExpR {
   public:
-    typedef Materialize<Element, D, M, R> XType;
+    typedef Materialize<Element, Number, M, R> XType;
     typedef Element EType;
-    typedef D DType;
+    typedef Number DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
 
@@ -787,7 +787,7 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       return derived().dat(i);
     }
 
@@ -859,7 +859,7 @@ namespace mathq {
       return derived().classname();
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpR<X, Element, D, M, R>& te) {
+    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpR<X, Element, Number, M, R>& te) {
       const X& td = te.derived();
       if (td.isExpression()) {
         return printMultiArrayExpression(stream, te);
@@ -884,12 +884,12 @@ namespace mathq {
   // -------------------------------------------------------------------
 
 
-  template <class X, class Element, typename D, int M, int R> class
-    MArrayExpRW : public MArrayExpR<MArrayExpRW<X, Element, D, M, R>, Element, D, M, R> {
+  template <class X, class Element, typename Number, int M, int R> class
+    MArrayExpRW : public MArrayExpR<MArrayExpRW<X, Element, Number, M, R>, Element, Number, M, R> {
   public:
-    typedef Materialize<Element, D, M, R> XType;
+    typedef Materialize<Element, Number, M, R> XType;
     typedef Element EType;
-    typedef D DType;
+    typedef Number DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
 
@@ -904,10 +904,10 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       return derived().dat(i);
     }
-    D& dat(const size_t i) {
+    Number& dat(const size_t i) {
       return derived().dat(i);
     }
 
@@ -980,7 +980,7 @@ namespace mathq {
       return derived().classname();
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpRW<X, Element, D, M, R>& te) {
+    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpRW<X, Element, Number, M, R>& te) {
       const X& td = te.derived();
       if (td.isExpression()) {
         return printMultiArrayExpression(stream, te);
@@ -1003,7 +1003,7 @@ namespace mathq {
 
     // assign to vector or expression
     template <class Y>
-    X& equals(const MArrayExpR<Y, Element, D, M, R>& rhs) {
+    X& equals(const MArrayExpR<Y, Element, Number, M, R>& rhs) {
 
       const size_t N = size();
 
@@ -1011,7 +1011,7 @@ namespace mathq {
       if (common(*this, rhs)) {
         // if a vector appears on both the right hand and left hand side,
         // we need to make a copy of the rhs first
-        Vector<D> y(N);
+        Vector<Number> y(N);
 
         for (size_t i = 0; i<N; i++)
           y[i] = rhs[i];
@@ -1033,7 +1033,7 @@ namespace mathq {
 
 
 
-  //  template <class X, class Element, typename D, int M, int R> class MultiArrayObject {
+  //  template <class X, class Element, typename Number, int M, int R> class MultiArrayObject {
   //  };
 
 

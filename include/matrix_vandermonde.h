@@ -8,18 +8,18 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixVandermonde<D        -- variable size matrix (valarray)
-   *                        D  = type for elements
-   * MatrixVandermonde<D,NR>    -- fixed number of rows (valarray)
+   * MatrixVandermonde<Number        -- variable size matrix (valarray)
+   *                        Number  = type for elements
+   * MatrixVandermonde<Number,NR>    -- fixed number of rows (valarray)
    *                        NR = number of rows
-   * MatrixVandermonde<D,NR,NC> -- fixed number of rows and cols (array)
+   * MatrixVandermonde<Number,NR,NC> -- fixed number of rows and cols (array)
    *                        NC = number of cols
    ********************************************************************
    */
 
-   //, typename = EnableIf<NumberTrait<D>::value>
-  template <class D, int NR, int NC >
-  class MatrixVandermonde : public MArrayExpRW<MatrixVandermonde<D, NR, NC>, D, D, 1, 2> {
+   //, typename = EnableIf<NumberTrait<Number>::value>
+  template <class Number, int NR, int NC >
+  class MatrixVandermonde : public MArrayExpRW<MatrixVandermonde<Number, NR, NC>, Number, Number, 1, 2> {
 
   public:
     constexpr static int R = 2;
@@ -28,28 +28,28 @@ namespace mathq {
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
-    typedef MatrixVandermonde<D, NR, NC> XType;
-    typedef D EType;
-    typedef D DType;
-    typedef typename OrderedNumberTrait<D>::Type FType;
+    typedef MatrixVandermonde<Number, NR, NC> XType;
+    typedef Number EType;
+    typedef Number DType;
+    typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
     // if either NR or NC is 0, then we use valarray
-    typedef typename ArrayType<D, NR>::Type MyArrayType;
+    typedef typename ArrayType<Number, NR>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const D zero_ = 0;
-    D dummy_ = 0;
+    const Number zero_ = 0;
+    Number dummy_ = 0;
     MyArrayType data_;
 
     size_t Nrows_;
     size_t Ncols_;
 
-    static_assert(NumberTrait<D>::value,
+    static_assert(NumberTrait<Number>::value,
       "class MatrixVandermonde can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -61,14 +61,14 @@ namespace mathq {
   public:
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    explicit MatrixVandermonde<D, NR, NC>() {
+    explicit MatrixVandermonde<Number, NR, NC>() {
       size_t NN = NR*NC;
       resize(NR, NC);
       *this = 0;
     }
 
-    // -------------------  D value --------------------
-    explicit MatrixVandermonde<D, NR, NC>(const D& value) {
+    // -------------------  Number value --------------------
+    explicit MatrixVandermonde<Number, NR, NC>(const Number& value) {
       size_t NN = NR*NC;
       resize(NR, NC);
       *this = value;
@@ -77,7 +77,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = NR*NC, EnableIf<(NN > 0)> = 0>
 
-    explicit MatrixVandermonde<D, NR, NC>(const Vector<D>& v) {
+    explicit MatrixVandermonde<Number, NR, NC>(const Vector<Number>& v) {
       resize(NR, NC);
       *this = v;
     }
@@ -86,7 +86,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixVandermonde<D, NR, NC>(const Vector<D>& v, const size_t Nc) {
+    explicit MatrixVandermonde<Number, NR, NC>(const Vector<Number>& v, const size_t Nc) {
       const size_t Nr = v.size();
       resize(Nr, Nc);  // this a *request* to resize
       *this = v;
@@ -95,7 +95,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixVandermonde<D, NR, NC>(const size_t Nr, const size_t Nc) {
+    explicit MatrixVandermonde<Number, NR, NC>(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
       *this = 0;
     }
@@ -103,7 +103,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixVandermonde<D, NR, NC>(const size_t Nr, const size_t Nc, const D& value) {
+    explicit MatrixVandermonde<Number, NR, NC>(const size_t Nr, const size_t Nc, const Number& value) {
       resize(Nr, Nc);
       *this = value;
     }
@@ -115,7 +115,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixVandermonde<D, NR, NC>() {
+    ~MatrixVandermonde<Number, NR, NC>() {
       //remove from directory
     }
 
@@ -201,7 +201,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixVandermonde<D, NR, NC>& resize(const int Nr, const int Nc) {
+    MatrixVandermonde<Number, NR, NC>& resize(const int Nr, const int Nc) {
       Nrows_ = NR;
       Ncols_ = NC;
       if constexpr (resizableRows) {
@@ -221,14 +221,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixVandermonde<D, NR, NC>& resize(const Dimensions dims) {
+    MatrixVandermonde<Number, NR, NC>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixVandermonde<D, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixVandermonde<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> deepdims(deepdims_new);
       Dimensions newdims = deepdims[0];
       resize(newdims);
@@ -241,7 +241,7 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    MatrixVandermonde<D, NR, NC>& reshape(const size_t nr, const size_t nc) {
+    MatrixVandermonde<Number, NR, NC>& reshape(const size_t nr, const size_t nc) {
       const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
@@ -258,14 +258,14 @@ namespace mathq {
     }
 
 
-    MatrixVandermonde<D, NR, NC>& transpose(void) {
+    MatrixVandermonde<Number, NR, NC>& transpose(void) {
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixVandermonde<D, NR, NC>& >::type adjoint() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixVandermonde<Number, NR, NC>& >::type adjoint() {
       return *this;
     }
 
@@ -277,7 +277,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // read
-    const D dat(const size_t n)  const {
+    const Number dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -286,7 +286,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const D dat(const Indices& inds)  const {
+    const Number dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -298,7 +298,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const D dat(const DeepIndices& dinds)  const {
+    const Number dat(const DeepIndices& dinds)  const {
       const size_t depth = dinds.size();
       const Indices& inds = dinds[depth-Mvalue];
       size_t r = inds[0];
@@ -312,7 +312,7 @@ namespace mathq {
     //**********************************************************************
 
     // read / write
-    D& operator[](const size_t n) {
+    Number& operator[](const size_t n) {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -320,7 +320,7 @@ namespace mathq {
     }
 
     // read
-    const D operator[](const size_t n)  const {
+    const Number operator[](const size_t n)  const {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -357,7 +357,7 @@ namespace mathq {
     //***************MultiArray-style Element Access: A(r,c) *********************
     //**********************************************************************
 
-    D& operator()(const size_t r, const size_t c) {
+    Number& operator()(const size_t r, const size_t c) {
       if (c==1) {
         return data_[r];
       }
@@ -367,7 +367,7 @@ namespace mathq {
       }
     }
 
-    const D operator()(const size_t r, const size_t c) const {
+    const Number operator()(const size_t r, const size_t c) const {
       return std::pow(data_[r], c);
     }
 
@@ -378,13 +378,13 @@ namespace mathq {
     //**********************************************************************
 
 
-    MatrixVandermonde<D, NR, NC>& set(const Vector<D>& v) {
+    MatrixVandermonde<Number, NR, NC>& set(const Vector<Number>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return *this;
     }
-    MatrixVandermonde<D, NR, NC>& operator=(const Vector<D>& v) {
+    MatrixVandermonde<Number, NR, NC>& operator=(const Vector<Number>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -392,7 +392,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixVandermonde<D, NR, NC>& operator=(const MArrayExpR<X, D, D, 1, 1>& v) {
+    MatrixVandermonde<Number, NR, NC>& operator=(const MArrayExpR<X, Number, Number, 1, 1>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -400,22 +400,22 @@ namespace mathq {
     }
 
 
-    Vector<D>& get() const {
-      Vector<D>& v = *(new Vector<D>(data_.size()));
+    Vector<Number>& get() const {
+      Vector<Number>& v = *(new Vector<Number>(data_.size()));
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return v;
     }
 
-    MatrixVandermonde<D, NR, NC>& operator=(const D& value) {
+    MatrixVandermonde<Number, NR, NC>& operator=(const Number& value) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = value;
       }
       return *this;
     }
 
-    MatrixVandermonde<D, NR, NC>& operator=(const MatrixVandermonde<D, NR, NC>& b) {
+    MatrixVandermonde<Number, NR, NC>& operator=(const MatrixVandermonde<Number, NR, NC>& b) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = b[k];
       }
@@ -430,7 +430,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixVandermonde<D, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixVandermonde<Number, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       return *this;
     }
 
@@ -438,8 +438,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixVandermonde<D, NR, NC>& >::type conj() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixVandermonde<Number, NR, NC>& >::type conj() {
       return *this;
     }
 
@@ -453,7 +453,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixVandermonde";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(D());
+      s += getTypeName(Number());
       if (NR!=0) {
         s += StyledString::get(COMMA).get();
         s += "NR=";
@@ -486,7 +486,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixVandermonde<D, NR, NC>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixVandermonde<Number, NR, NC>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -521,8 +521,8 @@ namespace mathq {
     }
 
 
-    //template <class D>	
-    friend inline std::istream& operator>>(const std::string s, MatrixVandermonde<D, NR, NC>& m2) {
+    //template <class Number>	
+    friend inline std::istream& operator>>(const std::string s, MatrixVandermonde<Number, NR, NC>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -530,7 +530,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixVandermonde<D, NR, NC>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixVandermonde<Number, NR, NC>& m2) {
       return stream;
     }
 

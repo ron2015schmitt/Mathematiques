@@ -14,8 +14,8 @@ namespace mathq {
    ****************************************************************************   
    */
 
-  template <class D> class Vector :
-    public MArrayExpRW<D,Vector<D> > {
+  template <class Number> class Vector :
+    public MArrayExpRW<Number,Vector<Number> > {
   private:
 
     // *********************** OBJECT DATA ***********************************
@@ -24,12 +24,12 @@ namespace mathq {
     // keep the instances lightweight
     //**********************************************************************
     
-    std::valarray<D>* data_;
+    std::valarray<Number>* data_;
 
 
   public:     
-    typedef D DataType;
-    typedef typename OrderedNumberTrait<D>::Type PrimDataType;
+    typedef Number DataType;
+    typedef typename OrderedNumberTrait<Number>::Type PrimDataType;
 
 
 
@@ -39,39 +39,39 @@ namespace mathq {
 
 
     // -------------------  DEFAULT  CONSTRUCTOR: Vector()  --------------------
-    explicit Vector<D>() {
-      data_ = new std::valarray<D>(0); 
+    explicit Vector<Number>() {
+      data_ = new std::valarray<Number>(0); 
       constructorHelper();
     }
 
 
     // --------------------- Vector(N)  ---------------------
 
-    explicit Vector<D>(const size_t N) { 
-      data_ = new std::valarray<D>(N);
+    explicit Vector<Number>(const size_t N) { 
+      data_ = new std::valarray<Number>(N);
       constructorHelper();
     }
 
 
     // --------------------- Vector(N,value)  ---------------------
 
-    explicit Vector<D>(const size_t N, const D val) {
-      data_ = new std::valarray<D>(val, N); 
+    explicit Vector<Number>(const size_t N, const Number val) {
+      data_ = new std::valarray<Number>(val, N); 
       constructorHelper();
     }
 
 
     // --------------------- array[]  CONSTRUCTOR ---------------------
-    Vector<D>(const size_t N, const D (vals)[]) {
+    Vector<Number>(const size_t N, const Number (vals)[]) {
       // allocate store
-	data_ = new std::valarray<D>(vals, N); 
+	data_ = new std::valarray<Number>(vals, N); 
 	constructorHelper();
     }
 
     // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    Vector<D>(std::initializer_list<D> mylist) {
+    Vector<Number>(std::initializer_list<Number> mylist) {
       const size_t N =  mylist.size();
-      data_ = new std::valarray<D>(N); 
+      data_ = new std::valarray<Number>(N); 
       *this = mylist;
       constructorHelper();
     }
@@ -79,17 +79,17 @@ namespace mathq {
 
 
     // --------------------- Vector(valarray)  ---------------------
-     Vector<D>(const std::valarray<D>& valar) {
-      data_ = new std::valarray<D>(valar); 
+     Vector<Number>(const std::valarray<Number>& valar) {
+      data_ = new std::valarray<Number>(valar); 
       constructorHelper();
     }
 
 
     // --------------------- Vector(Vector) --------------------
 
-    Vector<D>(const Vector<D>& v2) {
+    Vector<Number>(const Vector<Number>& v2) {
       const size_t N = v2.size();
-      data_ = new std::valarray<D>(N); 
+      data_ = new std::valarray<Number>(N); 
       *this = v2;
       constructorHelper();
     }
@@ -98,10 +98,10 @@ namespace mathq {
     // --------------------- EXPRESSION CONSTRUCTOR --------------------
 
     template <class A>
-    Vector<D>(const MArrayExpR<D,A>& x) 
+    Vector<Number>(const MArrayExpR<Number,A>& x) 
     {
       const size_t N = x.size();
-      data_ = new std::valarray<D>(N);
+      data_ = new std::valarray<Number>(N);
       *this = x;
       constructorHelper();
     }
@@ -124,7 +124,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~Vector<D>() {
+    ~Vector<Number>() {
       delete  data_ ;
 
       //remove from directory
@@ -168,24 +168,24 @@ namespace mathq {
 
 
     // *** this is used for resize-by-assignment ***
-    TERW_Resize<D>  resize(void) { 
-      return  TERW_Resize<D>(*this);
+    TERW_Resize<Number>  resize(void) { 
+      return  TERW_Resize<Number>(*this);
     }
 
     // this is used to empty the vector of its datastore
-    TERW_Resize<D>  resize(void) const {
+    TERW_Resize<Number>  resize(void) const {
       this->resize(0);
-      return  TERW_Resize<D>(*this);
+      return  TERW_Resize<Number>(*this);
     }
 
     // --------------------- .resize(N) ---------------------
 
-    Vector<D>&  resize(const size_t N) { 
+    Vector<Number>&  resize(const size_t N) { 
       if (N==this->size())
 	return *this;
       // reallocate store
       //      delete  data_ ;
-      //      data_ = new std::valarray<D>(N);
+      //      data_ = new std::valarray<Number>(N);
       data_->resize(N);
       return *this;
     }
@@ -193,11 +193,11 @@ namespace mathq {
     // -------------------------- .reshape(nr,nc) --------------------------------
     // morph into a matrix, pillaging this object of its data store.
     //
-    Matrix<D>& reshape(const size_t nr, const size_t nc) { 
+    Matrix<Number>& reshape(const size_t nr, const size_t nc) { 
       const size_t N = nr*nc;
       // rob the data_
-      Matrix<D> m = new Matrix<D>(nr, nc, this->data_);
-      this->data_ = new std::valarray<D>(0);
+      Matrix<Number> m = new Matrix<Number>(nr, nc, this->data_);
+      this->data_ = new std::valarray<Number>(0);
       // return the new Matrix, while we live on at zero size...
       return *m;
     }
@@ -212,12 +212,12 @@ namespace mathq {
         // -------------------- ELEMENT ACCESS[] --------------------
 
     // "read/write": unsigned
-    D& operator[](const size_t n)  {
+    Number& operator[](const size_t n)  {
       return (*data_)[n]; 
     }
 
     // "read/write": signed
-    D& operator[](const size_t k)  {
+    Number& operator[](const size_t k)  {
       size_t index = k;
       if (k < 0) {
 	index += size();
@@ -227,16 +227,16 @@ namespace mathq {
 
 
     // "read only": unsigned
-    inline const D operator[](const size_t n) const {
-      return (const D)(*data_)[n]; 
+    inline const Number operator[](const size_t n) const {
+      return (const Number)(*data_)[n]; 
     }
     // "read only": signed
-    inline const D operator[](const size_t k) const {
+    inline const Number operator[](const size_t k) const {
       size_t index = k;
       if (k < 0) {
 	index += size();
       }
-      return (const D)(*data_)[index]; 
+      return (const Number)(*data_)[index]; 
     }
 
 
@@ -244,10 +244,10 @@ namespace mathq {
 
     // Accessing a slice of values
     
-    TERW_Subset<D> operator[](const slc& slice)  { 
+    TERW_Subset<Number> operator[](const slc& slice)  { 
       return (*this)[slice.toIndexVector(size())];
     }
-    const TERW_Subset<D>  operator[](const slc& slice) const  {
+    const TERW_Subset<Number>  operator[](const slc& slice) const  {
       //      display::log3("Vector","operator[]","(const slc& slice)\n");
       return (*this)[slice.toIndexVector(size())];
     }
@@ -256,11 +256,11 @@ namespace mathq {
 
     // Accessing a SET of values using a vector of ints
 
-    TERW_Subset<D> operator[](const Vector<size_t>& ii) {
-      return TERW_Subset<D>(*this, ii);
+    TERW_Subset<Number> operator[](const Vector<size_t>& ii) {
+      return TERW_Subset<Number>(*this, ii);
     }
-    const TERW_Subset<D> operator[](const Vector<size_t>& ii) const {
-      return TERW_Subset<D>(*this, ii);
+    const TERW_Subset<Number> operator[](const Vector<size_t>& ii) const {
+      return TERW_Subset<Number>(*this, ii);
     }
 
 
@@ -268,34 +268,34 @@ namespace mathq {
     
     // Accessing a SET of values using a MASK
     
-    TERW_Submask<D> operator[](const Vector<bool>& mask)  {
-      return  TERW_Submask<D>(*this,mask);
+    TERW_Submask<Number> operator[](const Vector<bool>& mask)  {
+      return  TERW_Submask<Number>(*this,mask);
     }
-    const TERW_Submask<D> operator[](const Vector<bool>& mask)  const {
-      return  TERW_Submask<D>(*this,mask);
+    const TERW_Submask<Number> operator[](const Vector<bool>& mask)  const {
+      return  TERW_Submask<Number>(*this,mask);
     }
 
 
 
     //Accessing a SET of values using a list
 
-    TERW_Subset<D> operator[](const std::initializer_list<size_t>& list) {
-      return  TERW_Subset<D>(*this, list);
+    TERW_Subset<Number> operator[](const std::initializer_list<size_t>& list) {
+      return  TERW_Subset<Number>(*this, list);
     }
-    const TERW_Subset<D> operator[](const std::initializer_list<size_t>& list) const {
-      return  TERW_Subset<D>(*this, list);
+    const TERW_Subset<Number> operator[](const std::initializer_list<size_t>& list) const {
+      return  TERW_Subset<Number>(*this, list);
     }
 
 
     // -------------------- ELEMENT ACCESS --------------------
 
     // "read/write": unsigned
-    D& operator()(const size_t n)  {
+    Number& operator()(const size_t n)  {
       return (*data_)[n]; 
     }
 
     // "read/write": signed
-    D& operator()(const size_t k)  {
+    Number& operator()(const size_t k)  {
       size_t index = k;
       if (k < 0) {
 	index += size();
@@ -305,16 +305,16 @@ namespace mathq {
 
 
     // "read only": unsigned
-    inline const D operator()(const size_t n) const {
-      return (const D)(*data_)[n]; 
+    inline const Number operator()(const size_t n) const {
+      return (const Number)(*data_)[n]; 
     }
     // "read only": signed
-    inline const D operator()(const size_t k) const {
+    inline const Number operator()(const size_t k) const {
       size_t index = k;
       if (k < 0) {
 	index += size();
       }
-      return (const D)(*data_)[index]; 
+      return (const Number)(*data_)[index]; 
     }
 
 
@@ -322,10 +322,10 @@ namespace mathq {
 
     // Accessing a slice of values
     
-    TERW_Subset<D> operator()(const slc& slice)  { 
+    TERW_Subset<Number> operator()(const slc& slice)  { 
       return (*this)[slice.toIndexVector(size())];
     }
-    const TERW_Subset<D>  operator()(const slc& slice) const  {
+    const TERW_Subset<Number>  operator()(const slc& slice) const  {
       //      display::log3("Vector","operator[]","(const slc& slice)\n");
       return (*this)[slice.toIndexVector(size())];
     }
@@ -334,11 +334,11 @@ namespace mathq {
 
     // Accessing a SET of values using a vector of ints
 
-    TERW_Subset<D> operator()(const Vector<size_t>& ii) {
-      return TERW_Subset<D>(*this, ii);
+    TERW_Subset<Number> operator()(const Vector<size_t>& ii) {
+      return TERW_Subset<Number>(*this, ii);
     }
-    const TERW_Subset<D> operator()(const Vector<size_t>& ii) const {
-      return TERW_Subset<D>(*this, ii);
+    const TERW_Subset<Number> operator()(const Vector<size_t>& ii) const {
+      return TERW_Subset<Number>(*this, ii);
     }
 
 
@@ -346,22 +346,22 @@ namespace mathq {
     
     // Accessing a SET of values using a MASK
     
-    TERW_Submask<D> operator()(const Vector<bool>& mask)  {
-      return  TERW_Submask<D>(*this,mask);
+    TERW_Submask<Number> operator()(const Vector<bool>& mask)  {
+      return  TERW_Submask<Number>(*this,mask);
     }
-    const TERW_Submask<D> operator()(const Vector<bool>& mask)  const {
-      return  TERW_Submask<D>(*this,mask);
+    const TERW_Submask<Number> operator()(const Vector<bool>& mask)  const {
+      return  TERW_Submask<Number>(*this,mask);
     }
 
 
 
     //Accessing a SET of values using a list
 
-    TERW_Subset<D> operator()(const std::initializer_list<size_t>& list) {
-      return  TERW_Subset<D>(*this, list);
+    TERW_Subset<Number> operator()(const std::initializer_list<size_t>& list) {
+      return  TERW_Subset<Number>(*this, list);
     }
-    const TERW_Subset<D> operator()(const std::initializer_list<size_t>& list) const {
-      return  TERW_Subset<D>(*this, list);
+    const TERW_Subset<Number> operator()(const std::initializer_list<size_t>& list) const {
+      return  TERW_Subset<Number>(*this, list);
     }
 
 
@@ -372,12 +372,12 @@ namespace mathq {
 
     // -------------------- getInternalStdArray() --------------------
     // "read/write" to the wrapped valarray
-    std::valarray<D>& getInternalStdArray()  {
+    std::valarray<Number>& getInternalStdArray()  {
       return *data_; 
     }
 
     // -------------------- setValArray(*valarray) --------------------
-    Vector<D>& setValArray(std::valarray<D>* valptr)  {
+    Vector<Number>& setValArray(std::valarray<Number>* valptr)  {
       delete  data_ ;
       const size_t N = valptr->size();
       data_ = valptr;
@@ -394,18 +394,18 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
-    Vector<D>& equals(const D d) { 
+    Vector<Number>& equals(const Number d) { 
       for(size_t i=size(); i--;) 
 	(*data_)[i]=d; 
       return *this;
     }
-    Vector<D>& operator=(const D d) { 
+    Vector<Number>& operator=(const Number d) { 
       return equals(d);
     }
 
 
     // Assignment to a vector expression
-    template <class A>  Vector<D>& equals(const MArrayExpR<D,A>& x) {  
+    template <class A>  Vector<Number>& equals(const MArrayExpR<Number,A>& x) {  
 
       // resize to avoid segmentation faults
       resize(x.size());
@@ -413,7 +413,7 @@ namespace mathq {
       //      MOUT<<std::endl<< "inside normal Vector operator=" <<std::endl;
       if (common(*this,x)){
 	//MOUT<< "  common addresses found" <<std::endl;
-	Vector<D> vtemp(size());
+	Vector<Number> vtemp(size());
 	for (size_t i = 0; i < size(); i++) 
 	  vtemp[i] = x[i];   // Inlined expression
 	for (size_t i = 0; i < size(); i++) 
@@ -427,30 +427,30 @@ namespace mathq {
       return *this; 
     }
     
-    template <class A>  Vector<D>& operator=(const MArrayExpR<D,A>& x) {  
+    template <class A>  Vector<Number>& operator=(const MArrayExpR<Number,A>& x) {  
       return equals(x);
     }
     
 
 
     // doesn't work
-    //    template <class A, class B>  Vector<D>& equals(const MArrayExpR<MArrayExpR<D,A>,B>& x) {  
-    //    template <class A, class B>  Vector<D>& operator=(MArrayExpR<MArrayExpR<typename OrderedNumberTrait<D>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<D>& operator=(MArrayExpR<MArrayExpR<D,A>,B>) {
-    //    template <class A>  Vector<D>& operator=(A& x) {
-    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<D>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<D>::Type,A>,B> x) {
-    //    template <template<class,class> class A, class B, class C>  Vector<D>& operator=(const MArrayExpR<A<D,B>,C>& x) {
-    //    template <template<class,class> class A, class B, class C>  Vector<D>& operator=(const MArrayExpR<A<PrimDataType,B>,C>& x) {
+    //    template <class A, class B>  Vector<Number>& equals(const MArrayExpR<MArrayExpR<Number,A>,B>& x) {  
+    //    template <class A, class B>  Vector<Number>& operator=(MArrayExpR<MArrayExpR<typename OrderedNumberTrait<Number>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(MArrayExpR<MArrayExpR<Number,A>,B>) {
+    //    template <class A>  Vector<Number>& operator=(A& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<Number>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<Number>::Type,A>,B> x) {
+    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const MArrayExpR<A<Number,B>,C>& x) {
+    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const MArrayExpR<A<PrimDataType,B>,C>& x) {
    // WORKS
-    //    template <class A>  Vector<D>& operator=(A x) {
-    //    template <class A>  Vector<D>& operator=(const A x) {
-    //    template <class A>  Vector<D>& operator=(const A& x) {
-    //    template <class A, class B>  Vector<D>& operator=(const MArrayExpR<A,B> x) {
-    //  template <class A, class B>  Vector<D>& operator=(const MArrayExpR<A,B>& x) {
+    //    template <class A>  Vector<Number>& operator=(A x) {
+    //    template <class A>  Vector<Number>& operator=(const A x) {
+    //    template <class A>  Vector<Number>& operator=(const A& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<A,B> x) {
+    //  template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<A,B>& x) {
  
 
-    template <class X, class Y>  Vector<D>& operator=(const MArrayExpR<X,Y>& x) {
+    template <class X, class Y>  Vector<Number>& operator=(const MArrayExpR<X,Y>& x) {
       MOUT << __FUNCTION__ <<" ";
       //      return *this;
       const Y& y = x.derived();
@@ -464,7 +464,7 @@ namespace mathq {
             
       //TLDISP(b0);
       for (size_t i = 0; i<size(); i--) {
-	//	Object<D> q = y[i];
+	//	Object<Number> q = y[i];
 	//	for (size_t j = 0; j<y[i].size(); j--) {
 	//	  MDISP(i,j,q[j]);
 	//	}
@@ -474,7 +474,7 @@ namespace mathq {
 
 
     std::string bottom(){
-      typename OrderedNumberTrait<D>::Type d;
+      typename OrderedNumberTrait<Number>::Type d;
       return display::getTypeName(d);
     }
 
@@ -482,13 +482,13 @@ namespace mathq {
 
     // ------------------------ matrix = array[] ----------------
 
-    Vector<D>& equals(const D array[]) {
+    Vector<Number>& equals(const Number array[]) {
       for (size_t i = 0; i < size(); i++)  { 
 	(*this)[i] = array[i];
       }
       return *this;
     }
-    Vector<D>& operator=(const D array[]) {
+    Vector<Number>& operator=(const Number array[]) {
       return equals(array);
     }
 
@@ -498,7 +498,7 @@ namespace mathq {
     
 
     // Copy asignment
-    Vector<D>& equals(const Vector<D>& v2) {
+    Vector<Number>& equals(const Vector<Number>& v2) {
 
       // resize to avoid segmentation faults
       resize(v2.size());
@@ -510,43 +510,43 @@ namespace mathq {
 
 
 
-    Vector<D>& operator=(const Vector<D>& v2) {
+    Vector<Number>& operator=(const Vector<Number>& v2) {
       return equals(v2);
     }
     template <class B>
-    Vector<D>& operator=(const TERW_Resize<D>& b) { 
+    Vector<Number>& operator=(const TERW_Resize<Number>& b) { 
       return *this;
     }
 
 
-    Vector<D>& equals(const std::list<D>& mylist) {
+    Vector<Number>& equals(const std::list<Number>& mylist) {
       // resize to avoid segmentation faults
       resize(mylist.size());
       size_t i = 0;
-      for (typename std::list<D>::const_iterator it = mylist.begin(); it != mylist.end(); ++it)  { 
+      for (typename std::list<Number>::const_iterator it = mylist.begin(); it != mylist.end(); ++it)  { 
 	(*this)[i++] = *it;
       }
       return *this;
     }
-    Vector<D>& operator=(const std::list<D>& mylist) {
+    Vector<Number>& operator=(const std::list<Number>& mylist) {
       return equals(mylist);
     }
 
     
     // assignment to a C++11 list
-    Vector<D>& equals(const std::initializer_list<D>& mylist) {
+    Vector<Number>& equals(const std::initializer_list<Number>& mylist) {
       // resize to avoid segmentation faults
       resize(mylist.size());
 
       size_t k = 0;
-      typename std::initializer_list<D>::iterator it; 
+      typename std::initializer_list<Number>::iterator it; 
       for (it = mylist.begin(); it != mylist.end(); ++it)  { 
 	(*this)[k++] = *it;
       }
 
       return *this;
     }
-    Vector<D>& operator=(const std::initializer_list<D>& mylist) {
+    Vector<Number>& operator=(const std::initializer_list<Number>& mylist) {
       return equals(mylist);
     }
 
@@ -554,7 +554,7 @@ namespace mathq {
 
 
     // assignment to a std::vector
-    Vector<D>& equals(const std::vector<D>& vstd) {
+    Vector<Number>& equals(const std::vector<Number>& vstd) {
       
 
       // resize to avoid segmentation faults
@@ -567,7 +567,7 @@ namespace mathq {
     }
 
 
-    Vector<D>& operator=(const std::vector<D>& vstd) {
+    Vector<Number>& operator=(const std::vector<Number>& vstd) {
       return equals(vstd);
     }
 
@@ -575,7 +575,7 @@ namespace mathq {
 
     // assignment to a std::array
     template <std::size_t N>
-    Vector<D>& equals(const std::array<D,N>& varray) {
+    Vector<Number>& equals(const std::array<Number,N>& varray) {
       
 
       // resize to avoid segmentation faults
@@ -589,14 +589,14 @@ namespace mathq {
 
 
     template <std::size_t N>
-    Vector<D>& operator=(const std::array<D,N>& varray) {
+    Vector<Number>& operator=(const std::array<Number,N>& varray) {
       return equals(varray);
     }
 
 
 
     // assignment to a std::val_array
-    Vector<D>& equals(const std::valarray<D>& varray) {
+    Vector<Number>& equals(const std::valarray<Number>& varray) {
       
 
       // resize to avoid segmentation faults
@@ -608,7 +608,7 @@ namespace mathq {
       return *this;
     }
 
-    Vector<D>& operator=(const std::valarray<D>& varray) {
+    Vector<Number>& operator=(const std::valarray<Number>& varray) {
       return equals(varray);
     }
 
@@ -623,7 +623,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
     
-    Vector<D>&  roundzero(D tolerance = MatricksHelper<D>::tolerance) { 
+    Vector<Number>&  roundzero(Number tolerance = MatricksHelper<Number>::tolerance) { 
       for(size_t i=size(); i--;) {
 	(*data_)[i] = mathq::roundzero((*data_)[i], tolerance);
       }
@@ -634,7 +634,7 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T=D >
+    template< typename T=Number >
       typename std::enable_if<is_complex<T>{}, Vector<T>& >::type conj() {
       using std::conj;
       for(size_t i=size(); i--;) {
@@ -660,7 +660,7 @@ namespace mathq {
       if (N==0)
 	return ivec;
     
-      std::vector<Pair<D> > temp(N);
+      std::vector<Pair<Number> > temp(N);
 
       for (size_t i = 0; i < N ; i++ ) {
 	temp[i].index = i;
@@ -691,12 +691,12 @@ namespace mathq {
       if (N==0)
 	return *(new Vector<size_t>(0));
     
-      std::queue<Pair<D> > unique;
+      std::queue<Pair<Number> > unique;
 	
-      Pair<D> prevpair(0, (*data_)[0]);
+      Pair<Number> prevpair(0, (*data_)[0]);
       unique.push(prevpair);
       for (size_t i = 1; i < N ; i++ ) {
-	Pair<D> mypair(i, (*data_)[i]);
+	Pair<Number> mypair(i, (*data_)[i]);
 	if (mypair.data != prevpair.data) {
 	  unique.push(mypair);
 	  prevpair = mypair;
@@ -707,7 +707,7 @@ namespace mathq {
       Vector<size_t> &indexvec = *(new Vector<size_t>(Nnew));
       resize(Nnew);
       for (size_t i = 0; i < Nnew ; i++ ) {
-	Pair<D> mypair = unique.front();
+	Pair<Number> mypair = unique.front();
 	unique.pop();
 	indexvec[i] = mypair.index;
 	(*data_)[i] = mypair.data;
@@ -727,17 +727,17 @@ namespace mathq {
       if (N==0)
 	return *(new Vector<size_t>(0));
     
-      std::map<size_t,D> mymap;
+      std::map<size_t,Number> mymap;
       for (size_t j = 0; j < N ; j++ ) {
 	mymap[j] = (*data_)[j];
       }
 
       for (size_t j = 0; j < N ; j++ ) {
 	if (mymap.find(j) == mymap.end()) continue;
-	Pair<D> pair1(j, (*data_)[j]);
+	Pair<Number> pair1(j, (*data_)[j]);
 	for (size_t k = j+1; k < N ; k++ ) {
 	  if (mymap.find(k) == mymap.end()) continue;
-	  Pair<D> pair2(k, (*data_)[k]);
+	  Pair<Number> pair2(k, (*data_)[k]);
 	  if (pair1.data == pair2.data) {
 	    mymap.erase(k);
 	  } 
@@ -748,7 +748,7 @@ namespace mathq {
       Vector<size_t> &indexvec = *(new Vector<size_t>(Nnew));
       resize(Nnew);
       size_t k = 0;
-      for (typename std::map<size_t,D>::iterator it = mymap.begin(); it != mymap.end(); ++it) {
+      for (typename std::map<size_t,Number>::iterator it = mymap.begin(); it != mymap.end(); ++it) {
 	indexvec[k] = it->first;
 	(*data_)[k++] = it->second;
       }
@@ -757,14 +757,14 @@ namespace mathq {
     }
 
 
-    Vector<D>& reverse() {
+    Vector<Number>& reverse() {
 
       const size_t N = size();
       if (N==0)
 	return *this;
    
       for (size_t i = 0; i < N/2 ; i++ ) {
-	D temp = (*data_)[i];
+	Number temp = (*data_)[i];
 	(*data_)[i] = (*data_)[N-i-1];
 	(*data_)[N-i-1] = temp;
       }
@@ -776,9 +776,9 @@ namespace mathq {
 
     // .cumsum() -- cumulative sum
 
-    Vector<D>& cumsum() {
+    Vector<Number>& cumsum() {
       const size_t N = size();
-      D sum = 0;
+      Number sum = 0;
       for (size_t i = 0; i < N ; i++ ) {
 	sum += (*data_)[i];
 	(*data_)[i] = sum;
@@ -788,9 +788,9 @@ namespace mathq {
 
     // .cumprod()  --  cumulative product
 
-    Vector<D>& cumprod() {
+    Vector<Number>& cumprod() {
       const size_t N = size();
-      D prod = 1;
+      Number prod = 1;
       for (size_t i = 0; i < N ; i++ ) {
 	prod *= (*data_)[i];
 	(*data_)[i] = prod;
@@ -801,10 +801,10 @@ namespace mathq {
 
     // .cumtrapz() -- cumulative trapezoidal summation
 
-    Vector<D>& cumtrapz() {
+    Vector<Number>& cumtrapz() {
       const size_t N = size();
       if (N==0) return *this;
-      D sum = (*data_)[0]/2;
+      Number sum = (*data_)[0]/2;
       (*data_)[0] = 0;
       for (size_t i = 1; i < N ; i++ ) {
 	sum += (*data_)[i];
@@ -817,20 +817,20 @@ namespace mathq {
     // order  name
     //     0  rectangular
     //     1  trapazoidal
-    Vector<D>& integrate_a2x(const D a, const D b, const int order=1) {
-      std::valarray<D> &mydata = *data_;
+    Vector<Number>& integrate_a2x(const Number a, const Number b, const int order=1) {
+      std::valarray<Number> &mydata = *data_;
 
       const size_t N = size();
 
       if (order == 0) {
 	this->cumsum();
-	const D dx = (b-a)/D(N);
+	const Number dx = (b-a)/Number(N);
 	for (size_t i = 0; i < N ; i++ ) {
 	  mydata[i] *= dx;
 	}
       } else if (order == 1) {
 	this->cumtrapz();
-	const D dx = (b-a)/D(N-1);
+	const Number dx = (b-a)/Number(N-1);
 	for (size_t i = 0; i < N ; i++ ) {
 	  mydata[i] *= dx;
 	}
@@ -843,11 +843,11 @@ namespace mathq {
 
     // .cumsumrev() -- cumulative sum -- from last to first
 
-    Vector<D>& cumsum_rev() {
-      std::valarray<D> &mydata = *data_;
+    Vector<Number>& cumsum_rev() {
+      std::valarray<Number> &mydata = *data_;
       const size_t N = size();
 
-      D sum = 0;
+      Number sum = 0;
       for (size_t i = 0; i < N ; i++ ) {
 	sum += mydata[N-1-i];
 	mydata[N-1-i] = sum;
@@ -857,11 +857,11 @@ namespace mathq {
 
     // .cumprodrev()  --  cumulative product  -- from last to first
 
-    Vector<D>& cumprod_rev() {
-      std::valarray<D> &mydata = *data_;
+    Vector<Number>& cumprod_rev() {
+      std::valarray<Number> &mydata = *data_;
       const size_t N = size();
 
-      D prod = 1;
+      Number prod = 1;
       for (size_t i = 0; i < N ; i++ ) {
 	prod *= mydata[N-1-i];
 	mydata[N-1-i] = prod;
@@ -872,12 +872,12 @@ namespace mathq {
 
     // .cumtrapz() -- cumulative trapezoidal summation -- from last to first
 
-    Vector<D>& cumtrapz_rev() {
-      std::valarray<D> &mydata = *data_;
+    Vector<Number>& cumtrapz_rev() {
+      std::valarray<Number> &mydata = *data_;
       const size_t N = size();
       if (N==0) return *this;
 
-      D sum = mydata[N-1]/2;
+      Number sum = mydata[N-1]/2;
       mydata[N-1] = 0;
       for (size_t i = 1; i < N ; i++ ) {
 	sum += mydata[N-1-i];
@@ -892,19 +892,19 @@ namespace mathq {
     // order  name
     //     0  rectangular
     //     1  trapazoidal
-    Vector<D>& integrate_x2b(const D a, const D b, const int order=1) {
-      std::valarray<D> &mydata = *data_;
+    Vector<Number>& integrate_x2b(const Number a, const Number b, const int order=1) {
+      std::valarray<Number> &mydata = *data_;
       const size_t N = size();
 
       if (order == 0) {
 	this->cumsum_rev();
-	const D dx = (b-a)/(N);
+	const Number dx = (b-a)/(N);
 	for (size_t i = 0; i < N ; i++ ) {
 	  mydata[N-1-i] *= dx;
 	}
       } else if (order == 1) {
 	this->cumtrapz_rev();
-	const D dx = (b-a)/(N-1);
+	const Number dx = (b-a)/(N-1);
 	for (size_t i = 0; i < N ; i++ ) {
 	  mydata[N-1-i] *= dx;
 	}
@@ -917,12 +917,12 @@ namespace mathq {
 
 
     // diff   (v[n] = v[n] - v[n-1])
-    Vector<D>& diff(const bool periodic=false) {
-      std::valarray<D> &mydata = *data_;
+    Vector<Number>& diff(const bool periodic=false) {
+      std::valarray<Number> &mydata = *data_;
       const size_t N = size();
       if (N<=1) return *this;
 
-      D temp;
+      Number temp;
       if (periodic) {
 	temp = mydata[0] - mydata[N-1];
       } else {
@@ -938,12 +938,12 @@ namespace mathq {
     }
 
     // diff_rev   (v[n] = v[n+1] - v[n])
-    Vector<D>& diff_rev(const bool periodic=false) {
+    Vector<Number>& diff_rev(const bool periodic=false) {
       const size_t N = size();
-      std::valarray<D> &mydata = *data_;
+      std::valarray<Number> &mydata = *data_;
       if (N<=1) return *this;
 
-      D temp;
+      Number temp;
       if (periodic) {
 	temp = mydata[0] - mydata[N-1];
       } else {
@@ -962,13 +962,13 @@ namespace mathq {
     // deriv -  derivative
     // any change in the default parameters must be likewise made in vfunctions.h: deriv(...)
 
-    Vector<D>& deriv(const D a, const D b, const int n=1, int Dpts=7, const bool periodic=false) {
-      std::valarray<D> &dat = *data_;
+    Vector<Number>& deriv(const Number a, const Number b, const int n=1, int Dpts=7, const bool periodic=false) {
+      std::valarray<Number> &dat = *data_;
       //MDISP(a,b,n,Dpts,periodic);
       const size_t N = size();
       if (N<=1) return *this;
 
-      const D dx = (b-a)/D(N-1);
+      const Number dx = (b-a)/Number(N-1);
 
       if (Dpts > N ) {
 	//TODO: error or warning
@@ -982,9 +982,9 @@ namespace mathq {
 	}
 	
       } else if (Dpts == 3) {
-	D prev;
-	D curr;
-	D last;
+	Number prev;
+	Number curr;
+	Number last;
 	if (periodic) {
 	  // first point
 	  prev = dat[1] - dat[N-1];
@@ -997,7 +997,7 @@ namespace mathq {
 	  last = 3*dat[N-1] - 4*dat[N-2] + dat[N-3];
 	}
 	
-	const D c0 = 0.5/dx;
+	const Number c0 = 0.5/dx;
 	for (size_t i = 1; i < N-1 ; i++ ) {
 	  curr = dat[i+1] - dat[i-1];
 	  dat[i-1] = c0*prev;
@@ -1007,11 +1007,11 @@ namespace mathq {
 	dat[N-1] = c0*last;
 	
       } else if (Dpts == 5) {
-	D prev1;
-	D prev2;
-	D curr;
-	D last;
-	D lastminus1;
+	Number prev1;
+	Number prev2;
+	Number curr;
+	Number last;
+	Number lastminus1;
 	if (periodic) {
 	  // second to last point
 	  lastminus1 = dat[N-4] - 8*dat[N-3] + 8*dat[N-1] - dat[0];
@@ -1028,7 +1028,7 @@ namespace mathq {
 	  prev1      =    dat[4]   -  6*dat[3]   + 18*dat[2]   - 10*dat[1]   -  3*dat[0];
 	}
 	
-	const D c0 = 1/(12*dx);
+	const Number c0 = 1/(12*dx);
 	for (size_t i = 2; i < N-2 ; i++ ) {
 	  curr = dat[i-2] - 8*dat[i-1] + 8*dat[i+1]  - dat[i+2];
 	  dat[i-2] = c0*prev2;
@@ -1041,13 +1041,13 @@ namespace mathq {
 	dat[N-1] = c0*last;
 	
       } else if (Dpts == 7) {
-	D prev1;
-	D prev2;
-	D prev3;
-	D curr;
-	D last;
-	D lastminus1;
-	D lastminus2;
+	Number prev1;
+	Number prev2;
+	Number prev3;
+	Number curr;
+	Number last;
+	Number lastminus1;
+	Number lastminus2;
 	if (periodic) {
 	  lastminus2 = -dat[N-6] + 9*dat[N-5] - 45*dat[N-4] + 45*dat[N-2]  - 9*dat[N-1] + dat[0];
 	  lastminus1 = -dat[N-5] + 9*dat[N-4] - 45*dat[N-3] + 45*dat[N-1]  - 9*dat[0] + dat[1];
@@ -1064,7 +1064,7 @@ namespace mathq {
 	  prev2 =  -10*dat[0] -  77*dat[1] + 150*dat[2] - 100*dat[3] +  50*dat[4] - 15*dat[5] +  2*dat[6];
 	  prev1 =    2*dat[0] -  24*dat[1] -  35*dat[2] +  80*dat[3] -  30*dat[4] +  8*dat[5] -    dat[6];
 	}
-	const D c0 = 1/(60*dx);
+	const Number c0 = 1/(60*dx);
 	for (size_t i = 3; i < N-3 ; i++ ) {
 	  curr = -dat[i-3] + 9*dat[i-2] - 45*dat[i-1] + 45*dat[i+1]  - 9*dat[i+2] + dat[i+3];
 	  dat[i-3] = c0*prev3;
@@ -1096,7 +1096,7 @@ namespace mathq {
     //**********************************************************************
 
     inline std::string classname() const {
-      D d;
+      Number d;
       return "Vector"+display::getBracketedTypeName(d);
     }
 
@@ -1112,7 +1112,7 @@ namespace mathq {
 
     // stream << operator
 
-    friend std::ostream& operator<<(std::ostream &stream, const Vector<D>& v) {
+    friend std::ostream& operator<<(std::ostream &stream, const Vector<Number>& v) {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       stream << style.apply(FormatDataVector::string_opening);
@@ -1134,8 +1134,8 @@ namespace mathq {
     }
 
 
-    //template <class D>	
-    friend inline std::istream& operator>>(const std::string s,  Vector<D>& x) {	
+    //template <class Number>	
+    friend inline std::istream& operator>>(const std::string s,  Vector<Number>& x) {	
       std::istringstream st(s);
       return (st >> x);
     }
@@ -1143,13 +1143,13 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream,  Vector<D>& x) {	
+    friend std::istream& operator>>(std::istream& stream,  Vector<Number>& x) {	
       // const size_t LINESZ = 32768;
       // char line[LINESZ];
-      // std::vector<D> v;
+      // std::vector<Number> v;
       // size_t N = 0;
       // const size_t Nold = x.size();
-      // D temp;
+      // Number temp;
       // size_t Nlines = 0;
       // std::istringstream strmline;
 

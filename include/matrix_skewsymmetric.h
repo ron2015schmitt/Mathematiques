@@ -8,16 +8,16 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixSkewSymmetric<D>    -- variable size matrix (valarray)
-   *                              D  = type for elements
-   * MatrixSkewSymmetric<D,N>  -- fixed number of rows (valarray)
+   * MatrixSkewSymmetric<Number>    -- variable size matrix (valarray)
+   *                              Number  = type for elements
+   * MatrixSkewSymmetric<Number,N>  -- fixed number of rows (valarray)
    *                              N = number of rows
    *                                = number of cols
    ********************************************************************
    */
 
-  template <class D, int N>
-  class MatrixSkewSymmetric : public MArrayExpRW<MatrixSkewSymmetric<D, N>, D, D, 1, 2> {
+  template <class Number, int N>
+  class MatrixSkewSymmetric : public MArrayExpRW<MatrixSkewSymmetric<Number, N>, Number, Number, 1, 2> {
 
   public:
     constexpr static int R = 2;
@@ -26,27 +26,27 @@ namespace mathq {
     constexpr static int NR = N;
     constexpr static int NC = N;
     static constexpr bool resizable = (N==0) ? true : false;
-    typedef MatrixSkewSymmetric<D, N> XType;
-    typedef D EType;
-    typedef D DType;
-    typedef typename OrderedNumberTrait<D>::Type FType;
+    typedef MatrixSkewSymmetric<Number, N> XType;
+    typedef Number EType;
+    typedef Number DType;
+    typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
     // if N is 0, then we use valarray
-    typedef typename ArrayType<D, ((N* N-N)/2)>::Type MyArrayType;
+    typedef typename ArrayType<Number, ((N* N-N)/2)>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const D zero_ = 0;
-    D dummy_ = 0;
+    const Number zero_ = 0;
+    Number dummy_ = 0;
     MyArrayType data_;
 
     size_t N_;
 
-    static_assert(NumberTrait<D>::value,
+    static_assert(NumberTrait<Number>::value,
       "class MatrixSkewSymmetric can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -60,13 +60,13 @@ namespace mathq {
     // ********************* FIXED SIZE CONSTRUCTORS ***********************
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    explicit MatrixSkewSymmetric<D, N>() {
+    explicit MatrixSkewSymmetric<Number, N>() {
       resize(N);
       *this = 0;
     }
 
-    // -------------------  D value --------------------
-    explicit MatrixSkewSymmetric<D, N>(const D& value) {
+    // -------------------  Number value --------------------
+    explicit MatrixSkewSymmetric<Number, N>(const Number& value) {
       resize(N);
       *this = value;
     }
@@ -74,7 +74,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = N, EnableIf<(NN > 0)> = 0>
 
-    explicit MatrixSkewSymmetric<D, N>(const Vector<D>& v) {
+    explicit MatrixSkewSymmetric<Number, N>(const Vector<Number>& v) {
       const size_t size = v.size();
       // TODO: chekc that size = N(N+1)/2
       resize(N);
@@ -84,7 +84,7 @@ namespace mathq {
     // --------------------- Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<(NN>0)> = 0>
 
-    explicit MatrixSkewSymmetric<D, N>(const MArrayExpR<X, D, D, 1, 2> A) {
+    explicit MatrixSkewSymmetric<Number, N>(const MArrayExpR<X, Number, Number, 1, 2> A) {
       // TODO: chekc that A is N x N
       resize(N);
       *this = A;
@@ -97,7 +97,7 @@ namespace mathq {
     // ------------------- variable size (Column) Vector --------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSkewSymmetric<D, N>(const Vector<D>& v) {
+    explicit MatrixSkewSymmetric<Number, N>(const Vector<Number>& v) {
       const size_t len = v.size();
       const size_t M = (std::sqrt(1+8*len) + 1)/2;
       resize(M);
@@ -107,7 +107,7 @@ namespace mathq {
     // --------------------- variable-size zero-CONSTRUCTOR---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSkewSymmetric<D, N>(const size_t M) {
+    explicit MatrixSkewSymmetric<Number, N>(const size_t M) {
       resize(M);
       *this = 0;
     }
@@ -115,7 +115,7 @@ namespace mathq {
     // --------------------- variable-size value CONSTRUCTOR ---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSkewSymmetric<D, N>(const size_t M, const D& value) {
+    explicit MatrixSkewSymmetric<Number, N>(const size_t M, const Number& value) {
       resize(M);
       *this = value;
     }
@@ -124,7 +124,7 @@ namespace mathq {
     // --------------------- variable-size Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSkewSymmetric<D, N>(const MArrayExpR<X, D, D, 1, 2> A) {
+    explicit MatrixSkewSymmetric<Number, N>(const MArrayExpR<X, Number, Number, 1, 2> A) {
       const size_t M = A.Nrows();
       // TODO: chekc that A is square
       resize(M);
@@ -137,7 +137,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixSkewSymmetric<D, N>() {
+    ~MatrixSkewSymmetric<Number, N>() {
       //remove from directory
     }
 
@@ -223,7 +223,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixSkewSymmetric<D, N>& resize(const int M) {
+    MatrixSkewSymmetric<Number, N>& resize(const int M) {
       N_ = N;
       if constexpr (resizable) {
         N_ = M;
@@ -237,14 +237,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixSkewSymmetric<D, N>& resize(const Dimensions dims) {
+    MatrixSkewSymmetric<Number, N>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixSkewSymmetric<D, N>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixSkewSymmetric<Number, N>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> deepdims(deepdims_new);
       Dimensions newdims = deepdims[0];
       resize(newdims);
@@ -254,15 +254,15 @@ namespace mathq {
 
 
 
-    MatrixSkewSymmetric<D, N>& transpose(void) {
+    MatrixSkewSymmetric<Number, N>& transpose(void) {
       // TODO: implement
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixSkewSymmetric<D, N>& >::type adjoint() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixSkewSymmetric<Number, N>& >::type adjoint() {
       return *this;
     }
 
@@ -274,7 +274,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // read
-    const D dat(const size_t n)  const {
+    const Number dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -283,7 +283,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const D dat(const Indices& inds)  const {
+    const Number dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -295,7 +295,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const D dat(const DeepIndices& dinds)  const {
+    const Number dat(const DeepIndices& dinds)  const {
       const size_t depth = dinds.size();
       const Indices& inds = dinds[depth-Mvalue];
       size_t r = inds[0];
@@ -309,7 +309,7 @@ namespace mathq {
     //**********************************************************************
 
     // read / write
-    D& operator[](const size_t n) {
+    Number& operator[](const size_t n) {
       const Indices& inds = indices(n);
       size_t r = inds[0];
       size_t c = inds[1];
@@ -317,7 +317,7 @@ namespace mathq {
     }
 
     // read
-    const D operator[](const size_t n)  const {
+    const Number operator[](const size_t n)  const {
       const Indices& inds = indices(n);
       size_t r = inds[0];
       size_t c = inds[1];
@@ -353,7 +353,7 @@ namespace mathq {
       return c-1 + (N_-1)*r - (r*r+r)/2;
     }
 
-    D& operator()(const size_t r, const size_t c) {
+    Number& operator()(const size_t r, const size_t c) {
       if (r < c) {
         return data_[dataIndex(r, c)];
       }
@@ -365,7 +365,7 @@ namespace mathq {
       }
     }
 
-    const D operator()(const size_t r, const size_t c) const {
+    const Number operator()(const size_t r, const size_t c) const {
       if (r < c) {
         return data_[dataIndex(r, c)];
       }
@@ -390,21 +390,13 @@ namespace mathq {
     //**********************************************************************
 
 
-    MatrixSkewSymmetric<D, N>& set(const Vector<D>& v) {
+    MatrixSkewSymmetric<Number, N>& set(const Vector<Number>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return *this;
     }
-    MatrixSkewSymmetric<D, N>& operator=(const Vector<D>& v) {
-      for (size_t k = 0; k < data_.size(); k++) {
-        data_[k] = v[k];
-      }
-      return *this;
-    }
-
-    template <class X>
-    MatrixSkewSymmetric<D, N>& operator=(const MArrayExpR<X, D, D, 1, 1>& v) {
+    MatrixSkewSymmetric<Number, N>& operator=(const Vector<Number>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -412,7 +404,15 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixSkewSymmetric<D, N>& operator=(const MArrayExpR<X, D, D, 1, 2>& A) {
+    MatrixSkewSymmetric<Number, N>& operator=(const MArrayExpR<X, Number, Number, 1, 1>& v) {
+      for (size_t k = 0; k < data_.size(); k++) {
+        data_[k] = v[k];
+      }
+      return *this;
+    }
+
+    template <class X>
+    MatrixSkewSymmetric<Number, N>& operator=(const MArrayExpR<X, Number, Number, 1, 2>& A) {
       const size_t M = A.Nrows();
       // TODO: check that A is square
       resize(M);
@@ -425,22 +425,22 @@ namespace mathq {
     }
 
 
-    Vector<D>& get() const {
-      Vector<D>& v = *(new Vector<D>(data_.size()));
+    Vector<Number>& get() const {
+      Vector<Number>& v = *(new Vector<Number>(data_.size()));
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return v;
     }
 
-    MatrixSkewSymmetric<D, N>& operator=(const D& value) {
+    MatrixSkewSymmetric<Number, N>& operator=(const Number& value) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = value;
       }
       return *this;
     }
 
-    MatrixSkewSymmetric<D, N>& operator=(const MatrixSkewSymmetric<D, N>& b) {
+    MatrixSkewSymmetric<Number, N>& operator=(const MatrixSkewSymmetric<Number, N>& b) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = b[k];
       }
@@ -455,7 +455,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixSkewSymmetric<D, N>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixSkewSymmetric<Number, N>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       return *this;
     }
 
@@ -463,8 +463,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixSkewSymmetric<D, N>& >::type conj() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixSkewSymmetric<Number, N>& >::type conj() {
       return *this;
     }
 
@@ -478,7 +478,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixSkewSymmetric";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(D());
+      s += getTypeName(Number());
       if (N!=0) {
         s += StyledString::get(COMMA).get();
         s += "N=";
@@ -506,7 +506,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixSkewSymmetric<D, N>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixSkewSymmetric<Number, N>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -541,8 +541,8 @@ namespace mathq {
     }
 
 
-    //template <class D>	
-    friend inline std::istream& operator>>(const std::string s, MatrixSkewSymmetric<D, N>& m2) {
+    //template <class Number>	
+    friend inline std::istream& operator>>(const std::string s, MatrixSkewSymmetric<Number, N>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -550,7 +550,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixSkewSymmetric<D, N>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixSkewSymmetric<Number, N>& m2) {
       return stream;
     }
 

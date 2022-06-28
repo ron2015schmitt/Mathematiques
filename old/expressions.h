@@ -13,10 +13,10 @@ namespace matricks {
   // TER_Unary    unary expressions
   //---------------------------------------------------------------------------
     
-    template <class Element, class A, class D, int M, FUNC> 
-      class TER_Unary  : public  MArrayExpR<D,TER_Unary<D,A,FUNC,M>> {
+    template <class Element, class A, class Number, int M, FUNC> 
+      class TER_Unary  : public  MArrayExpR<Number,TER_Unary<Number,A,FUNC,M>> {
     public:
-      typedef MArrayExpR<Element,A,D,M> TIN;
+      typedef MArrayExpR<Element,A,Number,M> TIN;
   
   private:
     const TIN& a_;
@@ -36,7 +36,7 @@ namespace matricks {
       delete vptrs;
     }
 
-  const D dat(const size_t i) const {
+  const Number dat(const size_t i) const {
     return FUNC::apply(a_.dat(i));
   }
   
@@ -430,24 +430,24 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TERW_Subset   Subset Expression
   //---------------------------------------------------------------------------
-  template<class D, int M>
-    class TERW_Subset :  public  MArrayExpRW<D,TERW_Subset<D,M> > {
+  template<class Number, int M>
+    class TERW_Subset :  public  MArrayExpRW<Number,TERW_Subset<Number,M> > {
   private:
     // can't be constant since we alow to be on left hand side
-    Vector<D>& a_;
+    Vector<Number>& a_;
     const Vector<size_t>& ii_;
     const bool delete_ii_;
     VectorofPtrs *vptrs;
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
-  TERW_Subset(Vector<D>& a, const Vector<size_t>& ii)
+  TERW_Subset(Vector<Number>& a, const Vector<size_t>& ii)
     : a_(a), ii_(ii), delete_ii_(false) {
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
       vptrs->add(&ii_);
   }
-  TERW_Subset(Vector<D>& a, const std::initializer_list<size_t>& list)
+  TERW_Subset(Vector<Number>& a, const std::initializer_list<size_t>& list)
     : a_(a), ii_(*(new Vector<size_t>(list))), delete_ii_(true) {
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
@@ -475,14 +475,14 @@ namespace matricks {
       return a_.dat(ind);
     }
   
-    const D operator[](const size_t i) const {
+    const Number operator[](const size_t i) const {
       size_t ind = ii_[i];
       if (ind < 0) {
 	ind = a_.size() + ind;
       }
       return a_[ind];
     }
-    D& operator[](const size_t i)  {
+    Number& operator[](const size_t i)  {
       size_t ind = ii_[i];
       if (ind < 0) {
 	ind = a_.size() + ind;
@@ -536,11 +536,11 @@ namespace matricks {
 
 
     template <class D2, class B>
-      TERW_Subset<D>& operator=(const MArrayExpR<D2,B>& rhs) { 
+      TERW_Subset<Number>& operator=(const MArrayExpR<D2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_Subset<D>& operator=(const MyNumberType d) { 
+    TERW_Subset<Number>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -569,19 +569,19 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TERW_Submask   subset of a tensor from a mask
   //---------------------------------------------------------------------------
-  template<class D, int M>
-    class TERW_Submask :  public  MArrayExpRW<D,TERW_Submask<D,M> > {
+  template<class Number, int M>
+    class TERW_Submask :  public  MArrayExpRW<Number,TERW_Submask<Number,M> > {
   private:
     // can't be constant since we alow to be on left hand side
-    Vector<D>& a_;
+    Vector<Number>& a_;
     const Vector<size_t>* ii_;
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TERW_Submask(Vector<D>& a, const Vector<bool>& mask)
+  TERW_Submask(Vector<Number>& a, const Vector<bool>& mask)
     : a_(a), ii_(new Vector<size_t>(findtrue(mask))) { 
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
@@ -594,11 +594,11 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const size_t i) const{
+    const Number operator[](const size_t i) const{
       size_t ind = (*ii_)[i];
       return a_[ind];
     }
-     D& operator[](const size_t i) {
+     Number& operator[](const size_t i) {
       size_t ind = (*ii_)[i];
       return a_[ind];
     }
@@ -658,11 +658,11 @@ namespace matricks {
 
 
     template <class D2, class B>
-      TERW_Submask<D>& operator=(const MArrayExpR<D2,B>& rhs) { 
+      TERW_Submask<Number>& operator=(const MArrayExpR<D2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_Submask<D>& operator=(const MyNumberType d) { 
+    TERW_Submask<Number>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -689,17 +689,17 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //---------------------------------------------------------------------------
-  template <class D, class OP, int M>
-    class TERW_RealFromComplex : public  MArrayExpRW<D,TERW_RealFromComplex<D,OP,M> > {
+  template <class Number, class OP, int M>
+    class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,M> > {
   private:
-    Vector<std::complex<D> >& a_;
+    Vector<std::complex<Number> >& a_;
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TERW_RealFromComplex(Vector<std::complex<D> >& a)
+  TERW_RealFromComplex(Vector<std::complex<Number> >& a)
     :   a_(a) { 
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
@@ -709,10 +709,10 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](size_t i) const{
+    const Number operator[](size_t i) const{
       return OP::give(a_[i]);
     }
-    D& operator[](size_t i) {
+    Number& operator[](size_t i) {
       return OP::give(a_[i]);
     }
     const MyNumberType dat(const size_t i) const {
@@ -769,11 +769,11 @@ namespace matricks {
 
 
     template <class D2, class B>
-      TERW_RealFromComplex<D,OP,M>& operator=(const MArrayExpR<D2,B>& rhs) { 
+      TERW_RealFromComplex<Number,OP,M>& operator=(const MArrayExpR<D2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_RealFromComplex<D,OP,M>& operator=(const MyNumberType d) { 
+    TERW_RealFromComplex<Number,OP,M>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -794,21 +794,21 @@ namespace matricks {
   // TER_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
-  template<class D, class A, class X, int M>
-    class TER_Series : public  MArrayExpR<D,TER_Series<D,A,X,M> > {
+  template<class Number, class A, class X, int M>
+    class TER_Series : public  MArrayExpR<Number,TER_Series<Number,A,X,M> > {
 
   private:
     const A& a_;
     const X& x_;
     const int N_;
-    const D x0_;
+    const Number x0_;
     VectorofPtrs *vptrs;
     
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TER_Series(const A& a, const X& x, const int N, const D x0)
+  TER_Series(const A& a, const X& x, const int N, const Number x0)
     : a_(a), x_(x), N_(N), x0_(x0) { 
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
@@ -825,14 +825,14 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const size_t i) const {
-      const D x = x_[i] - x0_;
-      D sum = 0;
+    const Number operator[](const size_t i) const {
+      const Number x = x_[i] - x0_;
+      Number sum = 0;
       // TODO: check a_.size >= N
-      D xpow = 1;
+      Number xpow = 1;
       for (int n = 0; n <= N_ ; n++) {
-	D an = a_[n];
-	if (an!=D(0)) {
+	Number an = a_[n];
+	if (an!=Number(0)) {
 	  sum += an*xpow;
 	}
 	//	if (i==2) {
@@ -913,25 +913,25 @@ namespace matricks {
   // TER_Series2    used for fourier series
   //---------------------------------------------------------------------------
   
-  template<class D, class A, class B, class X, class OP1, class OP2, int M>
-    class TER_Series2 : public  MArrayExpR<D,TER_Series2< D, A, B, X, OP1, OP2> > {
+  template<class Number, class A, class B, class X, class OP1, class OP2, int M>
+    class TER_Series2 : public  MArrayExpR<Number,TER_Series2< Number, A, B, X, OP1, OP2> > {
 
   private:
     const A& a_;
     const B& b_;
     const X& x_;
     const int N_;
-    const D k1_;
-    Vector<D>& k_;
+    const Number k1_;
+    Vector<Number>& k_;
     bool initialized;
     VectorofPtrs *vptrs;
     
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TER_Series2(const A& a, const A& b, const X& x, const int N, const D k1)
-    : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<D>(N))) {
+  TER_Series2(const A& a, const A& b, const X& x, const int N, const Number k1)
+    : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<Number>(N))) {
       
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
@@ -948,17 +948,17 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const size_t i) const {
-      D sum = 0;
+    const Number operator[](const size_t i) const {
+      Number sum = 0;
       // TODO: check a_.size >= N
       for (int n = 0; n < N_ ; n++) {
-	D kx = k_[n]*x_[i];
-	D an = a_[n];
-	if (an != D(0)) {
+	Number kx = k_[n]*x_[i];
+	Number an = a_[n];
+	if (an != Number(0)) {
 	  sum += an*OP1::apply(kx);
 	}
-	D bn = b_[n];
-	if (bn != D(0)) {
+	Number bn = b_[n];
+	if (bn != Number(0)) {
 	  sum += bn*OP2::apply(kx);
 	}
       }
@@ -1047,15 +1047,15 @@ namespace matricks {
   // TERW_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template<class D, class A, class FUNC, int M>
-    class TERW_Transpose  : public  MArrayExpRW<D,TERW_Transpose<D,A,FUNC,M> > {
+  template<class Number, class A, class FUNC, int M>
+    class TERW_Transpose  : public  MArrayExpRW<Number,TERW_Transpose<Number,A,FUNC,M> > {
   
   private:
     A& a_;
     VectorofPtrs *vptrs;
     Dimensions *rdims;
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
 
@@ -1070,13 +1070,13 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const size_t index1) const {
+    const Number operator[](const size_t index1) const {
       const Indices inds1 = rdims->indices(index1);
       const Indices inds2 = inds1.getReverse();
       const size_t index2 = a_.dims().index(inds2);
       return FUNC::apply(a_[index2]);
     }
-    D& operator[](const size_t index1) {
+    Number& operator[](const size_t index1) {
       const Indices inds1 = rdims->indices(index1);
       const Indices inds2 = inds1.getReverse();
       const size_t index2 = a_.dims().index(inds2);
@@ -1129,11 +1129,11 @@ namespace matricks {
     }
 
     template <class D2, class B>
-      TERW_Submask<D>& operator=(const MArrayExpR<D2,B>& rhs) { 
+      TERW_Submask<Number>& operator=(const MArrayExpR<D2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_Submask<D>& operator=(const MyNumberType d) { 
+    TERW_Submask<Number>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -1157,8 +1157,8 @@ namespace matricks {
   // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template<class D, class A, class FUNC, int M>
-    class TER_Transpose  : public  MArrayExpR<D,TER_Transpose<D,A,FUNC,M> > {
+  template<class Number, class A, class FUNC, int M>
+    class TER_Transpose  : public  MArrayExpR<Number,TER_Transpose<Number,A,FUNC,M> > {
   
   private:
     const A& a_;
@@ -1166,7 +1166,7 @@ namespace matricks {
     Dimensions *rdims;
   
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
 
@@ -1181,7 +1181,7 @@ namespace matricks {
       delete vptrs;
     }
 
-    const D operator[](const size_t index1) const {
+    const Number operator[](const size_t index1) const {
       const Indices inds1 = rdims->indices(index1);
       const Indices inds2 = inds1.getReverse();
       const size_t index2 = a_.dims().index(inds2);
@@ -1248,8 +1248,8 @@ namespace matricks {
   // VER_Join   joining two MultiArrays (RHS only)
   //---------------------------------------------------------------------------
 
-  template<class D, class A, class B, int M>
-    class VER_Join : public  MArrayExpR<D,VER_Join<D,A,B,M> > {
+  template<class Number, class A, class B, int M>
+    class VER_Join : public  MArrayExpR<Number,VER_Join<Number,A,B,M> > {
 
   private:
     const A& a_;
@@ -1257,7 +1257,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
   VER_Join(const A& a, const B& b)
@@ -1273,7 +1273,7 @@ namespace matricks {
       delete vptrs;
     }
     
-    const D operator[](const size_t i) const{
+    const Number operator[](const size_t i) const{
       if ( i < a_.size() ) {
 	return a_[i];
       } else {
@@ -1340,8 +1340,8 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
 
-  template<class D, class A, class B, int M>
-    class VERW_Join : public  MArrayExpRW<D,VERW_Join<D,A,B,M> > {
+  template<class Number, class A, class B, int M>
+    class VERW_Join : public  MArrayExpRW<Number,VERW_Join<Number,A,B,M> > {
 
   private:
     A& a_;
@@ -1349,7 +1349,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
   VERW_Join(A& a, B& b)
@@ -1364,14 +1364,14 @@ namespace matricks {
     }
 
 
-    const D operator[](const size_t i) const{
+    const Number operator[](const size_t i) const{
       if ( i < a_.size() ) {
 	return a_[i];
       } else {
 	return b_[i-a_.size()];
       }
     }
-     D& operator[](const size_t i) {
+     Number& operator[](const size_t i) {
       if ( i < a_.size() ) {
 	return a_[i];
       } else {
@@ -1422,23 +1422,23 @@ namespace matricks {
       return "VERW_Join";
     }
 
-    VERW_Join<D,A,B>& operator=(TERW_Resize<D>& b) { 
+    VERW_Join<Number,A,B>& operator=(TERW_Resize<Number>& b) { 
       return this->equals(b);
     }
 
     template <class C>
-      VERW_Join<D,A,B>& operator=(const MArrayExpR<D,C>& rhs) { 
-      PRINTF2("VERW_Join<D,A,B>& operator=(const MArrayExpR<D,C>& rhs)\n");
+      VERW_Join<Number,A,B>& operator=(const MArrayExpR<Number,C>& rhs) { 
+      PRINTF2("VERW_Join<Number,A,B>& operator=(const MArrayExpR<Number,C>& rhs)\n");
       return this->equals(rhs);
     }
 
 
     template <class D2, class C>
-      VERW_Join<D,A,B>& operator=(const MArrayExpR<D2,C>& rhs) { 
+      VERW_Join<Number,A,B>& operator=(const MArrayExpR<D2,C>& rhs) { 
       return this->equals(rhs);
     }
     
-    VERW_Join<D,A,B>& operator=(const MyNumberType d) { 
+    VERW_Join<Number,A,B>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -1462,8 +1462,8 @@ namespace matricks {
   // VER_Rep  repeat a tensor
   //---------------------------------------------------------------------------
 
-  template<class D, class A, int M>
-    class VER_Rep : public  MArrayExpR<D,VER_Rep<D,A,M> > {
+  template<class Number, class A, int M>
+    class VER_Rep : public  MArrayExpR<Number,VER_Rep<Number,A,M> > {
 
   private:
     const A& a_;
@@ -1472,7 +1472,7 @@ namespace matricks {
     VectorofPtrs *vptrs;
 
   public:
-    typedef typename NumberTrait<D>::Type MyNumberType;
+    typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
   VER_Rep(const A& a, const size_t m)
@@ -1487,7 +1487,7 @@ namespace matricks {
     }
 
 
-    const D operator[](const size_t i) const{
+    const Number operator[](const size_t i) const{
       size_t index = size_t(i % N_);
       //      PRINTF3("  i=%d, m_=%lu, i%%N_=%d\n",i,m_,index);
       return a_[index];

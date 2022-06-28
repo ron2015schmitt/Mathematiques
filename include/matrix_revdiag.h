@@ -8,18 +8,18 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixRevDiag<D        -- variable size matrix (valarray)
-   *                        D  = type for elements
-   * MatrixRevDiag<D,NR>    -- fixed number of rows (valarray)
+   * MatrixRevDiag<Number        -- variable size matrix (valarray)
+   *                        Number  = type for elements
+   * MatrixRevDiag<Number,NR>    -- fixed number of rows (valarray)
    *                        NR = number of rows
-   * MatrixRevDiag<D,NR,NC> -- fixed number of rows and cols (array)
+   * MatrixRevDiag<Number,NR,NC> -- fixed number of rows and cols (array)
    *                        NC = number of cols
    ********************************************************************
    */
 
-   //, typename = EnableIf<NumberTrait<D>::value>
-  template <class D, int NR, int NC >
-  class MatrixRevDiag : public MArrayExpRW<MatrixRevDiag<D, NR, NC>, D, D, 1, 2> {
+   //, typename = EnableIf<NumberTrait<Number>::value>
+  template <class Number, int NR, int NC >
+  class MatrixRevDiag : public MArrayExpRW<MatrixRevDiag<Number, NR, NC>, Number, Number, 1, 2> {
 
   public:
     constexpr static int R = 2;
@@ -28,28 +28,28 @@ namespace mathq {
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
-    typedef MatrixRevDiag<D, NR, NC> XType;
-    typedef D EType;
-    typedef D DType;
-    typedef typename OrderedNumberTrait<D>::Type FType;
+    typedef MatrixRevDiag<Number, NR, NC> XType;
+    typedef Number EType;
+    typedef Number DType;
+    typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
     // if either NR or NC is 0, then we use valarray
-    typedef typename ArrayType<D, std::min(NR, NC)>::Type MyArrayType;
+    typedef typename ArrayType<Number, std::min(NR, NC)>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const D zero_ = 0;
-    D dummy_ = 0;
+    const Number zero_ = 0;
+    Number dummy_ = 0;
     MyArrayType data_;
 
     size_t Nrows_;
     size_t Ncols_;
 
-    static_assert(NumberTrait<D>::value,
+    static_assert(NumberTrait<Number>::value,
       "class MatrixRevDiag can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -61,14 +61,14 @@ namespace mathq {
   public:
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    explicit MatrixRevDiag<D, NR, NC>() {
+    explicit MatrixRevDiag<Number, NR, NC>() {
       size_t NN = NR*NC;
       resize(NR, NC);
       *this = 1;
     }
 
-    // -------------------  D value --------------------
-    explicit MatrixRevDiag<D, NR, NC>(const D& value) {
+    // -------------------  Number value --------------------
+    explicit MatrixRevDiag<Number, NR, NC>(const Number& value) {
       size_t NN = NR*NC;
       resize(NR, NC);
       *this = value;
@@ -77,7 +77,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixRevDiag<D, NR, NC>(const size_t Nr, const size_t Nc) {
+    explicit MatrixRevDiag<Number, NR, NC>(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
       *this = 1;
     }
@@ -85,7 +85,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixRevDiag<D, NR, NC>(const size_t Nr, const size_t Nc, const D& value) {
+    explicit MatrixRevDiag<Number, NR, NC>(const size_t Nr, const size_t Nc, const Number& value) {
       resize(Nr, Nc);
       *this = value;
     }
@@ -97,7 +97,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixRevDiag<D, NR, NC>() {
+    ~MatrixRevDiag<Number, NR, NC>() {
       //remove from directory
     }
 
@@ -183,7 +183,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixRevDiag<D, NR, NC>& resize(const int Nr, const int Nc) {
+    MatrixRevDiag<Number, NR, NC>& resize(const int Nr, const int Nc) {
       Nrows_ = NR;
       Ncols_ = NC;
       if constexpr (resizableRows) {
@@ -203,14 +203,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixRevDiag<D, NR, NC>& resize(const Dimensions dims) {
+    MatrixRevDiag<Number, NR, NC>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixRevDiag<D, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixRevDiag<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> deepdims(deepdims_new);
       Dimensions newdims = deepdims[0];
       resize(newdims);
@@ -223,7 +223,7 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    MatrixRevDiag<D, NR, NC>& reshape(const size_t nr, const size_t nc) {
+    MatrixRevDiag<Number, NR, NC>& reshape(const size_t nr, const size_t nc) {
       const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
@@ -240,14 +240,14 @@ namespace mathq {
     }
 
 
-    MatrixRevDiag<D, NR, NC>& transpose(void) {
+    MatrixRevDiag<Number, NR, NC>& transpose(void) {
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixRevDiag<D, NR, NC>& >::type adjoint() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixRevDiag<Number, NR, NC>& >::type adjoint() {
       return *this;
     }
 
@@ -259,7 +259,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // read
-    const D dat(const size_t n)  const {
+    const Number dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -268,7 +268,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const D dat(const Indices& inds)  const {
+    const Number dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -280,7 +280,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const D dat(const DeepIndices& dinds)  const {
+    const Number dat(const DeepIndices& dinds)  const {
       const size_t depth = dinds.size();
       const Indices& inds = dinds[depth-Mvalue];
       size_t r = inds[0];
@@ -294,7 +294,7 @@ namespace mathq {
     //**********************************************************************
 
     // read / write
-    D& operator[](const size_t n) {
+    Number& operator[](const size_t n) {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -302,7 +302,7 @@ namespace mathq {
     }
 
     // read
-    const D operator[](const size_t n)  const {
+    const Number operator[](const size_t n)  const {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -339,7 +339,7 @@ namespace mathq {
     //***************MultiArray-style Element Access: A(r,c) *********************
     //**********************************************************************
 
-    D& operator()(const size_t r, const size_t c) {
+    Number& operator()(const size_t r, const size_t c) {
       if (r+c+1==Ncols_) {
         return data_[r];
       }
@@ -348,7 +348,7 @@ namespace mathq {
       }
     }
 
-    const D operator()(const size_t r, const size_t c) const {
+    const Number operator()(const size_t r, const size_t c) const {
       if (r+c+1==Ncols_) {
         return data_[r];
       }
@@ -363,14 +363,14 @@ namespace mathq {
     //************************** ASSIGNMENT ********************************
     //**********************************************************************
 
-    MatrixRevDiag<D, NR, NC>& operator=(const D& value) {
+    MatrixRevDiag<Number, NR, NC>& operator=(const Number& value) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = value;
       }
       return *this;
     }
 
-    MatrixRevDiag<D, NR, NC>& operator=(const MatrixRevDiag<D, NR, NC>& b) {
+    MatrixRevDiag<Number, NR, NC>& operator=(const MatrixRevDiag<Number, NR, NC>& b) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = b[k];
       }
@@ -385,7 +385,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixRevDiag<D, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixRevDiag<Number, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       return *this;
     }
 
@@ -393,8 +393,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixRevDiag<D, NR, NC>& >::type conj() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixRevDiag<Number, NR, NC>& >::type conj() {
       return *this;
     }
 
@@ -408,7 +408,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixRevDiag";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(D());
+      s += getTypeName(Number());
       if (NR!=0) {
         s += StyledString::get(COMMA).get();
         s += "NR=";
@@ -441,7 +441,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixRevDiag<D, NR, NC>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixRevDiag<Number, NR, NC>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -476,8 +476,8 @@ namespace mathq {
     }
 
 
-    //template <class D>	
-    friend inline std::istream& operator>>(const std::string s, MatrixRevDiag<D, NR, NC>& m2) {
+    //template <class Number>	
+    friend inline std::istream& operator>>(const std::string s, MatrixRevDiag<Number, NR, NC>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -485,7 +485,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixRevDiag<D, NR, NC>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixRevDiag<Number, NR, NC>& m2) {
       return stream;
     }
 

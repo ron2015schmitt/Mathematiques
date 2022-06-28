@@ -9,15 +9,15 @@ namespace mathq {
   // TER_Unary    unary expressions
   //---------------------------------------------------------------------------
 
-  // NOTE: D and Element are the output types!
+  // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class Element, class D, int M, int R, class FUNC>
-  class TER_Unary : public MArrayExpR<TER_Unary<X, Element, D, M, R, FUNC>, Element, D, M, R> {
+  template <class X, class Element, class Number, int M, int R, class FUNC>
+  class TER_Unary : public MArrayExpR<TER_Unary<X, Element, Number, M, R, FUNC>, Element, Number, M, R> {
   public:
-    typedef Materialize<Element, D, M, R> XType;
+    typedef Materialize<Element, Number, M, R> XType;
     typedef Element EType;
-    typedef D DType;
+    typedef Number DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
 
@@ -36,7 +36,7 @@ namespace mathq {
       delete vptrs;
     }
 
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       return FUNC::apply(x_.dat(i));
     }
 
@@ -115,16 +115,16 @@ namespace mathq {
   // TER_Unary_User    unary expressions
   //---------------------------------------------------------------------------
 
-  // NOTE: D and Element are the output types!
+  // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class X, class Element, class D, int M, int R>
-  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, D, M, R>, Element, D, M, R> {
+  template <class X, class Element, class Number, int M, int R>
+  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, Number, M, R>, Element, Number, M, R> {
   public:
-    typedef Materialize<Element, D, M, R> XType;
+    typedef Materialize<Element, Number, M, R> XType;
     typedef Element EType;
-    typedef D DType;
-    typedef typename FunctionType1<D, D>::type FUNC;
+    typedef Number DType;
+    typedef typename FunctionType1<Number, Number>::type FUNC;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
 
@@ -144,7 +144,7 @@ namespace mathq {
       delete vptrs;
     }
 
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       return f_(x_.dat(i));
     }
 
@@ -1106,12 +1106,12 @@ namespace mathq {
   // TER_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
-  template <class A, class X, class Element, class D, int M, int R>
-  class TER_Series : public MArrayExpR<TER_Series<A, X, Element, D, M, R>, Element, D, M, R> {
+  template <class A, class X, class Element, class Number, int M, int R>
+  class TER_Series : public MArrayExpR<TER_Series<A, X, Element, Number, M, R>, Element, Number, M, R> {
   public:
-    typedef Materialize<Element, D, M, R> XType;
+    typedef Materialize<Element, Number, M, R> XType;
     typedef Element EType;
-    typedef D DType;
+    typedef Number DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
 
@@ -1119,11 +1119,11 @@ namespace mathq {
     const A& a_;
     const X& x_;
     const int N_;
-    const D x0_;
+    const Number x0_;
     VectorofPtrs* vptrs;
 
   public:
-    TER_Series(const A& a, const X& x, const int N, const D x0)
+    TER_Series(const A& a, const X& x, const int N, const Number x0)
       : a_(a), x_(x), N_(N), x0_(x0) {
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
@@ -1140,15 +1140,15 @@ namespace mathq {
       delete vptrs;
     }
 
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
 
-      const D x = x_.dat(i) - x0_;
-      D sum = 0;
+      const Number x = x_.dat(i) - x0_;
+      Number sum = 0;
       // TODO: check a_.size >= N
-      D xpow = 1;
+      Number xpow = 1;
       for (size_t n = 0; n <= N_; n++) {
-        D an = a_[n];
-        if (an != D(0)) {
+        Number an = a_[n];
+        if (an != Number(0)) {
           sum += an * xpow;
         }
         //	if (i==2) {
@@ -1165,8 +1165,8 @@ namespace mathq {
       // TODO: check a_.size >= N
       Element xpow = 1;
       for (size_t n = 0; n <= N_; n++) {
-        D an = a_[n];
-        if (an != D(0)) {
+        Number an = a_[n];
+        if (an != Number(0)) {
           sum += an * xpow;
         }
         //	if (i==2) {
@@ -1248,12 +1248,12 @@ namespace mathq {
   // TER_Series2    used for fourier series
   //---------------------------------------------------------------------------
 
-  template <class A, class B, class X, class D, class OP1, class OP2>
-  class TER_Series2 : public MArrayExpR<TER_Series2<A, B, X, D, OP1, OP2>, D, D, 1, 1> {
+  template <class A, class B, class X, class Number, class OP1, class OP2>
+  class TER_Series2 : public MArrayExpR<TER_Series2<A, B, X, Number, OP1, OP2>, Number, Number, 1, 1> {
   public:
-    typedef Materialize<D, D, 1, 1> XType;
-    typedef D EType;
-    typedef D DType;
+    typedef Materialize<Number, Number, 1, 1> XType;
+    typedef Number EType;
+    typedef Number DType;
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = 1;
 
@@ -1262,14 +1262,14 @@ namespace mathq {
     const B& b_;
     const X& x_;
     const int N_;
-    const D k1_;
-    Vector<D>& k_;
+    const Number k1_;
+    Vector<Number>& k_;
     bool initialized;
     VectorofPtrs* vptrs;
 
   public:
-    TER_Series2(const A& a, const A& b, const X& x, const int N, const D k1)
-      : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<D>(N))) {
+    TER_Series2(const A& a, const A& b, const X& x, const int N, const Number k1)
+      : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<Number>(N))) {
 
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
@@ -1286,21 +1286,21 @@ namespace mathq {
       delete vptrs;
     }
 
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       return (*this)[i];
     }
 
-    const D operator[](const size_t i) const {
-      D sum = 0;
+    const Number operator[](const size_t i) const {
+      Number sum = 0;
       // TODO: check a_.size >= N
       for (int n = 0; n < N_; n++) {
-        D kx = k_[n] * x_[i];
-        D an = a_[n];
-        if (an != D(0)) {
+        Number kx = k_[n] * x_[i];
+        Number an = a_[n];
+        if (an != Number(0)) {
           sum += an * OP1::apply(kx);
         }
-        D bn = b_[n];
-        if (bn != D(0)) {
+        Number bn = b_[n];
+        if (bn != Number(0)) {
           sum += bn * OP2::apply(kx);
         }
       }
@@ -1378,12 +1378,12 @@ namespace mathq {
   // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template <class X, class Element, class D, int M, int R, class FUNC>
-  class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, D, M, R, FUNC>, Element, D, M, R> {
+  template <class X, class Element, class Number, int M, int R, class FUNC>
+  class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, Number, M, R, FUNC>, Element, Number, M, R> {
   public:
-    typedef Materialize<Element, D, M, R> XType;
+    typedef Materialize<Element, Number, M, R> XType;
     typedef Element EType;
-    typedef D DType;
+    typedef Number DType;
     constexpr static int Rvalue = R;
     constexpr static int Mvalue = M;
 
@@ -1404,7 +1404,7 @@ namespace mathq {
       delete vptrs;
     }
 
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       if constexpr (M <= 1) {
         return (*this[i]);
       }
@@ -1480,14 +1480,14 @@ namespace mathq {
   // VER_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class Element, class D, int M>
-  class TER_Join : public MArrayExpR<TER_Join<X, Y, Element, D, M>, Element, D, M, 1> {
+  template <class X, class Y, class Element, class Number, int M>
+  class TER_Join : public MArrayExpR<TER_Join<X, Y, Element, Number, M>, Element, Number, M, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = M;
-    typedef Materialize<Element, D, M, Rvalue> XType;
+    typedef Materialize<Element, Number, M, Rvalue> XType;
     typedef Element EType;
-    typedef D DType;
+    typedef Number DType;
 
   private:
     const X& x_;
@@ -1506,7 +1506,7 @@ namespace mathq {
       delete vptrs;
     }
 
-    const D dat(const size_t i) const {
+    const Number dat(const size_t i) const {
       if (i < x_.deepsize()) {
         return x_.dat(i);
       }
@@ -1599,14 +1599,14 @@ namespace mathq {
   // TER_Rep  repeat a tensor
   //---------------------------------------------------------------------------
 
-  template <class A, class D>
-  class TER_Rep : public MArrayExpR<TER_Rep<A, D>, D, D, 1, 1> {
+  template <class A, class Number>
+  class TER_Rep : public MArrayExpR<TER_Rep<A, Number>, Number, Number, 1, 1> {
   public:
     constexpr static int Rvalue = 1;
     constexpr static int Mvalue = 1;
-    typedef Materialize<D, D, 1, 1> XType;
-    typedef D EType;
-    typedef D DType;
+    typedef Materialize<Number, Number, 1, 1> XType;
+    typedef Number EType;
+    typedef Number DType;
 
   private:
     const A& a_;
@@ -1625,7 +1625,7 @@ namespace mathq {
       delete vptrs;
     }
 
-    const D operator[](const size_t i) const {
+    const Number operator[](const size_t i) const {
       size_t index = size_t(i % N_);
       //      PRINTF3("  i=%d, m_=%lu, i%%N_=%d\n",i,m_,index);
       return a_[index];

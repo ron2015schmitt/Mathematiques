@@ -15,17 +15,17 @@ namespace mathq {
 
   
 #define FUNCTOR_UNARY(Function,ClassName)			\
-  template <class Element, class D> class FUNCTOR_##ClassName {		\
+  template <class Element, class Number> class FUNCTOR_##ClassName {		\
   public:								\
-    typedef D DType;							\
-    typedef D DoutType;						\
+    typedef Number DType;							\
+    typedef Number DoutType;						\
     typedef Element EType;							\
     typedef Element EoutType;						\
-    static D apply(const D d) {					\
+    static Number apply(const Number d) {					\
       return Function(d);						\
     }									\
     template <class T=Element>						\
-      static  typename std::enable_if<!std::is_same<T,D>::value, Element& >::type \
+      static  typename std::enable_if<!std::is_same<T,Number>::value, Element& >::type \
       apply(const Element& e) {						\
       Element *e2 = new Element();						\
       *e2 = Function(e);						\
@@ -49,9 +49,9 @@ namespace mathq {
   // ************************************************************************
 
 #define FUNCTION_UNARY(Function,Functor)		\
-  template <class X, class Element, class D, int M, int R>			\
-  inline auto Function(const MArrayExpR<X,Element,D,M,R>& x) {		\
-    return  TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R, Functor<Element,D> >(x); \
+  template <class X, class Element, class Number, int M, int R>			\
+  inline auto Function(const MArrayExpR<X,Element,Number,M,R>& x) {		\
+    return  TER_Unary<MArrayExpR<X,Element,Number,M,R>,Element,Number,M,R, Functor<Element,Number> >(x); \
     }
 
 
@@ -251,7 +251,7 @@ namespace mathq {
   // ************************************************************************
 
 #define FUNCTION_UNARY_TYPE2(Function,Functor,DIN,DOUT)			\
-  template <class X, class Element, class D, int M, int R>			\
+  template <class X, class Element, class Number, int M, int R>			\
   inline auto Function(const MArrayExpR<X,Element,DIN,M,R>& x) {		\
     typedef typename NumberTrait<Element,DOUT>::ReplaceTypeE EOUT;		\
     return  TER_Unary<MArrayExpR<X,Element,DIN,M,R>,EOUT,DOUT,M,R, Functor<Element,DIN,DOUT>>(x); \
@@ -262,7 +262,7 @@ namespace mathq {
   // ************************************************************************
   
   FUNCTOR_UNARY_TYPE2(std::ilogb,ilogb);
-  FUNCTION_UNARY_TYPE2(ilogb,FUNCTOR_ilogb,D,int);
+  FUNCTION_UNARY_TYPE2(ilogb,FUNCTOR_ilogb,Number,int);
 
   
 
@@ -279,17 +279,17 @@ namespace mathq {
 
   // function: conj(x) x=real
 
-  template <class X, class Element, class D, int M, int R> 
-    EnableMethodIf<std::is_arithmetic<D>::value,const MArrayExpR<X,Element,D,M,R>&>  
-    conj(const MArrayExpR<X,Element,D,M,R>& x) {
+  template <class X, class Element, class Number, int M, int R> 
+    EnableMethodIf<std::is_arithmetic<Number>::value,const MArrayExpR<X,Element,Number,M,R>&>  
+    conj(const MArrayExpR<X,Element,Number,M,R>& x) {
     return x;
   }
 
 
   // function: conj(y) y=imag
   
-  template <class X, class Element, class D, int M, int R> 
-  inline const auto conj(const MArrayExpR<X,Element,Imaginary<D>,M,R>& x) {
+  template <class X, class Element, class Number, int M, int R> 
+  inline const auto conj(const MArrayExpR<X,Element,Imaginary<Number>,M,R>& x) {
     return  -x; 
   }
   
@@ -298,9 +298,9 @@ namespace mathq {
 
   FUNCTOR_UNARY(std::conj,conj_complex);
 
-  template <class X, class Element, class D, int M, int R> 
-    inline auto conj(const MArrayExpR<X,Element,std::complex<D>,M,R>& x) {
-    typedef std::complex<D> DIN;
+  template <class X, class Element, class Number, int M, int R> 
+    inline auto conj(const MArrayExpR<X,Element,std::complex<Number>,M,R>& x) {
+    typedef std::complex<Number> DIN;
     return  TER_Unary<MArrayExpR<X,Element,DIN,M,R>,Element,DIN,M,R,FUNCTOR_conj_complex<Element,DIN>>(x); 
   }
 
@@ -311,8 +311,8 @@ namespace mathq {
 
   // function: real(x) x=real
   
-  template <class X, class Element, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,const MArrayExpR<X,Element,D,M,R>&>  
-    real(const MArrayExpR<X,Element,D,M,R>& x) {
+  template <class X, class Element, class Number, int M, int R> EnableMethodIf<std::is_arithmetic<Number>::value,const MArrayExpR<X,Element,Number,M,R>&>  
+    real(const MArrayExpR<X,Element,Number,M,R>& x) {
     return x;
   }
 
@@ -320,13 +320,13 @@ namespace mathq {
   // function: real(y) y=Imaginary
 
   FUNCTOR_UNARY_TYPE2(mathq::real,real_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(real,FUNCTOR_real_of_Imaginary, Imaginary<D>, D);
+  FUNCTION_UNARY_TYPE2(real,FUNCTOR_real_of_Imaginary, Imaginary<Number>, Number);
 
   
   // function: real(z) z=complex
 
   FUNCTOR_UNARY_TYPE2(std::real,real_of_complex);
-  FUNCTION_UNARY_TYPE2(real,FUNCTOR_real_of_complex, std::complex<D>, D);
+  FUNCTION_UNARY_TYPE2(real,FUNCTOR_real_of_complex, std::complex<Number>, Number);
 
 
 
@@ -337,9 +337,9 @@ namespace mathq {
 
   // function: imag(x) x=real
 
-  template <class X, class Element, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value,TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_zero<Element,D>>>  
-    imag(const MArrayExpR<X,Element,D,M,R>& x) {
-    return  TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_zero<Element,D>>(x); 
+  template <class X, class Element, class Number, int M, int R> EnableMethodIf<std::is_arithmetic<Number>::value,TER_Unary<MArrayExpR<X,Element,Number,M,R>,Element,Number,M,R,FUNCTOR_zero<Element,Number>>>  
+    imag(const MArrayExpR<X,Element,Number,M,R>& x) {
+    return  TER_Unary<MArrayExpR<X,Element,Number,M,R>,Element,Number,M,R,FUNCTOR_zero<Element,Number>>(x); 
   }
 
 
@@ -347,14 +347,14 @@ namespace mathq {
   // imag(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::imag,imag_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(imag,FUNCTOR_imag_of_Imaginary, Imaginary<D>, D);
+  FUNCTION_UNARY_TYPE2(imag,FUNCTOR_imag_of_Imaginary, Imaginary<Number>, Number);
 
 
 
   // // imag(z) z=complex function
 
   FUNCTOR_UNARY_TYPE2(std::imag,imag_of_complex);
-  FUNCTION_UNARY_TYPE2(imag,FUNCTOR_imag_of_complex, std::complex<D>, D);
+  FUNCTION_UNARY_TYPE2(imag,FUNCTOR_imag_of_complex, std::complex<Number>, Number);
 
 
   //***************************************************************
@@ -365,22 +365,22 @@ namespace mathq {
   
   FUNCTOR_UNARY(std::abs,abs_of_real);
 
-  template <class X, class Element, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_abs_of_real<Element,D>>>  
-    abs(const MArrayExpR<X,Element,D,M,R>& x) {
-    return  TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_abs_of_real<Element,D>>(x); 
+  template <class X, class Element, class Number, int M, int R> EnableMethodIf<std::is_arithmetic<Number>::value, TER_Unary<MArrayExpR<X,Element,Number,M,R>,Element,Number,M,R,FUNCTOR_abs_of_real<Element,Number>>>  
+    abs(const MArrayExpR<X,Element,Number,M,R>& x) {
+    return  TER_Unary<MArrayExpR<X,Element,Number,M,R>,Element,Number,M,R,FUNCTOR_abs_of_real<Element,Number>>(x); 
   }
 
 
   // function: abs(y) y=imaginary
 
   FUNCTOR_UNARY_TYPE2(mathq::abs,abs_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(abs,FUNCTOR_abs_of_Imaginary, Imaginary<D>, D);
+  FUNCTION_UNARY_TYPE2(abs,FUNCTOR_abs_of_Imaginary, Imaginary<Number>, Number);
 
     
   // function: abs(z) z=complex
 
   FUNCTOR_UNARY_TYPE2(std::abs,abs_of_complex);
-  FUNCTION_UNARY_TYPE2(abs,FUNCTOR_abs_of_complex, std::complex<D>, D);
+  FUNCTION_UNARY_TYPE2(abs,FUNCTOR_abs_of_complex, std::complex<Number>, Number);
 
 
 
@@ -392,22 +392,22 @@ namespace mathq {
   
   FUNCTOR_UNARY(std::arg,arg_of_real);
 
-  template <class X, class Element, class D, int M, int R> EnableMethodIf<std::is_arithmetic<D>::value, TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_arg_of_real<Element,D>>>  
-    arg(const MArrayExpR<X,Element,D,M,R>& x) {
-    return  TER_Unary<MArrayExpR<X,Element,D,M,R>,Element,D,M,R,FUNCTOR_arg_of_real<Element,D>>(x); 
+  template <class X, class Element, class Number, int M, int R> EnableMethodIf<std::is_arithmetic<Number>::value, TER_Unary<MArrayExpR<X,Element,Number,M,R>,Element,Number,M,R,FUNCTOR_arg_of_real<Element,Number>>>  
+    arg(const MArrayExpR<X,Element,Number,M,R>& x) {
+    return  TER_Unary<MArrayExpR<X,Element,Number,M,R>,Element,Number,M,R,FUNCTOR_arg_of_real<Element,Number>>(x); 
   }
 
 
   // function: arg(y) y=imaginary
 
   FUNCTOR_UNARY_TYPE2(mathq::arg,arg_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(arg,FUNCTOR_arg_of_Imaginary, Imaginary<D>, D);
+  FUNCTION_UNARY_TYPE2(arg,FUNCTOR_arg_of_Imaginary, Imaginary<Number>, Number);
 
     
   // function: arg(z) z=complex
 
   FUNCTOR_UNARY_TYPE2(std::arg,arg_of_complex);
-  FUNCTION_UNARY_TYPE2(arg,FUNCTOR_arg_of_complex, std::complex<D>, D);
+  FUNCTION_UNARY_TYPE2(arg,FUNCTOR_arg_of_complex, std::complex<Number>, Number);
 
 
   //***************************************************************
@@ -419,115 +419,115 @@ namespace mathq {
  
   FUNCTOR_UNARY_TYPE2(std::proj,rproj_of_real);
 
-  template <class X, class Element, class D, int M, int R,EnableIf<std::is_arithmetic<D>::value> = 0 > auto 
-    rproj(const MArrayExpR<X,Element,D,M,R>& x) {
-     typedef std::complex<D> DOUT;
+  template <class X, class Element, class Number, int M, int R,EnableIf<std::is_arithmetic<Number>::value> = 0 > auto 
+    rproj(const MArrayExpR<X,Element,Number,M,R>& x) {
+     typedef std::complex<Number> DOUT;
      typedef typename NumberTrait<Element,DOUT>::ReplaceTypeE EOUT;
-     return  TER_Unary<MArrayExpR<X,Element,D,M,R>,EOUT,DOUT,M,R, FUNCTOR_rproj_of_real<Element,D,DOUT> >(x); 
+     return  TER_Unary<MArrayExpR<X,Element,Number,M,R>,EOUT,DOUT,M,R, FUNCTOR_rproj_of_real<Element,Number,DOUT> >(x); 
   }
 
 
   // function: rproj(y) y=imaginary
 
   FUNCTOR_UNARY_TYPE2(mathq::proj,rproj_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(rproj,FUNCTOR_rproj_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(rproj,FUNCTOR_rproj_of_Imaginary, Imaginary<Number>, std::complex<Number>);
 
     
   // function: rproj(z) z=complex
 
   FUNCTOR_UNARY(std::proj,rproj_of_complex);
 
-  template <class X, class Element, class D, int M, int R> 
-    inline auto rproj(const MArrayExpR<X,Element,std::complex<D>,M,R>& x) {
-    typedef std::complex<D> DIN;
+  template <class X, class Element, class Number, int M, int R> 
+    inline auto rproj(const MArrayExpR<X,Element,std::complex<Number>,M,R>& x) {
+    typedef std::complex<Number> DIN;
     return  TER_Unary<MArrayExpR<X,Element,DIN,M,R>,Element,DIN,M,R,FUNCTOR_rproj_of_complex<Element,DIN>>(x); 
   }
 
 
   
   //***************************************************************
-  // Imaginary<D> functions
+  // Imaginary<Number> functions
   //***************************************************************
 
   // exp(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::exp,exp_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(exp,FUNCTOR_exp_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(exp,FUNCTOR_exp_of_Imaginary, Imaginary<Number>, std::complex<Number>);
   
   // log(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::log,log_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(log,FUNCTOR_log_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(log,FUNCTOR_log_of_Imaginary, Imaginary<Number>, std::complex<Number>);
 
   // log10(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::log10,log10_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(log10,FUNCTOR_log10_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(log10,FUNCTOR_log10_of_Imaginary, Imaginary<Number>, std::complex<Number>);
 
   // sqrt(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::sqrt,sqrt_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(sqrt,FUNCTOR_sqrt_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(sqrt,FUNCTOR_sqrt_of_Imaginary, Imaginary<Number>, std::complex<Number>);
 
   // sin(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::sin,sin_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(sin,FUNCTOR_sin_of_Imaginary, Imaginary<D>, Imaginary<D>);
+  FUNCTION_UNARY_TYPE2(sin,FUNCTOR_sin_of_Imaginary, Imaginary<Number>, Imaginary<Number>);
 
   // cos(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::cos,cos_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(cos,FUNCTOR_cos_of_Imaginary, Imaginary<D>, D);
+  FUNCTION_UNARY_TYPE2(cos,FUNCTOR_cos_of_Imaginary, Imaginary<Number>, Number);
 
   // tan(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::tan,tan_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(tan,FUNCTOR_tan_of_Imaginary, Imaginary<D>, Imaginary<D>);
+  FUNCTION_UNARY_TYPE2(tan,FUNCTOR_tan_of_Imaginary, Imaginary<Number>, Imaginary<Number>);
 
   // asin(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::asin,asin_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(asin,FUNCTOR_asin_of_Imaginary, Imaginary<D>, Imaginary<D>);
+  FUNCTION_UNARY_TYPE2(asin,FUNCTOR_asin_of_Imaginary, Imaginary<Number>, Imaginary<Number>);
 
   // acos(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::acos,acos_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(acos,FUNCTOR_acos_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(acos,FUNCTOR_acos_of_Imaginary, Imaginary<Number>, std::complex<Number>);
 
   // atan(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::atan,atan_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(atan,FUNCTOR_atan_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(atan,FUNCTOR_atan_of_Imaginary, Imaginary<Number>, std::complex<Number>);
 
   // sinh(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::sinh,sinh_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(sinh,FUNCTOR_sinh_of_Imaginary, Imaginary<D>, Imaginary<D>);
+  FUNCTION_UNARY_TYPE2(sinh,FUNCTOR_sinh_of_Imaginary, Imaginary<Number>, Imaginary<Number>);
 
   // cosh(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::cosh,cosh_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(cosh,FUNCTOR_cosh_of_Imaginary, Imaginary<D>, D);
+  FUNCTION_UNARY_TYPE2(cosh,FUNCTOR_cosh_of_Imaginary, Imaginary<Number>, Number);
 
   // tanh(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::tanh,tanh_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(tanh,FUNCTOR_tanh_of_Imaginary, Imaginary<D>, Imaginary<D>);
+  FUNCTION_UNARY_TYPE2(tanh,FUNCTOR_tanh_of_Imaginary, Imaginary<Number>, Imaginary<Number>);
 
   // asinh(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::asinh,asinh_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(asinh,FUNCTOR_asinh_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(asinh,FUNCTOR_asinh_of_Imaginary, Imaginary<Number>, std::complex<Number>);
 
   // acosh(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::acosh,acosh_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(acosh,FUNCTOR_acosh_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(acosh,FUNCTOR_acosh_of_Imaginary, Imaginary<Number>, std::complex<Number>);
 
   // atanh(y) y=Imaginary function
 
   FUNCTOR_UNARY_TYPE2(mathq::atanh,atanh_of_Imaginary);
-  FUNCTION_UNARY_TYPE2(atanh,FUNCTOR_atanh_of_Imaginary, Imaginary<D>, std::complex<D>);
+  FUNCTION_UNARY_TYPE2(atanh,FUNCTOR_atanh_of_Imaginary, Imaginary<Number>, std::complex<Number>);
 
 
 

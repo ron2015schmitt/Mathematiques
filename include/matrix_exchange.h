@@ -8,18 +8,18 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixExchange<D        -- variable size matrix (valarray)
-   *                        D  = type for elements
-   * MatrixExchange<D,NR>    -- fixed number of rows (valarray)
+   * MatrixExchange<Number        -- variable size matrix (valarray)
+   *                        Number  = type for elements
+   * MatrixExchange<Number,NR>    -- fixed number of rows (valarray)
    *                        NR = number of rows
-   * MatrixExchange<D,NR,NC> -- fixed number of rows and cols (array)
+   * MatrixExchange<Number,NR,NC> -- fixed number of rows and cols (array)
    *                        NC = number of cols
    ********************************************************************
    */
 
-   //, typename = EnableIf<NumberTrait<D>::value>
-  template <class D, int NR, int NC >
-  class MatrixExchange : public MArrayExpRW<MatrixExchange<D, NR, NC>, D, D, 1, 2> {
+   //, typename = EnableIf<NumberTrait<Number>::value>
+  template <class Number, int NR, int NC >
+  class MatrixExchange : public MArrayExpRW<MatrixExchange<Number, NR, NC>, Number, Number, 1, 2> {
 
   public:
     constexpr static int R = 2;
@@ -28,10 +28,10 @@ namespace mathq {
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
-    typedef MatrixExchange<D, NR, NC> XType;
-    typedef D EType;
-    typedef D DType;
-    typedef typename OrderedNumberTrait<D>::Type FType;
+    typedef MatrixExchange<Number, NR, NC> XType;
+    typedef Number EType;
+    typedef Number DType;
+    typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
 
@@ -40,13 +40,13 @@ namespace mathq {
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const D zero_ = 0;
-    const D one_ = 1;
+    const Number zero_ = 0;
+    const Number one_ = 1;
 
     size_t Nrows_;
     size_t Ncols_;
 
-    static_assert(NumberTrait<D>::value,
+    static_assert(NumberTrait<Number>::value,
       "class MatrixExchange can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -58,7 +58,7 @@ namespace mathq {
   public:
 
     // -------------------  DEFAULT  CONSTRUCTOR: empty --------------------
-    explicit MatrixExchange<D, NR, NC>() {
+    explicit MatrixExchange<Number, NR, NC>() {
       size_t NN = NR*NC;
       resize(NR, NC);
     }
@@ -66,7 +66,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixExchange<D, NR, NC>(const size_t Nr, const size_t Nc) {
+    explicit MatrixExchange<Number, NR, NC>(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
     }
 
@@ -77,7 +77,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixExchange<D, NR, NC>() {
+    ~MatrixExchange<Number, NR, NC>() {
       //remove from directory
     }
 
@@ -163,7 +163,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixExchange<D, NR, NC>& resize(const int Nr, const int Nc) {
+    MatrixExchange<Number, NR, NC>& resize(const int Nr, const int Nc) {
       Nrows_ = NR;
       Ncols_ = NC;
       if constexpr (resizableRows) {
@@ -179,14 +179,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixExchange<D, NR, NC>& resize(const Dimensions dims) {
+    MatrixExchange<Number, NR, NC>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixExchange<D, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixExchange<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> deepdims(deepdims_new);
       Dimensions newdims = deepdims[0];
       resize(newdims);
@@ -199,7 +199,7 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    MatrixExchange<D, NR, NC>& reshape(const size_t nr, const size_t nc) {
+    MatrixExchange<Number, NR, NC>& reshape(const size_t nr, const size_t nc) {
       const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
@@ -215,14 +215,14 @@ namespace mathq {
     }
 
 
-    MatrixExchange<D, NR, NC>& transpose(void) {
+    MatrixExchange<Number, NR, NC>& transpose(void) {
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixExchange<D, NR, NC>& >::type adjoint() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixExchange<Number, NR, NC>& >::type adjoint() {
       return *this;
     }
 
@@ -232,7 +232,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // read
-    const D dat(const size_t n)  const {
+    const Number dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -241,7 +241,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const D dat(const Indices& inds)  const {
+    const Number dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -253,7 +253,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const D dat(const DeepIndices& dinds)  const {
+    const Number dat(const DeepIndices& dinds)  const {
       const size_t depth = dinds.size();
       const Indices& inds = dinds[depth-Mvalue];
       size_t r = inds[0];
@@ -267,7 +267,7 @@ namespace mathq {
     //**********************************************************************
 
     // read
-    const D operator[](const size_t n)  const {
+    const Number operator[](const size_t n)  const {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -305,7 +305,7 @@ namespace mathq {
     //**********************************************************************
 
 
-    const D operator()(const size_t r, const size_t c) const {
+    const Number operator()(const size_t r, const size_t c) const {
       if (r+c+1==Ncols_) {
         return one_;
       }
@@ -325,7 +325,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixExchange<D, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixExchange<Number, NR, NC>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       return *this;
     }
 
@@ -333,8 +333,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixExchange<D, NR, NC>& >::type conj() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixExchange<Number, NR, NC>& >::type conj() {
       return *this;
     }
 
@@ -348,7 +348,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixExchange";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(D());
+      s += getTypeName(Number());
       if (NR!=0) {
         s += StyledString::get(COMMA).get();
         s += "NR=";
@@ -381,7 +381,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixExchange<D, NR, NC>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixExchange<Number, NR, NC>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -416,8 +416,8 @@ namespace mathq {
     }
 
 
-    //template <class D>	
-    friend inline std::istream& operator>>(const std::string s, MatrixExchange<D, NR, NC>& m2) {
+    //template <class Number>	
+    friend inline std::istream& operator>>(const std::string s, MatrixExchange<Number, NR, NC>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -425,7 +425,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixExchange<D, NR, NC>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixExchange<Number, NR, NC>& m2) {
       return stream;
     }
 

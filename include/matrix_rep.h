@@ -10,41 +10,41 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixRep<D>        -- variable size matrix (valarray)
-   *                        D  = type for elements
+   * MatrixRep<Number>        -- variable size matrix (valarray)
+   *                        Number  = type for elements
   * Matrix defined by a single vector that can have repeated rows or repeated cols
    ********************************************************************
    */
 
-  template <class D>
-  class MatrixRep : public MArrayExpRW<MatrixRep<D>, D, D, 1, 2> {
+  template <class Number>
+  class MatrixRep : public MArrayExpRW<MatrixRep<Number>, Number, Number, 1, 2> {
 
   public:
     constexpr static int R = 2;
     constexpr static int Rvalue = 2;
     constexpr static int Mvalue = 1;
-    typedef MatrixRep<D> XType;
-    typedef D EType;
-    typedef D DType;
-    typedef typename OrderedNumberTrait<D>::Type FType;
+    typedef MatrixRep<Number> XType;
+    typedef Number EType;
+    typedef Number DType;
+    typedef typename OrderedNumberTrait<Number>::Type FType;
 
 
-    typedef typename std::valarray<D> MyArrayType;
+    typedef typename std::valarray<Number> MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const D zero_ = 0;
-    D dummy_ = 0;
+    const Number zero_ = 0;
+    Number dummy_ = 0;
     MyArrayType data_;
 
     size_t Nrows_;
     size_t Ncols_;
     MatrixRepEnum repeatType;
 
-    static_assert(NumberTrait<D>::value,
+    static_assert(NumberTrait<Number>::value,
       "class MatrixRep can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -58,7 +58,7 @@ namespace mathq {
 
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    explicit MatrixRep<D>() {
+    explicit MatrixRep<Number>() {
       resize(0, 0);
       repeatType = REPEAT_ROW;
       *this = 0;
@@ -67,7 +67,7 @@ namespace mathq {
 
     // -------------------  Full constructor  --------------------
 
-    explicit MatrixRep<D>(const size_t Nrows, const size_t Ncols, const MatrixRepEnum& type, const Vector<D>& v) {
+    explicit MatrixRep<Number>(const size_t Nrows, const size_t Ncols, const MatrixRepEnum& type, const Vector<Number>& v) {
       // debug: verify that v is correct size per repeatType
       resize(Nrows, Ncols);
       repeatType = type;
@@ -80,7 +80,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixRep<D>() {
+    ~MatrixRep<Number>() {
       //remove from directory
     }
 
@@ -165,7 +165,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixRep<D>& resize(const int Nr, const int Nc) {
+    MatrixRep<Number>& resize(const int Nr, const int Nc) {
       Nrows_ = Nr;
       Ncols_ = Nc;
       const size_t sz;
@@ -183,14 +183,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixRep<D>& resize(const Dimensions dims) {
+    MatrixRep<Number>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixRep<D>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixRep<Number>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> deepdims(deepdims_new);
       Dimensions newdims = deepdims[0];
       resize(newdims);
@@ -205,7 +205,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // read
-    const D dat(const size_t n)  const {
+    const Number dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -214,7 +214,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const D dat(const Indices& inds)  const {
+    const Number dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -226,7 +226,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const D dat(const DeepIndices& dinds)  const {
+    const Number dat(const DeepIndices& dinds)  const {
       const size_t depth = dinds.size();
       const Indices& inds = dinds[depth-Mvalue];
       size_t r = inds[0];
@@ -240,7 +240,7 @@ namespace mathq {
     //**********************************************************************
 
     // read / write
-    D& operator[](const size_t n) {
+    Number& operator[](const size_t n) {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -248,7 +248,7 @@ namespace mathq {
     }
 
     // read
-    const D operator[](const size_t n)  const {
+    const Number operator[](const size_t n)  const {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -285,7 +285,7 @@ namespace mathq {
     //***************MultiArray-style Element Access: A(r,c) *********************
     //**********************************************************************
 
-    D& operator()(const size_t r, const size_t c) {
+    Number& operator()(const size_t r, const size_t c) {
       if (repeatType == REPEAT_ROW) {
         return data_[c];
       }
@@ -294,7 +294,7 @@ namespace mathq {
       }
     }
 
-    const D operator()(const size_t r, const size_t c) const {
+    const Number operator()(const size_t r, const size_t c) const {
       if (repeatType == REPEAT_ROW) {
         return data_[c];
       }
@@ -310,13 +310,13 @@ namespace mathq {
     //**********************************************************************
 
 
-    MatrixRep<D>& set(const Vector<D>& v) {
+    MatrixRep<Number>& set(const Vector<Number>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return *this;
     }
-    MatrixRep<D>& operator=(const Vector<D>& v) {
+    MatrixRep<Number>& operator=(const Vector<Number>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -324,7 +324,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixRep<D>& operator=(const MArrayExpR<X, D, D, 1, 1>& v) {
+    MatrixRep<Number>& operator=(const MArrayExpR<X, Number, Number, 1, 1>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -332,22 +332,22 @@ namespace mathq {
     }
 
 
-    Vector<D>& get() const {
-      Vector<D>& v = *(new Vector<D>(data_.size()));
+    Vector<Number>& get() const {
+      Vector<Number>& v = *(new Vector<Number>(data_.size()));
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return v;
     }
 
-    MatrixRep<D>& operator=(const D& value) {
+    MatrixRep<Number>& operator=(const Number& value) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = value;
       }
       return *this;
     }
 
-    MatrixRep<D>& operator=(const MatrixRep<D>& b) {
+    MatrixRep<Number>& operator=(const MatrixRep<Number>& b) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = b[k];
       }
@@ -362,7 +362,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixRep<D>& roundzero(FType tolerance = Functions<FType>::tolerance) {
+    MatrixRep<Number>& roundzero(FType tolerance = Functions<FType>::tolerance) {
       return *this;
     }
 
@@ -370,8 +370,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = D >
-    typename std::enable_if<is_complex<T>{}, MatrixRep<D>& >::type conj() {
+    template< typename T = Number >
+    typename std::enable_if<is_complex<T>{}, MatrixRep<Number>& >::type conj() {
       return *this;
     }
 
@@ -385,7 +385,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixRep";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(D());
+      s += getTypeName(Number());
       s += StyledString::get(ANGLE2).get();
       return s;
     }
@@ -395,7 +395,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixRep<D>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixRep<Number>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -430,8 +430,8 @@ namespace mathq {
     }
 
 
-    //template <class D>	
-    friend inline std::istream& operator>>(const std::string s, MatrixRep<D>& m2) {
+    //template <class Number>	
+    friend inline std::istream& operator>>(const std::string s, MatrixRep<Number>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -439,7 +439,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixRep<D>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixRep<Number>& m2) {
       return stream;
     }
 

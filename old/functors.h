@@ -25,11 +25,11 @@ namespace matricks {
 
   // unary+ operator
 
-  template <class D> class Fun_Plus {
+  template <class Number> class Fun_Plus {
     Fun_Plus() {}
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return a;
@@ -43,7 +43,7 @@ namespace matricks {
     }
 
     static inline std::string classname() {
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Plus")+display::getBracketedTypeName(d);
     }
 #endif
@@ -55,11 +55,11 @@ namespace matricks {
   
   // unary-
 
-  template <class D> class Fun_Minus {
+  template <class Number> class Fun_Minus {
     Fun_Minus() { }
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return (-a); 
@@ -72,7 +72,7 @@ namespace matricks {
     }
 
     static inline std::string classname() {
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Minus")+display::getBracketedTypeName(d);
     }
 #endif
@@ -313,11 +313,11 @@ namespace matricks {
   
   // sqr(a)
 
-  template <class D> class Fun_Sqr {
+  template <class Number> class Fun_Sqr {
     Fun_Sqr() { }
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return (a*a); 
@@ -332,7 +332,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Sqr")+display::getBracketedTypeName(d);
     }
 #endif
@@ -342,11 +342,11 @@ namespace matricks {
 
   // cube(a)
 
-  template <class D> class Fun_Cube {
+  template <class Number> class Fun_Cube {
     Fun_Cube() { }
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return (a*a*a); 
@@ -360,7 +360,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Cube")+display::getBracketedTypeName(d);
     }
 #endif
@@ -370,11 +370,11 @@ namespace matricks {
 
   // sqrt(a)
 
-  template <class D> class Fun_Sqrt {
+  template <class Number> class Fun_Sqrt {
     Fun_Sqrt() { }
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::sqrt;
@@ -390,7 +390,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Sqrt")+display::getBracketedTypeName(d);
     }
 #endif
@@ -399,12 +399,12 @@ namespace matricks {
 
 
   // exp(a)
-  template <class D> class Fun_Exp {
+  template <class Number> class Fun_Exp {
     Fun_Exp() { }
     
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::exp;
@@ -420,7 +420,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Exp")+display::getBracketedTypeName(d);
     }
 #endif
@@ -430,12 +430,12 @@ namespace matricks {
  
   // log(a)
 
-  template <class D> class Fun_Log {
+  template <class Number> class Fun_Log {
     Fun_Log() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::log;
@@ -451,7 +451,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Log")+display::getBracketedTypeName(d);
     }
 #endif
@@ -462,12 +462,12 @@ namespace matricks {
   
   // log2(a)
 
-  template <class D> class Fun_Log2 {
+  template <class Number> class Fun_Log2 {
     Fun_Log2() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::log2;
@@ -483,7 +483,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Log2")+display::getBracketedTypeName(d);
     }
 #endif
@@ -494,13 +494,13 @@ namespace matricks {
   
   // log10(a)
  
-  template <class D> class Fun_Log10 {
+  template <class Number> class Fun_Log10 {
     Fun_Log10() {
     }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::log10;
@@ -515,7 +515,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Log10")+display::getBracketedTypeName(d);
     }
 #endif
@@ -532,12 +532,12 @@ namespace matricks {
 
   // sin(a)
 
-  template <class D> class Fun_Sin {
+  template <class Number> class Fun_Sin {
     Fun_Sin() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::sin;
@@ -553,7 +553,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Sin")+display::getBracketedTypeName(d);
     }
 #endif
@@ -563,11 +563,11 @@ namespace matricks {
 
   // cos(a)
 
-  template <class D> class Fun_Cos {
+  template <class Number> class Fun_Cos {
     Fun_Cos() { }
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::cos;
@@ -583,7 +583,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Cos")+display::getBracketedTypeName(d);
     }
 #endif
@@ -595,11 +595,11 @@ namespace matricks {
 
   // tan(a)
 
-  template <class D> class Fun_Tan {
+  template <class Number> class Fun_Tan {
     Fun_Tan() { }
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::tan;
@@ -614,7 +614,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Tan")+display::getBracketedTypeName(d);
     }
 #endif
@@ -624,12 +624,12 @@ namespace matricks {
 
   // asin(a)
 
-  template <class D> class Fun_Asin                       {
+  template <class Number> class Fun_Asin                       {
     Fun_Asin() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::asin;
@@ -644,7 +644,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Asin")+display::getBracketedTypeName(d);
     }
 #endif
@@ -655,12 +655,12 @@ namespace matricks {
   
   // acos(a)
 
-  template <class D> class Fun_Acos                       {
+  template <class Number> class Fun_Acos                       {
     Fun_Acos() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::acos;
@@ -675,7 +675,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Acos")+display::getBracketedTypeName(d);
     }
 #endif
@@ -686,12 +686,12 @@ namespace matricks {
   
   // atan(a)
 
-  template <class D> class Fun_Atan {
+  template <class Number> class Fun_Atan {
     Fun_Atan() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::atan;
@@ -706,7 +706,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Atan")+display::getBracketedTypeName(d);
     }
 #endif
@@ -755,12 +755,12 @@ namespace matricks {
 
   // sinh(a)
 
-  template <class D> class Fun_Sinh {
+  template <class Number> class Fun_Sinh {
     Fun_Sinh() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::sinh;
@@ -776,7 +776,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Sinh")+display::getBracketedTypeName(d);
     }
 #endif
@@ -787,12 +787,12 @@ namespace matricks {
 
   // cosh(a)
 
-  template <class D> class Fun_Cosh {
+  template <class Number> class Fun_Cosh {
     Fun_Cosh() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::cosh;
@@ -807,7 +807,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Cosh")+display::getBracketedTypeName(d);
     }
 #endif
@@ -818,12 +818,12 @@ namespace matricks {
   
   // tanh(a)
 
-  template <class D> class Fun_Tanh {
+  template <class Number> class Fun_Tanh {
     Fun_Tanh() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::tanh;
@@ -838,7 +838,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Tanh")+display::getBracketedTypeName(d);
 
     }
@@ -855,12 +855,12 @@ namespace matricks {
 
   // abs(a)
 
-  template <class D> class Fun_Abs {
+  template <class Number> class Fun_Abs {
     Fun_Abs() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::abs;
@@ -875,7 +875,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Abs")+display::getBracketedTypeName(d);
     }
 #endif
@@ -886,12 +886,12 @@ namespace matricks {
   
   // sgn(a)
 
-  template <class D> class Fun_Sgn {
+  template <class Number> class Fun_Sgn {
     Fun_Sgn() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return matricks::sgn(a);
@@ -905,7 +905,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Sgn")+display::getBracketedTypeName(d);
     }
 #endif
@@ -918,12 +918,12 @@ namespace matricks {
   
   // ceil(a)
 
-  template <class D> class Fun_Ceil {
+  template <class Number> class Fun_Ceil {
     Fun_Ceil() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::ceil;
@@ -940,7 +940,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Ceil")+display::getBracketedTypeName(d);
     }
 #endif
@@ -951,12 +951,12 @@ namespace matricks {
   
   // floor(a)
 
-  template <class D> class Fun_Floor {
+  template <class Number> class Fun_Floor {
     Fun_Floor() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::floor;
@@ -973,7 +973,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Floor")+display::getBracketedTypeName(d);
     }
 #endif
@@ -984,12 +984,12 @@ namespace matricks {
   
   // round(a)
 
-  template <class D> class Fun_Round {
+  template <class Number> class Fun_Round {
     Fun_Round() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       using std::round;
@@ -1005,7 +1005,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Round")+display::getBracketedTypeName(d);
     }
 #endif
@@ -1093,14 +1093,14 @@ namespace matricks {
 
 
 
-  // y = op1<D,userfunc>(a)
+  // y = op1<Number,userfunc>(a)
 
-  template <class D, typename matricks::FunctionTypes<D>::unary_func F> class Fun_UnaryUser {
+  template <class Number, typename matricks::FunctionTypes<Number>::unary_func F> class Fun_UnaryUser {
     Fun_UnaryUser() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
-    typedef typename NumberTrait<D>::Type Type;
+    typedef typename NumberTrait<Number>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
       return F(a); 
@@ -1114,7 +1114,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_UnaryUser")+display::getBracketedTypeName(d);
     }
 #endif
@@ -1124,7 +1124,7 @@ namespace matricks {
 
 
   
-  // y = op2<D,userfunc>(a,b)
+  // y = op2<Number,userfunc>(a,b)
 
   template <class A, class B, typename FunctionTypes<typename NumberTrait<A>::Type>::binary_func F> class Fun_BinaryUser {
   public:
@@ -1589,11 +1589,11 @@ namespace matricks {
 
   // arg(a)
 
-  template <class D> class Fun_Arg {
+  template <class Number> class Fun_Arg {
     Fun_Arg() { }
   public:
-    typedef std::complex<D> TypeIn;
-    typedef D Type;
+    typedef std::complex<Number> TypeIn;
+    typedef Number Type;
 
     static inline Type apply(const TypeIn a) { 
 
@@ -1621,10 +1621,10 @@ namespace matricks {
 
   // conj(a)
 
-  template <class D > class Fun_Conj {
+  template <class Number > class Fun_Conj {
     Fun_Conj() { }
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type TypeIn;
     typedef typename Complexify<TypeIn>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
@@ -1639,7 +1639,7 @@ namespace matricks {
     }
     
     static inline std::string classname() {
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Conj")+display::getBracketedTypeName(d);
     }
 #endif
@@ -1649,10 +1649,10 @@ namespace matricks {
 
   // real(a)
 
-  template <class D> class Fun_Real {
+  template <class Number> class Fun_Real {
     Fun_Real() { }
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type TypeIn;
     typedef typename Realify<TypeIn>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
@@ -1670,7 +1670,7 @@ namespace matricks {
     
     static inline std::string classname() {
       using namespace display;
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Real")+display::getBracketedTypeName(d);
     }
 #endif
@@ -1680,11 +1680,11 @@ namespace matricks {
 
   // imag(a)
 
-  template <class D> class Fun_Imag {
+  template <class Number> class Fun_Imag {
     Fun_Imag() { }
 
   public:
-    typedef typename NumberTrait<D>::Type TypeIn;
+    typedef typename NumberTrait<Number>::Type TypeIn;
     typedef typename Realify<TypeIn>::Type Type;
 
     static inline Type apply(const TypeIn a) { 
@@ -1699,7 +1699,7 @@ namespace matricks {
     }
     
     static inline std::string classname() {
-      D d;
+      Number d;
       return functor_namestyle.apply("Fun_Imag")+display::getBracketedTypeName(d);
     }
 #endif

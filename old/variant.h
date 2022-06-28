@@ -1,9 +1,9 @@
 
-template <class D>
+template <class Number>
 class
   NotDefined {
 public:
-  D a = 0;
+  Number a = 0;
   NotDefined() {
   }
   ~NotDefined() {
@@ -11,11 +11,11 @@ public:
 };
 
 
-template <class D>
+template <class Number>
 class
   Point {
 public:
-  D a = 1;
+  Number a = 1;
   Point() {
   }
   ~Point() {
@@ -23,11 +23,11 @@ public:
 };
 
 
-template <class D>
+template <class Number>
 class
   Intervale {
 public:
-  D a = 2;
+  Number a = 2;
   Intervale() {
   }
   ~Intervale() {
@@ -37,44 +37,44 @@ public:
 
 
 
-template <class D, int ii>
+template <class Number, int ii>
 class
   Helper {
 public:
-  typedef NotDefined<D> Type;
+  typedef NotDefined<Number> Type;
 };
-template <class D>
+template <class Number>
 class
-  Helper<D, 0> {
+  Helper<Number, 0> {
 public:
-  typedef NotDefined<D> Type;
+  typedef NotDefined<Number> Type;
 };
-template <class D>
+template <class Number>
 class
-  Helper<D, 1> {
+  Helper<Number, 1> {
 public:
-  typedef Point<D> Type;
+  typedef Point<Number> Type;
 };
-template <class D>
+template <class Number>
 class
-  Helper<D, 2> {
+  Helper<Number, 2> {
 public:
-  typedef Intervale<D> Type;
+  typedef Intervale<Number> Type;
 };
 
 
-template <template <typename> class T, typename D>
-T<D>& value(const std::variant<NotDefined<D>, Point<D>, Intervale<D>>& var, const T<D>& dummy) {
-  return std::get<T<D>>(var);
+template <template <typename> class T, typename Number>
+T<Number>& value(const std::variant<NotDefined<Number>, Point<Number>, Intervale<Number>>& var, const T<Number>& dummy) {
+  return std::get<T<Number>>(var);
 }
 
 
 
-template <class D>
+template <class Number>
 class
-  NoGrid : public mathq::GridSet<D> {
+  NoGrid : public mathq::GridSet<Number> {
 public:
-  NoGrid() : mathq::GridSet<D>(true) {
+  NoGrid() : mathq::GridSet<Number>(true) {
   }
   ~NoGrid() {
   }
@@ -88,29 +88,29 @@ inline void dispval_strm(std::ostream& stream, const NoGrid<T>& var) {
 
 // need to be able to place thes ein a std::vector so they need to have same type
 
-template <class D>
+template <class Number>
 class
   Coordinate2 {
 public:
   const std::string name;
-  std::variant<NotDefined<D>, Point<D>, Intervale<D>> definition;
+  std::variant<NotDefined<Number>, Point<Number>, Intervale<Number>> definition;
   const int index;
 
   Coordinate2() :
     name("[no-name]") {
   }
 
-  Coordinate2(const std::string& name, const NotDefined<D>& realSet) :
+  Coordinate2(const std::string& name, const NotDefined<Number>& realSet) :
     name(name),
     definition(realSet),
     index(0) {
   }
-  Coordinate2(const std::string& name, const Point<D>& realSet) :
+  Coordinate2(const std::string& name, const Point<Number>& realSet) :
     name(name),
     definition(realSet),
     index(1) {
   }
-  Coordinate2(const std::string& name, const Intervale<D>& realSet) :
+  Coordinate2(const std::string& name, const Intervale<Number>& realSet) :
     name(name),
     definition(realSet),
     index(2) {
@@ -120,8 +120,8 @@ public:
   }
 
   template <template <typename> class T>
-  T<D>& getRealSet() {
-    return std::get<T<D>>(definition);
+  T<Number>& getRealSet() {
+    return std::get<T<Number>>(definition);
   }
 
 };

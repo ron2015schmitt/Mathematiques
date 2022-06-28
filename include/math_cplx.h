@@ -46,10 +46,10 @@ namespace mathq {
   template<class T> struct is_complex : std::false_type {};
 
   // std::complex class (true)
-  template<class D> struct is_complex<std::complex<D>> : std::true_type {};
+  template<class Number> struct is_complex<std::complex<Number>> : std::true_type {};
 
   // T<std::complex> (true)  container holding complex
-  template<template<typename> class T, class D> struct is_complex<T<std::complex<D> > > : std::true_type {};
+  template<template<typename> class T, class Number> struct is_complex<T<std::complex<Number> > > : std::true_type {};
 
 
   // template <typename T> class
@@ -59,10 +59,10 @@ namespace mathq {
   //   typedef std::complex<FType> CType;
   //   typedef typename NumberTrait<T,CType>::ReplaceTypeE Type;
   // };
-  // template <typename Element, typename A, typename D, int M, int R> class
-  //   Complexify<MArrayExpR<Element,A,D,M,R> > {
+  // template <typename Element, typename A, typename Number, int M, int R> class
+  //   Complexify<MArrayExpR<Element,A,Number,M,R> > {
   // public:
-  //   typedef MArrayExpR<typename Complexify<Element>::Type,A,typename Complexify<D>::Type, M,R> Type;
+  //   typedef MArrayExpR<typename Complexify<Element>::Type,A,typename Complexify<Number>::Type, M,R> Type;
   // };
 
 
@@ -72,10 +72,10 @@ namespace mathq {
   //   typedef typename OrderedNumberTrait<T>::Type FType;
   //   typedef typename NumberTrait<T,FType>::ReplaceTypeE Type;
   // };
-  // template <typename Element, typename A, typename D, int M, int R> class
-  //   Realify<MArrayExpR<Element,A,D,M,R> > {
+  // template <typename Element, typename A, typename Number, int M, int R> class
+  //   Realify<MArrayExpR<Element,A,Number,M,R> > {
   // public:
-  //   typedef MArrayExpR<typename Realify<Element>::Type,A,typename Realify<D>::Type,M,R> Type;
+  //   typedef MArrayExpR<typename Realify<Element>::Type,A,typename Realify<Number>::Type,M,R> Type;
   // };
 
 
@@ -87,10 +87,10 @@ namespace mathq {
   //   typedef Imaginary<FType> IType;
   //   typedef typename NumberTrait<T,IType>::ReplaceTypeE Type;
   // };
-  // template <typename Element, typename A, typename D, int M, int R> class
-  //   Imaginarify<MArrayExpR<Element,A,D,M,R> > {
+  // template <typename Element, typename A, typename Number, int M, int R> class
+  //   Imaginarify<MArrayExpR<Element,A,Number,M,R> > {
   // public:
-  //   typedef MArrayExpR<typename Imaginarify<Element>::Type,A,typename Imaginarify<D>::Type, M,R> Type;
+  //   typedef MArrayExpR<typename Imaginarify<Element>::Type,A,typename Imaginarify<Number>::Type, M,R> Type;
   // };
 
 
@@ -116,64 +116,64 @@ namespace mathq {
 
   // complex conjugate: complex numbers
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value> > std::complex<D>
-  conj(const std::complex<D>& x) {
-    return std::complex<D>(x.real(), -x.imag());
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > std::complex<Number>
+  conj(const std::complex<Number>& x) {
+    return std::complex<Number>(x.real(), -x.imag());
   }
 
   // complex conjugate OPERTOR ~
 
-  template <typename D, typename = std::enable_if_t<std::is_arithmetic<D>::value> > std::complex<D>
-  operator~(const std::complex<D>& x) {
-    return std::complex<D>(x.real(), -x.imag());
+  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > std::complex<Number>
+  operator~(const std::complex<Number>& x) {
+    return std::complex<Number>(x.real(), -x.imag());
   }
 
   // complex - normsqr
-  template <typename D> D normsqr(const std::complex<D>& z) {
+  template <typename Number> Number normsqr(const std::complex<Number>& z) {
     return z.real()*z.real() + z.imag()*z.imag();
   }
 
   // complex - sqr
-  template <typename D> std::complex<D> sqr(const std::complex<D>& z) {
+  template <typename Number> std::complex<Number> sqr(const std::complex<Number>& z) {
     return z*z;
   }
 
   // cube(z)
 
-  template <typename D> std::complex<D> cube(const std::complex<D>& z) {
+  template <typename Number> std::complex<Number> cube(const std::complex<Number>& z) {
     return z*z*z;
   }
 
 
   // complex rounding
 
-  template <typename D> std::complex<D> round(const std::complex<D>& x) {
-    return std::complex<D>(std::round(x.real()), std::round(x.imag()));
+  template <typename Number> std::complex<Number> round(const std::complex<Number>& x) {
+    return std::complex<Number>(std::round(x.real()), std::round(x.imag()));
   }
 
   // complex - sgn
-  template <typename D> std::complex<D> sgn(const std::complex<D>& z) {
-    return std::complex<D>(sgn(real(z)), sgn(imag(z)));
+  template <typename Number> std::complex<Number> sgn(const std::complex<Number>& z) {
+    return std::complex<Number>(sgn(real(z)), sgn(imag(z)));
   }
 
 
   // complex - floor
-  template <typename D> std::complex<D> floor(const std::complex<D>& z) {
+  template <typename Number> std::complex<Number> floor(const std::complex<Number>& z) {
     using std::floor;
-    return std::complex<D>(floor(real(z)), floor(imag(z)));
+    return std::complex<Number>(floor(real(z)), floor(imag(z)));
   }
 
   // complex - ceil
-  template <typename D> std::complex<D> ceil(const std::complex<D>& z) {
+  template <typename Number> std::complex<Number> ceil(const std::complex<Number>& z) {
     using std::ceil;
-    return std::complex<D>(ceil(real(z)), ceil(imag(z)));
+    return std::complex<Number>(ceil(real(z)), ceil(imag(z)));
   }
 
 
 
   // complex - roundzero
-  template <typename D> std::complex<D> roundzero(const std::complex<D>& x, const D tolerance = Functions<D>::tolerance) {
-    return std::complex<D>(roundzero(x.real(), tolerance), roundzero(x.imag(), tolerance));
+  template <typename Number> std::complex<Number> roundzero(const std::complex<Number>& x, const Number tolerance = Functions<Number>::tolerance) {
+    return std::complex<Number>(roundzero(x.real(), tolerance), roundzero(x.imag(), tolerance));
   }
 
   // approx - complex
@@ -184,9 +184,9 @@ namespace mathq {
   }
 
   // complex log2
-  template <typename D> std::complex<D>
-  log2(const std::complex<D>& x) {
-    const D A0 = 1/log(D(2));
+  template <typename Number> std::complex<Number>
+  log2(const std::complex<Number>& x) {
+    const Number A0 = 1/log(Number(2));
     return A0*log(x);
   }
 

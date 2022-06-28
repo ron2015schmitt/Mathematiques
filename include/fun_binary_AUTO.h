@@ -1933,7 +1933,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename AddType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -2087,7 +2087,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename SubType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -2241,7 +2241,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -2395,7 +2395,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename DivType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -2549,7 +2549,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename RelType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -2703,7 +2703,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename RelType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -2857,7 +2857,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename RelType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -3011,7 +3011,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename RelType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -3165,7 +3165,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename RelType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -3319,7 +3319,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename RelType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -3473,7 +3473,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename AndType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -3627,7 +3627,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename OrType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -3781,7 +3781,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -3935,7 +3935,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -4089,7 +4089,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -4243,7 +4243,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -4397,7 +4397,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -4551,7 +4551,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -4705,7 +4705,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -4859,7 +4859,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -5013,7 +5013,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -5167,7 +5167,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -5321,7 +5321,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -5475,7 +5475,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -5629,7 +5629,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -5783,7 +5783,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename MultType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -5937,7 +5937,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename ComplexType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -6091,7 +6091,7 @@ template <class A, class B, class E2, class D1, class D2, int M1, int M2, int R,
   typedef typename ComplexType<D1, D2>::Type D3;
   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3;   // see TODO note above
   constexpr int M3 = M2;
-  //    MOUT << "D" <<std::endl;
+  //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
     MArrayExpR<B, E2, D2, M2, R>,
     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,

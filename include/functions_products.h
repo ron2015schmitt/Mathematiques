@@ -74,7 +74,7 @@ namespace mathq
    // EnableMethodIf<R == 1, typename MultType<D1, D2>::Type &> dot(const MArrayExpR<A, E1, D1, M, R> &a, const MArrayExpR<B, E2, D2, M, R> &b)
    // {
 
-   //   // MArrayExpRW<Matrix<Element,NR,NC,D,M>,Element,D,M,2> x;
+   //   // MArrayExpRW<Matrix<Element,NR,NC,Number,M>,Element,Number,M,2> x;
 
    //   typedef typename MultType<D1, D2>::Type D3;
    //   typedef typename NumberTrait<E1, D3>::ReplaceTypeD E3; // see TODO note above
@@ -260,7 +260,7 @@ namespace mathq
   //   typedef typename AddType<D1, D2>::Type D3;
   //   typedef typename NumberTrait<E2, D3>::ReplaceTypeD E3; // see TODO note above
   //   constexpr int M3 = M2;
-  //   //    MOUT << "D" <<std::endl;
+  //   //    MOUT << "Number" <<std::endl;
   //   return TER_Binary<MArrayExpR<A, D1, D1, M1, R>,
   //                     MArrayExpR<B, E2, D2, M2, R>,
   //                     D1, E2, E3, D1, D2, D3, M1, M2, M3, R, R, R,
@@ -312,7 +312,7 @@ namespace mathq
 
      //     // (Vector|Vector)
      //     if ((a.ndims() == 1) && (b.ndims() == 1)) {
-     //       D result = D(0);
+     //       Number result = Number(0);
      //       for (size_t i = a.deepsize(); i--;) {
      // 	result += a[i]*b[i];
      //       }

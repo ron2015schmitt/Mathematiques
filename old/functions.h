@@ -21,19 +21,19 @@ namespace matricks {
 
   // +(MultiArray)
 
-  template <class Element, class A, class D, int M> 
-    inline auto operator+(const MArrayExpR<Element,A,D,M>& a)
+  template <class Element, class A, class Number, int M> 
+    inline auto operator+(const MArrayExpR<Element,A,Number,M>& a)
   {
-    return  TER_Unary< MArrayExpR<Element,A,D,M>, Fun_Plus<D> >(a);
+    return  TER_Unary< MArrayExpR<Element,A,Number,M>, Fun_Plus<Number> >(a);
   }
 
 
   // -(MultiArray)
 
-  template <class D, class A> 
-    inline auto operator-(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto operator-(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Minus<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Minus<Number> >(a);
   }
 
 
@@ -265,16 +265,16 @@ namespace matricks {
   // (a|b)
 
   // TODO: rewrite for only floating point base types
-  template <class D> inline
-    D operator|( const Scalar<D>& a, const  Scalar<D>& b ) {
+  template <class Number> inline
+    Number operator|( const Scalar<Number>& a, const  Scalar<Number>& b ) {
     return a()*b();
   }
 
 
   // dot(a,b)
 
-  template <class D> inline
-    D dot( const Scalar<D>& a, const  Scalar<D>& b ) {
+  template <class Number> inline
+    Number dot( const Scalar<Number>& a, const  Scalar<Number>& b ) {
     return (a|b);
   }
 
@@ -284,16 +284,16 @@ namespace matricks {
   // (a&b)
   // TODO: rewrite for only floating point base types
 
-  template <class D> inline
-    D operator&( const Scalar<D>& a, const  Scalar<D>& b ) {
+  template <class Number> inline
+    Number operator&( const Scalar<Number>& a, const  Scalar<Number>& b ) {
     return a()*b();
   }
 
 
   // tprod(a,b)
 
-  template <class D> inline
-    D tprod( const Scalar<D>& a, const  Scalar<D>& b ) {
+  template <class Number> inline
+    Number tprod( const Scalar<Number>& a, const  Scalar<Number>& b ) {
     return (a&b);
   }
 
@@ -303,16 +303,16 @@ namespace matricks {
   // (a^b)
   // TODO: rewrite for only floating point base types
 
-  template <class D> inline
-    D operator^( const Scalar<D>& a, const  Scalar<D>& b ) {
+  template <class Number> inline
+    Number operator^( const Scalar<Number>& a, const  Scalar<Number>& b ) {
     return 0;
   }
 
 
   // wprod(a,b)
 
-  template <class D> inline
-    D wprod( const Scalar<D>& a, const  Scalar<D>& b ) {
+  template <class Number> inline
+    Number wprod( const Scalar<Number>& a, const  Scalar<Number>& b ) {
     return (a^b);
   }
 
@@ -328,10 +328,10 @@ namespace matricks {
   // (a|b)
   // TODO: rewrite for only floating point base types
 
-  template <class D> inline
-    D operator|( const Vector<D>& a, const  Vector<D>& b ) {
+  template <class Number> inline
+    Number operator|( const Vector<Number>& a, const  Vector<Number>& b ) {
 
-    D result = D(0);
+    Number result = Number(0);
     for (size_t i = a.deepsize(); i--;) {
       result += a[i]*b[i];
     }
@@ -340,8 +340,8 @@ namespace matricks {
 
   // dot(a,b)
 
-  template <class D> inline
-    D dot( const Vector<D>& a, const  Vector<D>& b ) {
+  template <class Number> inline
+    Number dot( const Vector<Number>& a, const  Vector<Number>& b ) {
     return (a|b);
   }
 
@@ -379,8 +379,8 @@ namespace matricks {
 
   // (a|b)
 
-  template <class D, class A, class B> inline
-    D operator|( const MArrayExpR<D,A>& a, const  MArrayExpR<D,B>& b ) {
+  template <class Number, class A, class B> inline
+    Number operator|( const MArrayExpR<Number,A>& a, const  MArrayExpR<Number,B>& b ) {
 
     // (Scalar|Scalar)
     if ((a.ndims() == 0) && (b.ndims() == 0)) {
@@ -389,7 +389,7 @@ namespace matricks {
 
     // (Vector|Vector)
     if ((a.ndims() == 1) && (b.ndims() == 1)) {
-      D result = D(0);
+      Number result = Number(0);
       for (size_t i = a.deepsize(); i--;) {
 	result += a[i]*b[i];
       }
@@ -399,8 +399,8 @@ namespace matricks {
 
   // dot(a,b)
 
-  template <class D, class A, class B> inline
-    D dot( const MArrayExpR<D,A>& a, const  MArrayExpR<D,B>& b ) {
+  template <class Number, class A, class B> inline
+    Number dot( const MArrayExpR<Number,A>& a, const  MArrayExpR<Number,B>& b ) {
     return (a|b);
   }
 
@@ -408,8 +408,8 @@ namespace matricks {
 
   // (a&b)
 
-  template <class D, class A, class B> inline
-    D operator&( const MArrayExpR<D,A>& a, const  MArrayExpR<D,B>& b ) {
+  template <class Number, class A, class B> inline
+    Number operator&( const MArrayExpR<Number,A>& a, const  MArrayExpR<Number,B>& b ) {
 
     // (Scalar&Scalar)
     if ((a.ndims() == 0) && (b.ndims() == 0)) {
@@ -420,8 +420,8 @@ namespace matricks {
 
   // tprod(a,b)
 
-  template <class D, class A, class B> inline
-    D tprod( const MArrayExpR<D,A>& a, const  MArrayExpR<D,B>& b ) {
+  template <class Number, class A, class B> inline
+    Number tprod( const MArrayExpR<Number,A>& a, const  MArrayExpR<Number,B>& b ) {
     return (a&b);
   }
 
@@ -429,8 +429,8 @@ namespace matricks {
 
   // (a^b)
 
-  template <class D, class A, class B> inline
-    D operator^( const MArrayExpR<D,A>& a, const  MArrayExpR<D,B>& b ) {
+  template <class Number, class A, class B> inline
+    Number operator^( const MArrayExpR<Number,A>& a, const  MArrayExpR<Number,B>& b ) {
 
     // (Scalar^Scalar)
     if ((a.ndims() == 0) && (b.ndims() == 0)) {
@@ -441,8 +441,8 @@ namespace matricks {
 
   // wprod(a,b)
 
-  template <class D, class A, class B> inline
-    D wprod( const MArrayExpR<D,A>& a, const  MArrayExpR<D,B>& b ) {
+  template <class Number, class A, class B> inline
+    Number wprod( const MArrayExpR<Number,A>& a, const  MArrayExpR<Number,B>& b ) {
     return (a^b);
   }
   
@@ -500,62 +500,62 @@ namespace matricks {
 
   // sqr(MultiArray)
 
-  template <class D, class A> 
-    inline auto sqr(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto sqr(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Sqr<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Sqr<Number> >(a);
   }
 
   // cube(MultiArray)
 
-  template <class D, class A> 
-    inline auto cube(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto cube(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Cube<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Cube<Number> >(a);
   }
 
   // sqrt(MultiArray)
 
-  template <class D, class A> 
-    inline auto sqrt(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto sqrt(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Sqrt<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Sqrt<Number> >(a);
   }
 
   // exp(MultiArray)
 
-  template <class D, class A> 
-    inline auto exp(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto exp(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Exp<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Exp<Number> >(a);
   }
 
 
 
   // log(MultiArray)
 
-  template <class D, class A> 
-    inline auto log(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto log(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Log<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Log<Number> >(a);
   }
 
 
   // log10(MultiArray)
 
-  template <class D, class A> 
-    inline auto log10(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto log10(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Log10<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Log10<Number> >(a);
   }
 
 
   // log2(MultiArray)
 
-  template <class D, class A> 
-    inline auto log2(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto log2(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Log2<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Log2<Number> >(a);
   }
 
 
@@ -569,56 +569,56 @@ namespace matricks {
 
   // sin(MultiArray)
 
-  template <class D, class A> 
-    inline auto sin(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto sin(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Sin<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Sin<Number> >(a);
   }
 
 
   // cos(MultiArray)
 
-  template <class D, class A> 
-    inline auto cos(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto cos(const MArrayExpR<Number,A>& a)
   {
-    return TER_Unary<D,MArrayExpR<D,A>,Fun_Cos<D> >(a);
+    return TER_Unary<Number,MArrayExpR<Number,A>,Fun_Cos<Number> >(a);
   }
 
 
 
   // tan(MultiArray)
 
-  template <class D, class A> 
-    inline auto tan(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto tan(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Tan<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Tan<Number> >(a);
   }
 
 
   // asin(MultiArray)
 
-  template <class D, class A> 
-    inline auto asin(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto asin(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Asin<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Asin<Number> >(a);
   }
 
 
   // acos(MultiArray)
 
-  template <class D, class A> 
-    inline auto acos(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto acos(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Acos<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Acos<Number> >(a);
   }
 
 
   // atan(MultiArray)
 
-  template <class D, class A> 
-    inline auto atan(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto atan(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Atan<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Atan<Number> >(a);
   }
 
 
@@ -636,28 +636,28 @@ namespace matricks {
 
   // sinh(MultiArray)
 
-  template <class D, class A> 
-    inline auto sinh(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto sinh(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Sinh<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Sinh<Number> >(a);
   }
 
 
   // cosh(MultiArray)
 
-  template <class D, class A> 
-    inline auto cosh(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto cosh(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Cosh<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Cosh<Number> >(a);
   }
 
 
   // tanh(MultiArray)
 
-  template <class D, class A> 
-    inline auto tanh(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto tanh(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Tanh<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Tanh<Number> >(a);
   }
 
 
@@ -668,47 +668,47 @@ namespace matricks {
 
   // abs(MultiArray)
 
-  template <class D, class A> 
-    inline auto abs(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto abs(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Abs<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Abs<Number> >(a);
   }
 
 
   // sgn(MultiArray)
 
-  template <class D, class A> 
-    inline auto sgn(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto sgn(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Sgn<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Sgn<Number> >(a);
   }
 
 
 
   // ceil(MultiArray)
 
-  template <class D, class A> 
-    inline auto ceil(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto ceil(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Ceil<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Ceil<Number> >(a);
   }
 
 
   // floor(MultiArray)
 
-  template <class D, class A> 
-    inline auto floor(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto floor(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Floor<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Floor<Number> >(a);
   }
 
 
   // round(MultiArray)
 
-  template <class D, class A> 
-    inline auto round(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto round(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D,MArrayExpR<D,A>,Fun_Round<D> >(a);
+    return  TER_Unary<Number,MArrayExpR<Number,A>,Fun_Round<Number> >(a);
   }
 
 
@@ -731,16 +731,16 @@ namespace matricks {
 
 
   // user-defined functions
-  template <class D, typename FunctionTypes<D>::unary_func F, class A> 
-    inline auto op1(const MArrayExpR<D,A>& a)
+  template <class Number, typename FunctionTypes<Number>::unary_func F, class A> 
+    inline auto op1(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Unary<D, MArrayExpR<D,A>, Fun_UnaryUser<D,F> >(a);
+    return  TER_Unary<Number, MArrayExpR<Number,A>, Fun_UnaryUser<Number,F> >(a);
   }
 
-  template <class D, typename FunctionTypes<D>::binary_func F, class A, class B> 
-    inline auto op2(const MArrayExpR<D,A>& a, const MArrayExpR<D,B>& b)
+  template <class Number, typename FunctionTypes<Number>::binary_func F, class A, class B> 
+    inline auto op2(const MArrayExpR<Number,A>& a, const MArrayExpR<Number,B>& b)
   {
-    return  TER_Binary<MArrayExpR<D,A>,MArrayExpR<D,B>, D,D, Fun_BinaryUser<D,D,F>>(a,b);
+    return  TER_Binary<MArrayExpR<Number,A>,MArrayExpR<Number,B>, Number,Number, Fun_BinaryUser<Number,Number,F>>(a,b);
   }
 
 
@@ -870,7 +870,7 @@ namespace matricks {
   
   
   // ************************************************************************
-  // *              Relational ops (return a bool MultiArray from two D MultiArrays)
+  // *              Relational ops (return a bool MultiArray from two Number MultiArrays)
   // ************************************************************************
 
 
@@ -1186,8 +1186,8 @@ namespace matricks {
   // equal - if two tensors are equal. returns a single bool
   //         checks dimensions first
   // -------------------------------------------------------------------
-  template <class D, class A, class B>
-    inline bool equal(const MArrayExpR<D,A>& tensor1, const MArrayExpR<D,B>& tensor2) {
+  template <class Number, class A, class B>
+    inline bool equal(const MArrayExpR<Number,A>& tensor1, const MArrayExpR<Number,B>& tensor2) {
     if (!dimequiv(tensor1,tensor2)) {
       return false;
     }
@@ -1204,8 +1204,8 @@ namespace matricks {
   // approx - if two tensors are approximately equal, returns a single bool
   //          checks dimensions first
   // -------------------------------------------------------------------
-  template <class D, class A, class B>
-    inline bool approx(const MArrayExpR<D,A>& tensor1, const MArrayExpR<D,B>& tensor2, typename OrderedNumberTrait<D>::Type tolerance = MatricksHelper<typename OrderedNumberTrait<D>::Type>::tolerance) {
+  template <class Number, class A, class B>
+    inline bool approx(const MArrayExpR<Number,A>& tensor1, const MArrayExpR<Number,B>& tensor2, typename OrderedNumberTrait<Number>::Type tolerance = MatricksHelper<typename OrderedNumberTrait<Number>::Type>::tolerance) {
     if (!dimequiv(tensor1,tensor2)) {
       return false;
     }
@@ -1227,15 +1227,15 @@ namespace matricks {
 
   // sum(a)
 
-  template <class D, class A> 
-    D sum( const MArrayExpR<D,A>& a ) {
+  template <class Number, class A> 
+    Number sum( const MArrayExpR<Number,A>& a ) {
     
  
     const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
-    D result = a[0];
+    Number result = a[0];
 
     for (size_t i = 1; i < N ; i++ )
       result += a[i];
@@ -1248,15 +1248,15 @@ namespace matricks {
   
   // prod(a)
 
-  template <class D, class A> 
-    D prod( const MArrayExpR<D,A>& a ) {
+  template <class Number, class A> 
+    Number prod( const MArrayExpR<Number,A>& a ) {
     
  
     const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
-    D result = a[0];
+    Number result = a[0];
 
     for (size_t i = 1; i < N ; i++ )
       result *= a[i];
@@ -1270,15 +1270,15 @@ namespace matricks {
 
   // norm(a)
 
-  template <class D, class A> 
-    D norm( const MArrayExpR<D,A>& a ) {
+  template <class Number, class A> 
+    Number norm( const MArrayExpR<Number,A>& a ) {
     
  
     const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
-    D result = a[0]*a[0];
+    Number result = a[0]*a[0];
 
     for (size_t i = 1; i < N ; i++ )
       result += a[i]*a[i];
@@ -1291,15 +1291,15 @@ namespace matricks {
 
   // min(a)
 
-  template <class D, class A> 
-    D min( const MArrayExpR<D,A>& a ) {
+  template <class Number, class A> 
+    Number min( const MArrayExpR<Number,A>& a ) {
     
  
     const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
-    D result = a[0];
+    Number result = a[0];
 
     for (size_t i = 1; i < N ; i++ )
       result = std::min(result,a[i]);
@@ -1312,14 +1312,14 @@ namespace matricks {
 
   // max(a)
 
-  template <class D, class A> 
-    D max( const MArrayExpR<D,A>& a ) {
+  template <class Number, class A> 
+    Number max( const MArrayExpR<Number,A>& a ) {
     
     const size_t N = a.deepsize();
     if (N==0)
       return 0;
 
-    D result = a[0];
+    Number result = a[0];
 
     for (size_t i = 1; i < N ; i++ )
       result = std::max(result,a[i]);
@@ -1343,8 +1343,8 @@ namespace matricks {
   
   // alltrue(a)
 
-  template <class D, class A> 
-    inline bool alltrue( const MArrayExpR<D,A>& a ) {
+  template <class Number, class A> 
+    inline bool alltrue( const MArrayExpR<Number,A>& a ) {
     bool result = true;
     
  
@@ -1357,8 +1357,8 @@ namespace matricks {
 
   // anytrue(a)
 
-  template <class D, class A> 
-    inline bool anytrue( const MArrayExpR<D,A>& a ) {
+  template <class Number, class A> 
+    inline bool anytrue( const MArrayExpR<Number,A>& a ) {
     bool result = false;
     
  
@@ -1371,8 +1371,8 @@ namespace matricks {
 
   // numtrue(a)
 
-  template <class D, class A> 
-    inline size_t numtrue( const MArrayExpR<D,A>& a ) {
+  template <class Number, class A> 
+    inline size_t numtrue( const MArrayExpR<Number,A>& a ) {
     size_t result = 0;
     
  
@@ -1416,54 +1416,54 @@ namespace matricks {
 
   // real(MultiArray)
 
-  template <class D, class A> 
-    inline auto real(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto real(const MArrayExpR<Number,A>& a)
   {
-    return TER_Unary<typename Realify<D>::Type, MArrayExpR<D,A>, Fun_Real<D> >(a);
+    return TER_Unary<typename Realify<Number>::Type, MArrayExpR<Number,A>, Fun_Real<Number> >(a);
   }
 
   // imag(MultiArray)
 
-  template <class D, class A> 
-    inline auto imag(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto imag(const MArrayExpR<Number,A>& a)
   {
-    return TER_Unary<typename Realify<D>::Type, MArrayExpR<D,A>, Fun_Imag<D> >(a);
+    return TER_Unary<typename Realify<Number>::Type, MArrayExpR<Number,A>, Fun_Imag<Number> >(a);
   }
 
 
   // conj(MultiArray)
 
-  template <class D, class A> 
-    inline auto conj(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto conj(const MArrayExpR<Number,A>& a)
   {
-    return TER_Unary<typename Complexify<D>::Type, MArrayExpR<D,A>, Fun_Conj<D> >(a);
+    return TER_Unary<typename Complexify<Number>::Type, MArrayExpR<Number,A>, Fun_Conj<Number> >(a);
   }
 
 
   
   // transpose(A) 
 
-  template <class D, class A> 
-    inline auto transpose(MArrayExpRW<D,A>& a)
+  template <class Number, class A> 
+    inline auto transpose(MArrayExpRW<Number,A>& a)
   {
-    return TERW_Transpose<D,MArrayExpRW<D,A>,Fun_Plus<D> >(a);
+    return TERW_Transpose<Number,MArrayExpRW<Number,A>,Fun_Plus<Number> >(a);
   }
 
   // adjoint(A) - conjugate transpose 
 
-  template <class D, class A> 
-    inline auto adjoint(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto adjoint(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Transpose<D,MArrayExpR<D,A>,Fun_Conj<D> >(a);
+    return  TER_Transpose<Number,MArrayExpR<Number,A>,Fun_Conj<Number> >(a);
   }
 
   
   // ~A conjugate transpose operator
 
-  template <class D, class A> 
-    inline auto operator~(const MArrayExpR<D,A>& a)
+  template <class Number, class A> 
+    inline auto operator~(const MArrayExpR<Number,A>& a)
   {
-    return  TER_Transpose<D,MArrayExpR<D,A>,Fun_Conj<D> >(a);
+    return  TER_Transpose<Number,MArrayExpR<Number,A>,Fun_Conj<Number> >(a);
   }
 
 
@@ -1478,49 +1478,49 @@ namespace matricks {
   // operator, (join)
 
 
-  template <class D> 
-    inline auto operator,(Vector<D>& a, Vector<D>& b)
+  template <class Number> 
+    inline auto operator,(Vector<Number>& a, Vector<Number>& b)
     {
     
-      PRINTF2("  VERW_Join operator,(Vector<D>& a, Vector<D>& b)\n");
-      return  VERW_Join<D,Vector<D>,Vector<D> >(a,b);
+      PRINTF2("  VERW_Join operator,(Vector<Number>& a, Vector<Number>& b)\n");
+      return  VERW_Join<Number,Vector<Number>,Vector<Number> >(a,b);
     }
 
   //--------------------------------------------
   // Need the const for compiler to find this
   // then we cast away the const
-  template <class D, class A> 
-    inline auto operator,(const MArrayExpRW<D,A>& a, const Vector<D>& b)
+  template <class Number, class A> 
+    inline auto operator,(const MArrayExpRW<Number,A>& a, const Vector<Number>& b)
     {
-      PRINTF2("  VERW_Join operator,(const MArrayExpRW<D,A>& a, const Vector<D>& b)\n");
-      MArrayExpRW<D,A>& a_ = const_cast<MArrayExpRW<D,A>& >(a);
-      Vector<D>& b_ = const_cast<Vector<D>& >(b);
-      return  VERW_Join<D, MArrayExpRW<D,A>,Vector<D> >(a_,b_);
+      PRINTF2("  VERW_Join operator,(const MArrayExpRW<Number,A>& a, const Vector<Number>& b)\n");
+      MArrayExpRW<Number,A>& a_ = const_cast<MArrayExpRW<Number,A>& >(a);
+      Vector<Number>& b_ = const_cast<Vector<Number>& >(b);
+      return  VERW_Join<Number, MArrayExpRW<Number,A>,Vector<Number> >(a_,b_);
     }
   //--------------------------------------------
 
   //--------------------------------------------
   // Need the const for compiler to find this
   // then we cast away the const
-  template <class D, class B> 
-    inline auto operator,(const Vector<D>& a, const MArrayExpRW<D,B>& b)
+  template <class Number, class B> 
+    inline auto operator,(const Vector<Number>& a, const MArrayExpRW<Number,B>& b)
     {
-      PRINTF2("  VERW_Join operator,(const Vector<D>& a, const MArrayExpRW<D,B>& b)\n");
-      Vector<D>& a_ = const_cast<Vector<D>& >(a);
-      MArrayExpRW<D,B>& b_ = const_cast<MArrayExpRW<D,B>& >(b);
-      return VERW_Join<D, Vector<D>,MArrayExpRW<D,B> >(a_,b_);
+      PRINTF2("  VERW_Join operator,(const Vector<Number>& a, const MArrayExpRW<Number,B>& b)\n");
+      Vector<Number>& a_ = const_cast<Vector<Number>& >(a);
+      MArrayExpRW<Number,B>& b_ = const_cast<MArrayExpRW<Number,B>& >(b);
+      return VERW_Join<Number, Vector<Number>,MArrayExpRW<Number,B> >(a_,b_);
     }
   //--------------------------------------------
 
   //--------------------------------------------
   // Need the const for compiler to find this
-  template <class D, class A, class B> 
-    inline auto operator,(const MArrayExpRW<D,A>& a, const MArrayExpRW<D,B>& b)
+  template <class Number, class A, class B> 
+    inline auto operator,(const MArrayExpRW<Number,A>& a, const MArrayExpRW<Number,B>& b)
     {
-      PRINTF2("  VERW_Join operator,(const MArrayExpRW<D,A>& a, const MArrayExpRW<D,B>& b)\n");
-      MArrayExpRW<D,A>& a_ = const_cast<MArrayExpRW<D,A>& >(a);
-      MArrayExpRW<D,B>& b_ = const_cast<MArrayExpRW<D,B>& >(b);
-      return  VERW_Join<D, MArrayExpRW<D,A>,MArrayExpRW<D,B> >(a_,b_);
+      PRINTF2("  VERW_Join operator,(const MArrayExpRW<Number,A>& a, const MArrayExpRW<Number,B>& b)\n");
+      MArrayExpRW<Number,A>& a_ = const_cast<MArrayExpRW<Number,A>& >(a);
+      MArrayExpRW<Number,B>& b_ = const_cast<MArrayExpRW<Number,B>& >(b);
+      return  VERW_Join<Number, MArrayExpRW<Number,A>,MArrayExpRW<Number,B> >(a_,b_);
     }
   //--------------------------------------------
 
@@ -1528,32 +1528,32 @@ namespace matricks {
   
   ///---------
   
-  template <class D> 
-    inline const auto operator,(const Vector<D>& a, const Vector<D>& b)
+  template <class Number> 
+    inline const auto operator,(const Vector<Number>& a, const Vector<Number>& b)
     {
-      PRINTF2("  VER_Join operator,(const Vector<D>& a, const Vector<D>& b)\n");
-      return  VER_Join<D,Vector<D>,Vector<D> >(a,b);
+      PRINTF2("  VER_Join operator,(const Vector<Number>& a, const Vector<Number>& b)\n");
+      return  VER_Join<Number,Vector<Number>,Vector<Number> >(a,b);
     }
 
-  template <class D, class B> 
-    inline const auto operator,(const Vector<D>& a, const MArrayExpR<D,B>& b)
+  template <class Number, class B> 
+    inline const auto operator,(const Vector<Number>& a, const MArrayExpR<Number,B>& b)
     {
-      PRINTF2("  VER_Join operator,(const Vector<D>& a, const MArrayExpR<D,B>& b)\n");
-      return  VER_Join<D,Vector<D>,MArrayExpR<D,B>  >(a,b);
+      PRINTF2("  VER_Join operator,(const Vector<Number>& a, const MArrayExpR<Number,B>& b)\n");
+      return  VER_Join<Number,Vector<Number>,MArrayExpR<Number,B>  >(a,b);
     }
 
-  template <class D, class A> 
-    inline const auto operator,(const MArrayExpR<D,A>& a, const Vector<D>& b)
+  template <class Number, class A> 
+    inline const auto operator,(const MArrayExpR<Number,A>& a, const Vector<Number>& b)
     {
-      PRINTF2("  VER_Join operator,(const MArrayExpR<D,A>& a, const Vector<D>& b)\n");
-      return  VER_Join<D,MArrayExpR<D,A>,Vector<D> >(a,b);
+      PRINTF2("  VER_Join operator,(const MArrayExpR<Number,A>& a, const Vector<Number>& b)\n");
+      return  VER_Join<Number,MArrayExpR<Number,A>,Vector<Number> >(a,b);
     }
  
-  template <class D, class A, class B> 
-    inline const auto operator,(const MArrayExpR<D,A>& a, const MArrayExpR<D,B>& b)
+  template <class Number, class A, class B> 
+    inline const auto operator,(const MArrayExpR<Number,A>& a, const MArrayExpR<Number,B>& b)
     {
-      PRINTF2("  VER_Join operator,(const MArrayExpR<D,A>& a, const MArrayExpR<D,B>& b)\n");
-      return  VER_Join<D, MArrayExpR<D,A>,MArrayExpR<D,B> >(a,b);
+      PRINTF2("  VER_Join operator,(const MArrayExpR<Number,A>& a, const MArrayExpR<Number,B>& b)\n");
+      return  VER_Join<Number, MArrayExpR<Number,A>,MArrayExpR<Number,B> >(a,b);
     }
 
 
@@ -1563,9 +1563,9 @@ namespace matricks {
 
   // rep(v,m)
 
-  template <class D, class A> 
-    inline auto rep(const MArrayExpR<D,A>& a, const size_t m) {
-    return VER_Rep<D,MArrayExpR<D,A> >(a,m);
+  template <class Number, class A> 
+    inline auto rep(const MArrayExpR<Number,A>& a, const size_t m) {
+    return VER_Rep<Number,MArrayExpR<Number,A> >(a,m);
   }
 
   
