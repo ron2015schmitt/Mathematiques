@@ -186,13 +186,6 @@ struct integer_sequence2 {
 
 
 
-// put in a namespace so that the enums don't clash
-namespace DimensionsKinds {
-  enum Type { fixed, dynamic };
-};
-using DimensionsKindEnum = DimensionsKinds::Type;
-
-
 
 
 // // put in a namespace so that the enums don't clash
@@ -285,50 +278,120 @@ using DimensionsKindEnum = DimensionsKinds::Type;
 
 
 
-template<size_t Rank, typename Dims, typename NextDims> class NestedDimensions;
-
 
 template<size_t Rank, typename Derived> class BaseDims;
 template<size_t... dims> class FixedDims;
 template<size_t Rank> class DynamicDims;
 
+template<typename Dims, typename NextDims = void> class NestedDims;
 
 
-template<size_t Rank, typename Dims, typename NextDims>
+
+template<typename Dims, typename NextDims>
 class NestedDims : public Dims {
 public:
-  typedef NestedDims<Rank, Dims, NextDims> Type;
+  typedef NestedDims<Dims, NextDims> Type;
   typedef Dims DimsType;
   typedef NextDims NextDimsType;
   constexpr static bool hasNext = true;
 
-  constexpr static size_t rank() noexcept {
-    return Rank;
+  Dims dimensions;
+  NextDims nextDimensions;
+
+  NestedDims() : dimensions(*(new DimsType)), nextDimensions(*(new NextDimsType)) {
+  }
+  NestedDims(Dims dims_) : dimensions(dims_), nextDimensions(*(new NextDimsType)) {
+  }
+  NestedDims(Dims dims_, NextDims nextDims_) : dimensions(dims_), nextDimensions(nextDims_) {
   }
 
-  Dims dims;
-  NextDims nextDims;
-
-  NestedDims(Dims dims_, NextDims nextDims_) : dims(dims_), nextDims(nextDims_) {
-
+  Dims& dims() {
+    return dimensions;
   }
+  const Dims& dims() const {
+    return dimensions;
+  }
+
+  size_t rank() const {
+    return dimensions.rank();
+  }
+
+  NextDims& next() {
+    return nextDimensions;
+  }
+  const NextDims& next() const {
+    return nextDimensions;
+  }
+
+
+  size_t depth() const {
+    return 1 + nextDimensions.depth();
+  }
+
+  inline std::string classname() const {
+    using namespace display;
+    std::string s = "NestedDims";
+    s += StyledString::get(ANGLE1).get();
+    s += dimensions.classname();
+    s += StyledString::get(COMMA).get();
+    s += nextDimensions.classname();
+    s += StyledString::get(ANGLE2).get();
+    return s;
+  }
+
+  inline friend std::ostream& operator<<(std::ostream& stream, const Type& dims2) {
+    using namespace display;
+    dispval_strm(stream, dims2.dimensions);
+    stream << ", ";
+    dispval_strm(stream, dims2.nextDimensions);
+    return stream;
+  }
+
+
 };
 
-template<size_t Rank, typename Dims>
-class NestedDims<Rank, Dims, void> : public Dims {
+template<typename Dims>
+class NestedDims<Dims, void> : public Dims {
 public:
-  typedef NestedDims<Rank, Dims, void> Type;
+  typedef NestedDims<Dims, void> Type;
   typedef Dims DimsType;
   typedef void NextDimsType;
   constexpr static bool hasNext = false;
 
-  constexpr static size_t rank() noexcept {
-    return Rank;
+  Dims dimensions;
+
+  NestedDims() : dimensions(*(new DimsType)) {
   }
-  Dims dims;
+  NestedDims(Dims dims_) : dimensions(dims_) {
+  }
 
-  NestedDims(Dims dims_) : dims(dims_) {
+  size_t rank() const {
+    return dimensions.rank();
+  }
 
+  size_t depth() const {
+    return 1;
+  }
+
+  Dims& dims() {
+    return dimensions;
+  }
+  const Dims& dims() const {
+    return dimensions;
+  }
+  inline std::string classname() const {
+    using namespace display;
+    std::string s = "NestedDims";
+    s += StyledString::get(ANGLE1).get();
+    s += dimensions.classname();
+    s += StyledString::get(ANGLE2).get();
+    return s;
+  }
+
+  inline friend std::ostream& operator<<(std::ostream& stream, const Type& dims2) {
+    using namespace display;
+    dispval_strm(stream, dims2.dimensions);
+    return stream;
   }
 
 };
@@ -833,6 +896,18 @@ int main(int argc, char* argv[]) {
   TRDISP(dims9.rank());
   TRDISP(dims9.datasize());
   TRDISP(dims9);
+
+  CR();
+  ECHO_CODE(NestedDims<decltype(dims9)> ndims1(dims9));
+  TRDISP(ndims1);
+  TRDISP(ndims1.rank());
+  TRDISP(ndims1.depth());
+
+  CR();
+  ECHO_CODE(NestedDims<decltype(dims), decltype(ndims1)> ndims2(dims, ndims1));
+  TRDISP(ndims2);
+  TRDISP(ndims2.rank());
+  TRDISP(ndims2.depth());
 
 
   // generates an error via static_assert
