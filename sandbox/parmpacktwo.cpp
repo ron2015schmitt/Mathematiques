@@ -285,7 +285,7 @@ using DimensionsKindEnum = DimensionsKinds::Type;
 
 
 
-template<size_t Rank, typename Contained> class NestedDimensions;
+template<size_t Rank, typename Dims, typename NextDims> class NestedDimensions;
 
 
 template<size_t Rank, typename Derived> class BaseDims;
@@ -294,15 +294,45 @@ template<size_t Rank> class DynamicDims;
 
 
 
-template<size_t Rank, typename Contained>
-class NestedDimensions {
+template<size_t Rank, typename Dims, typename NextDims>
+class NestedDims : public Dims {
 public:
-  typedef NestedDimensions<Rank, Contained> Type;
+  typedef NestedDims<Rank, Dims, NextDims> Type;
+  typedef Dims DimsType;
+  typedef NextDims NextDimsType;
+  constexpr static bool hasNext = true;
 
   constexpr static size_t rank() noexcept {
     return Rank;
   }
+
+  Dims dims;
+  NextDims nextDims;
+
+  NestedDims(Dims dims_, NextDims nextDims_) : dims(dims_), nextDims(nextDims_) {
+
+  }
 };
+
+template<size_t Rank, typename Dims>
+class NestedDims<Rank, Dims, void> : public Dims {
+public:
+  typedef NestedDims<Rank, Dims, void> Type;
+  typedef Dims DimsType;
+  typedef void NextDimsType;
+  constexpr static bool hasNext = false;
+
+  constexpr static size_t rank() noexcept {
+    return Rank;
+  }
+  Dims dims;
+
+  NestedDims(Dims dims_) : dims(dims_) {
+
+  }
+
+};
+
 
 
 template<size_t Rank, typename Derived>

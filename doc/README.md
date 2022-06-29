@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.73-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.74-c++20</h1>
 
 # Documentation
 
