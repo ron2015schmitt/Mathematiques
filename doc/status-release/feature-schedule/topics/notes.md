@@ -19,3 +19,7 @@ sudo update-alternatives --config g++
 This is set using the `-std=<dialect>`  option
 
 Currently using `c++20` and `g++ 10.3`
+
+1. [g++ release list](https://gcc.gnu.org/releases.html)
+
+1. turning an object "inside out" is referred to as __eversion__

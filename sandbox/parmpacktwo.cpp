@@ -278,19 +278,31 @@ using DimensionsKindEnum = DimensionsKinds::Type;
 // };
 // using DimensionsEnum = Dimensions_space::Type;
 
-
-
-
-
-
 // constexpr static size_t dynamic = 0;
 // template<bool...> struct bool_pack;
 // template<bool... bs> 
 // using all_true = std::is_same<bool_pack<bs..., true>, bool_pack<true, bs...>>;
 
+
+
+template<size_t Rank, typename Contained> class NestedDimensions;
+
+
 template<size_t Rank, typename Derived> class BaseDims;
 template<size_t... dims> class FixedDims;
 template<size_t Rank> class DynamicDims;
+
+
+
+template<size_t Rank, typename Contained>
+class NestedDimensions {
+public:
+  typedef NestedDimensions<Rank, Contained> Type;
+
+  constexpr static size_t rank() noexcept {
+    return Rank;
+  }
+};
 
 
 template<size_t Rank, typename Derived>

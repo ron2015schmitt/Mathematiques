@@ -154,9 +154,9 @@ int main(int argc, char* argv[]) {
     t = x()(1)(2, 1);
     TLDISP(t);
     TLDISP(t.dims());
-    TLDISP(t(1u, 0u, 0u));
+    TLDISP(t(1, 0, 0));
 
-    TLDISP(x()(1)(2, 1)(1u, 0u, 0u));
+    TLDISP(x()(1)(2, 1)(1, 0, 0));
 
     Indices inds({ 1, 2, 1, 1, 0, 0 });
     TLDISP(inds);

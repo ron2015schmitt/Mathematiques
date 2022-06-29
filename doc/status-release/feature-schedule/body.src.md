@@ -2,14 +2,15 @@
 
 
 ### v0.40 Multi-Array Refactoring and Vector Calculus started
-1. add variable for the C++ version used, currently C++17.  append to version string. 
-1. upgrade to c++20a(g++10.4)
+1. add variable for the C++ version used, currently C++20.  append to version string. 
+1. using g++ 10.4
 1. Refactor `Dimensions` class
+1. New `NestedDimensions` class
 1. Refactor all multi-arrays
-  * simplifly the templates to only have `Element` type and (top level) `Dimensions`
-  * Renamed `Tensor` -> `MultiArray`
+  * Simplifly the templates to only have `Element` type and (top level) `Dimensions`
+  * Renamed `Tensor` -> `MultiArray` ->? `AlgebraTensor`
   * Refactor `Scalar`, `Vector` and `Matrix` to be type aliases for `MultiArray`
-1. `Vector` calculus
+1. Vector calculus
   * create `RealSet` and `MultiSet` classes
   * create Grid classes
   * Start `CurvilinearCoords` and `CurvilinearField` classes
