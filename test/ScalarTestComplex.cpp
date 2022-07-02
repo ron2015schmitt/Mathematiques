@@ -121,7 +121,7 @@ int main(int argc, char* argv[]) {
 
     Scalar<ComplexInt> s1 = ComplexInt(1, 1);
     bool result;
-    testcode(result = (s1.size() == 1) && (s1.dims().datasize() == 1) && (s1.ndims() == 0) && (s1.dims().size() == 0));
+    testcode(result = (s1.size() == 1) && (s1.dims().datasize() == 1) && (s1.rank() == 0) && (s1.dims().size() == 0));
     bool expected = true;
     bool pass = result;
     printEnd(pass, result, expected);

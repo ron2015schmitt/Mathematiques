@@ -10,7 +10,7 @@ namespace mathq {
    *                   rank = number of rank (0=scalar,1=vector,2=matrix,etc)
    *
    *                 The defaults are defined in the declaration in
-   *                 preface.h
+   *                 declarations.h
    *                 NumberType = number type
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
@@ -18,21 +18,21 @@ namespace mathq {
    ********************************************************************
    */
 
-  template <class Element, int rank>
+  template <class Element, int rank, size_t... ints>
   class
-    MultiArray : public MArrayExpRW<MultiArray<Element, rank>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), rank> {
+    MultiArray : public MArrayExpRW<MultiArray<Element, rank>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::depth(), rank> {
   public:
 
     typedef MultiArray<Element, rank> ConcreteType;
 
     typedef Element ElementType;
     typedef typename NumberTrait<Element>::Type NumberType;
-    typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<NumberType>::Type OrderedNumberType;
 
     typedef typename ArrayTypeTrait<Element, 0>::Type MyArrayType;
 
     constexpr static int rank_value = rank;
-    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
+    constexpr static int depth = 1 + NumberTrait<Element>::depth();
     constexpr static int depth_value = depth;
 
 
@@ -132,8 +132,8 @@ namespace mathq {
     inline size_t size(void) const {
       return data_.size();
     }
-    size_t ndims(void) const {
-      return dimensions_->ndims();
+    size_t rank(void) const {
+      return dimensions_->rank();
     }
     Dimensions dims(void) const {
       return *dimensions_;
@@ -150,15 +150,15 @@ namespace mathq {
       return myaddr;
     }
 
-    size_t tdims(void) const {
+    size_t template_dims(void) const {
       return dims();
     }
 
-    inline size_t getDepth(void) const {
+    inline size_t depth(void) const {
       return depth;
     }
 
-    Dimensions eldims(void) const {
+    Dimensions element_dims(void) const {
       Dimensions dimensions();
       if constexpr (depth > 1) {
         if (size() > 0) {
@@ -169,7 +169,7 @@ namespace mathq {
     }
 
     // the size of each element
-    inline size_t elsize(void) const {
+    inline size_t element_size(void) const {
       if constexpr (depth < 2) {
         return 1;
       }
@@ -329,11 +329,11 @@ namespace mathq {
       // MOUT << "  ";
       // TLDISP(inds);
       // MOUT << "  ";
-      // TLDISP(ndims());
+      // TLDISP(rank());
       Indices inds_next(inds);
       // error if (inds.size() != sum deepdims[i].rank
       Indices mine;
-      for (int i = 0; i < ndims(); i++) {
+      for (int i = 0; i < rank(); i++) {
         mine.push_back(inds_next[0]);
         inds_next.erase(inds_next.begin());
       }
@@ -357,11 +357,11 @@ namespace mathq {
       // MOUT << "  ";
       // TLDISP(inds);
       // MOUT << "  ";
-      // TLDISP(ndims());
+      // TLDISP(rank());
       Indices inds_next(inds);
       // error if (inds.size() != sum deepdims[i].rank
       Indices mine;
-      for (int i = 0; i < ndims(); i++) {
+      for (int i = 0; i < rank(); i++) {
         mine.push_back(inds_next[0]);
         inds_next.erase(inds_next.begin());
       }
@@ -439,8 +439,8 @@ namespace mathq {
     /* template<typename... Ts> size_t index(int i, const Ts... args){ */
     /* const int size = sizeof...(args); */
     /* int argarray[size] = {args...}; */
-    /*   Indices& inds = *(new Indices(ndims())); */
-    /*   const size_t depth = this->ndims(); */
+    /*   Indices& inds = *(new Indices(rank())); */
+    /*   const size_t depth = this->rank(); */
     /*   inds[0] = i;  */
     /*   for(size_t n = 1; n < depth; n++) { */
     /* 	inds[n] = argarray[n];  */
@@ -454,8 +454,8 @@ namespace mathq {
 
       const size_t size = sizeof...(args);
       size_t argarray[size] = { std::make_unsigned<int>::type(args)... };
-      Indices& inds = *(new Indices(ndims()));
-      const size_t NN = this->ndims();
+      Indices& inds = *(new Indices(rank()));
+      const size_t NN = this->rank();
       for (size_t n = 0; n < NN; n++) {
         inds[n] = argarray[n];
       }
@@ -465,7 +465,7 @@ namespace mathq {
 
     size_t index(const std::initializer_list<size_t>& mylist) const {
       // TODO: check size
-      const size_t NN = this->ndims();
+      const size_t NN = this->rank();
       const size_t N = mylist.size();
       size_t k = 0;
       size_t n = 0;
@@ -665,7 +665,7 @@ namespace mathq {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       //      MDISP(n,dim);
-      const int delta = this->ndims() - dim.ndims();
+      const int delta = this->rank() - dim.rank();
       if (delta == 0) {
         stream << std::endl;
       }
@@ -675,14 +675,14 @@ namespace mathq {
       }
       stream << indent << style.apply("{");
 
-      if (dim.ndims() > 1) {
+      if (dim.rank() > 1) {
         stream << std::endl;
       }
-      if (dim.ndims() > 0) {
+      if (dim.rank() > 0) {
         Dimensions newdim(dim);
         newdim.erase(newdim.begin());
         for (size_t j = 0; j < dim[0]; j++) {
-          if (dim.ndims() > 1) {
+          if (dim.rank() > 1) {
             Dimensions newdim(dim);
             newdim.erase(newdim.begin());
             this->send(stream, n, newdim);
@@ -698,10 +698,10 @@ namespace mathq {
           }
         }
       }
-      if (dim.ndims() == 1) {
+      if (dim.rank() == 1) {
         stream << style.apply("}");
       }
-      else if (dim.ndims() == this->ndims()) {
+      else if (dim.rank() == this->rank()) {
         stream << std::endl
           << indent << style.apply("}");
       }

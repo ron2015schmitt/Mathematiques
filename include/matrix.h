@@ -22,20 +22,20 @@ namespace mathq {
 
 
   template <class Element, int NR, int NC>
-  class Matrix : public MArrayExpRW<Matrix<Element, NR, NC>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 2> {
+  class Matrix : public MArrayExpRW<Matrix<Element, NR, NC>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::depth(), 2> {
 
   public:
     typedef Matrix<Element, NR, NC> ConcreteType;
 
     typedef Element ElementType;
     typedef typename NumberTrait<Element>::Type NumberType;
-    typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<NumberType>::Type OrderedNumberType;
 
     typedef typename ArrayTypeTrait<Element, NR* NC>::Type MyArrayType;
 
     constexpr static int rank = 2;
     constexpr static int rank_value = rank;
-    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
+    constexpr static int depth = 1 + NumberTrait<Element>::depth();
     constexpr static int depth_value = depth;
 
     static constexpr bool resizable = (NR*NC==0) ? true : false;
@@ -190,7 +190,7 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    size_t ndims(void)  const {
+    size_t rank(void)  const {
       return rank;
     }
 
@@ -222,16 +222,16 @@ namespace mathq {
       return myaddr;
     }
 
-    Dimensions tdims(void) const {
+    Dimensions template_dims(void) const {
       Dimensions dimensions(NR, NC);
       return dimensions;
     }
 
 
-    constexpr size_t getDepth(void) const {
+    constexpr size_t depth(void) const {
       return depth_value;
     }
-    Dimensions eldims(void) const {
+    Dimensions element_dims(void) const {
       Dimensions dimensions();
       if constexpr (depth_value>1) {
         if (size()>0) {
@@ -242,7 +242,7 @@ namespace mathq {
     }
 
     // the size of each element
-    inline size_t elsize(void) const {
+    inline size_t element_size(void) const {
       if constexpr (depth_value<=1) {
         return 1;
       }

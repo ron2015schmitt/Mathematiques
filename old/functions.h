@@ -383,12 +383,12 @@ namespace matricks {
     Number operator|( const MArrayExpR<Number,A>& a, const  MArrayExpR<Number,B>& b ) {
 
     // (Scalar|Scalar)
-    if ((a.ndims() == 0) && (b.ndims() == 0)) {
+    if ((a.rank() == 0) && (b.rank() == 0)) {
       return a[0]*b[0];
     }
 
     // (Vector|Vector)
-    if ((a.ndims() == 1) && (b.ndims() == 1)) {
+    if ((a.rank() == 1) && (b.rank() == 1)) {
       Number result = Number(0);
       for (size_t i = a.deepsize(); i--;) {
 	result += a[i]*b[i];
@@ -412,7 +412,7 @@ namespace matricks {
     Number operator&( const MArrayExpR<Number,A>& a, const  MArrayExpR<Number,B>& b ) {
 
     // (Scalar&Scalar)
-    if ((a.ndims() == 0) && (b.ndims() == 0)) {
+    if ((a.rank() == 0) && (b.rank() == 0)) {
       return a[0]*b[0];
     }
 
@@ -433,7 +433,7 @@ namespace matricks {
     Number operator^( const MArrayExpR<Number,A>& a, const  MArrayExpR<Number,B>& b ) {
 
     // (Scalar^Scalar)
-    if ((a.ndims() == 0) && (b.ndims() == 0)) {
+    if ((a.rank() == 0) && (b.rank() == 0)) {
       return a[0]*b[0];
     }
 
@@ -716,9 +716,9 @@ namespace matricks {
   // roundzero(MultiArray)
 
   template <class NT1, class A>
-     auto roundzero(const MArrayExpR<NT1,A>& a, const typename OrderedNumberTrait<NT1>::Type tolerance = MatricksHelper< typename OrderedNumberTrait<NT1>::Type >::tolerance)
+     auto roundzero(const MArrayExpR<NT1,A>& a, const typename SimpleNumberTrait<NT1>::Type tolerance = MatricksHelper< typename SimpleNumberTrait<NT1>::Type >::tolerance)
     {
-      typedef typename OrderedNumberTrait<NT1>::Type TOL;
+      typedef typename SimpleNumberTrait<NT1>::Type TOL;
       return  TER_Binary< MArrayExpR<NT1,A>,TOL, NT1,TOL, Fun_Roundzero<NT1,TOL> >(a, tolerance);
     }
   
@@ -1205,7 +1205,7 @@ namespace matricks {
   //          checks dimensions first
   // -------------------------------------------------------------------
   template <typename Number, class A, class B>
-    inline bool approx(const MArrayExpR<Number,A>& tensor1, const MArrayExpR<Number,B>& tensor2, typename OrderedNumberTrait<Number>::Type tolerance = MatricksHelper<typename OrderedNumberTrait<Number>::Type>::tolerance) {
+    inline bool approx(const MArrayExpR<Number,A>& tensor1, const MArrayExpR<Number,B>& tensor2, typename SimpleNumberTrait<Number>::Type tolerance = MatricksHelper<typename SimpleNumberTrait<Number>::Type>::tolerance) {
     if (!dimequiv(tensor1,tensor2)) {
       return false;
     }
@@ -1388,7 +1388,7 @@ namespace matricks {
 
   // findtrue(a)
 
-  // NOTE: declaration in preface.h
+  // NOTE: declaration in declarations.h
   
   template <class A> 
     inline Vector<size_t>& findtrue( const MArrayExpR<bool,A>& a ) {

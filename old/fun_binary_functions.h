@@ -10,7 +10,7 @@
 template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank> 
 auto operator+(const MArrayExpR<A,E1,NT1,depth,rank>& x1, const MArrayExpR<B,E2,NT2,depth,rank>& x2) {
   typedef typename AddType<NT1,NT2>::Type NT3;
-  typedef typename NumberTrait<E1,NT3>::ReplaceTypeE E3;   // see TODO note above
+  typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
   return  TER_Binary<MArrayExpR<A,E1,NT1,depth,rank>,
 		     MArrayExpR<B,E2,NT2,depth,rank>,
 		     E1,E2,E3,NT1,NT2,NT3,depth,depth,depth,rank,rank,rank,
@@ -25,11 +25,11 @@ auto operator+(const MArrayExpR<A,E1,NT1,depth,rank>& x1, const MArrayExpR<B,E2,
 template <class A, class NT2, class Element, class NT1, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>> 
 auto operator+(const MArrayExpR<A,Element,NT1,depth,rank>& x1, const NT2& x2) {
   typedef typename AddType<NT1,NT2>::Type NT3;
-  typedef typename NumberTrait<Element,NT3>::ReplaceTypeE E3;   
+  typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
   return  TER_Binary<MArrayExpR<A,Element,NT1,depth,rank>,
 		     NT2,
-		     Element,Null,E3,NT1,NT2,NT3,depth,0,depth,rank,rank,rank,
-		     FUNCTOR_add<Element,Null,E3,NT1,NT2,NT3> >(x1,x2); 
+		     Element,NullType,E3,NT1,NT2,NT3,depth,0,depth,rank,rank,rank,
+		     FUNCTOR_add<Element,NullType,E3,NT1,NT2,NT3> >(x1,x2); 
 }
 
 
@@ -39,11 +39,11 @@ auto operator+(const MArrayExpR<A,Element,NT1,depth,rank>& x1, const NT2& x2) {
 template <class NT1, class B, class Element, class NT2, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>> 
 auto operator+(const NT1& x1, const MArrayExpR<B,Element,NT2,depth,rank>& x2) {
   typedef typename AddType<NT1,NT2>::Type NT3;
-  typedef typename NumberTrait<Element,NT3>::ReplaceTypeE E3;   
+  typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
   return  TER_Binary<NT1,
 		     MArrayExpR<B,Element,NT2,depth,rank>,
-		     Null,Element,E3,NT1,NT2,NT3,0,depth,depth,rank,rank,rank,
-		     FUNCTOR_add<Null,Element,E3,NT1,NT2,NT3> >(x1,x2); 
+		     NullType,Element,E3,NT1,NT2,NT3,0,depth,depth,rank,rank,rank,
+		     FUNCTOR_add<NullType,Element,E3,NT1,NT2,NT3> >(x1,x2); 
 }
 
 
@@ -60,7 +60,7 @@ auto operator+(const MArrayExpR<A,E1,NT1,D1,R1>& x1, const MArrayExpR<B,E2,NT2,D
   typedef E1 Element;   // see TODO note above
   constexpr int R3 = R1;
   constexpr int D3 = D1;
-  typedef typename NumberTrait<Element,NT3>::ReplaceTypeE E3;
+  typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;
   //    MOUT << "A" <<std::endl;
   return  TER_Binary<MArrayExpR<A,E1,NT1,D1,R1>,
 		     MArrayExpR<B,E2,NT2,D2,R2>,
@@ -80,7 +80,7 @@ auto operator+(const MArrayExpR<A,E1,NT1,D1,R1>& x1, const MArrayExpR<B,E2,NT2,D
   typedef E2 Element;   // see TODO note above
   constexpr int R3 = R2;
   constexpr int D3 = D2;
-  typedef typename NumberTrait<Element,NT3>::ReplaceTypeE E3;  
+  typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;  
   //    MOUT << "B" <<std::endl;
   return  TER_Binary<MArrayExpR<A,E1,NT1,D1,R1>,
 		     MArrayExpR<B,E2,NT2,D2,R2>,
@@ -106,7 +106,7 @@ auto operator+(const MArrayExpR<A,E1,NT1,D1,rank>& x1, const MArrayExpR<B,NT2,NT
   typedef MArrayExpR<B,NT2,NT2,D2,rank> E2;  
 
   typedef typename AddType<NT1,NT2>::Type NT3;
-  typedef typename NumberTrait<E1,NT3>::ReplaceTypeE E3;   // see TODO note above
+  typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  TER_Binary<MArrayExpR<A,E1,NT1,D1,rank>,
@@ -130,7 +130,7 @@ auto operator+(const MArrayExpR<A,NT1,NT1,D1,rank>& x1, const MArrayExpR<B,E2,NT
   //    typedef A E1;  
   typedef MArrayExpR<A,NT1,NT1,D1,rank> E1;  
   typedef typename AddType<NT1,NT2>::Type NT3;
-  typedef typename NumberTrait<E2,NT3>::ReplaceTypeE E3;   // see TODO note above
+  typedef typename NumberTrait<E2,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
   return  TER_Binary<MArrayExpR<A,NT1,NT1,D1,rank>,

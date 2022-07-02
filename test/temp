@@ -13,7 +13,7 @@ compile-time settings
 [0m[1m[38;5;129mScalarTest.cpp[0m - scalar tests
 
 
-[38;5;21m[1mTest#1:   [0m[38;5;240mresult = (s1.size() == 1) && (s1.dims().datasize() == 1) && (s1.ndims() == 0) && (s1.dims().size() == 0)[0m
+[38;5;21m[1mTest#1:   [0m[38;5;240mresult = (s1.size() == 1) && (s1.dims().datasize() == 1) && (s1.rank() == 0) && (s1.dims().size() == 0)[0m
 [32m☀ [0m[1mdimensions[0m[38;5;240m ➜ [0m[36mDimensions[0m {}[38;5;240m;[0m
 [32m☀ [0m[1mdimensions[0m[38;5;240m ➜ [0m[36mDimensions[0m {}[38;5;240m;[0m
                  = [38;5;22mtrue[0m

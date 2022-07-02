@@ -135,13 +135,13 @@ int main(int argc, char *argv[]) {
     CR();
     MultiArray<double> t0;
     TLDISP(t0.dims());
-    TLDISP(t0.eldims());
+    TLDISP(t0.element_dims());
     TLDISP(t0);
     MultiArray<double, 3> t1;
     TLDISP(t1.dims());
     TLDISP(t1.deepdims());
     TLDISP(t1.deepsize());
-    TLDISP(t1.getDepth());
+    TLDISP(t1.depth());
     TLDISP(t1);
     Dimensions dims(3, 2, 5);
     MultiArray<double, 3> t2(dims);
@@ -163,7 +163,7 @@ int main(int argc, char *argv[]) {
 
     MultiArray<double, 1> t3{1, 2, 3};
     TLDISP(t3.dims());
-    TLDISP(t3.eldims());
+    TLDISP(t3.element_dims());
     TLDISP(t3);
 
 
@@ -262,7 +262,7 @@ int main(int argc, char *argv[]) {
     TLDISP(s.dims());
     TLDISP(s.size());
     TLDISP(s().dims());
-    TLDISP(s.getDepth());
+    TLDISP(s.depth());
     TLDISP(s.deepdims());
 
     Scalar<MultiArray<double, 2>> s2;
@@ -391,14 +391,14 @@ int main(int argc, char *argv[]) {
     TLDISP(m1.dims());
     TLDISP(m1.size());
     TLDISP(m1.deepdims());
-    Dimensions tdims(2, 3, 2);
+    Dimensions template_dims(2, 3, 2);
 
     for (int i = 0; i < m1.dims()[0]; i++) {
       for (int j = 0; j < m1.dims()[1]; j++) {
-        m1(i, j).resize(tdims);
-        for (int k = 0; k < tdims[0]; k++) {
-          for (int l = 0; l < tdims[1]; l++) {
-            for (int m = 0; m < tdims[2]; m++) {
+        m1(i, j).resize(template_dims);
+        for (int k = 0; k < template_dims[0]; k++) {
+          for (int l = 0; l < template_dims[1]; l++) {
+            for (int m = 0; m < template_dims[2]; m++) {
               m1(i, j)(k, l, m) = double(10000 * i) + double(1000 * j) + double(100 * k) + double(10 * l) + double(m);
             }
           }
@@ -466,8 +466,8 @@ int main(int argc, char *argv[]) {
     TLDISP(t);
     TLDISP(t.dims());
     TLDISP(t.deepdims());
-    Dimensions tdims(2, 2);
-    t.resize(tdims);
+    Dimensions template_dims(2, 2);
+    t.resize(template_dims);
     t(0, 0) = 1;
     t(0, 1) = 2;
     t(1, 0) = 3;
@@ -475,7 +475,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t);
     TLDISP(t.dims());
     TLDISP(t.deepdims());
-    TLDISP(t.eldims());
+    TLDISP(t.element_dims());
   }
   {
 
@@ -486,7 +486,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t(1, 0)());
     TLDISP(t.dims());
     TLDISP(t.deepdims());
-    TLDISP(t.eldims());
+    TLDISP(t.element_dims());
     decltype(t) xx;
     TLDISP(xx);
     typename decltype(t)::NumberType d;

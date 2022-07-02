@@ -44,7 +44,7 @@ namespace matricks {
 
     static inline std::string classname() {
       Number d;
-      return functor_namestyle.apply("Fun_Plus")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Plus")+display::bracketAndStyleTypename(d);
     }
 #endif
         
@@ -73,7 +73,7 @@ namespace matricks {
 
     static inline std::string classname() {
       Number d;
-      return functor_namestyle.apply("Fun_Minus")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Minus")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -87,8 +87,8 @@ namespace matricks {
   public:
     typedef typename NumberTrait<NT1>::Type TypeIn;
     typedef typename NumberTrait<NT2>::Type Type;
-    typedef typename OrderedNumberTrait<NT1>::Type FTypeIn;
-    typedef typename OrderedNumberTrait<NT2>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<NT1>::Type FTypeIn;
+    typedef typename SimpleNumberTrait<NT2>::Type OrderedNumberType;
 
     static inline Type apply(const TypeIn a) { 
       return numbercast<OrderedNumberType,FTypeIn>(a); 
@@ -333,7 +333,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Sqr")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Sqr")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -361,7 +361,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Cube")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Cube")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -391,7 +391,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Sqrt")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Sqrt")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -421,7 +421,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Exp")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Exp")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -452,7 +452,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Log")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Log")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -484,7 +484,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Log2")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Log2")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -516,7 +516,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Log10")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Log10")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -554,7 +554,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Sin")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Sin")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -584,7 +584,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Cos")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Cos")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -615,7 +615,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Tan")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Tan")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -645,7 +645,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Asin")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Asin")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -676,7 +676,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Acos")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Acos")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -707,7 +707,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Atan")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Atan")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -777,7 +777,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Sinh")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Sinh")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -808,7 +808,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Cosh")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Cosh")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -839,7 +839,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Tanh")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Tanh")+display::bracketAndStyleTypename(d);
 
     }
 #endif
@@ -876,7 +876,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Abs")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Abs")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -906,7 +906,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Sgn")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Sgn")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -941,7 +941,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Ceil")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Ceil")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -974,7 +974,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Floor")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Floor")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -1006,7 +1006,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Round")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Round")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -1115,7 +1115,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_UnaryUser")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_UnaryUser")+display::bracketAndStyleTypename(d);
     }
 #endif
 	
@@ -1610,7 +1610,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       TypeIn d;
-      return functor_namestyle.apply("Fun_Arg")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Arg")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -1640,7 +1640,7 @@ namespace matricks {
     
     static inline std::string classname() {
       Number d;
-      return functor_namestyle.apply("Fun_Conj")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Conj")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -1671,7 +1671,7 @@ namespace matricks {
     static inline std::string classname() {
       using namespace display;
       Number d;
-      return functor_namestyle.apply("Fun_Real")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Real")+display::bracketAndStyleTypename(d);
     }
 #endif
 
@@ -1700,7 +1700,7 @@ namespace matricks {
     
     static inline std::string classname() {
       Number d;
-      return functor_namestyle.apply("Fun_Imag")+display::getBracketedTypeName(d);
+      return functor_namestyle.apply("Fun_Imag")+display::bracketAndStyleTypename(d);
     }
 #endif
 

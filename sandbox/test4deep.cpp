@@ -59,17 +59,17 @@ int main(int argc, char* argv[]) {
     TLDISP(x.dims());
     TLDISP(x.size());
     TLDISP(x.deepdims());
-    Dimensions tdims(2, 1, 2);
+    Dimensions template_dims(2, 1, 2);
 
     for (size_t h = 0; h < x().size(); h++) {
       const size_t NR = x()(h).Nrows();
       const size_t NC = x()(h).Ncols();
       for (size_t i = 0; i < NR; i++) {
         for (size_t j = 0; j < NC; j++) {
-          x()(h)(i, j).resize(tdims);
-          for (size_t k = 0; k < tdims[0]; k++) {
-            for (size_t l = 0; l < tdims[1]; l++) {
-              for (size_t m = 0; m < tdims[2]; m++) {
+          x()(h)(i, j).resize(template_dims);
+          for (size_t k = 0; k < template_dims[0]; k++) {
+            for (size_t l = 0; l < template_dims[1]; l++) {
+              for (size_t m = 0; m < template_dims[2]; m++) {
                 x()(h)(i, j)(k, l, m) = double(100000 * h) + double(10000 * i) + double(1000 * j) + double(100 * k) + double(10 * l) + double(m);
               }
             }
@@ -183,10 +183,10 @@ int main(int argc, char* argv[]) {
       const size_t NC = x()(h).Ncols();
       for (size_t i = 0; i < NR; i++) {
         for (size_t j = 0; j < NC; j++) {
-          Dimensions tdims = x()(h)(i, j).dims();
-          for (size_t k = 0; k < tdims[0]; k++) {
-            for (size_t l = 0; l < tdims[1]; l++) {
-              for (size_t m = 0; m < tdims[2]; m++) {
+          Dimensions template_dims = x()(h)(i, j).dims();
+          for (size_t k = 0; k < template_dims[0]; k++) {
+            for (size_t l = 0; l < template_dims[1]; l++) {
+              for (size_t m = 0; m < template_dims[2]; m++) {
                 // MDISP(h, i, j, k, l, m, x()(h)(i, j)(k, l, m), g3(k, l, m)(i, j)(h)()); // this for checking by hand
                 if (x()(h)(i, j)(k, l, m) != g3(k, l, m)(i, j)(h)()) {
                   OUTPUT("FAILED!!!");

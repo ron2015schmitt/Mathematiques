@@ -182,8 +182,8 @@ int main() {
   TRDISP(ones<Vector<double, 2>>());
   DISP(sizeof(PolarCoords<double>)/sizeof(double));
 
-  VectorOfGrids<double, 2> vgA;
-  GridOfVectors<double, 2> vgB;
+  MultiArrayOfGrids<double, 2> vgA;
+  GridOfMultiArrays<double, 2> vgB;
   TRDISP(vgA);
   TRDISP(vgB);
   CG<double,2,false>::Type cgA;

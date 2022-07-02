@@ -3,50 +3,88 @@
 
 namespace mathq {
 
-    /********************************************************************
-     * Scalar<Element>    -- variable size vector (valarray)
-     *                 Element  = type for elements
-     *
-     *                 NumberType = number type
-     *                   = underlying algebraic field
-     *                     ex. int, double, std::complex<double>
-     *                 depth = tensor depth. if Element=NumberType, then depth=1.
-    ********************************************************************
-     */
 
-  template <class Element> class Scalar :
-    public MArrayExpRW<Scalar<Element>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 0> {
-
+  template <typename Element, size_t depth_value = 0>
+  class ScalarHelper {
   public:
-    typedef Scalar<Element> ConcreteType;
+    using DimensionsType = const FixedDims<>;
+    using NestedDimensionsType = NestedDimensions<DimensionsType, ElementDimensionsType>;
+    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
-    typedef Element ElementType;
-    typedef typename NumberTrait<Element>::Type NumberType;
-    typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumberType;
-
-    typedef Element MyArrayType;
-
-    constexpr static int rank = 0;
-    constexpr static int rank_value = rank;
-    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
-    constexpr static int depth_value = depth;
-
-  private:
-
-    // *********************** OBJECT DATA ***********************************
-    //
-    // do NOT declare any other storage.
-    // keep the instances lightweight
-
-    Element data_;
+    using ParentType = MArrayExpRW<
+      MultiArray<Element, 0>,
+      Element,
+      typename NumberTrait<Element>::Type,
+      1 + NumberTrait<Element>::depth(),
+      0,
+      ScalarHelper<Element>::DimensionsType,
+    >;
+  };
 
 
+  /******************************************************************************
+   * Scalar<Element> == MultiArray<Element>
+   *
+   *                 Element  = type for elements
+   *
+   *                 NumberType = number type
+   *                   = underlying algebraic field
+   *                     ex. int, double, std::complex<double>
+   *                 depth = tensor depth. if Element=NumberType, then depth=1.
+  *********************************************************************************
+   */
 
+
+  template <class Element>
+  class MultiArray<Element, 0> : public ScalarHelper<Element>::ParentType {
 
   public:
 
     //**********************************************************************
-    //************************** CONSTRUCTORS ******************************
+    //                            TYPES 
+    //**********************************************************************
+
+    using ConcreteType = Scalar<Element>;
+
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<Element>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using DimensionsType = typename ScalarHelper<Element>::DimensionsType;
+    using ElementDimensionsType = typename ScalarHelper<Element, depth_value>::ElementDimensionsType;
+    using NestedDimensionsType = typename ScalarHelper<Element>::NestedDimensionsType;
+
+    using MyArrayType = Element;
+
+
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = 0;
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t template_dimensions_value = DimensionsType;
+
+    constexpr static bool is_dynamic() noexcept {
+      return false;
+    }
+
+
+    //**********************************************************************
+    // OBJECT DATA 
+    //
+    // do NOT declare any other storage.
+    // keep the instances lightweight
+    //**********************************************************************
+
+    Element data;
+
+
+  public:
+
+
+    //**********************************************************************
+    //                            CONSTRUCTORS 
     //**********************************************************************
 
 
@@ -56,7 +94,7 @@ namespace mathq {
         *this = 0;
       }
       else {
-        data_ = *(new Element());
+        data = *(new Element());
       }
       constructorHelper();
     }
@@ -90,7 +128,7 @@ namespace mathq {
     }
 
 
-    // ************* C++11 initializer_list CONSTRUCTOR---------------------
+    // CONSTRUCTOR: initializer_list 
     Scalar<Element>(const std::initializer_list<Element>& mylist) {
       *this = mylist;
       constructorHelper();
@@ -104,45 +142,78 @@ namespace mathq {
     }
 
 
-
-
-
     //**********************************************************************
-    //************************** DESTRUCTOR ******************************
+    //                             DESTRUCTOR 
     //**********************************************************************
 
     ~Scalar<Element>() {
-      //remove from MultiArrayPool
     }
 
 
     //**********************************************************************
-    //************************** Size related  ******************************
+    //                         Basis characteristics
     //**********************************************************************
 
+    bool isExpression(void) const {
+      return false;
+    }
+    MultiArrays getEnum(void) const {
+      return T_SCALAR;
+    }
+    VectorofPtrs getAddresses(void) const {
+      VectorofPtrs myaddr((void*)this);
+      return myaddr;
+    }
 
+
+    //**********************************************************************
+    //                            Size related  
+    //**********************************************************************
+
+    size_t rank(void) const {
+      return rank_value;
+    }
+    inline size_t depth(void) const {
+      return depth_value;
+    }
     inline size_t size(void) const {
       return 1;
     }
-    inline size_t getDepth(void) const {
-      return depth;
+
+    DimensionsType& dims(void) const {
+      return template_dims();
+    }
+    const DimensionsType& template_dims(void) const {
+      return template_dimensions_value;
     }
 
-    Dimensions eldims(void) const {
-      Dimensions dimensions();
-      if constexpr (depth>1) {
-        return data_.dims();
-      }
-      else {
-        return *(new Dimensions());
-      }
-    }
-    inline size_t elsize(void) const {
+
+    //**********************************************************************
+    //                    Element Size related  
+    //**********************************************************************
+
+    inline size_t element_size(void) const {
       if constexpr (depth<2) {
         return 1;
       }
       else {
-        return data_.size();
+        return data.size();
+      }
+    }
+    Dimensions element_dims(void) const {
+      if constexpr (depth>1) {
+        return data.dims();
+      }
+      else {
+        return *(new FixedDims<>);
+      }
+    }
+    inline size_t element_size(void) const {
+      if constexpr (depth<2) {
+        return 1;
+      }
+      else {
+        return data.size();
       }
     }
     inline size_t eldeepsize(void) const {
@@ -150,9 +221,16 @@ namespace mathq {
         return 1;
       }
       else {
-        return data_.deepsize();
+        return data.deepsize();
       }
     }
+
+
+
+    //**********************************************************************
+    //                       Nested Size related  
+    //**********************************************************************
+
     size_t deepsize(void) const {
       if constexpr (depth<2) {
         return this->size();
@@ -168,45 +246,66 @@ namespace mathq {
     std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
       if constexpr (depth>1) {
-        data_.deepdims(parentdims);
+        data.deepdims(parentdims);
       }
       return parentdims;
     }
 
 
-    size_t ndims(void) const {
-      return 0;
-    }
-    Dimensions dims(void) const {
-      Dimensions dimensions;
-      return dimensions;
-    }
-    Dimensions tdims(void) const {
-      Dimensions dimensions;
-      return dimensions;
-    }
-    bool isExpression(void) const {
-      return false;
-    }
-    MultiArrays getEnum(void) const {
-      return T_SCALAR;
-    }
-    VectorofPtrs getAddresses(void) const {
-      VectorofPtrs myaddr((void*)this);
-      return myaddr;
+
+    //**********************************************************************
+    //                        Text Related
+    //**********************************************************************
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "Scalar";
+      s += StyledString::get(ANGLE1).get();
+      Element e;
+      s += getTypeName(e);
+      //if (depth>1) {
+      //  s += StyledString::get(COMMA).get();
+      //  s += "depth=";
+      //  s += num2string(depth);
+      //}
+      s += StyledString::get(ANGLE2).get();
+      return s;
     }
 
 
-    // TODO: should just pass an index and make deepdims const
+    // stream << operator
 
+    friend std::ostream& operator<<(std::ostream& stream, const Scalar<Element>& s) {
+      using namespace display;
+      Style& style = FormatDataVector::style_for_punctuation;
+      stream << style.apply(FormatDataVector::string_opening);
+      dispval_strm(stream, s());
+      stream << style.apply(FormatDataVector::string_closing);
 
-    Scalar<Element>& resize(std::vector<Dimensions>& deepdims) {
-      if constexpr (depth>1) {
-        deepdims.erase(deepdims.begin());
-        data_.resize(deepdims);
-      }
-      return *this;
+      return stream;
     }
+
+
+    //template <typename NumberType>	
+    friend inline std::istream& operator>>(const std::string s, Scalar<Element>& x) {
+      std::istringstream st(s);
+      return (st >> x);
+    }
+
+
+    // stream >> operator
+
+    // TODO: implement this
+    friend std::istream& operator>>(std::istream& stream, Scalar<Element>& x) {
+      return stream;
+    }
+
+#if MATHQ_DEBUG>=1
+    std::string expression(void) const {
+      return "";
+  }
+#endif
+
 
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
@@ -219,20 +318,20 @@ namespace mathq {
     // "read/write": unsigned
     NumberType& dat(const size_t n) {
       if constexpr (depth <= 1) {
-        return data_;
+        return data;
       }
       else {
-        return (data_).dat(n);
+        return (data).dat(n);
       }
     }
 
     // "read/write": signed
     const NumberType& dat(const size_t n)  const {
       if constexpr (depth <= 1) {
-        return data_;
+        return data;
       }
       else {
-        return (data_).dat(n);
+        return (data).dat(n);
       }
     }
 
@@ -295,13 +394,23 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write": unsigned
+    Element& operator[]() {
+      return data;
+    }
+
+    // "read/write": signed
+    const Element& operator[]()  const {
+      return data;
+    }
+
+    // "read/write": unsigned
     Element& operator[](const size_t n) {
-      return data_;
+      return data;
     }
 
     // "read/write": signed
     const Element& operator[](const size_t n)  const {
-      return data_;
+      return data;
     }
 
 
@@ -313,14 +422,23 @@ namespace mathq {
 
     // "read/write"
     Element& operator()() {
-      return data_;
+      return data;
     }
 
     // "read only"
     const Element& operator()()  const {
-      return data_;
+      return data;
     }
 
+    // "read/write": unsigned
+    Element& operator()(const size_t n) {
+      return data;
+    }
+
+    // "read/write": signed
+    const Element& operator()(const size_t n)  const {
+      return data;
+    }
 
 
 
@@ -330,7 +448,7 @@ namespace mathq {
     //**********************************************************************
 
     Scalar<Element>& operator=(const Element e) {
-      data_ = e;
+      data = e;
       return *this;
     }
 
@@ -345,7 +463,7 @@ namespace mathq {
 
     Scalar<Element>& operator=(const Scalar<Element>& s2) {
       if constexpr (depth<=1) {
-        data_ = s2();
+        data = s2();
       }
       else {
         resize(s2.deepdims());
@@ -359,7 +477,7 @@ namespace mathq {
 
     Scalar<Element>& operator=(const std::initializer_list<Element>& mylist) {
       typename std::initializer_list<Element>::iterator it = mylist.begin();
-      data_ = *it;
+      data = *it;
       return *this;
     }
 
@@ -367,7 +485,7 @@ namespace mathq {
     template <class X>
     Scalar<Element>& operator=(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
       if constexpr (depth<=1) {
-        data_ = x[0];
+        data = x[0];
       }
       else {
         resize(x.deepdims());
@@ -389,7 +507,7 @@ namespace mathq {
 
 
     Scalar<Element>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
-      data_ = mathq::roundzero(data_, tolerance);
+      data = mathq::roundzero(data, tolerance);
       return *this;
     }
 
@@ -399,75 +517,11 @@ namespace mathq {
     template< typename T = NumberType >
     typename std::enable_if<is_complex<T>{}, Scalar<T>& >::type conj() {
       using std::conj;
-      data_ = conj(data_);
+      data = conj(data);
       return *this;
     }
 
-
-
-
-
-    //**********************************************************************
-    //************************** Text and debugging ************************
-    //**********************************************************************
-
-    inline std::string classname() const {
-      using namespace display;
-      std::string s = "Scalar";
-      s += StyledString::get(ANGLE1).get();
-      Element e;
-      s += getTypeName(e);
-      //if (depth>1) {
-      //  s += StyledString::get(COMMA).get();
-      //  s += "depth=";
-      //  s += num2string(depth);
-      //}
-      s += StyledString::get(ANGLE2).get();
-      return s;
-    }
-
-
-#if MATHQ_DEBUG>=1
-    std::string expression(void) const {
-      return "";
-    }
-#endif
-
-
-    // stream << operator
-
-    friend std::ostream& operator<<(std::ostream& stream, const Scalar<Element>& s) {
-      using namespace display;
-      Style& style = FormatDataVector::style_for_punctuation;
-      stream << style.apply(FormatDataVector::string_opening);
-      dispval_strm(stream, s());
-      stream << style.apply(FormatDataVector::string_closing);
-
-      return stream;
-    }
-
-
-    //template <typename NumberType>	
-    friend inline std::istream& operator>>(const std::string s, Scalar<Element>& x) {
-      std::istringstream st(s);
-      return (st >> x);
-    }
-
-
-    // stream >> operator
-
-    // TODO: implement this
-    friend std::istream& operator>>(std::istream& stream, Scalar<Element>& x) {
-      return stream;
-    }
-
-    // --------------------- FRIENDS ---------------------
-
-
-
-  };
-
-
+};
 
 
 };

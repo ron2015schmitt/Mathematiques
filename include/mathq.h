@@ -6,33 +6,36 @@
 #ifndef MATHQ_H
 #define MATHQ_H
 
+// list C++ headers alphabetically
+#include <cassert>
 #include <cstddef>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
 #include <complex>
 #include <fstream>
+#include <initializer_list>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
 #include <limits>
 #include <list>
 #include <map>
+#include <numeric>
 #include <queue>
 #include <sstream>
+#include <stdarg.h>
 #include <string>
+#include <type_traits> 
 #include <typeinfo>
 #include <valarray>
 #include <vector>
 
-// C++11
-#include <initializer_list>
-#include <type_traits> 
-#include <stdarg.h>
 
 
 #include "version_mathq.h"  // auto generated
-#include "preface.h"
+#include "declarations.h"
+#include "type-traits.h"
 #include "math_real.h"
 #include "math_cplx.h"
 #include "math_imag.h"
@@ -43,8 +46,10 @@
 
 #include "multiarrays.h"
 #include "debug.h"
+
 #include "scalar.h"
 #include "vector.h"
+#include "vector-constant.h"
 
 #include "matrix.h"
 #include "matrix_constdiag.h"
@@ -64,8 +69,14 @@
 #include "matrix_uppertriangle.h"
 #include "matrix_vandermonde.h"
 #include "matrix_zero.h"
+#include "matrix-constant.h"
+#include "matrix-repeat-vec.h"
+#include "matrix-outer-product.h"
 
 #include "multi-array.h"
+#include "multi-array-constant.h"
+#include "multi-array-repeat-vec.h"
+#include "multi-array-outer-product.h"
 
 #include "expressionsR.h"
 #include "expressionsRW.h"

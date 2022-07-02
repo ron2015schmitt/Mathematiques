@@ -29,7 +29,7 @@ namespace mathq {
     typedef MatrixUpperTriangle<Number, N> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
 
 
     // if N is 0, then we use valarray
@@ -146,7 +146,7 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    size_t ndims(void)  const {
+    size_t rank(void)  const {
       return rank_value;
     }
 
@@ -178,22 +178,22 @@ namespace mathq {
       return myaddr;
     }
 
-    Dimensions tdims(void) const {
+    Dimensions template_dims(void) const {
       Dimensions dimensions(N, N);
       return dimensions;
     }
 
 
-    constexpr size_t getDepth(void) const {
+    constexpr size_t depth(void) const {
       return depth_value;
     }
-    Dimensions eldims(void) const {
+    Dimensions element_dims(void) const {
       Dimensions dimensions();
       return *(new Dimensions());
     }
 
     // the size of each element
-    inline size_t elsize(void) const {
+    inline size_t element_size(void) const {
       return 1;
     }
 

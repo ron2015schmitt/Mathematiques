@@ -63,13 +63,13 @@ namespace mathq {
       using namespace display;
       std::string sout = "";
       DOUT d;
-      sout = functor_style.apply("numbercast")+display::getBracketedTypeName(d)+"("+ sa + ")";
+      sout = functor_style.apply("numbercast")+display::bracketAndStyleTypename(d)+"("+ sa + ")";
       return sout;
     }
     static std::string classname() {
       using namespace display;
       Element e;
-      return functor_namestyle.apply("FUNCTOR_numbercast")+display::getBracketedTypeName(e);
+      return functor_namestyle.apply("FUNCTOR_numbercast")+display::bracketAndStyleTypename(e);
     }
   };
 
@@ -80,7 +80,7 @@ namespace mathq {
 
   template <class NT2, class X, class Element, typename Number, int depth, int rank>
   auto numbercast(const MArrayExpR<X, Element, Number, depth, rank>& x) {
-    typedef typename NumberTrait<Element, NT2>::ReplaceTypeD EOUT;
+    typedef typename NumberTrait<Element, NT2>::ReplacedNumberType EOUT;
     return  TER_Unary<MArrayExpR<X, Element, Number, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Number, NT2>>(x);
   }
 
@@ -98,7 +98,7 @@ namespace mathq {
 
   template <class Element, typename Number> class FUNCTOR_roundzero {
   public:
-    typedef typename OrderedNumberTrait<Number>::Type DTOL;
+    typedef typename SimpleNumberTrait<Number>::Type DTOL;
     static Number apply(const Number d, const DTOL tol) {
       return mathq::roundzero(d, tol);
     }
@@ -134,9 +134,9 @@ namespace mathq {
   //         
   // -------------------------------------------------------------------
   template <class X, class Element, typename Number, int depth, int rank>
-  auto roundzero(const MArrayExpR<X, Element, Number, depth, rank>& x, const typename OrderedNumberTrait<Number>::Type& tol = Functions<typename OrderedNumberTrait<Number>::Type>::tolerance) {
+  auto roundzero(const MArrayExpR<X, Element, Number, depth, rank>& x, const typename SimpleNumberTrait<Number>::Type& tol = Functions<typename SimpleNumberTrait<Number>::Type>::tolerance) {
 
-    typedef typename OrderedNumberTrait<Number>::Type DTOL;
+    typedef typename SimpleNumberTrait<Number>::Type DTOL;
     return  TER_Binary<MArrayExpR<X, Element, Number, depth, rank>,
       DTOL,
       Element, DTOL, Element, Number, DTOL, Number, depth, 0, depth, rank, 0, rank,
@@ -169,7 +169,7 @@ namespace mathq {
 
   template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_approx {
   public:
-    typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
+    typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
 
     static NT3 apply(const NT1 d1, const NT2 d2, const DTOL tol) {
       return mathq::approx(d1, d2, tol);
@@ -238,11 +238,11 @@ namespace mathq {
   // (11) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> 
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-  auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
-    typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
+    typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
-    typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;
+    typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3;
     return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
       MArrayExpR<B, E2, NT2, depth, rank>,
       DTOL,
@@ -253,11 +253,11 @@ namespace mathq {
   // (10) MultiArray<E1(NT1)> , NT2 
 
   template <class A, class E1, class NT1, class NT2, int depth, int rank>
-  auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
-    typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
+    typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
-    typedef typename NumberTrait<E1, NT3>::ReplaceTypeD E3;
+    typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3;
     return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
       NT2,
       DTOL,
@@ -270,11 +270,11 @@ namespace mathq {
   // (01) NT1, MultiArray<E2(NT2)> 
 
   template <class B, class E2, class NT1, class NT2, int depth, int rank>
-  auto approx(NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  auto approx(NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
-    typedef typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
+    typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
-    typedef typename NumberTrait<E2, NT3>::ReplaceTypeD E3;
+    typedef typename NumberTrait<E2, NT3>::ReplacedNumberType E3;
     return  TER_Ternary<NT1,
       MArrayExpR<B, E2, NT2, depth, rank>,
       DTOL,
@@ -289,7 +289,7 @@ namespace mathq {
   //          checks dimensions first
   // -------------------------------------------------------------------
   template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-  bool equal_approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const  typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type tol = Functions< typename OrderedNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  bool equal_approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const  typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type tol = Functions< typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     if (!dimequiv(x1, x2)) {
       return false;
@@ -356,7 +356,7 @@ namespace mathq {
 
   // findtrue(a) - deep indexing
 
-  // NOTE: declaration in preface.h
+  // NOTE: declaration in declarations.h
 
   template <class X, class Element, typename Number, int depth, int rank>
   EnableMethodIf<std::is_same<Number, bool>::value, Vector<size_t>&>
@@ -593,6 +593,24 @@ namespace mathq {
   // *********************************************************
   // *          
   // *********************************************************
+
+
+  // ***************************************************************************
+  // * nabla object
+  // ***************************************************************************
+
+  template <class T = void>
+  class Nabla {
+  public:
+    const unsigned int Nwindow;
+  public:
+    Nabla(const unsigned int Nwindow = 7) :
+      Nwindow(Nwindow) {
+    }
+    ~Nabla() {
+    }
+  };
+
 
 
 //
@@ -922,7 +940,7 @@ namespace mathq {
     }
 
 
-    size_t ndims(void) const {
+    size_t rank(void) const {
       return NDIMS;
     }
 
@@ -930,11 +948,11 @@ namespace mathq {
       Dimensions dimensions(NDIMS);
       return dimensions;
     }
-    Dimensions tdims(void) const {
+    Dimensions template_dims(void) const {
       Dimensions dimensions(NDIMS);
       return dimensions;
     }
-    inline size_t getDepth(void) const {
+    inline size_t depth(void) const {
       return 1;
     }
 

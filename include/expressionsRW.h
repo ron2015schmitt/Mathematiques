@@ -94,13 +94,13 @@ namespace mathq {
     size_t size(void) const {
       return ii_.size();
     }
-    size_t ndims(void) const {
-      return x_.ndims();
+    size_t rank(void) const {
+      return x_.rank();
     }
     Dimensions dims(void) const {
       return x_.dims();
     }
-    Dimensions tdims(void) const {
+    Dimensions template_dims(void) const {
       return this->dims();
     }
     std::vector<Dimensions>& deepdims(void) const {
@@ -113,15 +113,15 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t getDepth(void) const {
+    size_t depth(void) const {
       return depth_value;
     }
-    size_t elsize(void) const {
+    size_t element_size(void) const {
       if constexpr (depth_value<=1) {
         return 1;
       }
       else {
-        return x_.elsize();
+        return x_.element_size();
       }
     }
     size_t eldeepsize(void) const {
@@ -223,13 +223,13 @@ namespace mathq {
     size_t size(void) const {
       return ii_.size();
     }
-    size_t ndims(void) const {
-      return x_.ndims();
+    size_t rank(void) const {
+      return x_.rank();
     }
     Dimensions dims(void) const {
       return x_.dims();
     }
-    Dimensions tdims(void) const {
+    Dimensions template_dims(void) const {
       return this->dims();
     }
     std::vector<Dimensions>& deepdims(void) const {
@@ -242,15 +242,15 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t getDepth(void) const {
+    size_t depth(void) const {
       return depth_value;
     }
-    size_t elsize(void) const {
+    size_t element_size(void) const {
       if constexpr (depth_value<=1) {
         return 1;
       }
       else {
-        return x_.elsize();
+        return x_.element_size();
       }
     }
     size_t eldeepsize(void) const {
@@ -372,14 +372,14 @@ namespace mathq {
     size_t size(void) const {
       return x_.size()+y_.size();
     }
-    size_t ndims(void) const {
+    size_t rank(void) const {
       return rank_value;
     }
     Dimensions dims(void) const {
       Dimensions d(x_.size()+y_.size());
       return d;
     }
-    Dimensions tdims(void) const {
+    Dimensions template_dims(void) const {
       return this->dims();
     }
     std::vector<Dimensions>& deepdims(void) const {
@@ -395,18 +395,18 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t getDepth(void) const {
+    size_t depth(void) const {
       return depth;
     }
-    Dimensions eldims(void) const {
-      return x_.eldims();
+    Dimensions element_dims(void) const {
+      return x_.element_dims();
     }
-    size_t elsize(void) const {
+    size_t element_size(void) const {
       if constexpr (depth<=1) {
         return 1;
       }
       else {
-        return x_.elsize();
+        return x_.element_size();
       }
     }
     size_t eldeepsize(void) const {
@@ -491,8 +491,8 @@ namespace mathq {
   //     size_t size(void) const {
   //       return a_.size();
   //     }
-  //     size_t ndims(void) const {
-  //       return a_.ndims();
+  //     size_t rank(void) const {
+  //       return a_.rank();
   //     }
   //     Dimensions dims(void) const {
   //       return a_.dims();
@@ -500,14 +500,14 @@ namespace mathq {
   //     bool isExpression(void) const {
   //       return true;
   //     }
-  //   size_t getDepth(void) const {
+  //   size_t depth(void) const {
   //       return depth;
   //     }
-  //   size_t elsize(void) const {
+  //   size_t element_size(void) const {
   //     if constexpr(depth<2) {
   //       return 1;
   //     } else {
-  //       return a_.elsize();
+  //       return a_.element_size();
   //     }
   //   }
   //   size_t eldeepsize(void) const {

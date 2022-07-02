@@ -154,10 +154,15 @@
 * use https://doxygen.nl/manual/docblocks.html os similar to generate method and function docs?
 * all objects should have .invert() and conjugate(), not .inv and .conj
 * inv<D>(D x) for real, integers, imaginar, complex, quaternion
-* Complex type that inherits from std::complex
-  * google this topic and make sure no problems, else make my own
-  * can then allows complex, imaginary and quaternion to hold vectors (if it makes sense)
-    * what would v1 + i*v2 be?  Vector<complex<D>> or complex<Vector<D>>?
+* Complex,Imaginary, Quaternion types that inherit from MArrays
+  * just need to redefine * and / and define extras
+  * can then allows complex, imaginary and quaternion to hold vectors 
+    * resolve what would v1 + i*v2 be?  Vector<complex<D>> or complex<Vector<D>> similar to dot product issues
+  * need to prevent nesting Complex, Imaginary, Quaternion, ie only 0 or one allowed in nest
+    * static assert using a new type trait
+  * modify NumberTrait, InversionType class
+  * need AddType etc for auto-promotion 
+    * do we have promotion AddType for Scalar + Vector?  we should.
 * cast between various multi-arrays
   * https://en.cppreference.com/w/cpp/language/cast_operator
   * completed: MArray Constructor from Vector in multi-array.h

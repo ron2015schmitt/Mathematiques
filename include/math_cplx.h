@@ -55,9 +55,9 @@ namespace mathq {
   // template <typename T> class
   //   Complexify {
   // public:
-  //   typedef typename OrderedNumberTrait<T>::Type OrderedNumberType;
+  //   typedef typename SimpleNumberTrait<T>::Type OrderedNumberType;
   //   typedef std::complex<OrderedNumberType> CType;
-  //   typedef typename NumberTrait<T,CType>::ReplaceTypeE Type;
+  //   typedef typename NumberTrait<T,CType>::ReplacedElementType Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
   //   Complexify<MArrayExpR<Element,A,Number,depth,rank> > {
@@ -69,8 +69,8 @@ namespace mathq {
   // template <typename T> class
   //   Realify {
   // public:
-  //   typedef typename OrderedNumberTrait<T>::Type OrderedNumberType;
-  //   typedef typename NumberTrait<T,OrderedNumberType>::ReplaceTypeE Type;
+  //   typedef typename SimpleNumberTrait<T>::Type OrderedNumberType;
+  //   typedef typename NumberTrait<T,OrderedNumberType>::ReplacedElementType Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
   //   Realify<MArrayExpR<Element,A,Number,depth,rank> > {
@@ -83,9 +83,9 @@ namespace mathq {
   // template <typename T> class
   //   Imaginarify {
   // public:
-  //   typedef typename OrderedNumberTrait<T>::Type OrderedNumberType;
+  //   typedef typename SimpleNumberTrait<T>::Type OrderedNumberType;
   //   typedef Imaginary<OrderedNumberType> IType;
-  //   typedef typename NumberTrait<T,IType>::ReplaceTypeE Type;
+  //   typedef typename NumberTrait<T,IType>::ReplacedElementType Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
   //   Imaginarify<MArrayExpR<Element,A,Number,depth,rank> > {
@@ -101,7 +101,7 @@ namespace mathq {
 
   template <typename C2, typename F1> EnableMethodIf<IsComplex<C2>::value, C2>
   numbercast(const std::complex<F1>& x) {
-    typedef typename IsComplex<C2>::RealType F2;
+    typedef typename IsComplex<C2>::OrderedNumberType F2;
     F2 re = numbercast<F2>(real(x));
     F2 im = numbercast<F2>(imag(x));
     return std::complex<F2>(re, im);

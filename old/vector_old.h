@@ -29,7 +29,7 @@ namespace mathq {
 
   public:     
     typedef Number DataType;
-    typedef typename OrderedNumberTrait<Number>::Type PrimDataType;
+    typedef typename SimpleNumberTrait<Number>::Type PrimDataType;
 
 
 
@@ -134,11 +134,11 @@ namespace mathq {
     inline size_t size(void) const {
       return data_->size();
     }
-    size_t getDepth(void) const {
+    size_t depth(void) const {
       return 1;
     }
 
-    size_t ndims(void) const {
+    size_t rank(void) const {
       return 1;
     }
     Dimensions dims(void) const {
@@ -435,11 +435,11 @@ namespace mathq {
 
     // doesn't work
     //    template <class A, class B>  Vector<Number>& equals(const MArrayExpR<MArrayExpR<Number,A>,B>& x) {  
-    //    template <class A, class B>  Vector<Number>& operator=(MArrayExpR<MArrayExpR<typename OrderedNumberTrait<Number>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(MArrayExpR<MArrayExpR<typename SimpleNumberTrait<Number>::Type,A>,B>& x) {
     //    template <class A, class B>  Vector<Number>& operator=(MArrayExpR<MArrayExpR<Number,A>,B>) {
     //    template <class A>  Vector<Number>& operator=(A& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<Number>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<Number>::Type,A>,B> x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename SimpleNumberTrait<Number>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename SimpleNumberTrait<Number>::Type,A>,B> x) {
     //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const MArrayExpR<A<Number,B>,C>& x) {
     //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const MArrayExpR<A<PrimDataType,B>,C>& x) {
    // WORKS
@@ -474,7 +474,7 @@ namespace mathq {
 
 
     std::string bottom(){
-      typename OrderedNumberTrait<Number>::Type d;
+      typename SimpleNumberTrait<Number>::Type d;
       return display::getTypeName(d);
     }
 
@@ -1097,7 +1097,7 @@ namespace mathq {
 
     inline std::string classname() const {
       Number d;
-      return "Vector"+display::getBracketedTypeName(d);
+      return "Vector"+display::bracketAndStyleTypename(d);
     }
 
 

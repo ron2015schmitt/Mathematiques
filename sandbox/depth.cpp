@@ -5,13 +5,13 @@
 #include "mathq.h"
 
 
-template <typename D, int M = 1 + mathq::NumberTrait<D>::getDepth()>
+template <typename D, int M = 1 + mathq::NumberTrait<D>::depth()>
 class Test : public mathq::MArrayExpRW<Test<D>, D, typename mathq::NumberTrait<D>::Type, M, 1> {
 public:
   typedef D Type;
   Test() {
   }
-  constexpr size_t getDepth() const {
+  constexpr size_t depth() const {
     return M;
   }
 };
@@ -27,8 +27,8 @@ public:
   }
   Test2(D d) : d_(d) {
   }
-  constexpr size_t getDepth() const {
-    return mathq::NumberTrait<decltype(*this)>::getDepth();
+  constexpr size_t depth() const {
+    return mathq::NumberTrait<decltype(*this)>::depth();
   }
 };
 
@@ -112,36 +112,36 @@ int main(int argc, char *argv[]) {
   {
     CR();
     MOUT << bold.apply("Vector<double> testing") << std::endl;
-    TLDISP(NumberTrait<double>::getDepth());
+    TLDISP(NumberTrait<double>::depth());
     Vector<double> vd{1, 2, 3, 4};
     TLDISP(vd);
 
-    TLDISP(OrderedNumberTrait<double>::getDepth());
-    OrderedNumberTrait<double>::Type d1 = 0.1;
+    TLDISP(SimpleNumberTrait<double>::depth());
+    SimpleNumberTrait<double>::Type d1 = 0.1;
     TLDISP(d1);
 
-    TLDISP(OrderedNumberTrait<ComplexDouble>::getDepth());
-    OrderedNumberTrait<ComplexDouble>::Type d2 = 0.1;
+    TLDISP(SimpleNumberTrait<ComplexDouble>::depth());
+    SimpleNumberTrait<ComplexDouble>::Type d2 = 0.1;
     TLDISP(d2);
 
-    TLDISP(OrderedNumberTrait<decltype(vd)>::getDepth());
-    OrderedNumberTrait<decltype(vd)>::Type d3 = 0.1;
+    TLDISP(SimpleNumberTrait<decltype(vd)>::depth());
+    SimpleNumberTrait<decltype(vd)>::Type d3 = 0.1;
     TLDISP(d3);
 
-    TLDISP(NumberTrait<decltype(vd)>::getDepth());
+    TLDISP(NumberTrait<decltype(vd)>::depth());
     NumberTrait<decltype(vd)>::Type d4 = 0.2;
     TLDISP(d4);
   }
   {
     CR();
     MOUT << bold.apply("Vector<ComplexDouble> testing") << std::endl;
-    TLDISP(NumberTrait<ComplexDouble>::getDepth());
+    TLDISP(NumberTrait<ComplexDouble>::depth());
     Vector<ComplexDouble> vd{ComplexDouble(0.1, 1), ComplexDouble(0.2, 2), ComplexDouble(3, 0.3)};
     TLDISP(vd);
-    TLDISP(OrderedNumberTrait<decltype(vd)>::getDepth());
-    OrderedNumberTrait<decltype(vd)>::Type d = 3.14;
+    TLDISP(SimpleNumberTrait<decltype(vd)>::depth());
+    SimpleNumberTrait<decltype(vd)>::Type d = 3.14;
     TLDISP(d);
-    TLDISP(NumberTrait<decltype(vd)>::getDepth());
+    TLDISP(NumberTrait<decltype(vd)>::depth());
     NumberTrait<decltype(vd)>::Type d2 = ComplexDouble(0.1, 0.2);
     TLDISP(d2);
   }
@@ -150,10 +150,10 @@ int main(int argc, char *argv[]) {
     MOUT << bold.apply("Vector<Vector<double> > testing") << std::endl;
     Vector<Vector<double>> vd{{1.1, 1.2}, {2.1, 2.2}, {3.1, 3.2}};
     TLDISP(vd);
-    TLDISP(OrderedNumberTrait<decltype(vd)>::getDepth());
-    OrderedNumberTrait<decltype(vd)>::Type d = 0.1;
+    TLDISP(SimpleNumberTrait<decltype(vd)>::depth());
+    SimpleNumberTrait<decltype(vd)>::Type d = 0.1;
     TLDISP(d);
-    TLDISP(NumberTrait<decltype(vd)>::getDepth());
+    TLDISP(NumberTrait<decltype(vd)>::depth());
     NumberTrait<decltype(vd)>::Type d2 = 0.2;
     TLDISP(d2);
   }
@@ -162,13 +162,13 @@ int main(int argc, char *argv[]) {
     // this work sbut DISP() doesn't work because it doesn't recurse formats
     CR();
     MOUT << bold.apply("complex<Vector<double>> testing") << std::endl;
-    TLDISP(NumberTrait<complex<Vector<double>>>::getDepth());
+    TLDISP(NumberTrait<complex<Vector<double>>>::depth());
     complex<Vector<double>> vd = complex<Vector<double>>({1.1, 1.2, 1.3}, {2.1, 2.2, 2.3});
     MOUT << vd << endl;
-    TLDISP(OrderedNumberTrait<decltype(vd)>::getDepth());
-    OrderedNumberTrait<decltype(vd)>::Type d = 43;
+    TLDISP(SimpleNumberTrait<decltype(vd)>::depth());
+    SimpleNumberTrait<decltype(vd)>::Type d = 43;
     TLDISP(d);
-    TLDISP(NumberTrait<decltype(vd)>::getDepth());
+    TLDISP(NumberTrait<decltype(vd)>::depth());
     NumberTrait<decltype(vd)>::Type v2 = vd;
     MOUT << v2 << endl;
 
@@ -181,28 +181,28 @@ int main(int argc, char *argv[]) {
   //   CR();
   //   MOUT << bold.apply("Test class testing") << std::endl;
   //   Test<double> t0;
-  //   TLDISP(NumberTrait<decltype(t0)>::getDepth());
-  //   TLDISP(t0.getDepth());
+  //   TLDISP(NumberTrait<decltype(t0)>::depth());
+  //   TLDISP(t0.depth());
   //   Test<Test<double>> t1;
-  //   TLDISP(NumberTrait<decltype(t1)>::getDepth());
-  //   TLDISP(t1.getDepth());
+  //   TLDISP(NumberTrait<decltype(t1)>::depth());
+  //   TLDISP(t1.depth());
   //   Test<Test<Test<double>>> t2;
-  //   TLDISP(NumberTrait<decltype(t2)>::getDepth());
-  //   TLDISP(t2.getDepth());
+  //   TLDISP(NumberTrait<decltype(t2)>::depth());
+  //   TLDISP(t2.depth());
   // }
 
   // {
   //   CR();
   //   MOUT << bold.apply("Test2 class testing") << std::endl;
   //   Test2<double> t0(0);
-  //   TLDISP(NumberTrait<decltype(t0)>::getDepth());
-  //   TLDISP(t0.getDepth());
+  //   TLDISP(NumberTrait<decltype(t0)>::depth());
+  //   TLDISP(t0.depth());
   //   Test2<Test2<double>> t1 {1};
-  //   TLDISP(NumberTrait<decltype(t1)>::getDepth());
-  //   TLDISP(t1.getDepth());
+  //   TLDISP(NumberTrait<decltype(t1)>::depth());
+  //   TLDISP(t1.depth());
   //   Test2<Test2<Test2<double>>> t2 {{2}};
-  //   TLDISP(NumberTrait<decltype(t2)>::getDepth());
-  //   TLDISP(t2.getDepth());
+  //   TLDISP(NumberTrait<decltype(t2)>::depth());
+  //   TLDISP(t2.depth());
   // }
 
 
@@ -211,10 +211,10 @@ int main(int argc, char *argv[]) {
     MOUT << bold.apply("Scalar<double> class testing") << std::endl;
     Scalar<double> t1(1.1);
     TLDISP(t1);
-    TLDISP(NumberTrait<decltype(t1)>::getDepth());
+    TLDISP(NumberTrait<decltype(t1)>::depth());
     TLDISP(t1.size());
-    TLDISP(t1.getDepth());
-    TLDISP(t1.elsize());
+    TLDISP(t1.depth());
+    TLDISP(t1.element_size());
     TLDISP(t1.eldeepsize());
     TLDISP(t1.deepsize());
 
@@ -222,40 +222,40 @@ int main(int argc, char *argv[]) {
     MOUT << bold.apply("Vector<double> class testing") << std::endl;
     Vector<double> v{1, 2, 3, 4};
     TLDISP(v);
-    TLDISP(NumberTrait<decltype(v)>::getDepth());
+    TLDISP(NumberTrait<decltype(v)>::depth());
     TLDISP(v.size());
-    TLDISP(v.getDepth());
-    TLDISP(v.elsize());
+    TLDISP(v.depth());
+    TLDISP(v.element_size());
     TLDISP(v.eldeepsize());
     TLDISP(v.deepsize());
 
     MOUT << bold.apply("Scalar<Scalar<double>> class testing") << std::endl;
     Scalar<Scalar<double>> t2{{2.2}};
     TLDISP(t2);
-    TLDISP(NumberTrait<decltype(t2)>::getDepth());
+    TLDISP(NumberTrait<decltype(t2)>::depth());
     TLDISP(t2.size());
-    TLDISP(t2.getDepth());
-    TLDISP(t2.elsize());
+    TLDISP(t2.depth());
+    TLDISP(t2.element_size());
     TLDISP(t2.eldeepsize());
     TLDISP(t2.deepsize());
 
     MOUT << bold.apply("Scalar<Vector<double>> class testing") << std::endl;
     Scalar<Vector<double>> t3{{1, 2}};
     TLDISP(t3);
-    TLDISP(NumberTrait<decltype(t3)>::getDepth());
+    TLDISP(NumberTrait<decltype(t3)>::depth());
     TLDISP(t3.size());
-    TLDISP(t3.getDepth());
-    TLDISP(t3.elsize());
+    TLDISP(t3.depth());
+    TLDISP(t3.element_size());
     TLDISP(t3.eldeepsize());
     TLDISP(t3.deepsize());
 
 
     Vector<Scalar<double>> t4(0);
     TLDISP(t4);
-    TLDISP(NumberTrait<decltype(t4)>::getDepth());
+    TLDISP(NumberTrait<decltype(t4)>::depth());
     TLDISP(t4.size());
-    TLDISP(t4.getDepth());
-    TLDISP(t4.elsize());
+    TLDISP(t4.depth());
+    TLDISP(t4.element_size());
     TLDISP(t4.eldeepsize());
     TLDISP(t4.deepsize());
 
@@ -266,29 +266,29 @@ int main(int argc, char *argv[]) {
     TLDISP(t5[2]);
     t5[0] = 3.2;
     TLDISP(t5[0]);
-    TLDISP(NumberTrait<decltype(t5)>::getDepth());
+    TLDISP(NumberTrait<decltype(t5)>::depth());
     TLDISP(t5.size());
-    TLDISP(t5.getDepth());
-    TLDISP(t5.elsize());
+    TLDISP(t5.depth());
+    TLDISP(t5.element_size());
     TLDISP(t5.eldeepsize());
     TLDISP(t5.deepsize());
 
     Vector<Scalar<double>> t6{{1}, {2}};
     TLDISP(t6);
-    TLDISP(NumberTrait<decltype(t6)>::getDepth());
+    TLDISP(NumberTrait<decltype(t6)>::depth());
     TLDISP(t6.size());
-    TLDISP(t6.getDepth());
-    TLDISP(t6.elsize());
+    TLDISP(t6.depth());
+    TLDISP(t6.element_size());
     TLDISP(t6.eldeepsize());
     TLDISP(t6.deepsize());
 
 
     Vector<Vector<double>> t7{{1, 2, 3}, {4, 5, 6}};
     TLDISP(t7);
-    TLDISP(NumberTrait<decltype(t7)>::getDepth());
+    TLDISP(NumberTrait<decltype(t7)>::depth());
     TLDISP(t7.size());
-    TLDISP(t7.getDepth());
-    TLDISP(t7.elsize());
+    TLDISP(t7.depth());
+    TLDISP(t7.element_size());
     TLDISP(t7.eldeepsize());
     TLDISP(t7.deepsize());
 
@@ -302,10 +302,10 @@ int main(int argc, char *argv[]) {
     // MOUT << bold.apply("Vector<Vector<double>> class testing") << std::endl;
     // Vector<Vector<double>> t5 {{1,2},{3,4},{5,6}};
     // TLDISP(t5);
-    // TLDISP(NumberTrait<decltype(t5)>::getDepth());
+    // TLDISP(NumberTrait<decltype(t5)>::depth());
     // TLDISP(t5.size());
-    // TLDISP(t5.getDepth());
-    // TLDISP(t5.elsize());
+    // TLDISP(t5.depth());
+    // TLDISP(t5.element_size());
     // TLDISP(t5.eldeepsize());
     // TLDISP(t5.deepsize());
   }
@@ -322,7 +322,7 @@ int main(int argc, char *argv[]) {
     TLDISP(y);
     typename DeeperType<double, decltype(t1)>::Type z;
     TLDISP(z);
-    typename NumberTrait<decltype(t1), float>::ReplaceTypeD w;
+    typename NumberTrait<decltype(t1), float>::ReplacedNumberType w;
     TLDISP(w);
   }
 

@@ -275,9 +275,9 @@ int main(int argc, char *argv[]) {
     Vector<Matrix<double>> v1{{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}}};
     Vector<double> v0{100, 200, 300};
 
-    TRDISP(IsMathqContainer<double>::value);
-    TRDISP(IsMathqContainer<Vector<double>>::value);
-    TRDISP(IsMathqContainer<Vector<Matrix<double>>>::value);
+    TRDISP(IsMultiArrayOrExpression<double>::value);
+    TRDISP(IsMultiArrayOrExpression<Vector<double>>::value);
+    TRDISP(IsMultiArrayOrExpression<Vector<Matrix<double>>>::value);
 
     MOUT << blue.apply("Given:") << endl;
     MOUT << "  ";

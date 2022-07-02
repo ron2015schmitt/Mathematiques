@@ -51,26 +51,26 @@ namespace matricks {
   size_t size(void) const {
       return a_.size();
     }
-  size_t ndims(void) const {
-      return a_.ndims();
+  size_t rank(void) const {
+      return a_.rank();
     }
   Dimensions dims(void) const {
       return a_.dims();
     }
-  Dimensions tdims(void) const {
+  Dimensions template_dims(void) const {
       return this->dims();
     }
   bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -191,7 +191,7 @@ namespace matricks {
         return b_.size();
       }
     }
-    size_t ndims(void) const {
+    size_t rank(void) const {
       return dims().size();
     }
     Dimensions dims(void) const {
@@ -204,18 +204,18 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-    size_t getDepth(void) const {
+    size_t depth(void) const {
       if constexpr(D1>=D2) {
         return D1;
       } else {
         return D2;
       }
     }
-    size_t elsize(void) const {
+    size_t element_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.elsize();
+        return a_.element_size();
       } else {
-        return b_.elsize();
+        return b_.element_size();
       }
     }
     size_t eldeepsize(void) const {
@@ -353,11 +353,11 @@ namespace matricks {
         return b_.size();
       }
     }
-    size_t ndims(void) const {
+    size_t rank(void) const {
       if constexpr(D1>=D2) {
-        return a_.ndims();
+        return a_.rank();
       } else {
-        return b_.ndims();
+        return b_.rank();
       }
     }
     Dimensions dims(void) const {
@@ -370,18 +370,18 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-    size_t getDepth(void) const {
+    size_t depth(void) const {
       if constexpr(D1>=D2) {
         return D1;
       } else {
         return D2;
       }
     }
-    size_t elsize(void) const {
+    size_t element_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.elsize();
+        return a_.element_size();
       } else {
-        return b_.elsize();
+        return b_.element_size();
       }
     }
     size_t eldeepsize(void) const {
@@ -497,8 +497,8 @@ namespace matricks {
     size_t size(void) const {
       return ii_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -506,14 +506,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -618,8 +618,8 @@ namespace matricks {
     size_t size(void) const {
       return ii_->size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -627,14 +627,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -730,8 +730,8 @@ namespace matricks {
     size_t size(void) const {
       return a_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -739,14 +739,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -851,8 +851,8 @@ namespace matricks {
       // TODO: check a_.size >= N
     }
 
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -860,14 +860,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -972,8 +972,8 @@ namespace matricks {
     size_t size(void) const {
       return x_.size();
     }
-    size_t ndims(void) const {
-      return x_.ndims();
+    size_t rank(void) const {
+      return x_.rank();
     }
     Dimensions dims(void) const {
       return x_.dims();
@@ -981,14 +981,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -1091,8 +1091,8 @@ namespace matricks {
     size_t size(void) const {
       return rdims->datasize();
     }
-    size_t ndims(void) const {
-      return rdims->ndims();
+    size_t rank(void) const {
+      return rdims->rank();
     }
     Dimensions dims(void) const {
       return *rdims;
@@ -1100,14 +1100,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -1194,8 +1194,8 @@ namespace matricks {
     size_t size(void) const {
       return rdims->datasize();
     }
-    size_t ndims(void) const {
-      return rdims->ndims();
+    size_t rank(void) const {
+      return rdims->rank();
     }
     Dimensions dims(void) const {
       return *rdims;
@@ -1203,14 +1203,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -1287,8 +1287,8 @@ namespace matricks {
     size_t size(void) const {
       return a_.size() +b_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -1296,14 +1296,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -1385,8 +1385,8 @@ namespace matricks {
     size_t size(void) const {
       return a_.size() +b_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -1394,14 +1394,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {
@@ -1500,8 +1500,8 @@ namespace matricks {
     size_t size(void) const {
       return m_*a_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -1509,14 +1509,14 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
   size_t eldeepsize(void) const {

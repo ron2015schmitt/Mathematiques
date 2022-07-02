@@ -524,7 +524,7 @@ public:
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
 auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -539,7 +539,7 @@ auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExp
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -552,7 +552,7 @@ auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExp
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -565,7 +565,7 @@ auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, 
 template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -578,7 +578,7 @@ auto sph_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, 
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto sph_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -592,7 +592,7 @@ auto sph_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, 
 template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto sph_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -605,7 +605,7 @@ auto sph_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, 
 template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto sph_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E3, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -637,7 +637,7 @@ auto sph_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, dep
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
 auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -652,7 +652,7 @@ auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayE
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -665,7 +665,7 @@ auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayE
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -678,7 +678,7 @@ auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2
 template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -691,7 +691,7 @@ auto assoc_legendre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto assoc_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -705,7 +705,7 @@ auto assoc_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2
 template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto assoc_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -718,7 +718,7 @@ auto assoc_legendre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2
 template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto assoc_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E3, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -750,7 +750,7 @@ auto assoc_legendre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, d
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
 auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -765,7 +765,7 @@ auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayE
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -778,7 +778,7 @@ auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayE
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -791,7 +791,7 @@ auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2
 template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -804,7 +804,7 @@ auto assoc_laguerre(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto assoc_laguerre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -818,7 +818,7 @@ auto assoc_laguerre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2
 template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto assoc_laguerre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -831,7 +831,7 @@ auto assoc_laguerre(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2
 template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto assoc_laguerre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E3, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -863,7 +863,7 @@ auto assoc_laguerre(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, d
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
 auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -878,7 +878,7 @@ auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B,
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -891,7 +891,7 @@ auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B,
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -904,7 +904,7 @@ auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, cons
 template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -917,7 +917,7 @@ auto ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, cons
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -931,7 +931,7 @@ auto ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, cons
 template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -944,7 +944,7 @@ auto ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, cons
 template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto ellint_3(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E3, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -976,7 +976,7 @@ auto ellint_3(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, 
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank>
 auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -991,7 +991,7 @@ auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayEx
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -1004,7 +1004,7 @@ auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayEx
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -1017,7 +1017,7 @@ auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2,
 template <class A, class E1, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E1, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E1, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -1030,7 +1030,7 @@ auto comp_ellint_3(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2,
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto comp_ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     MArrayExpR<C, E3, NT3, depth, rank>,
@@ -1044,7 +1044,7 @@ auto comp_ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2,
 template <class B, class E2, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto comp_ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E2, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E2, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     MArrayExpR<B, E2, NT2, depth, rank>,
     NT3,
@@ -1057,7 +1057,7 @@ auto comp_ellint_3(const NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2,
 template <class C, class E3, class NT1, class NT2, class NT3, int depth, int rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto comp_ellint_3(const NT1& x1, const NT2& x2, const MArrayExpR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type D4;
-  typedef typename NumberTrait<E3, D4>::ReplaceTypeD E4;   // see TODO note above
+  typedef typename NumberTrait<E3, D4>::ReplacedNumberType E4;   // see TODO note above
   return  TER_Ternary<NT1,
     NT2,
     MArrayExpR<C, E3, NT3, depth, rank>,

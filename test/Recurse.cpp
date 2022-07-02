@@ -42,10 +42,10 @@ int main(int argc, char* argv[]) {
     size_t result;
     bool pass;
 
-    // ndims()
+    // rank()
     printStart(++testnum);
     expected = 0;
-    testcode(result = s.ndims());
+    testcode(result = s.rank());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -101,19 +101,19 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // getDepth()
+    // depth()
     printStart(++testnum);
     expected = 2;
-    testcode(result = s.getDepth());
+    testcode(result = s.depth());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // elsize()
+    // element_size()
     printStart(++testnum);
     expected = 1;
-    testcode(result = s.elsize());
+    testcode(result = s.element_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -185,10 +185,10 @@ int main(int argc, char* argv[]) {
     size_t result;
     bool pass;
 
-    // ndims()
+    // rank()
     printStart(++testnum);
     expected = 0;
-    testcode(result = s.ndims());
+    testcode(result = s.rank());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -244,19 +244,19 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // getDepth()
+    // depth()
     printStart(++testnum);
     expected = 2;
-    testcode(result = s.getDepth());
+    testcode(result = s.depth());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // elsize()
+    // element_size()
     printStart(++testnum);
     expected = 2;
-    testcode(result = s.elsize());
+    testcode(result = s.element_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -338,10 +338,10 @@ int main(int argc, char* argv[]) {
   //   size_t result;
   //   bool pass;
 
-  //   // ndims()
+  //   // rank()
   //   printStart(++testnum);
   //   expected = 0;
-  //   testcode( result = s.ndims() );
+  //   testcode( result = s.rank() );
   //   pass = (result==expected);
   //   printEnd(pass,result,expected);
   //   allpass = allpass && pass;
@@ -398,19 +398,19 @@ int main(int argc, char* argv[]) {
   //   allpass = allpass && pass;
   //   failnum += (!pass);
 
-  //   // getDepth()
+  //   // depth()
   //   printStart(++testnum);
   //   expected = 2;
-  //   testcode( result = s.getDepth() );
+  //   testcode( result = s.depth() );
   //   pass = (result==expected);
   //   printEnd(pass,result,expected);
   //   allpass = allpass && pass;
   //   failnum += (!pass);
 
-  //   // elsize()
+  //   // element_size()
   //   printStart(++testnum);
   //   expected = 4;
-  //   testcode( result = s.elsize() );
+  //   testcode( result = s.element_size() );
   //   pass = (result==expected);
   //   printEnd(pass,result,expected);
   //   allpass = allpass && pass;

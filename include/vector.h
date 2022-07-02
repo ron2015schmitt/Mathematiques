@@ -3,6 +3,13 @@
 
 namespace mathq {
 
+  template <typename Element, size_t N1 = 0>
+  class VectorHelper {
+  public:
+    using DimensionsType = typename std::conditional< (N1 > 0), FixedDims<N1>, DynamicDims<1> >::type;
+  };
+
+
   /********************************************************************
    * Vector<Element>    -- variable size vector (valarray)
    *                 Element  = type for elements
@@ -11,7 +18,7 @@ namespace mathq {
    *
    * DO NOT SPECIFY: NumberType,depth
    *                 The defaults are defined in the declaration in
-   *                 preface.h
+   *                 declarations.h
    *                 NumberType = number type
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
@@ -19,43 +26,65 @@ namespace mathq {
   ********************************************************************
    */
 
-  template <class Element, int N1> class Vector :
-    public MArrayExpRW<Vector<Element, N1>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 1> {
+
+  template <typename Element, size_t N1 = 0>
+  class Vector : public MArrayExpRW<
+    Vector<Element, N1>,
+    Element,
+    typename NumberTrait<Element>::Type,
+    1 + NumberTrait<Element>::depth(),
+    1,
+    typename VectorHelper<Element, N1>::DimensionsType
+  > {
 
   public:
-    typedef Vector<Element, N1> ConcreteType;
 
-    typedef Element ElementType;
-    typedef typename NumberTrait<Element>::Type NumberType;
-    typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumberType;
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
 
-    typedef typename ArrayTypeTrait<Element, N1>::Type MyArrayType;
+    using ConcreteType = Vector<Element, N1>;
 
-    constexpr static int rank = 1;
-    constexpr static int rank_value = rank;
-    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
-    constexpr static int depth_value = depth;
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<Element>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using DimensionsType = typename VectorHelper<Element, N1>::DimensionsType;
+    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
+    using NestedDimensionsType = NestedDimensions<DimensionsType, ElementDimensionsType>;
+
+    using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
 
 
-    // *********************** OBJECT DATA ***********************************
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = 1;
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t template_dimensions_value = DimensionsType;
+
+    constexpr static bool is_dynamic() noexcept {
+      return N1 == 0;
+    }
+
+
+    //**********************************************************************
+    // OBJECT DATA 
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
     //**********************************************************************
 
 
-  private:
     MyArrayType data_;
 
 
   public:
 
     //**********************************************************************
-    //************************** CONSTRUCTORS ******************************
+    //                            CONSTRUCTORS 
     //**********************************************************************
-
-
-    // TODO: never use new. just resize the valarray  
 
 
     // -------------------  DEFAULT  CONSTRUCTOR: Vector()  --------------------
@@ -86,17 +115,15 @@ namespace mathq {
 
     // --------------------- Vector(std::initializer_list<Dimensions>)  ---------------------
 
-    template<size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-
-    explicit Vector<Element, N1>(const std::initializer_list<Dimensions> deepdims) {
+    template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
+    explicit Vector<Element, N1>(const NestedDims<DimensionsType, NextDims>& deepdims) {
       // TRDISP(deepdims);
       this->resize(std::vector<Dimensions>(deepdims));
       constructorHelper();
     }
     // --------------------- Vector(std::vector<Dimensions>)  ---------------------
 
-    template<size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-
+    template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
     explicit Vector<Element, N1>(const std::vector<Dimensions> deepdims) {
       // TRDISP(deepdims);
       this->resize(deepdims);
@@ -181,13 +208,8 @@ namespace mathq {
     }
 
 
-
-
-
-
-
     //**********************************************************************
-    //************************** DESTRUCTOR ******************************
+    //                             DESTRUCTOR 
     //**********************************************************************
 
     ~Vector<Element, N1>() {
@@ -195,9 +217,8 @@ namespace mathq {
 
 
     //**********************************************************************
-    //************************** SIZE ******************************
+    //                         Basis characteristics
     //**********************************************************************
-
 
     bool isExpression(void) const {
       return false;
@@ -210,27 +231,71 @@ namespace mathq {
       return myaddr;
     }
 
+    //**********************************************************************
+    //                            Size related  
+    //**********************************************************************
+
+    size_t rank(void) const {
+      return rank_value;
+    }
+    inline size_t depth(void) const {
+      return depth_value;
+    }
     inline size_t size(void) const {
       return data_.size();
     }
-    size_t ndims(void) const {
-      return 1;
+
+    DimensionsType& dims(void) const {
+      if constexpr (is_dynamic()) {
+        return DimensionsType(size());
+      }
+      else {
+        return template_dims();
+      }
     }
-    Dimensions dims(void) const {
-      Dimensions dimensions(size());
-      return dimensions;
-    }
-    Dimensions tdims(void) const {
-      Dimensions dimensions(N1);
-      return dimensions;
+    const DimensionsType& template_dims(void) const {
+      return template_dimensions_value;
     }
 
 
-    inline size_t getDepth(void) const {
-      return depth;
+    // --------------------- .resize(N) ---------------------
+
+    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
+
+    Vector<Element, N1>& resize(const size_t N) {
+      if (N==this->size())
+        return *this;
+      // reallocate store
+      //      delete  data_ ;
+      //      data_ = new std::valarray<NumberType>(N);
+      data_.resize(N);
+      return *this;
     }
 
-    Dimensions eldims(void) const {
+    // TODO: should just pass an index and make deepdims const
+
+    Vector<Element, N1>& resize(const std::vector<Dimensions>& deepdims_in) {
+      std::vector<Dimensions> deepdims(deepdims_in);
+      Dimensions newdims = deepdims[0];
+      const size_t Nnew = newdims[0];
+      if constexpr (N1==0) {
+        resize(Nnew);
+      }
+      if constexpr (depth>1) {
+        deepdims.erase(deepdims.begin());
+        for (size_t i = 0; i < size(); i++) {
+          std::vector<Dimensions> ddims(deepdims);
+          data_[i].resize(ddims);
+        }
+      }
+
+      return *this;
+    }
+
+
+
+
+    Dimensions element_dims(void) const {
       Dimensions dimensions();
       if constexpr (depth>1) {
         if (size()>0) {
@@ -241,7 +306,7 @@ namespace mathq {
     }
 
     // the size of each element
-    inline size_t elsize(void) const {
+    inline size_t element_size(void) const {
       if constexpr (depth<2) {
         return 1;
       }
@@ -300,50 +365,6 @@ namespace mathq {
 
 
 
-
-    //**********************************************************************
-    //************************** RESIZE & REHSAPCE ******************************
-    //**********************************************************************
-
-    // --------------------- .resize() ---------------------
-
-    // These allow the user to resize a vector
-
-
-
-    // --------------------- .resize(N) ---------------------
-
-    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
-
-    Vector<Element, N1>& resize(const size_t N) {
-      if (N==this->size())
-        return *this;
-      // reallocate store
-      //      delete  data_ ;
-      //      data_ = new std::valarray<NumberType>(N);
-      data_.resize(N);
-      return *this;
-    }
-
-    // TODO: should just pass an index and make deepdims const
-
-    Vector<Element, N1>& resize(const std::vector<Dimensions>& deepdims_in) {
-      std::vector<Dimensions> deepdims(deepdims_in);
-      Dimensions newdims = deepdims[0];
-      const size_t Nnew = newdims[0];
-      if constexpr (N1==0) {
-        resize(Nnew);
-      }
-      if constexpr (depth>1) {
-        deepdims.erase(deepdims.begin());
-        for (size_t i = 0; i < size(); i++) {
-          std::vector<Dimensions> ddims(deepdims);
-          data_[i].resize(ddims);
-        }
-      }
-
-      return *this;
-    }
 
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
@@ -480,13 +501,13 @@ namespace mathq {
       MultiArray<Element, 1> ma(*this);
     }
 
-      //**********************************************************************
-      //***************MultiArray-style Element Access: v(n) *********************
-      //**********************************************************************
+    //**********************************************************************
+    //***************MultiArray-style Element Access: v(n) *********************
+    //**********************************************************************
 
 
-      // "read/write"
-      Element& operator()(const size_t n) {
+    // "read/write"
+    Element& operator()(const size_t n) {
       return data_[n];
     }
 
@@ -1247,7 +1268,7 @@ namespace mathq {
     //**********************************************************************
 
     std::string bottom() {
-      typename OrderedNumberTrait<Element>::Type d;
+      typename SimpleNumberTrait<Element>::Type d;
       return display::getTypeName(d);
     }
 

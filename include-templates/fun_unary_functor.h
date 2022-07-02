@@ -31,7 +31,7 @@ public:
   static std::string classname() {
     using namespace display;
     Element e;
-    return functor_namestyle.apply("FUNCTOR_##FUNCTORNAME##")+display::getBracketedTypeName(e);
+    return functor_namestyle.apply("FUNCTOR_##FUNCTORNAME##")+display::bracketAndStyleTypename(e);
   }
 };
 
