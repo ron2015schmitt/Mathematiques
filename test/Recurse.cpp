@@ -38,8 +38,8 @@ int main(int argc, char* argv[]) {
   //--------------------------------------------
   {
     Scalar<Scalar<double>> s{ {2.2} };
-    size_t expected;
-    size_t result;
+    size_t   expected;
+    size_t   result;
     bool pass;
 
     // rank()
@@ -181,8 +181,8 @@ int main(int argc, char* argv[]) {
 
   {
     Scalar<Vector<double>> s{ {1.1, 2.2} };
-    size_t expected;
-    size_t result;
+    size_t   expected;
+    size_t   result;
     bool pass;
 
     // rank()
@@ -334,8 +334,8 @@ int main(int argc, char* argv[]) {
 
   // {
   //   Scalar<Matrix<double>> s { {{1.1,2.2},{3.3,4.4}} };
-  //   size_t expected;
-  //   size_t result;
+  //   size_t   expected;
+  //   size_t   result;
   //   bool pass;
 
   //   // rank()

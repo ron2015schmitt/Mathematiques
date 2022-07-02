@@ -8,16 +8,16 @@ namespace mathq {
 
   class slc {
   private:
-    const size_t start_;
-    const size_t end_;
-    const size_t step_;
+    const size_t   start_;
+    const size_t   end_;
+    const size_t   step_;
   public:
-    slc(const size_t start, const size_t end, const size_t step);
-    slc(const size_t start, const size_t end);
-    size_t start(void) const;
-    size_t end(void) const;
-    size_t step(void) const;
-    Vector<size_t>& toIndexVector(const size_t N) const;
+    slc(const size_t   start, const size_t   end, const size_t   step);
+    slc(const size_t   start, const size_t   end);
+    size_t   start(void) const;
+    size_t   end(void) const;
+    size_t   step(void) const;
+    Vector<size_t>& toIndexVector(const size_t   N) const;
     std::string expression() const;
     std::string classname() const;
     friend std::ostream& operator<<(std::ostream& stream, const slc& slice);

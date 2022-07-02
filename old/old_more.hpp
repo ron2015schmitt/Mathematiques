@@ -37,24 +37,24 @@ namespace mathq {
     }
 
 
-    inline const D operator()(const size_t i) const {
+    inline const D operator()(const size_t   i) const {
       return derived()(i);
     }
 
-    inline const D operator()(const size_t r, const size_t c) const {
+    inline const D operator()(const size_t   r, const size_t   c) const {
       return derived()(r,c);
     }
 
 
-    inline size_t size(void) const {
+    inline size_t   size(void) const {
       return derived().size();
     }
 
-    inline size_t Nrows(void) const {
+    inline size_t   Nrows(void) const {
       return derived().Nrows();
     }
 
-    inline size_t Ncols(void) const {
+    inline size_t   Ncols(void) const {
       return derived().Ncols();
     }
 
@@ -76,7 +76,7 @@ namespace mathq {
   };
 
   template <class A> 
-    Vector<size_t> sub2ind(const MorE<size_t,A>& subs, const size_t NR, const size_t NC);
+    Vector<size_t> sub2ind(const MorE<size_t,A>& subs, const size_t   NR, const size_t   NC);
 
 
 

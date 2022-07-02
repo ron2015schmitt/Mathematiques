@@ -62,8 +62,8 @@ int main(int argc, char* argv[]) {
     Dimensions template_dims(2, 1, 2);
 
     for (size_t h = 0; h < x().size(); h++) {
-      const size_t NR = x()(h).Nrows();
-      const size_t NC = x()(h).Ncols();
+      const size_t   NR = x()(h).Nrows();
+      const size_t   NC = x()(h).Ncols();
       for (size_t i = 0; i < NR; i++) {
         for (size_t j = 0; j < NC; j++) {
           x()(h)(i, j).resize(template_dims);
@@ -179,8 +179,8 @@ int main(int argc, char* argv[]) {
     TLDISP(g3);
 
     for (size_t h = 0; h < x().size(); h++) {
-      const size_t NR = x()(h).Nrows();
-      const size_t NC = x()(h).Ncols();
+      const size_t   NR = x()(h).Nrows();
+      const size_t   NC = x()(h).Ncols();
       for (size_t i = 0; i < NR; i++) {
         for (size_t j = 0; j < NC; j++) {
           Dimensions template_dims = x()(h)(i, j).dims();

@@ -20,28 +20,32 @@ namespace mathq {
   template <typename Element>
   class ScalarHelper {
   public:
-    constexpr static size_t rank_value = 0;
-    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t   rank_value = 0;
     constexpr static bool is_dynamic = false;
+    constexpr static bool num_compile_time_elements = 1;
 
+
+    using ConcreteType = Scalar<Element>;
     using DimensionsType = const FixedDims<>;
-    using NestedDimensionsType = NestedDimensions<DimensionsType, ElementDimensionsType>;
+
+    // ---- same for all subtypes --------
+    constexpr static size_t   depth_value = 1 + NumberTrait<Element>::depth();
+    using MyArrayType = typename ArrayTypeTrait<Element, num_compile_time_elements>::Type;
+    using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
-    //  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT> class MArrayExpRW
+    // ---- same for all subtypes --------
     using ParentType = MArrayExpRW<
       MultiArray<Element, rank_value>,  // Derived
       Element,  // Element
       typename NumberTrait<Element>::Type,  // Number
       depth_value,  // depth
       rank_value,  // rank
-      ScalarHelper<Element>::DimensionsType,  // DimensionsT
+      DimensionsType,  // DimensionsT
     >;
   };
 
 
-
-  // TODO: change this to Scalar and see if it works
 
   template <class Element>
   class MultiArray<Element, 0> : public ScalarHelper<Element>::ParentType {
@@ -52,29 +56,29 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using ConcreteType = Scalar<Element>;
+    using Helper = ScalarHelper<Element>;
 
+    // ---- same for all subtypes --------
+    using ConcreteType = typename Helper::ConcreteType;
+    using MyArrayType = Helper::MyArrayType;
+    using DimensionsType = typename Helper::DimensionsType;
+    using ElementDimensionsType = typename Helper::ElementDimensionsType;
+    using NestedDimensionsType = typename Helper::NestedDimensionsType;
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
-
-    using DimensionsType = typename ScalarHelper<Element>::DimensionsType;
-    using ElementDimensionsType = typename ScalarHelper<Element, depth_value>::ElementDimensionsType;
-    using NestedDimensionsType = typename ScalarHelper<Element>::NestedDimensionsType;
-
-    using MyArrayType = Element;
 
 
     //**********************************************************************
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t rank_value = ScalarHelper<Element>::rank_value;
-    constexpr static size_t depth_value = ScalarHelper<Element>::depth_value;
-    constexpr static size_t template_dimensions_value = DimensionsType;
+    constexpr static size_t   rank_value = Helper::rank_value;
+    constexpr static size_t   depth_value = Helper::depth_value;
+    constexpr static size_t   template_dimensions_value = DimensionsType;
 
     constexpr static bool is_dynamic() noexcept {
-      return ScalarHelper<Element>::is_dynamic;
+      return Helper::is_dynamic;
     }
 
 
@@ -84,7 +88,7 @@ namespace mathq {
     // do NOT declare any other storage.
     // keep the instances lightweight
     //**********************************************************************
-
+  private:
     Element data;
 
 
@@ -178,13 +182,13 @@ namespace mathq {
     //                            Size related  
     //**********************************************************************
 
-    size_t rank(void) const {
+    size_t   rank(void) const {
       return rank_value;
     }
-    inline size_t depth(void) const {
+    inline size_t   depth(void) const {
       return depth_value;
     }
-    inline size_t size(void) const {
+    inline size_t   size(void) const {
       return 1;
     }
 
@@ -200,7 +204,7 @@ namespace mathq {
     //                    Element Size related  
     //**********************************************************************
 
-    inline size_t element_size(void) const {
+    inline size_t   element_size(void) const {
       if constexpr (depth<2) {
         return 1;
       }
@@ -216,7 +220,7 @@ namespace mathq {
         return *(new FixedDims<>);
       }
     }
-    inline size_t element_size(void) const {
+    inline size_t   element_size(void) const {
       if constexpr (depth<2) {
         return 1;
       }
@@ -224,7 +228,7 @@ namespace mathq {
         return data.size();
       }
     }
-    inline size_t eldeepsize(void) const {
+    inline size_t   eldeepsize(void) const {
       if constexpr (depth<2) {
         return 1;
       }
@@ -239,7 +243,7 @@ namespace mathq {
     //                       Nested Size related  
     //**********************************************************************
 
-    size_t deepsize(void) const {
+    size_t   deepsize(void) const {
       if constexpr (depth<2) {
         return this->size();
       }
@@ -324,7 +328,7 @@ namespace mathq {
     // -------------------------------------------------------------
 
     // "read/write": unsigned
-    NumberType& dat(const size_t n) {
+    NumberType& dat(const size_t   n) {
       if constexpr (depth <= 1) {
         return data;
       }
@@ -334,7 +338,7 @@ namespace mathq {
     }
 
     // "read/write": signed
-    const NumberType& dat(const size_t n)  const {
+    const NumberType& dat(const size_t   n)  const {
       if constexpr (depth <= 1) {
         return data;
       }
@@ -412,12 +416,12 @@ namespace mathq {
     }
 
     // "read/write": unsigned
-    Element& operator[](const size_t n) {
+    Element& operator[](const size_t   n) {
       return data;
     }
 
     // "read/write": signed
-    const Element& operator[](const size_t n)  const {
+    const Element& operator[](const size_t   n)  const {
       return data;
     }
 
@@ -439,12 +443,12 @@ namespace mathq {
     }
 
     // "read/write": unsigned
-    Element& operator()(const size_t n) {
+    Element& operator()(const size_t   n) {
       return data;
     }
 
     // "read/write": signed
-    const Element& operator()(const size_t n)  const {
+    const Element& operator()(const size_t   n)  const {
       return data;
     }
 

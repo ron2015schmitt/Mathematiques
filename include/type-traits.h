@@ -31,6 +31,24 @@ namespace mathq {
 
   };
 
+  // **************************************************************************
+  // *   ArrayTypeTrait
+  //
+  //
+  // ************************************************************************** 
+
+  template <typename Number, size_t   NN>
+  class ArrayTypeTrait {
+  public:
+    using Type = std::array<Number, NN>;
+  };
+
+  template <typename Number>
+  class ArrayTypeTrait<Number, 0> {
+  public:
+    using Type = std::valarray<Number>;
+  };
+
 
   // ***************************************************************************
   // Materialize 
@@ -39,7 +57,7 @@ namespace mathq {
   // Useful when working with multiarray expressions
   // ***************************************************************************
 
-  template <typename Element, size_t rank, size_t... dims>
+  template <typename Element, size_t   rank, size_t... dims>
   class Materialize {
   public:
     using Type = typename MultiArray<Element, rank, dims...>::Type;
@@ -117,19 +135,19 @@ namespace mathq {
     constexpr static bool value = false;
   };
 
-  template <typename Element, size_t rank, size_t... ints>
+  template <typename Element, size_t   rank, size_t... ints>
   class IsMultiArrayOrExpression<MultiArray<Element, rank, ints...>> {
   public:
     constexpr static bool value = true;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t   depth, size_t   rank, class DimensionsT>
   class IsMultiArrayOrExpression<MArrayExpR<Derived, Element, Number, depth, rank, DimensionsT>> {
   public:
     constexpr static bool value = true;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t   depth, size_t   rank, class DimensionsT>
   class IsMultiArrayOrExpression<MArrayExpRW<Derived, Element, Number, depth, rank, DimensionsT>> {
   public:
     constexpr static bool value = true;
@@ -149,7 +167,7 @@ namespace mathq {
     constexpr static bool value = false;
   };
 
-  template <typename Element, size_t rank, size_t... ints>
+  template <typename Element, size_t   rank, size_t... ints>
   class IsMultiArray<MultiArray<Element, rank, ints...>> {
   public:
     constexpr static bool value = true;
@@ -166,13 +184,13 @@ namespace mathq {
     constexpr static bool value = false;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t   depth, size_t   rank, class DimensionsT>
   class IsMultiArrayExp<MArrayExpR<Derived, Element, Number, depth, rank, DimensionsT>> {
   public:
     constexpr static bool value = true;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t   depth, size_t   rank, class DimensionsT>
   class IsMultiArrayExp<MArrayExpRW<Derived, Element, Number, depth, rank, DimensionsT>> {
   public:
     constexpr static bool value = true;
@@ -189,7 +207,7 @@ namespace mathq {
     constexpr static bool value = false;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t   depth, size_t   rank, class DimensionsT>
   class IsMultiArrayExpRW<MArrayExpRW<Derived, Element, Number, depth, rank, DimensionsT>> {
   public:
     constexpr static bool value = true;
@@ -229,13 +247,13 @@ namespace mathq {
     using ReplacedElementType = NewNumber;
 
     constexpr static bool value = true;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 0;
     }
-    inline static size_t size(NullType x) {
+    inline static size_t   size(NullType x) {
       return 0;
     }
-    inline static size_t deepsize(NullType x) {
+    inline static size_t   deepsize(NullType x) {
       return 0;
     }
   };
@@ -252,13 +270,13 @@ namespace mathq {
     using ReplacedElementType = NewNumber; // this is correct, see comment above
 
     constexpr static bool value = true;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 0;
     }
-    inline static size_t size(const Number x) {
+    inline static size_t   size(const Number x) {
       return 1;
     }
-    inline static size_t deepsize(const Number& x) {
+    inline static size_t   deepsize(const Number& x) {
       return 1;
     }
   };
@@ -274,13 +292,13 @@ namespace mathq {
     using ReplacedElementType = NewNumber; // this is correct, see comment above
 
     constexpr static bool value = true;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 0;
     }
-    inline static size_t size(const Number x) {
+    inline static size_t   size(const Number x) {
       return 1;
     }
-    inline static size_t deepsize(const Number& x) {
+    inline static size_t   deepsize(const Number& x) {
       return 1;
     }
   };
@@ -297,13 +315,13 @@ namespace mathq {
     using ReplacedElementType = NewNumber; // this is correct, see comment above
 
     constexpr static bool value = true;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 0;
     }
-    inline static size_t size(const Number x) {
+    inline static size_t   size(const Number x) {
       return 1;
     }
-    inline static size_t deepsize(const Number& x) {
+    inline static size_t   deepsize(const Number& x) {
       return 1;
     }
   };
@@ -319,13 +337,13 @@ namespace mathq {
     using ReplacedElementType = NewNumber; // this is correct, see comment above
 
     constexpr static bool value = true;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 0;
     }
-    inline static size_t size(const Number x) {
+    inline static size_t   size(const Number x) {
       return 1;
     }
-    inline static size_t deepsize(const Number& x) {
+    inline static size_t   deepsize(const Number& x) {
       return 1;
     }
   };
@@ -334,7 +352,7 @@ namespace mathq {
 
   //  MultiArray<Element>
 
-  template <typename Element, size_t rank, size_t... ints, typename NewNumber>
+  template <typename Element, size_t   rank, size_t... ints, typename NewNumber>
   class
     NumberTrait<MultiArray<Element, rank, ints...>, NewNumber> {
   public:
@@ -344,20 +362,20 @@ namespace mathq {
     using ReplacedElementType = MultiArray<NewNumber, rank, ints...>; // this is correct, see comment above
 
     constexpr static bool value = false;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 1 + NumberTrait<Element, NewNumber>::depth();
     }
-    inline static size_t size(const InputType& x) {
+    inline static size_t   size(const InputType& x) {
       return x.size();
     }
-    inline static size_t deepsize(const InputType& x) {
+    inline static size_t   deepsize(const InputType& x) {
       return x.deepsize();
     }
   };
 
   //  MArrayExpR
 
-  template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, typename NewNumber, size_t   depth_in, size_t   rank, class DimensionsT>
   class
     NumberTrait<MArrayExpR<Derived, Element, Number, depth_in, rank, DimensionsT>, NewNumber> {
   public:
@@ -369,13 +387,13 @@ namespace mathq {
     using ReplacedElementType = MArrayExpR<Derived, NewNumber, Number, depth_in, rank, DimensionsT>;  // TODO: should first slot be DerivedReplacedNumberType? should third slot be NewNumber?  
 
     constexpr static bool value = false;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return depth_in;
     }
-    inline static size_t size(const InputType& x) {
+    inline static size_t   size(const InputType& x) {
       return x.size();
     }
-    inline static size_t deepsize(const InputType& x) {
+    inline static size_t   deepsize(const InputType& x) {
       return x.deepsize();
     }
   };
@@ -383,7 +401,7 @@ namespace mathq {
 
   //  MArrayExpRW
 
-  template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, typename NewNumber, size_t   depth_in, size_t   rank, class DimensionsT>
   class
     NumberTrait<MArrayExpRW<Derived, Element, Number, depth_in, rank, DimensionsT>, NewNumber> {
   public:
@@ -395,13 +413,13 @@ namespace mathq {
     using ReplacedElementType = MArrayExpRW<Derived, NewNumber, Number, depth_in, rank, DimensionsT>;  // TODO: should first slot be DerivedReplacedNumberType? should third slot be NewNumber?  
 
     constexpr static bool value = false;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return depth_in;
     }
-    inline static size_t size(const InputType& x) {
+    inline static size_t   size(const InputType& x) {
       return x.size();
     }
-    inline static size_t deepsize(const InputType& x) {
+    inline static size_t   deepsize(const InputType& x) {
       return x.deepsize();
     }
   };
@@ -422,7 +440,7 @@ namespace mathq {
   class SimpleNumberTrait {
   public:
     using Type = void;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 0;
     }
   };
@@ -433,7 +451,7 @@ namespace mathq {
     SimpleNumberTrait<T, typename std::enable_if<std::is_arithmetic<T>::value>::type> {
   public:
     using Type = T;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 0;
     }
   };
@@ -443,7 +461,7 @@ namespace mathq {
   class SimpleNumberTrait<T<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 1 + SimpleNumberTrait<Element>::depth();
     }
   };
@@ -452,7 +470,7 @@ namespace mathq {
   class SimpleNumberTrait<std::complex<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 1 + SimpleNumberTrait<Element>::depth();
     }
   };
@@ -461,7 +479,7 @@ namespace mathq {
   class SimpleNumberTrait<Imaginary<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 1 + SimpleNumberTrait<Element>::depth();
     }
   };
@@ -470,35 +488,35 @@ namespace mathq {
   class SimpleNumberTrait<Quaternion<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 1 + SimpleNumberTrait<Element>::depth();
     }
   };
 
 
-  template <typename Element, size_t rank, size_t... ints>
+  template <typename Element, size_t   rank, size_t... ints>
   class SimpleNumberTrait<MultiArray<Element, rank, ints...>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 1 + SimpleNumberTrait<Element>::depth();
     }
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t   depth_, size_t   rank, class DimensionsT>
   class SimpleNumberTrait<MArrayExpR<Derived, Element, Number, depth_, rank, DimensionsT>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 1 + SimpleNumberTrait<Element>::depth();
     }
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t   depth_, size_t   rank, class DimensionsT>
   class SimpleNumberTrait<MArrayExpRW<Derived, Element, Number, depth_, rank, DimensionsT>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
+    constexpr static size_t   depth() {
       return 1 + SimpleNumberTrait<Element>::depth();
     }
   };
@@ -565,7 +583,7 @@ namespace mathq {
 
 
   //  MultiArray<Element>
-  template <typename Element, size_t rank, size_t... ints, typename C>
+  template <typename Element, size_t   rank, size_t... ints, typename C>
   class InversionType<MultiArray<Element, rank, ints...>, C> {
   public:
     using NumberType = typename NumberTrait<Element>::Type;
@@ -583,19 +601,19 @@ namespace mathq {
   // ***************************************************************************
 
   template <typename Number>
-  inline Number&& At(Number&& x, size_t n) {
+  inline Number&& At(Number&& x, size_t   n) {
     return x;
   }
   template <typename Number>
-  inline const Number&& At(const Number&& x, size_t n) {
+  inline const Number&& At(const Number&& x, size_t   n) {
     return x;
   }
   template <template <class> class T, typename Number>
-  inline Number&& At(T<Number>&& x, size_t n) {
+  inline Number&& At(T<Number>&& x, size_t   n) {
     return x[n];
   }
   template <template <class> class T, typename Number>
-  inline const Number&& At(const T<Number>&& x, size_t n) {
+  inline const Number&& At(const T<Number>&& x, size_t   n) {
     return x[n];
   }
 
@@ -801,23 +819,23 @@ namespace mathq {
 
 
 
-template <typename Number, size_t NDIMS, size_t rank, typename G> 
-class GridTraits {
-  constexpr static bool isMultiArrayOfGrids = false;
-  constexpr static bool isGridOfMultiArrays = false;
-};
+  template <typename Number, size_t   NDIMS, size_t   rank, typename G>
+  class GridTraits {
+    constexpr static bool isMultiArrayOfGrids = false;
+    constexpr static bool isGridOfMultiArrays = false;
+  };
 
-template <typename Number, size_t NDIMS, size_t rank> 
-class GridTraits<Number, NDIMS, rank, MultiArrayOfGrids<Number, NDIMS, rank>> {
-  constexpr static bool isMultiArrayOfGrids = true;
-  constexpr static bool isGridOfMultiArrays = false;
-};
+  template <typename Number, size_t   NDIMS, size_t   rank>
+  class GridTraits<Number, NDIMS, rank, MultiArrayOfGrids<Number, NDIMS, rank>> {
+    constexpr static bool isMultiArrayOfGrids = true;
+    constexpr static bool isGridOfMultiArrays = false;
+  };
 
-template <typename Number, size_t NDIMS, size_t rank> 
-class GridTraits<Number, NDIMS, rank, GridOfMultiArrays<Number, NDIMS, rank>> {
-  constexpr static bool isMultiArrayOfGrids = false;
-  constexpr static bool isGridOfMultiArrays = true;
-};
+  template <typename Number, size_t   NDIMS, size_t   rank>
+  class GridTraits<Number, NDIMS, rank, GridOfMultiArrays<Number, NDIMS, rank>> {
+    constexpr static bool isMultiArrayOfGrids = false;
+    constexpr static bool isGridOfMultiArrays = true;
+  };
 
 
 
@@ -832,19 +850,19 @@ class GridTraits<Number, NDIMS, rank, GridOfMultiArrays<Number, NDIMS, rank>> {
   // ***************************************************************************
   // * RealMultiSet 
   // ***************************************************************************
-  template <typename Number, size_t NDIMS = 0, class MULTIGRID = MultiArrayOfGrids<Number, NDIMS>>
+  template <typename Number, size_t   NDIMS = 0, class MULTIGRID = MultiArrayOfGrids<Number, NDIMS>>
   class RealMultiSet;
 
 
   // ***************************************************************************
   // * CurvilinearCoordinateSystem 
   // ***************************************************************************
-  template <typename Number, size_t NDIMS, typename CHILD>
+  template <typename Number, size_t   NDIMS, typename CHILD>
   class CurvilinearCoordinateSystem;
 
 
-  // template <typename Element, size_t NDIMS, class CHILD> class CurvilinearCoords;
-  // template <typename Element, size_t NDIMS> class CartCoords;
+  // template <typename Element, size_t   NDIMS, class CHILD> class CurvilinearCoords;
+  // template <typename Element, size_t   NDIMS> class CartCoords;
   // template <typename Element> class PolarCoords;
 
   template <class T = void>
@@ -856,6 +874,18 @@ class GridTraits<Number, NDIMS, rank, GridOfMultiArrays<Number, NDIMS, rank>> {
   // ***************************************************************************
   // * compile time functions
   // ***************************************************************************
+
+
+  // template<size_t   N, size_t... ints>
+  // constexpr std::array<size_t  , N> compile_time_fill_array() {
+  //   if constexpr (sizeof...(ints) {
+
+  //   }
+  //   else {
+  //     return
+  //       std::array<size_t  , N>{};
+  //   }
+  // }
 
 
   constexpr bool is_all_zeros(std::initializer_list<size_t> list) {
@@ -872,7 +902,7 @@ class GridTraits<Number, NDIMS, rank, GridOfMultiArrays<Number, NDIMS, rank>> {
     return true;
   }
 
-  template<typename T, std::size_t N>
+  template<typename T, size_t   N>
   constexpr T compile_time_summation(const std::array<T, N>& A) {
     T sum(T(0));
     for (size_t i = 0; i < N; ++i) {
@@ -882,7 +912,7 @@ class GridTraits<Number, NDIMS, rank, GridOfMultiArrays<Number, NDIMS, rank>> {
   }
 
   // note this returns 1 for arrays of size == 0
-  template<typename T, std::size_t N>
+  template<typename T, size_t   N>
   constexpr T compile_time_product(const std::array<T, N>& A) {
     T product(T(1));
     for (size_t i = 0; i < N; ++i) {

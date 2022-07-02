@@ -33,15 +33,15 @@ namespace mathq {
       : a_(a), b_(b)
     { 
     }
-    inline bool operator()(const size_t i) const {
+    inline bool operator()(const size_t   i) const {
       return OP::apply(a_(i), b_(i));
     }
 
-    inline bool operator()(const size_t r, const size_t c) const {
+    inline bool operator()(const size_t   r, const size_t   c) const {
       return OP::apply(a_(r,c), b_(r,c));
     }
 
-    inline size_t Nrows(void) const {
+    inline size_t   Nrows(void) const {
       if  (a_.Nrows() !=  b_.Nrows() ) {
 	return badsize;
       } else {
@@ -49,7 +49,7 @@ namespace mathq {
       }
     }
 
-    inline size_t Ncols(void) const {
+    inline size_t   Ncols(void) const {
       if  (a_.Ncols() !=  b_.Ncols() ) {
 	return badsize;
       } else {
@@ -58,7 +58,7 @@ namespace mathq {
     }
 
 
-    inline size_t size(void) const {
+    inline size_t   size(void) const {
       if ( (Nrows()==badsize) || (Ncols()==badsize) )
 	return badsize;
       else
@@ -115,23 +115,23 @@ namespace mathq {
       : a_(a), val_(b)
     { }
 
-    inline bool operator()(const size_t i) const {
+    inline bool operator()(const size_t   i) const {
       return OP::apply(a_(i), val_);
     }
 
-    inline bool operator()(const size_t r, const size_t c) const {
+    inline bool operator()(const size_t   r, const size_t   c) const {
       return OP::apply(a_(r,c), val_);
     }
 
-    inline size_t Nrows(void) const {
+    inline size_t   Nrows(void) const {
       return a_.Nrows();
     }
 
-    inline size_t Ncols(void) const {
+    inline size_t   Ncols(void) const {
       return a_.Ncols();
     }
 
-    inline size_t size(void) const {
+    inline size_t   size(void) const {
       return a_.size();
     }
 
@@ -184,23 +184,23 @@ namespace mathq {
       :  val_(a), b_(b)
     { }
 
-    inline bool operator()(const size_t i) const {
+    inline bool operator()(const size_t   i) const {
       return OP::apply(val_, b_(i));
     }
 
-    inline bool operator()(const size_t r, const size_t c) const {
+    inline bool operator()(const size_t   r, const size_t   c) const {
       return OP::apply(val_, b_(r,c));
     }
 
-    inline size_t Nrows(void) const {
+    inline size_t   Nrows(void) const {
       return b_.Nrows();
     }
 
-    inline size_t Ncols(void) const {
+    inline size_t   Ncols(void) const {
       return b_.Ncols();
     }
 
-    inline size_t size(void) const {
+    inline size_t   size(void) const {
       return b_.size();
     }
 
@@ -246,23 +246,23 @@ namespace mathq {
   public:
     MboolFuncOp(const A& a) : a_(a) { }
 
-    inline bool operator()(const size_t i) const {
+    inline bool operator()(const size_t   i) const {
       return FUNC::apply(a_(i));
     }
 
-    inline bool operator()(const size_t r, const size_t c) const {
+    inline bool operator()(const size_t   r, const size_t   c) const {
       return FUNC::apply(a_(r,c));
     }
 
-    inline size_t Nrows(void) const {
+    inline size_t   Nrows(void) const {
       return a_.Nrows();
     }
 
-    inline size_t Ncols(void) const {
+    inline size_t   Ncols(void) const {
       return a_.Ncols();
     }
 
-    inline size_t size(void) const {
+    inline size_t   size(void) const {
       return a_.size();
     }
 

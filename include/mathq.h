@@ -33,20 +33,33 @@
 #include <vector>
 
 
+// Mathematiques
 
 #include "version_mathq.h"  // auto generated
+
 #include "declarations.h"
 #include "type-traits.h"
+#include "display.h"
+
+#include "type-defs.h"
+
 #include "math_real.h"
 #include "math_cplx.h"
 #include "math_imag.h"
 #include "math_quaternion.h"
-#include "display.h"
+
+#include "indices.h"
+#include "dimensions.h"
 #include "slices.h"
 #include "util.h"
-
-#include "multiarrays.h"
 #include "debug.h"
+
+#include "multi-array-expressions.h"
+
+#include "multi-array.h"
+#include "multi-array-constant.h"
+#include "multi-array-repeat-vec.h"
+#include "multi-array-outer-product.h"
 
 #include "scalar.h"
 #include "vector.h"
@@ -74,12 +87,8 @@
 #include "matrix-repeat-vec.h"
 #include "matrix-outer-product.h"
 
-#include "multi-array.h"
 #include "multi-array3.h"
 #include "multi-array4.h"
-#include "multi-array-constant.h"
-#include "multi-array-repeat-vec.h"
-#include "multi-array-outer-product.h"
 
 #include "expressionsR.h"
 #include "expressionsRW.h"

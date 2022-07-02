@@ -62,20 +62,20 @@ namespace mathq {
   template <class D, class A, class B> 
   inline Matrix<D>
   operator|( const MorE<D,A>& a, const  MorE<D,B>& b ) {
-    const size_t NR = a.Nrows();
-    const size_t NC = b.Ncols();
-    const size_t M = a.Ncols();
-    const size_t C1 = NR*M;
+    const size_t   NR = a.Nrows();
+    const size_t   NC = b.Ncols();
+    const size_t   M = a.Ncols();
+    const size_t   C1 = NR*M;
 
 
     Matrix<D> y(NR,NC);
 
-    register size_t i = 0;
-    for(register size_t n=0; n < C1; n+=M) 
-      for(register size_t c=0; c < NC; c++,i++) {
+    register size_t   i = 0;
+    for(register size_t   n=0; n < C1; n+=M) 
+      for(register size_t   c=0; c < NC; c++,i++) {
 	size_t j = n;
 	size_t k = c;
-	const size_t C2 = n+M-1;
+	const size_t   C2 = n+M-1;
 	// using a local variable for the accumation saves a lot of CPU Time!!
 	D result = a(j) * b(k);
 	while (j<C2){
@@ -297,7 +297,7 @@ namespace mathq {
 
   template <class D2, class D1, class A> 
   inline MFuncReshape<D2,MorE<D1,A>,Fun_Cast<D1,D2> > 
-  mcast(const MorE<D1,A>& a, const size_t nr, const size_t nc)
+  mcast(const MorE<D1,A>& a, const size_t   nr, const size_t   nc)
   {
     return  MFuncReshape<D2,MorE<D1,A>,Fun_Cast<D1,D2> >(a,nr,nc);
   }
@@ -308,7 +308,7 @@ namespace mathq {
 
   template <class D2, class D1, class A> 
   inline MFuncVec<D2,MArrayExpR<D1,A>,Fun_Cast<D1,D2> > 
-  mcast(const MArrayExpR<D1,A>& a, const size_t NR, const size_t NC)
+  mcast(const MArrayExpR<D1,A>& a, const size_t   NR, const size_t   NC)
   {
     return  MFuncVec<D2,MArrayExpR<D1,A>,Fun_Cast<D1,D2> >(a,NR,NC);
   }
@@ -318,7 +318,7 @@ namespace mathq {
 
   template <class D2, class D1> 
   inline Matrix<D2> 
-  mcast(const D1* dptr, const size_t NR, const size_t NC)
+  mcast(const D1* dptr, const size_t   NR, const size_t   NC)
   {
     Matrix<D2> m(NR,NC);
     for(size_t i = 0; i<NR*NC; i++) 
@@ -332,13 +332,13 @@ namespace mathq {
 
   template <class D2, class D1> 
   inline Matrix<D2> 
-  mcastF(const D1* dptr, const size_t NR, const size_t NC)
+  mcastF(const D1* dptr, const size_t   NR, const size_t   NC)
   {
     Matrix<D2> y(NR,NC);
-    const size_t C1 = NR*NC-NR;
-    register size_t i = 0;
-    for(register size_t c = 0; c < NR; c++, i++) {
-      register size_t k = c;
+    const size_t   C1 = NR*NC-NR;
+    register size_t   i = 0;
+    for(register size_t   c = 0; c < NR; c++, i++) {
+      register size_t   k = c;
       y(i) = static_cast<D2>(dptr[k]);
       while (k<C1) {
 	y((i+=1)) = static_cast<D2>(dptr[k+=NR]);
@@ -358,19 +358,19 @@ namespace mathq {
   operator~(const MorE<D,A>& a)
   {
     // 0.75 secs
-    const size_t NR = a.Nrows();
-    const size_t NC = a.Ncols();
-    const size_t NN = a.size();
-    const size_t C1 = NN-NC;
+    const size_t   NR = a.Nrows();
+    const size_t   NC = a.Ncols();
+    const size_t   NN = a.size();
+    const size_t   C1 = NN-NC;
     
 
     Matrix<D> y(NC,NR);
 
 
 
-    register size_t i = 0;
-    for(register size_t c = 0; c < NC; c++, i++) {
-      register size_t k = c;
+    register size_t   i = 0;
+    for(register size_t   c = 0; c < NC; c++, i++) {
+      register size_t   k = c;
       y(i) = a(k);
       while (k<C1) {
 	y((i+=1)) = a((k+=NC));
@@ -396,7 +396,7 @@ namespace mathq {
   toCarray(const MorE<D1,A>& m) {
 
 
-    const size_t N = m.size();
+    const size_t   N = m.size();
     D2* dptr = new D2[N];
     for(size_t i = 0; i<N; i++) 
       dptr[i] = static_cast<D2>(m(i));
@@ -411,14 +411,14 @@ namespace mathq {
   toFarray(const MorE<D1,A>& m) {
 
 
-    const size_t NR = m.Nrows();
-    //    const size_t NC = m.Ncols();
-    const size_t N = m.size();
+    const size_t   NR = m.Nrows();
+    //    const size_t   NC = m.Ncols();
+    const size_t   N = m.size();
     D2* dptr = new D2[N];
-    const size_t C1 = N-NR;
-    register size_t i = 0;
-    for(register size_t c = 0; c < NR; c++, i++) {
-      register size_t k = c;
+    const size_t   C1 = N-NR;
+    register size_t   i = 0;
+    for(register size_t   c = 0; c < NR; c++, i++) {
+      register size_t   k = c;
       dptr[k] = static_cast<D2>(m(i));
       while (k<C1) {
 	dptr[k+=NR] = static_cast<D2>(m(i+=1));
@@ -430,8 +430,8 @@ namespace mathq {
 
 
   template <class A> 
-  Vector<size_t> sub2ind(const MorE<size_t,A>& subs, const size_t NC) {
-    const size_t N = subs.Nrows();
+  Vector<size_t> sub2ind(const MorE<size_t,A>& subs, const size_t   NC) {
+    const size_t   N = subs.Nrows();
     Vector<size_t> ii(N);
  
 
@@ -471,7 +471,7 @@ namespace mathq {
  
     D result = a(0);
 
-    for (register size_t i = 1; i < a.size() ; i++ )
+    for (register size_t   i = 1; i < a.size() ; i++ )
       result += a(i);
     
     return result;
@@ -483,12 +483,12 @@ namespace mathq {
   template <class D, class A> 
   inline Vector<D> sumbyrow( const MorE<D,A>& a ) {
     
-    const size_t NR = a.Nrows();
-    const size_t NC = a.Ncols();
+    const size_t   NR = a.Nrows();
+    const size_t   NC = a.Ncols();
     Vector<D> y(NR);
 
 
-    size_t i = 0;
+    size_t   i = 0;
     for(size_t r = 0; r<NR; r++) {
       D temp=D();
       for(size_t c = 0; c<NC; c++,i++) {
@@ -505,13 +505,13 @@ namespace mathq {
   template <class D, class A> 
   inline Vector<D> sumbycol( const MorE<D,A>& a ) {
     
-    const size_t NR = a.Nrows();
-    const size_t NC = a.Ncols();
+    const size_t   NR = a.Nrows();
+    const size_t   NC = a.Ncols();
     Vector<D> y(NC);
 
 
     for(size_t c = 0; c<NC; c++) {
-      size_t LIMIT = NR*NC-NC+c+1;
+      size_t   LIMIT = NR*NC-NC+c+1;
       D temp=D();
       for(size_t i = c; i<LIMIT; i+=NC) {
 	temp += a(i);
@@ -530,7 +530,7 @@ namespace mathq {
   template <class D, class A> 
   inline D min( const MorE<D,A>& a ) {
     D result = a(0);
-    for (register size_t i = 1; i < a.size() ; i++ )
+    for (register size_t   i = 1; i < a.size() ; i++ )
       result = std::min(result,a(i));
     return result;
   }
@@ -542,11 +542,11 @@ namespace mathq {
   template <class D, class A> 
   inline Vector<D> minbyrow( const MorE<D,A>& a ) {
     
-    const size_t NR = a.Nrows();
-    const size_t NC = a.Ncols();
+    const size_t   NR = a.Nrows();
+    const size_t   NC = a.Ncols();
     Vector<D> y(NR);
 
-    size_t i = 0;
+    size_t   i = 0;
     for(size_t r = 0; r<NR; r++) {
       D temp = a(i); 
       i++;
@@ -565,14 +565,14 @@ namespace mathq {
   template <class D, class A> 
   inline Vector<D> minbycol( const MorE<D,A>& a ) {
     
-    const size_t NR = a.Nrows();
-    const size_t NC = a.Ncols();
+    const size_t   NR = a.Nrows();
+    const size_t   NC = a.Ncols();
     Vector<D> y(NC);
 
 
     for(size_t c = 0; c<NC; c++) {
-      size_t LIMIT = NR*NC-NC+c+1;
-      size_t i = c;
+      size_t   LIMIT = NR*NC-NC+c+1;
+      size_t   i = c;
       D temp=a(i);
       for(i+=NC; i<LIMIT; i+=NC) {
 	temp = std::min(temp,a(i));
@@ -592,7 +592,7 @@ namespace mathq {
  
     D result = a(0);
 
-    for (register size_t i = 1; i < a.size() ; i++ )
+    for (register size_t   i = 1; i < a.size() ; i++ )
       result = std::max(result,a(i));
     
     return result;
@@ -608,11 +608,11 @@ namespace mathq {
   template <class D, class A> 
   inline Vector<D> maxbyrow( const MorE<D,A>& a ) {
     
-    const size_t NR = a.Nrows();
-    const size_t NC = a.Ncols();
+    const size_t   NR = a.Nrows();
+    const size_t   NC = a.Ncols();
     Vector<D> y(NR);
 
-    size_t i = 0;
+    size_t   i = 0;
     for(size_t r = 0; r<NR; r++) {
       D temp = a(i); 
       i++;
@@ -631,14 +631,14 @@ namespace mathq {
   template <class D, class A> 
   inline Vector<D> maxbycol( const MorE<D,A>& a ) {
     
-    const size_t NR = a.Nrows();
-    const size_t NC = a.Ncols();
+    const size_t   NR = a.Nrows();
+    const size_t   NC = a.Ncols();
     Vector<D> y(NC);
 
 
     for(size_t c = 0; c<NC; c++) {
-      size_t LIMIT = NR*NC-NC+c+1;
-      size_t i = c;
+      size_t   LIMIT = NR*NC-NC+c+1;
+      size_t   i = c;
       D temp=a(i);
       for(i+=NC; i<LIMIT; i+=NC) {
 	temp = std::max(temp,a(i));
@@ -660,15 +660,15 @@ namespace mathq {
     
  
     D result = a(0);
-    size_t Nmin;
+    size_t   Nmin;
     if (a.Nrows() < a.Ncols())
       Nmin=a.Nrows();
     else
       Nmin=a.Ncols();
     
-    const size_t N=Nmin;
+    const size_t   N=Nmin;
 
-    for (register size_t i = 1; i < N ; i++ )
+    for (register size_t   i = 1; i < N ; i++ )
       result += a(i,i);
     
     return result;

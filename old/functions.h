@@ -1231,7 +1231,7 @@ namespace matricks {
     Number sum( const MArrayExpR<Number,A>& a ) {
     
  
-    const size_t N = a.deepsize();
+    const size_t   N = a.deepsize();
     if (N==0)
       return 0;
 
@@ -1252,7 +1252,7 @@ namespace matricks {
     Number prod( const MArrayExpR<Number,A>& a ) {
     
  
-    const size_t N = a.deepsize();
+    const size_t   N = a.deepsize();
     if (N==0)
       return 0;
 
@@ -1274,7 +1274,7 @@ namespace matricks {
     Number norm( const MArrayExpR<Number,A>& a ) {
     
  
-    const size_t N = a.deepsize();
+    const size_t   N = a.deepsize();
     if (N==0)
       return 0;
 
@@ -1295,7 +1295,7 @@ namespace matricks {
     Number min( const MArrayExpR<Number,A>& a ) {
     
  
-    const size_t N = a.deepsize();
+    const size_t   N = a.deepsize();
     if (N==0)
       return 0;
 
@@ -1315,7 +1315,7 @@ namespace matricks {
   template <typename Number, class A> 
     Number max( const MArrayExpR<Number,A>& a ) {
     
-    const size_t N = a.deepsize();
+    const size_t   N = a.deepsize();
     if (N==0)
       return 0;
 
@@ -1335,7 +1335,7 @@ namespace matricks {
 
   
   /****************************************************************************
-   * Unary Functions/Operators that bools or size_t MultiArrays
+   * Unary Functions/Operators that bools or size_t   MultiArrays
    ****************************************************************************
    */
 
@@ -1372,8 +1372,8 @@ namespace matricks {
   // numtrue(a)
 
   template <typename Number, class A> 
-    inline size_t numtrue( const MArrayExpR<Number,A>& a ) {
-    size_t result = 0;
+    inline size_t   numtrue( const MArrayExpR<Number,A>& a ) {
+    size_t   result = 0;
     
  
     for (size_t i = 0; i< a.deepsize(); i++)
@@ -1400,7 +1400,7 @@ namespace matricks {
  
     Vector<size_t> *y = new Vector<size_t>(N);
 
-    size_t j =0;
+    size_t   j =0;
     for (size_t i = 0; i< a.size(); i++)
       if (a[i])
 	(*y)[j++] = i;
@@ -1564,7 +1564,7 @@ namespace matricks {
   // rep(v,m)
 
   template <typename Number, class A> 
-    inline auto rep(const MArrayExpR<Number,A>& a, const size_t m) {
+    inline auto rep(const MArrayExpR<Number,A>& a, const size_t   m) {
     return VER_Rep<Number,MArrayExpR<Number,A> >(a,m);
   }
 
@@ -1584,7 +1584,7 @@ namespace matricks {
 
   template <class NT2, class NT1, class A> 
     inline NT2* toCarray(const MArrayExpR<NT1,A>& v) {
-    const size_t N = v.size();
+    const size_t   N = v.size();
     NT2* dptr = new NT2[N];
     for(size_t i = 0; i<N; i++) 
       dptr[i] = static_cast<NT2>(v[i]);
@@ -1598,7 +1598,7 @@ namespace matricks {
   template <class NT2, class NT1, class A> 
     inline std::vector<NT2>
     tostdvector(const MArrayExpR<NT1,A>& v) {
-    const size_t N = v.size();
+    const size_t   N = v.size();
     std::vector<NT2> y(N);
     for(size_t i = 0; i<N; i++) 
       y[i] = static_cast<NT2>(v[i]);
@@ -1612,7 +1612,7 @@ namespace matricks {
   template <class NT2, class NT1, class A> 
     inline std::valarray<NT2>
     tovalarray(const MArrayExpR<NT1,A>& v) {
-    const size_t N = v.size();
+    const size_t   N = v.size();
     std::valarray<NT2> y(N);
     for(size_t i = 0; i<N; i++) 
       y[i] = static_cast<NT2>(v[i]);

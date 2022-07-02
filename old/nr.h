@@ -29,8 +29,8 @@ namespace mathq_nr {
 		 Matrix<double>& A, 
 		 Matrix<double>& U, Vector<double>& W, Matrix<double>& V )
   {
-    const size_t depth = A.Nrows();
-    const size_t N = A.Ncols();       // Dimensions of matrix.
+    const size_t   depth = A.Nrows();
+    const size_t   N = A.Ncols();       // Dimensions of matrix.
 
     /*
       assert(m >= n);

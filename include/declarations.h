@@ -62,6 +62,20 @@ namespace mathq {
 
 
 
+  // maximum subcript size for vectors and matrices (since we allow negative indexing)
+  const size_t maxsize = std::numeric_limits<size_t>::max();
+  const size_t badsize = std::numeric_limits<size_t>::max();
+
+
+  class Indices;
+  inline bool equiv(const Indices& inds1, const Indices& inds2);
+
+  template <typename NestedDims>
+  class DeepIndices;
+
+  template<typename Element, int L>
+  class NestedInitializerListDef;
+
   //*******************************************************
   //          Trait classes
   //*******************************************************
@@ -100,13 +114,22 @@ namespace mathq {
   class NestedDims;
 
 
+
+
+  class VectorofPtrs;
+  template <class DAT> class Pair;
+  class Indices;
+  enum MultiArrays : unsigned int;
+  enum MultiArrayOrExpression : unsigned int;
+
+
   // *********************************************************************
   // * MultiArray Expressions
   // ********************************************************************
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t   depth, size_t   rank, class DimensionsT>
   class MArrayExpR;
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t   depth, size_t   rank, class DimensionsT>
   class MArrayExpRW;
 
 
@@ -121,27 +144,27 @@ namespace mathq {
   //   return true;
   // }
 
-  template <typename Element, size_t rank, size_t... dims >
+  template <typename Element, size_t   rank, size_t... dims >
   class MultiArray;
 
 
 
   // typenames for specializations
 
-  
-  template <typename Element>
-  using Scalar = MultiArray<Element,0>;
 
-  template <typename Element, size_t NE = 0>
+  template <typename Element>
+  using Scalar = MultiArray<Element, 0>;
+
+  template <typename Element, size_t   NE = 0>
   using Vector = MultiArray<Element, NE>;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   using Matrix = MultiArray<Element, NR, NC>;
 
-  template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0>
+  template <typename Element, size_t   N1 = 0, size_t   N2 = 0, size_t   N3 = 0>
   using MultiArray3 = MultiArray<Element, N1, N2, N3>;
 
-  template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0, size_t N4 = 0>
+  template <typename Element, size_t   N1 = 0, size_t   N2 = 0, size_t   N3 = 0, size_t   N4 = 0>
   using MultiArray4 = MultiArray<Element, N1, N2, N3, N4>;
 
 
@@ -151,55 +174,55 @@ namespace mathq {
   // * Special Matrices
   // ********************************************************************
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixZero;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixIdentity;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixExchange;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixConstDiag;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixDiagonal;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixRevDiag;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixRepCol;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixRepRow;
 
   template <typename Element>
   class MatrixRepRowAndCol;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixVandermonde;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
+  template <typename Element, size_t   NR = 0, size_t   NC = 0>
   class MatrixToeplitz;
 
-  template <typename Element, size_t N = 0>
+  template <typename Element, size_t   N = 0>
   class MatrixUpperTriangle;
 
-  template <typename Element, size_t N = 0>
+  template <typename Element, size_t   N = 0>
   class MatrixLowerTriangle;
 
-  template <typename Element, size_t N = 0>
+  template <typename Element, size_t   N = 0>
   class MatrixSymmetric;
 
-  template <typename Element, size_t N = 0>
+  template <typename Element, size_t   N = 0>
   class MatrixSkewSymmetric;
 
-  template <typename Element, size_t N = 0>
+  template <typename Element, size_t   N = 0>
   class MatrixHermitian;
 
-  template <typename Element, size_t N = 0>
+  template <typename Element, size_t   N = 0>
   class MatrixSkewHermitian;
 
 
@@ -208,28 +231,28 @@ namespace mathq {
   // * Expressions
   // ********************************************************************
 
-  template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
+  template <class A, typename Element, typename Number, size_t   depth, size_t   rank, class FUNC>
   class TER_Unary;
 
-  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t D1, size_t D2, size_t D3, size_t R1, size_t R2, size_t R3, class OP>
+  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t   D1, size_t   D2, size_t   D3, size_t   R1, size_t   R2, size_t   R3, class OP>
   class TER_Binary;
 
-  template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4, size_t D1, size_t D2, size_t D3, size_t M4, size_t R1, size_t R2, size_t R3, size_t R4, class OP>
+  template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4, size_t   D1, size_t   D2, size_t   D3, size_t   M4, size_t   R1, size_t   R2, size_t   R3, size_t   R4, class OP>
   class TER_Ternary;
 
-  template <class A, class X, typename Element, typename Number, size_t depth, size_t rank>
+  template <class A, class X, typename Element, typename Number, size_t   depth, size_t   rank>
   class TER_Series;
 
   template <class A, class B, class X, typename Number, class OP1, class OP2>
   class TER_Series2;
 
-  template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
+  template <class A, typename Element, typename Number, size_t   depth, size_t   rank, class FUNC>
   class TER_Transpose;
 
   template <class A, typename Number>
   class TER_Rep;
 
-  template <class X, class Y, typename Element, typename Number, size_t depth>
+  template <class X, class Y, typename Element, typename Number, size_t   depth>
   class TER_Join;
 
   template <typename Number>
@@ -238,7 +261,7 @@ namespace mathq {
   template <typename Number>
   class TERW_Submask;
 
-  template <class X, class Y, typename Element, typename Number, size_t depth>
+  template <class X, class Y, typename Element, typename Number, size_t   depth>
   class TERW_Join;
 
 
@@ -263,7 +286,7 @@ namespace mathq {
   //  multiarray of depth=1 and fixed rank=NDIMS but dynamic size
   // ***************************************************************************
 
-  template <typename Number, size_t NDIMS>
+  template <typename Number, size_t   NDIMS>
   using Grid = MultiArray<Number, NDIMS>;
 
 
@@ -280,7 +303,7 @@ namespace mathq {
   // TODO: use OuterProductMultiArray for 2nd level to save on space
   // ***************************************************************************
 
-  template <typename Number, size_t NDIMS, size_t rank = 1>
+  template <typename Number, size_t   NDIMS, size_t   rank = 1>
   using MultiArrayOfGrids = MultiArray< Grid<Number, NDIMS>, rank >;
 
 
@@ -298,20 +321,20 @@ namespace mathq {
   // TODO: use OuterProductMultiArray for 1st level to save on space
   // ***************************************************************************
 
-  template <typename Number, size_t NDIMS, size_t rank = 1>
+  template <typename Number, size_t   NDIMS, size_t   rank = 1>
   using GridOfMultiArrays = Grid< MultiArray<Number, rank>, NDIMS>;
 
 
 
 
-  template <typename Number, size_t NDIMS, size_t rank, typename G>
+  template <typename Number, size_t   NDIMS, size_t   rank, typename G>
   class GridTraits;
 
   ////////////////////////////////////////////////////////////
   // In functions_misc.h
   ////////////////////////////////////////////////////////////
 
-  // template <class Derived, typename Element, typename Number, size_t depth_, size_t rank, class DimensionsT>
+  // template <class Derived, typename Element, typename Number, size_t   depth_, size_t   rank, class DimensionsT>
   // EnableMethodIf<std::is_same<Number, bool>::value, Vector<size_t>&> findtrue(const MArrayExpR<Derived, Element, Number, depth_, rank, DimensionsT>& v);
 
 

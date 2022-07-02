@@ -47,30 +47,30 @@ namespace mathq {
     }
 
 
-    const Number dat(const size_t i) const {
-      size_t ind = ii_[i];
+    const Number dat(const size_t   i) const {
+      size_t   ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
       }
       return x_.dat(ind);
     }
-    MyNumberType& dat(const size_t i) {
-      size_t ind = ii_[i];
+    MyNumberType& dat(const size_t   i) {
+      size_t   ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
       }
       return x_.dat(ind);
     }
 
-    const Number operator[](const size_t i) const {
-      size_t ind = ii_[i];
+    const Number operator[](const size_t   i) const {
+      size_t   ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
       }
       return x_[ind];
     }
-    Number& operator[](const size_t i) {
-      size_t ind = ii_[i];
+    Number& operator[](const size_t   i) {
+      size_t   ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
       }
@@ -91,10 +91,10 @@ namespace mathq {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_t size(void) const {
+    size_t   size(void) const {
       return ii_.size();
     }
-    size_t rank(void) const {
+    size_t   rank(void) const {
       return x_.rank();
     }
     Dimensions dims(void) const {
@@ -113,10 +113,10 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t   depth(void) const {
       return depth_value;
     }
-    size_t element_size(void) const {
+    size_t   element_size(void) const {
       if constexpr (depth_value<=1) {
         return 1;
       }
@@ -124,7 +124,7 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t   eldeepsize(void) const {
       if constexpr (depth_value<=1) {
         return 1;
       }
@@ -132,7 +132,7 @@ namespace mathq {
         return x_.eldeepsize();
       }
     }
-    size_t deepsize(void) const {
+    size_t   deepsize(void) const {
       if constexpr (depth_value<=1) {
         return this->size();
       }
@@ -188,21 +188,21 @@ namespace mathq {
     }
 
 
-    const Number dat(const size_t i) const {
-      size_t ind = ii_[i];
+    const Number dat(const size_t   i) const {
+      size_t   ind = ii_[i];
       return x_.dat(ind);
     }
-    MyNumberType& dat(const size_t i) {
-      size_t ind = ii_[i];
+    MyNumberType& dat(const size_t   i) {
+      size_t   ind = ii_[i];
       return x_.dat(ind);
     }
 
-    const Number operator[](const size_t i) const {
-      size_t ind = ii_[i];
+    const Number operator[](const size_t   i) const {
+      size_t   ind = ii_[i];
       return x_[ind];
     }
-    Number& operator[](const size_t i) {
-      size_t ind = ii_[i];
+    Number& operator[](const size_t   i) {
+      size_t   ind = ii_[i];
       return x_[ind];
     }
 
@@ -220,10 +220,10 @@ namespace mathq {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_t size(void) const {
+    size_t   size(void) const {
       return ii_.size();
     }
-    size_t rank(void) const {
+    size_t   rank(void) const {
       return x_.rank();
     }
     Dimensions dims(void) const {
@@ -242,10 +242,10 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t   depth(void) const {
       return depth_value;
     }
-    size_t element_size(void) const {
+    size_t   element_size(void) const {
       if constexpr (depth_value<=1) {
         return 1;
       }
@@ -253,7 +253,7 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t   eldeepsize(void) const {
       if constexpr (depth_value<=1) {
         return 1;
       }
@@ -261,7 +261,7 @@ namespace mathq {
         return x_.eldeepsize();
       }
     }
-    size_t deepsize(void) const {
+    size_t   deepsize(void) const {
       if constexpr (depth_value<=1) {
         return this->size();
       }
@@ -320,7 +320,7 @@ namespace mathq {
       delete vptrs;
     }
 
-    const Number dat(const size_t i) const {
+    const Number dat(const size_t   i) const {
       if (i < x_.deepsize()) {
         return x_.dat(i);
       }
@@ -328,7 +328,7 @@ namespace mathq {
         return y_.dat(i-x_.deepsize());
       }
     }
-    Number& dat(const size_t i) {
+    Number& dat(const size_t   i) {
       if (i < x_.deepsize()) {
         return x_.dat(i);
       }
@@ -336,7 +336,7 @@ namespace mathq {
         return y_.dat(i-x_.deepsize());
       }
     }
-    const Element operator[](const size_t i) const {
+    const Element operator[](const size_t   i) const {
       if (i < x_.size()) {
         return x_[i];
       }
@@ -344,7 +344,7 @@ namespace mathq {
         return y_[i-x_.size()];
       }
     }
-    Element& operator[](const size_t i) {
+    Element& operator[](const size_t   i) {
       if (i < x_.size()) {
         return x_[i];
       }
@@ -369,10 +369,10 @@ namespace mathq {
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
-    size_t size(void) const {
+    size_t   size(void) const {
       return x_.size()+y_.size();
     }
-    size_t rank(void) const {
+    size_t   rank(void) const {
       return rank_value;
     }
     Dimensions dims(void) const {
@@ -395,13 +395,13 @@ namespace mathq {
     bool isExpression(void) const {
       return true;
     }
-    size_t depth(void) const {
+    size_t   depth(void) const {
       return depth;
     }
     Dimensions element_dims(void) const {
       return x_.element_dims();
     }
-    size_t element_size(void) const {
+    size_t   element_size(void) const {
       if constexpr (depth<=1) {
         return 1;
       }
@@ -409,7 +409,7 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t   eldeepsize(void) const {
       if constexpr (depth<=1) {
         return 1;
       }
@@ -417,7 +417,7 @@ namespace mathq {
         return x_.eldeepsize();
       }
     }
-    size_t deepsize(void) const {
+    size_t   deepsize(void) const {
       if constexpr (depth<=1) {
         return this->size();
       }
@@ -476,10 +476,10 @@ namespace mathq {
   //     Number& operator[](size_t i) {
   //       return OP::give(a_[i]);
   //     }
-  //     const MyNumberType dat(const size_t i) const {
+  //     const MyNumberType dat(const size_t   i) const {
   //       return OP::give(a_.dat(i));
   //     }
-  //     MyNumberType& dat(const size_t i)  {
+  //     MyNumberType& dat(const size_t   i)  {
   //       return OP::give(a_.dat(i));
   //     }
 
@@ -488,10 +488,10 @@ namespace mathq {
   //     VectorofPtrs getAddresses(void) const {
   //       return *vptrs;
   //     }
-  //     size_t size(void) const {
+  //     size_t   size(void) const {
   //       return a_.size();
   //     }
-  //     size_t rank(void) const {
+  //     size_t   rank(void) const {
   //       return a_.rank();
   //     }
   //     Dimensions dims(void) const {
@@ -500,24 +500,24 @@ namespace mathq {
   //     bool isExpression(void) const {
   //       return true;
   //     }
-  //   size_t depth(void) const {
+  //   size_t   depth(void) const {
   //       return depth;
   //     }
-  //   size_t element_size(void) const {
+  //   size_t   element_size(void) const {
   //     if constexpr(depth<2) {
   //       return 1;
   //     } else {
   //       return a_.element_size();
   //     }
   //   }
-  //   size_t eldeepsize(void) const {
+  //   size_t   eldeepsize(void) const {
   //     if constexpr(depth<2) {
   //       return 1;
   //     } else {
   //       return a_.eldeepsize();
   //     }
   //   }
-  //     size_t deepsize(void) const {
+  //     size_t   deepsize(void) const {
   //       if constexpr(depth<2) {
   // 	  return this->size();
   // 	} else {

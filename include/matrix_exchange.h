@@ -43,8 +43,8 @@ namespace mathq {
     const Number zero_ = 0;
     const Number one_ = 1;
 
-    size_t Nrows_;
-    size_t Ncols_;
+    size_t   Nrows_;
+    size_t   Ncols_;
 
     static_assert(NumberTrait<Number>::value,
       "class MatrixExchange can only have numbers as elements, ie not vectors, matrices etc.");
@@ -59,14 +59,14 @@ namespace mathq {
 
     // -------------------  DEFAULT  CONSTRUCTOR: empty --------------------
     explicit MatrixExchange<Number, NR, NC>() {
-      size_t NN = NR*NC;
+      size_t   NN = NR*NC;
       resize(NR, NC);
     }
 
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixExchange<Number, NR, NC>(const size_t Nr, const size_t Nc) {
+    explicit MatrixExchange<Number, NR, NC>(const size_t   Nr, const size_t   Nc) {
       resize(Nr, Nc);
     }
 
@@ -86,18 +86,18 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    size_t rank(void)  const {
+    size_t   rank(void)  const {
       return rank_value;
     }
 
 
-    inline size_t size(void) const {
+    inline size_t   size(void) const {
       return Nrows()*Ncols();
     }
-    inline size_t Nrows(void) const {
+    inline size_t   Nrows(void) const {
       return Nrows_;
     }
-    inline size_t Ncols(void) const {
+    inline size_t   Ncols(void) const {
       return Ncols_;
     }
     Dimensions dims(void) const {
@@ -124,7 +124,7 @@ namespace mathq {
     }
 
 
-    constexpr size_t depth(void) const {
+    constexpr size_t   depth(void) const {
       return depth_value;
     }
     Dimensions element_dims(void) const {
@@ -133,17 +133,17 @@ namespace mathq {
     }
 
     // the size of each element
-    inline size_t element_size(void) const {
+    inline size_t   element_size(void) const {
       return 1;
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t eldeepsize(void) const {
+    inline size_t   eldeepsize(void) const {
       return 1;
     }
 
     // the total number of numbers in this data structure
-    size_t deepsize(void) const {
+    size_t   deepsize(void) const {
       return this->size();
     }
     std::vector<Dimensions>& deepdims(void) const {
@@ -199,8 +199,8 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    MatrixExchange<Number, NR, NC>& reshape(const size_t nr, const size_t nc) {
-      const size_t nn = nr*nc;
+    MatrixExchange<Number, NR, NC>& reshape(const size_t   nr, const size_t   nc) {
+      const size_t   nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
           Nrows_ = 0;
@@ -232,7 +232,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // read
-    const Number dat(const size_t n)  const {
+    const Number dat(const size_t   n)  const {
       return (*this)[n];
     }
 
@@ -242,8 +242,8 @@ namespace mathq {
 
     // "read": x.dat(Indices)
     const Number dat(const Indices& inds)  const {
-      size_t r = inds[0];
-      size_t c = inds[1];
+      size_t   r = inds[0];
+      size_t   c = inds[1];
       return (*this)(r, c);
     }
 
@@ -254,10 +254,10 @@ namespace mathq {
 
     // "read": x.dat(DeepIndices)
     const Number dat(const DeepIndices& dinds)  const {
-      const size_t mydepth = dinds.size();
+      const size_t   mydepth = dinds.size();
       const Indices& inds = dinds[mydepth -depth_value];
-      size_t r = inds[0];
-      size_t c = inds[1];
+      size_t   r = inds[0];
+      size_t   c = inds[1];
       return (*this)(r, c);
     }
 
@@ -267,17 +267,17 @@ namespace mathq {
     //**********************************************************************
 
     // read
-    const Number operator[](const size_t n)  const {
+    const Number operator[](const size_t   n)  const {
       const Indices& inds = indices(n);;
-      size_t r = inds[0];
-      size_t c = inds[1];
+      size_t   r = inds[0];
+      size_t   c = inds[1];
       return (*this)(r, c);
     }
 
 
     // --------------------------- index(r,c) -----------------------------
 
-    size_t index(const size_t r, const size_t c) const {
+    size_t   index(const size_t   r, const size_t   c) const {
       //TODO: bounds check
       return c + Ncols_*r; // row major
     }
@@ -285,7 +285,7 @@ namespace mathq {
     // --------------------------- indices(k) -----------------------------
 
     // This is the inverse of the above function
-    Indices& indices(const size_t k) const {
+    Indices& indices(const size_t   k) const {
       // NOTE: a divide is between 6 to 40 times more costly than a multiply
       //       https://stackoverflow.com/questions/4125033/floating-point-division-vs-floating-point-multiplication
       //       So avoid using this whenever possible
@@ -305,7 +305,7 @@ namespace mathq {
     //**********************************************************************
 
 
-    const Number operator()(const size_t r, const size_t c) const {
+    const Number operator()(const size_t   r, const size_t   c) const {
       if (r+c+1==Ncols_) {
         return one_;
       }
@@ -386,11 +386,11 @@ namespace mathq {
 
       Style& style = FormatDataMatrix::style_for_punctuation;
       stream << style.apply(FormatDataMatrix::string_opening);
-      const size_t N = FormatDataMatrix::max_elements_per_line;
+      const size_t   N = FormatDataMatrix::max_elements_per_line;
 
       for (size_t r = 0; r < m.Nrows(); r++) {
         stream << style.apply(FormatDataMatrix::string_row_opening);
-        size_t k = 0;
+        size_t   k = 0;
         for (size_t c = 0; c < m.Ncols(); c++, k++) {
           if (k >= N) {
             stream << style.apply(FormatDataMatrix::string_endofline);

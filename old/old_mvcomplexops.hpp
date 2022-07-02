@@ -14,14 +14,14 @@ namespace mathq {
   inline Matrix<std::complex<D> >
   operator^(const MArrayExpR<std::complex<D>,A>& a, const MArrayExpR<D,B>& b)
   {
-    const size_t NC = a.size();
-    const size_t NR = b.size();
+    const size_t   NC = a.size();
+    const size_t   NR = b.size();
     Matrix<std::complex<D> > y(NR,NC);
 
 
-    register size_t i=0;
-    for(register size_t r=0; r < NR; r++) 
-      for(register size_t c=0; c < NC; c++,i++) 
+    register size_t   i=0;
+    for(register size_t   r=0; r < NR; r++) 
+      for(register size_t   c=0; c < NC; c++,i++) 
 	y(i) = a[c]*b[r];   
 
     return  y;
@@ -34,14 +34,14 @@ namespace mathq {
   inline Matrix<std::complex<D> >
   operator^(const MArrayExpR<D,A>& a, const MArrayExpR<std::complex<D>,B>& b)
   {
-    const size_t NC = a.size();
-    const size_t NR = b.size();
+    const size_t   NC = a.size();
+    const size_t   NR = b.size();
     Matrix<std::complex<D> > y(NR,NC);
 
 
-    register size_t i=0;
-    for(register size_t r=0; r < NR; r++) 
-      for(register size_t c=0; c < NC; c++,i++) 
+    register size_t   i=0;
+    for(register size_t   r=0; r < NR; r++) 
+      for(register size_t   c=0; c < NC; c++,i++) 
 	y(i) = a[c]*b[r];   
 
     return  y;
@@ -60,18 +60,18 @@ namespace mathq {
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
   operator|( const MorE<std::complex<D> ,A>& a, const  MArrayExpR<D,B>& b ) {
-    const size_t NR = a.Nrows();
-    const size_t M = a.Ncols();
-    const size_t C1 = NR*M;
-    const size_t C2 = M-1;
+    const size_t   NR = a.Nrows();
+    const size_t   M = a.Ncols();
+    const size_t   C1 = NR*M;
+    const size_t   C2 = M-1;
 
     Vector<std::complex<D> > y(NR);
 
 
-    register size_t i = 0;
-    for(register size_t n=0; n < C1; n+=M, i++) {
-      size_t j = n;
-      size_t k = 0;
+    register size_t   i = 0;
+    for(register size_t   n=0; n < C1; n+=M, i++) {
+      size_t   j = n;
+      size_t   k = 0;
        // using a local variable for the accumation saves a lot of CPU Time!!
       std::complex<D>  result = a(j) * b[k];
       do {
@@ -89,17 +89,17 @@ namespace mathq {
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
   operator|( const MArrayExpR<D,A>& a, const  MorE<std::complex<D> ,B>& b ) {
-    const size_t NC = b.Ncols();
-    const size_t M = b.Nrows();
+    const size_t   NC = b.Ncols();
+    const size_t   M = b.Nrows();
 
     Vector<std::complex<D> > y(NC);
 
 
-    register size_t i = 0;
-    for(register size_t c=0; c < NC; c++,i++) {
-      size_t j = 0;
-      size_t k = c;
-      const size_t C2 = M-1;
+    register size_t   i = 0;
+    for(register size_t   c=0; c < NC; c++,i++) {
+      size_t   j = 0;
+      size_t   k = c;
+      const size_t   C2 = M-1;
       // using a local variable for the accumation saves a lot of CPU Time!!
       std::complex<D>  result = a[j] * b(k);
       do {
@@ -121,18 +121,18 @@ namespace mathq {
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
   operator|( const MorE<D,A>& a, const  MArrayExpR<std::complex<D> ,B>& b ) {
-    const size_t NR = a.Nrows();
-    const size_t M = a.Ncols();
-    const size_t C1 = NR*M;
-    const size_t C2 = M-1;
+    const size_t   NR = a.Nrows();
+    const size_t   M = a.Ncols();
+    const size_t   C1 = NR*M;
+    const size_t   C2 = M-1;
 
     Vector<std::complex<D> > y(NR);
 
 
-    register size_t i = 0;
-    for(register size_t n=0; n < C1; n+=M, i++) {
-      size_t j = n;
-      size_t k = 0;
+    register size_t   i = 0;
+    for(register size_t   n=0; n < C1; n+=M, i++) {
+      size_t   j = n;
+      size_t   k = 0;
        // using a local variable for the accumation saves a lot of CPU Time!!
       std::complex<D>  result = a(j) * b[k];
       do {
@@ -150,17 +150,17 @@ namespace mathq {
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
   operator|( const MArrayExpR<std::complex<D> ,A>& a, const  MorE<D,B>& b ) {
-    const size_t NC = b.Ncols();
-    const size_t M = b.Nrows();
+    const size_t   NC = b.Ncols();
+    const size_t   M = b.Nrows();
 
     Vector<std::complex<D> > y(NC);
 
 
-    register size_t i = 0;
-    for(register size_t c=0; c < NC; c++,i++) {
-      size_t j = 0;
-      size_t k = c;
-      const size_t C2 = M-1;
+    register size_t   i = 0;
+    for(register size_t   c=0; c < NC; c++,i++) {
+      size_t   j = 0;
+      size_t   k = c;
+      const size_t   C2 = M-1;
       // using a local variable for the accumation saves a lot of CPU Time!!
       std::complex<D>  result = a[j] * b(k);
       do {

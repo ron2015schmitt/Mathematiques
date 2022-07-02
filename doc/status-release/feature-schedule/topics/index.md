@@ -26,7 +26,7 @@ Refer to file `sandbox/indexing.cpp` for prototyping.
 * Define both direct index (for speed) access for each tensor class
    * `Scalar()` - same method for both
    * `Vector(size_t k)` and `Vector(Index ind)`
-   * `Matrix(size_t r, size_t c)` and  `Matrix(Index ind1, Index ind2)` and 
+   * `Matrix(size_t r, size_t   c)` and  `Matrix(Index ind1, Index ind2)` and 
    * `MultiArray(size_t... ks)` and  `MultiArray(Index... inds)`
 * define `even`, `odd`, `rev` slices in their own namespace
 

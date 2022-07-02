@@ -73,9 +73,9 @@ namespace mathq_lapack {
     // place checks here
 
 
-    const size_t depth = A.Nrows();
-    const size_t N = A.Ncols();       // Dimensions of matrix.
-    const size_t minMN = std::min(depth, N);
+    const size_t   depth = A.Nrows();
+    const size_t   N = A.Ncols();       // Dimensions of matrix.
+    const size_t   minMN = std::min(depth, N);
 
     Matrix<ComplexDouble > Atemp(N, depth, "Atemp");
     // need to pass transpose because lapack uses col major form

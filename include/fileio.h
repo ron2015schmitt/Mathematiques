@@ -16,7 +16,7 @@ namespace mathq {
    */
 
   template <class X>
-  bool save(X& x, std::string fname, size_t precision, std::ios_base::fmtflags flags) {
+  bool save(X& x, std::string fname, size_t   precision, std::ios_base::fmtflags flags) {
     std::ofstream out(fname.data(), std::ios::out);
 
     if (!out) {
@@ -34,12 +34,12 @@ namespace mathq {
   }
 
   template <class X>
-  bool save(X& x, std::string fname, std::ios_base::fmtflags flags, size_t precision) {
+  bool save(X& x, std::string fname, std::ios_base::fmtflags flags, size_t   precision) {
     return save(x, fname, flags, precision);
   }
 
   template <class X>
-  bool save(X& x, std::string fname, size_t precision = 16) {
+  bool save(X& x, std::string fname, size_t   precision = 16) {
     std::ios_base::fmtflags flags = std::ios_base::fmtflags();
     return save(x, fname, precision, flags);
   }

@@ -25,20 +25,34 @@
 
 
 #include "version_mathq.h"  // auto generated
+
 #include "declarations.h"
 #include "type-traits.h"
+#include "display.h"
+
+#include "type-defs.h"
+
 #include "math_real.h"
 #include "math_cplx.h"
 #include "math_imag.h"
 #include "math_quaternion.h"
-#include "display.h"
+
+#include "indices.h"
+#include "dimensions.h"
 // #include "slices.h"
 // #include "util.h"
-
-// #include "multiarrays.h"
 // #include "debug.h"
+
+// #include "multi-array-expressions.h"
+
+// #include "multi-array.h"
+// #include "multi-array-constant.h"
+// #include "multi-array-repeat-vec.h"
+// #include "multi-array-outer-product.h"
+
 // #include "scalar.h"
 // #include "vector.h"
+// #include "vector-constant.h"
 
 // #include "matrix.h"
 // #include "matrix_constdiag.h"
@@ -58,8 +72,12 @@
 // #include "matrix_uppertriangle.h"
 // #include "matrix_vandermonde.h"
 // #include "matrix_zero.h"
+// #include "matrix-constant.h"
+// #include "matrix-repeat-vec.h"
+// #include "matrix-outer-product.h"
 
-// #include "multi-array.h"
+// #include "multi-array3.h"
+// #include "multi-array4.h"
 
 // #include "expressionsR.h"
 // #include "expressionsRW.h"
@@ -74,6 +92,12 @@
 
 // #include "fileio.h"
 // #include "coda.h"
+
+template<size_t   N, size_t... ints>
+constexpr std::array<size_t  , N> compile_time_fill_array() {
+  return std::array<size_t  , N>{ (static_cast<size_t>(ints))... };
+}
+
 
 
 
@@ -122,7 +146,7 @@ int main(int argc, char* argv[]) {
   TRDISP(NumberTrait<std::complex<double>>::Type());
   // TRDISP(NumberTrait<std::complex<Vector<bool>>>::Type());
   typename NumberTrait<Vector<double>>::Type x;
-  TRDISP(NumberTrait<Vector<double,1>,double>::Type());
+  TRDISP(NumberTrait<Vector<double, 1>, double>::Type());
   TRDISP(NumberTrait<Vector<std::complex<double>>>::Type());
   TRDISP(NumberTrait<MArrayExpR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
   TRDISP(NumberTrait<MArrayExpRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
@@ -164,6 +188,10 @@ int main(int argc, char* argv[]) {
   DISP(SimpleNumberTrait<MArrayExpR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
   DISP(SimpleNumberTrait<MArrayExpRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
   cout << std::endl;
+
+  std::array<size_t  , 7> ron{ 1, 5};
+
+  TRDISP(ron);
 
 
   return 0;

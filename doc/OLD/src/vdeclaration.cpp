@@ -33,7 +33,7 @@ int main()
   {
     EXAMPLE(Nex++, "Declare vector `v` (initialize to zeros).");
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_t N = 4 );
+    ECHO_CODE( const size_t   N = 4 );
     ECHO_CODE( Vector<double> v(N) );
     GMD_CODE_END();
     RESULT(v);

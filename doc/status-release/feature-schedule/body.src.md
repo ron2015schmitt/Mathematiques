@@ -5,7 +5,7 @@
 1. add variable for the C++ version used, currently C++20.  append to version string. 
 1. using g++ 10.4
 1. Refactor `Dimensions` class
-1. New `NestedDimensions` class
+1. New `NestedDims` class
 1. Refactor all multi-arrays
   * Simplifly the templates to only have `Element` type and (top level) `Dimensions`
   * Renamed `Tensor` -> `MultiArray` ->? `AlgebraTensor`
@@ -78,8 +78,8 @@
   + new index/iterator types such as slices similar to C++ stdlib, Fortran, and Python, including negative indices
   + [Index class and new indexing methodology](topics/index.md)
   + slcies to get row or col of matrix
-1. use std::size_t instead of these  (searc and replace everywhere)
-  * typedef std::vector<double>::size_t size_t;
+1. use size_t   instead of these  (searc and replace everywhere)
+  * typedef std::vector<double>size_t size_t;
   * typedef int size_t;
   * typedef long double extended;  -> quad?
 1. use [C++20 Ranges](https://en.cppreference.com/w/cpp/ranges)

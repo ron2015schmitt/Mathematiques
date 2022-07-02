@@ -11,7 +11,7 @@ public:
   typedef D Type;
   Test() {
   }
-  constexpr size_t depth() const {
+  constexpr size_t   depth() const {
     return M;
   }
 };
@@ -27,7 +27,7 @@ public:
   }
   Test2(D d) : d_(d) {
   }
-  constexpr size_t depth() const {
+  constexpr size_t   depth() const {
     return mathq::NumberTrait<decltype(*this)>::depth();
   }
 };

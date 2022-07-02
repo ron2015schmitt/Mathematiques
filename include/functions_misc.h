@@ -300,7 +300,7 @@ namespace mathq {
 
 
   /****************************************************************************
-   * Unary Functions/Operators that bools or size_t MultiArrays
+   * Unary Functions/Operators that bools or size_t   MultiArrays
    ****************************************************************************
    */
 
@@ -339,9 +339,9 @@ namespace mathq {
   // numtrue(a)
 
   template <class X, class Element, typename Number, int depth, int rank, typename = EnableIf<std::is_same<Number, bool>::value> >
-  size_t numtrue(const MArrayExpR<X, Element, Number, depth, rank>& x) {
+  size_t   numtrue(const MArrayExpR<X, Element, Number, depth, rank>& x) {
 
-    size_t result = 0;
+    size_t   result = 0;
 
     for (size_t i = 0; i< x.deepsize(); i++) {
       result += static_cast<size_t>(x.dat(i));
@@ -361,10 +361,10 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank>
   EnableMethodIf<std::is_same<Number, bool>::value, Vector<size_t>&>
     findtrue(const MArrayExpR<X, Element, Number, depth, rank>& x) {
-    size_t N = numtrue(x);
+    size_t   N = numtrue(x);
     Vector<size_t>* y = new Vector<size_t>(N);
 
-    size_t j = 0;
+    size_t   j = 0;
     for (size_t i = 0; i< x.deepsize(); i++)
       if (x.dat(i))
         (*y)[j++] = i;
@@ -384,7 +384,7 @@ namespace mathq {
   Element sum(const MArrayExpR<X, Element, Number, depth, rank>& v) {
 
 
-    const size_t N = v.size();
+    const size_t   N = v.size();
     if (N==0)
       return 0;
 
@@ -406,7 +406,7 @@ namespace mathq {
   Element prod(const MArrayExpR<X, Element, Number, depth, rank>& v) {
 
 
-    const size_t N = v.size();
+    const size_t   N = v.size();
     if (N==0)
       return 0;
 
@@ -432,7 +432,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank>
   Number min(const MArrayExpR<X, Element, Number, depth, rank>& v) {
 
-    const size_t N = v.deepsize();
+    const size_t   N = v.deepsize();
     if (N==0) {
       return 0;
     }
@@ -454,7 +454,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank>
   Number max(const MArrayExpR<X, Element, Number, depth, rank>& v) {
 
-    const size_t N = v.deepsize();
+    const size_t   N = v.deepsize();
     if (N==0) {
       return 0;
     }
@@ -497,7 +497,7 @@ namespace mathq {
   template <typename Number>
   Vector<Number>& range(Number start, Number end, Number step) {
     // determine size
-    size_t N = 0;
+    size_t   N = 0;
     if (step > 0) {
       for (Number x = start; x<=end; x += step)
         N += 1;
@@ -533,7 +533,7 @@ namespace mathq {
   // linspace function [a,b]
 
   template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-  Vector<Number>& linspace(Number start, Number end, size_t N) {
+  Vector<Number>& linspace(Number start, Number end, size_t   N) {
     Vector<Number>* y = new Vector<Number>(N);
 
 
@@ -554,7 +554,7 @@ namespace mathq {
   // with spacing delta, spanning from a+delta to b
 
   template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-  Vector<Number>& linspace_a(Number start, Number end, size_t N) {
+  Vector<Number>& linspace_a(Number start, Number end, size_t   N) {
     Vector<Number>* y = new Vector<Number>(N);
 
 
@@ -568,7 +568,7 @@ namespace mathq {
   // with spacing delta, spanning from a to b-delta
 
   template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-  Vector<Number>& linspace_b(Number start, Number end, size_t N) {
+  Vector<Number>& linspace_b(Number start, Number end, size_t   N) {
     Vector<Number>* y = new Vector<Number>(N);
 
 
@@ -581,7 +581,7 @@ namespace mathq {
   // with spacing delta, spanning from a+delta to b-delta
 
   template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-  Vector<Number>& linspace_ab(Number start, Number end, size_t N) {
+  Vector<Number>& linspace_ab(Number start, Number end, size_t   N) {
     Vector<Number>* y = new Vector<Number>(N);
 
 
@@ -621,7 +621,7 @@ namespace mathq {
   class
     RealSet {
   public:
-    size_t N;
+    size_t   N;
     Number a;
     Number b;
     bool include_a;
@@ -632,7 +632,7 @@ namespace mathq {
     // move to private
     Number log_a;
     Number log_b;
-    size_t Neff;
+    size_t   Neff;
     Number start;
     Number step;
     mathq::Vector<Number> grid;
@@ -645,7 +645,7 @@ namespace mathq {
       N = 0;
       this->init_();
     }
-    RealSet(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
+    RealSet(const Number& a, const Number& b, const size_t   N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
       a(a), b(b), N(N), scale(scale), include_a(include_a), include_b(include_b) {
       this->init_();
     }
@@ -794,22 +794,22 @@ namespace mathq {
     }
 
     // [a,b]
-    static RealSet<Number> interval_CC(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+    static RealSet<Number> interval_CC(const Number& a, const Number& b, const size_t   N, const GridScaleEnum& scale = GridScale::LINEAR) {
       return RealSet<Number>(a, b, N, scale, true, true);
     }
 
     // (a,b]
-    static RealSet<Number> interval_OC(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+    static RealSet<Number> interval_OC(const Number& a, const Number& b, const size_t   N, const GridScaleEnum& scale = GridScale::LINEAR) {
       return RealSet<Number>(a, b, N, scale, false, true);
     }
 
     // [a,b)
-    static RealSet<Number> interval_CO(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+    static RealSet<Number> interval_CO(const Number& a, const Number& b, const size_t   N, const GridScaleEnum& scale = GridScale::LINEAR) {
       return RealSet<Number>(a, b, N, scale, true, false);
     }
 
     // (a,b)
-    static RealSet<Number> interval_OO(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+    static RealSet<Number> interval_OO(const Number& a, const Number& b, const size_t   N, const GridScaleEnum& scale = GridScale::LINEAR) {
       return RealSet<Number>(a, b, N, scale, false, false);
     }
 
@@ -881,7 +881,7 @@ namespace mathq {
   // template <typename Number, template <typename> typename C>
   // inline Style getTypeStyle(const C<const Number>& var) {
 
-  template <typename Number, size_t NDIMS, class MULTIGRID>
+  template <typename Number, size_t   NDIMS, class MULTIGRID>
   class
     RealMultiSet : public std::array<RealSet<Number>, NDIMS> {
   public:
@@ -890,7 +890,7 @@ namespace mathq {
     typedef RealSet<Number> ElementType;
     typedef Number DataType;
 
-    const size_t Ndims = NDIMS;
+    const size_t   Ndims = NDIMS;
 
     // Rank of our multiarray grid is equal to number of dimensions
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
@@ -940,7 +940,7 @@ namespace mathq {
     }
 
 
-    size_t rank(void) const {
+    size_t   rank(void) const {
       return NDIMS;
     }
 
@@ -952,11 +952,11 @@ namespace mathq {
       Dimensions dimensions(NDIMS);
       return dimensions;
     }
-    inline size_t depth(void) const {
+    inline size_t   depth(void) const {
       return 1;
     }
 
-    inline size_t gridDepth(void) const {
+    inline size_t   gridDepth(void) const {
       return 1;
     }
 
@@ -974,7 +974,7 @@ namespace mathq {
     }
 
     RealMultiSet& operator=(const std::initializer_list<RealSet<Number>>& mylist) {
-      size_t i = 0;
+      size_t   i = 0;
       typename std::initializer_list<RealSet<Number>>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it) {
         (*this)[i++] = *it;
@@ -1008,8 +1008,8 @@ namespace mathq {
         Grid<Number, 1>& ygrid = get(1).forceRegenGrid();
         Grid<Number, NDIMS>& X = grid[0];
         Grid<Number, NDIMS>& Y = grid[1];
-        const size_t Nx = gridDims()[0];
-        const size_t Ny = gridDims()[1];
+        const size_t   Nx = gridDims()[0];
+        const size_t   Ny = gridDims()[1];
         X.resize(Nx, Ny);
         Y.resize(Nx, Ny);
         for (size_t r = 0; r < Nx; r++) {
@@ -1032,7 +1032,7 @@ namespace mathq {
     }
 
     void setGrid_(int coord, Indices& indices) {
-      const size_t Npts = gridDims()[coord];  // grdi size of coord-th coordinate
+      const size_t   Npts = gridDims()[coord];  // grdi size of coord-th coordinate
       // MDISP("ENTRY for coord", coord, Npts);
       for (int p = 0; p < Npts; p++) {
         indices[coord] = p;
@@ -1092,7 +1092,7 @@ namespace mathq {
   // * CurvilinearCoords<Number, NDIMS>
   // ***************************************************************************
 
-  template <class Element, size_t NDIMS, class CHILD>
+  template <class Element, size_t   NDIMS, class CHILD>
   class CurvilinearCoords : public Vector<Element, NDIMS> {
   public:
     typedef CurvilinearCoords<Element, NDIMS, CHILD> CLASS;
@@ -1152,7 +1152,7 @@ namespace mathq {
   // * CartCoords<Number, NDIMS>
   // ***************************************************************************
 
-  template <class Element, size_t NDIMS>
+  template <class Element, size_t   NDIMS>
   class CartCoords : public CurvilinearCoords<Element, NDIMS, CartCoords<Element, NDIMS>> {
   public:
     typedef CartCoords<Element, NDIMS> CLASS;
@@ -1326,7 +1326,7 @@ namespace mathq {
 
 
 
-  template <class Element, size_t NDIMS>
+  template <class Element, size_t   NDIMS>
   auto dot(const CartCoords<Element, NDIMS>& v1, const CartCoords<Element, NDIMS>& v2) {
     return v1 | v2;
   }
@@ -1513,7 +1513,7 @@ namespace mathq {
   // physics field object: scalar field, vector field, tensor field 
   // uses curvilinear coordinates
   // ***************************************************************************
-  template <typename Number, size_t RANK> class PolarField : public TensorOfGrids<Number, 2, RANK> {
+  template <typename Number, size_t   RANK> class PolarField : public TensorOfGrids<Number, 2, RANK> {
   public:
     using Coords = PolarCoords<Number>;
     // need a grid
@@ -1580,7 +1580,7 @@ namespace mathq {
     // https://stackoverflow.com/questions/69302003/how-to-use-c20-concepts-to-compile-time-enforce-match-of-number-of-args-for-gi
     // 
 
-  template <typename Number, size_t NDIMS, typename CHILD>
+  template <typename Number, size_t   NDIMS, typename CHILD>
   class
     CurvilinearCoordinateSystem {
   public:
@@ -1704,7 +1704,7 @@ namespace mathq {
 
   // template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
   // auto grad(const Vector<Number>& gridfunc, const Interval<Number>& range, const int Dpts = 7, const bool periodic = false) {
-  //   const size_t N = gridfunc.size();
+  //   const size_t   N = gridfunc.size();
   //   Vector<Number>* df = new Vector<Number>(N);
   //   *df = gridfunc;
   //   df->deriv(range.a, range.b, 1, Dpts, periodic);
@@ -1736,8 +1736,8 @@ namespace mathq {
 
   //   // TODO: rewrite with slices
 
-  //   const size_t NR = gridfunc.Nrows();
-  //   const size_t NC = gridfunc.Ncols();
+  //   const size_t   NR = gridfunc.Nrows();
+  //   const size_t   NC = gridfunc.Ncols();
   //   Vector<Matrix<Number>, 2>* df = new Vector<Matrix<Number>, 2>();
   //   // starts off with empty matrices
   //   // TRDISP(*df);
@@ -1931,7 +1931,7 @@ namespace mathq {
   EnableMethodIf<(depth==1)&&(rank==1), Number> integrate_a2b(const MArrayExpR<X, Element, Number, depth, rank>& v, const Number a, const Number b, const int order = 1) {
 
 
-    const size_t N = v.size();
+    const size_t   N = v.size();
     if (N==0) {
       return 0;
     }
