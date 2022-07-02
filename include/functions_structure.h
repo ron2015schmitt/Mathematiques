@@ -104,7 +104,7 @@ namespace mathq {
   // rep(v,m)
 
   template <class A, typename Number>
-  auto rep(const MArrayExpR<A, Number, Number, 1, 1>& a, const size_t   m) {
+  auto rep(const MArrayExpR<A, Number, Number, 1, 1>& a, const size_t m) {
     return TER_Rep<MArrayExpR<A, Number, Number, 1, 1>, Number>(a, m);
   }
 

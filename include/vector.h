@@ -22,10 +22,10 @@
 namespace mathq {
 
 
-  template <typename Element, size_t   N1 = 0>
+  template <typename Element, size_t N1 = 0>
   class VectorHelper {
   public:
-    constexpr static size_t   rank_value = 1;
+    constexpr static size_t rank_value = 1;
     constexpr static bool is_dynamic = (N1 == 0);
     constexpr static bool num_compile_time_elements = N1;
 
@@ -33,7 +33,7 @@ namespace mathq {
     using DimensionsType = typename std::conditional< is_dynamic, DynamicDims<rank_value, N1>, FixedDims<N1> >::type;
 
     // ---- same for all subtypes --------
-    constexpr static size_t   depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
     using MyArrayType = typename ArrayTypeTrait<Element,num_compile_time_elements>::Type;
     using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
@@ -51,7 +51,7 @@ namespace mathq {
 
 
 
-  template <typename Element, size_t   N1>
+  template <typename Element, size_t N1>
   class MultiArray<Element, 1, N1> : public VectorHelper<Element,N1>::ParentType {
 
 
@@ -79,9 +79,9 @@ namespace mathq {
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t   rank_value = Helper::rank_value;
-    constexpr static size_t   depth_value = Helper::depth_value;
-    constexpr static size_t   template_dimensions_value = DimensionsType;
+    constexpr static size_t rank_value = Helper::rank_value;
+    constexpr static size_t depth_value = Helper::depth_value;
+    constexpr static size_t template_dimensions_value = DimensionsType;
 
     constexpr static bool is_dynamic() noexcept {
       return Helper::is_dynamic;
@@ -117,7 +117,7 @@ private:
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    explicit Vector<Element, N1>(const size_t   N) {
+    explicit Vector<Element, N1>(const size_t N) {
       data_.resize(N);
       constructorHelper();
     }
@@ -127,7 +127,7 @@ private:
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    explicit Vector<Element, N1>(const size_t   N, const Element val) {
+    explicit Vector<Element, N1>(const size_t N, const Element val) {
       data_.resize(N);
       *this = val;
       constructorHelper();
@@ -135,7 +135,7 @@ private:
 
     // --------------------- Vector(std::initializer_list<Dimensions>)  ---------------------
 
-    template<typename NextDims, size_t   NE1 = N1, EnableIf<(NE1 > 0)> = 0>
+    template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
     explicit Vector<Element, N1>(const NestedDims<DimensionsType, NextDims>& deepdims) {
       // TRDISP(deepdims);
       this->resize(std::vector<Dimensions>(deepdims));
@@ -143,7 +143,7 @@ private:
     }
     // --------------------- Vector(std::vector<Dimensions>)  ---------------------
 
-    template<typename NextDims, size_t   NE1 = N1, EnableIf<(NE1 > 0)> = 0>
+    template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
     explicit Vector<Element, N1>(const std::vector<Dimensions> deepdims) {
       // TRDISP(deepdims);
       this->resize(deepdims);
@@ -174,7 +174,7 @@ private:
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    Vector<Element, N1>(const size_t   N, const Element(vals)[]) {
+    Vector<Element, N1>(const size_t N, const Element(vals)[]) {
       data_.resize(N);
       *this = vals;
       constructorHelper();
@@ -255,13 +255,13 @@ private:
     //                            Size related  
     //**********************************************************************
 
-    size_t   rank(void) const {
+    size_t rank(void) const {
       return rank_value;
     }
-    inline size_t   depth(void) const {
+    inline size_t depth(void) const {
       return depth_value;
     }
-    inline size_t   size(void) const {
+    inline size_t size(void) const {
       return data_.size();
     }
 
@@ -282,7 +282,7 @@ private:
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    Vector<Element, N1>& resize(const size_t   N) {
+    Vector<Element, N1>& resize(const size_t N) {
       if (N==this->size())
         return *this;
       // reallocate store
@@ -297,7 +297,7 @@ private:
     Vector<Element, N1>& resize(const std::vector<Dimensions>& deepdims_in) {
       std::vector<Dimensions> deepdims(deepdims_in);
       Dimensions newdims = deepdims[0];
-      const size_t   Nnew = newdims[0];
+      const size_t Nnew = newdims[0];
       if constexpr (N1==0) {
         resize(Nnew);
       }
@@ -326,12 +326,12 @@ private:
     }
 
     // the size of each element
-    inline size_t   element_size(void) const {
+    inline size_t element_size(void) const {
       if constexpr (depth<2) {
         return 1;
       }
       else {
-        const size_t   NElements = this->size();
+        const size_t NElements = this->size();
         if (NElements==0) {
           return 0;
         }
@@ -342,12 +342,12 @@ private:
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t   eldeepsize(void) const {
+    inline size_t eldeepsize(void) const {
       if constexpr (depth<2) {
         return 1;
       }
       else {
-        const size_t   NElements = this->size();
+        const size_t NElements = this->size();
         if (NElements==0) {
           return 0;
         }
@@ -358,7 +358,7 @@ private:
     }
 
     // the total number of numbers in this data structure
-    size_t   deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr (depth<2) {
         return this->size();
       }
@@ -392,7 +392,7 @@ private:
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // "read/write"
-    NumberType& dat(const size_t   n) {
+    NumberType& dat(const size_t n) {
       using namespace::display;
       if constexpr (depth < 2) {
         int k = n;
@@ -410,7 +410,7 @@ private:
     }
 
     // read
-    const NumberType& dat(const size_t   n)  const {
+    const NumberType& dat(const size_t n)  const {
       using namespace::display;
       if constexpr (depth < 2) {
         int k = n;
@@ -432,8 +432,8 @@ private:
 
     // "read/write": x.dat(DeepIndices)
     NumberType& dat(const DeepIndices& dinds) {
-      const size_t   mydepth = dinds.size();
-      size_t   n = dinds[mydepth -depth][0];
+      const size_t mydepth = dinds.size();
+      size_t n = dinds[mydepth -depth][0];
 
       if constexpr (depth>1) {
         return (*this)(n).dat(dinds);
@@ -445,8 +445,8 @@ private:
 
     // "read": x.dat(DeerIndices)
     const NumberType dat(const DeepIndices& dinds)  const {
-      const size_t   mydepth = dinds.size();
-      size_t   n = dinds[mydepth -depth][0];
+      const size_t mydepth = dinds.size();
+      size_t n = dinds[mydepth -depth][0];
 
       if constexpr (depth>1) {
         return (*this)(n).dat(dinds);
@@ -465,7 +465,7 @@ private:
       Indices inds_next(inds);
       // MOUT << "Vector: "<<std::endl;
       // error if (inds.size() != sum deepdims[i].rank
-      size_t   n = inds_next[0];
+      size_t n = inds_next[0];
       // MOUT << "  ";
       inds_next.erase(inds_next.begin());
       if constexpr (depth>1) {
@@ -480,7 +480,7 @@ private:
     const NumberType dat(const Indices& inds)  const {
       Indices inds_next(inds);
       // error if (inds.size() != sum deepdims[i].rank
-      size_t   n = inds_next[0];
+      size_t n = inds_next[0];
       inds_next.erase(inds_next.begin());
       if constexpr (depth>1) {
         return (*this)(n).dat(inds_next);
@@ -495,7 +495,7 @@ private:
     //**********************************************************************
 
     // "read/write"
-    Element& operator[](const size_t   n) {
+    Element& operator[](const size_t n) {
       int k = n;
       if (k < 0) {
         k += size();
@@ -504,7 +504,7 @@ private:
     }
 
     // read
-    const Element& operator[](const size_t   n)  const {
+    const Element& operator[](const size_t n)  const {
       int k = n;
       if (k < 0) {
         k += size();
@@ -527,12 +527,12 @@ private:
 
 
     // "read/write"
-    Element& operator()(const size_t   n) {
+    Element& operator()(const size_t n) {
       return data_[n];
     }
 
     // "read only"
-    const Element& operator()(const size_t   n)  const {
+    const Element& operator()(const size_t n)  const {
       return data_[n];
     }
 
@@ -705,7 +705,7 @@ private:
           resize(mylist.size());
         }
       }
-      size_t   i = 0;
+      size_t i = 0;
       for (typename std::list<Element>::const_iterator it = mylist.begin(); it != mylist.end(); ++it) {
         (*this)(i++) = *it;
       }
@@ -723,7 +723,7 @@ private:
         }
       }
 
-      size_t   k = 0;
+      size_t k = 0;
       typename std::initializer_list<Element>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
         data_[k] = *it;
@@ -755,7 +755,7 @@ private:
 
     // ------------------------ Vector = std::array ----------------
 
-    template <size_t   N>
+    template <size_t N>
     Vector<Element, N1>& operator=(const std::array<NumberType, N>& varray) {
       // resize to avoid segmentation faults
       if constexpr (N1==0) {
@@ -834,7 +834,7 @@ private:
 
     Vector<size_t>& sort() {
 
-      const size_t   N = size();
+      const size_t N = size();
       Vector<size_t>& ivec = *(new Vector<size_t>(N));
 
       if (N==0)
@@ -868,7 +868,7 @@ private:
 
     quniq() {
 
-      const size_t   N = size();
+      const size_t N = size();
 
       if (N==0)
         return *(new Vector<size_t>(0));
@@ -885,7 +885,7 @@ private:
         }
       }
 
-      const size_t   Nnew = unique.size();
+      const size_t Nnew = unique.size();
       Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
       resize(Nnew);
       for (size_t i = 0; i < Nnew; i++) {
@@ -905,7 +905,7 @@ private:
 
     uniq() {
 
-      const size_t   N = size();
+      const size_t N = size();
 
       if (N==0)
         return *(new Vector<size_t>(0));
@@ -927,10 +927,10 @@ private:
         }
       }
 
-      const size_t   Nnew = mymap.size();
+      const size_t Nnew = mymap.size();
       Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
       resize(Nnew);
-      size_t   k = 0;
+      size_t k = 0;
       for (typename std::map<size_t, NumberType>::iterator it = mymap.begin(); it != mymap.end(); ++it) {
         indexvec(k) = it->first;
         data_[k++] = it->second;
@@ -942,7 +942,7 @@ private:
 
     Vector<Element, N1>& reverse() {
 
-      const size_t   N = size();
+      const size_t N = size();
       if (N==0)
         return *this;
 
@@ -960,7 +960,7 @@ private:
     // .cumsum() -- cumulative sum
 
     Vector<Element, N1>& cumsum() {
-      const size_t   N = size();
+      const size_t N = size();
       Element sum = 0;
       for (size_t i = 0; i < N; i++) {
         sum += data_[i];
@@ -972,7 +972,7 @@ private:
     // .cumprod()  --  cumulative product
 
     Vector<Element, N1>& cumprod() {
-      const size_t   N = size();
+      const size_t N = size();
       Element prod = 1;
       for (size_t i = 0; i < N; i++) {
         prod *= data_[i];
@@ -985,7 +985,7 @@ private:
     // .cumtrapz() -- cumulative trapezoidal summation
 
     Vector<Element, N1>& cumtrapz() {
-      const size_t   N = size();
+      const size_t N = size();
       if (N==0) return *this;
       Element sum = data_[0]/2;
       data_[0] = 0;
@@ -1002,7 +1002,7 @@ private:
     //     1  trapazoidal
     Vector<Element, N1>& integrate_a2x(const Element a, const Element b, const int order = 1) {
 
-      const size_t   N = size();
+      const size_t N = size();
 
       if (order == 0) {
         this->cumsum();
@@ -1028,7 +1028,7 @@ private:
     // .cumsumrev() -- cumulative sum -- from last to first
 
     Vector<Element, N1>& cumsum_rev() {
-      const size_t   N = size();
+      const size_t N = size();
 
       Element sum = 0;
       for (size_t i = 0; i < N; i++) {
@@ -1041,7 +1041,7 @@ private:
     // .cumprodrev()  --  cumulative product  -- from last to first
 
     Vector<Element, N1>& cumprod_rev() {
-      const size_t   N = size();
+      const size_t N = size();
 
       Element prod = 1;
       for (size_t i = 0; i < N; i++) {
@@ -1055,7 +1055,7 @@ private:
     // .cumtrapz() -- cumulative trapezoidal summation -- from last to first
 
     Vector<Element, N1>& cumtrapz_rev() {
-      const size_t   N = size();
+      const size_t N = size();
       if (N==0) return *this;
 
       Element sum = data_[N-1]/2;
@@ -1074,7 +1074,7 @@ private:
     //     0  rectangular
     //     1  trapazoidal
     Vector<Element, N1>& integrate_x2b(const Element a, const Element b, const int order = 1) {
-      const size_t   N = size();
+      const size_t N = size();
 
       if (order == 0) {
         this->cumsum_rev();
@@ -1100,7 +1100,7 @@ private:
 
     // diff   (v[n] = v[n] - v[n-1])
     Vector<Element, N1>& diff(const bool periodic = false) {
-      const size_t   N = size();
+      const size_t N = size();
       if (N<=1) return *this;
 
       Element temp;
@@ -1121,7 +1121,7 @@ private:
 
     // diff_rev   (v[n] = v[n+1] - v[n])
     Vector<Element, N1>& diff_rev(const bool periodic = false) {
-      const size_t   N = size();
+      const size_t N = size();
       if (N<=1) return *this;
 
       Element temp;
@@ -1150,7 +1150,7 @@ private:
 
     Vector<Element, N1>& deriv(const Element a, const Element b, const int n = 1, int Dpts = 7, const bool periodic = false) {
       //MDISP(a,b,n,Dpts,periodic);
-      const size_t   N = size();
+      const size_t N = size();
       if (N<=1) return *this;
 
       const Element dx = (b-a)/NumberType(N-1);
@@ -1328,8 +1328,8 @@ private:
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       stream << style.apply(FormatDataVector::string_opening);
-      const size_t   N = FormatDataVector::max_elements_per_line;
-      size_t   k = 0;
+      const size_t N = FormatDataVector::max_elements_per_line;
+      size_t k = 0;
       for (size_t ii = 0; ii < v.size(); ii++, k++) {
         if (k >= N) {
           stream << style.apply(FormatDataVector::string_endofline);
@@ -1355,13 +1355,13 @@ private:
     // stream >> operator
 
     friend std::istream& operator>>(std::istream& stream, Vector<Element, N1>& x) {
-      // const size_t   LINESZ = 32768;
+      // const size_t LINESZ = 32768;
       // char line[LINESZ];
       // std::vector<Element> v;
-      // size_t   N = 0;
-      // const size_t   Nold = x.size();
+      // size_t N = 0;
+      // const size_t Nold = x.size();
       // Element temp;
-      // size_t   Nlines = 0;
+      // size_t Nlines = 0;
       // std::istringstream strmline;
 
       // switch (x.textformat()) {
@@ -1376,7 +1376,7 @@ private:
       // 	    strmline.str(line);
 
       // 	    char c;
-      // 	    size_t   Nchars=0;
+      // 	    size_t Nchars=0;
       // 	    while((state!=end) && strmline.get(c) ){
       // 	      Nchars++;
       // 	      if (isspace(c))
@@ -1457,7 +1457,7 @@ private:
       // 	      strmline.clear();
       // 	      strmline.str(line);
       // 	      char c;
-      // 	      size_t   Nchars=0;
+      // 	      size_t Nchars=0;
       // 	      while(strmline.get(c)){
       // 		Nchars++;
       // 		if (isspace(c))
@@ -1485,7 +1485,7 @@ private:
       // 	      strmline.clear();
       // 	      strmline.str(line);
       // 	      char c;
-      // 	      size_t   Nchars=0;
+      // 	      size_t Nchars=0;
       // 	      while((N<Nold) && strmline.get(c) ){
       // 		Nchars++;
       // 		std::string stemp = strmline.str();
@@ -1539,7 +1539,7 @@ private:
 
 
     operator std::vector<Element>() const {
-      const size_t   N = size();
+      const size_t N = size();
       std::vector<Element> y(N);
       for (size_t i = 0; i<N; i++) {
         y[i] = (*this)[i];
@@ -1549,7 +1549,7 @@ private:
 
 
     operator Element* () const {
-      const size_t   N = size();
+      const size_t N = size();
       Element* ptr = new Element[N];
       for (size_t i = 0; i<N; i++) {
         ptr[i] = (*this)[i];
@@ -1561,7 +1561,7 @@ private:
     // valarray<Element>
 
     operator std::valarray<Element>() const {
-      const size_t   N = size();
+      const size_t N = size();
       std::valarray<Element> y(N);
       for (size_t i = 0; i<N; i++) {
         y[i] = (*this)[i];

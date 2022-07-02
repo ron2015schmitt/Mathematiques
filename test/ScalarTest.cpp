@@ -1226,7 +1226,7 @@ int main(int argc, char* argv[]) {
   }
 
   /****************************************************************************
-   * Unary Functions/Operators that bools or size_t   MultiArrays
+   * Unary Functions/Operators that bools or size_t MultiArrays
    ****************************************************************************
    */
 

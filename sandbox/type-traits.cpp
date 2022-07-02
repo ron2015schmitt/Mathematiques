@@ -1,4 +1,4 @@
-
+// list C++ headers alphabetically
 #include <cassert>
 #include <cstddef>
 #include <cstdlib>
@@ -20,6 +20,7 @@
 #include <string>
 #include <type_traits> 
 #include <typeinfo>
+#include <utility>
 #include <valarray>
 #include <vector>
 
@@ -30,15 +31,15 @@
 #include "type-traits.h"
 #include "display.h"
 
-#include "type-defs.h"
+// #include "type-defs.h"
 
-#include "math_real.h"
-#include "math_cplx.h"
-#include "math_imag.h"
-#include "math_quaternion.h"
+// #include "math_real.h"
+// #include "math_cplx.h"
+// #include "math_imag.h"
+// #include "math_quaternion.h"
 
-#include "indices.h"
-#include "dimensions.h"
+// #include "indices.h"
+// #include "dimensions.h"
 // #include "slices.h"
 // #include "util.h"
 // #include "debug.h"
@@ -93,7 +94,7 @@
 // #include "fileio.h"
 // #include "coda.h"
 
-template<size_t   N, size_t... ints>
+template<size_t N, size_t... ints>
 constexpr std::array<size_t  , N> compile_time_fill_array() {
   return std::array<size_t  , N>{ (static_cast<size_t>(ints))... };
 }

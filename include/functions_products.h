@@ -135,9 +135,9 @@ namespace mathq
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
-    size_t   Nrows = m1.dims()[0];
-    size_t   Ncols = m1.dims()[1];
-    size_t   i = 0;
+    size_t Nrows = m1.dims()[0];
+    size_t Ncols = m1.dims()[1];
+    size_t i = 0;
     Vector<E3> vout(Nrows);
     E3* temp = new E3;
     // row major
@@ -160,9 +160,9 @@ namespace mathq
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
-    size_t   Nrows = m2.dims()[0];
-    size_t   Ncols = m2.dims()[1];
-    size_t   i = 0;
+    size_t Nrows = m2.dims()[0];
+    size_t Ncols = m2.dims()[1];
+    size_t i = 0;
     Vector<E3> vout(Ncols);
     E3* temp = new E3;
     // row major
@@ -186,12 +186,12 @@ namespace mathq
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
-    size_t   Nrows = m1.dims()[0];
-    size_t   Nsum = m1.dims()[1];
-    size_t   Ncols = m2.dims()[1];
-    size_t   i = 0;
-    size_t   j = 0;
-    size_t   k = 0;
+    size_t Nrows = m1.dims()[0];
+    size_t Nsum = m1.dims()[1];
+    size_t Ncols = m2.dims()[1];
+    size_t i = 0;
+    size_t j = 0;
+    size_t k = 0;
     Matrix<E3> m3(Nrows, Ncols);
     E3* temp = new E3;
     // row major

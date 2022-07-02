@@ -181,7 +181,7 @@ public:
 template<typename _Tp, _Tp... _Idx>
 struct integer_sequence2 {
   typedef _Tp value_type;
-  static constexpr size_t   size() noexcept { return sizeof...(_Idx); }
+  static constexpr size_t size() noexcept { return sizeof...(_Idx); }
 };
 
 
@@ -271,7 +271,7 @@ struct integer_sequence2 {
 // };
 // using DimensionsEnum = Dimensions_space::Type;
 
-// constexpr static size_t   dynamic = 0;
+// constexpr static size_t dynamic = 0;
 // template<bool...> struct bool_pack;
 // template<bool... bs> 
 // using all_true = std::is_same<bool_pack<bs..., true>, bool_pack<true, bs...>>;

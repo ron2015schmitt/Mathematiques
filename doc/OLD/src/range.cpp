@@ -113,7 +113,7 @@ int main()
     CR();
     EXAMPLE(Nex++,"Assigning a `Vector`'s to a *`range`*");
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_t   N = 10);
+    ECHO_CODE( const size_t N = 10);
     ECHO_CODE( Vector<double> v (N));
     ECHO_CODE( v = range<double>(0,N-1));
     GMD_CODE_END();

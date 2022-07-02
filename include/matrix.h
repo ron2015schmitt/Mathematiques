@@ -19,10 +19,10 @@ namespace mathq {
    ********************************************************************
    */
 
-  template <typename Element, size_t   N1 = 0, size_t   N2 = 0>
+  template <typename Element, size_t N1 = 0, size_t N2 = 0>
   class MatrixHelper {
   public:
-    constexpr static size_t   rank_value = 2;
+    constexpr static size_t rank_value = 2;
     constexpr static bool is_dynamic = (N1 == 0) || (N2 == 0);
     constexpr static bool num_compile_time_elements = N1 * N2;
 
@@ -30,7 +30,7 @@ namespace mathq {
     using DimensionsType = typename std::conditional< is_dynamic, DynamicDims<rank_value, N1, N2>, FixedDims<N1, N2> >::type;
 
     // ---- same for all subtypes --------
-    constexpr static size_t   depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
     using MyArrayType = typename ArrayTypeTrait<Element, num_compile_time_elements>::Type;
     using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
@@ -48,7 +48,7 @@ namespace mathq {
 
 
 
-  template <typename Element, size_t   N1, size_t   N2>
+  template <typename Element, size_t N1, size_t N2>
   class MultiArray<Element, 2, N1, N2> : public MatrixHelper<Element, N1, N2>::ParentType {
 
 
@@ -77,9 +77,9 @@ namespace mathq {
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t   rank_value = Helper::rank_value;
-    constexpr static size_t   depth_value = Helper::depth_value;
-    constexpr static size_t   template_dimensions_value = DimensionsType;
+    constexpr static size_t rank_value = Helper::rank_value;
+    constexpr static size_t depth_value = Helper::depth_value;
+    constexpr static size_t template_dimensions_value = DimensionsType;
 
     constexpr static bool is_dynamic() noexcept {
       return Helper::is_dynamic;
@@ -103,11 +103,11 @@ namespace mathq {
 
   public:
     if constexpr (is_dynamic()) {
-      size_t   n1 = N1;
-      size_t   n2 = N2;
+      size_t n1 = N1;
+      size_t n2 = N2;
     } else {
-      static constexpr size_t   n1 = N1;
-      static constexpr size_t   n2 = N2;
+      static constexpr size_t n1 = N1;
+      static constexpr size_t n2 = N2;
     }
 
 
@@ -127,7 +127,7 @@ namespace mathq {
     // --------------------- constant=0 CONSTRUCTOR ---------------------
     template<size_t NN = N1*N2, EnableIf<NN == 0> = 0>
 
-    explicit Matrix<Element, N1, N2>(const size_t   Nr, const size_t   Nc) {
+    explicit Matrix<Element, N1, N2>(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
     }
 
@@ -135,7 +135,7 @@ namespace mathq {
     // --------------------- constant CONSTRUCTOR ---------------------
     template<size_t NN = N1*N2, EnableIf<NN == 0> = 0>
 
-    explicit Matrix<Element, N1, N2>(const size_t   Nr, const size_t   Nc, const NumberType& val) {
+    explicit Matrix<Element, N1, N2>(const size_t Nr, const size_t Nc, const NumberType& val) {
       resize(Nr, Nc);
       *this = val;
     }
@@ -143,7 +143,7 @@ namespace mathq {
     // --------------------- 2D array  CONSTRUCTOR ---------------------
     template<size_t NN = N1*N2, EnableIf<NN == 0> = 0>
 
-    Matrix<Element, N1, N2>(const size_t   Nr, const size_t   Nc, const NumberType** vals) {
+    Matrix<Element, N1, N2>(const size_t Nr, const size_t Nc, const NumberType** vals) {
       resize(Nr, Nc);
       *this = vals;
     }
@@ -207,7 +207,7 @@ namespace mathq {
     // --------------------- 1D valarray CONSTRUCTOR ---------------------
     template<size_t NN = N1*N2, EnableIf<NN == 0> = 0>
 
-    Matrix<Element, N1, N2>(const size_t   Nr, const size_t   Nc, const std::valarray<Element>& valar) {
+    Matrix<Element, N1, N2>(const size_t Nr, const size_t Nc, const std::valarray<Element>& valar) {
       resize(Nr, Nc);
       *this = valar;
     }
@@ -216,7 +216,7 @@ namespace mathq {
     // --------------------- 1D array[]  CONSTRUCTOR ---------------------
     template<size_t NN = N1*N2, EnableIf<NN == 0> = 0>
 
-    Matrix<Element, N1, N2>(const size_t   Nr, const size_t   Nc, const NumberType(vals)[]) {
+    Matrix<Element, N1, N2>(const size_t Nr, const size_t Nc, const NumberType(vals)[]) {
       resize(Nr, Nc);
       *this = vals;
     }
@@ -243,18 +243,18 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    size_t   rank(void)  const {
+    size_t rank(void)  const {
       return rank;
     }
 
 
-    inline size_t   size(void) const {
+    inline size_t size(void) const {
       return data_.size();
     }
-    inline size_t   Nrows(void) const {
+    inline size_t Nrows(void) const {
       return Nrows_;
     }
-    inline size_t   Ncols(void) const {
+    inline size_t Ncols(void) const {
       return Ncols_;
     }
     Dimensions dims(void) const {
@@ -281,7 +281,7 @@ namespace mathq {
     }
 
 
-    constexpr size_t   depth(void) const {
+    constexpr size_t depth(void) const {
       return depth_value;
     }
     Dimensions element_dims(void) const {
@@ -295,12 +295,12 @@ namespace mathq {
     }
 
     // the size of each element
-    inline size_t   element_size(void) const {
+    inline size_t element_size(void) const {
       if constexpr (depth_value<=1) {
         return 1;
       }
       else {
-        const size_t   Nelements = this->size();
+        const size_t Nelements = this->size();
         if (Nelements==0) {
           return 0;
         }
@@ -311,12 +311,12 @@ namespace mathq {
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t   eldeepsize(void) const {
+    inline size_t eldeepsize(void) const {
       if constexpr (depth_value<2) {
         return 1;
       }
       else {
-        const size_t   Nelements = this->size();
+        const size_t Nelements = this->size();
         if (Nelements==0) {
           return 0;
         }
@@ -327,7 +327,7 @@ namespace mathq {
     }
 
     // the total number of numbers in this data structure
-    size_t   deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr (depth_value<2) {
         return this->size();
       }
@@ -406,8 +406,8 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    Matrix<Element, N1, N2>& reshape(const size_t   nr, const size_t   nc) {
-      const size_t   nn = nr*nc;
+    Matrix<Element, N1, N2>& reshape(const size_t nr, const size_t nc) {
+      const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
           Nrows_ = 0;
@@ -424,7 +424,7 @@ namespace mathq {
     // -------------------------- .reshape(N) --------------------------------
     // morph into a vector, pillaging this object of its data store.
     //
-    Vector<Element>& reshape(const size_t   N) {
+    Vector<Element>& reshape(const size_t N) {
       // TODO: check that N==size()
       // rob the data_
       Vector<Element> m = new Vector<Element>(N, this->data_);
@@ -439,14 +439,14 @@ namespace mathq {
     // 2) For non-square matrices, this changes the shape and operation is time-consuming
     //    Note: Transpose function is much quicker. only use this for when memory is critical
     Matrix<Element, N1, N2>& transpose(void) {
-      const size_t   Nr = Nrows_;
-      const size_t   Nc = Ncols_;
-      const size_t   N = size();
-      const size_t   Nminus1 = N-1;
+      const size_t Nr = Nrows_;
+      const size_t Nc = Ncols_;
+      const size_t N = size();
+      const size_t Nminus1 = N-1;
 
       // square matrix  
       if (Nc == Nr) {
-        size_t   r, c;
+        size_t r, c;
         NumberType temp;
         for (r = 0; r < Nr; ++r)
           for (c = r + 1; c < Nr; ++c) {
@@ -468,25 +468,25 @@ namespace mathq {
       // can set Nmove=1, but this will be very slow
       // Nmove=(Nr+Nc)/2 is optimal
       const bool Nmove = (Nr+Nc)/2;
-      size_t   move[Nmove];
+      size_t move[Nmove];
       for (size_t i = 0; i < Nmove; ++i)
         move[i] = false;
 
 
       // there are always at least 2 fixed points (at j=0 and j=Nminus1)
-      size_t   count = 2;
+      size_t count = 2;
       // find the rest of the fixed points
       if (Nc >= 3 && Nr >= 3)
         count += gcd(Nc - 1, Nr - 1) - 1;	/* # fixed points */
 
-      size_t   jstart = 1;
-      size_t   magicnum = Nc;
+      size_t jstart = 1;
+      size_t magicnum = Nc;
 
       while (1) {
-        size_t   jnext, jnextc;
-        size_t   jstartC = Nminus1 - jstart;
-        size_t   j = jstart;
-        size_t   jC = jstartC;
+        size_t jnext, jnextc;
+        size_t jstartC = Nminus1 - jstart;
+        size_t j = jstart;
+        size_t jC = jstartC;
         NumberType dstart = (*this)[jstart];
         NumberType dstartC = (*this)[jstartC];
 
@@ -531,7 +531,7 @@ namespace mathq {
           } while (jstart==magicnum);
 
           jnext = magicnum;
-          const  size_t   max = Nminus1-jstart+1;
+          const  size_t max = Nminus1-jstart+1;
           if (jstart < Nmove) {
             if (!move[jstart])
               break;
@@ -568,7 +568,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // "read/write"
-    NumberType& dat(const size_t   n) {
+    NumberType& dat(const size_t n) {
       using namespace::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
       if constexpr (depth_value<=1) {
@@ -587,7 +587,7 @@ namespace mathq {
     }
 
     // read
-    const NumberType& dat(const size_t   n)  const {
+    const NumberType& dat(const size_t n)  const {
       using namespace::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
       if constexpr (depth_value<=1) {
@@ -614,9 +614,9 @@ namespace mathq {
       Indices inds_next(inds);
       //MOUT << "Matrix: "<<std::endl;
       // error if (inds.size() != sum deepdims[i].rank)
-      size_t   n = inds_next[0];
+      size_t n = inds_next[0];
       inds_next.erase(inds_next.begin());
-      size_t   m = inds_next[0];
+      size_t m = inds_next[0];
       inds_next.erase(inds_next.begin());
       //MOUT << "  ";
       //MDISP(n,m); 
@@ -635,9 +635,9 @@ namespace mathq {
     const NumberType dat(const Indices& inds)  const {
       Indices inds_next(inds);
       // error if (inds.size() != sum deepdims[i].rank)
-      size_t   n = inds_next[0];
+      size_t n = inds_next[0];
       inds_next.erase(inds_next.begin());
-      size_t   m = inds_next[0];
+      size_t m = inds_next[0];
       inds_next.erase(inds_next.begin());
       if constexpr (depth_value>1) {
         return (*this)(n, m).dat(inds_next);
@@ -653,10 +653,10 @@ namespace mathq {
 
     // "read/write": x.dat(DeepIndices)
     NumberType& dat(const DeepIndices& dinds) {
-      const size_t   mydepth = dinds.size();
+      const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth -depth_value];
-      size_t   n = inds[0];
-      size_t   m = inds[1];
+      size_t n = inds[0];
+      size_t m = inds[1];
 
       if constexpr (depth_value>1) {
         return (*this)(n, m).dat(dinds);
@@ -668,10 +668,10 @@ namespace mathq {
 
     // "read": x.dat(DeepIndices)
     const NumberType dat(const DeepIndices& dinds)  const {
-      const size_t   mydepth = dinds.size();
+      const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth -depth_value];
-      size_t   n = inds[0];
-      size_t   m = inds[1];
+      size_t n = inds[0];
+      size_t m = inds[1];
 
       if constexpr (depth_value>1) {
         return (*this)(n, m).dat(dinds);
@@ -687,7 +687,7 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write"
-    Element& operator[](const size_t   n) {
+    Element& operator[](const size_t n) {
       int k = n;
       if (k < 0) {
         k += size();
@@ -696,7 +696,7 @@ namespace mathq {
     }
 
     // read
-    const Element& operator[](const size_t   n)  const {
+    const Element& operator[](const size_t n)  const {
       int k = n;
       if (k < 0) {
         k += size();
@@ -756,7 +756,7 @@ namespace mathq {
 
     // --------------------------- index(r,c) -----------------------------
 
-    size_t   index(const size_t   r, const size_t   c) const {
+    size_t index(const size_t r, const size_t c) const {
       //TODO: bounds check
       return c + Ncols_*r; // row major
     }
@@ -764,7 +764,7 @@ namespace mathq {
     // --------------------------- indices(k) -----------------------------
 
     // This is the inverse of the above function
-    Indices& indices(const size_t   k) const {
+    Indices& indices(const size_t k) const {
       // NOTE: a divide is between 6 to 40 times more costly than a multiply
       //       https://stackoverflow.com/questions/4125033/floating-point-division-vs-floating-point-multiplication
       //       So avoid using this whenever possible
@@ -783,10 +783,10 @@ namespace mathq {
 
 
     // ----------------- matrix(r,c) ----------------
-    Element& operator()(const size_t   r, const size_t   c) {
+    Element& operator()(const size_t r, const size_t c) {
       return data_[index(r, c)];
     }
-    const Element operator()(const size_t   r, const size_t   c) const {
+    const Element operator()(const size_t r, const size_t c) const {
       return data_[index(r, c)];
     }
 
@@ -868,7 +868,7 @@ namespace mathq {
     // ----------------- matrix = NumberType[][] ----------------
     Matrix<Element, N1, N2>&
       operator=(const Element** array) {
-      size_t   k = 0;
+      size_t k = 0;
       for (size_t r = 0; r < Nrows_; r++) {
         for (size_t c = 0; c < Ncols_; c++) {
           (*this)[k++] = array[r][c];
@@ -887,7 +887,7 @@ namespace mathq {
       const int Nc = (*(mylist.begin())).size();
       resize(Nr, Nc);
       // TODO: size check
-      size_t   i = 0;
+      size_t i = 0;
       typename std::initializer_list<std::initializer_list<Element> >::iterator itR;
       for (itR = mylist.begin(); itR != mylist.end(); ++itR) {
         const std::initializer_list<Element>& row = *itR;
@@ -929,7 +929,7 @@ namespace mathq {
       operator=(const std::initializer_list<Element>& mylist) {
 
       // TODO: bound scheck 
-      size_t   i = 0;
+      size_t i = 0;
       typename std::initializer_list<Element>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it) {
         (*this)[i++] = *it;
@@ -1040,11 +1040,11 @@ namespace mathq {
 
       Style& style = FormatDataMatrix::style_for_punctuation;
       stream << style.apply(FormatDataMatrix::string_opening);
-      const size_t   N = FormatDataMatrix::max_elements_per_line;
+      const size_t N = FormatDataMatrix::max_elements_per_line;
 
       for (size_t r = 0; r < m.Nrows(); r++) {
         stream << style.apply(FormatDataMatrix::string_row_opening);
-        size_t   k = 0;
+        size_t k = 0;
         for (size_t c = 0; c < m.Ncols(); c++, k++) {
           if (k >= N) {
             stream << style.apply(FormatDataMatrix::string_endofline);

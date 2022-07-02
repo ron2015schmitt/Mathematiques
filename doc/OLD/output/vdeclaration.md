@@ -7,7 +7,7 @@ _This document was automatically generated from file_ **`vdeclaration.cpp`** (Ma
 
 **EXAMPLE 1**: Declare vector `v` (initialize to zeros).
 ```C++
-const size_t   N = 4;
+const size_t N = 4;
 Vector<double> v(N);
 ```
 **The result is**

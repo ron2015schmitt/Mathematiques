@@ -18,10 +18,10 @@ namespace mathq {
    ********************************************************************
    */
 
-  template <typename Element, size_t   rank, size_t... ints>
+  template <typename Element, size_t rank, size_t... ints>
   class MultiArrayHelper {
   public:
-    constexpr static size_t   rank_value = rank;
+    constexpr static size_t rank_value = rank;
     constexpr static bool is_dynamic = (N1 == 0) || (N2 == 0) || (N3 == 0) || (N4 == 0);
     constexpr static bool num_compile_time_elements = N1*N2*N3*N4;
 
@@ -30,12 +30,12 @@ namespace mathq {
     using DimensionsType = typename std::conditional< is_dynamic, DynamicDims<rank_value, N1, N2, N3, N4>, FixedDims<N1, N2, N3, N4> >::type;
 
     // ---- same for all subtypes --------
-    constexpr static size_t   depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
     using MyArrayType = typename ArrayTypeTrait<Element, num_compile_time_elements>::Type;
     using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
-    //  template <class Derived, typename Element, typename Number, size_t   depth, size_t   rank, class DimensionsT> class MArrayExpRW
+    //  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT> class MArrayExpRW
     // ---- same for all subtypes --------
     using ParentType = MArrayExpRW<
       ConcreteType,  // Derived
@@ -171,10 +171,10 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    inline size_t   size(void) const {
+    inline size_t size(void) const {
       return data_.size();
     }
-    size_t   rank(void) const {
+    size_t rank(void) const {
       return dimensions_->rank();
     }
     Dimensions dims(void) const {
@@ -192,11 +192,11 @@ namespace mathq {
       return myaddr;
     }
 
-    size_t   template_dims(void) const {
+    size_t template_dims(void) const {
       return dims();
     }
 
-    inline size_t   depth(void) const {
+    inline size_t depth(void) const {
       return depth;
     }
 
@@ -211,12 +211,12 @@ namespace mathq {
     }
 
     // the size of each element
-    inline size_t   element_size(void) const {
+    inline size_t element_size(void) const {
       if constexpr (depth < 2) {
         return 1;
       }
       else {
-        const size_t   Nelements = this->size();
+        const size_t Nelements = this->size();
         if (Nelements == 0) {
           return 0;
         }
@@ -227,12 +227,12 @@ namespace mathq {
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t   eldeepsize(void) const {
+    inline size_t eldeepsize(void) const {
       if constexpr (depth < 2) {
         return 1;
       }
       else {
-        const size_t   Nelements = this->size();
+        const size_t Nelements = this->size();
         if (Nelements == 0) {
           return 0;
         }
@@ -243,7 +243,7 @@ namespace mathq {
     }
 
     // the total number of numbers in this data structure
-    size_t   deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr (depth < 2) {
         return this->size();
       }
@@ -323,7 +323,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [deepsize()] and note return type
 
     // "read/write"
-    NumberType& dat(const size_t   n) {
+    NumberType& dat(const size_t n) {
       using namespace ::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
       if constexpr (depth < 2) {
@@ -342,7 +342,7 @@ namespace mathq {
     }
 
     // read
-    const NumberType& dat(const size_t   n) const {
+    const NumberType& dat(const size_t n) const {
       using namespace ::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
       if constexpr (depth < 2) {
@@ -424,7 +424,7 @@ namespace mathq {
 
     // "read/write": x.dat(DeepIndices)
     NumberType& dat(const DeepIndices& dinds) {
-      const size_t   mydepth = dinds.size();
+      const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth  - depth];
 
       if constexpr (depth > 1) {
@@ -437,7 +437,7 @@ namespace mathq {
 
     // "read": x.dat(DeepIndices)
     const NumberType dat(const DeepIndices& dinds) const {
-      const size_t   mydepth = dinds.size();
+      const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth  - depth];
 
       if constexpr (depth > 1) {
@@ -453,7 +453,7 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write"
-    Element& operator[](const size_t   n) {
+    Element& operator[](const size_t n) {
       int k = n;
       if (k < 0) {
         k += size();
@@ -462,7 +462,7 @@ namespace mathq {
     }
 
     // read
-    const Element& operator[](const size_t   n) const {
+    const Element& operator[](const size_t n) const {
       int k = n;
       if (k < 0) {
         k += size();
@@ -474,47 +474,47 @@ namespace mathq {
     //*******MultiArray-style Element Access: A(i,j,k,...) *********************
     //**********************************************************************
 
-    size_t   indexOf(const Indices& inds) const {
+    size_t indexOf(const Indices& inds) const {
       return dimensions_->index(inds);
     }
 
-    /* template<typename... Ts> size_t   index(int i, const Ts... args){ */
+    /* template<typename... Ts> size_t index(int i, const Ts... args){ */
     /* const int size = sizeof...(args); */
     /* int argarray[size] = {args...}; */
     /*   Indices& inds = *(new Indices(rank())); */
-    /*   const size_t   depth = this->rank(); */
+    /*   const size_t depth = this->rank(); */
     /*   inds[0] = i;  */
     /*   for(size_t n = 1; n < depth; n++) { */
     /* 	inds[n] = argarray[n];  */
     /*   } */
-    /*   size_t   k = this->index(inds); */
+    /*   size_t k = this->index(inds); */
     /*   return k; */
     /* } */
 
     template <typename... U>
     typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, size_t>::type index(const U... args) {
 
-      const size_t   size = sizeof...(args);
-      size_t   argarray[size] = { std::make_unsigned<int>::type(args)... };
+      const size_t size = sizeof...(args);
+      size_t argarray[size] = { std::make_unsigned<int>::type(args)... };
       Indices& inds = *(new Indices(rank()));
-      const size_t   NN = this->rank();
+      const size_t NN = this->rank();
       for (size_t n = 0; n < NN; n++) {
         inds[n] = argarray[n];
       }
-      size_t   k = this->indexOf(inds);
+      size_t k = this->indexOf(inds);
       return k;
     }
 
-    size_t   index(const std::initializer_list<size_t>& mylist) const {
+    size_t index(const std::initializer_list<size_t>& mylist) const {
       // TODO: check size
-      const size_t   NN = this->rank();
-      const size_t   N = mylist.size();
-      size_t   k = 0;
-      size_t   n = 0;
+      const size_t NN = this->rank();
+      const size_t N = mylist.size();
+      size_t k = 0;
+      size_t n = 0;
       typename std::initializer_list<size_t>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it, n++) {
-        size_t   N = (*dimensions_)[n];
-        size_t   j = *it;
+        size_t N = (*dimensions_)[n];
+        size_t j = *it;
         k = N * k + j;
       }
       return k;
@@ -524,7 +524,7 @@ namespace mathq {
     // TODO: test this code
     // TODO: bounds check on k
 
-    inline Indices& indices(const size_t   k) const {
+    inline Indices& indices(const size_t k) const {
       return dimensions_->indices(k);
     }
 
@@ -534,11 +534,11 @@ namespace mathq {
 
     // ---------------- tensor(Indices)--------------
     Element& operator()(const Indices& inds) {
-      size_t   k = this->indexOf(inds);
+      size_t k = this->indexOf(inds);
       return (*this)[k];
     }
     const Element operator()(const Indices& inds) const {
-      size_t   k = this->indexOf(inds);
+      size_t k = this->indexOf(inds);
       return (*this)[k];
     }
 
@@ -550,7 +550,7 @@ namespace mathq {
 
       // const int size = sizeof...(args);
       // int argarray[size] = {args...};
-      size_t   k = this->index(args...);
+      size_t k = this->index(args...);
 
       return (*this)[k];
     }
@@ -561,11 +561,11 @@ namespace mathq {
 
     // ---------------- tensor({i,j,...})--------------
     Element& operator()(const std::initializer_list<size_t>& mylist) {
-      size_t   k = this->index(mylist);
+      size_t k = this->index(mylist);
       return (*this)[k];
     }
     const Element operator()(const std::initializer_list<size_t>& mylist) const {
-      size_t   k = this->index(mylist);
+      size_t k = this->index(mylist);
       return (*this)[k];
     }
 
@@ -760,7 +760,7 @@ namespace mathq {
 
     friend std::ostream& operator<<(std::ostream& stream, const MultiArray<Element, rank>& t) {
       using namespace display;
-      size_t   n = 0;
+      size_t n = 0;
       t.send(stream, n, t.dims());
       return stream;
     }

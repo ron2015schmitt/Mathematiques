@@ -23,7 +23,7 @@ namespace mathq {
     typedef Derived DerivedType;
 
 
-    constexpr static size_t   rank() noexcept {
+    constexpr static size_t rank() noexcept {
       return rank_;
     }
     constexpr static bool is_dynamic() noexcept {
@@ -39,40 +39,42 @@ namespace mathq {
     }
 
     // read
-    const size_t& operator[](const size_t   n) const {
+    const size_t& operator[](const size_t n) const {
       return derived()[n];
     }
 
-    size_t   index(const mathq::Indices& inds) const {
-      const size_t   M = this->rank();
-      size_t   k = 0;
-      for (size_t n = 0; n < M; n++) {
-        size_t   N = (*this)[n];
-        size_t   j = inds[n];
-        k = N*k + j;
-      }
-      return k;
-    }
+    // TODO: reintroduce
+    // size_t index(const mathq::Indices& inds) const {
+    //   const size_t M = this->rank();
+    //   size_t k = 0;
+    //   for (size_t n = 0; n < M; n++) {
+    //     size_t N = (*this)[n];
+    //     size_t j = inds[n];
+    //     k = N*k + j;
+    //   }
+    //   return k;
+    // }
 
 
-    inline mathq::Indices& indices(const size_t   k) const {
-      mathq::Indices& myinds = *(new mathq::Indices(rank()));
-      size_t   prev = k;
-      // This loop must go in reverse order.  Do NOT change.
-      for (size_t n = rank()-1; n > 0; n--) {
-        size_t   N = (*this)[n];
-        size_t   temp = prev/N;
-        myinds[n] = prev - N*temp;
-        prev = temp;
-      }
-      if (rank()>0) {
-        myinds[0] = prev;
-      }
-      return myinds;
-    }
+    // TODO: reintroduce
+    // inline mathq::Indices& indices(const size_t k) const {
+    //   mathq::Indices& myinds = *(new mathq::Indices(rank()));
+    //   size_t prev = k;
+    //   // This loop must go in reverse order.  Do NOT change.
+    //   for (size_t n = rank()-1; n > 0; n--) {
+    //     size_t N = (*this)[n];
+    //     size_t temp = prev/N;
+    //     myinds[n] = prev - N*temp;
+    //     prev = temp;
+    //   }
+    //   if (rank()>0) {
+    //     myinds[0] = prev;
+    //   }
+    //   return myinds;
+    // }
 
 
-    size_t   size() const {
+    size_t size() const {
       return derived().size();
     }
 
@@ -94,7 +96,7 @@ namespace mathq {
     DynamicDims<rank_>& getReverse() const {
       DynamicDims<rank_>& dims2 = *(new DynamicDims<rank_>{});
       // reverse order
-      size_t   ii = 0;
+      size_t ii = 0;
       for (size_t k = this->rank()-1; k >= 0; k--) {
         dims2[ii++] = (*this)[k];
       }
@@ -136,7 +138,7 @@ namespace mathq {
   };
 
 
-  template <size_t rank1, typename T1, size_t   rank2, typename T2>
+  template <size_t rank1, typename T1, size_t rank2, typename T2>
   inline bool equiv(const Dimensions<rank1, T1>& dims1, const Dimensions<rank2, T2>& dims2) {
     return dims1.equiv(dims2);
   }
@@ -153,11 +155,11 @@ namespace mathq {
     typedef FixedDims<ints...> Type;
     typedef Dimensions<sizeof...(ints), Type> ParentType;
 
-    constexpr static size_t   rank_value = sizeof...(ints);
+    constexpr static size_t rank_value = sizeof...(ints);
     constexpr static std::array<size_t, rank_value> data = { (static_cast<size_t>(ints))... };
-    const static size_t   numElements = mathq::compile_time_product(data);
+    const static size_t numElements = mathq::compile_time_product(data);
 
-    constexpr static size_t   rank() noexcept {
+    constexpr static size_t rank() noexcept {
       return rank_value;
     }
     constexpr static bool is_dynamic() noexcept {
@@ -172,15 +174,15 @@ namespace mathq {
     }
 
     // read
-    const size_t& operator[](const size_t   n) const {
-      size_t   k = n;
+    const size_t& operator[](const size_t n) const {
+      size_t k = n;
       if (k < 0) {
         k += rank();
       }
       return data[k];
     }
 
-    size_t   size() const {
+    size_t size() const {
       return numElements;
     }
 
@@ -190,7 +192,7 @@ namespace mathq {
       s += StyledString::get(ANGLE1).get();
       for (size_t ii = 0; ii < rank(); ii++) {
         if (ii>0)  s += StyledString::get(COMMA).get();
-        size_t   value = data[ii];
+        size_t value = data[ii];
         s += num2string(value);
       }
       s += StyledString::get(ANGLE2).get();
@@ -210,10 +212,14 @@ namespace mathq {
     typedef NullDims Type;
     typedef Dimensions<0, Type> ParentType;
 
-    constexpr static size_t   rank_value = 0;
-    const static size_t   numElements = 0;
+    constexpr static size_t rank_value = 0;
+    constexpr static size_t depth_value = 0;
+    constexpr static size_t numElements = 0;
 
-    constexpr static size_t   rank() noexcept {
+    constexpr static size_t depth() noexcept {
+      return depth_value;
+    }
+    constexpr static size_t rank() noexcept {
       return rank_value;
     }
     constexpr static bool is_dynamic() noexcept {
@@ -227,7 +233,7 @@ namespace mathq {
     explicit NullDims() {
     }
 
-    size_t   size() const {
+    size_t size() const {
       return numElements;
     }
 
@@ -251,10 +257,10 @@ namespace mathq {
     typedef DynamicDims<rank_> Type;
     typedef Dimensions<rank_, Type> ParentType;
 
-    constexpr static size_t   rank_value = rank_;
+    constexpr static size_t rank_value = rank_;
 
-    constexpr static size_t   rank() noexcept {
-      return size;
+    constexpr static size_t rank() noexcept {
+      return rank_value;
     }
     constexpr static bool is_dynamic() noexcept {
       return true;
@@ -275,7 +281,7 @@ namespace mathq {
 
     // Dynamic constructor
 
-    template<typename...T, size_t   DUMMY = 0, mathq::EnableIf<(DUMMY == 0) && (sizeof...(T) == rank_) && (std::conjunction<std::is_integral<T>...>::value)> = 0>
+    template<typename...T, size_t DUMMY = 0, mathq::EnableIf<(DUMMY == 0) && (sizeof...(T) == rank_) && (std::conjunction<std::is_integral<T>...>::value)> = 0>
     DynamicDims(T... dynamic_dims) {
       data = { (static_cast<size_t>(dynamic_dims))... };
     }
@@ -286,8 +292,8 @@ namespace mathq {
     }
 
     DynamicDims(const std::initializer_list<size_t>& list) {
-      // const size_t   N = list.size();
-      size_t   i = 0;
+      // const size_t N = list.size();
+      size_t i = 0;
       typename std::initializer_list<size_t>::iterator it;
       for (it = list.begin(); it != list.end(); ++it) {
         (*this)[i++] = *it;
@@ -295,8 +301,8 @@ namespace mathq {
     }
 
     DynamicDims(const std::list<size_t>& mylist) {
-      // const size_t   N = mylist.size();
-      size_t   i = 0;
+      // const size_t N = mylist.size();
+      size_t i = 0;
       for (auto it = mylist.begin(); it != mylist.end(); ++it) {
         (*this)[i++] = *it;
       }
@@ -324,9 +330,9 @@ namespace mathq {
 
 
     // "read/write"
-    // std::enable_if<is_dynamic(), size_t&> operator[](const size_t   n) {
-    size_t& operator[](const size_t   n) {
-      size_t   k = n;
+    // std::enable_if<is_dynamic(), size_t&> operator[](const size_t n) {
+    size_t& operator[](const size_t n) {
+      size_t k = n;
       if (k < 0) {
         k += rank();
       }
@@ -334,8 +340,8 @@ namespace mathq {
     }
 
     // read
-    const size_t& operator[](const size_t   n) const {
-      size_t   k = n;
+    const size_t& operator[](const size_t n) const {
+      size_t k = n;
       if (k < 0) {
         k += rank();
       }
@@ -343,7 +349,7 @@ namespace mathq {
     }
 
 
-    size_t   size() const {
+    size_t size() const {
       // returns 1 if rank==0
       return std::accumulate(data.begin(), data.end(), 1, std::multiplies<size_t>());
     }
@@ -403,7 +409,7 @@ namespace mathq {
       return dimensions;
     }
 
-    size_t   rank() const {
+    size_t rank() const {
       return dimensions.rank();
     }
 
@@ -415,7 +421,7 @@ namespace mathq {
     }
 
 
-    size_t   depth() const {
+    size_t depth() const {
       return 1 + nextDimensions.depth();
     }
 
@@ -461,11 +467,11 @@ namespace mathq {
     NestedDims(Dims dims_) : dimensions(dims_) {
     }
 
-    size_t   rank() const {
+    size_t rank() const {
       return dimensions.rank();
     }
 
-    size_t   depth() const {
+    size_t depth() const {
       return 1;
     }
 

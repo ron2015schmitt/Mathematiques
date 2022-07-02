@@ -20,7 +20,7 @@ namespace mathq {
     Indices() {
       resize(0, 0);
     }
-    Indices(const size_t   n) {
+    Indices(const size_t n) {
       resize(n, 0);
     }
     // arbitrary size. can alos use "push_back"
@@ -33,9 +33,9 @@ namespace mathq {
 
     // use C++11 init list for arbitrary rank
     Indices(const std::initializer_list<size_t> list) {
-      const size_t   N = list.size();
+      const size_t N = list.size();
       resize(N, 0);
-      size_t   i = 0;
+      size_t i = 0;
       typename std::initializer_list<size_t>::iterator it;
       for (it = list.begin(); it != list.end(); ++it) {
         (*this)[i++] = *it;
@@ -43,9 +43,9 @@ namespace mathq {
     }
 
     Indices(const std::list<size_t>& mylist) {
-      const size_t   N = mylist.size();
+      const size_t N = mylist.size();
       resize(N, 0);
-      size_t   i = 0;
+      size_t i = 0;
       std::list<size_t>::const_iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it) {
         (*this)[i++] = *it;
@@ -108,8 +108,8 @@ namespace mathq {
 
 
   //   DeepIndices& operator++(int dum) {
-  //     const size_t   N = deepdims_.size();
-  //     size_t   m = N;
+  //     const size_t N = deepdims_.size();
+  //     size_t m = N;
   //     while (true) {
   //       if (m == 0) {
   //         this->clear();
@@ -125,10 +125,10 @@ namespace mathq {
   //       }
   //       Dimensions& dims = deepdims_[m];
   //       Indices& inds = (*this)[m];
-  //       size_t   n = dims.size();
-  //       size_t   d = 0;
-  //       size_t   sz = dims[n-d-1];
-  //       size_t   ind = ++(inds[n-d-1]);
+  //       size_t n = dims.size();
+  //       size_t d = 0;
+  //       size_t sz = dims[n-d-1];
+  //       size_t ind = ++(inds[n-d-1]);
   //       // MDISP(m, n, d, sz, ind, inds[n-d-1]);
   //       while (ind >= sz) {
   //         inds[n-d-1] = 0;
@@ -148,7 +148,7 @@ namespace mathq {
 
 
   //   DeepIndices& getReverse() const {
-  //     const size_t   N = size();
+  //     const size_t N = size();
   //     std::vector<Dimensions> rddims(N);
   //     for (int k = 0; k < N; k++) {
   //       rddims[k] = deepdims_[N-k-1];

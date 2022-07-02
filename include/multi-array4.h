@@ -21,10 +21,10 @@ namespace mathq {
    ********************************************************************
    */
 
-  template <typename Element, size_t   N1 = 0, size_t   N2 = 0, size_t   N3 = 0, size_t   N4 = 0>
+  template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0, size_t N4 = 0>
   class MArray4Helper {
   public:
-    constexpr static size_t   rank_value = 4;
+    constexpr static size_t rank_value = 4;
     constexpr static bool is_dynamic = (N1 == 0) || (N2 == 0) || (N3 == 0) || (N4 == 0);
     constexpr static bool num_compile_time_elements = N1 * N2 * N3 * N4;
 
@@ -33,7 +33,7 @@ namespace mathq {
 
 
     // ---- same for all subtypes --------
-    constexpr static size_t   depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
     using MyArrayType = typename ArrayTypeTrait<Element, num_compile_time_elements>::Type;
     using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
@@ -50,7 +50,7 @@ namespace mathq {
   };
 
 
-  template <typename Element, size_t   N1, size_t   N2, size_t   N3, size_t   N4>
+  template <typename Element, size_t N1, size_t N2, size_t N3, size_t N4>
   class MultiArray<Element, 4, N1, N2, N3, N4> : public MArray4Helper<Element, N1, N2, N3, N4>::ParentType {
 
   public:
@@ -81,9 +81,9 @@ namespace mathq {
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t   rank_value = Helper::rank_value;
-    constexpr static size_t   depth_value = Helper::depth_value;
-    constexpr static size_t   template_dimensions_value = DimensionsType;
+    constexpr static size_t rank_value = Helper::rank_value;
+    constexpr static size_t depth_value = Helper::depth_value;
+    constexpr static size_t template_dimensions_value = DimensionsType;
 
     constexpr static bool is_dynamic() noexcept {
       return Helper::is_dynamic;
@@ -101,15 +101,15 @@ namespace mathq {
 
   public:
     if constexpr (is_dynamic()) {
-      size_t   n1 = N1;
-      size_t   n2 = N2;
-      size_t   n3 = N3;
-      size_t   n4 = N4;
+      size_t n1 = N1;
+      size_t n2 = N2;
+      size_t n3 = N3;
+      size_t n4 = N4;
     } else {
-      static constexpr size_t   n1 = N1;
-      static constexpr size_t   n2 = N2;
-      static constexpr size_t   n3 = N3;
-      static constexpr size_t   n4 = N4;
+      static constexpr size_t n1 = N1;
+      static constexpr size_t n2 = N2;
+      static constexpr size_t n3 = N3;
+      static constexpr size_t n4 = N4;
     }
 
 

@@ -107,7 +107,7 @@ namespace mathq {
 
   template <class DAT> class Pair {
   public:
-    size_t   index;
+    size_t index;
     DAT data;
     Pair(size_t index_, DAT data_) : index(index_), data(data_) {}
     Pair() : index(0), data(DAT(0)) {}

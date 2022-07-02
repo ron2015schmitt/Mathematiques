@@ -12,10 +12,10 @@ namespace mathq {
 
 
     // maximum subcript size for vectors and matrices (since we allow negative indexing)
-  const size_t   maxsize = std::numeric_limits<size_t>::max();
+  const size_t maxsize = std::numeric_limits<size_t>::max();
 
   // ?
-  const size_t   badsize = std::numeric_limits<size_t>::max();
+  const size_t badsize = std::numeric_limits<size_t>::max();
 
 
   /****************************************************************************

@@ -33,7 +33,7 @@ template <bool B>
 using EnableIfB = typename std::enable_if<B, int>::type;
 
 
-template <typename T, size_t   D>
+template <typename T, size_t D>
 class yabba {
   T values[D];
 

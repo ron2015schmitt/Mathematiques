@@ -71,7 +71,7 @@ Vector<double> v3 ( range<double>(0,3));
 
 **EXAMPLE 7**: Assigning a `Vector`'s to a *`range`*
 ```C++
-const size_t   N = 10;
+const size_t N = 10;
 Vector<double> v (N);
 v = range<double>(0,N-1);
 ```

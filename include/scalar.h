@@ -20,7 +20,7 @@ namespace mathq {
   template <typename Element>
   class ScalarHelper {
   public:
-    constexpr static size_t   rank_value = 0;
+    constexpr static size_t rank_value = 0;
     constexpr static bool is_dynamic = false;
     constexpr static bool num_compile_time_elements = 1;
 
@@ -29,7 +29,7 @@ namespace mathq {
     using DimensionsType = const FixedDims<>;
 
     // ---- same for all subtypes --------
-    constexpr static size_t   depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
     using MyArrayType = typename ArrayTypeTrait<Element, num_compile_time_elements>::Type;
     using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
@@ -73,9 +73,9 @@ namespace mathq {
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t   rank_value = Helper::rank_value;
-    constexpr static size_t   depth_value = Helper::depth_value;
-    constexpr static size_t   template_dimensions_value = DimensionsType;
+    constexpr static size_t rank_value = Helper::rank_value;
+    constexpr static size_t depth_value = Helper::depth_value;
+    constexpr static size_t template_dimensions_value = DimensionsType;
 
     constexpr static bool is_dynamic() noexcept {
       return Helper::is_dynamic;
@@ -182,13 +182,13 @@ namespace mathq {
     //                            Size related  
     //**********************************************************************
 
-    size_t   rank(void) const {
+    size_t rank(void) const {
       return rank_value;
     }
-    inline size_t   depth(void) const {
+    inline size_t depth(void) const {
       return depth_value;
     }
-    inline size_t   size(void) const {
+    inline size_t size(void) const {
       return 1;
     }
 
@@ -204,7 +204,7 @@ namespace mathq {
     //                    Element Size related  
     //**********************************************************************
 
-    inline size_t   element_size(void) const {
+    inline size_t element_size(void) const {
       if constexpr (depth<2) {
         return 1;
       }
@@ -220,7 +220,7 @@ namespace mathq {
         return *(new FixedDims<>);
       }
     }
-    inline size_t   element_size(void) const {
+    inline size_t element_size(void) const {
       if constexpr (depth<2) {
         return 1;
       }
@@ -228,7 +228,7 @@ namespace mathq {
         return data.size();
       }
     }
-    inline size_t   eldeepsize(void) const {
+    inline size_t eldeepsize(void) const {
       if constexpr (depth<2) {
         return 1;
       }
@@ -243,7 +243,7 @@ namespace mathq {
     //                       Nested Size related  
     //**********************************************************************
 
-    size_t   deepsize(void) const {
+    size_t deepsize(void) const {
       if constexpr (depth<2) {
         return this->size();
       }
@@ -328,7 +328,7 @@ namespace mathq {
     // -------------------------------------------------------------
 
     // "read/write": unsigned
-    NumberType& dat(const size_t   n) {
+    NumberType& dat(const size_t n) {
       if constexpr (depth <= 1) {
         return data;
       }
@@ -338,7 +338,7 @@ namespace mathq {
     }
 
     // "read/write": signed
-    const NumberType& dat(const size_t   n)  const {
+    const NumberType& dat(const size_t n)  const {
       if constexpr (depth <= 1) {
         return data;
       }
@@ -416,12 +416,12 @@ namespace mathq {
     }
 
     // "read/write": unsigned
-    Element& operator[](const size_t   n) {
+    Element& operator[](const size_t n) {
       return data;
     }
 
     // "read/write": signed
-    const Element& operator[](const size_t   n)  const {
+    const Element& operator[](const size_t n)  const {
       return data;
     }
 
@@ -443,12 +443,12 @@ namespace mathq {
     }
 
     // "read/write": unsigned
-    Element& operator()(const size_t   n) {
+    Element& operator()(const size_t n) {
       return data;
     }
 
     // "read/write": signed
-    const Element& operator()(const size_t   n)  const {
+    const Element& operator()(const size_t n)  const {
       return data;
     }
 

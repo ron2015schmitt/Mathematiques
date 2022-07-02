@@ -21,17 +21,17 @@ namespace mathq {
 
     // *********************** OBJECT DATA ***********************************
 
-    size_t   Nrows_;
-    size_t   Ncols_;
+    size_t Nrows_;
+    size_t Ncols_;
     std::valarray<D>* data_;
 
   public:
 
     // ************************** CONSTRUCTOR **********************************
 
-    explicit Matrix<D>(const size_t   NR, const size_t   NC) {
+    explicit Matrix<D>(const size_t NR, const size_t NC) {
       // allocate store
-      size_t   N = NR*NC;
+      size_t N = NR*NC;
       bool bad=false;
       double Ncheck = double(NR)*double(NC);
       if (Ncheck>double(maxsize)) {
@@ -56,11 +56,11 @@ namespace mathq {
     // ****************** DEFAULT CONSTRUCTOR **********************************
 
     explicit Matrix<D>() {
-      size_t   NR=0;
-      size_t   NC=0;
+      size_t NR=0;
+      size_t NC=0;
 
       // allocate store
-      size_t   N = NR*NC;
+      size_t N = NR*NC;
       bool bad=false;
       double Ncheck = double(NR)*double(NC);
       if (Ncheck>double(maxsize)) {
@@ -87,9 +87,9 @@ namespace mathq {
 
     Matrix<D>(const Matrix<D>& m2) {
       // allocate store
-      const size_t   NR = m2.Nrows();
-      const size_t   NC = m2.Ncols();
-      size_t   N = NR*NC;
+      const size_t NR = m2.Nrows();
+      const size_t NC = m2.Ncols();
+      size_t N = NR*NC;
       bool bad=false;
       double Ncheck = double(NR)*double(NC);
       if (Ncheck>double(maxsize)) {
@@ -113,9 +113,9 @@ namespace mathq {
 
  
       // allocate store
-      const size_t   NR = x.Nrows();
-      const size_t   NC = x.Ncols();
-      size_t   N = NR*NC;
+      const size_t NR = x.Nrows();
+      const size_t NC = x.Ncols();
+      size_t N = NR*NC;
       bool bad=false;
       double Ncheck = double(NR)*double(NC);
       if (Ncheck>double(maxsize)) {
@@ -158,13 +158,13 @@ namespace mathq {
 
     // *** resize from given size *** 
 
-    Matrix<D>&  resize(const size_t   NR, const size_t   NC) { 
+    Matrix<D>&  resize(const size_t NR, const size_t NC) { 
 
       if (NR==this->Nrows() && NC==this->Ncols())
 	return *this;
 
       // allocate store
-      size_t   N = NR*NC;
+      size_t N = NR*NC;
       bool bad=false;
       double Ncheck = double(NR)*double(NC);
       if (Ncheck>double(maxsize)) {
@@ -194,9 +194,9 @@ namespace mathq {
     // reshape(matrix,nr,nc)
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    Matrix<D>&  reshape(const size_t   nr, const size_t   nc) { 
+    Matrix<D>&  reshape(const size_t nr, const size_t nc) { 
 
-      const size_t   nn = nr*nc;
+      const size_t nn = nr*nc;
 
       if (nn==0) {
 	Nrows_=0;
@@ -214,10 +214,10 @@ namespace mathq {
     // For square matrices this operation is quick and easy.
     // For non-square matrices, this changes the shape and operation is time-consuming
     Matrix<D>  transpose(void) { 
-      const size_t   NR = size_t(Nrows());
-      const size_t   NC = size_t(Ncols());
-      const size_t   N = size_t(size());
-      const size_t   Nminus1 = N-1;
+      const size_t NR = size_t(Nrows());
+      const size_t NC = size_t(Ncols());
+      const size_t N = size_t(size());
+      const size_t Nminus1 = N-1;
 
       // symmetric matrix  
       if (NC == NR) {
@@ -243,19 +243,19 @@ namespace mathq {
       // can set Nmove=1, but this will be very slow
       // Nmove=(NR+NC)/2 is optimal
       const bool Nmove =(NR+NC)/2;
-      size_t   move[Nmove];
+      size_t move[Nmove];
       for (size_t i = 0; i < Nmove; ++i)
 	move[i] = false;
 
 
       // there are always at least 2 fixed points (at j=0 and j=Nminus1)
-      size_t   count = 2;		
+      size_t count = 2;		
       // find the rest of the fixed points
       if (NC >= 3 && NR >= 3)
 	count += gcd(NC - 1, NR - 1) - 1;	/* # fixed points */
 
-      size_t   jstart = 1;
-      size_t   magicnum = NC;
+      size_t jstart = 1;
+      size_t magicnum = NC;
 
       while (1) {
 	size_t jnext,jnextc;
@@ -306,7 +306,7 @@ namespace mathq {
 	  } while (jstart==magicnum);
 	   
 	  jnext = magicnum;
-	  const  size_t   max = Nminus1-jstart+1;
+	  const  size_t max = Nminus1-jstart+1;
 	  if (jstart < Nmove){
 	    if (!move[jstart])
 	      break;
@@ -340,12 +340,12 @@ namespace mathq {
 
 
 
-    inline D& operator()(const size_t   i)  {
+    inline D& operator()(const size_t i)  {
       return (*data_)[i]; 
     }
 
 
-    inline const D operator()(const size_t   i) const {
+    inline const D operator()(const size_t i) const {
       return (*data_)[i]; 
     }
 
@@ -406,15 +406,15 @@ namespace mathq {
 
     // ************************* (ROW,COL) INDEX ELEMENT ACCESS **************************
 
-    inline size_t   index(const size_t   r, const size_t   c) const {
+    inline size_t index(const size_t r, const size_t c) const {
       return c + Ncols_*r;
     }
 
-    inline D& operator()(const size_t   r, const size_t   c) {
+    inline D& operator()(const size_t r, const size_t c) {
       return (*data_)[c + Ncols_*r]; 
     }
 
-    inline const D operator()(const size_t   r, const size_t   c) const {
+    inline const D operator()(const size_t r, const size_t c) const {
       return (*data_)[c + Ncols_*r]; 
     }
 
@@ -430,19 +430,19 @@ namespace mathq {
 
     // Accessing a (set,integer) 
 
-    const MDualSetObj<D> operator()(const Vector<size_t>& ii, const size_t   j) const {
+    const MDualSetObj<D> operator()(const Vector<size_t>& ii, const size_t j) const {
       return MDualSetObj<D>(*this, ii, j);
     }
-    MDualSetObj<D> operator()(const Vector<size_t>& ii, const size_t   j)  {
+    MDualSetObj<D> operator()(const Vector<size_t>& ii, const size_t j)  {
       return MDualSetObj<D>(*this, ii, j);
     }
 
     // Accessing a (integer,set) 
 
-    const MDualSetObj<D> operator()(const size_t   i, const Vector<size_t>& jj) const {
+    const MDualSetObj<D> operator()(const size_t i, const Vector<size_t>& jj) const {
       return MDualSetObj<D>(*this, i,jj);
     }
-    MDualSetObj<D> operator()(const size_t   i, const Vector<size_t>& jj)  {
+    MDualSetObj<D> operator()(const size_t i, const Vector<size_t>& jj)  {
       return MDualSetObj<D>(*this, i,jj);
     }
 
@@ -474,18 +474,18 @@ namespace mathq {
 
     // Accessing  (integer,slc)
 
-    const MSetRangeObj<D> operator()(const size_t   i, const slc& jj) const {
+    const MSetRangeObj<D> operator()(const size_t i, const slc& jj) const {
       return MSetRangeObj<D>(*this, i, jj);
     }
-    MSetRangeObj<D> operator()(const size_t   i, const slc& jj)  {
+    MSetRangeObj<D> operator()(const size_t i, const slc& jj)  {
       return MSetRangeObj<D>(*this, i, jj);
     }
     // Accessing  (slc,integer)
 
-    const MRangeSetObj<D> operator()(const slc& ii, const size_t   j) const {
+    const MRangeSetObj<D> operator()(const slc& ii, const size_t j) const {
       return MRangeSetObj<D>(*this, ii, j);
     }
-    MRangeSetObj<D> operator()(const slc& ii, const size_t   j)  {
+    MRangeSetObj<D> operator()(const slc& ii, const size_t j)  {
       return MRangeSetObj<D>(*this, ii, j);
     }
 
@@ -496,33 +496,33 @@ namespace mathq {
     // Accessing a submatrix of values
                                                                                         
     inline MSubmatObj<D>
-    submat(const size_t   rstart, const size_t   rend,
-	   const size_t   cstart, const size_t   cend)  {
+    submat(const size_t rstart, const size_t rend,
+	   const size_t cstart, const size_t cend)  {
       return MSubmatObj<D>(*this, rstart,  rend, cstart, cend);
     }
     inline const MSubmatObj<D>
-    submat(const size_t   rstart, const size_t   rend,
-	   const size_t   cstart, const size_t   cend)  const {
+    submat(const size_t rstart, const size_t rend,
+	   const size_t cstart, const size_t cend)  const {
       return MSubmatObj<D>(*this, rstart,  rend, cstart, cend);
     }
     
     // Accessing a row
     inline  MSubmatObj<D> 
-    row(const size_t   r) {
+    row(const size_t r) {
       return submat(r,r,0,Ncols()-1);
     }
     inline const  MSubmatObj<D> 
-    row(const size_t   r) const {
+    row(const size_t r) const {
       return submat(r,r,0,Ncols()-1);
     }
 
     // Accessing a column
     inline  MSubmatObj<D> 
-    col(const size_t   c) {
+    col(const size_t c) {
       return submat(0,Nrows()-1,c,c);
     }
     inline const MSubmatObj<D> 
-    col(const size_t   c) const {
+    col(const size_t c) const {
       return submat(0,Nrows()-1,c,c);
     }
 
@@ -530,15 +530,15 @@ namespace mathq {
 
     // ************************** ATTRIBUTE ACCESS ********************************
 
-    inline size_t   size(void) const {
+    inline size_t size(void) const {
       return data_->size();
     }
 
-    inline size_t   Nrows(void) const {
+    inline size_t Nrows(void) const {
       return Nrows_;
     }
 
-    inline size_t   Ncols(void) const {
+    inline size_t Ncols(void) const {
       return Ncols_;
     }
 
@@ -564,8 +564,8 @@ namespace mathq {
 
     // Assign all elements to the same constant value
     Matrix<D>& operator=(const D d) { 
-      const size_t   NN = size();
-      for(register size_t   i=0; i<NN; i++) 
+      const size_t NN = size();
+      for(register size_t i=0; i<NN; i++) 
 	(*data_)[i] = d; 
       return *this;
     }
@@ -573,20 +573,20 @@ namespace mathq {
 
     // Assignment to a matrix expression
     template <class A>  Matrix<D>& operator=(const Mexpr<D,A>& x) {
-      const size_t   NN = x.size();
-      const size_t   NR = x.Nrows();
-      const size_t   NC = x.Ncols();
+      const size_t NN = x.size();
+      const size_t NR = x.Nrows();
+      const size_t NC = x.Ncols();
 
       resize(NR,NC);
 
       if (x.mustcopy(this)) {    
 	Matrix<D> mtemp(NR,NC);
-	for(register size_t   i = 0; i < NN; i++) 
+	for(register size_t i = 0; i < NN; i++) 
 	  mtemp(i) = x(i);   
-	for(register size_t   i = 0; i < NN; i++) 
+	for(register size_t i = 0; i < NN; i++) 
 	  (*this)(i) = mtemp(i);
       } else {
-	for(register size_t   i = 0; i < NN; i++) 
+	for(register size_t i = 0; i < NN; i++) 
 	  (*this)(i) = x(i);   
       }
       return *this; 
@@ -604,8 +604,8 @@ namespace mathq {
 
       resize(m2.Nrows(),m2.Ncols());
 
-      const size_t   NN = size();
-      for(register size_t   i=0; i<NN; i++) 
+      const size_t NN = size();
+      for(register size_t i=0; i<NN; i++) 
 	(*data_)[i] = m2(i);    
       return *this;
     }
@@ -615,17 +615,17 @@ namespace mathq {
     
     template <class B>
     Matrix<D>& operator=(const MArrayExpR<D,B>& rhs) { 
-      const size_t   N =size();
+      const size_t N =size();
 
 
       if ( rhs.mustcopy(this) ) {    
 	Vector<D> y(N);
-	for(register size_t   i=0; i<N; i++) 
+	for(register size_t i=0; i<N; i++) 
 	  y[i] = rhs[i]; 
-	for(register size_t   i=0; i<N; i++) 
+	for(register size_t i=0; i<N; i++) 
 	  (*data_)[i] = y[i]; 
       } else {
-	for(register size_t   i=0; i<N; i++) 
+	for(register size_t i=0; i<N; i++) 
 	  (*data_)[i] = rhs[i]; 
       }
       return *this;
@@ -662,9 +662,9 @@ namespace mathq {
     // stream << operator
 
     friend std::ostream& operator<<(std::ostream &stream, const Matrix<D>& m) {
-      // const size_t   NR = m.Nrows();
-      // const size_t   NC = m.Ncols();
-      // const size_t   w = m.width();
+      // const size_t NR = m.Nrows();
+      // const size_t NC = m.Ncols();
+      // const size_t w = m.width();
       // std::string sep;
       // switch (m.textformt()) {
       // case text_braces:
@@ -716,16 +716,16 @@ namespace mathq {
 
 
     friend std::istream& operator>>(std::istream& stream,  Matrix<D>& m) {	
-      // const size_t   LINESZ = 32768;
+      // const size_t LINESZ = 32768;
       // char line[LINESZ];
-      // size_t   Nlines = 0;
+      // size_t Nlines = 0;
       // std::vector<D> v;
-      // size_t   NR=0;
-      // size_t   NC=0;
-      // size_t   N=0;
-      // const size_t   NCold=m.Ncols();
-      // const size_t   NRold=m.Nrows();
-      // const size_t   Nold=NRold*NCold;
+      // size_t NR=0;
+      // size_t NC=0;
+      // size_t N=0;
+      // const size_t NCold=m.Ncols();
+      // const size_t NRold=m.Nrows();
+      // const size_t Nold=NRold*NCold;
       // D temp;
       // std::istringstream strmline;
 
@@ -734,14 +734,14 @@ namespace mathq {
       // 	{
       // 	  enum States {begin, betweenrows, inrow, waitingforcomma, end};
       // 	  States state = begin;
-      // 	  size_t   col = 0;
+      // 	  size_t col = 0;
       // 	  while( (state!=end) && stream.getline(line,LINESZ) ){
       // 	    Nlines++;
       // 	    strmline.clear();
       // 	    strmline.str(line);
 	    
       // 	    char c;
-      // 	    size_t   Nchars=0;
+      // 	    size_t Nchars=0;
       // 	    while((state!=end) && strmline.get(c) ){
       // 	      Nchars++;
       // 	      if (isspace(c))
@@ -852,13 +852,13 @@ namespace mathq {
       // 	  std::string oldline = line;
       // 	  if (Nold==0) {
       // 	    while( stream.getline(line,LINESZ) ){ // read as "one row per line" until end of stream
-      // 	      size_t   col = 0;
+      // 	      size_t col = 0;
       // 	      Nlines++;
       // 	      strmline.clear();
       // 	      strmline.str(line);
 	    
       // 	      char c;
-      // 	      size_t   Nchars=0;
+      // 	      size_t Nchars=0;
       // 	      while(strmline.get(c)){
       // 		Nchars++;
       // 		if (isspace(c))
@@ -895,7 +895,7 @@ namespace mathq {
       // 	      strmline.clear();
       // 	      strmline.str(line);
       // 	      char c;
-      // 	      size_t   Nchars=0;
+      // 	      size_t Nchars=0;
       // 	      while((N<Nold) && strmline.get(c)){
       // 		Nchars++;
       // 		if (isspace(c))
@@ -933,7 +933,7 @@ namespace mathq {
       // 	break;
       // }//switch
       
-      // const size_t   len=NR*NC;
+      // const size_t len=NR*NC;
       // for(size_t i=0; i<len; i++)
       // 	m(i) = v[i];
   

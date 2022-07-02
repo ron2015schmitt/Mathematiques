@@ -461,7 +461,7 @@ namespace display {
   //****************************************************************************
 
   inline std::string replaceAll(std::string s, std::string s1, std::string s2) {
-    size_t   pos = s.find(s1);
+    size_t pos = s.find(s1);
     while (pos != std::string::npos) {
       s.replace(pos, s1.size(), s2);
       pos = s.find(s1, pos + s2.size());
@@ -475,11 +475,11 @@ namespace display {
   //------------------------------------------------------------
 
   inline std::string printf2str(const char* format, ...) {
-    const size_t   BUFFER_SIZE = 256;
+    const size_t BUFFER_SIZE = 256;
     char buffer[BUFFER_SIZE];
     va_list args;
     va_start(args, format);
-    size_t   n = vsnprintf(buffer, BUFFER_SIZE, format, args);
+    size_t n = vsnprintf(buffer, BUFFER_SIZE, format, args);
     if (n < 0) {
       // TODO: format error and throw
     }
@@ -1009,7 +1009,7 @@ namespace display {
   }
 
   // T[]
-  template <typename T, size_t   N>
+  template <typename T, size_t N>
   inline std::string getTypeName(const T(&a)[N]) {
     std::string tname = getTypeName(a[0]);
     std::ostringstream stream;
@@ -1115,7 +1115,7 @@ namespace display {
 
 
 
-  template <typename D, size_t   NDIMS, typename CHILD>
+  template <typename D, size_t NDIMS, typename CHILD>
   inline std::string getTypeName(const mathq::CurvilinearCoordinateSystem<D, NDIMS, CHILD>& var) {
     std::string s = getTypeStyle(var).apply("mathq::RealSet");
     D d;
@@ -1130,7 +1130,7 @@ namespace display {
 
 
   // template< class T >
-  // inline constexpr size_t   tuple_size_v = std::tuple_size<T>::value;
+  // inline constexpr size_t tuple_size_v = std::tuple_size<T>::value;
 
   template <size_t I = 0, typename... Ts>
   constexpr std::string getTypeName(const std::tuple<Ts...>& var, std::string s = std::string("")) {
@@ -1272,7 +1272,7 @@ namespace display {
   // Vector
   class FormatDataVector {
   public:
-    static size_t   max_elements_per_line;
+    static size_t max_elements_per_line;
     static Style style_for_punctuation;
     static std::string string_opening;
     static std::string string_delimeter;
@@ -1283,7 +1283,7 @@ namespace display {
   // Matrix
   class FormatDataMatrix {
   public:
-    static size_t   max_elements_per_line;
+    static size_t max_elements_per_line;
     static Style style_for_punctuation;
     static std::string string_opening;
     static std::string string_delimeter;
@@ -1314,7 +1314,7 @@ namespace display {
       // rethrow
       passed = false;
     }
-    size_t   found = s.find("(nil)");
+    size_t found = s.find("(nil)");
     if (found != string::npos)
       passed = false;
     D x2 = D(0);
@@ -1504,7 +1504,7 @@ namespace display {
 
 
   // T[N]
-  template <typename T, size_t   N>
+  template <typename T, size_t N>
   inline void dispval_strm(std::ostream& stream, const T(&a)[N]) {
     stream << "{";
     for (size_t ii = 0; ii < N; ii++) {
@@ -1542,7 +1542,7 @@ namespace display {
 
 
   // CurvilinearCoordinateSystem
-  template <typename D, size_t   NDIMS, typename CHILD>
+  template <typename D, size_t NDIMS, typename CHILD>
   inline void dispval_strm(std::ostream& stream, const mathq::CurvilinearCoordinateSystem<D, NDIMS, CHILD>& var) {
     stream << var;
   }
@@ -1591,7 +1591,7 @@ namespace display {
   template <typename D>
   inline void dispval_strm(std::ostream& stream, const std::list<D>& var) {
     stream << "{";
-    size_t   ii = 0;
+    size_t ii = 0;
     for (typename std::list<D>::const_iterator it = var.begin(); it != var.end(); ++it) {
       if (ii++ > 0)
         stream << ", ";
@@ -1604,7 +1604,7 @@ namespace display {
   template <typename D>
   inline void dispval_strm(std::ostream& stream, const std::initializer_list<D>& var) {
     stream << "{";
-    size_t   ii = 0;
+    size_t ii = 0;
     for (auto it = var.begin(); it != var.end(); ++it) {
       if (ii++ > 0)
         stream << ", ";
@@ -1620,7 +1620,7 @@ namespace display {
     std::queue<D> myq = var;
 
     stream << "{";
-    const size_t   N = myq.size();
+    const size_t N = myq.size();
     for (size_t ii = 0; ii < N; ii++) {
       if (ii > 0)
         stream << ", ";
@@ -1711,7 +1711,7 @@ namespace display {
     catch (...) {
       passed = false;
     }
-    size_t   found = s.find("(nil)");
+    size_t found = s.find("(nil)");
     if (found != string::npos)
       passed = false;
 

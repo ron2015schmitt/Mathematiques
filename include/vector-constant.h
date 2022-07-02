@@ -8,7 +8,7 @@ namespace mathq {
    ********************************************************************
    */
 
-  template <class Element, size_t   N1>
+  template <class Element, size_t N1>
   class
     ConstantVector : public MultiArray<Element, 1, N1> {
   public:

@@ -7,12 +7,12 @@
 
 namespace mathq {
 
-  slc::slc(const size_t   start, const size_t   end, const size_t   step)
+  slc::slc(const size_t start, const size_t end, const size_t step)
     : start_(start), end_(end), step_(step) {
     //PRINTF3("slc::slc(start=%d, end=%d, step=%d)\n",start, end, step);
   }
 
-  slc::slc(const size_t   start, const size_t   end)
+  slc::slc(const size_t start, const size_t end)
     : start_(start), end_(end), step_(1) {
     //PRINTF3("slc::slc(start=%d, end=%d)\n",start, end);
   }
@@ -20,28 +20,28 @@ namespace mathq {
 
 
 
-  size_t   slc::start(void) const {
+  size_t slc::start(void) const {
     return start_;
   }
-  size_t   slc::end(void) const {
+  size_t slc::end(void) const {
     return end_;
   }
-  size_t   slc::step(void) const {
+  size_t slc::step(void) const {
     return step_;
   }
 
-  Vector<size_t>& slc::toIndexVector(const size_t   N) const {
+  Vector<size_t>& slc::toIndexVector(const size_t N) const {
     //    PRINTF3("slc::toIndexVector(N=%lu)\n",N);
-    size_t   mystart = start_;
+    size_t mystart = start_;
     if (mystart < 0) {
       mystart += N;
     }
-    size_t   myend = end_;
+    size_t myend = end_;
     if (myend < 0) {
       myend += N;
     }
 
-    size_t   mystep = step_;
+    size_t mystep = step_;
 
     std::queue<size_t> indices;
 
@@ -64,7 +64,7 @@ namespace mathq {
       }
     }
 
-    const size_t   Nnew = indices.size();
+    const size_t Nnew = indices.size();
     Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
     for (size_t i = 0; i < Nnew; i++) {
       indexvec[i] = indices.front();

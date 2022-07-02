@@ -78,7 +78,7 @@
   + new index/iterator types such as slices similar to C++ stdlib, Fortran, and Python, including negative indices
   + [Index class and new indexing methodology](topics/index.md)
   + slcies to get row or col of matrix
-1. use size_t   instead of these  (searc and replace everywhere)
+1. use size_t instead of these  (searc and replace everywhere)
   * typedef std::vector<double>size_t size_t;
   * typedef int size_t;
   * typedef long double extended;  -> quad?

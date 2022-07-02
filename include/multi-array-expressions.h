@@ -103,7 +103,7 @@ namespace mathq {
   //            either a tensor or a tensor expression that is "read only"
   // -------------------------------------------------------------------
 
-  template <class Derived, typename Element, typename Number, size_t   depth, size_t   rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
   class MArrayExpR {
   public:
 
@@ -127,9 +127,9 @@ namespace mathq {
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t   rank_value = rank;
-    constexpr static size_t   depth_value = depth;
-    constexpr static size_t   template_dimensions_value = DimensionsType;
+    constexpr static size_t rank_value = rank;
+    constexpr static size_t depth_value = depth;
+    constexpr static size_t template_dimensions_value = DimensionsType;
 
     // the size of an expression cannot be changed
     constexpr static bool is_dynamic() noexcept {
@@ -146,7 +146,7 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const Number dat(const size_t   i) const {
+    const Number dat(const size_t i) const {
       return derived().dat(i);
     }
 
@@ -154,17 +154,17 @@ namespace mathq {
     //***************** Element ACCESS as an array *************************
     //**********************************************************************
 
-    const Element operator[](const size_t   i) const {
+    const Element operator[](const size_t i) const {
       return derived()[i];
     }
 
 
 
-    size_t   size(void) const {
+    size_t size(void) const {
       return derived().size();
     }
 
-    size_t   rank(void) const {
+    size_t rank(void) const {
       return derived().rank();
     }
     Dimensions dims(void) const {
@@ -183,20 +183,20 @@ namespace mathq {
       // return T_EXPRESSION_R;
       return derived().getEnum();
     }
-    size_t   depth(void) const {
+    size_t depth(void) const {
       return derived().depth();
     }
     Dimensions element_dims(void) const {
       return derived().element_dims();
     }
 
-    size_t   element_size(void) const {
+    size_t element_size(void) const {
       return derived().element_size();
     }
-    size_t   eldeepsize(void) const {
+    size_t eldeepsize(void) const {
       return derived().eldeepsize();
     }
-    size_t   deepsize(void) const {
+    size_t deepsize(void) const {
       return derived().deepsize();
     }
 
@@ -243,7 +243,7 @@ namespace mathq {
   // -------------------------------------------------------------------
 
 
-  template <class Derived, class Element, typename Number, size_t   depth, size_t   rank, class DimensionsT> class
+  template <class Derived, class Element, typename Number, size_t depth, size_t rank, class DimensionsT> class
     MArrayExpRW : public MArrayExpR<MArrayExpRW<Derived, Element, Number, depth, rank, DimensionsT>, Element, Number, depth, rank, DimensionsT> {
   public:
     typedef Materialize<Element, Number, depth, rank> ConcreteType;
@@ -263,29 +263,29 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const Number dat(const size_t   i) const {
+    const Number dat(const size_t i) const {
       return derived().dat(i);
     }
-    Number& dat(const size_t   i) {
+    Number& dat(const size_t i) {
       return derived().dat(i);
     }
 
     //**********************************************************************
     //***************** Element ACCESS as an array *************************
     //**********************************************************************
-    const Element operator[](const size_t   i) const {
+    const Element operator[](const size_t i) const {
       return derived()[i];
     }
-    Element& operator[](const size_t   i) {
+    Element& operator[](const size_t i) {
       return derived()[i];
     }
 
 
-    size_t   size(void) const {
+    size_t size(void) const {
       return derived().size();
     }
 
-    size_t   rank(void) const {
+    size_t rank(void) const {
       return derived().rank();
     }
     Dimensions dims(void) const {
@@ -304,19 +304,19 @@ namespace mathq {
       return derived().getEnum();
       // return T_EXPRESSION_RW;
     }
-    size_t   depth(void) const {
+    size_t depth(void) const {
       return derived().depth();
     }
     Dimensions element_dims(void) const {
       return derived().element_dims();
     }
-    size_t   element_size(void) const {
+    size_t element_size(void) const {
       return derived().element_size();
     }
-    size_t   eldeepsize(void) const {
+    size_t eldeepsize(void) const {
       return derived().eldeepsize();
     }
-    size_t   deepsize(void) const {
+    size_t deepsize(void) const {
       return derived().deepsize();
     }
 
@@ -364,7 +364,7 @@ namespace mathq {
     template <class Y>
     Derived& equals(const MArrayExpR<Y, Element, Number, depth, rank>& rhs) {
 
-      const size_t   N = size();
+      const size_t N = size();
 
 
       if (common(*this, rhs)) {

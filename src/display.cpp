@@ -200,7 +200,7 @@ namespace display {
   // Vector
   // TODO: this shoudl be size_t
   // TODO: put these into an intilization func and share it here as well as in h file
-  size_t   FormatDataVector::max_elements_per_line = mathq::maxsize;
+  size_t FormatDataVector::max_elements_per_line = mathq::maxsize;
   Style FormatDataVector::style_for_punctuation = CREATESTYLE(GRAY1);
   std::string FormatDataVector::string_opening = "{";
   std::string FormatDataVector::string_delimeter = ", ";
@@ -209,7 +209,7 @@ namespace display {
 
   // Matrix
   //  TODO: this shoudl be size_t
-  size_t   FormatDataMatrix::max_elements_per_line = mathq::maxsize;
+  size_t FormatDataMatrix::max_elements_per_line = mathq::maxsize;
   Style FormatDataMatrix::style_for_punctuation = CREATESTYLE(GRAY1);
   std::string FormatDataMatrix::string_opening = "{";
   std::string FormatDataMatrix::string_delimeter = ", ";

@@ -26,7 +26,7 @@ FormatData<double>::tens = false;
 Define the coefficient vectors: 
 
 ```C++
-const size_t   N = 20;
+const size_t N = 20;
 Vector<double> k = range<double>(0,N-1);
 Vector<double> An = 1/k;
 An[0] = 0.;
@@ -107,7 +107,7 @@ set_matlab_var_format();
 Define the coefficient vectors: 
 
 ```C++
-const size_t   N = 20;
+const size_t N = 20;
 Vector<double> k = range<double>(0,N-1);
 Vector<double> An = Vector<double>(N,0.);
 Vector<double> Bn = 1./sqr(k);
