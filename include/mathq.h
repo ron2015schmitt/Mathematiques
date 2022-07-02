@@ -28,6 +28,7 @@
 #include <string>
 #include <type_traits> 
 #include <typeinfo>
+#include <utility>
 #include <valarray>
 #include <vector>
 
@@ -74,6 +75,8 @@
 #include "matrix-outer-product.h"
 
 #include "multi-array.h"
+#include "multi-array3.h"
+#include "multi-array4.h"
 #include "multi-array-constant.h"
 #include "multi-array-repeat-vec.h"
 #include "multi-array-outer-product.h"

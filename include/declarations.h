@@ -114,25 +114,35 @@ namespace mathq {
   // * Concrete MultiArrays
   // ********************************************************************
 
-  template <typename Element, size_t rank, size_t... dims>
+  //   constexpr bool is_all_zeros(std::initializer_list<size_t> list) {
+  //   for (auto elem : list) {
+  //     if (elem != 0) return false;
+  //   }
+  //   return true;
+  // }
+
+  template <typename Element, size_t rank, size_t... dims >
   class MultiArray;
+
+
 
   // typenames for specializations
 
+  
   template <typename Element>
-  using Scalar = MultiArray<Element, 0>;
+  using Scalar = MultiArray<Element,0>;
 
   template <typename Element, size_t NE = 0>
-  using Vector = MultiArray<Element, 1, NE>;
+  using Vector = MultiArray<Element, NE>;
 
   template <typename Element, size_t NR = 0, size_t NC = 0>
-  using Matrix = MultiArray<Element, 2, NR, NC>;
+  using Matrix = MultiArray<Element, NR, NC>;
 
   template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0>
-  using MultiArray3 = MultiArray<Element, 3, N1, N2, N3>;
+  using MultiArray3 = MultiArray<Element, N1, N2, N3>;
 
   template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0, size_t N4 = 0>
-  using MultiArray4 = MultiArray<Element, 4, N1, N2, N3, N4>;
+  using MultiArray4 = MultiArray<Element, N1, N2, N3, N4>;
 
 
 
@@ -230,6 +240,66 @@ namespace mathq {
 
   template <class X, class Y, typename Element, typename Number, size_t depth>
   class TERW_Join;
+
+
+  // ***************************************************************************
+  // * GridScale enum
+  // ***************************************************************************
+
+  // put in a namespace so that the enums don't clash
+  namespace GridScale {
+    enum Type { LINEAR = false, LOG = true };
+  };
+
+  using GridScaleEnum = GridScale::Type;
+
+
+
+
+
+  // ***************************************************************************
+  // * Grid
+  //
+  //  multiarray of depth=1 and fixed rank=NDIMS but dynamic size
+  // ***************************************************************************
+
+  template <typename Number, size_t NDIMS>
+  using Grid = MultiArray<Number, NDIMS>;
+
+
+
+
+  // ***************************************************************************
+  // * MultiArrayOfGrids
+  //
+  // This is a nested structure with depth=2:
+  //   top level: A single MultiArray of fixed rank: MultiArray<Number,rank>
+  //              default rank = 1 => vector
+  //   second level: multiarrays of fixed rank=NDIMS but dynamic size
+  //
+  // TODO: use OuterProductMultiArray for 2nd level to save on space
+  // ***************************************************************************
+
+  template <typename Number, size_t NDIMS, size_t rank = 1>
+  using MultiArrayOfGrids = MultiArray< Grid<Number, NDIMS>, rank >;
+
+
+  // ***************************************************************************
+  // * GridOfMultiArrays
+  //
+  // This is a nested structure with depth=2:
+  //   top level: a single multiarray of fixed rank=NDIMS but dynamic size
+  //   second level: multiarrays of fixed rank: MultiArray<Number,rank>
+  //                 default rank = 1 => vector
+  //
+  // This type has the same total number of elements as MultiArrayOfGrids.
+  // The two types can be converted from one to another using the function 'insideout'.
+  //
+  // TODO: use OuterProductMultiArray for 1st level to save on space
+  // ***************************************************************************
+
+  template <typename Number, size_t NDIMS, size_t rank = 1>
+  using GridOfMultiArrays = Grid< MultiArray<Number, rank>, NDIMS>;
 
 
 

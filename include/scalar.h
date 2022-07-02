@@ -3,25 +3,6 @@
 
 namespace mathq {
 
-
-  template <typename Element, size_t depth_value = 0>
-  class ScalarHelper {
-  public:
-    using DimensionsType = const FixedDims<>;
-    using NestedDimensionsType = NestedDimensions<DimensionsType, ElementDimensionsType>;
-    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
-
-    using ParentType = MArrayExpRW<
-      MultiArray<Element, 0>,
-      Element,
-      typename NumberTrait<Element>::Type,
-      1 + NumberTrait<Element>::depth(),
-      0,
-      ScalarHelper<Element>::DimensionsType,
-    >;
-  };
-
-
   /******************************************************************************
    * Scalar<Element> == MultiArray<Element>
    *
@@ -34,6 +15,33 @@ namespace mathq {
   *********************************************************************************
    */
 
+
+
+  template <typename Element>
+  class ScalarHelper {
+  public:
+    constexpr static size_t rank_value = 0;
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static bool is_dynamic = false;
+
+    using DimensionsType = const FixedDims<>;
+    using NestedDimensionsType = NestedDimensions<DimensionsType, ElementDimensionsType>;
+    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
+
+    //  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT> class MArrayExpRW
+    using ParentType = MArrayExpRW<
+      MultiArray<Element, rank_value>,  // Derived
+      Element,  // Element
+      typename NumberTrait<Element>::Type,  // Number
+      depth_value,  // depth
+      rank_value,  // rank
+      ScalarHelper<Element>::DimensionsType,  // DimensionsT
+    >;
+  };
+
+
+
+  // TODO: change this to Scalar and see if it works
 
   template <class Element>
   class MultiArray<Element, 0> : public ScalarHelper<Element>::ParentType {
@@ -61,12 +69,12 @@ namespace mathq {
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t rank_value = 0;
-    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t rank_value = ScalarHelper<Element>::rank_value;
+    constexpr static size_t depth_value = ScalarHelper<Element>::depth_value;
     constexpr static size_t template_dimensions_value = DimensionsType;
 
     constexpr static bool is_dynamic() noexcept {
-      return false;
+      return ScalarHelper<Element>::is_dynamic;
     }
 
 

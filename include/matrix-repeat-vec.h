@@ -1,10 +1,10 @@
-#ifndef MATHQ__MULTI_ARRAY_REPEAT_VECTOR_H
-#define MATHQ__MULTI_ARRAY_REPEAT_VECTOR_H 1
+#ifndef MATHQ__MATRIX_REPEAT_VECTOR_H
+#define MATHQ__MATRIX_REPEAT_VECTOR_H 1
 
 namespace mathq {
 
   /********************************************************************
-   * OuterProductMultiArray is a MultiArray that consists of a single 
+   * RepeatedVectorMatrix is a Matrix that consists of a single 
    * vector across index `slot` repeated to fill the multiarray.
    * This is useful for grids.
    ********************************************************************
@@ -12,7 +12,7 @@ namespace mathq {
 
   template <size_t slot, class Element, int rank, size_t... ints>
   class
-    RepeatedVectorMultiArray : public MultiArray<Element, rank, ints>  {
+    RepeatedVectorMatrix : public MultiArray<Element, rank, ints>  {
   public:
   };
 

@@ -1,16 +1,16 @@
-#ifndef MATHQ__MULTI_ARRAY_CONSTANT_H
-#define MATHQ__MULTI_ARRAY_CONSTANT_H 1
+#ifndef MATHQ__VECTOR_CONSTANT_H
+#define MATHQ__VECTOR_CONSTANT_H 1
 
 namespace mathq {
 
   /********************************************************************
-   * ConstantMultiArray is a MultiArray with every element the same
+   * ConstantVector is a MultiArray with every element the same
    ********************************************************************
    */
 
-  template <class Element, int rank, size_t... ints>
+  template <class Element, size_t N1>
   class
-    ConstantMultiArray : public MultiArray<Element, rank, ints>  {
+    ConstantVector : public MultiArray<Element, 1, N1> {
   public:
   };
 

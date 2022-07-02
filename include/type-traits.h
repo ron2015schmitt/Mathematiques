@@ -800,66 +800,6 @@ namespace mathq {
   };
 
 
-  // ***************************************************************************
-  // * GridScale enum
-  // ***************************************************************************
-
-  // put in a namespace so that the enums don't clash
-  namespace GridScale {
-    enum Type { LINEAR = false, LOG = true };
-  };
-
-  using GridScaleEnum = GridScale::Type;
-
-
-
-
-
-  // ***************************************************************************
-  // * Grid
-  //
-  //  multiarray of depth=1 and fixed rank=NDIMS but dynamic size
-  // ***************************************************************************
-
-  template <typename Number, size_t NDIMS>
-  using Grid = MultiArray<Number, NDIMS>;
-
-
-
-
-  // ***************************************************************************
-  // * MultiArrayOfGrids
-  //
-  // This is a nested structure with depth=2:
-  //   top level: A single MultiArray of fixed rank: MultiArray<Number,rank>
-  //              default rank = 1 => vector
-  //   second level: multiarrays of fixed rank=NDIMS but dynamic size
-  //
-  // TODO: use OuterProductMultiArray for 2nd level to save on space
-  // ***************************************************************************
-
-  template <typename Number, size_t NDIMS, size_t rank = 1>
-  using MultiArrayOfGrids = MultiArray< Grid<Number, NDIMS>, rank >;
-
-
-  // ***************************************************************************
-  // * GridOfMultiArrays
-  //
-  // This is a nested structure with depth=2:
-  //   top level: a single multiarray of fixed rank=NDIMS but dynamic size
-  //   second level: multiarrays of fixed rank: MultiArray<Number,rank>
-  //                 default rank = 1 => vector
-  //
-  // This type has the same total number of elements as MultiArrayOfGrids.
-  // The two types can be converted from one to another using the function 'insideout'.
-  //
-  // TODO: use OuterProductMultiArray for 1st level to save on space
-  // ***************************************************************************
-
-  template <typename Number, size_t NDIMS, size_t rank = 1>
-  using GridOfMultiArrays = Grid< MultiArray<Number, rank>, NDIMS>;
-
-
 
 template <typename Number, size_t NDIMS, size_t rank, typename G> 
 class GridTraits {

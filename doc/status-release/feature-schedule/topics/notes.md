@@ -23,3 +23,7 @@ Currently using `c++20` and `g++ 10.3`
 1. [g++ release list](https://gcc.gnu.org/releases.html)
 
 1. turning an object "inside out" is referred to as __eversion__
+
+1. template parameter packs, eg `size_t... dims`, cannot have a default value
+
+1. You cannot specify or even determine the number of paramters for C-style variadic function parameters.  You have to pass the size first or have the size as a template and hope the user doesn't provide less because it will segmentation fault.  Same problem as arrays.

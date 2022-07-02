@@ -11,7 +11,7 @@ namespace mathq {
 
   template <class Element, int rank, size_t... ints>
   class
-    OuterProductMultiArray : public MultiArray<Element, rank, ints>  {
+    OuterProductMultiArray : public MultiArray<Element, rank, ints...>  {
   public:
   };
 

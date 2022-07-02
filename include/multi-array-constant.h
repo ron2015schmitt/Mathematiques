@@ -10,7 +10,7 @@ namespace mathq {
 
   template <class Element, int rank, size_t... ints>
   class
-    ConstantMultiArray : public MultiArray<Element, rank, ints>  {
+    ConstantMultiArray : public MultiArray<Element, rank, ints...>  {
   public:
   };
 

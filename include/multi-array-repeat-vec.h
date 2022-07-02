@@ -4,7 +4,7 @@
 namespace mathq {
 
   /********************************************************************
-   * OuterProductMultiArray is a MultiArray that consists of a single 
+   * RepeatedVectorMultiArray is a MultiArray that consists of a single 
    * vector across index `slot` repeated to fill the multiarray.
    * This is useful for grids.
    ********************************************************************
@@ -12,7 +12,7 @@ namespace mathq {
 
   template <size_t slot, class Element, int rank, size_t... ints>
   class
-    RepeatedVectorMultiArray : public MultiArray<Element, rank, ints>  {
+    RepeatedVectorMultiArray : public MultiArray<Element, rank, ints...>  {
   public:
   };
 

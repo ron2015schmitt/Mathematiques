@@ -3,39 +3,35 @@
 
 namespace mathq {
 
+
   template <typename Element, size_t N1 = 0>
   class VectorHelper {
   public:
-    using DimensionsType = typename std::conditional< (N1 > 0), FixedDims<N1>, DynamicDims<1> >::type;
+    constexpr static size_t rank_value = 1;
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static bool is_dynamic = (N1 == 0);
+
+    using DimensionsType = typename std::conditional< is_dynamic, DynamicDims<rank_value, N1>, FixedDims<N1> >::type;
+    using NestedDimensionsType = NestedDimensions<DimensionsType, ElementDimensionsType>;
+    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
+
+    //  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT> class MArrayExpRW
+    using ParentType = MArrayExpRW<
+      MultiArray<Element, rank_value, N1>,  // Derived
+      Element,  // Element
+      typename NumberTrait<Element>::Type, // Number
+      depth_value,  // depth
+      rank_value,  // rank
+      VectorHelper<Element>::DimensionsType, // DimensionsT
+    >;
   };
 
 
-  /********************************************************************
-   * Vector<Element>    -- variable size vector (valarray)
-   *                 Element  = type for elements
-   * Vector<Element,N1> -- fixed size vector (array)
-   *                 N1 = size = number of elements
-   *
-   * DO NOT SPECIFY: NumberType,depth
-   *                 The defaults are defined in the declaration in
-   *                 declarations.h
-   *                 NumberType = number type
-   *                   = underlying algebraic field
-   *                     ex. int, double, std::complex<double>
-   *                 depth = tensor depth. if Element=NumberType, then depth=1.
-  ********************************************************************
-   */
 
+  // TODO: change this to Vector and see if it works
+  template <typename Element, size_t N1>
+  class MultiArray<Element, 1, N1> : public VectorHelper<Element>::ParentType {
 
-  template <typename Element, size_t N1 = 0>
-  class Vector : public MArrayExpRW<
-    Vector<Element, N1>,
-    Element,
-    typename NumberTrait<Element>::Type,
-    1 + NumberTrait<Element>::depth(),
-    1,
-    typename VectorHelper<Element, N1>::DimensionsType
-  > {
 
   public:
 
@@ -49,24 +45,25 @@ namespace mathq {
     using NumberType = typename NumberTrait<Element>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-    using DimensionsType = typename VectorHelper<Element, N1>::DimensionsType;
-    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
-    using NestedDimensionsType = NestedDimensions<DimensionsType, ElementDimensionsType>;
+    using DimensionsType = typename VectorHelper<Element>::DimensionsType;
+    using ElementDimensionsType = typename VectorHelper<Element, depth_value>::ElementDimensionsType;
+    using NestedDimensionsType = typename VectorHelper<Element>::NestedDimensionsType;
 
-    using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
+    using MyArrayType = Element;
 
 
     //**********************************************************************
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t rank_value = 1;
-    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
+    constexpr static size_t rank_value = VectorHelper<Element>::rank_value;
+    constexpr static size_t depth_value = VectorHelper<Element>::depth_value;
     constexpr static size_t template_dimensions_value = DimensionsType;
 
     constexpr static bool is_dynamic() noexcept {
-      return N1 == 0;
+      return VectorHelper<Element>::is_dynamic;
     }
+
 
 
     //**********************************************************************
@@ -1296,7 +1293,7 @@ namespace mathq {
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
-    }
+  }
 #endif
 
 
@@ -1550,12 +1547,12 @@ namespace mathq {
     }
 
 
-  };
-
-
-
-
 };
+
+
+
+
+  };
 
 
 #endif 
