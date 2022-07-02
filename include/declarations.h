@@ -62,12 +62,14 @@ namespace mathq {
 
 
 
+  // TODO: need to figure out how to handle this. need a signed type
   // maximum subcript size for vectors and matrices (since we allow negative indexing)
   const size_t maxsize = std::numeric_limits<size_t>::max();
   const size_t badsize = std::numeric_limits<size_t>::max();
 
 
   class Indices;
+
   inline bool equiv(const Indices& inds1, const Indices& inds2);
 
   template <typename NestedDims>
@@ -329,13 +331,6 @@ namespace mathq {
 
   template <typename Number, size_t NDIMS, size_t rank, typename G>
   class GridTraits;
-
-  ////////////////////////////////////////////////////////////
-  // In functions_misc.h
-  ////////////////////////////////////////////////////////////
-
-  // template <class Derived, typename Element, typename Number, size_t depth_, size_t rank, class DimensionsT>
-  // EnableMethodIf<std::is_same<Number, bool>::value, Vector<size_t>&> findtrue(const MArrayExpR<Derived, Element, Number, depth_, rank, DimensionsT>& v);
 
 
 

@@ -861,10 +861,9 @@ namespace mathq {
   class CurvilinearCoordinateSystem;
 
 
-  // template <typename Element, size_t NDIMS, class CHILD> class CurvilinearCoords;
-  // template <typename Element, size_t NDIMS> class CartCoords;
-  // template <typename Element> class PolarCoords;
-
+  // ***************************************************************************
+  // * Nabla
+  // ***************************************************************************
   template <class T = void>
   class Nabla;
 
@@ -874,18 +873,6 @@ namespace mathq {
   // ***************************************************************************
   // * compile time functions
   // ***************************************************************************
-
-
-  // template<size_t N, size_t... ints>
-  // constexpr std::array<size_t  , N> compile_time_fill_array() {
-  //   if constexpr (sizeof...(ints) {
-
-  //   }
-  //   else {
-  //     return
-  //       std::array<size_t  , N>{};
-  //   }
-  // }
 
 
   constexpr bool is_all_zeros(std::initializer_list<size_t> list) {
