@@ -132,6 +132,7 @@
 ```
 * make all temp README.md files read-only
 * conjugate OPERTOR~ for real ints wil give negative!!  make sure you dont take ~ of built-in types
+* what about equals for (double = 0) == Imaginary<double>(0)
 * refactor the headers so that 
   * vectors, matrices display tensors Scalar are broken out into different headers
   * use copious #ifdefs so that order of inclusion matters

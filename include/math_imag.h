@@ -443,6 +443,30 @@ namespace mathq {
   //          unary funcs
   //*******************************************************
 
+
+
+
+
+  // zero
+
+  template <typename Number, typename T >
+  typename std::enable_if< std::is_same<T, Imaginary<Number>>::value, Imaginary<Number> >
+    zero() {
+    return Imaginary<Number>(0);
+  }
+
+  // one
+
+  template <typename Number, typename T >
+  typename std::enable_if<
+    std::is_same<T, Imaginary<Number>>::value,
+    Imaginary<Number>
+  >
+    one() {
+    return Imaginary<Number>(1);
+  }
+
+
   // real(z)
 
   template <typename Number>
