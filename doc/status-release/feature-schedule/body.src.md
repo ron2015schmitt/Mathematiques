@@ -131,6 +131,7 @@
   // this seems to works for ints. if problems, use a helper class to determine which exp to call: expf expl, exp
 ```
 * make all temp README.md files read-only
+* conjugate OPERTOR~ for real ints wil give negative!!  make sure you dont take ~ of built-in types
 * refactor the headers so that 
   * vectors, matrices display tensors Scalar are broken out into different headers
   * use copious #ifdefs so that order of inclusion matters

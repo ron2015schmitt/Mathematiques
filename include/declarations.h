@@ -86,6 +86,12 @@ namespace mathq {
   class NumberTrait;
 
 
+
+
+  template <typename T, typename B = void> T zero();
+  template <typename T, typename B = void> T one();
+
+
   //*******************************************************
   //          number types
   //*******************************************************

@@ -92,15 +92,16 @@ namespace mathq {
 
   // zero
 
+
   template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number zero(const Number& x) {
+  Number zero() {
     return Number(0);
   }
 
   // one
 
   template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number one(const Number& x) {
+  Number one() {
     return Number(1);
   }
 
@@ -113,12 +114,12 @@ namespace mathq {
   }
 
   // complex conjugate OPERTOR ~
+  // ~ is defined for ints nad can;t be defined for reals
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > Number
-    operator~(Number& x) {
-    return x;
-  }
-
+  // template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> >
+  // Number operator~(Number& x) {
+  //   return x;
+  // }
 
   // real
 
