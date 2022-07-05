@@ -32,8 +32,8 @@
 #include "type-defs.h"
 
 #include "math_real.h"
-#include "math_cplx.h"
 #include "math_imag.h"
+#include "math_cplx.h"
 #include "math_quaternion.h"
 
 #include "indices.h"
@@ -102,42 +102,51 @@ int main(int argc, char* argv[]) {
   std::cout << "running: " <<myname << std::endl;
   std::cout << std::endl;
 
-  Imaginary<int> ii{42};
-  Imaginary<double> dub{3.14};
-  Imaginary<int> nii{-13};
-  Imaginary<double> ndub{-2.73};
+
+  {
+    CR();
+    ECHO_CODE(Imaginary<float> x1{ 0.001 });
+    TRDISP(roundzero(x1));
+    ECHO_CODE(Imaginary<float> x2{ 3e-7 });
+    TRDISP(x2);
+    TRDISP(roundzero(x2));
+  }
+
+  {
+    CR();
+    ECHO_CODE(Imaginary<double> x1{ 0.001 });
+    TRDISP(roundzero(x1));
+    ECHO_CODE(Imaginary<double> x2{ 1e-16 });
+    TRDISP(x2);
+    TRDISP(roundzero(x2));
+  }
+
+
+  {
+    CR();
+    ECHO_CODE(Imaginary<quad> x1{ 0.001 });
+    TRDISP(roundzero(x1));
+    ECHO_CODE(Imaginary<quad> x2{ 1e-30 });
+    TRDISP(x2);
+    TRDISP(roundzero(x2));
+  }
 
 
   CR();
-  TRDISP(roundzero(float(0.001)));
-  TRDISP(float(3e-7));
-  TRDISP(roundzero(float(3e-7)));
+  TRDISP(zero<Imaginary<int>>());
+  TRDISP(zero<Imaginary<double>>());
+  TRDISP(zero<Imaginary<quad>>());
 
   CR();
-  TRDISP(roundzero(double(0.001)));
-  TRDISP(double(1e-16));
-  TRDISP(roundzero(double(1e-16)));
+  TRDISP(one<Imaginary<int>>());
+  TRDISP(one<Imaginary<double>>());
+  TRDISP(one<Imaginary<quad>>());
 
   CR();
-  TRDISP(roundzero(quad(0.001)));
-  TRDISP(quad(1e-30));
-  TRDISP(roundzero(quad(1e-30)));
-
-  CR();
-  TRDISP(zero<int>());
-  TRDISP(zero<double>());
-  TRDISP(zero<quad>());
-
-  CR();
-  TRDISP(one<int>());
-  TRDISP(one<double>());
-  TRDISP(one<quad>());
-
-
-  CR();
-  TRDISP(mathq::conj(ii));
-  TRDISP(mathq::conj(dub));
-
+  ECHO_CODE(Imaginary<int> ii{ 42 });
+  ECHO_CODE(Imaginary<double> dub{ 3.14 });
+  ECHO_CODE(Imaginary<int> nii{ -13 });
+  ECHO_CODE(Imaginary<double> ndub{ -2.73 });
 
   CR();
   TRDISP(mathq::real(ii));
@@ -146,6 +155,10 @@ int main(int argc, char* argv[]) {
   CR();
   TRDISP(mathq::imag(ii));
   TRDISP(mathq::imag(dub));
+
+  CR();
+  TRDISP(mathq::conj(ii));
+  TRDISP(mathq::conj(dub));
 
   CR();
   TRDISP(mathq::sqr(ii));
@@ -175,7 +188,6 @@ int main(int argc, char* argv[]) {
   TRDISP(mathq::approx(ii, ii + Imaginary<int>(1)));
   TRDISP(mathq::approx(dub, dub + Imaginary<double>(1e-16)));
   TRDISP(mathq::approx(dub, dub + Imaginary<double>(5e-16)));
-
 
   return 0;
 }

@@ -1,4 +1,4 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/rs2015/Mathematiques'
 make -C /home/rs2015/Mathematiques/versioning -j all
 make -C /home/rs2015/Mathematiques/include -j all
@@ -7,6 +7,7 @@ make -C /home/rs2015/Mathematiques/include -j all
 \cd /home/rs2015/Mathematiques/benchmark && make -j all 
 \cd /home/rs2015/Mathematiques/test && make -j all 
 \cd /home/rs2015/Mathematiques/sandbox && make -j all 
+cat body.src.md doc/about/part-one.src.md > body.temp.md
 python3 /home/rs2015/Mathematiques/scripts/doc_create_top.py /home/rs2015/Mathematiques/versioning/tag.mathq.out.txt body.temp.md 
 chmod a-w README.md body.temp.md
 \cd /home/rs2015/Mathematiques/doc && make all   
