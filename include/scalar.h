@@ -182,7 +182,7 @@ namespace mathq {
     //                            Size related  
     //**********************************************************************
 
-    size_t rank(void) const {
+    size_t getRank(void) const {
       return rank_value;
     }
     inline size_t depth(void) const {

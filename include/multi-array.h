@@ -20,27 +20,26 @@ namespace mathq {
 
 
 
-  template<typename T, size_t N>
-  constexpr T check_dynamic(const size_t& rank, const std::array<T, N>& A) {
-    if constexpr (N < rank) {
-      return true
-    }
-    for (size_t i = 0; i < N; ++i) {
-      if (A[i] == 0) return true;
-    }
-    return false;
-  }
-
 
 
   template <typename Element, size_t rank, size_t... ints>
   class MultiArrayHelper {
   public:
 
+    constexpr bool check_dynamic() {
+      if constexpr (sizeof...(ints) < rank) {
+        return true;
+      }
+      constexpr std::array<size_t, num_compile_time_elements> A = { (static_cast<size_t>(ints))... };
+      for (size_t i = 0; i < num_compile_time_elements; ++i) {
+        if (A[i] == 0) return true;
+      }
+      return false;
+    }
 
 
     constexpr static size_t rank_value = rank;
-    constexpr static bool is_dynamic = check_dynamic(rank, { (static_cast<size_t>(ints))... });
+    constexpr static bool is_dynamic = check_dynamic();
     constexpr static bool num_compile_time_elements = compile_time_product({ (static_cast<size_t>(ints))... });
 
     using ConcreteType = MultiArray<Element, rank, ints...>;
@@ -49,8 +48,8 @@ namespace mathq {
     // ---- same for all subtypes --------
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
     using MyArrayType = typename ArrayTypeTrait<Element, num_compile_time_elements>::Type;
+    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, typename Element::DimensionsType>::type;
     using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
-    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
     // ---- same for all subtypes --------
     using ParentType = MArrayExpRW<
@@ -59,7 +58,7 @@ namespace mathq {
       typename NumberTrait<Element>::Type, // Number
       depth_value,  // depth
       rank_value,  // rank
-      DimensionsType, // DimensionsT
+      DimensionsType // DimensionsT
     >;
   };
 
@@ -80,7 +79,7 @@ namespace mathq {
 
     // ---- same for all subtypes --------
     using ConcreteType = typename Helper::ConcreteType;
-    using MyArrayType = Helper::MyArrayType;
+    using MyArrayType = typename Helper::MyArrayType;
     using DimensionsType = typename Helper::DimensionsType;
     using ElementDimensionsType = typename Helper::ElementDimensionsType;
     using NestedDimensionsType = typename Helper::NestedDimensionsType;
@@ -96,7 +95,8 @@ namespace mathq {
 
     constexpr static size_t rank_value = Helper::rank_value;
     constexpr static size_t depth_value = Helper::depth_value;
-    constexpr static size_t template_dimensions_value = DimensionsType;
+    constexpr static DimensionsType template_dimensions_value = DimensionsType{};
+    constexpr static std::array<size_t, rank_value> static_dims_array = { (static_cast<size_t>(ints))... };
 
     constexpr static bool is_dynamic() noexcept {
       return Helper::is_dynamic;
@@ -112,19 +112,9 @@ namespace mathq {
     MyArrayType data_;
 
 
-
-
   public:
 
-
-    // make into Dimemsions types?
-    if constexpr (is_dynamic()) {
-      std::array<size_t, rank_value> dims_array = { (static_cast<size_t>(ints))... };
-    }
-    else {
-      constexpr static std::array<size_t, rank_value> dims_array = { (static_cast<size_t>(ints))... };
-    }
-
+    std::array<size_t, rank_value>& dims_array;
 
 
 
@@ -134,7 +124,7 @@ namespace mathq {
 
     // --------------------- default CONSTRUCTOR ---------------------
 
-    explicit MultiArray<Element, rank>() {
+    explicit MultiArray() : dims_array(static_dims_array) {
       std::vector<size_t> dv(rank);
       resize(new Dimensions(dv));
       constructorHelper();
@@ -142,14 +132,14 @@ namespace mathq {
 
     // --------------------- constant=0 CONSTRUCTOR ---------------------
 
-    explicit MultiArray<Element, rank>(const Dimensions& dims) {
+    explicit MultiArray(const Dimensions& dims) : dims_array(static_dims_array)  {
       resize(dims);
       constructorHelper();
     }
 
     // --------------------- constant Element CONSTRUCTOR ---------------------
 
-    explicit MultiArray<Element, rank>(const Dimensions& dims, const Element& e) {
+    explicit MultiArray(const Dimensions& dims, const Element& e)  : dims_array(static_dims_array) {
       resize(dims);
       constructorHelper();
       *this = e;
@@ -159,14 +149,14 @@ namespace mathq {
 
     template <size_t D1 = depth, EnableIf<(D1 > 0)> = 0>
 
-      explicit MultiArray<Element, rank>(const Dimensions& dims, const NumberType d) {
+      explicit MultiArray(const Dimensions& dims, const NumberType d)  : dims_array(static_dims_array) {
       resize(dims);
       constructorHelper();
       *this = d;
     }
 
     // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    MultiArray<Element, rank>(const NestedInitializerList<Element, rank>& mylist) {
+    MultiArray(const NestedInitializerList<Element, rank>& mylist)  : dims_array(static_dims_array) {
       *this = mylist;
       constructorHelper();
     }
@@ -174,7 +164,7 @@ namespace mathq {
     // ************* Expression CONSTRUCTOR---------------------
 
     template <class X>
-    MultiArray<Element, rank>(const MArrayExpR<X, Element, NumberType, depth, rank>& x) {
+    MultiArray(const MArrayExpR<X, Element, NumberType, depth, rank>& x)  : dims_array(static_dims_array) {
       *this = x;
       constructorHelper();
     }
@@ -182,7 +172,7 @@ namespace mathq {
 
     // ************* Vector Constructor---------------------
     template <int NE>
-    MultiArray<Element, rank>(const Vector<Element, NE>& v) {
+    MultiArray(const Vector<Element, NE>& v) : dims_array(static_dims_array)  {
       resize(v.deepdims());
       for (int c = 0; c < v.deepsize(); c++) {
         (*this)[c] = v[c];
@@ -211,7 +201,7 @@ namespace mathq {
     inline size_t size(void) const {
       return data_.size();
     }
-    size_t rank(void) const {
+    size_t getRank(void) const {
       return dimensions_->rank();
     }
     Dimensions dims(void) const {
@@ -789,7 +779,7 @@ namespace mathq {
           << indent << style.apply("}");
       }
       return stream;
-    }
+  }
 
     // stream << operator
 
@@ -816,7 +806,7 @@ namespace mathq {
     }
 
     // --------------------- FRIENDS ---------------------
-  };
+};
 
 }; // namespace mathq
 

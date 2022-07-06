@@ -243,7 +243,7 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    size_t rank(void)  const {
+    size_t getRank(void)  const {
       return rank;
     }
 

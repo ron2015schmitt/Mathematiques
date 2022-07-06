@@ -55,6 +55,9 @@
     "valarray": "cpp",
     "any": "cpp",
     "typeindex": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "ranges": "cpp"
   }
 }

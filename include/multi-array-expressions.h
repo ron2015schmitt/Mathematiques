@@ -25,75 +25,27 @@ namespace mathq {
   //       as described below.
   // -------------------------------------------------------------------
 
-/// TODO: get this working or remove
-
-  enum MultiArrayOrExpression : unsigned int { T_TENSOR_OBJ, T_TENSOR_EXP };
 
 
-  enum MultiArrays : unsigned int { T_SCALAR, T_VECTOR, T_MATRIX, T_TENSOR, T_EXPRESSION_R, T_EXPRESSION_RW };
-
-
-
-
-
-  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-  bool dimequiv(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank, class DT1, class DT2>
+  bool dimequiv(const MArrayExpR<A, E1, NT1, depth, rank, DT1>& x1, const MArrayExpR<B, E2, NT2, depth, rank, DT2>& x2) {
     return equiv(x1.dims(), x2.dims());
   }
 
-  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-  bool common(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
+  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank, class DT1, class DT2>
+  bool common(const MArrayExpR<A, E1, NT1, depth, rank, DT1>& x1, const MArrayExpR<B, E2, NT2, depth, rank, DT2>& x2) {
     // PRINTF3("in common");
     return common(x1.getAddresses(), x2.getAddresses());
   }
 
 
 
-  // -------------------------------------------------------------------
-  //
-  // printMultiArrayExpression
-  //
-  // Basically this is the vistor design pattern.
-  // -------------------------------------------------------------------
 
-/// TODO: get this working or remove
-
-
-  template <class X, class Element, typename Number, int depth, int rank>
-  std::ostream& printMultiArrayExpression(std::ostream& stream, const MArrayExpR<X, Element, Number, depth, rank>& te) {
-
-    if constexpr (rank==0) {
-      Scalar<Element> s;
-      s = te;
-      stream << "" +display::getTypeName(s)+" ";
-      stream << s;
-      return stream;
-    }
-    else
-      if constexpr (rank==1) {
-        Vector<Element> v;
-        v = te;
-        stream << "" +display::getTypeName(v)+" ";
-        stream << v;
-        return stream;
-      }
-      else
-        if constexpr (rank==2) {
-          Matrix<Element> m;
-          m = te;
-          stream << "" +display::getTypeName(m)+" ";
-          stream << m;
-          return stream;
-        }
-        else
-          if constexpr (rank>=3) {
-            MultiArray<Element, rank> t;
-            t = te;
-            stream << "" +display::getTypeName(t)+" ";
-            stream << t;
-            return stream;
-          }
-  }
+  // Materialize t;
+  // t = te;
+  // stream << "" +display::getTypeName(t)+" ";
+  // stream << t;
+  // return stream;
 
 
 
@@ -108,17 +60,24 @@ namespace mathq {
   public:
 
     //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = rank;
+    constexpr static size_t depth_value = depth;
+
+    //**********************************************************************
     //                            TYPES 
     //**********************************************************************
 
-    typedef Materialize<Element, Number> ConcreteType;
+    typedef Materialize<Element, rank, DimensionsT> ConcreteType;
 
     using ElementType = Element;
     using NumberType = Number;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using DimensionsType = DimensionsT;
-    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
+    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, typename Element::DimensionsType>::type;
     using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
 
     using MyArrayType = Element;
@@ -126,10 +85,6 @@ namespace mathq {
     //**********************************************************************
     //                  Compile Time Constant
     //**********************************************************************
-
-    constexpr static size_t rank_value = rank;
-    constexpr static size_t depth_value = depth;
-    constexpr static size_t template_dimensions_value = DimensionsType;
 
     // the size of an expression cannot be changed
     constexpr static bool is_dynamic() noexcept {
@@ -164,29 +119,23 @@ namespace mathq {
       return derived().size();
     }
 
-    size_t rank(void) const {
+    size_t getRank(void) const {
       return derived().rank();
     }
-    Dimensions dims(void) const {
+
+    const DimensionsType& dims(void) const {
       return derived().dims();
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    const NestedDimensionsType& deepdims(void) const {
       return derived().deepdims();
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      return derived().deepdims(parentdims);
-    }
+    // NestedDimensionsType& deepdims(std::vector<Dimensions>& parentdims) const {
+    //   return derived().deepdims(parentdims);
+    // }
     bool isExpression(void) const {
       return derived().isExpression();
     }
-    MultiArrays getEnum(void) const {
-      // return T_EXPRESSION_R;
-      return derived().getEnum();
-    }
-    size_t depth(void) const {
-      return derived().depth();
-    }
-    Dimensions element_dims(void) const {
+    ElementDimensionsType element_dims(void) const {
       return derived().element_dims();
     }
 
@@ -218,7 +167,7 @@ namespace mathq {
       return derived().classname();
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpR<Derived, Element, Number, depth, rank>& te) {
+    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpR<Derived, Element, Number, depth, rank, DimensionsT>& te) {
       const Derived& td = te.derived();
       if (td.isExpression()) {
         return printMultiArrayExpression(stream, te);
@@ -246,11 +195,37 @@ namespace mathq {
   template <class Derived, class Element, typename Number, size_t depth, size_t rank, class DimensionsT> class
     MArrayExpRW : public MArrayExpR<MArrayExpRW<Derived, Element, Number, depth, rank, DimensionsT>, Element, Number, depth, rank, DimensionsT> {
   public:
-    typedef Materialize<Element, Number, depth, rank> ConcreteType;
-    typedef Element ElementType;
-    typedef Number NumberType;
-    constexpr static int rank_value = rank;
-    constexpr static int depth_value = depth;
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = rank;
+    constexpr static size_t depth_value = depth;
+
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
+
+    typedef Materialize<Element, rank, DimensionsT> ConcreteType;
+
+    using ElementType = Element;
+    using NumberType = Number;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using DimensionsType = DimensionsT;
+    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, typename Element::DimensionsType>::type;
+    using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
+
+    using MyArrayType = Element;
+
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    // the size of an expression cannot be changed
+    constexpr static bool is_dynamic() noexcept {
+      return false;
+    }
 
     Derived& derived() {
       return static_cast<Derived&>(*this);
@@ -281,35 +256,31 @@ namespace mathq {
     }
 
 
+
     size_t size(void) const {
       return derived().size();
     }
 
-    size_t rank(void) const {
+    size_t getRank(void) const {
       return derived().rank();
     }
-    Dimensions dims(void) const {
+
+    const DimensionsType& dims(void) const {
       return derived().dims();
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    const NestedDimensionsType& deepdims(void) const {
       return derived().deepdims();
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      return derived().deepdims(parentdims);
-    }
+    // NestedDimensionsType& deepdims(std::vector<Dimensions>& parentdims) const {
+    //   return derived().deepdims(parentdims);
+    // }
     bool isExpression(void) const {
       return derived().isExpression();
     }
-    MultiArrays getEnum(void) const {
-      return derived().getEnum();
-      // return T_EXPRESSION_RW;
-    }
-    size_t depth(void) const {
-      return derived().depth();
-    }
-    Dimensions element_dims(void) const {
+    ElementDimensionsType element_dims(void) const {
       return derived().element_dims();
     }
+
     size_t element_size(void) const {
       return derived().element_size();
     }
@@ -339,7 +310,7 @@ namespace mathq {
       return derived().classname();
     }
 
-    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpRW<Derived, Element, Number, depth, rank>& te) {
+    friend std::ostream& operator<<(std::ostream& stream, const MArrayExpR<Derived, Element, Number, depth, rank, DimensionsT>& te) {
       const Derived& td = te.derived();
       if (td.isExpression()) {
         return printMultiArrayExpression(stream, te);
@@ -361,8 +332,8 @@ namespace mathq {
 
 
     // assign to vector or expression
-    template <class Y>
-    Derived& equals(const MArrayExpR<Y, Element, Number, depth, rank>& rhs) {
+    template <class Y, class DT2>
+    Derived& equals(const MArrayExpR<Y, Element, Number, depth, rank, DT2>& rhs) {
 
       const size_t N = size();
 

@@ -57,10 +57,17 @@ namespace mathq {
   // Useful when working with multiarray expressions
   // ***************************************************************************
 
-  template <typename Element, size_t rank, size_t... dims>
+  template <typename Element, size_t rank, class DimensionsType>
   class Materialize {
   public:
-    using Type = typename MultiArray<Element, rank, dims...>::Type;
+    using Type = typename MultiArray<Element, rank>::Type;
+  };
+
+
+  template <typename Element, size_t rank, size_t... ints>
+  class Materialize<Element, rank, FixedDims<ints...>> {
+  public:
+    using Type = typename MultiArray<Element, rank, ints...>::Type;
   };
 
 
