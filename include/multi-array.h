@@ -18,16 +18,33 @@ namespace mathq {
    ********************************************************************
    */
 
+
+
+  template<typename T, size_t N>
+  constexpr T check_dynamic(const size_t& rank, const std::array<T, N>& A) {
+    if constexpr (N < rank) {
+      return true
+    }
+    for (size_t i = 0; i < N; ++i) {
+      if (A[i] == 0) return true;
+    }
+    return false;
+  }
+
+
+
   template <typename Element, size_t rank, size_t... ints>
   class MultiArrayHelper {
   public:
+
+
+
     constexpr static size_t rank_value = rank;
-    constexpr static bool is_dynamic = (N1 == 0) || (N2 == 0) || (N3 == 0) || (N4 == 0);
-    constexpr static bool num_compile_time_elements = N1*N2*N3*N4;
+    constexpr static bool is_dynamic = check_dynamic(rank, { (static_cast<size_t>(ints))... });
+    constexpr static bool num_compile_time_elements = compile_time_product({ (static_cast<size_t>(ints))... });
 
-
-    using ConcreteType = MArray4<Element, rank, ints...>;
-    using DimensionsType = typename std::conditional< is_dynamic, DynamicDims<rank_value, N1, N2, N3, N4>, FixedDims<N1, N2, N3, N4> >::type;
+    using ConcreteType = MultiArray<Element, rank, ints...>;
+    using DimensionsType = typename std::conditional< is_dynamic, DynamicDims<rank_value, ints...>, FixedDims<ints...> >::type;
 
     // ---- same for all subtypes --------
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
@@ -35,7 +52,6 @@ namespace mathq {
     using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
-    //  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT> class MArrayExpRW
     // ---- same for all subtypes --------
     using ParentType = MArrayExpRW<
       ConcreteType,  // Derived
@@ -49,22 +65,43 @@ namespace mathq {
 
 
 
-  template <class Element, int rank, size_t... ints>
-  class
-    MultiArray : public MArrayExpRW<MultiArray<Element, rank>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::depth(), rank> {
+  template <typename Element, size_t rank, size_t... ints>
+  class MultiArray : public MultiArrayHelper<Element, rank, ints...>::ParentType {
+
+
   public:
 
-    typedef MultiArray<Element, rank, ints...> ConcreteType;
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
 
-    typedef Element ElementType;
-    typedef typename NumberTrait<Element>::Type NumberType;
-    typedef typename SimpleNumberTrait<NumberType>::Type OrderedNumberType;
 
-    typedef typename ArrayTypeTrait<Element, 0>::Type MyArrayType;
+    using Helper = MultiArrayHelper<Element, rank, ints...>;
 
-    constexpr static int rank_value = rank;
-    constexpr static int depth = 1 + NumberTrait<Element>::depth();
-    constexpr static int depth_value = depth;
+    // ---- same for all subtypes --------
+    using ConcreteType = typename Helper::ConcreteType;
+    using MyArrayType = Helper::MyArrayType;
+    using DimensionsType = typename Helper::DimensionsType;
+    using ElementDimensionsType = typename Helper::ElementDimensionsType;
+    using NestedDimensionsType = typename Helper::NestedDimensionsType;
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<Element>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+
+
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = Helper::rank_value;
+    constexpr static size_t depth_value = Helper::depth_value;
+    constexpr static size_t template_dimensions_value = DimensionsType;
+
+    constexpr static bool is_dynamic() noexcept {
+      return Helper::is_dynamic;
+    }
+
 
 
   private:
@@ -122,7 +159,7 @@ namespace mathq {
 
     template <size_t D1 = depth, EnableIf<(D1 > 0)> = 0>
 
-    explicit MultiArray<Element, rank>(const Dimensions& dims, const NumberType d) {
+      explicit MultiArray<Element, rank>(const Dimensions& dims, const NumberType d) {
       resize(dims);
       constructorHelper();
       *this = d;
