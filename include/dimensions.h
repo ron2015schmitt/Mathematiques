@@ -43,35 +43,6 @@ namespace mathq {
       return derived()[n];
     }
 
-    // TODO: reintroduce
-    // size_t index(const mathq::Indices& inds) const {
-    //   const size_t M = this->rank();
-    //   size_t k = 0;
-    //   for (size_t n = 0; n < M; n++) {
-    //     size_t N = (*this)[n];
-    //     size_t j = inds[n];
-    //     k = N*k + j;
-    //   }
-    //   return k;
-    // }
-
-
-    // TODO: reintroduce
-    // inline mathq::Indices& indices(const size_t k) const {
-    //   mathq::Indices& myinds = *(new mathq::Indices(rank()));
-    //   size_t prev = k;
-    //   // This loop must go in reverse order.  Do NOT change.
-    //   for (size_t n = rank()-1; n > 0; n--) {
-    //     size_t N = (*this)[n];
-    //     size_t temp = prev/N;
-    //     myinds[n] = prev - N*temp;
-    //     prev = temp;
-    //   }
-    //   if (rank()>0) {
-    //     myinds[0] = prev;
-    //   }
-    //   return myinds;
-    // }
 
 
     size_t size() const {
@@ -394,12 +365,16 @@ namespace mathq {
 
     Dims dimensions;
     NextDims nextDimensions;
+    bool hasPrev = false;
 
     NestedDims() : dimensions(*(new DimsType)), nextDimensions(*(new NextDimsType)) {
+      nextDimensions.hasPrev = true;
     }
     NestedDims(Dims dims_) : dimensions(dims_), nextDimensions(*(new NextDimsType)) {
+      nextDimensions.hasPrev = true;
     }
     NestedDims(Dims dims_, NextDims nextDims_) : dimensions(dims_), nextDimensions(nextDims_) {
+      nextDimensions.hasPrev = true;
     }
 
     Dims& dims() {
@@ -424,6 +399,26 @@ namespace mathq {
     size_t depth() const {
       return 1 + nextDimensions.depth();
     }
+
+    template<size_t rank, typename Derived>
+    const Dimensions<rank, Derived>& operator[](const size_t& n) const {
+      if (n == 0) {
+        return dimensions;
+      }
+      else {
+        return nextDimensions[n-1];
+      }
+    }
+    template<size_t rank, typename Derived>
+    Dimensions<rank, Derived>& operator[](const size_t& n) {
+      if (n == 0) {
+        return dimensions;
+      }
+      else {
+        return nextDimensions[n-1];
+      }
+    }
+
 
     inline std::string classname() const {
       using namespace display;
@@ -453,14 +448,15 @@ namespace mathq {
   // 
 
   template<typename Dims>
-  class NestedDims<Dims, void> : public Dims {
+  class NestedDims<Dims, NullDims> : public Dims {
   public:
-    typedef NestedDims<Dims, void> Type;
+    typedef NestedDims<Dims, NullDims> Type;
     typedef Dims DimsType;
-    typedef void NextDimsType;
+    typedef NullDims NextDimsType;
     constexpr static bool hasNext = false;
 
     Dims dimensions;
+    bool hasPrev = false;
 
     NestedDims() : dimensions(*(new DimsType)) {
     }

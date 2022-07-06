@@ -121,7 +121,8 @@ namespace mathq {
   template<typename Dims, typename NextDims = NullDims>
   class NestedDims;
 
-
+  template<typename Element, int L>
+  class NestedInitializerListDef;
 
 
   class VectorofPtrs;

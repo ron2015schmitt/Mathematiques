@@ -11,6 +11,38 @@ namespace mathq {
   public:
     typedef typename std::vector<size_t> Parent;
     typedef typename Parent::iterator Iterator;
+
+
+    template<size_t rank, typename Derived>
+    static size_t index(const mathq::Indices& inds, const Dimensions<rank, Derived>& dims) {
+      size_t k = 0;
+      for (size_t n = 0; n < rank; n++) {
+        size_t N = dims[n];
+        size_t j = inds[n];
+        k = N*k + j;
+      }
+      return k;
+    }
+
+
+    template<size_t rank, typename Derived>
+    static mathq::Indices& indices(const size_t k, const Dimensions<rank, Derived>& dims) {
+      mathq::Indices& myinds = *(new mathq::Indices(rank));
+      size_t prev = k;
+      // This loop must go in reverse order.  Do NOT change.
+      for (size_t n = rank-1; n > 0; n--) {
+        size_t N = dims[n];
+        size_t temp = prev/N;
+        myinds[n] = prev - N*temp;
+        prev = temp;
+      }
+      if (rank>0) {
+        myinds[0] = prev;
+      }
+      return myinds;
+    }
+
+
     Indices(const Indices& inds) {
       resize(inds.size(), 0);
       for (int k = 0; k < inds.size(); k++) {
@@ -23,6 +55,7 @@ namespace mathq {
     Indices(const size_t n) {
       resize(n, 0);
     }
+
     // arbitrary size. can alos use "push_back"
     Indices(const Parent& inds) {
       resize(inds.size(), 0);
@@ -31,7 +64,6 @@ namespace mathq {
       }
     }
 
-    // use C++11 init list for arbitrary rank
     Indices(const std::initializer_list<size_t> list) {
       const size_t N = list.size();
       resize(N, 0);
@@ -83,6 +115,8 @@ namespace mathq {
 
       return stream;
     }
+
+
 
 
   };
@@ -177,66 +211,64 @@ namespace mathq {
   //   }
   // };
 
-  // //*******************************************************
-  // //     NestedInitializerList  Type Definition
-  // //*******************************************************
+
+  //*******************************************************
+  //     NestedInitializerList  Type Definition
+  //*******************************************************
 
 
-  // template<typename Element, int L>
-  // class NestedInitializerListDef {
-  // public:
-  //   using type = std::initializer_list<
-  //     typename NestedInitializerListDef<Element, L-1>::type
-  //   >;
-  //   template <int rank>
-  //   static void compute(MultiArray<Element, rank>& t, const type& list, int& i) {
+  template<typename Element, int L>
+  class NestedInitializerListDef {
+  public:
+    using type = std::initializer_list<
+      typename NestedInitializerListDef<Element, L-1>::type
+    >;
+    template <int rank>
+    static void compute(MultiArray<Element, rank>& t, const type& list, int& i) {
 
-  //     for (auto nlist : list) {
-  //       NestedInitializerListDef<Element, L-1>::compute(t, nlist, i);
-  //     }
-  //   }
+      for (auto nlist : list) {
+        NestedInitializerListDef<Element, L-1>::compute(t, nlist, i);
+      }
+    }
 
-  //   static Dimensions& dims(const type& list) {
-  //     Dimensions& dims = *(new Dimensions());
-  //     return NestedInitializerListDef::dims(list, dims);
-  //   }
-  //   static Dimensions& dims(const type& list, Dimensions& dims) {
-  //     const int nl = list.size();
-  //     dims.push_back(nl);
-  //     if (nl==0) {
-  //       return dims;
-  //     }
-  //     else {
-  //       return NestedInitializerListDef<Element, L-1>::dims(*(list.begin()), dims);
-  //     }
-  //   }
+    // static Dimensions& dims(const type& list) {
+    //   Dimensions& dims = *(new Dimensions());
+    //   return NestedInitializerListDef::dims(list, dims);
+    // }
+    // static Dimensions& dims(const type& list, Dimensions& dims) {
+    //   const int nl = list.size();
+    //   dims.push_back(nl);
+    //   if (nl==0) {
+    //     return dims;
+    //   }
+    //   else {
+    //     return NestedInitializerListDef<Element, L-1>::dims(*(list.begin()), dims);
+    //   }
+    // }
 
 
-  // };
+  };
 
-  // template<typename Element>
-  // class NestedInitializerListDef<Element, 0> {
-  // public:
-  //   using type = Element;
+  template<typename Element>
+  class NestedInitializerListDef<Element, 0> {
+  public:
+    using type = Element;
 
-  //   template <int rank>
-  //   static void compute(MultiArray<Element, rank>& t, const type& item, int& i) {
-  //     //TLDISP(item);
-  //     t[i++] = item;
-  //   }
+    template <int rank>
+    static void compute(MultiArray<Element, rank>& t, const type& item, int& i) {
+      //TLDISP(item);
+      t[i++] = item;
+    }
 
-  //   static Dimensions& dims(const type& item, Dimensions& dims) {
-  //     return dims;
-  //   }
 
-  // };
+  };
 
 
 
-  // // Type to use NestedInitializerListDef<T,int>
+  // Type to use NestedInitializerListDef<T,int>
 
-  // template<typename T, int T_levels>
-  // using NestedInitializerList = typename NestedInitializerListDef<T, T_levels>::type;
+  template<typename T, int T_levels>
+  using NestedInitializerList = typename NestedInitializerListDef<T, T_levels>::type;
 
 
 
