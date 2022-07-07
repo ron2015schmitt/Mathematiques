@@ -107,19 +107,8 @@ namespace mathq {
   // Dimensions classes
   // ***************************************************************************
 
-  template<size_t Rank, class Derived>
+  template<size_t rank_, size_t... ints>
   class Dimensions;
-
-  template<size_t... dims>
-  class FixedDims;
-
-  template<size_t Rank>
-  class DynamicDims;
-
-  class NullDims;
-
-  template<typename Dims, typename NextDims = NullDims>
-  class NestedDims;
 
   template<typename Element, int L>
   class NestedInitializerListDef;
@@ -136,9 +125,9 @@ namespace mathq {
   // * MultiArray Expressions
   // ********************************************************************
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
   class MArrayExpR;
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
   class MArrayExpRW;
 
 
@@ -164,17 +153,17 @@ namespace mathq {
   template <typename Element>
   using Scalar = MultiArray<Element, 0>;
 
-  template <typename Element, size_t NE = 0>
-  using Vector = MultiArray<Element, NE>;
+  template <typename Element, size_t N1 = 0>
+  using Vector = MultiArray<Element, 1, N1>;
 
   template <typename Element, size_t NR = 0, size_t NC = 0>
-  using Matrix = MultiArray<Element, NR, NC>;
+  using Matrix = MultiArray<Element, 2, NR, NC>;
 
   template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0>
-  using MultiArray3 = MultiArray<Element, N1, N2, N3>;
+  using MultiArray3 = MultiArray<Element, 3, N1, N2, N3>;
 
   template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0, size_t N4 = 0>
-  using MultiArray4 = MultiArray<Element, N1, N2, N3, N4>;
+  using MultiArray4 = MultiArray<Element, 4, N1, N2, N3, N4>;
 
 
 

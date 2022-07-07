@@ -27,3 +27,5 @@ Currently using `c++20` and `g++ 10.3`
 1. template parameter packs, eg `size_t... dims`, cannot have a default value
 
 1. You cannot specify or even determine the number of paramters for C-style variadic function parameters.  You have to pass the size first or have the size as a template and hope the user doesn't provide less because it will segmentation fault.  Same problem as arrays.
+
+1. for the `Vector = MultiArray<Element, 1, N1>` specialization, Vector can be used for the constructor but it must be specified as `Vector<Element, N1>()`. The decontructor must be `~Vector()`. Best to use MultiArray instead

@@ -26,17 +26,6 @@ namespace mathq {
   class MultiArrayHelper {
   public:
 
-    constexpr bool check_dynamic() {
-      if constexpr (sizeof...(ints) < rank) {
-        return true;
-      }
-      constexpr std::array<size_t, num_compile_time_elements> A = { (static_cast<size_t>(ints))... };
-      for (size_t i = 0; i < num_compile_time_elements; ++i) {
-        if (A[i] == 0) return true;
-      }
-      return false;
-    }
-
 
     constexpr static size_t rank_value = rank;
     constexpr static bool is_dynamic = check_dynamic();
@@ -114,7 +103,7 @@ namespace mathq {
 
   public:
 
-    std::array<size_t, rank_value>& dims_array;
+    std::array<size_t, rank_value>& dims_array = static_dims_array;
 
 
 
@@ -124,7 +113,7 @@ namespace mathq {
 
     // --------------------- default CONSTRUCTOR ---------------------
 
-    explicit MultiArray() : dims_array(static_dims_array) {
+    explicit MultiArray()  {
       std::vector<size_t> dv(rank);
       resize(new Dimensions(dv));
       constructorHelper();
@@ -132,53 +121,53 @@ namespace mathq {
 
     // --------------------- constant=0 CONSTRUCTOR ---------------------
 
-    explicit MultiArray(const Dimensions& dims) : dims_array(static_dims_array)  {
-      resize(dims);
-      constructorHelper();
-    }
+    // explicit MultiArray(const Dimensions& dims)   {
+    //   resize(dims);
+    //   constructorHelper();
+    // }
 
-    // --------------------- constant Element CONSTRUCTOR ---------------------
+    // // --------------------- constant Element CONSTRUCTOR ---------------------
 
-    explicit MultiArray(const Dimensions& dims, const Element& e)  : dims_array(static_dims_array) {
-      resize(dims);
-      constructorHelper();
-      *this = e;
-    }
+    // explicit MultiArray(const Dimensions& dims, const Element& e)   {
+    //   resize(dims);
+    //   constructorHelper();
+    //   *this = e;
+    // }
 
-    // --------------------- constant Element CONSTRUCTOR ---------------------
+    // // --------------------- constant Element CONSTRUCTOR ---------------------
 
-    template <size_t D1 = depth, EnableIf<(D1 > 0)> = 0>
+    // template <size_t D1 = depth, EnableIf<(D1 > 0)> = 0>
 
-      explicit MultiArray(const Dimensions& dims, const NumberType d)  : dims_array(static_dims_array) {
-      resize(dims);
-      constructorHelper();
-      *this = d;
-    }
+    //   explicit MultiArray(const Dimensions& dims, const NumberType d)   {
+    //   resize(dims);
+    //   constructorHelper();
+    //   *this = d;
+    // }
 
-    // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    MultiArray(const NestedInitializerList<Element, rank>& mylist)  : dims_array(static_dims_array) {
-      *this = mylist;
-      constructorHelper();
-    }
+    // // ************* C++11 initializer_list CONSTRUCTOR---------------------
+    // MultiArray(const NestedInitializerList<Element, rank>& mylist)   {
+    //   *this = mylist;
+    //   constructorHelper();
+    // }
 
-    // ************* Expression CONSTRUCTOR---------------------
+    // // ************* Expression CONSTRUCTOR---------------------
 
-    template <class X>
-    MultiArray(const MArrayExpR<X, Element, NumberType, depth, rank>& x)  : dims_array(static_dims_array) {
-      *this = x;
-      constructorHelper();
-    }
+    // template <class X>
+    // MultiArray(const MArrayExpR<X, Element, NumberType, depth, rank>& x)   {
+    //   *this = x;
+    //   constructorHelper();
+    // }
 
 
-    // ************* Vector Constructor---------------------
-    template <int NE>
-    MultiArray(const Vector<Element, NE>& v) : dims_array(static_dims_array)  {
-      resize(v.deepdims());
-      for (int c = 0; c < v.deepsize(); c++) {
-        (*this)[c] = v[c];
-      }
-      constructorHelper();
-    }
+    // // ************* Vector Constructor---------------------
+    // template <int NE>
+    // MultiArray(const Vector<Element, NE>& v)   {
+    //   resize(v.deepdims());
+    //   for (int c = 0; c < v.deepsize(); c++) {
+    //     (*this)[c] = v[c];
+    //   }
+    //   constructorHelper();
+    // }
 
 
     // --------------------- constructorHelper() --------------------
@@ -190,7 +179,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MultiArray<Element, rank>() {
+    ~MultiArray() {
       // remove from directory
     }
 

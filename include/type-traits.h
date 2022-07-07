@@ -57,18 +57,13 @@ namespace mathq {
   // Useful when working with multiarray expressions
   // ***************************************************************************
 
-  template <typename Element, size_t rank, class DimensionsType>
-  class Materialize {
-  public:
-    using Type = typename MultiArray<Element, rank>::Type;
-  };
-
-
   template <typename Element, size_t rank, size_t... ints>
-  class Materialize<Element, rank, FixedDims<ints...>> {
+  class Materialize {
   public:
     using Type = typename MultiArray<Element, rank, ints...>::Type;
   };
+
+
 
 
 
@@ -148,14 +143,14 @@ namespace mathq {
     constexpr static bool value = true;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
-  class IsMultiArrayOrExpression<MArrayExpR<Derived, Element, Number, depth, rank, DimensionsT>> {
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
+  class IsMultiArrayOrExpression<MArrayExpR<Derived, Element, Number, depth, rank>> {
   public:
     constexpr static bool value = true;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
-  class IsMultiArrayOrExpression<MArrayExpRW<Derived, Element, Number, depth, rank, DimensionsT>> {
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
+  class IsMultiArrayOrExpression<MArrayExpRW<Derived, Element, Number, depth, rank>> {
   public:
     constexpr static bool value = true;
   };
@@ -191,14 +186,14 @@ namespace mathq {
     constexpr static bool value = false;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
-  class IsMultiArrayExp<MArrayExpR<Derived, Element, Number, depth, rank, DimensionsT>> {
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
+  class IsMultiArrayExp<MArrayExpR<Derived, Element, Number, depth, rank>> {
   public:
     constexpr static bool value = true;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
-  class IsMultiArrayExp<MArrayExpRW<Derived, Element, Number, depth, rank, DimensionsT>> {
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
+  class IsMultiArrayExp<MArrayExpRW<Derived, Element, Number, depth, rank>> {
   public:
     constexpr static bool value = true;
   };
@@ -214,8 +209,8 @@ namespace mathq {
     constexpr static bool value = false;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, class DimensionsT>
-  class IsMultiArrayExpRW<MArrayExpRW<Derived, Element, Number, depth, rank, DimensionsT>> {
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
+  class IsMultiArrayExpRW<MArrayExpRW<Derived, Element, Number, depth, rank>> {
   public:
     constexpr static bool value = true;
   };
@@ -382,16 +377,16 @@ namespace mathq {
 
   //  MArrayExpR
 
-  template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank>
   class
-    NumberTrait<MArrayExpR<Derived, Element, Number, depth_in, rank, DimensionsT>, NewNumber> {
+    NumberTrait<MArrayExpR<Derived, Element, Number, depth_in, rank>, NewNumber> {
   public:
-    using InputType = MArrayExpR<Derived, Element, Number, depth_in, rank, DimensionsT>;
+    using InputType = MArrayExpR<Derived, Element, Number, depth_in, rank>;
     using Type = Number;
-    using ExpReplacedNumberType = MArrayExpR<Derived, typename NumberTrait<Element, NewNumber>::ReplacedNumberType, NewNumber, depth_in, rank, DimensionsT>;
+    using ExpReplacedNumberType = MArrayExpR<Derived, typename NumberTrait<Element, NewNumber>::ReplacedNumberType, NewNumber, depth_in, rank>;
     using DerivedReplacedNumberType = typename NumberTrait<Derived, NewNumber>::ReplacedNumberType;
     using ReplacedNumberType = DerivedReplacedNumberType;  // this is correct, see comment above
-    using ReplacedElementType = MArrayExpR<Derived, NewNumber, Number, depth_in, rank, DimensionsT>;  // TODO: should first slot be DerivedReplacedNumberType? should third slot be NewNumber?  
+    using ReplacedElementType = MArrayExpR<Derived, NewNumber, Number, depth_in, rank>;  // TODO: should first slot be DerivedReplacedNumberType? should third slot be NewNumber?  
 
     constexpr static bool value = false;
     constexpr static size_t depth() {
@@ -408,16 +403,16 @@ namespace mathq {
 
   //  MArrayExpRW
 
-  template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank, class DimensionsT>
+  template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank>
   class
-    NumberTrait<MArrayExpRW<Derived, Element, Number, depth_in, rank, DimensionsT>, NewNumber> {
+    NumberTrait<MArrayExpRW<Derived, Element, Number, depth_in, rank>, NewNumber> {
   public:
-    using InputType = MArrayExpRW<Derived, Element, Number, depth_in, rank, DimensionsT>;
+    using InputType = MArrayExpRW<Derived, Element, Number, depth_in, rank>;
     using Type = Number;
-    using ExpReplacedNumberType = MArrayExpRW<Derived, typename NumberTrait<Element, NewNumber>::ReplacedNumberType, NewNumber, depth_in, rank, DimensionsT>;
+    using ExpReplacedNumberType = MArrayExpRW<Derived, typename NumberTrait<Element, NewNumber>::ReplacedNumberType, NewNumber, depth_in, rank>;
     using DerivedReplacedNumberType = typename NumberTrait<Derived, NewNumber>::ReplacedNumberType;
     using ReplacedNumberType = DerivedReplacedNumberType;  // this is correct, see comment above
-    using ReplacedElementType = MArrayExpRW<Derived, NewNumber, Number, depth_in, rank, DimensionsT>;  // TODO: should first slot be DerivedReplacedNumberType? should third slot be NewNumber?  
+    using ReplacedElementType = MArrayExpRW<Derived, NewNumber, Number, depth_in, rank>;  // TODO: should first slot be DerivedReplacedNumberType? should third slot be NewNumber?  
 
     constexpr static bool value = false;
     constexpr static size_t depth() {
@@ -510,8 +505,8 @@ namespace mathq {
     }
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank, class DimensionsT>
-  class SimpleNumberTrait<MArrayExpR<Derived, Element, Number, depth_, rank, DimensionsT>> {
+  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank>
+  class SimpleNumberTrait<MArrayExpR<Derived, Element, Number, depth_, rank>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
     constexpr static size_t depth() {
@@ -519,8 +514,8 @@ namespace mathq {
     }
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank, class DimensionsT>
-  class SimpleNumberTrait<MArrayExpRW<Derived, Element, Number, depth_, rank, DimensionsT>> {
+  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank>
+  class SimpleNumberTrait<MArrayExpRW<Derived, Element, Number, depth_, rank>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
     constexpr static size_t depth() {
@@ -914,6 +909,21 @@ namespace mathq {
     }
     return product;
   }
+
+
+  template<size_t rank, size_t... ints>
+  constexpr bool check_dynamic() {
+    constexpr size_t N = sizeof...(ints);
+    if constexpr (N < rank) {
+      return true;
+    }
+    constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
+    for (size_t i = 0; i < N; ++i) {
+      if (A[i] == 0) return true;
+    }
+    return false;
+  }
+
 
 
 

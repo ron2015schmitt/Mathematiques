@@ -14,7 +14,7 @@ namespace mathq {
 
 
     template<size_t rank, typename Derived>
-    static size_t index(const mathq::Indices& inds, const Dimensions<rank, Derived>& dims) {
+    static size_t index(const mathq::Indices& inds, const Dimensions<rank>& dims) {
       size_t k = 0;
       for (size_t n = 0; n < rank; n++) {
         size_t N = dims[n];
@@ -26,7 +26,7 @@ namespace mathq {
 
 
     template<size_t rank, typename Derived>
-    static mathq::Indices& indices(const size_t k, const Dimensions<rank, Derived>& dims) {
+    static mathq::Indices& indices(const size_t k, const Dimensions<rank>& dims) {
       mathq::Indices& myinds = *(new mathq::Indices(rank));
       size_t prev = k;
       // This loop must go in reverse order.  Do NOT change.

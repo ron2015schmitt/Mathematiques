@@ -22,6 +22,7 @@
 namespace mathq {
 
 
+
   template <typename Element, size_t N1 = 0>
   class VectorHelper {
   public:
@@ -30,13 +31,13 @@ namespace mathq {
     constexpr static bool num_compile_time_elements = N1;
 
     using ConcreteType = Vector<Element, N1>;
-    using DimensionsType = typename std::conditional< is_dynamic, DynamicDims<rank_value, N1>, FixedDims<N1> >::type;
+    // using DimensionsType = typename std::conditional< is_dynamic, DynamicDims<rank_value, N1>, FixedDims<N1> >::type;
 
     // ---- same for all subtypes --------
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
-    using MyArrayType = typename ArrayTypeTrait<Element,num_compile_time_elements>::Type;
-    using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
-    using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
+    using MyArrayType = typename ArrayTypeTrait<Element, num_compile_time_elements>::Type;
+    // using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
+    // using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
     // ---- same for all subtypes --------
     using ParentType = MArrayExpRW<
@@ -44,49 +45,43 @@ namespace mathq {
       Element,  // Element
       typename NumberTrait<Element>::Type, // Number
       depth_value,  // depth
-      rank_value,  // rank
-      DimensionsType, // DimensionsT
+      rank_value  // rank
     >;
   };
 
 
 
+  //
+  // Vector
+  //
+
+
   template <typename Element, size_t N1>
-  class MultiArray<Element, 1, N1> : public VectorHelper<Element,N1>::ParentType {
-
-
+  class MultiArray<Element, 1, N1>
+    // : public VectorHelper<Element, N1>::ParentType {
+  {
   public:
 
     //**********************************************************************
     //                            TYPES 
     //**********************************************************************
 
-    using Helper = VectorHelper<Element, N1>; 
-
-    // ---- same for all subtypes --------
-    using ConcreteType = typename Helper::ConcreteType;
-    using MyArrayType = Helper::MyArrayType;
-    using DimensionsType = typename Helper::DimensionsType;
-    using ElementDimensionsType = typename Helper::ElementDimensionsType;
-    using NestedDimensionsType = typename Helper::NestedDimensionsType;
+    using ConcreteType = Vector<Element, N1>;
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
 
+    using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
 
     //**********************************************************************
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t rank_value = Helper::rank_value;
-    constexpr static size_t depth_value = Helper::depth_value;
-    constexpr static size_t template_dimensions_value = DimensionsType;
-
-    constexpr static bool is_dynamic() noexcept {
-      return Helper::is_dynamic;
-    }
-
+    constexpr static size_t rank_value = 1;
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
+    constexpr static bool dynamic = (N1 == 0);
+    constexpr static std::array<size_t, rank_value> static_dims_array = { N1 };
 
 
     //**********************************************************************
@@ -94,11 +89,12 @@ namespace mathq {
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
+    //
+    // size is taken from data_.size
     //**********************************************************************
 
-private:
+  // private:
     MyArrayType data_;
-
 
   public:
 
@@ -108,7 +104,7 @@ private:
 
 
     // -------------------  DEFAULT  CONSTRUCTOR: Vector()  --------------------
-    explicit Vector<Element, N1>() {
+    explicit MultiArray() {
       constructorHelper();
     }
 
@@ -117,108 +113,111 @@ private:
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    explicit Vector<Element, N1>(const size_t N) {
+    explicit MultiArray(const size_t N) {
       data_.resize(N);
       constructorHelper();
     }
 
 
-    // --------------------- Vector(N,value)  ---------------------
+    // // --------------------- Vector(N,value)  ---------------------
 
-    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
+    // template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
-    explicit Vector<Element, N1>(const size_t N, const Element val) {
-      data_.resize(N);
-      *this = val;
-      constructorHelper();
-    }
-
-    // --------------------- Vector(std::initializer_list<Dimensions>)  ---------------------
-
-    template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-    explicit Vector<Element, N1>(const NestedDims<DimensionsType, NextDims>& deepdims) {
-      // TRDISP(deepdims);
-      this->resize(std::vector<Dimensions>(deepdims));
-      constructorHelper();
-    }
-    // --------------------- Vector(std::vector<Dimensions>)  ---------------------
-
-    template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-    explicit Vector<Element, N1>(const std::vector<Dimensions> deepdims) {
-      // TRDISP(deepdims);
-      this->resize(deepdims);
-      constructorHelper();
-    }
+    // explicit Vector(const size_t N, const Element val) {
+    //   data_.resize(N);
+    //   *this = val;
+    //   constructorHelper();
+    // }
 
 
-    // --------------------- Vector(Element value)  ---------------------
+    // // --------------------- Vector(std::initializer_list<Dimensions>)  ---------------------
 
-    template<size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-
-    explicit Vector<Element, N1>(const Element val) {
-      *this = val;
-      constructorHelper();
-    }
-
-    // --------------------- Vector(NumberType value)  ---------------------
-
-    template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth>1)> = 0>
-
-    explicit Vector<Element, N1>(const NumberType val) {
-      *this = val;
-      constructorHelper();
-    }
+    // template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
+    //   explicit Vector(const NestedDims<Dimensions<rank_value>, NextDims>& deepdims) {
+    //   // TRDISP(deepdims);
+    //   this->resize(std::vector<Dimensions>(deepdims));
+    //   constructorHelper();
+    // }
 
 
-    // --------------------- array[]  CONSTRUCTOR ---------------------
+    // // --------------------- Vector(std::vector<Dimensions>)  ---------------------
 
-    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
+    // template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
+    // explicit Vector(const std::vector<Dimensions> deepdims) {
+    //   // TRDISP(deepdims);
+    //   this->resize(deepdims);
+    //   constructorHelper();
+    // }
 
-    Vector<Element, N1>(const size_t N, const Element(vals)[]) {
-      data_.resize(N);
-      *this = vals;
-      constructorHelper();
-    }
 
-    // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    Vector<Element, N1>(const std::initializer_list<Element>& mylist) {
+    // // --------------------- Vector(Element value)  ---------------------
+
+    // template<size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
+
+    // explicit Vector(const Element val) {
+    //   *this = val;
+    //   constructorHelper();
+    // }
+
+    // // --------------------- Vector(NumberType value)  ---------------------
+
+    // template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth>1)> = 0>
+
+    // explicit Vector(const NumberType val) {
+    //   *this = val;
+    //   constructorHelper();
+    // }
+
+
+    // // --------------------- array[]  CONSTRUCTOR ---------------------
+
+    // template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
+
+    // Vector(const size_t N, const Element(vals)[]) {
+    //   data_.resize(N);
+    //   *this = vals;
+    //   constructorHelper();
+    // }
+
+    // ************* initializer_list CONSTRUCTOR---------------------
+    MultiArray(const std::initializer_list<Element>& mylist) {
       *this = mylist;
       constructorHelper();
     }
 
 
-    // --------------------- Vector(Vector) --------------------
+    // // --------------------- Vector(Vector) --------------------
 
-    template <int NE2>
-    Vector<Element, N1>(const Vector<Element, NE2>& v2) {
-      *this = v2;
-      constructorHelper();
-    }
-
-
-    // --------------------- EXPRESSION CONSTRUCTOR --------------------
-
-    template <class X>
-    Vector<Element, N1>(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
-      if constexpr (N1==0) {
-        this->resize(x.size());
-      }
-
-      *this = x;
-      constructorHelper();
-    }
+    // template <int NE2>
+    // Vector(const Vector<Element, NE2>& v2) {
+    //   *this = v2;
+    //   constructorHelper();
+    // }
 
 
+    // // --------------------- EXPRESSION CONSTRUCTOR --------------------
+
+    // template <class X>
+    // Vector(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
+    //   if constexpr (N1==0) {
+    //     this->resize(x.size());
+    //   }
+
+    //   *this = x;
+    //   constructorHelper();
+    // }
 
 
-    // --------------------- Vector(valarray)  ---------------------
-    Vector<Element, N1>(const std::valarray<Element>& valar) {
-      if constexpr (N1==0) {
-        this->resize(valar.size());
-      }
-      *this = valar;
-      constructorHelper();
-    }
+
+
+    // // --------------------- Vector(valarray)  ---------------------
+    // Vector(const std::valarray<Element>& valar) {
+    //   if constexpr (N1==0) {
+    //     this->resize(valar.size());
+    //   }
+    //   *this = valar;
+    //   constructorHelper();
+    // }
 
 
 
@@ -227,12 +226,11 @@ private:
     void constructorHelper() {
     }
 
-
     //**********************************************************************
     //                             DESTRUCTOR 
     //**********************************************************************
 
-    ~Vector<Element, N1>() {
+    ~Vector() {
     }
 
 
@@ -243,9 +241,6 @@ private:
     bool isExpression(void) const {
       return false;
     }
-    MultiArrays getEnum() const {
-      return T_VECTOR;
-    }
     VectorofPtrs getAddresses(void) const {
       VectorofPtrs myaddr((void*)this);
       return myaddr;
@@ -255,7 +250,7 @@ private:
     //                            Size related  
     //**********************************************************************
 
-    size_t getRank(void) const {
+    size_t rank(void) const {
       return rank_value;
     }
     inline size_t depth(void) const {
@@ -265,17 +260,17 @@ private:
       return data_.size();
     }
 
-    DimensionsType& dims(void) const {
-      if constexpr (is_dynamic()) {
-        return DimensionsType(size());
-      }
-      else {
-        return template_dims();
-      }
-    }
-    const DimensionsType& template_dims(void) const {
-      return template_dimensions_value;
-    }
+    // Dimensions<rank_value>& dims(void) const {
+    //   if constexpr (dynamic) {
+    //     return Dimensions<rank_value>(size());
+    //   }
+    //   else {
+    //     return template_dims();
+    //   }
+    // }
+    // const Dimensions<rank_value>& template_dims(void) const {
+    //   return static_dims_array;
+    // }
 
 
     // --------------------- .resize(N) ---------------------
@@ -294,92 +289,92 @@ private:
 
     // TODO: should just pass an index and make deepdims const
 
-    Vector<Element, N1>& resize(const std::vector<Dimensions>& deepdims_in) {
-      std::vector<Dimensions> deepdims(deepdims_in);
-      Dimensions newdims = deepdims[0];
-      const size_t Nnew = newdims[0];
-      if constexpr (N1==0) {
-        resize(Nnew);
-      }
-      if constexpr (depth>1) {
-        deepdims.erase(deepdims.begin());
-        for (size_t i = 0; i < size(); i++) {
-          std::vector<Dimensions> ddims(deepdims);
-          data_[i].resize(ddims);
-        }
-      }
+    // Vector<Element, N1>& resize(const std::vector<Dimensions>& deepdims_in) {
+    //   std::vector<Dimensions<rank_value>> deepdims(deepdims_in);
+    //   Dimensions<rank_value> newdims = deepdims[0];
+    //   const size_t Nnew = newdims[0];
+    //   if constexpr (N1==0) {
+    //     resize(Nnew);
+    //   }
+    //   if constexpr (depth>1) {
+    //     deepdims.erase(deepdims.begin());
+    //     for (size_t i = 0; i < size(); i++) {
+    //       std::vector<Dimensions<rank_value>> ddims(deepdims);
+    //       data_[i].resize(ddims);
+    //     }
+    //   }
 
-      return *this;
-    }
-
-
+    //   return *this;
+    // }
 
 
-    Dimensions element_dims(void) const {
-      Dimensions dimensions();
-      if constexpr (depth>1) {
-        if (size()>0) {
-          return data_[0].dims();
-        }
-      }
-      return *(new Dimensions());
-    }
 
-    // the size of each element
-    inline size_t element_size(void) const {
-      if constexpr (depth<2) {
-        return 1;
-      }
-      else {
-        const size_t NElements = this->size();
-        if (NElements==0) {
-          return 0;
-        }
-        else {
-          return data_[0].size();
-        }
-      }
-    }
 
-    // the deep size of an element: the total number of numbers in an element
-    inline size_t eldeepsize(void) const {
-      if constexpr (depth<2) {
-        return 1;
-      }
-      else {
-        const size_t NElements = this->size();
-        if (NElements==0) {
-          return 0;
-        }
-        else {
-          return data_[0].deepsize();
-        }
-      }
-    }
+    // Dimensions<rank_value> element_dims(void) const {
+    //   Dimensions<rank_value> dimensions();
+    //   if constexpr (depth>1) {
+    //     if (size()>0) {
+    //       return data_[0].dims();
+    //     }
+    //   }
+    //   return *(new Dimensions<rank_value>());
+    // }
 
-    // the total number of numbers in this data structure
-    size_t deepsize(void) const {
-      if constexpr (depth<2) {
-        return this->size();
-      }
-      else {
-        return (this->size())*(this->eldeepsize());
-      }
-    }
+    // // the size of each element
+    // inline size_t element_size(void) const {
+    //   if constexpr (depth<2) {
+    //     return 1;
+    //   }
+    //   else {
+    //     const size_t NElements = this->size();
+    //     if (NElements==0) {
+    //       return 0;
+    //     }
+    //     else {
+    //       return data_[0].size();
+    //     }
+    //   }
+    // }
 
-    std::vector<Dimensions>& deepdims(void) const {
-      std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return deepdims(ddims);
-    }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      parentdims.push_back(dims());
-      if constexpr (depth>1) {
-        if (size()>0) {
-          data_[0].deepdims(parentdims);
-        }
-      }
-      return parentdims;
-    }
+    // // the deep size of an element: the total number of numbers in an element
+    // inline size_t eldeepsize(void) const {
+    //   if constexpr (depth<2) {
+    //     return 1;
+    //   }
+    //   else {
+    //     const size_t NElements = this->size();
+    //     if (NElements==0) {
+    //       return 0;
+    //     }
+    //     else {
+    //       return data_[0].deepsize();
+    //     }
+    //   }
+    // }
+
+    // // the total number of numbers in this data structure
+    // size_t deepsize(void) const {
+    //   if constexpr (depth<2) {
+    //     return this->size();
+    //   }
+    //   else {
+    //     return (this->size())*(this->eldeepsize());
+    //   }
+    // }
+
+    // std::vector<Dimensions<rank_value>>& deepdims(void) const {
+    //   std::vector<Dimensions<rank_value>>& ddims = *(new std::vector<Dimensions<rank_value>>);
+    //   return deepdims(ddims);
+    // }
+    // std::vector<Dimensions<rank_value>>& deepdims(std::vector<Dimensions<rank_value>>& parentdims) const {
+    //   parentdims.push_back(dims());
+    //   if constexpr (depth>1) {
+    //     if (size()>0) {
+    //       data_[0].deepdims(parentdims);
+    //     }
+    //   }
+    //   return parentdims;
+    // }
 
 
 
@@ -430,31 +425,31 @@ private:
     // -------------------- auto x.dat(DeepIndices) --------------------
     // -------------------------------------------------------------
 
-    // "read/write": x.dat(DeepIndices)
-    NumberType& dat(const DeepIndices& dinds) {
-      const size_t mydepth = dinds.size();
-      size_t n = dinds[mydepth -depth][0];
+    // // "read/write": x.dat(DeepIndices)
+    // NumberType& dat(const DeepIndices& dinds) {
+    //   const size_t mydepth = dinds.size();
+    //   size_t n = dinds[mydepth -depth][0];
 
-      if constexpr (depth>1) {
-        return (*this)(n).dat(dinds);
-      }
-      else {
-        return (*this)(n);
-      }
-    }
+    //   if constexpr (depth>1) {
+    //     return (*this)(n).dat(dinds);
+    //   }
+    //   else {
+    //     return (*this)(n);
+    //   }
+    // }
 
-    // "read": x.dat(DeerIndices)
-    const NumberType dat(const DeepIndices& dinds)  const {
-      const size_t mydepth = dinds.size();
-      size_t n = dinds[mydepth -depth][0];
+    // // "read": x.dat(DeerIndices)
+    // const NumberType dat(const DeepIndices& dinds)  const {
+    //   const size_t mydepth = dinds.size();
+    //   size_t n = dinds[mydepth -depth][0];
 
-      if constexpr (depth>1) {
-        return (*this)(n).dat(dinds);
-      }
-      else {
-        return (*this)(n);
-      }
-    }
+    //   if constexpr (depth>1) {
+    //     return (*this)(n).dat(dinds);
+    //   }
+    //   else {
+    //     return (*this)(n);
+    //   }
+    // }
 
 
     // -------------------- auto x.dat(Indices) --------------------
@@ -512,14 +507,6 @@ private:
       return data_[k];
     }
 
-
-    //**********************************************************************
-    //***************MultiArray cast *********************
-    //**********************************************************************
-
-    operator MultiArray<Element, rank>() const {
-      MultiArray<Element, 1> ma(*this);
-    }
 
     //**********************************************************************
     //***************MultiArray-style Element Access: v(n) *********************
@@ -625,64 +612,64 @@ private:
       return *this;
     }
 
-    template <class T = Element>
-    typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N1>& >::type operator=(const NumberType& d) {
-      for (size_t i = 0; i < deepsize(); i++) {
-        (*this).dat(i) = d;
-      }
-      return *this;
-    }
+    // template <class T = Element>
+    // typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N1>& >::type operator=(const NumberType& d) {
+    //   for (size_t i = 0; i < deepsize(); i++) {
+    //     (*this).dat(i) = d;
+    //   }
+    //   return *this;
+    // }
 
 
 
 
-    // ------------------------ Vector = Vector<Element,NE2,NumberType,depth> ----------------
+    // // ------------------------ Vector = Vector<Element,NE2,NumberType,depth> ----------------
 
-    template <int NE2>
-    Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
-      if constexpr (depth<=1) {
-        if constexpr (N1==0) {
-          if (this->size() != v.size()) {
-            resize(v.size());
-          }
-        }
-        for (size_t i = 0; i < size(); i++) {
-          (*this)[i] = v[i];
-        }
-      }
-      else {
-        resize(v.deepdims());
-        for (size_t i = 0; i < deepsize(); i++) {
-          this->dat(i) = v.dat(i);
-        }
-      }
-      return *this;
-    }
+    // template <int NE2>
+    // Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
+    //   if constexpr (depth<=1) {
+    //     if constexpr (N1==0) {
+    //       if (this->size() != v.size()) {
+    //         resize(v.size());
+    //       }
+    //     }
+    //     for (size_t i = 0; i < size(); i++) {
+    //       (*this)[i] = v[i];
+    //     }
+    //   }
+    //   else {
+    //     resize(v.deepdims());
+    //     for (size_t i = 0; i < deepsize(); i++) {
+    //       this->dat(i) = v.dat(i);
+    //     }
+    //   }
+    //   return *this;
+    // }
 
 
-    // ------------------------ Vector = MArrayExpR ----------------
+    // // ------------------------ Vector = MArrayExpR ----------------
 
-    template <class X>
-    Vector<Element, N1>& operator=(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
+    // template <class X>
+    // Vector<Element, N1>& operator=(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
 
-      if constexpr (depth<=1) {
-        if constexpr (N1==0) {
-          if (this->size() != x.size()) {
-            resize(x.size());
-          }
-        }
-        for (size_t i = 0; i < size(); i++) {
-          (*this)[i] = x[i];
-        }
-      }
-      else {
-        resize(x.deepdims());
-        for (size_t i = 0; i < deepsize(); i++) {
-          this->dat(i) = x.dat(i);
-        }
-      }
-      return *this;
-    }
+    //   if constexpr (depth<=1) {
+    //     if constexpr (N1==0) {
+    //       if (this->size() != x.size()) {
+    //         resize(x.size());
+    //       }
+    //     }
+    //     for (size_t i = 0; i < size(); i++) {
+    //       (*this)[i] = x[i];
+    //     }
+    //   }
+    //   else {
+    //     resize(x.deepdims());
+    //     for (size_t i = 0; i < deepsize(); i++) {
+    //       this->dat(i) = x.dat(i);
+    //     }
+    //   }
+    //   return *this;
+    // }
 
 
 
@@ -1575,7 +1562,7 @@ private:
 
 
 
-  };
+};
 
 
 #endif 
