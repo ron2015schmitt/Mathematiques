@@ -8,44 +8,71 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // Dimensions classes
+  // Dimensions 
+  //
+  // Vector of fixed  = rank_
+  // if all non-zero ints... are provided, the values will be fixed as well
   // ***************************************************************************
-
 
 
   template<size_t rank_, size_t... ints>
   class Dimensions : public Vector<size_t, rank_> {
   public:
-    typedef Dimensions<rank_> Type;
+    using Type = Dimensions<rank_, ints...>;
+    using Parent = Vector<size_t, rank_>;
+    using ElementType = size_t;
 
-    constexpr static size_t rank() noexcept {
+    constexpr static size_t dims_rank() noexcept {
       return rank_;
     }
     constexpr static bool is_dynamic() noexcept {
       return check_dynamic<rank_, ints...>();
     }
-    constexpr static std::array<size_t, rank_> static_dims_array = { (static_cast<size_t>(ints))... };
+    constexpr static size_t Nints = sizeof...(ints);
+    constexpr static std::array<size_t, Nints> static_dims_array = { (static_cast<size_t>(ints))... };
 
 
 
     explicit Dimensions() {
       for (size_t n = 0; n < rank_; n++) {
-        (*this)[n] = static_dims_array[n];
+        if (n < Nints) {
+          Parent::operator[](n) = static_dims_array[n];
+        } else {
+          Parent::operator[](n) = 0;
+        }
       }
     }
 
-    template<typename...T, size_t DUMMY = 0, mathq::EnableIf<(DUMMY == 0) && (sizeof...(T) == rank_) && (std::conjunction<std::is_integral<T>...>::value)> = 0>
+    template<typename...T, size_t DUMMY = is_dynamic(), mathq::EnableIf<(DUMMY == true) && (sizeof...(T) == rank_) && (std::conjunction<std::is_integral<T>...>::value)> = 0>
     Dimensions(T... dynamic_dims) {
-      std::array<size_t, rank_> data = { (static_cast<size_t>(dynamic_dims))... };
+      std::array<size_t, rank_> temp = { (static_cast<size_t>(dynamic_dims))... };
       for (size_t n = 0; n < rank_; n++) {
-        (*this)[n] = static_dims_array[n];
+        Parent::operator[](n) = temp[n];
       }
     }
     // void foo(Args&& ... args) {
     // auto&& first = std::get<0>(std::forward_as_tuple(std::forward<Args>(args)...));
 
     Dimensions(const Dimensions<rank_>& dims2) {
-      *this = dims2;
+      for (size_t n = 0; n < rank_; n++) {
+        Parent::operator[](n) = dims2[n];
+      }
+    }
+
+    // "read/write"
+    template <bool value = is_dynamic()>
+    typename std::enable_if<value, size_t&>::type operator[](const size_t n) {
+      return Parent::operator[](n);
+    }
+
+    // "read"
+    const size_t& operator[](const size_t n) const {
+      return Parent::operator[](n);
+    }
+
+    template <bool value = is_dynamic()>
+    typename std::enable_if<value, size_t&>::type resize(const size_t n) {
+      return Parent::resize(n);
     }
 
 
@@ -88,7 +115,7 @@ namespace mathq {
       std::string s = "Dimensions";
       s += StyledString::get(ANGLE1).get();
       s += num2string(rank_);
-      for (size_t n = 0; n < rank_; n++) {
+      for (size_t n = 0; n < Nints; n++) {
         s += StyledString::get(COMMA).get();
         s += num2string(static_dims_array[n]);
       }

@@ -116,49 +116,49 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Vector<double> v2{3.1, 22.5, 100});
+  ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
   TRDISP(v2.size());
   TRDISP(v2.dynamic);
   TRDISP(v2.data_);
   TRDISP(v2.static_dims_array);
+  TRDISP(v2.resize(4));
 
   CR();
-  ECHO_CODE(Vector<double,3> v3{3.1, 22.5, 100});
+  ECHO_CODE(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
   TRDISP(v3.size());
   TRDISP(v3.dynamic);
   TRDISP(v3.data_);
   TRDISP(v3.static_dims_array);
 
 
-  // CR();
-  // ECHO_CODE(Dimensions<3, 1, 4, 2> dims);
-  // TRDISP(dims.is_dynamic());
-  // TRDISP(dims.rank());
-  // // TRDISP(dims[1]);
-  // TRDISP(dims.size());
-  // TRDISP(dims);
-
-  // dims.data[1] = 42;  // should cause compile error
+  CR();
+  ECHO_CODE(Dimensions<3, 1, 4, 2> dims);
+  TRDISP(dims.is_dynamic());
+  TRDISP(dims.dims_rank());
+  TRDISP(dims.static_dims_array);
+  TRDISP(dims.size());
+  TRDISP(dims);
+  TRDISP(dims[1]);
   // dims[1] = 42;  // should cause compile error
+  TRDISP(dims);
 
 
 
-  // CR();
-  // ECHO_CODE(Dimensions<1> dims2);
-  // TRDISP(dims2.is_dynamic());
-  // TRDISP(dims2.rank());
-  // TRDISP(dims2.size());
-  // TRDISP(dims2);
+  CR();
+  ECHO_CODE(Dimensions<3> dims2);
+  TRDISP(dims2.is_dynamic());
+  TRDISP(dims2.dims_rank());
+  TRDISP(dims2.static_dims_array);
+  TRDISP(dims2.size());
+  TRDISP(dims2[0]);
+  TRDISP(dims2);
 
-  // ECHO_CODE(dims2.data[0] = 42);
-  // TRDISP(dims2);
-  // ECHO_CODE(dims2[0] = 101);
-  // TRDISP(dims2);
-  // ECHO_CODE(std::array<size_t, 1> a = std::array<size_t, 1>{56});
-  // TRDISP(a);
-  // ECHO_CODE(dims2.data = a);
-  // TRDISP(dims2.size());
-  // TRDISP(dims2);
+  ECHO_CODE(dims2[0] = 42);
+  TRDISP(dims2);
+  dims2 = {3,2,1};
+  TRDISP(dims2);
+  // TRDISP(dims2.resize(4));
+  TRDISP(dims2);
 
 
   // CR();

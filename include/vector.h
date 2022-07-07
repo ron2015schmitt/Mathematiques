@@ -66,6 +66,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
+    using Type = MultiArray<Element, 1, N1>;
     using ConcreteType = Vector<Element, N1>;
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
@@ -275,14 +276,11 @@ namespace mathq {
 
     // --------------------- .resize(N) ---------------------
 
-    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
-
-    Vector<Element, N1>& resize(const size_t N) {
-      if (N==this->size())
+    template<bool temp = dynamic, EnableIf<temp> = 0>
+    Type& resize(const size_t N) {
+      if (N==this->size()) {
         return *this;
-      // reallocate store
-      //      delete  data_ ;
-      //      data_ = new std::valarray<NumberType>(N);
+      }
       data_.resize(N);
       return *this;
     }
@@ -491,20 +489,20 @@ namespace mathq {
 
     // "read/write"
     Element& operator[](const size_t n) {
-      int k = n;
-      if (k < 0) {
-        k += size();
-      }
-      return data_[k];
+      // int k = n;
+      // if (k < 0) {
+      //   k += size();
+      // }
+      return data_[n];
     }
 
     // read
     const Element& operator[](const size_t n)  const {
-      int k = n;
-      if (k < 0) {
-        k += size();
-      }
-      return data_[k];
+      // int k = n;
+      // if (k < 0) {
+      //   k += size();
+      // }
+      return data_[n];
     }
 
 
