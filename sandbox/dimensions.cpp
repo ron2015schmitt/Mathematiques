@@ -140,6 +140,7 @@ int main(int argc, char* argv[]) {
   TRDISP(dims);
   TRDISP(dims[1]);
   // dims[1] = 42;  // should cause compile error
+  // dims.resize(4);  // should cause compile error
   TRDISP(dims);
 
 
@@ -155,7 +156,7 @@ int main(int argc, char* argv[]) {
 
   ECHO_CODE(dims2[0] = 42);
   TRDISP(dims2);
-  dims2 = {3,2,1};
+  dims2 = { 3,2,1 };
   TRDISP(dims2);
   // TRDISP(dims2.resize(4));
   TRDISP(dims2);

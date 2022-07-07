@@ -70,7 +70,8 @@ namespace mathq {
       return Parent::operator[](n);
     }
 
-    template <bool value = is_dynamic()>
+  // do NOT allow resize
+    template <bool value = false>
     typename std::enable_if<value, size_t&>::type resize(const size_t n) {
       return Parent::resize(n);
     }
