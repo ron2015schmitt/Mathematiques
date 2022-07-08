@@ -82,7 +82,7 @@ namespace mathq {
   //          Trait classes
   //*******************************************************
 
-  template <typename T, typename NewNumber = double, typename dummy = void>
+  template <typename T, typename NewNumber = T, typename dummy = void>
   class NumberTrait;
 
 
@@ -107,8 +107,10 @@ namespace mathq {
   // Dimensions classes
   // ***************************************************************************
 
-  template<size_t rank_, size_t... ints>
+  // template<size_t rank_, size_t... ints>
+  // template <typename DUMMY = void>  
   class Dimensions;
+
 
   template<typename Element, int L>
   class NestedInitializerListDef;

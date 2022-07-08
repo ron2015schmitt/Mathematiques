@@ -375,6 +375,31 @@ namespace mathq {
     }
   };
 
+
+  // //  MultiArray<Element>
+
+  // template <typename NewNumber>
+  // class
+  //   NumberTrait<Dimensions, NewNumber> {
+  // public:
+  //   using InputType = Dimensions;
+  //   using Type = typename NumberTrait<size_t>::Type;
+  //   using ReplacedNumberType = Vector<typename NumberTrait<size_t, NewNumber>::ReplacedNumberType>;
+  //   using ReplacedElementType = Vector<NewNumber>; // this is correct, see comment above
+
+  //   constexpr static bool value = false;
+  //   constexpr static size_t depth() {
+  //     return 1 + NumberTrait<size_t, NewNumber>::depth();
+  //   }
+  //   inline static size_t size(const InputType& x) {
+  //     return x.size();
+  //   }
+  //   inline static size_t deepsize(const InputType& x) {
+  //     return x.deepsize();
+  //   }
+  // };
+
+
   //  MArrayExpR
 
   template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank>

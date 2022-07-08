@@ -81,7 +81,7 @@ namespace mathq {
 
     constexpr static size_t rank_value = 1;
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool dynamic = (N1 == 0);
+    constexpr static bool is_dynamic_value = (N1 == 0);
     constexpr static std::array<size_t, rank_value> static_dims_array = { N1 };
 
 
@@ -231,7 +231,7 @@ namespace mathq {
     //                             DESTRUCTOR 
     //**********************************************************************
 
-    ~Vector() {
+    ~MultiArray() {
     }
 
 
@@ -262,7 +262,7 @@ namespace mathq {
     }
 
     // Dimensions<rank_value>& dims(void) const {
-    //   if constexpr (dynamic) {
+    //   if constexpr (is_dynamic_value) {
     //     return Dimensions<rank_value>(size());
     //   }
     //   else {
@@ -276,7 +276,7 @@ namespace mathq {
 
     // --------------------- .resize(N) ---------------------
 
-    template<bool temp = dynamic, EnableIf<temp> = 0>
+    template<bool temp = is_dynamic_value, EnableIf<temp> = 0>
     Type& resize(const size_t N) {
       if (N==this->size()) {
         return *this;
@@ -453,35 +453,35 @@ namespace mathq {
     // -------------------- auto x.dat(Indices) --------------------
     // -------------------------------------------------------------
 
-    // "read/write": x.dat(Indices)
-    NumberType& dat(const Indices& inds) {
-      Indices inds_next(inds);
-      // MOUT << "Vector: "<<std::endl;
-      // error if (inds.size() != sum deepdims[i].rank
-      size_t n = inds_next[0];
-      // MOUT << "  ";
-      inds_next.erase(inds_next.begin());
-      if constexpr (depth>1) {
-        return (*this)(n).dat(inds_next);
-      }
-      else {
-        return (*this)(n);
-      }
-    }
+    // // "read/write": x.dat(Indices)
+    // NumberType& dat(const Indices& inds) {
+    //   Indices inds_next(inds);
+    //   // MOUT << "Vector: "<<std::endl;
+    //   // error if (inds.size() != sum deepdims[i].rank
+    //   size_t n = inds_next[0];
+    //   // MOUT << "  ";
+    //   inds_next.erase(inds_next.begin());
+    //   if constexpr (depth>1) {
+    //     return (*this)(n).dat(inds_next);
+    //   }
+    //   else {
+    //     return (*this)(n);
+    //   }
+    // }
 
-    // "read": x.dat(Indices)
-    const NumberType dat(const Indices& inds)  const {
-      Indices inds_next(inds);
-      // error if (inds.size() != sum deepdims[i].rank
-      size_t n = inds_next[0];
-      inds_next.erase(inds_next.begin());
-      if constexpr (depth>1) {
-        return (*this)(n).dat(inds_next);
-      }
-      else {
-        return (*this)(n);
-      }
-    }
+    // // "read": x.dat(Indices)
+    // const NumberType dat(const Indices& inds)  const {
+    //   Indices inds_next(inds);
+    //   // error if (inds.size() != sum deepdims[i].rank
+    //   size_t n = inds_next[0];
+    //   inds_next.erase(inds_next.begin());
+    //   if constexpr (depth>1) {
+    //     return (*this)(n).dat(inds_next);
+    //   }
+    //   else {
+    //     return (*this)(n);
+    //   }
+    // }
 
     //**********************************************************************
     //************* Array-style Element Access: x[n] ***********************
@@ -526,13 +526,13 @@ namespace mathq {
 
     // Accessing a slice of values
 
-    TERW_Subset<Element> operator[](const slc& slice) {
-      return (*this)[slice.toIndexVector(size())];
-    }
-    const TERW_Subset<Element>  operator[](const slc& slice) const {
-      //      display::log3("Vector","operator[]","(const slc& slice)\n");
-      return (*this)[slice.toIndexVector(size())];
-    }
+    // TERW_Subset<Element> operator[](const slc& slice) {
+    //   return (*this)[slice.toIndexVector(size())];
+    // }
+    // const TERW_Subset<Element>  operator[](const slc& slice) const {
+    //   //      display::log3("Vector","operator[]","(const slc& slice)\n");
+    //   return (*this)[slice.toIndexVector(size())];
+    // }
 
 
     // Accessing a SET of values using a vector of ints
