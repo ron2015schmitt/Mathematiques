@@ -59,11 +59,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& nested_dims(void) const {
-      return x_.nested_dims();
+    std::vector<Dimensions>& recursive_dims(void) const {
+      return x_.recursive_dims();
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
-      return x_.nested_dims(parentdims);
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+      return x_.recursive_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;
@@ -82,20 +82,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (depth <= 1) {
         return 1;
       }
       else {
-        return x_.eldeepsize();
+        return x_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (depth <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->eldeepsize());
+        return (this->size()) * (this->el_recursive_size());
       }
     }
 
@@ -167,11 +167,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& nested_dims(void) const {
-      return x_.nested_dims();
+    std::vector<Dimensions>& recursive_dims(void) const {
+      return x_.recursive_dims();
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
-      return x_.nested_dims(parentdims);
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+      return x_.recursive_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;
@@ -190,20 +190,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (depth <= 1) {
         return 1;
       }
       else {
-        return x_.eldeepsize();
+        return x_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (depth <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->eldeepsize());
+        return (this->size()) * (this->el_recursive_size());
       }
     }
 
@@ -350,7 +350,7 @@ namespace mathq {
     }
     // helper for: T<Element> + Element
     const NT3 dat_el1(const size_t i) const {
-      size_t j = i % b_.deepsize();
+      size_t j = i % b_.recursive_size();
       return OP::apply(a_.dat(i), b_.dat(j));
     }
 
@@ -361,7 +361,7 @@ namespace mathq {
     }
     // helper for: Element + T<Element>
     const NT3 dat_el2(const size_t i) const {
-      size_t j = i % a_.deepsize();
+      size_t j = i % a_.recursive_size();
       return OP::apply(a_.dat(j), b_.dat(i));
     }
 
@@ -488,20 +488,20 @@ namespace mathq {
         return b_.dims();
       }
     }
-    std::vector<Dimensions>& nested_dims(void) const {
+    std::vector<Dimensions>& recursive_dims(void) const {
       if constexpr (D1 >= D2) {
-        return a_.nested_dims();
+        return a_.recursive_dims();
       }
       else {
-        return b_.nested_dims();
+        return b_.recursive_dims();
       }
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
       if constexpr (D1 >= D2) {
-        return a_.nested_dims(parentdims);
+        return a_.recursive_dims(parentdims);
       }
       else {
-        return b_.nested_dims(parentdims);
+        return b_.recursive_dims(parentdims);
       }
     }
     bool isExpression(void) const {
@@ -523,20 +523,20 @@ namespace mathq {
         return b_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (D1 >= D2) {
-        return a_.eldeepsize();
+        return a_.el_recursive_size();
       }
       else {
-        return b_.eldeepsize();
+        return b_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (D1 >= D2) {
-        return a_.deepsize();
+        return a_.recursive_size();
       }
       else {
-        return b_.deepsize();
+        return b_.recursive_size();
       }
     }
 
@@ -682,7 +682,7 @@ namespace mathq {
     }
     // helper for: T<Element> + Element
     const NT3 dat_el1(const size_t i) const {
-      size_t j = i % b_.deepsize();
+      size_t j = i % b_.recursive_size();
       return f_(a_.dat(i), b_.dat(j));
     }
 
@@ -693,7 +693,7 @@ namespace mathq {
     }
     // helper for: Element + T<Element>
     const NT3 dat_el2(const size_t i) const {
-      size_t j = i % a_.deepsize();
+      size_t j = i % a_.recursive_size();
       return f_(a_.dat(j), b_.dat(i));
     }
 
@@ -820,20 +820,20 @@ namespace mathq {
         return b_.dims();
       }
     }
-    std::vector<Dimensions>& nested_dims(void) const {
+    std::vector<Dimensions>& recursive_dims(void) const {
       if constexpr (D1 >= D2) {
-        return a_.nested_dims();
+        return a_.recursive_dims();
       }
       else {
-        return b_.nested_dims();
+        return b_.recursive_dims();
       }
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
       if constexpr (D1 >= D2) {
-        return a_.nested_dims(parentdims);
+        return a_.recursive_dims(parentdims);
       }
       else {
-        return b_.nested_dims(parentdims);
+        return b_.recursive_dims(parentdims);
       }
     }
     bool isExpression(void) const {
@@ -855,20 +855,20 @@ namespace mathq {
         return b_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (D1 >= D2) {
-        return a_.eldeepsize();
+        return a_.el_recursive_size();
       }
       else {
-        return b_.eldeepsize();
+        return b_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (D1 >= D2) {
-        return a_.deepsize();
+        return a_.recursive_size();
       }
       else {
-        return b_.deepsize();
+        return b_.recursive_size();
       }
     }
 
@@ -1018,26 +1018,26 @@ namespace mathq {
         return c_.dims();
       }
     }
-    std::vector<Dimensions>& nested_dims(void) const {
+    std::vector<Dimensions>& recursive_dims(void) const {
       if constexpr (D1 > 0) {
-        return a_.nested_dims();
+        return a_.recursive_dims();
       }
       else if constexpr (D2 > 0) {
-        return b_.nested_dims();
+        return b_.recursive_dims();
       }
       else {
-        return c_.nested_dims();
+        return c_.recursive_dims();
       }
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
       if constexpr (D1 > 0) {
-        return a_.nested_dims(parentdims);
+        return a_.recursive_dims(parentdims);
       }
       else if constexpr (D2 > 0) {
-        return b_.nested_dims(parentdims);
+        return b_.recursive_dims(parentdims);
       }
       else {
-        return c_.nested_dims(parentdims);
+        return c_.recursive_dims(parentdims);
       }
     }
     bool isExpression(void) const {
@@ -1065,26 +1065,26 @@ namespace mathq {
         return c_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (D1 > 0) {
-        return a_.eldeepsize();
+        return a_.el_recursive_size();
       }
       else if constexpr (D2 > 0) {
-        return b_.eldeepsize();
+        return b_.el_recursive_size();
       }
       else {
-        return c_.eldeepsize();
+        return c_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (D1 > 0) {
-        return a_.deepsize();
+        return a_.recursive_size();
       }
       else if constexpr (D2 > 0) {
-        return b_.deepsize();
+        return b_.recursive_size();
       }
       else {
-        return c_.deepsize();
+        return c_.recursive_size();
       }
     }
 
@@ -1192,11 +1192,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& nested_dims(void) const {
-      return x_.nested_dims();
+    std::vector<Dimensions>& recursive_dims(void) const {
+      return x_.recursive_dims();
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
-      return x_.nested_dims(parentdims);
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+      return x_.recursive_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;
@@ -1215,20 +1215,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (depth <= 1) {
         return 1;
       }
       else {
-        return x_.eldeepsize();
+        return x_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (depth <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->eldeepsize());
+        return (this->size()) * (this->el_recursive_size());
       }
     }
 
@@ -1322,11 +1322,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& nested_dims(void) const {
-      return x_.nested_dims();
+    std::vector<Dimensions>& recursive_dims(void) const {
+      return x_.recursive_dims();
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
-      return x_.nested_dims(parentdims);
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+      return x_.recursive_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;
@@ -1345,20 +1345,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
-        return x_.eldeepsize();
+        return x_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (depth_value <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->eldeepsize());
+        return (this->size()) * (this->el_recursive_size());
       }
     }
 
@@ -1448,20 +1448,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (depth < 2) {
         return 1;
       }
       else {
-        return x_.eldeepsize();
+        return x_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (depth < 2) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->eldeepsize());
+        return (this->size()) * (this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -1507,11 +1507,11 @@ namespace mathq {
     }
 
     const Number dat(const size_t i) const {
-      if (i < x_.deepsize()) {
+      if (i < x_.recursive_size()) {
         return x_.dat(i);
       }
       else {
-        return y_.dat(i - x_.deepsize());
+        return y_.dat(i - x_.recursive_size());
       }
     }
     const Element operator[](const size_t i) const {
@@ -1539,13 +1539,13 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& nested_dims(void) const {
+    std::vector<Dimensions>& recursive_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return nested_dims(ddims);
+      return recursive_dims(ddims);
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
       const int N = parentdims.size();
-      std::vector<Dimensions>& ddims = x_.nested_dims(parentdims);
+      std::vector<Dimensions>& ddims = x_.recursive_dims(parentdims);
       ddims[N] = this->dims();
       return ddims;
     }
@@ -1566,20 +1566,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (depth <= 1) {
         return 1;
       }
       else {
-        return x_.eldeepsize();
+        return x_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (depth <= 1) {
         return this->size();
       }
       else {
-        return x_.deepsize() + y_.deepsize();
+        return x_.recursive_size() + y_.recursive_size();
       }
     }
 
@@ -1646,11 +1646,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& nested_dims(void) const {
-      return a_.nested_dims();
+    std::vector<Dimensions>& recursive_dims(void) const {
+      return a_.recursive_dims();
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
-      return a_.nested_dims(parentdims);
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+      return a_.recursive_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;
@@ -1666,20 +1666,20 @@ namespace mathq {
         return a_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
-        return a_.eldeepsize();
+        return a_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (depth_value <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->eldeepsize());
+        return (this->size()) * (this->el_recursive_size());
       }
     }
     std::string classname() const {

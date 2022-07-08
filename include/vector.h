@@ -27,18 +27,6 @@ namespace mathq {
   {
   public:
 
-    //**********************************************************************
-    //                            TYPES 
-    //**********************************************************************
-
-    using Type = MultiArray<Element, 1, N1>;
-    using ConcreteType = Vector<Element, N1>;
-    using ElementType = Element;
-    using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
-
-
-    using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
 
     //**********************************************************************
     //                  Compile Time Constant
@@ -48,6 +36,21 @@ namespace mathq {
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = (N1 == 0);
     constexpr static std::array<size_t, rank_value> static_dims_array = { N1 };
+
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
+
+    using Type = MultiArray<Element, rank_value, N1>;
+    using ConcreteType = Vector<Element, N1>;
+    using ElementType = Element;
+    using DimensionsType = Dimensions<rank_value>;
+    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
+    using NumberType = typename NumberTrait<Element>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+
+    using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
 
 
     //**********************************************************************
@@ -87,9 +90,9 @@ namespace mathq {
     // --------------------- NestedDims  ---------------------
 
     // template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-    //   explicit MultiArray(const NestedDims<depth_value>& nested_dims) {
-    //   // TRDISP(nested_dims);
-    //   this->resize(nested_dims);
+    //   explicit MultiArray(const NestedDims<depth_value>& recursive_dims) {
+    //   // TRDISP(recursive_dims);
+    //   this->resize(recursive_dims);
     //   constructorHelper();
     // }
 
@@ -233,19 +236,19 @@ namespace mathq {
       return *this;
     }
 
-    // TODO: should just pass an index and make nested_dims const
+    // TODO: should just pass an index and make recursive_dims const
 
     // Vector<Element, N1>& resize(const std::vector<Dimensions>& deepdims_in) {
-    //   std::vector<Dimensions<rank_value>> nested_dims(deepdims_in);
-    //   Dimensions<rank_value> newdims = nested_dims[0];
+    //   std::vector<Dimensions<rank_value>> recursive_dims(deepdims_in);
+    //   Dimensions<rank_value> newdims = recursive_dims[0];
     //   const size_t Nnew = newdims[0];
     //   if constexpr (is_dynamic_value) {
     //     resize(Nnew);
     //   }
     //   if constexpr (depth>1) {
-    //     nested_dims.erase(nested_dims.begin());
+    //     recursive_dims.erase(recursive_dims.begin());
     //     for (size_t i = 0; i < size(); i++) {
-    //       std::vector<Dimensions<rank_value>> ddims(nested_dims);
+    //       std::vector<Dimensions<rank_value>> ddims(recursive_dims);
     //       data_[i].resize(ddims);
     //     }
     //   }
@@ -256,75 +259,77 @@ namespace mathq {
 
 
 
-    // Dimensions<rank_value> element_dims(void) const {
-    //   Dimensions<rank_value> dimensions();
-    //   if constexpr (depth>1) {
-    //     if (size()>0) {
-    //       return data_[0].dims();
-    //     }
-    //   }
-    //   return *(new Dimensions<rank_value>());
-    // }
-
-    // // the size of each element
-    // inline size_t element_size(void) const {
-    //   if constexpr (depth<2) {
-    //     return 1;
-    //   }
-    //   else {
-    //     const size_t NElements = this->size();
-    //     if (NElements==0) {
-    //       return 0;
-    //     }
-    //     else {
-    //       return data_[0].size();
-    //     }
-    //   }
-    // }
-
-    // // the deep size of an element: the total number of numbers in an element
-    // inline size_t eldeepsize(void) const {
-    //   if constexpr (depth<2) {
-    //     return 1;
-    //   }
-    //   else {
-    //     const size_t NElements = this->size();
-    //     if (NElements==0) {
-    //       return 0;
-    //     }
-    //     else {
-    //       return data_[0].deepsize();
-    //     }
-    //   }
-    // }
-
-    // // the total number of numbers in this data structure
-    size_t deepsize(void) const {
-      return this->size();
-      //   if constexpr (depth<2) {
-      //     return this->size();
-      //   }
-      //   else {
-      //     return (this->size())*(this->eldeepsize());
-      //   }
+    ElementDimensionsType& element_dims(void) const {
+      if constexpr (depth_value>1) {
+        if (this->size()>0) {
+          return data_[0].dims();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.dims();
+        }
+      }
+      return *(new ElementDimensionsType{});
     }
 
-    NestedDimensions<depth_value>& nested_dims(void) const {
-      NestedDimensions<depth_value>& my_ndims = *(new NestedDimensions<depth_value>);
-      return nested_dims(my_ndims, 0);
+    // the size of each element
+    inline size_t element_size(void) const {
+      if constexpr (depth_value<2) {
+        return 1;
+      }
+      else {
+        if (size() > 0) {
+          return data_[0].size();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.size();
+        }
+      }
+    }
+
+    // // the deep size of an element: the total number of numbers in an element
+    inline size_t el_recursive_size(void) const {
+      if constexpr (depth_value<2) {
+        return 1;
+      }
+      else {
+        if (size() > 0) {
+          return data_[0].recursive_size();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.recursive_size();
+        }
+      }
+    }
+
+    // // the total number of numbers in this data structure
+    size_t recursive_size(void) const {
+      if constexpr (depth_value<2) {
+        return this->size();
+      }
+      else {
+        return (this->size())*(this->el_recursive_size());
+      }
+    }
+
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      RecursiveDimensions<depth_value>& my_ndims = *(new RecursiveDimensions<depth_value>);
+      return recursive_dims(my_ndims, 0);
     }
 
     template <size_t full_depth>
-    NestedDimensions<full_depth>& nested_dims(NestedDimensions<full_depth>& parent_ndims, const size_t depth_index) const {
+    RecursiveDimensions<full_depth>& recursive_dims(RecursiveDimensions<full_depth>& parent_ndims, const size_t depth_index) const {
       size_t dindex = depth_index;
       parent_ndims[dindex++] = dims();
       if constexpr (depth_value>1) {
         if (size()>0) {
-          data_[0].nested_dims(parent_ndims, dindex);
-        } else {
-          for (size_t d = dindex; d < full_depth; d++) {
-            parent_ndims[d] = Dimensions<0>();
-          }
+          data_[0].recursive_dims(parent_ndims, dindex);
+        }
+        else {
+          Element& x = *(new Element);
+          x.recursive_dims(parent_ndims, dindex);
         }
       }
       return parent_ndims;
@@ -339,12 +344,12 @@ namespace mathq {
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    // NOTE: indexes over [0] to [deepsize()] and note return type
+    // NOTE: indexes over [0] to [recursive_size()] and note return type
 
     // "read/write"
     NumberType& dat(const size_t n) {
       using namespace::display;
-      if constexpr (depth < 2) {
+      if constexpr (depth_value < 2) {
         int k = n;
         if (k < 0) {
           k += size();
@@ -352,7 +357,7 @@ namespace mathq {
         return data_[k];
       }
       else {
-        const int Ndeep = this->eldeepsize();
+        const int Ndeep = this->el_recursive_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
         return data_[j].dat(k);
@@ -362,7 +367,7 @@ namespace mathq {
     // read
     const NumberType& dat(const size_t n)  const {
       using namespace::display;
-      if constexpr (depth < 2) {
+      if constexpr (depth_value < 2) {
         int k = n;
         if (k < 0) {
           k += size();
@@ -370,7 +375,7 @@ namespace mathq {
         return data_[k];
       }
       else {
-        const int Ndeep = this->eldeepsize();
+        const int Ndeep = this->el_recursive_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
         return data_[j].dat(k);
@@ -383,9 +388,9 @@ namespace mathq {
     // // "read/write": x.dat(DeepIndices)
     // NumberType& dat(const DeepIndices& dinds) {
     //   const size_t mydepth = dinds.size();
-    //   size_t n = dinds[mydepth -depth][0];
+    //   size_t n = dinds[mydepth -depth_value][0];
 
-    //   if constexpr (depth>1) {
+    //   if constexpr (depth_value>1) {
     //     return (*this)(n).dat(dinds);
     //   }
     //   else {
@@ -396,9 +401,9 @@ namespace mathq {
     // // "read": x.dat(DeerIndices)
     // const NumberType dat(const DeepIndices& dinds)  const {
     //   const size_t mydepth = dinds.size();
-    //   size_t n = dinds[mydepth -depth][0];
+    //   size_t n = dinds[mydepth -depth_value][0];
 
-    //   if constexpr (depth>1) {
+    //   if constexpr (depth_value>1) {
     //     return (*this)(n).dat(dinds);
     //   }
     //   else {
@@ -414,11 +419,11 @@ namespace mathq {
     // NumberType& dat(const Indices& inds) {
     //   Indices inds_next(inds);
     //   // MOUT << "Vector: "<<std::endl;
-    //   // error if (inds.size() != sum nested_dims[i].rank
+    //   // error if (inds.size() != sum recursive_dims[i].rank
     //   size_t n = inds_next[0];
     //   // MOUT << "  ";
     //   inds_next.erase(inds_next.begin());
-    //   if constexpr (depth>1) {
+    //   if constexpr (depth_value>1) {
     //     return (*this)(n).dat(inds_next);
     //   }
     //   else {
@@ -429,10 +434,10 @@ namespace mathq {
     // // "read": x.dat(Indices)
     // const NumberType dat(const Indices& inds)  const {
     //   Indices inds_next(inds);
-    //   // error if (inds.size() != sum nested_dims[i].rank
+    //   // error if (inds.size() != sum recursive_dims[i].rank
     //   size_t n = inds_next[0];
     //   inds_next.erase(inds_next.begin());
-    //   if constexpr (depth>1) {
+    //   if constexpr (depth_value>1) {
     //     return (*this)(n).dat(inds_next);
     //   }
     //   else {
@@ -569,7 +574,7 @@ namespace mathq {
 
     // template <class T = Element>
     // typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N1>& >::type operator=(const NumberType& d) {
-    //   for (size_t i = 0; i < deepsize(); i++) {
+    //   for (size_t i = 0; i < recursive_size(); i++) {
     //     (*this).dat(i) = d;
     //   }
     //   return *this;
@@ -578,11 +583,11 @@ namespace mathq {
 
 
 
-    // // ------------------------ Vector = Vector<Element,NE2,NumberType,depth> ----------------
+    // // ------------------------ Vector = Vector<Element,NE2,NumberType,depth_value> ----------------
 
     // template <int NE2>
     // Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
-    //   if constexpr (depth<=1) {
+    //   if constexpr (depth_value<=1) {
     //     if constexpr (is_dynamic_value) {
     //       if (this->size() != v.size()) {
     //         resize(v.size());
@@ -593,8 +598,8 @@ namespace mathq {
     //     }
     //   }
     //   else {
-    //     resize(v.nested_dims());
-    //     for (size_t i = 0; i < deepsize(); i++) {
+    //     resize(v.recursive_dims());
+    //     for (size_t i = 0; i < recursive_size(); i++) {
     //       this->dat(i) = v.dat(i);
     //     }
     //   }
@@ -605,9 +610,9 @@ namespace mathq {
     // // ------------------------ Vector = MArrayExpR ----------------
 
     // template <class X>
-    // Vector<Element, N1>& operator=(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
+    // Vector<Element, N1>& operator=(const MArrayExpR<X, Element, NumberType, depth_value, rank_value>& x) {
 
-    //   if constexpr (depth<=1) {
+    //   if constexpr (depth_value<=1) {
     //     if constexpr (is_dynamic_value) {
     //       if (this->size() != x.size()) {
     //         resize(x.size());
@@ -618,8 +623,8 @@ namespace mathq {
     //     }
     //   }
     //   else {
-    //     resize(x.nested_dims());
-    //     for (size_t i = 0; i < deepsize(); i++) {
+    //     resize(x.recursive_dims());
+    //     for (size_t i = 0; i < recursive_size(); i++) {
     //       this->dat(i) = x.dat(i);
     //     }
     //   }
@@ -771,457 +776,457 @@ namespace mathq {
     //***************** in-place modification********************************
     //**********************************************************************
 
-    // .sort()
-    //         sorts in place and returns the permuted indices
+    // // .sort()
+    // //         sorts in place and returns the permuted indices
 
-    Vector<size_t>& sort() {
+    // Vector<size_t>& sort() {
 
-      const size_t N = size();
-      Vector<size_t>& ivec = *(new Vector<size_t>(N));
+    //   const size_t N = size();
+    //   Vector<size_t>& ivec = *(new Vector<size_t>(N));
 
-      if (N==0)
-        return ivec;
+    //   if (N==0)
+    //     return ivec;
 
-      std::vector<Pair<Element> > temp(N);
+    //   std::vector<Pair<Element> > temp(N);
 
-      for (size_t i = 0; i < N; i++) {
-        temp[i].index = i;
-        temp[i].data = data_[i];
-      }
+    //   for (size_t i = 0; i < N; i++) {
+    //     temp[i].index = i;
+    //     temp[i].data = data_[i];
+    //   }
 
 
-      std::sort(temp.begin(), temp.end());
+    //   std::sort(temp.begin(), temp.end());
 
 
-      for (size_t i = 0; i < N; i++) {
-        ivec(i) = temp[i].index;
-        data_[i] = temp[i].data;
-      }
+    //   for (size_t i = 0; i < N; i++) {
+    //     ivec(i) = temp[i].index;
+    //     data_[i] = temp[i].data;
+    //   }
 
-      return ivec;
+    //   return ivec;
 
-    }
+    // }
 
 
-    // .quniq()
-    //         removes adjacent duplicates
-    //  template<typename T=NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&> 
-    template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
+    // // .quniq()
+    // //         removes adjacent duplicates
+    // //  template<typename T=NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&> 
+    // template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
 
-    quniq() {
+    // quniq() {
 
-      const size_t N = size();
+    //   const size_t N = size();
 
-      if (N==0)
-        return *(new Vector<size_t>(0));
+    //   if (N==0)
+    //     return *(new Vector<size_t>(0));
 
-      std::queue<Pair<Element> > unique;
+    //   std::queue<Pair<Element> > unique;
 
-      Pair<Element> prevpair(0, data_[0]);
-      unique.push(prevpair);
-      for (size_t i = 1; i < N; i++) {
-        Pair<Element> mypair(i, data_[i]);
-        if (mypair.data != prevpair.data) {
-          unique.push(mypair);
-          prevpair = mypair;
-        }
-      }
+    //   Pair<Element> prevpair(0, data_[0]);
+    //   unique.push(prevpair);
+    //   for (size_t i = 1; i < N; i++) {
+    //     Pair<Element> mypair(i, data_[i]);
+    //     if (mypair.data != prevpair.data) {
+    //       unique.push(mypair);
+    //       prevpair = mypair;
+    //     }
+    //   }
 
-      const size_t Nnew = unique.size();
-      Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
-      resize(Nnew);
-      for (size_t i = 0; i < Nnew; i++) {
-        Pair<Element> mypair = unique.front();
-        unique.pop();
-        indexvec(i) = mypair.index;
-        data_[i] = mypair.data;
-      }
+    //   const size_t Nnew = unique.size();
+    //   Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
+    //   resize(Nnew);
+    //   for (size_t i = 0; i < Nnew; i++) {
+    //     Pair<Element> mypair = unique.front();
+    //     unique.pop();
+    //     indexvec(i) = mypair.index;
+    //     data_[i] = mypair.data;
+    //   }
 
-      return indexvec;
-    }
+    //   return indexvec;
+    // }
 
 
-    // .uniq()
-    //         removes all duplicates
-    template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
+    // // .uniq()
+    // //         removes all duplicates
+    // template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
 
-    uniq() {
+    // uniq() {
 
-      const size_t N = size();
+    //   const size_t N = size();
 
-      if (N==0)
-        return *(new Vector<size_t>(0));
+    //   if (N==0)
+    //     return *(new Vector<size_t>(0));
 
-      std::map<size_t, NumberType> mymap;
-      for (size_t j = 0; j < N; j++) {
-        mymap[j] = data_[j];
-      }
-
-      for (size_t j = 0; j < N; j++) {
-        if (mymap.find(j) == mymap.end()) continue;
-        Pair<Element> pair1(j, data_[j]);
-        for (size_t k = j+1; k < N; k++) {
-          if (mymap.find(k) == mymap.end()) continue;
-          Pair<Element> pair2(k, data_[k]);
-          if (pair1.data == pair2.data) {
-            mymap.erase(k);
-          }
-        }
-      }
-
-      const size_t Nnew = mymap.size();
-      Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
-      resize(Nnew);
-      size_t k = 0;
-      for (typename std::map<size_t, NumberType>::iterator it = mymap.begin(); it != mymap.end(); ++it) {
-        indexvec(k) = it->first;
-        data_[k++] = it->second;
-      }
-
-      return indexvec;
-    }
-
-
-    Vector<Element, N1>& reverse() {
-
-      const size_t N = size();
-      if (N==0)
-        return *this;
-
-      for (size_t i = 0; i < N/2; i++) {
-        Element temp = data_[i];
-        data_[i] = data_[N-i-1];
-        data_[N-i-1] = temp;
-      }
-
-      return *this;
-
-    }
-
-
-    // .cumsum() -- cumulative sum
-
-    Vector<Element, N1>& cumsum() {
-      const size_t N = size();
-      Element sum = 0;
-      for (size_t i = 0; i < N; i++) {
-        sum += data_[i];
-        data_[i] = sum;
-      }
-      return *this;
-    }
-
-    // .cumprod()  --  cumulative product
-
-    Vector<Element, N1>& cumprod() {
-      const size_t N = size();
-      Element prod = 1;
-      for (size_t i = 0; i < N; i++) {
-        prod *= data_[i];
-        data_[i] = prod;
-      }
-      return *this;
-    }
-
-
-    // .cumtrapz() -- cumulative trapezoidal summation
-
-    Vector<Element, N1>& cumtrapz() {
-      const size_t N = size();
-      if (N==0) return *this;
-      Element sum = data_[0]/2;
-      data_[0] = 0;
-      for (size_t i = 1; i < N; i++) {
-        sum += data_[i];
-        data_[i] = sum - data_[i]/2;
-      }
-      return *this;
-    }
-
-    // integrate_a2x(order)
-    // order  name
-    //     0  rectangular
-    //     1  trapazoidal
-    Vector<Element, N1>& integrate_a2x(const Element a, const Element b, const int order = 1) {
-
-      const size_t N = size();
-
-      if (order == 0) {
-        this->cumsum();
-        const Element dx = (b-a)/NumberType(N);
-        for (size_t i = 0; i < N; i++) {
-          data_[i] *= dx;
-        }
-      }
-      else if (order == 1) {
-        this->cumtrapz();
-        const Element dx = (b-a)/NumberType(N-1);
-        for (size_t i = 0; i < N; i++) {
-          data_[i] *= dx;
-        }
-      }
-      else {
-        //TODO: issue error
-      }
-      return *this;
-    }
-
-
-    // .cumsumrev() -- cumulative sum -- from last to first
-
-    Vector<Element, N1>& cumsum_rev() {
-      const size_t N = size();
-
-      Element sum = 0;
-      for (size_t i = 0; i < N; i++) {
-        sum += data_[N-1-i];
-        data_[N-1-i] = sum;
-      }
-      return *this;
-    }
-
-    // .cumprodrev()  --  cumulative product  -- from last to first
-
-    Vector<Element, N1>& cumprod_rev() {
-      const size_t N = size();
-
-      Element prod = 1;
-      for (size_t i = 0; i < N; i++) {
-        prod *= data_[N-1-i];
-        data_[N-1-i] = prod;
-      }
-      return *this;
-    }
-
-
-    // .cumtrapz() -- cumulative trapezoidal summation -- from last to first
-
-    Vector<Element, N1>& cumtrapz_rev() {
-      const size_t N = size();
-      if (N==0) return *this;
-
-      Element sum = data_[N-1]/2;
-      data_[N-1] = 0;
-      for (size_t i = 1; i < N; i++) {
-        sum += data_[N-1-i];
-        data_[N-1-i] = sum - data_[N-1-i]/2;
-      }
-      return *this;
-    }
-
-
-
-    // integrate_x2b
-    // order  name
-    //     0  rectangular
-    //     1  trapazoidal
-    Vector<Element, N1>& integrate_x2b(const Element a, const Element b, const int order = 1) {
-      const size_t N = size();
-
-      if (order == 0) {
-        this->cumsum_rev();
-        const Element dx = (b-a)/(N);
-        for (size_t i = 0; i < N; i++) {
-          data_[N-1-i] *= dx;
-        }
-      }
-      else if (order == 1) {
-        this->cumtrapz_rev();
-        const Element dx = (b-a)/(N-1);
-        for (size_t i = 0; i < N; i++) {
-          data_[N-1-i] *= dx;
-        }
-      }
-      else {
-        //TODO: issue error
-      }
-      return *this;
-    }
-
-
-
-    // diff   (v[n] = v[n] - v[n-1])
-    Vector<Element, N1>& diff(const bool periodic = false) {
-      const size_t N = size();
-      if (N<=1) return *this;
-
-      Element temp;
-      if (periodic) {
-        temp = data_[0] - data_[N-1];
-      }
-      else {
-        temp = data_[1] - data_[0];
-      }
-
-      for (size_t i = 0; i < N-1; i++) {
-        data_[N-1-i] = data_[N-1-i] - data_[N-2-i];
-      }
-
-      data_[0] = temp;
-      return *this;
-    }
-
-    // diff_rev   (v[n] = v[n+1] - v[n])
-    Vector<Element, N1>& diff_rev(const bool periodic = false) {
-      const size_t N = size();
-      if (N<=1) return *this;
-
-      Element temp;
-      if (periodic) {
-        temp = data_[0] - data_[N-1];
-      }
-      else {
-        temp = data_[N-1] - data_[N-2];
-      }
-
-      for (size_t i = 0; i < N-1; i++) {
-        data_[i] = data_[i+1] - data_[i];
-      }
-
-      data_[N-1] = temp;
-      return *this;
-    }
-
-
-    // deriv -  derivative
-    // any change in the default parameters must be likewise made in vfunctions.h: deriv(...)
-    // n: number of derivatives to take
-    // Dpts: window size = number of points used in derivative formula
-    // periodic: if true, perform derivative with start and end connected: 
-    //           dat[-1] == dat[n-1], dat[n] == dat[0] etc
-
-    Vector<Element, N1>& deriv(const Element a, const Element b, const int n = 1, int Dpts = 7, const bool periodic = false) {
-      //MDISP(a,b,n,Dpts,periodic);
-      const size_t N = size();
-      if (N<=1) return *this;
-
-      const Element dx = (b-a)/NumberType(N-1);
-
-      if (Dpts > N) {
-        //TODO: error or warning
-        Dpts = N;
-      }
-
-      if (Dpts == 2) {
-        this->diff(periodic);
-        for (size_t i = 0; i < N; i++) {
-          data_[i] /= dx;
-        }
-
-      }
-      else if (Dpts == 3) {
-        Element prev;
-        Element curr;
-        Element last;
-        if (periodic) {
-          // first point
-          prev = data_[1] - data_[N-1];
-          // last
-          last = data_[0] - data_[N-2];
-        }
-        else {
-          // first point
-          prev = -3*data_[0] + 4*data_[1] - data_[2];
-          // last
-          last = 3*data_[N-1] - 4*data_[N-2] + data_[N-3];
-        }
-
-        const Element c0 = 0.5/dx;
-        for (size_t i = 1; i < N-1; i++) {
-          curr = data_[i+1] - data_[i-1];
-          data_[i-1] = c0*prev;
-          prev = curr;
-        }
-        data_[N-2] = c0*prev;
-        data_[N-1] = c0*last;
-
-      }
-      else if (Dpts == 5) {
-        Element prev1;
-        Element prev2;
-        Element curr;
-        Element last;
-        Element lastminus1;
-        if (periodic) {
-          // second to last point
-          lastminus1 = data_[N-4] - 8*data_[N-3] + 8*data_[N-1] - data_[0];
-          // last
-          last = data_[N-3] - 8*data_[N-2] + 8*data_[0]   - data_[1];
-          // first point
-          prev2 = data_[N-2] - 8*data_[N-1] + 8*data_[1]   - data_[2];
-          // second point
-          prev1 = data_[N-1] - 8*data_[0]   + 8*data_[2]   - data_[3];
-        }
-        else {
-          lastminus1 = -data_[N-5] +  6*data_[N-4] - 18*data_[N-3] + 10*data_[N-2] +  3*data_[N-1];
-          last = 3*data_[N-5] - 16*data_[N-4] + 36*data_[N-3] - 48*data_[N-2] + 25*data_[N-1];
-          prev2 = -3*data_[4]   + 16*data_[3]   - 36*data_[2]   + 48*data_[1]   - 25*data_[0];
-          prev1 = data_[4]   -  6*data_[3]   + 18*data_[2]   - 10*data_[1]   -  3*data_[0];
-        }
-
-        const Element c0 = 1/(12*dx);
-        for (size_t i = 2; i < N-2; i++) {
-          curr = data_[i-2] - 8*data_[i-1] + 8*data_[i+1]  - data_[i+2];
-          data_[i-2] = c0*prev2;
-          prev2 = prev1;
-          prev1 = curr;
-        }
-        data_[N-4] = c0*prev2;
-        data_[N-3] = c0*prev1;
-        data_[N-2] = c0*lastminus1;
-        data_[N-1] = c0*last;
-
-      }
-      else if (Dpts == 7) {
-        Element prev1;
-        Element prev2;
-        Element prev3;
-        Element curr;
-        Element last;
-        Element lastminus1;
-        Element lastminus2;
-        if (periodic) {
-          lastminus2 = -data_[N-6] + 9*data_[N-5] - 45*data_[N-4] + 45*data_[N-2]  - 9*data_[N-1] + data_[0];
-          lastminus1 = -data_[N-5] + 9*data_[N-4] - 45*data_[N-3] + 45*data_[N-1]  - 9*data_[0] + data_[1];
-          last = -data_[N-4] + 9*data_[N-3] - 45*data_[N-2] + 45*data_[0]  - 9*data_[1] + data_[2];
-          prev3 = -data_[N-3] + 9*data_[N-2] - 45*data_[N-1] + 45*data_[1]  - 9*data_[2] + data_[3];
-          prev2 = -data_[N-2] + 9*data_[N-1] - 45*data_[0]   + 45*data_[2]  - 9*data_[3] + data_[4];
-          prev1 = -data_[N-1] + 9*data_[0]   - 45*data_[1]   + 45*data_[3]  - 9*data_[4] + data_[5];
-        }
-        else {
-          lastminus2 = -(2*data_[N-1] - 24*data_[N-2] -  35*data_[N-3] +  80*data_[N-4] -  30*data_[N-5] +  8*data_[N-6] -    data_[N-7]);
-          lastminus1 = -(-10*data_[N-1] - 77*data_[N-2] + 150*data_[N-3] - 100*data_[N-4] +  50*data_[N-5] - 15*data_[N-6] +  2*data_[N-7]);
-          last = -(-147*data_[N-1] +360*data_[N-2]- 450*data_[N-3] + 400*data_[N-4] - 225*data_[N-5] + 72*data_[N-6] - 10*data_[N-7]);
-
-          prev3 = -147*data_[0] + 360*data_[1] - 450*data_[2] + 400*data_[3] - 225*data_[4] + 72*data_[5] - 10*data_[6];
-          prev2 = -10*data_[0] -  77*data_[1] + 150*data_[2] - 100*data_[3] +  50*data_[4] - 15*data_[5] +  2*data_[6];
-          prev1 = 2*data_[0] -  24*data_[1] -  35*data_[2] +  80*data_[3] -  30*data_[4] +  8*data_[5] -    data_[6];
-        }
-        const Element c0 = 1/(60*dx);
-        for (size_t i = 3; i < N-3; i++) {
-          curr = -data_[i-3] + 9*data_[i-2] - 45*data_[i-1] + 45*data_[i+1]  - 9*data_[i+2] + data_[i+3];
-          data_[i-3] = c0*prev3;
-          prev3 = prev2;
-          prev2 = prev1;
-          prev1 = curr;
-        }
-        data_[N-6] = c0*prev3;
-        data_[N-5] = c0*prev2;
-        data_[N-4] = c0*prev1;
-        data_[N-3] = c0*lastminus2;
-        data_[N-2] = c0*lastminus1;
-        data_[N-1] = c0*last;
-
-
-      }
-      else {
-        //TODO: issue error
-      }
-      if (n>1) {
-        return this->deriv(a, b, n-1, Dpts, periodic);
-      }
-      return *this;
-    }
+    //   std::map<size_t, NumberType> mymap;
+    //   for (size_t j = 0; j < N; j++) {
+    //     mymap[j] = data_[j];
+    //   }
+
+    //   for (size_t j = 0; j < N; j++) {
+    //     if (mymap.find(j) == mymap.end()) continue;
+    //     Pair<Element> pair1(j, data_[j]);
+    //     for (size_t k = j+1; k < N; k++) {
+    //       if (mymap.find(k) == mymap.end()) continue;
+    //       Pair<Element> pair2(k, data_[k]);
+    //       if (pair1.data == pair2.data) {
+    //         mymap.erase(k);
+    //       }
+    //     }
+    //   }
+
+    //   const size_t Nnew = mymap.size();
+    //   Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
+    //   resize(Nnew);
+    //   size_t k = 0;
+    //   for (typename std::map<size_t, NumberType>::iterator it = mymap.begin(); it != mymap.end(); ++it) {
+    //     indexvec(k) = it->first;
+    //     data_[k++] = it->second;
+    //   }
+
+    //   return indexvec;
+    // }
+
+
+    // Vector<Element, N1>& reverse() {
+
+    //   const size_t N = size();
+    //   if (N==0)
+    //     return *this;
+
+    //   for (size_t i = 0; i < N/2; i++) {
+    //     Element temp = data_[i];
+    //     data_[i] = data_[N-i-1];
+    //     data_[N-i-1] = temp;
+    //   }
+
+    //   return *this;
+
+    // }
+
+
+    // // .cumsum() -- cumulative sum
+
+    // Vector<Element, N1>& cumsum() {
+    //   const size_t N = size();
+    //   Element sum = 0;
+    //   for (size_t i = 0; i < N; i++) {
+    //     sum += data_[i];
+    //     data_[i] = sum;
+    //   }
+    //   return *this;
+    // }
+
+    // // .cumprod()  --  cumulative product
+
+    // Vector<Element, N1>& cumprod() {
+    //   const size_t N = size();
+    //   Element prod = 1;
+    //   for (size_t i = 0; i < N; i++) {
+    //     prod *= data_[i];
+    //     data_[i] = prod;
+    //   }
+    //   return *this;
+    // }
+
+
+    // // .cumtrapz() -- cumulative trapezoidal summation
+
+    // Vector<Element, N1>& cumtrapz() {
+    //   const size_t N = size();
+    //   if (N==0) return *this;
+    //   Element sum = data_[0]/2;
+    //   data_[0] = 0;
+    //   for (size_t i = 1; i < N; i++) {
+    //     sum += data_[i];
+    //     data_[i] = sum - data_[i]/2;
+    //   }
+    //   return *this;
+    // }
+
+    // // integrate_a2x(order)
+    // // order  name
+    // //     0  rectangular
+    // //     1  trapazoidal
+    // Vector<Element, N1>& integrate_a2x(const Element a, const Element b, const int order = 1) {
+
+    //   const size_t N = size();
+
+    //   if (order == 0) {
+    //     this->cumsum();
+    //     const Element dx = (b-a)/NumberType(N);
+    //     for (size_t i = 0; i < N; i++) {
+    //       data_[i] *= dx;
+    //     }
+    //   }
+    //   else if (order == 1) {
+    //     this->cumtrapz();
+    //     const Element dx = (b-a)/NumberType(N-1);
+    //     for (size_t i = 0; i < N; i++) {
+    //       data_[i] *= dx;
+    //     }
+    //   }
+    //   else {
+    //     //TODO: issue error
+    //   }
+    //   return *this;
+    // }
+
+
+    // // .cumsumrev() -- cumulative sum -- from last to first
+
+    // Vector<Element, N1>& cumsum_rev() {
+    //   const size_t N = size();
+
+    //   Element sum = 0;
+    //   for (size_t i = 0; i < N; i++) {
+    //     sum += data_[N-1-i];
+    //     data_[N-1-i] = sum;
+    //   }
+    //   return *this;
+    // }
+
+    // // .cumprodrev()  --  cumulative product  -- from last to first
+
+    // Vector<Element, N1>& cumprod_rev() {
+    //   const size_t N = size();
+
+    //   Element prod = 1;
+    //   for (size_t i = 0; i < N; i++) {
+    //     prod *= data_[N-1-i];
+    //     data_[N-1-i] = prod;
+    //   }
+    //   return *this;
+    // }
+
+
+    // // .cumtrapz() -- cumulative trapezoidal summation -- from last to first
+
+    // Vector<Element, N1>& cumtrapz_rev() {
+    //   const size_t N = size();
+    //   if (N==0) return *this;
+
+    //   Element sum = data_[N-1]/2;
+    //   data_[N-1] = 0;
+    //   for (size_t i = 1; i < N; i++) {
+    //     sum += data_[N-1-i];
+    //     data_[N-1-i] = sum - data_[N-1-i]/2;
+    //   }
+    //   return *this;
+    // }
+
+
+
+    // // integrate_x2b
+    // // order  name
+    // //     0  rectangular
+    // //     1  trapazoidal
+    // Vector<Element, N1>& integrate_x2b(const Element a, const Element b, const int order = 1) {
+    //   const size_t N = size();
+
+    //   if (order == 0) {
+    //     this->cumsum_rev();
+    //     const Element dx = (b-a)/(N);
+    //     for (size_t i = 0; i < N; i++) {
+    //       data_[N-1-i] *= dx;
+    //     }
+    //   }
+    //   else if (order == 1) {
+    //     this->cumtrapz_rev();
+    //     const Element dx = (b-a)/(N-1);
+    //     for (size_t i = 0; i < N; i++) {
+    //       data_[N-1-i] *= dx;
+    //     }
+    //   }
+    //   else {
+    //     //TODO: issue error
+    //   }
+    //   return *this;
+    // }
+
+
+
+    // // diff   (v[n] = v[n] - v[n-1])
+    // Vector<Element, N1>& diff(const bool periodic = false) {
+    //   const size_t N = size();
+    //   if (N<=1) return *this;
+
+    //   Element temp;
+    //   if (periodic) {
+    //     temp = data_[0] - data_[N-1];
+    //   }
+    //   else {
+    //     temp = data_[1] - data_[0];
+    //   }
+
+    //   for (size_t i = 0; i < N-1; i++) {
+    //     data_[N-1-i] = data_[N-1-i] - data_[N-2-i];
+    //   }
+
+    //   data_[0] = temp;
+    //   return *this;
+    // }
+
+    // // diff_rev   (v[n] = v[n+1] - v[n])
+    // Vector<Element, N1>& diff_rev(const bool periodic = false) {
+    //   const size_t N = size();
+    //   if (N<=1) return *this;
+
+    //   Element temp;
+    //   if (periodic) {
+    //     temp = data_[0] - data_[N-1];
+    //   }
+    //   else {
+    //     temp = data_[N-1] - data_[N-2];
+    //   }
+
+    //   for (size_t i = 0; i < N-1; i++) {
+    //     data_[i] = data_[i+1] - data_[i];
+    //   }
+
+    //   data_[N-1] = temp;
+    //   return *this;
+    // }
+
+
+    // // deriv -  derivative
+    // // any change in the default parameters must be likewise made in vfunctions.h: deriv(...)
+    // // n: number of derivatives to take
+    // // Dpts: window size = number of points used in derivative formula
+    // // periodic: if true, perform derivative with start and end connected: 
+    // //           dat[-1] == dat[n-1], dat[n] == dat[0] etc
+
+    // Vector<Element, N1>& deriv(const Element a, const Element b, const int n = 1, int Dpts = 7, const bool periodic = false) {
+    //   //MDISP(a,b,n,Dpts,periodic);
+    //   const size_t N = size();
+    //   if (N<=1) return *this;
+
+    //   const Element dx = (b-a)/NumberType(N-1);
+
+    //   if (Dpts > N) {
+    //     //TODO: error or warning
+    //     Dpts = N;
+    //   }
+
+    //   if (Dpts == 2) {
+    //     this->diff(periodic);
+    //     for (size_t i = 0; i < N; i++) {
+    //       data_[i] /= dx;
+    //     }
+
+    //   }
+    //   else if (Dpts == 3) {
+    //     Element prev;
+    //     Element curr;
+    //     Element last;
+    //     if (periodic) {
+    //       // first point
+    //       prev = data_[1] - data_[N-1];
+    //       // last
+    //       last = data_[0] - data_[N-2];
+    //     }
+    //     else {
+    //       // first point
+    //       prev = -3*data_[0] + 4*data_[1] - data_[2];
+    //       // last
+    //       last = 3*data_[N-1] - 4*data_[N-2] + data_[N-3];
+    //     }
+
+    //     const Element c0 = 0.5/dx;
+    //     for (size_t i = 1; i < N-1; i++) {
+    //       curr = data_[i+1] - data_[i-1];
+    //       data_[i-1] = c0*prev;
+    //       prev = curr;
+    //     }
+    //     data_[N-2] = c0*prev;
+    //     data_[N-1] = c0*last;
+
+    //   }
+    //   else if (Dpts == 5) {
+    //     Element prev1;
+    //     Element prev2;
+    //     Element curr;
+    //     Element last;
+    //     Element lastminus1;
+    //     if (periodic) {
+    //       // second to last point
+    //       lastminus1 = data_[N-4] - 8*data_[N-3] + 8*data_[N-1] - data_[0];
+    //       // last
+    //       last = data_[N-3] - 8*data_[N-2] + 8*data_[0]   - data_[1];
+    //       // first point
+    //       prev2 = data_[N-2] - 8*data_[N-1] + 8*data_[1]   - data_[2];
+    //       // second point
+    //       prev1 = data_[N-1] - 8*data_[0]   + 8*data_[2]   - data_[3];
+    //     }
+    //     else {
+    //       lastminus1 = -data_[N-5] +  6*data_[N-4] - 18*data_[N-3] + 10*data_[N-2] +  3*data_[N-1];
+    //       last = 3*data_[N-5] - 16*data_[N-4] + 36*data_[N-3] - 48*data_[N-2] + 25*data_[N-1];
+    //       prev2 = -3*data_[4]   + 16*data_[3]   - 36*data_[2]   + 48*data_[1]   - 25*data_[0];
+    //       prev1 = data_[4]   -  6*data_[3]   + 18*data_[2]   - 10*data_[1]   -  3*data_[0];
+    //     }
+
+    //     const Element c0 = 1/(12*dx);
+    //     for (size_t i = 2; i < N-2; i++) {
+    //       curr = data_[i-2] - 8*data_[i-1] + 8*data_[i+1]  - data_[i+2];
+    //       data_[i-2] = c0*prev2;
+    //       prev2 = prev1;
+    //       prev1 = curr;
+    //     }
+    //     data_[N-4] = c0*prev2;
+    //     data_[N-3] = c0*prev1;
+    //     data_[N-2] = c0*lastminus1;
+    //     data_[N-1] = c0*last;
+
+    //   }
+    //   else if (Dpts == 7) {
+    //     Element prev1;
+    //     Element prev2;
+    //     Element prev3;
+    //     Element curr;
+    //     Element last;
+    //     Element lastminus1;
+    //     Element lastminus2;
+    //     if (periodic) {
+    //       lastminus2 = -data_[N-6] + 9*data_[N-5] - 45*data_[N-4] + 45*data_[N-2]  - 9*data_[N-1] + data_[0];
+    //       lastminus1 = -data_[N-5] + 9*data_[N-4] - 45*data_[N-3] + 45*data_[N-1]  - 9*data_[0] + data_[1];
+    //       last = -data_[N-4] + 9*data_[N-3] - 45*data_[N-2] + 45*data_[0]  - 9*data_[1] + data_[2];
+    //       prev3 = -data_[N-3] + 9*data_[N-2] - 45*data_[N-1] + 45*data_[1]  - 9*data_[2] + data_[3];
+    //       prev2 = -data_[N-2] + 9*data_[N-1] - 45*data_[0]   + 45*data_[2]  - 9*data_[3] + data_[4];
+    //       prev1 = -data_[N-1] + 9*data_[0]   - 45*data_[1]   + 45*data_[3]  - 9*data_[4] + data_[5];
+    //     }
+    //     else {
+    //       lastminus2 = -(2*data_[N-1] - 24*data_[N-2] -  35*data_[N-3] +  80*data_[N-4] -  30*data_[N-5] +  8*data_[N-6] -    data_[N-7]);
+    //       lastminus1 = -(-10*data_[N-1] - 77*data_[N-2] + 150*data_[N-3] - 100*data_[N-4] +  50*data_[N-5] - 15*data_[N-6] +  2*data_[N-7]);
+    //       last = -(-147*data_[N-1] +360*data_[N-2]- 450*data_[N-3] + 400*data_[N-4] - 225*data_[N-5] + 72*data_[N-6] - 10*data_[N-7]);
+
+    //       prev3 = -147*data_[0] + 360*data_[1] - 450*data_[2] + 400*data_[3] - 225*data_[4] + 72*data_[5] - 10*data_[6];
+    //       prev2 = -10*data_[0] -  77*data_[1] + 150*data_[2] - 100*data_[3] +  50*data_[4] - 15*data_[5] +  2*data_[6];
+    //       prev1 = 2*data_[0] -  24*data_[1] -  35*data_[2] +  80*data_[3] -  30*data_[4] +  8*data_[5] -    data_[6];
+    //     }
+    //     const Element c0 = 1/(60*dx);
+    //     for (size_t i = 3; i < N-3; i++) {
+    //       curr = -data_[i-3] + 9*data_[i-2] - 45*data_[i-1] + 45*data_[i+1]  - 9*data_[i+2] + data_[i+3];
+    //       data_[i-3] = c0*prev3;
+    //       prev3 = prev2;
+    //       prev2 = prev1;
+    //       prev1 = curr;
+    //     }
+    //     data_[N-6] = c0*prev3;
+    //     data_[N-5] = c0*prev2;
+    //     data_[N-4] = c0*prev1;
+    //     data_[N-3] = c0*lastminus2;
+    //     data_[N-2] = c0*lastminus1;
+    //     data_[N-1] = c0*last;
+
+
+    //   }
+    //   else {
+    //     //TODO: issue error
+    //   }
+    //   if (n>1) {
+    //     return this->deriv(a, b, n-1, Dpts, periodic);
+    //   }
+    //   return *this;
+    // }
 
 
 
@@ -1245,10 +1250,10 @@ namespace mathq {
         s += "N1=";
         s += template_resizable_to_string(N1);
       }
-      //    if (depth>1) {
+      //    if (depth_value>1) {
       //      s += StyledString::get(COMMA).get();
-      //      s += "depth=";
-      //      s += num2string(depth);
+      //      s += "depth_value=";
+      //      s += num2string(depth_value);
       //    }
       s += StyledString::get(ANGLE2).get();
       return s;
@@ -1258,7 +1263,7 @@ namespace mathq {
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
-  }
+    }
 #endif
 
 
@@ -1512,12 +1517,12 @@ namespace mathq {
     }
 
 
-};
+    };
 
 
 
 
-};
+  };
 
 
 #endif 

@@ -311,7 +311,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank, typename = EnableIf<std::is_same<Number, bool>::value> >
   bool alltrue(const MArrayExpR<X, Element, Number, depth, rank>& x) {
 
-    for (size_t i = 0; i< x.deepsize(); i++) {
+    for (size_t i = 0; i< x.recursive_size(); i++) {
       if (!x.dat(i)) {
         return false;
       }
@@ -326,7 +326,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank, typename = EnableIf<std::is_same<Number, bool>::value> >
   bool anytrue(const MArrayExpR<X, Element, Number, depth, rank>& x) {
 
-    for (size_t i = 0; i< x.deepsize(); i++) {
+    for (size_t i = 0; i< x.recursive_size(); i++) {
       if (x.dat(i)) {
         return true;
       }
@@ -343,7 +343,7 @@ namespace mathq {
 
     size_t result = 0;
 
-    for (size_t i = 0; i< x.deepsize(); i++) {
+    for (size_t i = 0; i< x.recursive_size(); i++) {
       result += static_cast<size_t>(x.dat(i));
     }
 
@@ -365,7 +365,7 @@ namespace mathq {
     Vector<size_t>* y = new Vector<size_t>(N);
 
     size_t j = 0;
-    for (size_t i = 0; i< x.deepsize(); i++)
+    for (size_t i = 0; i< x.recursive_size(); i++)
       if (x.dat(i))
         (*y)[j++] = i;
 
@@ -432,7 +432,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank>
   Number min(const MArrayExpR<X, Element, Number, depth, rank>& v) {
 
-    const size_t N = v.deepsize();
+    const size_t N = v.recursive_size();
     if (N==0) {
       return 0;
     }
@@ -454,7 +454,7 @@ namespace mathq {
   template <class X, class Element, typename Number, int depth, int rank>
   Number max(const MArrayExpR<X, Element, Number, depth, rank>& v) {
 
-    const size_t N = v.deepsize();
+    const size_t N = v.recursive_size();
     if (N==0) {
       return 0;
     }

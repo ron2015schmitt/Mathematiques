@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
     TLDISP(v(1)(0, 1));
     TLDISP(v.dims());
     TLDISP(v.size());
-    TLDISP(v.nested_dims());
+    TLDISP(v.recursive_dims());
 
     decltype(v) x(0.0);
     x = 0.;

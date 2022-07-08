@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
     TLDISP(x);
     TLDISP(x.dims());
     TLDISP(x.size());
-    TLDISP(x.nested_dims());
+    TLDISP(x.recursive_dims());
     Dimensions template_dims(2, 1, 2);
 
     for (size_t h = 0; h < x().size(); h++) {
@@ -80,7 +80,7 @@ int main(int argc, char* argv[]) {
     TLDISP(x);
     TLDISP(x.dims());
     TLDISP(x.size());
-    TLDISP(x.nested_dims());
+    TLDISP(x.recursive_dims());
   }
 
   {
@@ -139,7 +139,7 @@ int main(int argc, char* argv[]) {
     TLDISP(x);
     TLDISP(x.dims());
     TLDISP(x.size());
-    TLDISP(x.nested_dims());
+    TLDISP(x.recursive_dims());
 
 
     Vector<Matrix<MultiArray<double, 3>, 3, 2>, 4> v;
@@ -168,14 +168,14 @@ int main(int argc, char* argv[]) {
     TLDISP(g1);
     Matrix<Vector<Scalar<double>, 4>, 3, 2> g2;
     TLDISP(g2);
-    TLDISP(x.nested_dims());
+    TLDISP(x.recursive_dims());
 
 
     MultiArray<Matrix<Vector<Scalar<double>, 4>, 3, 2>, 3> g3;
     TLDISP(g3);
-    TLDISP(x.nested_dims());
+    TLDISP(x.recursive_dims());
     g3 = insideout(x);
-    TLDISP(g3.nested_dims());
+    TLDISP(g3.recursive_dims());
     TLDISP(g3);
 
     for (size_t h = 0; h < x().size(); h++) {

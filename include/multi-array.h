@@ -162,8 +162,8 @@ namespace mathq {
     // // ************* Vector Constructor---------------------
     // template <int NE>
     // MultiArray(const Vector<Element, NE>& v)   {
-    //   resize(v.nested_dims());
-    //   for (int c = 0; c < v.deepsize(); c++) {
+    //   resize(v.recursive_dims());
+    //   for (int c = 0; c < v.recursive_size(); c++) {
     //     (*this)[c] = v[c];
     //   }
     //   constructorHelper();
@@ -243,7 +243,7 @@ namespace mathq {
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t eldeepsize(void) const {
+    inline size_t el_recursive_size(void) const {
       if constexpr (depth < 2) {
         return 1;
       }
@@ -253,29 +253,29 @@ namespace mathq {
           return 0;
         }
         else {
-          return data_[0].deepsize();
+          return data_[0].recursive_size();
         }
       }
     }
 
     // the total number of numbers in this data structure
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (depth < 2) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->eldeepsize());
+        return (this->size()) * (this->el_recursive_size());
       }
     }
-    std::vector<Dimensions>& nested_dims(void) const {
+    std::vector<Dimensions>& recursive_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return nested_dims(ddims);
+      return recursive_dims(ddims);
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
       if constexpr (depth > 1) {
         if (size() > 0) {
-          data_[0].nested_dims(parentdims);
+          data_[0].recursive_dims(parentdims);
         }
       }
       return parentdims;
@@ -299,16 +299,16 @@ namespace mathq {
       return resize(*dims_in);
     }
 
-    // TODO: should just pass an index and make nested_dims const
+    // TODO: should just pass an index and make recursive_dims const
 
     MultiArray<Element, rank>& resize(const std::vector<Dimensions>& deepdims_in) {
-      std::vector<Dimensions> nested_dims(deepdims_in);
-      Dimensions newdims = nested_dims[0];
+      std::vector<Dimensions> recursive_dims(deepdims_in);
+      Dimensions newdims = recursive_dims[0];
       resize(newdims);
       if constexpr (depth > 1) {
-        nested_dims.erase(nested_dims.begin());
+        recursive_dims.erase(recursive_dims.begin());
         for (size_t i = 0; i < size(); i++) {
-          std::vector<Dimensions> ddims(nested_dims);
+          std::vector<Dimensions> ddims(recursive_dims);
           data_[i].resize(ddims);
         }
       }
@@ -336,7 +336,7 @@ namespace mathq {
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    // NOTE: indexes over [0] to [deepsize()] and note return type
+    // NOTE: indexes over [0] to [recursive_size()] and note return type
 
     // "read/write"
     NumberType& dat(const size_t n) {
@@ -350,7 +350,7 @@ namespace mathq {
         return data_[k];
       }
       else {
-        const int Ndeep = this->eldeepsize();
+        const int Ndeep = this->el_recursive_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
         return data_[j].dat(k);
@@ -369,7 +369,7 @@ namespace mathq {
         return data_[k];
       }
       else {
-        const int Ndeep = this->eldeepsize();
+        const int Ndeep = this->el_recursive_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
         return data_[j].dat(k);
@@ -389,7 +389,7 @@ namespace mathq {
       // MOUT << "  ";
       // TLDISP(rank());
       Indices inds_next(inds);
-      // error if (inds.size() != sum nested_dims[i].rank
+      // error if (inds.size() != sum recursive_dims[i].rank
       Indices mine;
       for (int i = 0; i < rank(); i++) {
         mine.push_back(inds_next[0]);
@@ -417,7 +417,7 @@ namespace mathq {
       // MOUT << "  ";
       // TLDISP(rank());
       Indices inds_next(inds);
-      // error if (inds.size() != sum nested_dims[i].rank
+      // error if (inds.size() != sum recursive_dims[i].rank
       Indices mine;
       for (int i = 0; i < rank(); i++) {
         mine.push_back(inds_next[0]);
@@ -605,7 +605,7 @@ namespace mathq {
     template <class T = Element>
     typename std::enable_if<!std::is_same<T, NumberType>::value, MultiArray<T, rank>&>::type operator=(const NumberType& d) {
 
-      for (size_t i = 0; i < deepsize(); i++) {
+      for (size_t i = 0; i < recursive_size(); i++) {
         data_.dat(i) = d;
       }
       return *this;
@@ -647,8 +647,8 @@ namespace mathq {
         }
       }
       else {
-        resize(x.nested_dims());
-        for (size_t i = 0; i < deepsize(); i++) {
+        resize(x.recursive_dims());
+        for (size_t i = 0; i < recursive_size(); i++) {
           this->dat(i) = x.dat(i);
         }
       }

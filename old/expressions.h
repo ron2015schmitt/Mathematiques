@@ -73,18 +73,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-  size_t deepsize(void) const {
+  size_t recursive_size(void) const {
     if constexpr(depth<2) {
       return this->size();
     } else {
-      return (this->size())*(this->eldeepsize());
+      return (this->size())*(this->el_recursive_size());
     }
   }
 
@@ -151,10 +151,10 @@ namespace matricks {
 	if constexpr(D1==D2) {
 	  return OP::apply(a_.dat(i), b_.dat(i));
 	} else if constexpr(D1==D2+1) {
-	  size_t j = i % b_.deepsize();
+	  size_t j = i % b_.recursive_size();
 	  return OP::apply(a_.dat(i), b_.dat(j));
 	} else if constexpr(D2==D1+1) {
-	  size_t j = i % a_.deepsize();
+	  size_t j = i % a_.recursive_size();
 	  return OP::apply(a_.dat(j), b_.dat(i));
 	}
       }
@@ -218,18 +218,18 @@ namespace matricks {
         return b_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.eldeepsize();
+        return a_.el_recursive_size();
       } else {
-        return b_.eldeepsize();
+        return b_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.deepsize();
+        return a_.recursive_size();
       } else {
-        return b_.deepsize();
+        return b_.recursive_size();
       }
     }
 
@@ -310,10 +310,10 @@ namespace matricks {
 	if constexpr(D1==D2) {
 	    return OP::apply(a_.dat(i), b_.dat(i), c_);
 	} else if constexpr(D1==D2+1) {
-	  size_t j = i % b_.deepsize();
+	  size_t j = i % b_.recursive_size();
 	  return OP::apply(a_.dat(i), b_.dat(j), c_);
 	} else if constexpr(D2==D1+1) {
-	  size_t j = i % a_.deepsize();
+	  size_t j = i % a_.recursive_size();
 	  return OP::apply(a_.dat(j), b_.dat(i), c_);
 	}
       }
@@ -384,18 +384,18 @@ namespace matricks {
         return b_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_recursive_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.eldeepsize();
+        return a_.el_recursive_size();
       } else {
-        return b_.eldeepsize();
+        return b_.el_recursive_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.deepsize();
+        return a_.recursive_size();
       } else {
-        return b_.deepsize();
+        return b_.recursive_size();
       }
     }
 
@@ -463,14 +463,14 @@ namespace matricks {
     const MyNumberType dat(const size_t i) const {
       size_t ind = ii_[i];
       if (ind < 0) {
-	ind = a_.deepsize() + ind;
+	ind = a_.recursive_size() + ind;
       }
       return a_.dat(ind);
     }
     MyNumberType& dat(const size_t i)  {
       size_t ind = ii_[i];
       if (ind < 0) {
-	ind = a_.deepsize() + ind;
+	ind = a_.recursive_size() + ind;
       }
       return a_.dat(ind);
     }
@@ -516,18 +516,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -637,18 +637,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -749,18 +749,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -870,18 +870,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -991,18 +991,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -1110,18 +1110,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -1213,18 +1213,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -1306,18 +1306,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -1404,18 +1404,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {
@@ -1519,18 +1519,18 @@ namespace matricks {
       return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_recursive_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_recursive_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_recursive_size());
       }
     }
     std::string classname() const {

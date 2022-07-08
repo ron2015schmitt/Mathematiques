@@ -119,19 +119,19 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // eldeepsize()
+    // el_recursive_size()
     printStart(++testnum);
     expected = 1;
-    testcode(result = s.eldeepsize());
+    testcode(result = s.el_recursive_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // deepsize()
+    // recursive_size()
     printStart(++testnum);
     expected = 1;
-    testcode(result = s.deepsize());
+    testcode(result = s.recursive_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -262,19 +262,19 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // eldeepsize()
+    // el_recursive_size()
     printStart(++testnum);
     expected = 2;
-    testcode(result = s.eldeepsize());
+    testcode(result = s.el_recursive_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // deepsize()
+    // recursive_size()
     printStart(++testnum);
     expected = 2;
-    testcode(result = s.deepsize());
+    testcode(result = s.recursive_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -416,19 +416,19 @@ int main(int argc, char* argv[]) {
   //   allpass = allpass && pass;
   //   failnum += (!pass);
 
-  //   // eldeepsize()
+  //   // el_recursive_size()
   //   printStart(++testnum);
   //   expected = 4;
-  //   testcode( result = s.eldeepsize() );
+  //   testcode( result = s.el_recursive_size() );
   //   pass = (result==expected);
   //   printEnd(pass,result,expected);
   //   allpass = allpass && pass;
   //   failnum += (!pass);
 
-  //   // deepsize()
+  //   // recursive_size()
   //   printStart(++testnum);
   //   expected = 4;
-  //   testcode( result = s.deepsize() );
+  //   testcode( result = s.recursive_size() );
   //   pass = (result==expected);
   //   printEnd(pass,result,expected);
   //   allpass = allpass && pass;

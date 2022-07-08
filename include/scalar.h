@@ -228,12 +228,12 @@ namespace mathq {
         return data.size();
       }
     }
-    inline size_t eldeepsize(void) const {
+    inline size_t el_recursive_size(void) const {
       if constexpr (depth<2) {
         return 1;
       }
       else {
-        return data.deepsize();
+        return data.recursive_size();
       }
     }
 
@@ -243,22 +243,22 @@ namespace mathq {
     //                       Nested Size related  
     //**********************************************************************
 
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       if constexpr (depth<2) {
         return this->size();
       }
       else {
-        return (this->size())*(this->eldeepsize());
+        return (this->size())*(this->el_recursive_size());
       }
     }
-    std::vector<Dimensions>& nested_dims(void) const {
+    std::vector<Dimensions>& recursive_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return nested_dims(ddims);
+      return recursive_dims(ddims);
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
       if constexpr (depth>1) {
-        data.nested_dims(parentdims);
+        data.recursive_dims(parentdims);
       }
       return parentdims;
     }
@@ -324,7 +324,7 @@ namespace mathq {
     //**********************************************************************
 
     // -------------------- NumberType dat(n) --------------------
-    // NOTE: indexes over [0] to [deepsize()]
+    // NOTE: indexes over [0] to [recursive_size()]
     // -------------------------------------------------------------
 
     // "read/write": unsigned
@@ -352,7 +352,7 @@ namespace mathq {
 
     // "read/write": DeepIndices
     NumberType& dat(const DeepIndices& dinds) {
-      // error if (inds.size() != sum nested_dims[i].rank
+      // error if (inds.size() != sum recursive_dims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(dinds);
       }
@@ -363,7 +363,7 @@ namespace mathq {
 
     // "read": DeepIndices
     const NumberType dat(const DeepIndices& dinds)  const {
-      // error if (inds.size() != sum nested_dims[i].rank
+      // error if (inds.size() != sum recursive_dims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(dinds);
       }
@@ -378,7 +378,7 @@ namespace mathq {
 
     // "read/write": Indices
     NumberType& dat(const Indices& inds) {
-      // error if (inds.size() != sum nested_dims[i].rank
+      // error if (inds.size() != sum recursive_dims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(inds);
       }
@@ -389,7 +389,7 @@ namespace mathq {
 
     // "read": Indices
     const NumberType dat(const Indices& inds)  const {
-      // error if (inds.size() != sum nested_dims[i].rank
+      // error if (inds.size() != sum recursive_dims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(inds);
       }
@@ -466,7 +466,7 @@ namespace mathq {
 
     template <int D1 = depth>
     typename std::enable_if<(D1>1), Scalar<Element>& >::type operator=(const NumberType& d) {
-      for (size_t i = 0; i < deepsize(); i++) {
+      for (size_t i = 0; i < recursive_size(); i++) {
         (*this).dat(i) = d;
       }
       return *this;
@@ -478,8 +478,8 @@ namespace mathq {
         data = s2();
       }
       else {
-        resize(s2.nested_dims());
-        for (size_t i = 0; i < deepsize(); i++) {
+        resize(s2.recursive_dims());
+        for (size_t i = 0; i < recursive_size(); i++) {
           (*this).dat(i) = s2.dat(i);
         }
       }
@@ -500,8 +500,8 @@ namespace mathq {
         data = x[0];
       }
       else {
-        resize(x.nested_dims());
-        for (size_t i = 0; i < deepsize(); i++) {
+        resize(x.recursive_dims());
+        for (size_t i = 0; i < recursive_size(); i++) {
           this->dat(i) = x.dat(i);
         }
       }

@@ -191,55 +191,77 @@ int main(int argc, char* argv[]) {
   TRDISP(dims5);
 
   CR();
-  TRDISP(sizeof(NestedDimensions<0>)/sizeof(size_t));
-  TRDISP(sizeof(NestedDimensions<1>)/sizeof(size_t));
-  TRDISP(sizeof(NestedDimensions<2>)/sizeof(size_t));
-  TRDISP(sizeof(NestedDimensions<10>)/sizeof(size_t));
+  TRDISP(sizeof(RecursiveDimensions<0>)/sizeof(size_t));
+  TRDISP(sizeof(RecursiveDimensions<1>)/sizeof(size_t));
+  TRDISP(sizeof(RecursiveDimensions<2>)/sizeof(size_t));
+  TRDISP(sizeof(RecursiveDimensions<10>)/sizeof(size_t));
 
 
   CR();
-  ECHO_CODE(NestedDimensions<2> ndims1);
+  ECHO_CODE(RecursiveDimensions<2> ndims1);
   TRDISP(ndims1.size());
   TRDISP(ndims1);
   ndims1[0] = dims;
   ndims1[1] = dims3;
   TRDISP(ndims1);
 
-  // ECHO_CODE(NestedDimensions<2> ndims2(5));  // shoudl cause compiler error
+  // ECHO_CODE(RecursiveDimensions<2> ndims2(5));  // shoudl cause compiler error
 
   CR();
-  ECHO_CODE(NestedDimensions<0> ndims2(2));
+  ECHO_CODE(RecursiveDimensions<0> ndims2(2));
   TRDISP(ndims2.size());
   TRDISP(ndims2);
   ndims2 = { dims, dims3 };
   TRDISP(ndims2);
 
   CR();
-  ECHO_CODE(NestedDimensions<> ndims3{ dims, dims3 });
+  ECHO_CODE(RecursiveDimensions<> ndims3{ dims, dims3 });
   TRDISP(ndims3);
 
   CR();
-  TRDISP(v1.nested_dims());
+  TRDISP(v1);
+  TRDISP(v1.size());
+  TRDISP(v1.element_size());
+  TRDISP(v1.recursive_size());
+  TRDISP(v1.dims());
+  TRDISP(v1.depth());
+  TRDISP(v1.recursive_dims());
+  TRDISP(v1.element_dims());
+
+
+  CR();
+  ECHO_CODE(Vector<Vector<double, 2>, dynamic> u2);
+  TRDISP(u2);
+  TRDISP(u2.size());
+  TRDISP(u2.element_size());
+  TRDISP(u2.recursive_size());
+  TRDISP(u2.dims());
+  TRDISP(u2.depth());
+  TRDISP(u2.recursive_dims());
+  TRDISP(u2.element_dims());
+
 
   CR();
   ECHO_CODE(Vector<Vector<double, 2>, 3> u);
   TRDISP(u.size());
+  TRDISP(u.element_size());
   TRDISP(u.dims());
   u[0] = { 1,2 };
   u[1] = { 3,4 };
   u[2] = { 5,6 };
   TRDISP(u);
-  TRDISP(u.nested_dims());
+  TRDISP(u.recursive_dims());
   u = { {11,12}, {13,14}, {15,16}};
   TRDISP(u);
-
-  CR();
-  ECHO_CODE(Vector<Vector<double, 2>, dynamic> u2);
-  TRDISP(u2.size());
-  TRDISP(u2.dims());
-  TRDISP(u2);
-  TRDISP(u2.nested_dims());
-
+  TRDISP(u);
+  TRDISP(u.size());
+  TRDISP(u.element_size());
+  TRDISP(u.el_recursive_size());
+  TRDISP(u.recursive_size());
+  TRDISP(u.dims());
+  TRDISP(u.depth());
+  TRDISP(u.recursive_dims());
+  TRDISP(u.element_dims());
 
   // CR();
   // ECHO_CODE(Dimensions<2> dims5);

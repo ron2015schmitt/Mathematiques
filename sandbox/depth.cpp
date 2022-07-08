@@ -215,8 +215,8 @@ int main(int argc, char *argv[]) {
     TLDISP(t1.size());
     TLDISP(t1.depth());
     TLDISP(t1.element_size());
-    TLDISP(t1.eldeepsize());
-    TLDISP(t1.deepsize());
+    TLDISP(t1.el_recursive_size());
+    TLDISP(t1.recursive_size());
 
     CR();
     MOUT << bold.apply("Vector<double> class testing") << std::endl;
@@ -226,8 +226,8 @@ int main(int argc, char *argv[]) {
     TLDISP(v.size());
     TLDISP(v.depth());
     TLDISP(v.element_size());
-    TLDISP(v.eldeepsize());
-    TLDISP(v.deepsize());
+    TLDISP(v.el_recursive_size());
+    TLDISP(v.recursive_size());
 
     MOUT << bold.apply("Scalar<Scalar<double>> class testing") << std::endl;
     Scalar<Scalar<double>> t2{{2.2}};
@@ -236,8 +236,8 @@ int main(int argc, char *argv[]) {
     TLDISP(t2.size());
     TLDISP(t2.depth());
     TLDISP(t2.element_size());
-    TLDISP(t2.eldeepsize());
-    TLDISP(t2.deepsize());
+    TLDISP(t2.el_recursive_size());
+    TLDISP(t2.recursive_size());
 
     MOUT << bold.apply("Scalar<Vector<double>> class testing") << std::endl;
     Scalar<Vector<double>> t3{{1, 2}};
@@ -246,8 +246,8 @@ int main(int argc, char *argv[]) {
     TLDISP(t3.size());
     TLDISP(t3.depth());
     TLDISP(t3.element_size());
-    TLDISP(t3.eldeepsize());
-    TLDISP(t3.deepsize());
+    TLDISP(t3.el_recursive_size());
+    TLDISP(t3.recursive_size());
 
 
     Vector<Scalar<double>> t4(0);
@@ -256,8 +256,8 @@ int main(int argc, char *argv[]) {
     TLDISP(t4.size());
     TLDISP(t4.depth());
     TLDISP(t4.element_size());
-    TLDISP(t4.eldeepsize());
-    TLDISP(t4.deepsize());
+    TLDISP(t4.el_recursive_size());
+    TLDISP(t4.recursive_size());
 
     Vector<Scalar<double>> t5(3);
     TLDISP(t5);
@@ -270,8 +270,8 @@ int main(int argc, char *argv[]) {
     TLDISP(t5.size());
     TLDISP(t5.depth());
     TLDISP(t5.element_size());
-    TLDISP(t5.eldeepsize());
-    TLDISP(t5.deepsize());
+    TLDISP(t5.el_recursive_size());
+    TLDISP(t5.recursive_size());
 
     Vector<Scalar<double>> t6{{1}, {2}};
     TLDISP(t6);
@@ -279,8 +279,8 @@ int main(int argc, char *argv[]) {
     TLDISP(t6.size());
     TLDISP(t6.depth());
     TLDISP(t6.element_size());
-    TLDISP(t6.eldeepsize());
-    TLDISP(t6.deepsize());
+    TLDISP(t6.el_recursive_size());
+    TLDISP(t6.recursive_size());
 
 
     Vector<Vector<double>> t7{{1, 2, 3}, {4, 5, 6}};
@@ -289,10 +289,10 @@ int main(int argc, char *argv[]) {
     TLDISP(t7.size());
     TLDISP(t7.depth());
     TLDISP(t7.element_size());
-    TLDISP(t7.eldeepsize());
-    TLDISP(t7.deepsize());
+    TLDISP(t7.el_recursive_size());
+    TLDISP(t7.recursive_size());
 
-    for (int n = 0; n < t7.deepsize(); n++) {
+    for (int n = 0; n < t7.recursive_size(); n++) {
       TLDISP(t7.dat(n));
     }
     for (int n = 0; n < t7.size(); n++) {
@@ -306,8 +306,8 @@ int main(int argc, char *argv[]) {
     // TLDISP(t5.size());
     // TLDISP(t5.depth());
     // TLDISP(t5.element_size());
-    // TLDISP(t5.eldeepsize());
-    // TLDISP(t5.deepsize());
+    // TLDISP(t5.el_recursive_size());
+    // TLDISP(t5.recursive_size());
   }
 
   {

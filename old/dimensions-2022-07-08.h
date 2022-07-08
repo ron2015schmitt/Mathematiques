@@ -139,17 +139,17 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // NestedDimensions 
+  // RecursiveDimensions 
   //
   // Vector of fixed  = rank_
   // if all non-zero ints... are provided, the values will be fixed as well
   // ***************************************************************************
 
   template<size_t depth_, typename... T>
-  class NestedDimensions : public Vector<Dimensions<>, depth_> {
+  class RecursiveDimensions : public Vector<Dimensions<>, depth_> {
 
   // template<typename T, size_t depth_>
-  // class NestedDimensions : public Vector<T, depth_> {
+  // class RecursiveDimensions : public Vector<T, depth_> {
   public:
     // using Type = Dimensions<rank_, ints...>;
     // using Parent = Vector<size_t, rank_>;

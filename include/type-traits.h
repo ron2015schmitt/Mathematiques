@@ -255,7 +255,7 @@ namespace mathq {
     inline static size_t size(NullType x) {
       return 0;
     }
-    inline static size_t deepsize(NullType x) {
+    inline static size_t recursive_size(NullType x) {
       return 0;
     }
   };
@@ -278,7 +278,7 @@ namespace mathq {
     inline static size_t size(const Number x) {
       return 1;
     }
-    inline static size_t deepsize(const Number& x) {
+    inline static size_t recursive_size(const Number& x) {
       return 1;
     }
   };
@@ -300,7 +300,7 @@ namespace mathq {
     inline static size_t size(const Number x) {
       return 1;
     }
-    inline static size_t deepsize(const Number& x) {
+    inline static size_t recursive_size(const Number& x) {
       return 1;
     }
   };
@@ -323,7 +323,7 @@ namespace mathq {
     inline static size_t size(const Number x) {
       return 1;
     }
-    inline static size_t deepsize(const Number& x) {
+    inline static size_t recursive_size(const Number& x) {
       return 1;
     }
   };
@@ -345,7 +345,7 @@ namespace mathq {
     inline static size_t size(const Number x) {
       return 1;
     }
-    inline static size_t deepsize(const Number& x) {
+    inline static size_t recursive_size(const Number& x) {
       return 1;
     }
   };
@@ -370,8 +370,8 @@ namespace mathq {
     inline static size_t size(const InputType& x) {
       return x.size();
     }
-    inline static size_t deepsize(const InputType& x) {
-      return x.deepsize();
+    inline static size_t recursive_size(const InputType& x) {
+      return x.recursive_size();
     }
   };
 
@@ -398,8 +398,8 @@ namespace mathq {
     inline static size_t size(const InputType& x) {
       return x.size();
     }
-    inline static size_t deepsize(const InputType& x) {
-      return x.deepsize();
+    inline static size_t recursive_size(const InputType& x) {
+      return x.recursive_size();
     }
   };
 
@@ -424,8 +424,8 @@ namespace mathq {
     inline static size_t size(const InputType& x) {
       return x.size();
     }
-    inline static size_t deepsize(const InputType& x) {
-      return x.deepsize();
+    inline static size_t recursive_size(const InputType& x) {
+      return x.recursive_size();
     }
   };
 
@@ -541,6 +541,37 @@ namespace mathq {
   public:
     using Type = typename std::conditional< NumberTrait<T1>::depth() >= NumberTrait<T2>::depth(), T1, T2>::type;
   };
+
+
+  // *****************************************************************************************
+  // DimensionsTrait
+  //
+  // This operates recursively to find the simple number type for type T
+  // We define simple number: as integers, rationals, reals, or subsets thereof.
+  // ****************************************************************************************
+
+  template <typename T, size_t level = 0>
+  class DimensionsTrait {
+  public:
+    using Type = NullDimensions;
+    constexpr static size_t depth() {
+      return 0;
+    }
+
+  };
+
+
+  //  DimensionsTrait<Element>
+  template <typename Element, size_t level, size_t rank, size_t... ints>
+  class DimensionsTrait<MultiArray<Element, rank, ints...>, level> {
+  public:
+    constexpr static size_t level_value = level;
+    using InputType = MultiArray<Element, rank, ints...>;
+    using DimensionsType = typename MultiArray<Element, rank, ints...>::DimensionsType;
+    using Type = typename std::conditional< level == 0, DimensionsType, DimensionsTrait<Element, level-1> >::type;
+    
+  };
+
 
 
   // ***************************************************************************
@@ -881,7 +912,8 @@ namespace mathq {
   const std::string template_resizable_to_string(const size_t n) {
     if (n == 0) {
       return std::string("dynamic");
-    } else {
+    }
+    else {
       return std::to_string(n);
     }
   }

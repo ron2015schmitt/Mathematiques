@@ -12,7 +12,7 @@ namespace mathq {
   // ***************************************************************************
   // Dimensions 
   //
-  // need to use resiable because we need the same exact type for NestedDimensions elements
+  // need to use resiable because we need the same exact type for RecursiveDimensions elements
   // ***************************************************************************
   template <size_t rank_>
   class Dimensions : public Vector<size_t, rank_> {
@@ -102,6 +102,47 @@ namespace mathq {
 
 
 
+  class NullDimensions : public Dimensions<0> {
+  public:
+    using Type = NullDimensions;
+    using Parent = Dimensions<0>;
+    using ElementType = size_t;
+
+
+    NullDimensions() {
+    }
+
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "NullDimensions";
+      return s;
+    }
+
+  };
+
+
+
+  class ScalarDimensions : public Dimensions<0> {
+  public:
+    using Type = ScalarDimensions;
+    using Parent = Dimensions<0>;
+    using ElementType = size_t;
+
+
+    ScalarDimensions() {
+    }
+
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "ScalarDimensions";
+      return s;
+    }
+
+  };
+
+
 
   //
   //  NumberTrait specialization for  Dimensions
@@ -123,8 +164,8 @@ namespace mathq {
     inline static size_t size(const InputType& x) {
       return x.size();
     }
-    inline static size_t deepsize(const InputType& x) {
-      return x.deepsize();
+    inline static size_t recursive_size(const InputType& x) {
+      return x.recursive_size();
     }
   };
 
@@ -146,28 +187,28 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // NestedDimensions 
+  // RecursiveDimensions 
   //
   // ***************************************************************************
 
 
 
   template<size_t depth_>
-  class NestedDimensions : public Vector<Dimensions<0>, depth_> {
+  class RecursiveDimensions : public Vector<Dimensions<0>, depth_> {
 
   public:
     using Parent = Vector<Dimensions<0>, depth_>;
     constexpr static size_t depth_value = depth_;
 
-    NestedDimensions() {
+    RecursiveDimensions() {
     }
 
     template<size_t dyn = Parent::is_dynamic_value, EnableIf<dyn> = 0>
-    NestedDimensions(const size_t depth) {
+    RecursiveDimensions(const size_t depth) {
       this->resize(depth);
     }
 
-    NestedDimensions(const std::initializer_list<Dimensions<0>>& ilist) {
+    RecursiveDimensions(const std::initializer_list<Dimensions<0>>& ilist) {
       if constexpr (this->is_dynamic_value) {
         this->resize(ilist.size());
       }
@@ -181,7 +222,7 @@ namespace mathq {
 
     inline std::string classname() const {
       using namespace display;
-      std::string s = "NestedDimensions";
+      std::string s = "RecursiveDimensions";
       s += StyledString::get(ANGLE1).get();
       s += template_resizable_to_string(depth_);
       s += StyledString::get(ANGLE2).get();

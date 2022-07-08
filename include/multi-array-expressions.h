@@ -126,11 +126,11 @@ namespace mathq {
     const DimensionsType& dims(void) const {
       return derived().dims();
     }
-    const NestedDimensionsType& nested_dims(void) const {
-      return derived().nested_dims();
+    const NestedDimensionsType& recursive_dims(void) const {
+      return derived().recursive_dims();
     }
-    // NestedDimensionsType& nested_dims(std::vector<Dimensions>& parentdims) const {
-    //   return derived().nested_dims(parentdims);
+    // NestedDimensionsType& recursive_dims(std::vector<Dimensions>& parentdims) const {
+    //   return derived().recursive_dims(parentdims);
     // }
     bool isExpression(void) const {
       return derived().isExpression();
@@ -142,11 +142,11 @@ namespace mathq {
     size_t element_size(void) const {
       return derived().element_size();
     }
-    size_t eldeepsize(void) const {
-      return derived().eldeepsize();
+    size_t el_recursive_size(void) const {
+      return derived().el_recursive_size();
     }
-    size_t deepsize(void) const {
-      return derived().deepsize();
+    size_t recursive_size(void) const {
+      return derived().recursive_size();
     }
 
 #if MATHQ_DEBUG>=1
@@ -268,11 +268,11 @@ namespace mathq {
     const DimensionsType& dims(void) const {
       return derived().dims();
     }
-    const NestedDimensionsType& nested_dims(void) const {
-      return derived().nested_dims();
+    const NestedDimensionsType& recursive_dims(void) const {
+      return derived().recursive_dims();
     }
-    // NestedDimensionsType& nested_dims(std::vector<Dimensions>& parentdims) const {
-    //   return derived().nested_dims(parentdims);
+    // NestedDimensionsType& recursive_dims(std::vector<Dimensions>& parentdims) const {
+    //   return derived().recursive_dims(parentdims);
     // }
     bool isExpression(void) const {
       return derived().isExpression();
@@ -284,11 +284,11 @@ namespace mathq {
     size_t element_size(void) const {
       return derived().element_size();
     }
-    size_t eldeepsize(void) const {
-      return derived().eldeepsize();
+    size_t el_recursive_size(void) const {
+      return derived().el_recursive_size();
     }
-    size_t deepsize(void) const {
-      return derived().deepsize();
+    size_t recursive_size(void) const {
+      return derived().recursive_size();
     }
 
 

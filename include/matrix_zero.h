@@ -137,19 +137,19 @@ namespace mathq {
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t eldeepsize(void) const {
+    inline size_t el_recursive_size(void) const {
       return 1;
     }
 
     // the total number of numbers in this data structure
-    size_t deepsize(void) const {
+    size_t recursive_size(void) const {
       return this->size();
     }
-    std::vector<Dimensions>& nested_dims(void) const {
+    std::vector<Dimensions>& recursive_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return nested_dims(ddims);
+      return recursive_dims(ddims);
     }
-    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
       return parentdims;
     }
@@ -186,8 +186,8 @@ namespace mathq {
 
 
     MatrixZero<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
-      std::vector<Dimensions> nested_dims(deepdims_new);
-      Dimensions newdims = nested_dims[0];
+      std::vector<Dimensions> recursive_dims(deepdims_new);
+      Dimensions newdims = recursive_dims[0];
       resize(newdims);
       return *this;
     }
@@ -228,7 +228,7 @@ namespace mathq {
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    // NOTE: indexes over [0] to [deepsize()] and note return type
+    // NOTE: indexes over [0] to [recursive_size()] and note return type
 
     // read
     const Number dat(const size_t n)  const {

@@ -74,21 +74,24 @@ namespace mathq {
 
   template <size_t rank_ = 0>
   class Dimensions;
+  class ScalarDimensions;
+  class NullDimensions;
+
 
   template<size_t depth_ = 0>
-  class NestedDimensions;
+  class RecursiveDimensions;
 
   template<typename Element, int L>
   class NestedInitializerListDef;
 
 
   class VectorofPtrs;
-  
+
   template <class DAT> class Pair;
-  
+
   class Indices;
-  
-  
+
+
 
   class Indices;
 
