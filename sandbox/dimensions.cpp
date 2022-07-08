@@ -218,6 +218,28 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(NestedDimensions<> ndims3{ dims, dims3 });
   TRDISP(ndims3);
 
+  CR();
+  TRDISP(v1.nested_dims());
+
+  CR();
+  ECHO_CODE(Vector<Vector<double, 2>, 3> u);
+  TRDISP(u.size());
+  TRDISP(u.dims());
+  u[0] = { 1,2 };
+  u[1] = { 3,4 };
+  u[2] = { 5,6 };
+  TRDISP(u);
+  TRDISP(u.nested_dims());
+  u = { {11,12}, {13,14}, {15,16}};
+  TRDISP(u);
+
+  CR();
+  ECHO_CODE(Vector<Vector<double, 2>, dynamic> u2);
+  TRDISP(u2.size());
+  TRDISP(u2.dims());
+  TRDISP(u2);
+  TRDISP(u2.nested_dims());
+
 
   // CR();
   // ECHO_CODE(Dimensions<2> dims5);

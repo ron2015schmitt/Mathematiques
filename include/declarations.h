@@ -72,11 +72,11 @@ namespace mathq {
   // Dimensions classes
   // ***************************************************************************
 
-  // template<size_t rank_, size_t... ints>
-  // template <typename Element = size_t>  
   template <size_t rank_ = 0>
   class Dimensions;
 
+  template<size_t depth_ = 0>
+  class NestedDimensions;
 
   template<typename Element, int L>
   class NestedInitializerListDef;

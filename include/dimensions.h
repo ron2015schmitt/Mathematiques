@@ -79,6 +79,16 @@ namespace mathq {
       return *(new Dimensions<0>(*this));
     }
 
+    template <size_t rank1 = rank_, size_t rank2, EnableIf<(rank1 == 0)> = 0>
+    Dimensions<rank1>& operator=(const Dimensions<rank2>& dims2) {
+      this->resize(dims2.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = dims2[i];
+      }
+      return *this;
+    }
+
+
     inline std::string classname() const {
       using namespace display;
       std::string s = "Dimensions";
@@ -131,7 +141,7 @@ namespace mathq {
 
   template <typename Element, size_t N1>
   Dimensions<Vector<Element, N1>::rank_value>& Vector<Element, N1>::dims(void) const {
-    return *(new Dimensions<rank_value>({this->size()}));
+    return *(new Dimensions<rank_value>({ this->size() }));
   }
 
 
@@ -140,8 +150,7 @@ namespace mathq {
   //
   // ***************************************************************************
 
-  template<size_t depth_ = 0>
-  class NestedDimensions;
+
 
   template<size_t depth_>
   class NestedDimensions : public Vector<Dimensions<0>, depth_> {

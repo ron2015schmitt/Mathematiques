@@ -309,19 +309,27 @@ namespace mathq {
       //   }
     }
 
-    // std::vector<Dimensions<rank_value>>& nested_dims(void) const {
-    //   std::vector<Dimensions<rank_value>>& ddims = *(new std::vector<Dimensions<rank_value>>);
-    //   return nested_dims(ddims);
-    // }
-    // std::vector<Dimensions<rank_value>>& nested_dims(std::vector<Dimensions<rank_value>>& parentdims) const {
-    //   parentdims.push_back(dims());
-    //   if constexpr (depth>1) {
-    //     if (size()>0) {
-    //       data_[0].nested_dims(parentdims);
-    //     }
-    //   }
-    //   return parentdims;
-    // }
+    NestedDimensions<depth_value>& nested_dims(void) const {
+      NestedDimensions<depth_value>& my_ndims = *(new NestedDimensions<depth_value>);
+      return nested_dims(my_ndims, 0);
+    }
+
+    template <size_t full_depth>
+    NestedDimensions<full_depth>& nested_dims(NestedDimensions<full_depth>& parent_ndims, const size_t depth_index) const {
+      size_t dindex = depth_index;
+      parent_ndims[dindex++] = dims();
+      if constexpr (depth_value>1) {
+        if (size()>0) {
+          data_[0].nested_dims(parent_ndims, dindex);
+        } else {
+          for (size_t d = dindex; d < full_depth; d++) {
+            parent_ndims[d] = Dimensions<0>();
+          }
+        }
+      }
+      return parent_ndims;
+    }
+
 
 
 
@@ -1250,7 +1258,7 @@ namespace mathq {
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
-    }
+  }
 #endif
 
 
@@ -1504,7 +1512,7 @@ namespace mathq {
     }
 
 
-  };
+};
 
 
 
