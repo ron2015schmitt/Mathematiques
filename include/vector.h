@@ -351,14 +351,15 @@ namespace mathq {
     // }
 
     // // the total number of numbers in this data structure
-    // size_t deepsize(void) const {
-    //   if constexpr (depth<2) {
-    //     return this->size();
-    //   }
-    //   else {
-    //     return (this->size())*(this->eldeepsize());
-    //   }
-    // }
+    size_t deepsize(void) const {
+      return this->size();
+      //   if constexpr (depth<2) {
+      //     return this->size();
+      //   }
+      //   else {
+      //     return (this->size())*(this->eldeepsize());
+      //   }
+    }
 
     // std::vector<Dimensions<rank_value>>& deepdims(void) const {
     //   std::vector<Dimensions<rank_value>>& ddims = *(new std::vector<Dimensions<rank_value>>);
@@ -1301,7 +1302,7 @@ namespace mathq {
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
-  }
+    }
 #endif
 
 
@@ -1555,7 +1556,7 @@ namespace mathq {
     }
 
 
-};
+  };
 
 
 

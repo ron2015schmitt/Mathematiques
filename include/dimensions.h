@@ -6,16 +6,25 @@
 namespace mathq {
 
 
+  /// TODO:
+  // 1. does Dimensions work with a dummy template parmater?
+  // 2. try N1 as the parameter instead of Element
+  // 3. this means NestedDims can only work with size = 0 but that's fine
+  // 4. get equiv function working
+  // 5. finished nested dims
+  // 6. implement diemnsiosn functions in Vector
+
+
 
   // ***************************************************************************
   // Dimensions 
   //
   // need to use resiable because we need the same exact type for NestedDimensions
   // ***************************************************************************
-  template <typename Element>
-  class Dimensions : public Vector<Element> {
+  // template <typename Element>
+  class Dimensions : public Vector<size_t> {
   public:
-    using Type = Dimensions<Element>;
+    using Type = Dimensions;
     using Parent = Vector<size_t>;
     using ElementType = size_t;
 
@@ -76,6 +85,31 @@ namespace mathq {
   };
 
 
+  //
+  //  NumberTrait for  Dimensions
+  //
+  template <typename NewNumber>
+  class
+    NumberTrait<Dimensions, NewNumber> {
+  public:
+    using InputType = Vector<size_t>;
+    using Type = typename NumberTrait<size_t>::Type;
+    using ReplacedNumberType = Vector<typename NumberTrait<size_t, NewNumber>::ReplacedNumberType>;
+    using ReplacedElementType = Vector<NewNumber>; // this is correct, see comment above
+
+    constexpr static bool value = false;
+    constexpr static size_t depth() {
+      return 1 + NumberTrait<size_t, NewNumber>::depth();
+    }
+    inline static size_t size(const InputType& x) {
+      return x.size();
+    }
+    inline static size_t deepsize(const InputType& x) {
+      return x.deepsize();
+    }
+  };
+
+
 
   // template <size_t rank1, typename T1, size_t rank2, typename T2>
   // inline bool equiv(const Dimensions& dims1, const Dimensions& dims2) {
@@ -94,7 +128,7 @@ namespace mathq {
   // class NestedDimensions : public Vector<Dimensions, depth_> {   // this causes "error: invalid use of incomplete type ".  Need to make Dimensions into a templated type
   // class NestedDimensions : public Vector<Vector<size_t>, depth_> {
 
-  class NestedDimensions : public Vector<Dimensions<size_t>, depth_> {
+  class NestedDimensions : public Vector<Dimensions, depth_> {
 
     // need to make Dimensions a template with Element type because otherwise when we get elements they will be of type Vector
     // unless we cast them in the operators[]
