@@ -84,36 +84,29 @@ namespace mathq {
       constructorHelper();
     }
 
+    // --------------------- NestedDims  ---------------------
+
+    // template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
+    //   explicit MultiArray(const NestedDims<depth_value>& nested_dims) {
+    //   // TRDISP(deepdims);
+    //   this->resize(nested_dims);
+    //   constructorHelper();
+    // }
+
+
+
+
+
 
     // // --------------------- Vector(N,value)  ---------------------
 
-    // template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
+    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
+    explicit MultiArray(const size_t N, const Element val) {
+      data_.resize(N);
+      *this = val;
+      constructorHelper();
+    }
 
-    // explicit Vector(const size_t N, const Element val) {
-    //   data_.resize(N);
-    //   *this = val;
-    //   constructorHelper();
-    // }
-
-
-    // // --------------------- Vector(std::initializer_list<Dimensions>)  ---------------------
-
-    // template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-    //   explicit Vector(const NestedDims<Dimensions<rank_value>, NextDims>& deepdims) {
-    //   // TRDISP(deepdims);
-    //   this->resize(std::vector<Dimensions>(deepdims));
-    //   constructorHelper();
-    // }
-
-
-    // // --------------------- Vector(std::vector<Dimensions>)  ---------------------
-
-    // template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-    // explicit Vector(const std::vector<Dimensions> deepdims) {
-    //   // TRDISP(deepdims);
-    //   this->resize(deepdims);
-    //   constructorHelper();
-    // }
 
 
     // // --------------------- Vector(Element value)  ---------------------
@@ -234,10 +227,9 @@ namespace mathq {
 
     template<bool temp = is_dynamic_value, EnableIf<temp> = 0>
     Type& resize(const size_t N) {
-      if (N==this->size()) {
-        return *this;
+      if (N != this->size()) {
+        data_.resize(N);
       }
-      data_.resize(N);
       return *this;
     }
 
