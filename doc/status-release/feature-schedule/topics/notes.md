@@ -46,3 +46,11 @@ Currently using `c++20` and `g++ 10.3`
     auto&& first = std::get<0>(std::forward_as_tuple(std::forward<Args>(args)...));
     }
 ```
+
+1. `error: there are no arguments to ‘size’ that depend on a template parameter, so a declaration of ‘size’ must be available [-fpermissive]`
+
+Solution:  call `this->size()` instead of `size()`
+
+    
+1. type traits like `NumberTrait` do not find derived classes.  You need to specialize for all derived classes. Hence it must be specialized for `Dimensions` even though it inherits from Vector
+

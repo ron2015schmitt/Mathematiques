@@ -140,7 +140,7 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Dimensions dims);
+  ECHO_CODE(Dimensions<> dims);
   TRDISP(dims.is_dynamic_value);
   TRDISP(dims.rank_value);
   TRDISP(dims.static_dims_array);
@@ -154,13 +154,13 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Dimensions dims2);
+  ECHO_CODE(Dimensions<> dims2);
   dims2 = { 3,2,1 };
   TRDISP(dims2);
 
 
   CR();
-  ECHO_CODE(Dimensions dims3{ 33, 46, 77, 81});
+  ECHO_CODE(Dimensions<> dims3{ 33, 46, 77, 81});
   TRDISP(dims3.is_dynamic_value);
   TRDISP(dims3.rank_value);
   TRDISP(dims3.static_dims_array);
@@ -169,15 +169,6 @@ int main(int argc, char* argv[]) {
   dims3 = { 13, 42, 56, 99 };
   TRDISP(dims3);
 
-
-  // CR();
-  // ECHO_CODE(Dimensions<> dims4);
-  // TRDISP(dims4.is_dynamic_value);
-  // TRDISP(dims4.rank_value);
-  // TRDISP(dims4.static_dims_array);
-  // TRDISP(dims4.size());
-  // // dims4 = { 13, 42, 56, 99 };
-  // TRDISP(dims4);
 
   CR();
   ECHO_CODE(NestedDimensions<2> ndims1);

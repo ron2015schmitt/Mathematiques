@@ -12,10 +12,10 @@ namespace mathq {
   //
   // need to use resiable because we need the same exact type for NestedDimensions
   // ***************************************************************************
-
-  class Dimensions : public Vector<size_t> {
+  template <typename Element>
+  class Dimensions : public Vector<Element> {
   public:
-    using Type = Dimensions;
+    using Type = Dimensions<Element>;
     using Parent = Vector<size_t>;
     using ElementType = size_t;
 
@@ -28,7 +28,7 @@ namespace mathq {
       const size_t N = sizeof...(dynamic_dims);
       std::array<size_t, N> temp = { (static_cast<size_t>(dynamic_dims))... };
 
-      resize(N);
+      this->resize(N);
       for (size_t n = 0; n < N; n++) {
         Parent::operator[](n) = temp[n];
       }
@@ -36,15 +36,15 @@ namespace mathq {
 
     Dimensions(const Dimensions& dims2) {
       resize(dims2.size());
-      for (size_t n = 0; n < size(); n++) {
+      for (size_t n = 0; n < this->size(); n++) {
         (*this)[n] = dims2[n];
       }
     }
 
     Dimensions& getReducedDims() const {
       Dimensions& v = *(new Dimensions{});
-      v.resize(size());
-      for (size_t i = 0; i < size(); i++) {
+      v.resize(this->size());
+      for (size_t i = 0; i < this->size(); i++) {
         v[i] = (*this)[i];
       }
       return v;
@@ -56,10 +56,10 @@ namespace mathq {
 
     Dimensions& getReverse() const {
       Dimensions& v = *(new Dimensions{});
-      v.resize(size());
+      v.resize(this->size());
       // reverse order
       size_t ii = 0;
-      for (size_t k = size()-1; k >= 0; k--) {
+      for (size_t k = this->size()-1; k >= 0; k--) {
         v[ii++] = (*this)[k];
       }
       return v;
@@ -68,6 +68,8 @@ namespace mathq {
     inline std::string classname() const {
       using namespace display;
       std::string s = "Dimensions";
+      s += StyledString::get(ANGLE1).get();
+      s += StyledString::get(ANGLE2).get();
       return s;
     }
 
@@ -75,10 +77,10 @@ namespace mathq {
 
 
 
-  template <size_t rank1, typename T1, size_t rank2, typename T2>
-  inline bool equiv(const Dimensions& dims1, const Dimensions& dims2) {
-    return dims1.equiv(dims2);
-  }
+  // template <size_t rank1, typename T1, size_t rank2, typename T2>
+  // inline bool equiv(const Dimensions& dims1, const Dimensions& dims2) {
+  //   return dims1.equiv(dims2);
+  // }
 
 
   // ***************************************************************************
@@ -92,10 +94,11 @@ namespace mathq {
   // class NestedDimensions : public Vector<Dimensions, depth_> {   // this causes "error: invalid use of incomplete type ".  Need to make Dimensions into a templated type
   // class NestedDimensions : public Vector<Vector<size_t>, depth_> {
 
+  class NestedDimensions : public Vector<Dimensions<size_t>, depth_> {
 
     // need to make Dimensions a template with Element type because otherwise when we get elements they will be of type Vector
     // unless we cast them in the operators[]
-  class NestedDimensions : public Vector<Vector<size_t>, depth_> {
+  // class NestedDimensions : public Vector<Vector<size_t>, depth_> {
 
     // template<typename T, size_t depth_>
     // class NestedDimensions : public Vector<T, depth_> {

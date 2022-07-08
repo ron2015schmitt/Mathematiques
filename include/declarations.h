@@ -108,7 +108,7 @@ namespace mathq {
   // ***************************************************************************
 
   // template<size_t rank_, size_t... ints>
-  // template <typename DUMMY = void>  
+  template <typename Element = size_t>  
   class Dimensions;
 
 
