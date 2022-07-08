@@ -114,6 +114,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v1);
   v1 = { 2.2, 4.4, -100.1 };
   TRDISP(v1);
+  TRDISP(sizeof(v1)/sizeof(double));
 
 
   CR();
@@ -170,6 +171,13 @@ int main(int argc, char* argv[]) {
   TRDISP(dims3);
 
 
+
+  TRDISP(sizeof(NestedDimensions<0>)/sizeof(size_t));
+  TRDISP(sizeof(NestedDimensions<1>)/sizeof(size_t));
+  TRDISP(sizeof(NestedDimensions<2>)/sizeof(size_t));
+  TRDISP(sizeof(NestedDimensions<10>)/sizeof(size_t));
+
+
   CR();
   ECHO_CODE(NestedDimensions<2> ndims1);
   TRDISP(ndims1.size());
@@ -177,6 +185,20 @@ int main(int argc, char* argv[]) {
   ndims1[0] = dims;
   ndims1[1] = dims3;
   TRDISP(ndims1);
+
+  // ECHO_CODE(NestedDimensions<2> ndims2(5));  // shoudl cause compiler error
+
+  CR();
+  ECHO_CODE(NestedDimensions<0> ndims2(2));
+  TRDISP(ndims2.size());
+  TRDISP(ndims2);
+  ndims2 = {dims, dims3};
+  TRDISP(ndims2);
+
+  CR();
+  ECHO_CODE(NestedDimensions<> ndims3{dims, dims3});
+  TRDISP(ndims3);
+
 
   // CR();
   // ECHO_CODE(Dimensions<2> dims5);

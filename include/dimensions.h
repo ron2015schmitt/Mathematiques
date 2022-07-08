@@ -6,22 +6,14 @@
 namespace mathq {
 
 
-  /// TODO:
-  // 1. does Dimensions work with a dummy template parmater?
-  // 2. try N1 as the parameter instead of Element
-  // 3. this means NestedDims can only work with size = 0 but that's fine
-  // 4. get equiv function working
-  // 5. finished nested dims
-  // 6. implement diemnsiosn functions in Vector
 
 
 
   // ***************************************************************************
   // Dimensions 
   //
-  // need to use resiable because we need the same exact type for NestedDimensions
+  // need to use resiable because we need the same exact type for NestedDimensions elements
   // ***************************************************************************
-  // template <typename Element>
   class Dimensions : public Vector<size_t> {
   public:
     using Type = Dimensions;
@@ -85,9 +77,12 @@ namespace mathq {
   };
 
 
+
+
   //
-  //  NumberTrait for  Dimensions
+  //  NumberTrait specialization for  Dimensions
   //
+
   template <typename NewNumber>
   class
     NumberTrait<Dimensions, NewNumber> {
@@ -111,34 +106,50 @@ namespace mathq {
 
 
 
-  // template <size_t rank1, typename T1, size_t rank2, typename T2>
-  // inline bool equiv(const Dimensions& dims1, const Dimensions& dims2) {
-  //   return dims1.equiv(dims2);
-  // }
+  inline bool equiv(const Dimensions& dims1, const Dimensions& dims2) {
+    return dims1.equiv(dims2);
+  }
+
+
 
 
   // ***************************************************************************
   // NestedDimensions 
   //
-  // Vector of fixed  = rank_
-  // if all non-zero ints... are provided, the values will be fixed as well
   // ***************************************************************************
 
   template<size_t depth_ = 0>
-  // class NestedDimensions : public Vector<Dimensions, depth_> {   // this causes "error: invalid use of incomplete type ".  Need to make Dimensions into a templated type
-  // class NestedDimensions : public Vector<Vector<size_t>, depth_> {
+  class NestedDimensions;
 
+  template<size_t depth_>
   class NestedDimensions : public Vector<Dimensions, depth_> {
 
-    // need to make Dimensions a template with Element type because otherwise when we get elements they will be of type Vector
-    // unless we cast them in the operators[]
-  // class NestedDimensions : public Vector<Vector<size_t>, depth_> {
-
-    // template<typename T, size_t depth_>
-    // class NestedDimensions : public Vector<T, depth_> {
   public:
+    using Parent = Vector<Dimensions, depth_>;
+    constexpr static size_t depth_value = depth_;
+
+    NestedDimensions() {
+    }
+
+    template<size_t dyn = Parent::is_dynamic_value, EnableIf<dyn> = 0>
+    NestedDimensions(const size_t depth) {
+      this->resize(depth);
+    }
+
+    NestedDimensions(const std::initializer_list<Dimensions>& ilist) {
+      if constexpr (this->is_dynamic_value) {
+        this->resize(ilist.size());
+      }
+      size_t k = 0;
+      typename std::initializer_list<Dimensions>::iterator it;
+      for (it = ilist.begin(); it != ilist.end(); ++it, k++) {
+        (*this)[k] = *it;
+      }
+    }
+
 
   };
+
 
 
 };

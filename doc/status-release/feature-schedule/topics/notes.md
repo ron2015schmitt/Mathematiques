@@ -55,3 +55,12 @@ Solution:  call `this->size()` instead of `size()`
 1. type traits like `NumberTrait` do not find derived classes.  You need to specialize for all derived classes. Hence it must be specialized for `Dimensions` even though it inherits from Vector
 
 1. `error: invalid use of incomplete type` template classes vs. non-template classes: template classes can be defined after their usage in other code (two-pass compilation).   Non-template classes must be defined before use (one-pass compilation).    So two solutions to `error: invalid use of incomplete type` are: 1) change the offending class to a template class or 2) move the code that uses the class so that it is after the class definition.
+
+1. reference instance variables take up memory regardless if they are referenced to a const or constexpr
+
+1. object that takes up no space
+
+```C++
+struct Empty {}; 
+[[no_unique_address]] Empty e;
+```
