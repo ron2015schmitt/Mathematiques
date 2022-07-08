@@ -319,9 +319,9 @@ namespace mathq {
     //********************* Direct access to data_  ***********************************
     //**********************************************************************
 
-    // -------------------- getInternalStdArray() --------------------
+    // -------------------- dataobj() --------------------
     // "read/write" to the wrapped valarray/aray
-    auto& getInternalStdArray() {
+    auto& dataobj() {
       return data_;
     }
 

@@ -370,9 +370,9 @@ namespace mathq {
     //********************* Direct access to data_  ***********************************
     //**********************************************************************
 
-    // -------------------- getInternalStdArray() --------------------
+    // -------------------- dataobj() --------------------
     // "read/write" to the wrapped valarray
-    std::valarray<Number>& getInternalStdArray()  {
+    std::valarray<Number>& dataobj()  {
       return *data_; 
     }
 

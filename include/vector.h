@@ -223,6 +223,15 @@ namespace mathq {
       return data_.size();
     }
 
+    // // the total number of numbers in this data structure
+    size_t total_size(void) const {
+      if constexpr (depth_value<2) {
+        return this->size();
+      }
+      else {
+        return (this->size())*(this->el_total_size());
+      }
+    }
 
     // the size of each element
     inline size_t element_size(void) const {
@@ -240,7 +249,7 @@ namespace mathq {
       }
     }
 
-    // // the deep size of an element: the total number of numbers in an element
+    // the total number of numbers in an element
     inline size_t el_total_size(void) const {
       if constexpr (depth_value<2) {
         return 1;
@@ -256,15 +265,6 @@ namespace mathq {
       }
     }
 
-    // // the total number of numbers in this data structure
-    size_t total_size(void) const {
-      if constexpr (depth_value<2) {
-        return this->size();
-      }
-      else {
-        return (this->size())*(this->el_total_size());
-      }
-    }
 
 
     //**********************************************************************
@@ -281,26 +281,29 @@ namespace mathq {
       return *this;
     }
 
-    // TODO: should just pass an index and make recursive_dims const
+    // resize_depth <= depth_value
+    template <size_t resize_depth>
+    Type& resize(const RecursiveDimensions<resize_depth>& new_rdims) {
+      return recurse_resize(new_rdims, 0);
+    }
 
-    // Vector<Element, N1>& resize(const std::vector<Dimensions>& deepdims_in) {
-    //   std::vector<Dimensions<rank_value>> recursive_dims(deepdims_in);
-    //   Dimensions<rank_value> newdims = recursive_dims[0];
-    //   const size_t Nnew = newdims[0];
-    //   if constexpr (is_dynamic_value) {
-    //     resize(Nnew);
-    //   }
-    //   if constexpr (depth>1) {
-    //     recursive_dims.erase(recursive_dims.begin());
-    //     for (size_t i = 0; i < size(); i++) {
-    //       std::vector<Dimensions<rank_value>> ddims(recursive_dims);
-    //       data_[i].resize(ddims);
-    //     }
-    //   }
 
-    //   return *this;
-    // }
-
+    template <size_t resize_depth>
+    Type& recurse_resize(const RecursiveDimensions<resize_depth>& parent_rdims, size_t di = 0) {
+      size_t depth_index = di;
+      const size_t newSize = parent_rdims[depth_index++];
+      if constexpr (is_dynamic_value) {
+        resize(newSize);
+      }
+      if constexpr (depth_value >= 1) {
+        if (depth_index < resize_depth) {
+          for (size_t ii = 0; ii < size(); ii++) {
+            data_[ii].recurse_resize(parent_rdims, depth_index);
+          }
+        }
+      }
+      return *this;
+    }
     //**********************************************************************
     //                        Dimensions
     //**********************************************************************
@@ -323,26 +326,26 @@ namespace mathq {
 
 
     RecursiveDimensions<depth_value>& recursive_dims(void) const {
-      RecursiveDimensions<depth_value>& my_ndims = *(new RecursiveDimensions<depth_value>);
-      return recursive_dims(my_ndims, 0);
+      RecursiveDimensions<depth_value>& rdims = *(new RecursiveDimensions<depth_value>);
+      recurse_dims(rdims, 0);
+      return rdims;
     }
 
     template <size_t full_depth>
-    RecursiveDimensions<full_depth>& recursive_dims(RecursiveDimensions<full_depth>& parent_ndims, const size_t depth_index) const {
-      size_t dindex = depth_index;
-      parent_ndims[dindex++] = dims();
+    const Type& recurse_dims(RecursiveDimensions<full_depth>& parent_rdims, const size_t di = 0) const {
+      size_t depth_index = di;
+      parent_rdims[depth_index++] = dims();
       if constexpr (depth_value>1) {
         if (size()>0) {
-          data_[0].recursive_dims(parent_ndims, dindex);
+          data_[0].recurse_dims(parent_rdims, depth_index);
         }
         else {
           Element& x = *(new Element);
-          x.recursive_dims(parent_ndims, dindex);
+          x.recurse_dims(parent_rdims, depth_index);
         }
       }
-      return parent_ndims;
+      return *this;
     }
-
 
 
 
@@ -541,9 +544,9 @@ namespace mathq {
     //********************* Direct access to data_  ***********************************
     //**********************************************************************
 
-    // -------------------- getInternalStdArray() --------------------
+    // -------------------- dataobj() --------------------
     // "read/write" to the wrapped valarray/aray
-    auto& getInternalStdArray() {
+    auto& dataobj() {
       return data_;
     }
 
@@ -1268,7 +1271,7 @@ namespace mathq {
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
-    }
+  }
 #endif
 
 
@@ -1522,7 +1525,7 @@ namespace mathq {
     }
 
 
-  };
+};
 
 
 
