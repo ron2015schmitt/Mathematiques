@@ -132,8 +132,8 @@ namespace mathq {
   // //
   // // Deepindices - class to full indices of nested MultiArrays
   // // -------------------------------------------------------------------
-  // template <typename NestedDims>
-  // class DeepIndices : public NestedDims {
+  // template <typename RecursiveDimensions>
+  // class DeepIndices : public RecursiveDimensions {
   // public:
 
   //   DeepIndices() : deepdims_(recursive_dims) {

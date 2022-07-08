@@ -35,7 +35,7 @@ namespace mathq {
     // ---- same for all subtypes --------
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
     using MyArrayType = typename ArrayTypeTrait<Element, num_compile_time_elements>::Type;
-    using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
+    using NestedDimensionsType = RecursiveDimensions<DimensionsType, ElementDimensionsType>;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
     // ---- same for all subtypes --------

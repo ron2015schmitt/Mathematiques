@@ -5,7 +5,7 @@
 1. add variable for the C++ version used, currently C++20.  append to version string. 
 1. using g++ 10.4
 1. Refactor `Dimensions` class
-1. New `NestedDims` class
+1. New `RecursiveDimensions` class
 1. Refactor all multi-arrays
   * Simplifly the templates to only have `Element` type and (top level) `Dimensions`
   * Renamed `Tensor` -> `MultiArray` ->? `AlgebraTensor`

@@ -302,13 +302,13 @@ int main(int argc, char* argv[]) {
   // TRDISP(dims9);
 
   // CR();
-  // ECHO_CODE(NestedDims<decltype(dims9)> ndims1(dims9));
+  // ECHO_CODE(RecursiveDimensions<decltype(dims9)> ndims1(dims9));
   // TRDISP(ndims1);
   // TRDISP(ndims1.rank());
   // TRDISP(ndims1.depth());
 
   // CR();
-  // ECHO_CODE(NestedDims<decltype(dims), decltype(ndims1)> ndims2(dims, ndims1));
+  // ECHO_CODE(RecursiveDimensions<decltype(dims), decltype(ndims1)> ndims2(dims, ndims1));
   // TRDISP(ndims2);
   // TRDISP(ndims2.rank());
   // TRDISP(ndims2.depth());

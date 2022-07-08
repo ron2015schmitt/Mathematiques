@@ -351,14 +351,14 @@ namespace mathq {
 
 
   // 
-  // NestedDims<Dims,NextDims>
+  // RecursiveDimensions<Dims,NextDims>
   // 
 
 
   template<typename Dims, typename NextDims>
-  class NestedDims : public Dims {
+  class RecursiveDimensions : public Dims {
   public:
-    typedef NestedDims<Dims, NextDims> Type;
+    typedef RecursiveDimensions<Dims, NextDims> Type;
     typedef Dims DimsType;
     typedef NextDims NextDimsType;
     constexpr static bool hasNext = true;
@@ -367,13 +367,13 @@ namespace mathq {
     NextDims nextDimensions;
     bool hasPrev = false;
 
-    NestedDims() : dimensions(*(new DimsType)), nextDimensions(*(new NextDimsType)) {
+    RecursiveDimensions() : dimensions(*(new DimsType)), nextDimensions(*(new NextDimsType)) {
       nextDimensions.hasPrev = true;
     }
-    NestedDims(Dims dims_) : dimensions(dims_), nextDimensions(*(new NextDimsType)) {
+    RecursiveDimensions(Dims dims_) : dimensions(dims_), nextDimensions(*(new NextDimsType)) {
       nextDimensions.hasPrev = true;
     }
-    NestedDims(Dims dims_, NextDims nextDims_) : dimensions(dims_), nextDimensions(nextDims_) {
+    RecursiveDimensions(Dims dims_, NextDims nextDims_) : dimensions(dims_), nextDimensions(nextDims_) {
       nextDimensions.hasPrev = true;
     }
 
@@ -422,7 +422,7 @@ namespace mathq {
 
     inline std::string classname() const {
       using namespace display;
-      std::string s = "NestedDims";
+      std::string s = "RecursiveDimensions";
       s += StyledString::get(ANGLE1).get();
       s += dimensions.classname();
       s += StyledString::get(COMMA).get();
@@ -444,13 +444,13 @@ namespace mathq {
 
 
   // 
-  // NestedDims<Dims>
+  // RecursiveDimensions<Dims>
   // 
 
   template<typename Dims>
-  class NestedDims<Dims, NullDims> : public Dims {
+  class RecursiveDimensions<Dims, NullDims> : public Dims {
   public:
-    typedef NestedDims<Dims, NullDims> Type;
+    typedef RecursiveDimensions<Dims, NullDims> Type;
     typedef Dims DimsType;
     typedef NullDims NextDimsType;
     constexpr static bool hasNext = false;
@@ -458,9 +458,9 @@ namespace mathq {
     Dims dimensions;
     bool hasPrev = false;
 
-    NestedDims() : dimensions(*(new DimsType)) {
+    RecursiveDimensions() : dimensions(*(new DimsType)) {
     }
-    NestedDims(Dims dims_) : dimensions(dims_) {
+    RecursiveDimensions(Dims dims_) : dimensions(dims_) {
     }
 
     size_t rank() const {
@@ -479,7 +479,7 @@ namespace mathq {
     }
     inline std::string classname() const {
       using namespace display;
-      std::string s = "NestedDims";
+      std::string s = "RecursiveDimensions";
       s += StyledString::get(ANGLE1).get();
       s += dimensions.classname();
       s += StyledString::get(ANGLE2).get();

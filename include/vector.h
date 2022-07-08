@@ -78,7 +78,7 @@ namespace mathq {
     }
 
 
-    // --------------------- Vector(N)  ---------------------
+    // --------------------- Vector(size N)  ---------------------
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
 
@@ -87,10 +87,10 @@ namespace mathq {
       constructorHelper();
     }
 
-    // --------------------- NestedDims  ---------------------
+    // --------------------- RecursiveDimensions  ---------------------
 
     // template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-    //   explicit MultiArray(const NestedDims<depth_value>& recursive_dims) {
+    //   explicit MultiArray(const RecursiveDimensions<depth_value>& recursive_dims) {
     //   // TRDISP(recursive_dims);
     //   this->resize(recursive_dims);
     //   constructorHelper();

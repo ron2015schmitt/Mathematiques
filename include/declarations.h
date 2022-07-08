@@ -97,7 +97,7 @@ namespace mathq {
 
   inline bool equiv(const Indices& inds1, const Indices& inds2);
 
-  template <typename NestedDims>
+  template <typename RecursiveDimensions>
   class DeepIndices;
 
   template<typename Element, int L>

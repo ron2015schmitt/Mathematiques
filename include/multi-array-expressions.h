@@ -78,7 +78,7 @@ namespace mathq {
 
     using DimensionsType = DimensionsT;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, typename Element::DimensionsType>::type;
-    using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
+    using NestedDimensionsType = RecursiveDimensions<DimensionsType, ElementDimensionsType>;
 
     using MyArrayType = Element;
 
@@ -214,7 +214,7 @@ namespace mathq {
 
     using DimensionsType = DimensionsT;
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, typename Element::DimensionsType>::type;
-    using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
+    using NestedDimensionsType = RecursiveDimensions<DimensionsType, ElementDimensionsType>;
 
     using MyArrayType = Element;
 
