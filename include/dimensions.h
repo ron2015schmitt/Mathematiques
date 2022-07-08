@@ -131,12 +131,7 @@ namespace mathq {
 
   template <typename Element, size_t N1>
   Dimensions<Vector<Element, N1>::rank_value>& Vector<Element, N1>::dims(void) const {
-    if constexpr (is_dynamic_value) {
-      return *(new Dimensions<rank_value>(size()));
-    }
-    else {
-      return *(new Dimensions<rank_value>());
-    }
+    return *(new Dimensions<rank_value>({this->size()}));
   }
 
 

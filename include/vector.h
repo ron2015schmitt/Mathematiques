@@ -48,7 +48,6 @@ namespace mathq {
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = (N1 == 0);
     constexpr static std::array<size_t, rank_value> static_dims_array = { N1 };
-    // const static Dimensions<rank_value> static_dimensions = Dimensions<rank_value>(N1);
 
 
     //**********************************************************************
@@ -166,7 +165,7 @@ namespace mathq {
 
     // template <class X>
     // Vector(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
-    //   if constexpr (N1==0) {
+    //   if constexpr (is_dynamic_value) {
     //     this->resize(x.size());
     //   }
 
@@ -179,7 +178,7 @@ namespace mathq {
 
     // // --------------------- Vector(valarray)  ---------------------
     // Vector(const std::valarray<Element>& valar) {
-    //   if constexpr (N1==0) {
+    //   if constexpr (is_dynamic_value) {
     //     this->resize(valar.size());
     //   }
     //   *this = valar;
@@ -227,6 +226,7 @@ namespace mathq {
       return data_.size();
     }
 
+    // defined later since Dimensions is dependent on Vector
     Dimensions<rank_value>& dims(void) const;
 
 
@@ -247,7 +247,7 @@ namespace mathq {
     //   std::vector<Dimensions<rank_value>> deepdims(deepdims_in);
     //   Dimensions<rank_value> newdims = deepdims[0];
     //   const size_t Nnew = newdims[0];
-    //   if constexpr (N1==0) {
+    //   if constexpr (is_dynamic_value) {
     //     resize(Nnew);
     //   }
     //   if constexpr (depth>1) {
@@ -540,7 +540,7 @@ namespace mathq {
     // get C pointer to raw data
     // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
     Element* data() {
-      if constexpr (N1 == 0) {
+      if constexpr (is_dynamic_value) {
         // valarray<Element>
         return &(data_[0]);
       }
@@ -583,7 +583,7 @@ namespace mathq {
     // template <int NE2>
     // Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
     //   if constexpr (depth<=1) {
-    //     if constexpr (N1==0) {
+    //     if constexpr (is_dynamic_value) {
     //       if (this->size() != v.size()) {
     //         resize(v.size());
     //       }
@@ -608,7 +608,7 @@ namespace mathq {
     // Vector<Element, N1>& operator=(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
 
     //   if constexpr (depth<=1) {
-    //     if constexpr (N1==0) {
+    //     if constexpr (is_dynamic_value) {
     //       if (this->size() != x.size()) {
     //         resize(x.size());
     //       }
@@ -641,7 +641,7 @@ namespace mathq {
     // ------------------------ Vector = list ----------------
 
     Vector<Element, N1>& operator=(const std::list<Element>& mylist) {
-      if constexpr (N1==0) {
+      if constexpr (is_dynamic_value) {
         // TODO: warn if not in constructor
         if (this->size() != mylist.size()) {
           resize(mylist.size());
@@ -658,7 +658,7 @@ namespace mathq {
     // ------------------------ Vector = initializer_list ----------------
 
     Vector<Element, N1>& operator=(const std::initializer_list<Element>& mylist) {
-      if constexpr (N1==0) {
+      if constexpr (is_dynamic_value) {
         // TODO: warn if not in constructor
         if (this->size() != mylist.size()) {
           data_.resize(mylist.size());
@@ -681,7 +681,7 @@ namespace mathq {
 
     Vector<Element, N1>& operator=(const std::vector<Element>& vstd) {
       // resize to avoid segmentation faults
-      if constexpr (N1==0) {
+      if constexpr (is_dynamic_value) {
         if (this->size() != vstd.size()) {
           resize(vstd.size());
         }
@@ -700,7 +700,7 @@ namespace mathq {
     template <size_t N>
     Vector<Element, N1>& operator=(const std::array<NumberType, N>& varray) {
       // resize to avoid segmentation faults
-      if constexpr (N1==0) {
+      if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
           resize(varray.size());
         }
@@ -721,7 +721,7 @@ namespace mathq {
     Vector<Element, N1>& operator=(const std::valarray<Element>& varray) {
 
       // resize to avoid segmentation faults
-      if constexpr (N1==0) {
+      if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
           resize(varray.size());
         }
@@ -806,7 +806,7 @@ namespace mathq {
     // .quniq()
     //         removes adjacent duplicates
     //  template<typename T=NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&> 
-    template<typename T = size_t> EnableMethodIf<N1==0, Vector<T>& >
+    template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
 
     quniq() {
 
@@ -843,7 +843,7 @@ namespace mathq {
 
     // .uniq()
     //         removes all duplicates
-    template<typename T = size_t> EnableMethodIf<N1==0, Vector<T>& >
+    template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
 
     uniq() {
 

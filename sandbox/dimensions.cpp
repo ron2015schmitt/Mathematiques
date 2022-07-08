@@ -115,12 +115,14 @@ int main(int argc, char* argv[]) {
   TRDISP(v1);
   v1 = { 2.2, 4.4, -100.1 };
   TRDISP(v1);
+  TRDISP(v1.dims());
   TRDISP(sizeof(v1)/sizeof(double));
 
 
   CR();
   ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
   TRDISP(v2.size());
+  TRDISP(v2.dims());
   TRDISP(v2.is_dynamic_value);
   // TRDISP(v2.data_);
   TRDISP(v2.static_dims_array);
@@ -132,6 +134,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v3.is_dynamic_value);
   // TRDISP(v3.data_);
   TRDISP(v3.static_dims_array);
+  TRDISP(v3.dims());
 
   CR();
   ECHO_CODE(Vector<double> v4);
@@ -139,6 +142,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v4.is_dynamic_value);
   // TRDISP(v4.data_);
   TRDISP(v4.static_dims_array);
+  TRDISP(v4.dims());
 
 
   CR();
