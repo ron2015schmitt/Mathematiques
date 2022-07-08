@@ -332,7 +332,7 @@ namespace matricks {
     Number operator|( const Vector<Number>& a, const  Vector<Number>& b ) {
 
     Number result = Number(0);
-    for (size_t i = a.recursive_size(); i--;) {
+    for (size_t i = a.total_size(); i--;) {
       result += a[i]*b[i];
     }
     return result;
@@ -390,7 +390,7 @@ namespace matricks {
     // (Vector|Vector)
     if ((a.rank() == 1) && (b.rank() == 1)) {
       Number result = Number(0);
-      for (size_t i = a.recursive_size(); i--;) {
+      for (size_t i = a.total_size(); i--;) {
 	result += a[i]*b[i];
       }
       return result;
@@ -1191,7 +1191,7 @@ namespace matricks {
     if (!dimequiv(tensor1,tensor2)) {
       return false;
     }
-    for (int ii = 0; ii < tensor1.recursive_size(); ii++) {
+    for (int ii = 0; ii < tensor1.total_size(); ii++) {
       if (tensor1[ii] != tensor2[ii]) {
 	return false;
       }
@@ -1209,7 +1209,7 @@ namespace matricks {
     if (!dimequiv(tensor1,tensor2)) {
       return false;
     }
-    for (int ii = 0; ii < tensor1.recursive_size(); ii++) {
+    for (int ii = 0; ii < tensor1.total_size(); ii++) {
       if (!approx(tensor1[ii], tensor2[ii], tolerance)) {
 	return false;
       }
@@ -1231,7 +1231,7 @@ namespace matricks {
     Number sum( const MArrayExpR<Number,A>& a ) {
     
  
-    const size_t N = a.recursive_size();
+    const size_t N = a.total_size();
     if (N==0)
       return 0;
 
@@ -1252,7 +1252,7 @@ namespace matricks {
     Number prod( const MArrayExpR<Number,A>& a ) {
     
  
-    const size_t N = a.recursive_size();
+    const size_t N = a.total_size();
     if (N==0)
       return 0;
 
@@ -1274,7 +1274,7 @@ namespace matricks {
     Number norm( const MArrayExpR<Number,A>& a ) {
     
  
-    const size_t N = a.recursive_size();
+    const size_t N = a.total_size();
     if (N==0)
       return 0;
 
@@ -1295,7 +1295,7 @@ namespace matricks {
     Number min( const MArrayExpR<Number,A>& a ) {
     
  
-    const size_t N = a.recursive_size();
+    const size_t N = a.total_size();
     if (N==0)
       return 0;
 
@@ -1315,7 +1315,7 @@ namespace matricks {
   template <typename Number, class A> 
     Number max( const MArrayExpR<Number,A>& a ) {
     
-    const size_t N = a.recursive_size();
+    const size_t N = a.total_size();
     if (N==0)
       return 0;
 
@@ -1348,7 +1348,7 @@ namespace matricks {
     bool result = true;
     
  
-    for (size_t i = 0; i< a.recursive_size(); i++)
+    for (size_t i = 0; i< a.total_size(); i++)
       result = result && a.dat(i);
     
     return result;
@@ -1362,7 +1362,7 @@ namespace matricks {
     bool result = false;
     
  
-    for (size_t i = 0; i< a.recursive_size(); i++)
+    for (size_t i = 0; i< a.total_size(); i++)
       result = result || a.dat(i);
     
     return result;
@@ -1376,7 +1376,7 @@ namespace matricks {
     size_t result = 0;
     
  
-    for (size_t i = 0; i< a.recursive_size(); i++)
+    for (size_t i = 0; i< a.total_size(); i++)
       result += static_cast<size_t>(a.dat(i));
     
     return result;

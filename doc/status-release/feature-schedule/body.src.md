@@ -172,7 +172,7 @@
     template <int NE>
     MultiArray<E, R, D, M>(const Vector<E, NE, D, M>& v) {
       resize(v.recursive_dims());
-      for (int c = 0; c < v.recursive_size(); c++ ) {
+      for (int c = 0; c < v.total_size(); c++ ) {
         (*this)[c] = v[c];
       }
       constructorHelper();

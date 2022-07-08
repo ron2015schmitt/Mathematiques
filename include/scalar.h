@@ -228,12 +228,12 @@ namespace mathq {
         return data.size();
       }
     }
-    inline size_t el_recursive_size(void) const {
+    inline size_t el_total_size(void) const {
       if constexpr (depth<2) {
         return 1;
       }
       else {
-        return data.recursive_size();
+        return data.total_size();
       }
     }
 
@@ -243,12 +243,12 @@ namespace mathq {
     //                       Nested Size related  
     //**********************************************************************
 
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (depth<2) {
         return this->size();
       }
       else {
-        return (this->size())*(this->el_recursive_size());
+        return (this->size())*(this->el_total_size());
       }
     }
     std::vector<Dimensions>& recursive_dims(void) const {
@@ -324,7 +324,7 @@ namespace mathq {
     //**********************************************************************
 
     // -------------------- NumberType dat(n) --------------------
-    // NOTE: indexes over [0] to [recursive_size()]
+    // NOTE: indexes over [0] to [total_size()]
     // -------------------------------------------------------------
 
     // "read/write": unsigned
@@ -466,7 +466,7 @@ namespace mathq {
 
     template <int D1 = depth>
     typename std::enable_if<(D1>1), Scalar<Element>& >::type operator=(const NumberType& d) {
-      for (size_t i = 0; i < recursive_size(); i++) {
+      for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
       return *this;
@@ -479,7 +479,7 @@ namespace mathq {
       }
       else {
         resize(s2.recursive_dims());
-        for (size_t i = 0; i < recursive_size(); i++) {
+        for (size_t i = 0; i < total_size(); i++) {
           (*this).dat(i) = s2.dat(i);
         }
       }
@@ -501,7 +501,7 @@ namespace mathq {
       }
       else {
         resize(x.recursive_dims());
-        for (size_t i = 0; i < recursive_size(); i++) {
+        for (size_t i = 0; i < total_size(); i++) {
           this->dat(i) = x.dat(i);
         }
       }

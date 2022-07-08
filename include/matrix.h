@@ -311,7 +311,7 @@ namespace mathq {
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t el_recursive_size(void) const {
+    inline size_t el_total_size(void) const {
       if constexpr (depth_value<2) {
         return 1;
       }
@@ -321,18 +321,18 @@ namespace mathq {
           return 0;
         }
         else {
-          return data_[0].recursive_size();
+          return data_[0].total_size();
         }
       }
     }
 
     // the total number of numbers in this data structure
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (depth_value<2) {
         return this->size();
       }
       else {
-        return (this->size())*(this->el_recursive_size());
+        return (this->size())*(this->el_total_size());
       }
     }
     std::vector<Dimensions>& recursive_dims(void) const {
@@ -565,7 +565,7 @@ namespace mathq {
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    // NOTE: indexes over [0] to [recursive_size()] and note return type
+    // NOTE: indexes over [0] to [total_size()] and note return type
 
     // "read/write"
     NumberType& dat(const size_t n) {
@@ -579,7 +579,7 @@ namespace mathq {
         return data_[k];
       }
       else {
-        const int Ndeep = this->el_recursive_size();
+        const int Ndeep = this->el_total_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
         return data_[j].dat(k);
@@ -598,7 +598,7 @@ namespace mathq {
         return data_[k];
       }
       else {
-        const int Ndeep = this->el_recursive_size();
+        const int Ndeep = this->el_total_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
         return data_[j].dat(k);
@@ -815,7 +815,7 @@ namespace mathq {
     template <class T = Element>
     typename std::enable_if<!std::is_same<T, NumberType>::value, Matrix<Element, N1, N2>& >::type operator=(const NumberType& d) {
 
-      for (size_t i = 0; i < recursive_size(); i++) {
+      for (size_t i = 0; i < total_size(); i++) {
         data_.dat(i) = d;
       }
       return *this;
@@ -834,7 +834,7 @@ namespace mathq {
       }
       else {
         resize(m.recursive_dims());
-        for (size_t i = 0; i < recursive_size(); i++) {
+        for (size_t i = 0; i < total_size(); i++) {
           this->dat(i) = m.dat(i);
         }
       }
@@ -855,7 +855,7 @@ namespace mathq {
       }
       else {
         resize(x.recursive_dims());
-        for (size_t i = 0; i < recursive_size(); i++) {
+        for (size_t i = 0; i < total_size(); i++) {
           this->dat(i) = x.dat(i);
         }
       }

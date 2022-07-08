@@ -8,13 +8,13 @@ _Most or all of these features have been implemented._
 Implement code necessary so that mathematical operations work for recursive tensors, eg. `Vector<Vector<double>>`.  This allows for the most straightforward way to implement vector and tensor functions of space and time.
 
 
-1. Methodology is to use `x.dat(index)``, for "deep indexing" that indexes from `0` to `recursive_size()-1`, covering all the elements contained.  
+1. Methodology is to use `x.dat(index)``, for "deep indexing" that indexes from `0` to `total_size()-1`, covering all the elements contained.  
 1. For shallow indexing, ie first level indexing, use the `operator()` operators:
     1. `Scalar()` ✓ complete 
     1. `Vector(i)` ✓ complete 
     1. Expressions — in progress
        1. get `Vector<Vector<double>> + Vector<double>` working
-       1. add `.dat(i)`, `.depth()`, `.recursive_size()`, `setequals` vistor pattern etc methods to MultiArrayAbstract
+       1. add `.dat(i)`, `.depth()`, `.total_size()`, `setequals` vistor pattern etc methods to MultiArrayAbstract
        1. for each class `Scalar`, `Vector`, etc, use setquals pattern when inside equals (MArrayExpR) and uses deep indexing
        1. convert all binary functions in `functions.h` to the new methodlogy of `operator+`, including use of `NumberTrait`
        1. have alternate version of binary operators `addr` that uses recursion. This is faster in certain cases.

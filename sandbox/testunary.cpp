@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
     MultiArray<double, 3> t1;
     TLDISP(t1.dims());
     TLDISP(t1.recursive_dims());
-    TLDISP(t1.recursive_size());
+    TLDISP(t1.total_size());
     TLDISP(t1.depth());
     TLDISP(t1);
     Dimensions dims(3, 2, 5);

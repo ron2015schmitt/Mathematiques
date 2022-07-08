@@ -255,7 +255,7 @@ namespace mathq {
     inline static size_t size(NullType x) {
       return 0;
     }
-    inline static size_t recursive_size(NullType x) {
+    inline static size_t total_size(NullType x) {
       return 0;
     }
   };
@@ -278,7 +278,7 @@ namespace mathq {
     inline static size_t size(const Number x) {
       return 1;
     }
-    inline static size_t recursive_size(const Number& x) {
+    inline static size_t total_size(const Number& x) {
       return 1;
     }
   };
@@ -300,7 +300,7 @@ namespace mathq {
     inline static size_t size(const Number x) {
       return 1;
     }
-    inline static size_t recursive_size(const Number& x) {
+    inline static size_t total_size(const Number& x) {
       return 1;
     }
   };
@@ -323,7 +323,7 @@ namespace mathq {
     inline static size_t size(const Number x) {
       return 1;
     }
-    inline static size_t recursive_size(const Number& x) {
+    inline static size_t total_size(const Number& x) {
       return 1;
     }
   };
@@ -345,7 +345,7 @@ namespace mathq {
     inline static size_t size(const Number x) {
       return 1;
     }
-    inline static size_t recursive_size(const Number& x) {
+    inline static size_t total_size(const Number& x) {
       return 1;
     }
   };
@@ -370,8 +370,8 @@ namespace mathq {
     inline static size_t size(const InputType& x) {
       return x.size();
     }
-    inline static size_t recursive_size(const InputType& x) {
-      return x.recursive_size();
+    inline static size_t total_size(const InputType& x) {
+      return x.total_size();
     }
   };
 
@@ -398,8 +398,8 @@ namespace mathq {
     inline static size_t size(const InputType& x) {
       return x.size();
     }
-    inline static size_t recursive_size(const InputType& x) {
-      return x.recursive_size();
+    inline static size_t total_size(const InputType& x) {
+      return x.total_size();
     }
   };
 
@@ -424,8 +424,8 @@ namespace mathq {
     inline static size_t size(const InputType& x) {
       return x.size();
     }
-    inline static size_t recursive_size(const InputType& x) {
-      return x.recursive_size();
+    inline static size_t total_size(const InputType& x) {
+      return x.total_size();
     }
   };
 

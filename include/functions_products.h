@@ -81,7 +81,7 @@ namespace mathq
 
    //   E3 *result = new E3;
    //   *result = 0;
-   //   for (size_t i = 0; i < a.recursive_size(); i++)
+   //   for (size_t i = 0; i < a.total_size(); i++)
    //   {
    //     *result += a[i] * b[i];
    //   }
@@ -120,7 +120,7 @@ namespace mathq
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
     E3* result = new E3;
     *result = 0;
-    for (size_t i = 0; i < v1.recursive_size(); i++) {
+    for (size_t i = 0; i < v1.total_size(); i++) {
       *result += v1[i] * v2[i];
     }
     return *result;
@@ -313,7 +313,7 @@ namespace mathq
      //     // (Vector|Vector)
      //     if ((a.rank() == 1) && (b.rank() == 1)) {
      //       Number result = Number(0);
-     //       for (size_t i = a.recursive_size(); i--;) {
+     //       for (size_t i = a.total_size(); i--;) {
      // 	result += a[i]*b[i];
      //       }
      //       return result;

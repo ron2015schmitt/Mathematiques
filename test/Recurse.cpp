@@ -119,19 +119,19 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // el_recursive_size()
+    // el_total_size()
     printStart(++testnum);
     expected = 1;
-    testcode(result = s.el_recursive_size());
+    testcode(result = s.el_total_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // recursive_size()
+    // total_size()
     printStart(++testnum);
     expected = 1;
-    testcode(result = s.recursive_size());
+    testcode(result = s.total_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -262,19 +262,19 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // el_recursive_size()
+    // el_total_size()
     printStart(++testnum);
     expected = 2;
-    testcode(result = s.el_recursive_size());
+    testcode(result = s.el_total_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // recursive_size()
+    // total_size()
     printStart(++testnum);
     expected = 2;
-    testcode(result = s.recursive_size());
+    testcode(result = s.total_size());
     pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -416,19 +416,19 @@ int main(int argc, char* argv[]) {
   //   allpass = allpass && pass;
   //   failnum += (!pass);
 
-  //   // el_recursive_size()
+  //   // el_total_size()
   //   printStart(++testnum);
   //   expected = 4;
-  //   testcode( result = s.el_recursive_size() );
+  //   testcode( result = s.el_total_size() );
   //   pass = (result==expected);
   //   printEnd(pass,result,expected);
   //   allpass = allpass && pass;
   //   failnum += (!pass);
 
-  //   // recursive_size()
+  //   // total_size()
   //   printStart(++testnum);
   //   expected = 4;
-  //   testcode( result = s.recursive_size() );
+  //   testcode( result = s.total_size() );
   //   pass = (result==expected);
   //   printEnd(pass,result,expected);
   //   allpass = allpass && pass;

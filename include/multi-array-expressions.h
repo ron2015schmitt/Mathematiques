@@ -142,11 +142,11 @@ namespace mathq {
     size_t element_size(void) const {
       return derived().element_size();
     }
-    size_t el_recursive_size(void) const {
-      return derived().el_recursive_size();
+    size_t el_total_size(void) const {
+      return derived().el_total_size();
     }
-    size_t recursive_size(void) const {
-      return derived().recursive_size();
+    size_t total_size(void) const {
+      return derived().total_size();
     }
 
 #if MATHQ_DEBUG>=1
@@ -284,11 +284,11 @@ namespace mathq {
     size_t element_size(void) const {
       return derived().element_size();
     }
-    size_t el_recursive_size(void) const {
-      return derived().el_recursive_size();
+    size_t el_total_size(void) const {
+      return derived().el_total_size();
     }
-    size_t recursive_size(void) const {
-      return derived().recursive_size();
+    size_t total_size(void) const {
+      return derived().total_size();
     }
 
 

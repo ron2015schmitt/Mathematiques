@@ -82,20 +82,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (depth <= 1) {
         return 1;
       }
       else {
-        return x_.el_recursive_size();
+        return x_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (depth <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->el_recursive_size());
+        return (this->size()) * (this->el_total_size());
       }
     }
 
@@ -190,20 +190,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (depth <= 1) {
         return 1;
       }
       else {
-        return x_.el_recursive_size();
+        return x_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (depth <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->el_recursive_size());
+        return (this->size()) * (this->el_total_size());
       }
     }
 
@@ -350,7 +350,7 @@ namespace mathq {
     }
     // helper for: T<Element> + Element
     const NT3 dat_el1(const size_t i) const {
-      size_t j = i % b_.recursive_size();
+      size_t j = i % b_.total_size();
       return OP::apply(a_.dat(i), b_.dat(j));
     }
 
@@ -361,7 +361,7 @@ namespace mathq {
     }
     // helper for: Element + T<Element>
     const NT3 dat_el2(const size_t i) const {
-      size_t j = i % a_.recursive_size();
+      size_t j = i % a_.total_size();
       return OP::apply(a_.dat(j), b_.dat(i));
     }
 
@@ -523,20 +523,20 @@ namespace mathq {
         return b_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (D1 >= D2) {
-        return a_.el_recursive_size();
+        return a_.el_total_size();
       }
       else {
-        return b_.el_recursive_size();
+        return b_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (D1 >= D2) {
-        return a_.recursive_size();
+        return a_.total_size();
       }
       else {
-        return b_.recursive_size();
+        return b_.total_size();
       }
     }
 
@@ -682,7 +682,7 @@ namespace mathq {
     }
     // helper for: T<Element> + Element
     const NT3 dat_el1(const size_t i) const {
-      size_t j = i % b_.recursive_size();
+      size_t j = i % b_.total_size();
       return f_(a_.dat(i), b_.dat(j));
     }
 
@@ -693,7 +693,7 @@ namespace mathq {
     }
     // helper for: Element + T<Element>
     const NT3 dat_el2(const size_t i) const {
-      size_t j = i % a_.recursive_size();
+      size_t j = i % a_.total_size();
       return f_(a_.dat(j), b_.dat(i));
     }
 
@@ -855,20 +855,20 @@ namespace mathq {
         return b_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (D1 >= D2) {
-        return a_.el_recursive_size();
+        return a_.el_total_size();
       }
       else {
-        return b_.el_recursive_size();
+        return b_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (D1 >= D2) {
-        return a_.recursive_size();
+        return a_.total_size();
       }
       else {
-        return b_.recursive_size();
+        return b_.total_size();
       }
     }
 
@@ -1065,26 +1065,26 @@ namespace mathq {
         return c_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (D1 > 0) {
-        return a_.el_recursive_size();
+        return a_.el_total_size();
       }
       else if constexpr (D2 > 0) {
-        return b_.el_recursive_size();
+        return b_.el_total_size();
       }
       else {
-        return c_.el_recursive_size();
+        return c_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (D1 > 0) {
-        return a_.recursive_size();
+        return a_.total_size();
       }
       else if constexpr (D2 > 0) {
-        return b_.recursive_size();
+        return b_.total_size();
       }
       else {
-        return c_.recursive_size();
+        return c_.total_size();
       }
     }
 
@@ -1215,20 +1215,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (depth <= 1) {
         return 1;
       }
       else {
-        return x_.el_recursive_size();
+        return x_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (depth <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->el_recursive_size());
+        return (this->size()) * (this->el_total_size());
       }
     }
 
@@ -1345,20 +1345,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
-        return x_.el_recursive_size();
+        return x_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (depth_value <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->el_recursive_size());
+        return (this->size()) * (this->el_total_size());
       }
     }
 
@@ -1448,20 +1448,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (depth < 2) {
         return 1;
       }
       else {
-        return x_.el_recursive_size();
+        return x_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (depth < 2) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->el_recursive_size());
+        return (this->size()) * (this->el_total_size());
       }
     }
     std::string classname() const {
@@ -1507,11 +1507,11 @@ namespace mathq {
     }
 
     const Number dat(const size_t i) const {
-      if (i < x_.recursive_size()) {
+      if (i < x_.total_size()) {
         return x_.dat(i);
       }
       else {
-        return y_.dat(i - x_.recursive_size());
+        return y_.dat(i - x_.total_size());
       }
     }
     const Element operator[](const size_t i) const {
@@ -1566,20 +1566,20 @@ namespace mathq {
         return x_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (depth <= 1) {
         return 1;
       }
       else {
-        return x_.el_recursive_size();
+        return x_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (depth <= 1) {
         return this->size();
       }
       else {
-        return x_.recursive_size() + y_.recursive_size();
+        return x_.total_size() + y_.total_size();
       }
     }
 
@@ -1666,20 +1666,20 @@ namespace mathq {
         return a_.element_size();
       }
     }
-    size_t el_recursive_size(void) const {
+    size_t el_total_size(void) const {
       if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
-        return a_.el_recursive_size();
+        return a_.el_total_size();
       }
     }
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       if constexpr (depth_value <= 1) {
         return this->size();
       }
       else {
-        return (this->size()) * (this->el_recursive_size());
+        return (this->size()) * (this->el_total_size());
       }
     }
     std::string classname() const {

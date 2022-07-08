@@ -198,12 +198,12 @@ namespace mathq {
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t el_recursive_size(void) const {
+    inline size_t el_total_size(void) const {
       return 1;
     }
 
     // the total number of numbers in this data structure
-    size_t recursive_size(void) const {
+    size_t total_size(void) const {
       return this->size();
     }
     std::vector<Dimensions>& recursive_dims(void) const {
@@ -271,7 +271,7 @@ namespace mathq {
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    // NOTE: indexes over [0] to [recursive_size()] and note return type
+    // NOTE: indexes over [0] to [total_size()] and note return type
 
     // read
     const Number dat(const size_t n)  const {

@@ -81,7 +81,6 @@ namespace mathq {
     // --------------------- Vector(size N)  ---------------------
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
-
     explicit MultiArray(const size_t N) {
       data_.resize(N);
       constructorHelper();
@@ -197,7 +196,7 @@ namespace mathq {
 
 
     //**********************************************************************
-    //                         Basis characteristics
+    //                         Basic characteristics
     //**********************************************************************
 
     bool isExpression(void) const {
@@ -209,22 +208,68 @@ namespace mathq {
     }
 
     //**********************************************************************
-    //                            Size related  
+    //                         Rank,Depth,Sizes
     //**********************************************************************
 
     size_t rank(void) const {
       return rank_value;
     }
+
     inline size_t depth(void) const {
       return depth_value;
     }
+
     inline size_t size(void) const {
       return data_.size();
     }
 
-    // defined later since Dimensions is dependent on Vector
-    Dimensions<rank_value>& dims(void) const;
 
+    // the size of each element
+    inline size_t element_size(void) const {
+      if constexpr (depth_value<2) {
+        return 1;
+      }
+      else {
+        if (size() > 0) {
+          return data_[0].size();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.size();
+        }
+      }
+    }
+
+    // // the deep size of an element: the total number of numbers in an element
+    inline size_t el_total_size(void) const {
+      if constexpr (depth_value<2) {
+        return 1;
+      }
+      else {
+        if (size() > 0) {
+          return data_[0].total_size();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.total_size();
+        }
+      }
+    }
+
+    // // the total number of numbers in this data structure
+    size_t total_size(void) const {
+      if constexpr (depth_value<2) {
+        return this->size();
+      }
+      else {
+        return (this->size())*(this->el_total_size());
+      }
+    }
+
+
+    //**********************************************************************
+    //                          Resize
+    //**********************************************************************
 
     // --------------------- .resize(N) ---------------------
 
@@ -256,8 +301,12 @@ namespace mathq {
     //   return *this;
     // }
 
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
 
-
+    // defined later since Dimensions is dependent on Vector
+    Dimensions<rank_value>& dims(void) const;
 
     ElementDimensionsType& element_dims(void) const {
       if constexpr (depth_value>1) {
@@ -272,47 +321,6 @@ namespace mathq {
       return *(new ElementDimensionsType{});
     }
 
-    // the size of each element
-    inline size_t element_size(void) const {
-      if constexpr (depth_value<2) {
-        return 1;
-      }
-      else {
-        if (size() > 0) {
-          return data_[0].size();
-        }
-        else {
-          Element& x = *(new Element);
-          return x.size();
-        }
-      }
-    }
-
-    // // the deep size of an element: the total number of numbers in an element
-    inline size_t el_recursive_size(void) const {
-      if constexpr (depth_value<2) {
-        return 1;
-      }
-      else {
-        if (size() > 0) {
-          return data_[0].recursive_size();
-        }
-        else {
-          Element& x = *(new Element);
-          return x.recursive_size();
-        }
-      }
-    }
-
-    // // the total number of numbers in this data structure
-    size_t recursive_size(void) const {
-      if constexpr (depth_value<2) {
-        return this->size();
-      }
-      else {
-        return (this->size())*(this->el_recursive_size());
-      }
-    }
 
     RecursiveDimensions<depth_value>& recursive_dims(void) const {
       RecursiveDimensions<depth_value>& my_ndims = *(new RecursiveDimensions<depth_value>);
@@ -338,13 +346,10 @@ namespace mathq {
 
 
 
-
-
-
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    // NOTE: indexes over [0] to [recursive_size()] and note return type
+    // NOTE: indexes over [0] to [total_size()] and note return type
 
     // "read/write"
     NumberType& dat(const size_t n) {
@@ -357,7 +362,7 @@ namespace mathq {
         return data_[k];
       }
       else {
-        const int Ndeep = this->el_recursive_size();
+        const int Ndeep = this->el_total_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
         return data_[j].dat(k);
@@ -375,7 +380,7 @@ namespace mathq {
         return data_[k];
       }
       else {
-        const int Ndeep = this->el_recursive_size();
+        const int Ndeep = this->el_total_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
         return data_[j].dat(k);
@@ -574,7 +579,7 @@ namespace mathq {
 
     // template <class T = Element>
     // typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N1>& >::type operator=(const NumberType& d) {
-    //   for (size_t i = 0; i < recursive_size(); i++) {
+    //   for (size_t i = 0; i < total_size(); i++) {
     //     (*this).dat(i) = d;
     //   }
     //   return *this;
@@ -599,7 +604,7 @@ namespace mathq {
     //   }
     //   else {
     //     resize(v.recursive_dims());
-    //     for (size_t i = 0; i < recursive_size(); i++) {
+    //     for (size_t i = 0; i < total_size(); i++) {
     //       this->dat(i) = v.dat(i);
     //     }
     //   }
@@ -624,7 +629,7 @@ namespace mathq {
     //   }
     //   else {
     //     resize(x.recursive_dims());
-    //     for (size_t i = 0; i < recursive_size(); i++) {
+    //     for (size_t i = 0; i < total_size(); i++) {
     //       this->dat(i) = x.dat(i);
     //     }
     //   }
@@ -1517,12 +1522,12 @@ namespace mathq {
     }
 
 
-    };
-
-
-
-
   };
+
+
+
+
+};
 
 
 #endif 

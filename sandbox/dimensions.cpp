@@ -222,7 +222,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v1);
   TRDISP(v1.size());
   TRDISP(v1.element_size());
-  TRDISP(v1.recursive_size());
+  TRDISP(v1.total_size());
   TRDISP(v1.dims());
   TRDISP(v1.depth());
   TRDISP(v1.recursive_dims());
@@ -234,7 +234,7 @@ int main(int argc, char* argv[]) {
   TRDISP(u2);
   TRDISP(u2.size());
   TRDISP(u2.element_size());
-  TRDISP(u2.recursive_size());
+  TRDISP(u2.total_size());
   TRDISP(u2.dims());
   TRDISP(u2.depth());
   TRDISP(u2.recursive_dims());
@@ -256,8 +256,8 @@ int main(int argc, char* argv[]) {
   TRDISP(u);
   TRDISP(u.size());
   TRDISP(u.element_size());
-  TRDISP(u.el_recursive_size());
-  TRDISP(u.recursive_size());
+  TRDISP(u.el_total_size());
+  TRDISP(u.total_size());
   TRDISP(u.dims());
   TRDISP(u.depth());
   TRDISP(u.recursive_dims());
