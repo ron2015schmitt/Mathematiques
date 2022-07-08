@@ -91,6 +91,10 @@ namespace mathq {
   template<size_t depth_ = 0>
   // class NestedDimensions : public Vector<Dimensions, depth_> {   // this causes "error: invalid use of incomplete type ".  Need to make Dimensions into a templated type
   // class NestedDimensions : public Vector<Vector<size_t>, depth_> {
+
+
+    // need to make Dimensions a template with Element type because otherwise when we get elements they will be of type Vector
+    // unless we cast them in the operators[]
   class NestedDimensions : public Vector<Vector<size_t>, depth_> {
 
     // template<typename T, size_t depth_>
