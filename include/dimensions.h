@@ -33,8 +33,6 @@ namespace mathq {
         Parent::operator[](n) = temp[n];
       }
     }
-    // void foo(Args&& ... args) {
-    // auto&& first = std::get<0>(std::forward_as_tuple(std::forward<Args>(args)...));
 
     Dimensions(const Dimensions& dims2) {
       resize(dims2.size());
@@ -43,39 +41,29 @@ namespace mathq {
       }
     }
 
-    // std::vector<size_t>& reduce() const {
-    //   std::vector<size_t>& v = *(new std::vector<size_t>{});
-    //   for (size_t i = 0; i < this->rank(); i++) {
-    //     if ((*this)[i] != 1) {
-    //       v.push_back((*this)[i]);
-    //     }
-    //   }
-    //   return v;
-    // }
+    Dimensions& getReducedDims() const {
+      Dimensions& v = *(new Dimensions{});
+      v.resize(size());
+      for (size_t i = 0; i < size(); i++) {
+        v[i] = (*this)[i];
+      }
+      return v;
+    }
 
-    // template <size_t rank2, typename T2>
-    // bool equiv(const Dimensions<rank2, T2>& dims2) const {
-    //   return (this->reduce() == dims2.reduce());
-    // }
+    bool equiv(const Dimensions& dims2) const {
+      return (this->getReducedDims() == dims2.getReducedDims());
+    }
 
-    // DynamicDims<rank_>& getReverse() const {
-    //   DynamicDims<rank_>& dims2 = *(new DynamicDims<rank_>{});
-    //   // reverse order
-    //   size_t ii = 0;
-    //   for (size_t k = this->rank()-1; k >= 0; k--) {
-    //     dims2[ii++] = (*this)[k];
-    //   }
-    //   return dims2;
-    // }
-
-    // explicit operator DynamicDims<rank_>() const {
-    //   DynamicDims<rank_>& dims2 = *(new DynamicDims<rank_>{});
-    //   // reverse order
-    //   for (size_t k = 0; k < rank(); k++) {
-    //     dims2[k] = (*this)[k];
-    //   }
-    //   return dims2;
-    // }
+    Dimensions& getReverse() const {
+      Dimensions& v = *(new Dimensions{});
+      v.resize(size());
+      // reverse order
+      size_t ii = 0;
+      for (size_t k = size()-1; k >= 0; k--) {
+        v[ii++] = (*this)[k];
+      }
+      return v;
+    }
 
     inline std::string classname() const {
       using namespace display;
@@ -87,24 +75,10 @@ namespace mathq {
 
 
 
-  // template <size_t rank1, typename T1, size_t rank2, typename T2>
-  // inline bool equiv(const Dimensions& dims1, const Dimensions& dims2) {
-  //   return dims1.equiv(dims2);
-  // }
-
-
-  template <typename Element>
-  class Tester : public Vector<Element> {
-  public:
-    using Type = Tester<Element>;
-    using ConcreteType = Tester<Element>;
-    using ElementType = Element;
-    using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
-
-    Tester() {
-    }
-  };
+  template <size_t rank1, typename T1, size_t rank2, typename T2>
+  inline bool equiv(const Dimensions& dims1, const Dimensions& dims2) {
+    return dims1.equiv(dims2);
+  }
 
 
   // ***************************************************************************

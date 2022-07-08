@@ -29,3 +29,20 @@ Currently using `c++20` and `g++ 10.3`
 1. You cannot specify or even determine the number of paramters for C-style variadic function parameters.  You have to pass the size first or have the size as a template and hope the user doesn't provide less because it will segmentation fault.  Same problem as arrays.
 
 1. for the `Vector = MultiArray<Element, 1, N1>` specialization, Vector can be used for the constructor but it must be specified as `Vector<Element, N1>()`. The decontructor must be `~Vector()`. Best to use MultiArray instead
+
+
+1. parameter pack function - method 1
+```C++
+    void foo(Args ... args) {
+      const size_t N = sizeof...(dynamic_dims);
+      std::array<size_t, N> temp = { (static_cast<size_t>(dynamic_dims))... };
+
+    }
+```
+
+1. parameter pack function - method 2
+```C++
+    void foo(Args&& ... args) {
+    auto&& first = std::get<0>(std::forward_as_tuple(std::forward<Args>(args)...));
+    }
+```
