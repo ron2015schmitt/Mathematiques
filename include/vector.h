@@ -88,7 +88,7 @@ namespace mathq {
 
     // template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
     //   explicit MultiArray(const NestedDims<depth_value>& nested_dims) {
-    //   // TRDISP(deepdims);
+    //   // TRDISP(nested_dims);
     //   this->resize(nested_dims);
     //   constructorHelper();
     // }
@@ -233,19 +233,19 @@ namespace mathq {
       return *this;
     }
 
-    // TODO: should just pass an index and make deepdims const
+    // TODO: should just pass an index and make nested_dims const
 
     // Vector<Element, N1>& resize(const std::vector<Dimensions>& deepdims_in) {
-    //   std::vector<Dimensions<rank_value>> deepdims(deepdims_in);
-    //   Dimensions<rank_value> newdims = deepdims[0];
+    //   std::vector<Dimensions<rank_value>> nested_dims(deepdims_in);
+    //   Dimensions<rank_value> newdims = nested_dims[0];
     //   const size_t Nnew = newdims[0];
     //   if constexpr (is_dynamic_value) {
     //     resize(Nnew);
     //   }
     //   if constexpr (depth>1) {
-    //     deepdims.erase(deepdims.begin());
+    //     nested_dims.erase(nested_dims.begin());
     //     for (size_t i = 0; i < size(); i++) {
-    //       std::vector<Dimensions<rank_value>> ddims(deepdims);
+    //       std::vector<Dimensions<rank_value>> ddims(nested_dims);
     //       data_[i].resize(ddims);
     //     }
     //   }
@@ -309,15 +309,15 @@ namespace mathq {
       //   }
     }
 
-    // std::vector<Dimensions<rank_value>>& deepdims(void) const {
+    // std::vector<Dimensions<rank_value>>& nested_dims(void) const {
     //   std::vector<Dimensions<rank_value>>& ddims = *(new std::vector<Dimensions<rank_value>>);
-    //   return deepdims(ddims);
+    //   return nested_dims(ddims);
     // }
-    // std::vector<Dimensions<rank_value>>& deepdims(std::vector<Dimensions<rank_value>>& parentdims) const {
+    // std::vector<Dimensions<rank_value>>& nested_dims(std::vector<Dimensions<rank_value>>& parentdims) const {
     //   parentdims.push_back(dims());
     //   if constexpr (depth>1) {
     //     if (size()>0) {
-    //       data_[0].deepdims(parentdims);
+    //       data_[0].nested_dims(parentdims);
     //     }
     //   }
     //   return parentdims;
@@ -406,7 +406,7 @@ namespace mathq {
     // NumberType& dat(const Indices& inds) {
     //   Indices inds_next(inds);
     //   // MOUT << "Vector: "<<std::endl;
-    //   // error if (inds.size() != sum deepdims[i].rank
+    //   // error if (inds.size() != sum nested_dims[i].rank
     //   size_t n = inds_next[0];
     //   // MOUT << "  ";
     //   inds_next.erase(inds_next.begin());
@@ -421,7 +421,7 @@ namespace mathq {
     // // "read": x.dat(Indices)
     // const NumberType dat(const Indices& inds)  const {
     //   Indices inds_next(inds);
-    //   // error if (inds.size() != sum deepdims[i].rank
+    //   // error if (inds.size() != sum nested_dims[i].rank
     //   size_t n = inds_next[0];
     //   inds_next.erase(inds_next.begin());
     //   if constexpr (depth>1) {
@@ -585,7 +585,7 @@ namespace mathq {
     //     }
     //   }
     //   else {
-    //     resize(v.deepdims());
+    //     resize(v.nested_dims());
     //     for (size_t i = 0; i < deepsize(); i++) {
     //       this->dat(i) = v.dat(i);
     //     }
@@ -610,7 +610,7 @@ namespace mathq {
     //     }
     //   }
     //   else {
-    //     resize(x.deepdims());
+    //     resize(x.nested_dims());
     //     for (size_t i = 0; i < deepsize(); i++) {
     //       this->dat(i) = x.dat(i);
     //     }

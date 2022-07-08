@@ -59,11 +59,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& deepdims(void) const {
-      return x_.deepdims();
+    std::vector<Dimensions>& nested_dims(void) const {
+      return x_.nested_dims();
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      return x_.deepdims(parentdims);
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+      return x_.nested_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;
@@ -167,11 +167,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& deepdims(void) const {
-      return x_.deepdims();
+    std::vector<Dimensions>& nested_dims(void) const {
+      return x_.nested_dims();
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      return x_.deepdims(parentdims);
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+      return x_.nested_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;
@@ -488,20 +488,20 @@ namespace mathq {
         return b_.dims();
       }
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    std::vector<Dimensions>& nested_dims(void) const {
       if constexpr (D1 >= D2) {
-        return a_.deepdims();
+        return a_.nested_dims();
       }
       else {
-        return b_.deepdims();
+        return b_.nested_dims();
       }
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
       if constexpr (D1 >= D2) {
-        return a_.deepdims(parentdims);
+        return a_.nested_dims(parentdims);
       }
       else {
-        return b_.deepdims(parentdims);
+        return b_.nested_dims(parentdims);
       }
     }
     bool isExpression(void) const {
@@ -820,20 +820,20 @@ namespace mathq {
         return b_.dims();
       }
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    std::vector<Dimensions>& nested_dims(void) const {
       if constexpr (D1 >= D2) {
-        return a_.deepdims();
+        return a_.nested_dims();
       }
       else {
-        return b_.deepdims();
+        return b_.nested_dims();
       }
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
       if constexpr (D1 >= D2) {
-        return a_.deepdims(parentdims);
+        return a_.nested_dims(parentdims);
       }
       else {
-        return b_.deepdims(parentdims);
+        return b_.nested_dims(parentdims);
       }
     }
     bool isExpression(void) const {
@@ -1018,26 +1018,26 @@ namespace mathq {
         return c_.dims();
       }
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    std::vector<Dimensions>& nested_dims(void) const {
       if constexpr (D1 > 0) {
-        return a_.deepdims();
+        return a_.nested_dims();
       }
       else if constexpr (D2 > 0) {
-        return b_.deepdims();
+        return b_.nested_dims();
       }
       else {
-        return c_.deepdims();
+        return c_.nested_dims();
       }
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
       if constexpr (D1 > 0) {
-        return a_.deepdims(parentdims);
+        return a_.nested_dims(parentdims);
       }
       else if constexpr (D2 > 0) {
-        return b_.deepdims(parentdims);
+        return b_.nested_dims(parentdims);
       }
       else {
-        return c_.deepdims(parentdims);
+        return c_.nested_dims(parentdims);
       }
     }
     bool isExpression(void) const {
@@ -1192,11 +1192,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& deepdims(void) const {
-      return x_.deepdims();
+    std::vector<Dimensions>& nested_dims(void) const {
+      return x_.nested_dims();
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      return x_.deepdims(parentdims);
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+      return x_.nested_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;
@@ -1322,11 +1322,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& deepdims(void) const {
-      return x_.deepdims();
+    std::vector<Dimensions>& nested_dims(void) const {
+      return x_.nested_dims();
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      return x_.deepdims(parentdims);
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+      return x_.nested_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;
@@ -1539,13 +1539,13 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    std::vector<Dimensions>& nested_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return deepdims(ddims);
+      return nested_dims(ddims);
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
       const int N = parentdims.size();
-      std::vector<Dimensions>& ddims = x_.deepdims(parentdims);
+      std::vector<Dimensions>& ddims = x_.nested_dims(parentdims);
       ddims[N] = this->dims();
       return ddims;
     }
@@ -1646,11 +1646,11 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& deepdims(void) const {
-      return a_.deepdims();
+    std::vector<Dimensions>& nested_dims(void) const {
+      return a_.nested_dims();
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      return a_.deepdims(parentdims);
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
+      return a_.nested_dims(parentdims);
     }
     bool isExpression(void) const {
       return true;

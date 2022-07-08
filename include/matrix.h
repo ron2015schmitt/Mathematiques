@@ -335,15 +335,15 @@ namespace mathq {
         return (this->size())*(this->eldeepsize());
       }
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    std::vector<Dimensions>& nested_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return deepdims(ddims);
+      return nested_dims(ddims);
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
       if constexpr (depth_value>1) {
         if (size()>0) {
-          data_[0].deepdims(parentdims);
+          data_[0].nested_dims(parentdims);
         }
       }
       return parentdims;
@@ -382,16 +382,16 @@ namespace mathq {
     }
 
 
-    // TODO: should just pass an index and make deepdims const
+    // TODO: should just pass an index and make nested_dims const
 
     Matrix<Element, N1, N2>& resize(const std::vector<Dimensions>& deepdims_new) {
-      std::vector<Dimensions> deepdims(deepdims_new);
-      Dimensions newdims = deepdims[0];
+      std::vector<Dimensions> nested_dims(deepdims_new);
+      Dimensions newdims = nested_dims[0];
       resize(newdims);
       if constexpr (depth_value>1) {
-        deepdims.erase(deepdims.begin());
+        nested_dims.erase(nested_dims.begin());
         for (size_t i = 0; i < size(); i++) {
-          std::vector<Dimensions> ddims(deepdims);
+          std::vector<Dimensions> ddims(nested_dims);
           data_[i].resize(ddims);
         }
       }
@@ -613,7 +613,7 @@ namespace mathq {
     NumberType& dat(const Indices& inds) {
       Indices inds_next(inds);
       //MOUT << "Matrix: "<<std::endl;
-      // error if (inds.size() != sum deepdims[i].rank)
+      // error if (inds.size() != sum nested_dims[i].rank)
       size_t n = inds_next[0];
       inds_next.erase(inds_next.begin());
       size_t m = inds_next[0];
@@ -634,7 +634,7 @@ namespace mathq {
     // "read": x.dat(Indices)
     const NumberType dat(const Indices& inds)  const {
       Indices inds_next(inds);
-      // error if (inds.size() != sum deepdims[i].rank)
+      // error if (inds.size() != sum nested_dims[i].rank)
       size_t n = inds_next[0];
       inds_next.erase(inds_next.begin());
       size_t m = inds_next[0];
@@ -833,7 +833,7 @@ namespace mathq {
         }
       }
       else {
-        resize(m.deepdims());
+        resize(m.nested_dims());
         for (size_t i = 0; i < deepsize(); i++) {
           this->dat(i) = m.dat(i);
         }
@@ -854,7 +854,7 @@ namespace mathq {
         }
       }
       else {
-        resize(x.deepdims());
+        resize(x.nested_dims());
         for (size_t i = 0; i < deepsize(); i++) {
           this->dat(i) = x.dat(i);
         }

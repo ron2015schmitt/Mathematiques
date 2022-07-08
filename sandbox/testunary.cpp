@@ -139,7 +139,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t0);
     MultiArray<double, 3> t1;
     TLDISP(t1.dims());
-    TLDISP(t1.deepdims());
+    TLDISP(t1.nested_dims());
     TLDISP(t1.deepsize());
     TLDISP(t1.depth());
     TLDISP(t1);
@@ -217,7 +217,7 @@ int main(int argc, char *argv[]) {
     TLDISP(s()());
     TLDISP(s.dims());
     TLDISP(s.size());
-    TLDISP(s.deepdims());
+    TLDISP(s.nested_dims());
     Scalar<Scalar<double>> s2;
     s2 = -s;
     TLDISP(s2);
@@ -233,7 +233,7 @@ int main(int argc, char *argv[]) {
     TLDISP(s.dat(2));
     TLDISP(s.dims());
     TLDISP(s.size());
-    TLDISP(s.deepdims());
+    TLDISP(s.nested_dims());
     Scalar<Vector<double>> s2;
     s2 = -s;
     TLDISP(s2);
@@ -246,7 +246,7 @@ int main(int argc, char *argv[]) {
     TLDISP(s()(0, 1));
     TLDISP(s.dims());
     TLDISP(s.size());
-    TLDISP(s.deepdims());
+    TLDISP(s.nested_dims());
 
     Scalar<Matrix<double>> s2;
     s2 = -s;
@@ -263,7 +263,7 @@ int main(int argc, char *argv[]) {
     TLDISP(s.size());
     TLDISP(s().dims());
     TLDISP(s.depth());
-    TLDISP(s.deepdims());
+    TLDISP(s.nested_dims());
 
     Scalar<MultiArray<double, 2>> s2;
     s2 = -s;
@@ -282,7 +282,7 @@ int main(int argc, char *argv[]) {
     TLDISP(v(0)());
     TLDISP(v.dims());
     TLDISP(v.size());
-    TLDISP(v.deepdims());
+    TLDISP(v.nested_dims());
     Vector<Scalar<double>> v2;
     v2 = -v;
     TLDISP(v2);
@@ -296,7 +296,7 @@ int main(int argc, char *argv[]) {
     TLDISP(v(0)(2));
     TLDISP(v.dims());
     TLDISP(v.size());
-    TLDISP(v.deepdims());
+    TLDISP(v.nested_dims());
     Vector<Vector<double>> v2;
     MOUT << "v2 = -v;" << endl;
     v2 = -v;
@@ -310,7 +310,7 @@ int main(int argc, char *argv[]) {
     TLDISP(v(1)(0, 1));
     TLDISP(v.dims());
     TLDISP(v.size());
-    TLDISP(v.deepdims());
+    TLDISP(v.nested_dims());
     Vector<Matrix<double>> v2;
     MOUT << "v2 = -v;" << endl;
     v2 = -v;
@@ -324,7 +324,7 @@ int main(int argc, char *argv[]) {
     TLDISP(v(2)(1, 1));
     TLDISP(v.dims());
     TLDISP(v.size());
-    TLDISP(v.deepdims());
+    TLDISP(v.nested_dims());
     Vector<MultiArray<double, 2>> v2;
     MOUT << "v2 = -v;" << endl;
     v2 = -v;
@@ -345,7 +345,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m.Nrows());
     TLDISP(m.Ncols());
     TLDISP(m.dims());
-    TLDISP(m.deepdims());
+    TLDISP(m.nested_dims());
     Matrix<Scalar<double>> m2;
     m2 = -m;
     TLDISP(m2);
@@ -360,7 +360,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m.Nrows());
     TLDISP(m.Ncols());
     TLDISP(m.dims());
-    TLDISP(m.deepdims());
+    TLDISP(m.nested_dims());
     Matrix<Vector<double>> m2;
     MOUT << "m2 = -m;" << endl;
     m2 = -m;
@@ -377,7 +377,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m(0, 0)(1, 1));
     TLDISP(m.dims());
     TLDISP(m.size());
-    TLDISP(m.deepdims());
+    TLDISP(m.nested_dims());
     Matrix<Matrix<double>> m2;
     MOUT << "m2 = -m;" << endl;
     m2 = -m;
@@ -390,7 +390,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1);
     TLDISP(m1.dims());
     TLDISP(m1.size());
-    TLDISP(m1.deepdims());
+    TLDISP(m1.nested_dims());
     Dimensions template_dims(2, 3, 2);
 
     for (int i = 0; i < m1.dims()[0]; i++) {
@@ -410,7 +410,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1(1, 0)(1, 2, 0));
     TLDISP(m1.dims());
     TLDISP(m1.size());
-    TLDISP(m1.deepdims());
+    TLDISP(m1.nested_dims());
 
 
     Matrix<MultiArray<double, 3>> m2;
@@ -449,7 +449,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1);
     TLDISP(m1.dims());
     TLDISP(m1.size());
-    TLDISP(m1.deepdims());
+    TLDISP(m1.nested_dims());
   }
 
 
@@ -465,7 +465,7 @@ int main(int argc, char *argv[]) {
     MultiArray<Scalar<double>, 2> t;
     TLDISP(t);
     TLDISP(t.dims());
-    TLDISP(t.deepdims());
+    TLDISP(t.nested_dims());
     Dimensions template_dims(2, 2);
     t.resize(template_dims);
     t(0, 0) = 1;
@@ -474,7 +474,7 @@ int main(int argc, char *argv[]) {
     t(1, 1) = 4;
     TLDISP(t);
     TLDISP(t.dims());
-    TLDISP(t.deepdims());
+    TLDISP(t.nested_dims());
     TLDISP(t.element_dims());
   }
   {
@@ -485,7 +485,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t(1, 0));
     TLDISP(t(1, 0)());
     TLDISP(t.dims());
-    TLDISP(t.deepdims());
+    TLDISP(t.nested_dims());
     TLDISP(t.element_dims());
     decltype(t) xx;
     TLDISP(xx);
@@ -514,7 +514,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t(0, 0));
     TLDISP(t(0, 0)(1));
     TLDISP(t.dims());
-    TLDISP(t.deepdims());
+    TLDISP(t.nested_dims());
     MultiArray<Vector<double>, 2> t2;
     MOUT << "t2 = -t;" << endl;
     t2 = -t;
@@ -531,7 +531,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m(0, 0)(1, 1));
     TLDISP(m.dims());
     TLDISP(m.size());
-    TLDISP(m.deepdims());
+    TLDISP(m.nested_dims());
     MultiArray<Matrix<double, 2, 2>, 2> m2;
     MOUT << "m2 = -m;" << endl;
     m2 = -m;
@@ -544,7 +544,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1);
     TLDISP(m1.dims());
     TLDISP(m1.size());
-    TLDISP(m1.deepdims());
+    TLDISP(m1.nested_dims());
     Dimensions tdims1(2, 2);
     m1.resize(tdims1);
     Dimensions tdims2(2, 3, 2);
@@ -566,7 +566,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1(1, 0)(1, 2, 0));
     TLDISP(m1.dims());
     TLDISP(m1.size());
-    TLDISP(m1.deepdims());
+    TLDISP(m1.nested_dims());
 
 
     MultiArray<MultiArray<double, 3>, 2> m2;
@@ -605,7 +605,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1);
     TLDISP(m1.dims());
     TLDISP(m1.size());
-    TLDISP(m1.deepdims());
+    TLDISP(m1.nested_dims());
   }
 
 

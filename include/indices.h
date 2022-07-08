@@ -136,7 +136,7 @@ namespace mathq {
   // class DeepIndices : public NestedDims {
   // public:
 
-  //   DeepIndices() : deepdims_(deepdims) {
+  //   DeepIndices() : deepdims_(nested_dims) {
 
   //   }
 

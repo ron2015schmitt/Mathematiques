@@ -251,14 +251,14 @@ namespace mathq {
         return (this->size())*(this->eldeepsize());
       }
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    std::vector<Dimensions>& nested_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return deepdims(ddims);
+      return nested_dims(ddims);
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
       if constexpr (depth>1) {
-        data.deepdims(parentdims);
+        data.nested_dims(parentdims);
       }
       return parentdims;
     }
@@ -352,7 +352,7 @@ namespace mathq {
 
     // "read/write": DeepIndices
     NumberType& dat(const DeepIndices& dinds) {
-      // error if (inds.size() != sum deepdims[i].rank
+      // error if (inds.size() != sum nested_dims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(dinds);
       }
@@ -363,7 +363,7 @@ namespace mathq {
 
     // "read": DeepIndices
     const NumberType dat(const DeepIndices& dinds)  const {
-      // error if (inds.size() != sum deepdims[i].rank
+      // error if (inds.size() != sum nested_dims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(dinds);
       }
@@ -378,7 +378,7 @@ namespace mathq {
 
     // "read/write": Indices
     NumberType& dat(const Indices& inds) {
-      // error if (inds.size() != sum deepdims[i].rank
+      // error if (inds.size() != sum nested_dims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(inds);
       }
@@ -389,7 +389,7 @@ namespace mathq {
 
     // "read": Indices
     const NumberType dat(const Indices& inds)  const {
-      // error if (inds.size() != sum deepdims[i].rank
+      // error if (inds.size() != sum nested_dims[i].rank
       if constexpr (depth>1) {
         return (*this)().dat(inds);
       }
@@ -478,7 +478,7 @@ namespace mathq {
         data = s2();
       }
       else {
-        resize(s2.deepdims());
+        resize(s2.nested_dims());
         for (size_t i = 0; i < deepsize(); i++) {
           (*this).dat(i) = s2.dat(i);
         }
@@ -500,7 +500,7 @@ namespace mathq {
         data = x[0];
       }
       else {
-        resize(x.deepdims());
+        resize(x.nested_dims());
         for (size_t i = 0; i < deepsize(); i++) {
           this->dat(i) = x.dat(i);
         }

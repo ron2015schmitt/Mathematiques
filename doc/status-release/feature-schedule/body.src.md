@@ -84,7 +84,7 @@
   * typedef long double extended;  -> quad?
 1. use [C++20 Ranges](https://en.cppreference.com/w/cpp/ranges)
 1. add vararg constructor for Dimensions or parameter pack 
-1. change deepdims from std::vector<Dimensions> to initlist<Dimensions>. define a class deepdims
+1. change nested_dims from std::vector<Dimensions> to initlist<Dimensions>. define a class nested_dims
 1. allow VEctor, Matrix, MultiArray to be initialized from deep dims
 1. create a Array3 type
 1. consts: `o` and `all`
@@ -171,7 +171,7 @@
       // ************* Vector Constructor---------------------
     template <int NE>
     MultiArray<E, R, D, M>(const Vector<E, NE, D, M>& v) {
-      resize(v.deepdims());
+      resize(v.nested_dims());
       for (int c = 0; c < v.deepsize(); c++ ) {
         (*this)[c] = v[c];
       }

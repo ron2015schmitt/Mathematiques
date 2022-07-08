@@ -146,11 +146,11 @@ namespace mathq {
     size_t deepsize(void) const {
       return this->size();
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    std::vector<Dimensions>& nested_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return deepdims(ddims);
+      return nested_dims(ddims);
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& nested_dims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
       return parentdims;
     }
@@ -187,8 +187,8 @@ namespace mathq {
 
 
     MatrixExchange<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
-      std::vector<Dimensions> deepdims(deepdims_new);
-      Dimensions newdims = deepdims[0];
+      std::vector<Dimensions> nested_dims(deepdims_new);
+      Dimensions newdims = nested_dims[0];
       resize(newdims);
       return *this;
     }

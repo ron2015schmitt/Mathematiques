@@ -126,11 +126,11 @@ namespace mathq {
     const DimensionsType& dims(void) const {
       return derived().dims();
     }
-    const NestedDimensionsType& deepdims(void) const {
-      return derived().deepdims();
+    const NestedDimensionsType& nested_dims(void) const {
+      return derived().nested_dims();
     }
-    // NestedDimensionsType& deepdims(std::vector<Dimensions>& parentdims) const {
-    //   return derived().deepdims(parentdims);
+    // NestedDimensionsType& nested_dims(std::vector<Dimensions>& parentdims) const {
+    //   return derived().nested_dims(parentdims);
     // }
     bool isExpression(void) const {
       return derived().isExpression();
@@ -268,11 +268,11 @@ namespace mathq {
     const DimensionsType& dims(void) const {
       return derived().dims();
     }
-    const NestedDimensionsType& deepdims(void) const {
-      return derived().deepdims();
+    const NestedDimensionsType& nested_dims(void) const {
+      return derived().nested_dims();
     }
-    // NestedDimensionsType& deepdims(std::vector<Dimensions>& parentdims) const {
-    //   return derived().deepdims(parentdims);
+    // NestedDimensionsType& nested_dims(std::vector<Dimensions>& parentdims) const {
+    //   return derived().nested_dims(parentdims);
     // }
     bool isExpression(void) const {
       return derived().isExpression();
