@@ -14,9 +14,10 @@ namespace mathq {
   //
   // need to use resiable because we need the same exact type for NestedDimensions elements
   // ***************************************************************************
-  class Dimensions : public Vector<size_t> {
+  template <size_t rank_>
+  class Dimensions : public Vector<size_t, rank_> {
   public:
-    using Type = Dimensions;
+    using Type = Dimensions<rank_>;
     using Parent = Vector<size_t>;
     using ElementType = size_t;
 
@@ -24,26 +25,32 @@ namespace mathq {
     Dimensions() {
     }
 
-    template<typename...T, mathq::EnableIf<(std::conjunction<std::is_integral<T>...>::value)> = 0>
-    Dimensions(T... dynamic_dims) {
-      const size_t N = sizeof...(dynamic_dims);
-      std::array<size_t, N> temp = { (static_cast<size_t>(dynamic_dims))... };
-
+    Dimensions(const size_t N) {
       this->resize(N);
-      for (size_t n = 0; n < N; n++) {
-        Parent::operator[](n) = temp[n];
-      }
     }
 
-    Dimensions(const Dimensions& dims2) {
-      resize(dims2.size());
+    template <size_t rank2>
+    Dimensions(const Dimensions<rank2>& dims2) {
+      this->resize(dims2.size());
       for (size_t n = 0; n < this->size(); n++) {
         (*this)[n] = dims2[n];
       }
     }
 
-    Dimensions& getReducedDims() const {
-      Dimensions& v = *(new Dimensions{});
+    Dimensions(const std::initializer_list<size_t>& ilist) {
+      if constexpr (this->is_dynamic_value) {
+        this->resize(ilist.size());
+      }
+      size_t k = 0;
+      typename std::initializer_list<size_t>::iterator it;
+      for (it = ilist.begin(); it != ilist.end(); ++it, k++) {
+        (*this)[k] = *it;
+      }
+    }
+
+
+    Dimensions<0>& getReducedDims() const {
+      Dimensions<0>& v = *(new Dimensions{});
       v.resize(this->size());
       for (size_t i = 0; i < this->size(); i++) {
         v[i] = (*this)[i];
@@ -51,12 +58,13 @@ namespace mathq {
       return v;
     }
 
-    bool equiv(const Dimensions& dims2) const {
+    template <size_t rank2>
+    bool equiv(const Dimensions<rank2>& dims2) const {
       return (this->getReducedDims() == dims2.getReducedDims());
     }
 
-    Dimensions& getReverse() const {
-      Dimensions& v = *(new Dimensions{});
+    Dimensions<rank_>& getReverse() const {
+      Dimensions<rank_>& v = *(new Dimensions<rank_>());
       v.resize(this->size());
       // reverse order
       size_t ii = 0;
@@ -66,10 +74,16 @@ namespace mathq {
       return v;
     }
 
+
+    operator Dimensions<0>() {
+      return *(new Dimensions<0>(*this));
+    }
+
     inline std::string classname() const {
       using namespace display;
       std::string s = "Dimensions";
       s += StyledString::get(ANGLE1).get();
+      s += template_resizable_to_string(rank_);
       s += StyledString::get(ANGLE2).get();
       return s;
     }
@@ -83,9 +97,9 @@ namespace mathq {
   //  NumberTrait specialization for  Dimensions
   //
 
-  template <typename NewNumber>
+  template <typename NewNumber, size_t rank>
   class
-    NumberTrait<Dimensions, NewNumber> {
+    NumberTrait<Dimensions<rank>, NewNumber> {
   public:
     using InputType = Vector<size_t>;
     using Type = typename NumberTrait<size_t>::Type;
@@ -106,11 +120,24 @@ namespace mathq {
 
 
 
-  inline bool equiv(const Dimensions& dims1, const Dimensions& dims2) {
+
+  template <size_t rank1, size_t rank2>
+  inline bool equiv(const Dimensions<rank1>& dims1, const Dimensions<rank2>& dims2) {
     return dims1.equiv(dims2);
   }
 
 
+
+
+  template <typename Element, size_t N1>
+  Dimensions<Vector<Element, N1>::rank_value>& Vector<Element, N1>::dims(void) const {
+    if constexpr (is_dynamic_value) {
+      return *(new Dimensions<rank_value>(size()));
+    }
+    else {
+      return *(new Dimensions<rank_value>());
+    }
+  }
 
 
   // ***************************************************************************
@@ -122,10 +149,10 @@ namespace mathq {
   class NestedDimensions;
 
   template<size_t depth_>
-  class NestedDimensions : public Vector<Dimensions, depth_> {
+  class NestedDimensions : public Vector<Dimensions<0>, depth_> {
 
   public:
-    using Parent = Vector<Dimensions, depth_>;
+    using Parent = Vector<Dimensions<0>, depth_>;
     constexpr static size_t depth_value = depth_;
 
     NestedDimensions() {
@@ -136,17 +163,26 @@ namespace mathq {
       this->resize(depth);
     }
 
-    NestedDimensions(const std::initializer_list<Dimensions>& ilist) {
+    NestedDimensions(const std::initializer_list<Dimensions<0>>& ilist) {
       if constexpr (this->is_dynamic_value) {
         this->resize(ilist.size());
       }
       size_t k = 0;
-      typename std::initializer_list<Dimensions>::iterator it;
+      typename std::initializer_list<Dimensions<0>>::iterator it;
       for (it = ilist.begin(); it != ilist.end(); ++it, k++) {
         (*this)[k] = *it;
       }
     }
 
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "NestedDimensions";
+      s += StyledString::get(ANGLE1).get();
+      s += template_resizable_to_string(depth_);
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
 
   };
 

@@ -68,6 +68,28 @@ namespace mathq {
   const size_t badsize = std::numeric_limits<size_t>::max();
 
 
+  // ***************************************************************************
+  // Dimensions classes
+  // ***************************************************************************
+
+  // template<size_t rank_, size_t... ints>
+  // template <typename Element = size_t>  
+  template <size_t rank_ = 0>
+  class Dimensions;
+
+
+  template<typename Element, int L>
+  class NestedInitializerListDef;
+
+
+  class VectorofPtrs;
+  
+  template <class DAT> class Pair;
+  
+  class Indices;
+  
+  
+
   class Indices;
 
   inline bool equiv(const Indices& inds1, const Indices& inds2);
@@ -103,24 +125,6 @@ namespace mathq {
   class Quaternion;
 
 
-  // ***************************************************************************
-  // Dimensions classes
-  // ***************************************************************************
-
-  // template<size_t rank_, size_t... ints>
-  // template <typename Element = size_t>  
-  class Dimensions;
-
-
-  template<typename Element, int L>
-  class NestedInitializerListDef;
-
-
-  class VectorofPtrs;
-  template <class DAT> class Pair;
-  class Indices;
-  enum MultiArrays : unsigned int;
-  enum MultiArrayOrExpression : unsigned int;
 
 
   // *********************************************************************

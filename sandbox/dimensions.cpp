@@ -39,6 +39,7 @@
 #include "vector.h"
 #include "dimensions.h"
 
+
 // #include "indices.h"
 // #include "slices.h"
 // #include "util.h"
@@ -107,7 +108,7 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(Vector<double, 3> v1);
   TRDISP(v1.size());
   TRDISP(v1.is_dynamic_value);
-  TRDISP(v1.data_);
+  // TRDISP(v1.data_);
   TRDISP(v1.static_dims_array);
   TRDISP(v1);
   v1[0] = 2.2;
@@ -121,7 +122,7 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
   TRDISP(v2.size());
   TRDISP(v2.is_dynamic_value);
-  TRDISP(v2.data_);
+  // TRDISP(v2.data_);
   TRDISP(v2.static_dims_array);
   TRDISP(v2.resize(4));
 
@@ -129,39 +130,39 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
   TRDISP(v3.size());
   TRDISP(v3.is_dynamic_value);
-  TRDISP(v3.data_);
+  // TRDISP(v3.data_);
   TRDISP(v3.static_dims_array);
 
   CR();
   ECHO_CODE(Vector<double> v4);
   TRDISP(v4.size());
   TRDISP(v4.is_dynamic_value);
-  TRDISP(v4.data_);
+  // TRDISP(v4.data_);
   TRDISP(v4.static_dims_array);
 
 
   CR();
-  ECHO_CODE(Dimensions dims);
+  ECHO_CODE(Dimensions<> dims);
   TRDISP(dims.is_dynamic_value);
   TRDISP(dims.rank_value);
   TRDISP(dims.static_dims_array);
   TRDISP(dims.size());
   TRDISP(dims);
   TRDISP(dims.resize(2));
-  ECHO_CODE(dims[0] = 14);  
-  ECHO_CODE(dims[1] = 42);  
+  ECHO_CODE(dims[0] = 14);
+  ECHO_CODE(dims[1] = 42);
   TRDISP(dims);
 
 
 
   CR();
-  ECHO_CODE(Dimensions dims2);
+  ECHO_CODE(Dimensions<> dims2);
   dims2 = { 3,2,1 };
   TRDISP(dims2);
 
 
   CR();
-  ECHO_CODE(Dimensions dims3{ 33, 46, 77, 81});
+  ECHO_CODE(Dimensions<> dims3{ 33, 46, 77, 81 });
   TRDISP(dims3.is_dynamic_value);
   TRDISP(dims3.rank_value);
   TRDISP(dims3.static_dims_array);
@@ -171,7 +172,21 @@ int main(int argc, char* argv[]) {
   TRDISP(dims3);
 
 
+  CR();
+  ECHO_CODE(Dimensions<> dims4 = *(new Dimensions<0>(5)));
+  TRDISP(dims4);
 
+  CR();
+  ECHO_CODE(Dimensions<4> dims5{ 33, 46, 77, 81 });
+  TRDISP(dims5.is_dynamic_value);
+  TRDISP(dims5.rank_value);
+  TRDISP(dims5.static_dims_array);
+  TRDISP(dims5.size());
+  TRDISP(dims5);
+  dims5 = { 13, 42, 56, 99 };
+  TRDISP(dims5);
+
+  CR();
   TRDISP(sizeof(NestedDimensions<0>)/sizeof(size_t));
   TRDISP(sizeof(NestedDimensions<1>)/sizeof(size_t));
   TRDISP(sizeof(NestedDimensions<2>)/sizeof(size_t));
@@ -192,11 +207,11 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(NestedDimensions<0> ndims2(2));
   TRDISP(ndims2.size());
   TRDISP(ndims2);
-  ndims2 = {dims, dims3};
+  ndims2 = { dims, dims3 };
   TRDISP(ndims2);
 
   CR();
-  ECHO_CODE(NestedDimensions<> ndims3{dims, dims3});
+  ECHO_CODE(NestedDimensions<> ndims3{ dims, dims3 });
   TRDISP(ndims3);
 
 

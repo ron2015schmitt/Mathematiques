@@ -64,3 +64,18 @@ Solution:  call `this->size()` instead of `size()`
 struct Empty {}; 
 [[no_unique_address]] Empty e;
 ```
+
+1. variadic constructor
+
+```C++
+    template<typename...T, mathq::EnableIf<(std::conjunction<std::is_integral<T>...>::value)> = 0>
+    Dimensions(T... dynamic_dims) {
+      const size_t N = sizeof...(dynamic_dims);
+      std::array<size_t, N> temp = { (static_cast<size_t>(dynamic_dims))... };
+
+      this->resize(N);
+      for (size_t n = 0; n < N; n++) {
+        Parent::operator[](n) = temp[n];
+      }
+    }
+```

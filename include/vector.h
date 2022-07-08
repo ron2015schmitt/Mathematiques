@@ -21,41 +21,6 @@
 
 namespace mathq {
 
-
-
-  template <typename Element, size_t N1 = 0>
-  class VectorHelper {
-  public:
-    constexpr static size_t rank_value = 1;
-    constexpr static bool is_dynamic = (N1 == 0);
-    constexpr static bool num_compile_time_elements = N1;
-
-    using ConcreteType = Vector<Element, N1>;
-    // using DimensionsType = typename std::conditional< is_dynamic, DynamicDims<rank_value, N1>, FixedDims<N1> >::type;
-
-    // ---- same for all subtypes --------
-    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();
-    using MyArrayType = typename ArrayTypeTrait<Element, num_compile_time_elements>::Type;
-    // using NestedDimensionsType = NestedDims<DimensionsType, ElementDimensionsType>;
-    // using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
-
-    // ---- same for all subtypes --------
-    using ParentType = MArrayExpRW<
-      MultiArray<Element, rank_value, N1>,  // Derived
-      Element,  // Element
-      typename NumberTrait<Element>::Type, // Number
-      depth_value,  // depth
-      rank_value  // rank
-    >;
-  };
-
-
-
-  //
-  // Vector
-  //
-
-
   template <typename Element, size_t N1>
   class MultiArray<Element, 1, N1>
     // : public VectorHelper<Element, N1>::ParentType {
@@ -83,6 +48,7 @@ namespace mathq {
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = (N1 == 0);
     constexpr static std::array<size_t, rank_value> static_dims_array = { N1 };
+    // const static Dimensions<rank_value> static_dimensions = Dimensions<rank_value>(N1);
 
 
     //**********************************************************************
@@ -94,7 +60,7 @@ namespace mathq {
     // size is taken from data_.size
     //**********************************************************************
 
-  // private:
+  private:
     MyArrayType data_;
 
   public:
@@ -261,17 +227,7 @@ namespace mathq {
       return data_.size();
     }
 
-    // Dimensions<rank_value>& dims(void) const {
-    //   if constexpr (is_dynamic_value) {
-    //     return Dimensions<rank_value>(size());
-    //   }
-    //   else {
-    //     return template_dims();
-    //   }
-    // }
-    // const Dimensions<rank_value>& template_dims(void) const {
-    //   return static_dims_array;
-    // }
+    Dimensions<rank_value>& dims(void) const;
 
 
     // --------------------- .resize(N) ---------------------
@@ -1287,7 +1243,7 @@ namespace mathq {
       if (N1!=0) {
         s += StyledString::get(COMMA).get();
         s += "N1=";
-        s += num2string(N1);
+        s += template_resizable_to_string(N1);
       }
       //    if (depth>1) {
       //      s += StyledString::get(COMMA).get();
