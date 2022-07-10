@@ -323,6 +323,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v13.element_size());
   TRDISP(v13.dims());
   TRDISP(v13);
+  TRDISP( static_cast<std::valarray<double>>(v13) );
 
 
   // CR();

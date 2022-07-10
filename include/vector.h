@@ -1502,7 +1502,7 @@ namespace mathq {
 
     //**********************************************************************
     //                      CONVERSION OPERATORS 
-    // use to dynamic_cast a Vector to another type of container
+    // use to static_cast a Vector to another type of container
     //**********************************************************************
 
     operator Element* () const {
@@ -1512,6 +1512,18 @@ namespace mathq {
         ptr[i] = (*this)[i];
       }
       return ptr;
+    }
+
+
+    // std::list()
+
+    operator std::list<Element>() const {
+      const size_t N = size();
+      std::list<Element> y(N);
+      for (size_t i = 0; i<N; i++) {
+          y.push_back(13);
+      }
+      return y;
     }
 
 
