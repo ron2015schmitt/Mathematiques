@@ -591,7 +591,7 @@ namespace mathq {
 
 
     //**********************************************************************
-    //************************** ASSIGNMENT **************************************
+    //************************** ASSIGNMENT ********************************
     //**********************************************************************
 
     // Any new assignment operators should also be addedc to MArrayExpRW for consistency.
@@ -606,13 +606,14 @@ namespace mathq {
       return *this;
     }
 
-    // template <class T = Element>
-    // typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N1>& >::type operator=(const NumberType& d) {
-    //   for (size_t i = 0; i < total_size(); i++) {
-    //     (*this).dat(i) = d;
-    //   }
-    //   return *this;
-    // }
+    // set elements to same value
+    template <class T = Element>
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N1>& >::type operator=(const NumberType& d) {
+      for (size_t i = 0; i < total_size(); i++) {
+        (*this).dat(i) = d;
+      }
+      return *this;
+    }
 
 
 
@@ -714,8 +715,6 @@ namespace mathq {
     }
 
 
-
-
     // ------------------------ Vector = std::vector ----------------
 
     Vector<Element, N1>& operator=(const std::vector<Element>& vstd) {
@@ -729,9 +728,6 @@ namespace mathq {
         (*this)(i) = vstd[i];
       return *this;
     }
-
-
-
 
 
     // ------------------------ Vector = std::array ----------------
@@ -750,9 +746,6 @@ namespace mathq {
 
       return *this;
     }
-
-
-
 
 
     // ------------------------ Vector = std::valarray ----------------
@@ -1297,10 +1290,8 @@ namespace mathq {
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
-  }
+    }
 #endif
-
-
 
 
     // stream << operator
@@ -1508,16 +1499,23 @@ namespace mathq {
       return stream;
     }
 
-    // --------------------- FRIENDS ---------------------
 
-    // --------------------- CONVERSION OPERATORS ---------------------
+    //**********************************************************************
+    //                      CONVERSION OPERATORS 
+    // use to dynamic_cast a Vector to another type of container
+    //**********************************************************************
 
-
-
+    operator Element* () const {
+      const size_t N = size();
+      Element* ptr = new Element[N];
+      for (size_t i = 0; i<N; i++) {
+        ptr[i] = (*this)[i];
+      }
+      return ptr;
+    }
 
 
     // std::vector()
-
 
     operator std::vector<Element>() const {
       const size_t N = size();
@@ -1528,15 +1526,6 @@ namespace mathq {
       return y;
     }
 
-
-    operator Element* () const {
-      const size_t N = size();
-      Element* ptr = new Element[N];
-      for (size_t i = 0; i<N; i++) {
-        ptr[i] = (*this)[i];
-      }
-      return ptr;
-    }
 
 
     // valarray<Element>
@@ -1551,7 +1540,19 @@ namespace mathq {
     }
 
 
-};
+    // array<Element>
+    template <size_t NE2>
+    operator std::array<Element, NE2>() const {
+      const size_t N = size();
+      std::array<Element, NE2> y(N);
+      for (size_t i = 0; i<N; i++) {
+        y[i] = (*this)[i];
+      }
+      return y;
+    }
+
+
+  };
 
 
 
