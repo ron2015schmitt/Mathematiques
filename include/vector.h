@@ -23,7 +23,7 @@ namespace mathq {
 
   template <typename Element, size_t N1>
   class MultiArray<Element, 1, N1>
-    // : public VectorHelper<Element, N1>::ParentType {
+    // : public MexpRW {
   {
   public:
 
@@ -48,6 +48,14 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     using NumberType = typename NumberTrait<Element>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using ParentType = MArrayExpRW<
+      ConcreteType,  // Derived
+      Element,  // Element
+      NumberType, // Number
+      depth_value,  // depth
+      rank_value  // rank
+    >;
 
 
     using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
@@ -77,110 +85,135 @@ namespace mathq {
       constructorHelper();
     }
 
+    // ----------------------- initializer_list ---------------------
+    MultiArray(const std::initializer_list<Element>& var) {
+      if (is_dynamic_value) {
+        resize(var.size());
+      }
+      *this = var;
+      constructorHelper();
+    }
 
-    // --------------------- Vector(size N)  ---------------------
+    // ----------------------- std::vector ---------------------
+    MultiArray(const std::vector<Element>& var) {
+      if (is_dynamic_value) {
+        resize(var.size());
+      }
+      *this = var;
+      constructorHelper();
+    }
 
-    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
+    // ----------------------- std::valarray ---------------------
+    MultiArray(const std::valarray<Element>& var) {
+      if (is_dynamic_value) {
+        resize(var.size());
+      }
+      *this = var;
+      constructorHelper();
+    }
+
+    // ----------------------- std::array ---------------------
+    template<size_t NE2>
+    MultiArray(const std::array<Element, NE2>& var) {
+      if (is_dynamic_value) {
+        resize(var.size());
+      }
+      *this = var;
+      constructorHelper();
+    }
+
+    // --------------------- copy constructor --------------------
+    template<size_t NE2>
+    MultiArray(const Vector<Element, NE2>& var) {
+      if (is_dynamic_value) {
+        resize(var.size());
+      }
+      *this = var;
+      constructorHelper();
+    }
+
+
+    // --------------------- EXPRESSION CONSTRUCTOR --------------------
+    // template <class X>
+    // MultiArray(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
+    //   if constexpr (is_dynamic_value) {
+    //     this->resize(x.size());
+    //   }
+    //   *this = x;
+    //   constructorHelper();
+    // }
+
+
+    //**********************************************************************
+    //                    CONSTRUCTORS: Dynamic size  
+    //**********************************************************************
+
+    // --------------------- DYNAMIC SIZE: set size from int  ---------------------
+
+    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
     explicit MultiArray(const size_t N) {
       data_.resize(N);
       constructorHelper();
     }
 
-    // --------------------- RecursiveDimensions  ---------------------
+    // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
-    // template<typename NextDims, size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-    //   explicit MultiArray(const RecursiveDimensions<depth_value>& recursive_dims) {
-    //   // TRDISP(recursive_dims);
-    //   this->resize(recursive_dims);
-    //   constructorHelper();
-    // }
+    template<size_t NE1 = N1, EnableIf<(NE1 == 0)> = 1>
+    explicit MultiArray(const Dimensions<0>& dims) {
+      // TRDISP(dims);
+      this->resize(dims);
+      constructorHelper();
+    }
+
+    // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
+
+    template<size_t NE1 = N1, size_t dim_depth, EnableIf<(NE1 == 0)> = 1>
+    explicit MultiArray(const RecursiveDimensions<dim_depth>& recursive_dims) {
+      // TRDISP(recursive_dims);
+      this->resize(recursive_dims);
+      constructorHelper();
+    }
 
 
 
+    // --------------------- DYNAMIC SIZE: set size = N and set all to same value  ---------------------
 
-
-
-    // // --------------------- Vector(N,value)  ---------------------
-
-    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
+    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
     explicit MultiArray(const size_t N, const Element val) {
       data_.resize(N);
       *this = val;
       constructorHelper();
     }
 
+    // --------------------- array[]  CONSTRUCTOR ---------------------
 
-
-    // // --------------------- Vector(Element value)  ---------------------
-
-    // template<size_t NE1 = N1, EnableIf<(NE1 > 0)> = 0>
-
-    // explicit Vector(const Element val) {
-    //   *this = val;
-    //   constructorHelper();
-    // }
-
-    // // --------------------- Vector(NumberType value)  ---------------------
-
-    // template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth>1)> = 0>
-
-    // explicit Vector(const NumberType val) {
-    //   *this = val;
-    //   constructorHelper();
-    // }
-
-
-    // // --------------------- array[]  CONSTRUCTOR ---------------------
-
-    // template<size_t NE1 = N1, EnableIf<NE1 == 0> = 0>
-
-    // Vector(const size_t N, const Element(vals)[]) {
-    //   data_.resize(N);
-    //   *this = vals;
-    //   constructorHelper();
-    // }
-
-    // ************* initializer_list CONSTRUCTOR---------------------
-    MultiArray(const std::initializer_list<Element>& mylist) {
-      *this = mylist;
+    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
+    MultiArray(const size_t N, const Element(vals)[]) {
+      data_.resize(N);
+      *this = vals;
       constructorHelper();
     }
 
 
-    // // --------------------- Vector(Vector) --------------------
+    //**********************************************************************
+    //                    CONSTRUCTORS: FIXED size  
+    //**********************************************************************
 
-    // template <int NE2>
-    // Vector(const Vector<Element, NE2>& v2) {
-    //   *this = v2;
-    //   constructorHelper();
-    // }
+    // --------------------- FIXED SIZE: set all to same value   ---------------------
 
+    template<size_t NE1 = N1, EnableIf< (NE1 > 0) > = 1>
+      explicit MultiArray(const Element val) {
+      *this = val;
+      constructorHelper();
+    }
 
-    // // --------------------- EXPRESSION CONSTRUCTOR --------------------
+    // --------------------- FIXED SIZE: set all Elements to same value   ---------------------
 
-    // template <class X>
-    // Vector(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
-    //   if constexpr (is_dynamic_value) {
-    //     this->resize(x.size());
-    //   }
-
-    //   *this = x;
-    //   constructorHelper();
-    // }
-
-
-
-
-    // // --------------------- Vector(valarray)  ---------------------
-    // Vector(const std::valarray<Element>& valar) {
-    //   if constexpr (is_dynamic_value) {
-    //     this->resize(valar.size());
-    //   }
-    //   *this = valar;
-    //   constructorHelper();
-    // }
-
-
+    template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth_value>1)&&(!std::is_same<Element, NumberType>::value)> = 1>
+      explicit MultiArray(const NumberType val) {
+      *this = val;
+      constructorHelper();
+    }
 
     // --------------------- constructorHelper() --------------------
 
@@ -281,13 +314,16 @@ namespace mathq {
       return *this;
     }
 
+    Type& resize(const Dimensions<dynamic>& dims);
+
+
     // resize_depth <= depth_value
     template <size_t resize_depth>
     Type& resize(const RecursiveDimensions<resize_depth>& new_rdims) {
       return recurse_resize(new_rdims, 0);
     }
 
-
+    // helper functions
     template <size_t resize_depth>
     Type& recurse_resize(const RecursiveDimensions<resize_depth>& parent_rdims, size_t di = 0) {
       size_t depth_index = di;
@@ -459,19 +495,11 @@ namespace mathq {
 
     // "read/write"
     Element& operator[](const size_t n) {
-      // int k = n;
-      // if (k < 0) {
-      //   k += size();
-      // }
       return data_[n];
     }
 
     // read
     const Element& operator[](const size_t n)  const {
-      // int k = n;
-      // if (k < 0) {
-      //   k += size();
-      // }
       return data_[n];
     }
 
@@ -490,8 +518,6 @@ namespace mathq {
     const Element& operator()(const size_t n)  const {
       return data_[n];
     }
-
-
 
 
     // Accessing a slice of values
@@ -546,7 +572,7 @@ namespace mathq {
 
     // -------------------- dataobj() --------------------
     // "read/write" to the wrapped valarray/aray
-    auto& dataobj() {
+    auto& data_obj() {
       return data_;
     }
 

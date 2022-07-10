@@ -60,6 +60,7 @@ namespace mathq {
 
   class NullType;
 
+  using signed_t = typename std::make_signed<size_t>::type;
 
 
   // TODO: need to figure out how to handle this. need a signed type

@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
   v1 = { 2.2, 4.4, -100.1 };
   TRDISP(v1);
   TRDISP(v1.dims());
-  TRDISP(sizeof(v1)/sizeof(double));
+  TRDISP(sizeof(v1)/(v1.total_size()*sizeof(double)));
 
 
   CR();
@@ -251,7 +251,7 @@ int main(int argc, char* argv[]) {
   u[2] = { 5,6 };
   TRDISP(u);
   TRDISP(u.recursive_dims());
-  u = { {11,12}, {13,14}, {15,16}};
+  u = { {11,12}, {13,14}, {15,16} };
   TRDISP(u);
   TRDISP(u);
   TRDISP(u.size());
@@ -262,6 +262,68 @@ int main(int argc, char* argv[]) {
   TRDISP(u.depth());
   TRDISP(u.recursive_dims());
   TRDISP(u.element_dims());
+
+  TRDISP(sizeof(u)/(u.total_size()*sizeof(double)));
+
+
+  CR();
+  ECHO_CODE(Vector<double> v6(3));
+  TRDISP(v6.size());
+  TRDISP(v6.element_size());
+  TRDISP(v6.dims());
+  v6[0] = { 1 };
+  v6[1] = { 3 };
+  v6[2] = { 5 };
+  TRDISP(v6);
+
+  CR();
+  ECHO_CODE(Dimensions dims7({3}));
+  TRDISP(dims7);
+  ECHO_CODE(Vector<double> v7(dims7));
+  TRDISP(v7.size());
+  TRDISP(v7.element_size());
+  TRDISP(v7.dims());
+  v7[0] = { 1 };
+  v7[1] = { 3 };
+  v7[2] = { 5 };
+  TRDISP(v7);
+
+
+  CR();
+  ECHO_CODE(Vector<double> v9(6, 7));
+  TRDISP(v9.size());
+  TRDISP(v9.element_size());
+  TRDISP(v9.dims());
+  TRDISP(v9);
+
+  CR();
+  ECHO_CODE(Vector<double> v10({ 2.2, 3.3, 4.4 }));
+  TRDISP(v10.size());
+  TRDISP(v10.element_size());
+  TRDISP(v10.dims());
+  TRDISP(v10);
+
+  CR();
+  ECHO_CODE(Vector<double> v11{ 2.2, 3.3, 4.4 });
+  TRDISP(v11.size());
+  TRDISP(v11.element_size());
+  TRDISP(v11.dims());
+  TRDISP(v11);
+
+  CR();
+  ECHO_CODE(Vector<double,3> v12({ 2.2, 3.3, 4.4 }));
+  TRDISP(v12.size());
+  TRDISP(v12.element_size());
+  TRDISP(v12.dims());
+  TRDISP(v12);
+
+  CR();
+  ECHO_CODE(Vector<double,3> v13{ 2.2, 3.3, 4.4 });
+  TRDISP(v13.size());
+  TRDISP(v13.element_size());
+  TRDISP(v13.dims());
+  TRDISP(v13);
+
 
   // CR();
   // ECHO_CODE(Dimensions<2> dims5);

@@ -6,14 +6,12 @@
 namespace mathq {
 
 
-
-
-
   // ***************************************************************************
   // Dimensions 
   //
   // need to use resiable because we need the same exact type for RecursiveDimensions elements
   // ***************************************************************************
+
   template <size_t rank_>
   class Dimensions : public Vector<size_t, rank_> {
   public:
@@ -48,7 +46,6 @@ namespace mathq {
       }
     }
 
-
     Dimensions<0>& getReducedDims() const {
       Dimensions<0>& v = *(new Dimensions{});
       v.resize(this->size());
@@ -73,7 +70,6 @@ namespace mathq {
       }
       return v;
     }
-
 
     operator Dimensions<0>() {
       return *(new Dimensions<0>(*this));
@@ -102,6 +98,13 @@ namespace mathq {
 
 
 
+  // ********************************************************************************
+  // NullDimensions 
+  //
+  // This class is used for the dimensiosn of non-MultiArray classes: int, float,
+  // std::complex, Imaginary, Quarternion, etc
+  // ********************************************************************************
+
   class NullDimensions : public Dimensions<0> {
   public:
     using Type = NullDimensions;
@@ -123,30 +126,35 @@ namespace mathq {
 
 
 
+  // ********************************************************************************
+  // ScalarDimensions 
+  //
+  // This class is used for the dimensions of the Scalar class
+  // ********************************************************************************
+
   class ScalarDimensions : public Dimensions<0> {
   public:
     using Type = ScalarDimensions;
     using Parent = Dimensions<0>;
     using ElementType = size_t;
 
-
     ScalarDimensions() {
     }
-
 
     inline std::string classname() const {
       using namespace display;
       std::string s = "ScalarDimensions";
       return s;
     }
-
   };
 
 
 
+  // ***************************************************************************
+  // NumberTrait specialization for  Dimensions
   //
-  //  NumberTrait specialization for  Dimensions
-  //
+  // Compiler can't compile this until after Dimensions has been defined
+  // ***************************************************************************
 
   template <typename NewNumber, size_t rank>
   class
@@ -171,6 +179,11 @@ namespace mathq {
 
 
 
+  // ***************************************************************************
+  // equiv
+  //
+  // stand-alone function for two Dimensions instances
+  // ***************************************************************************
 
   template <size_t rank1, size_t rank2>
   inline bool equiv(const Dimensions<rank1>& dims1, const Dimensions<rank2>& dims2) {
@@ -180,18 +193,31 @@ namespace mathq {
 
 
 
-  template <typename Element, size_t N1>
-  Dimensions<Vector<Element, N1>::rank_value>& Vector<Element, N1>::dims(void) const {
+  // ********************************************************************************
+  // Vector method definiitions
+  //
+  // The compiler can't compile these until after Dimensiosn class has been defined.
+  // Thus we define them here.
+  // ********************************************************************************
+
+  template <typename Element, size_t N1> Dimensions<Vector<Element, N1>::rank_value>&
+    Vector<Element, N1>::dims(void) const {
     return *(new Dimensions<rank_value>({ this->size() }));
   }
+
+  template <typename Element, size_t N1> Vector<Element, N1>&
+    Vector<Element, N1>::resize(const Dimensions<dynamic>& dims) {
+    TRDISP(dims);
+    TRDISP(dims[0]);
+    return resize(3);
+  }
+
 
 
   // ***************************************************************************
   // RecursiveDimensions 
   //
   // ***************************************************************************
-
-
 
   template<size_t depth_>
   class RecursiveDimensions : public Vector<Dimensions<0>, depth_> {
@@ -218,7 +244,6 @@ namespace mathq {
         (*this)[k] = *it;
       }
     }
-
 
     inline std::string classname() const {
       using namespace display;
