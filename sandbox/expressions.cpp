@@ -36,11 +36,14 @@
 #include "math_imag.h"
 #include "math_quaternion.h"
 
-#include "indices.h"
+#include "vector.h"
 #include "dimensions.h"
-#include "slices.h"
-#include "util.h"
-#include "debug.h"
+
+
+// #include "indices.h"
+// #include "slices.h"
+// #include "util.h"
+// #include "debug.h"
 
 // #include "multi-array-expressions.h"
 
@@ -50,7 +53,6 @@
 // #include "multi-array-outer-product.h"
 
 // #include "scalar.h"
-#include "vector.h"
 // #include "vector-constant.h"
 
 // #include "matrix.h"
@@ -104,9 +106,13 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Vector<double, 3> dims);
-  TRDISP(dims.is_dynamic());
-  TRDISP(dims);
+  ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
+  TRDISP(v2);
+
+  CR();
+  ECHO_CODE(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
+  TRDISP(v3);
+
 
   return 0;
 }
