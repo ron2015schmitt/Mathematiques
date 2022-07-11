@@ -906,10 +906,11 @@ namespace mathq {
 
 
   constexpr size_t dynamic = 0;
+
   // ***************************************************************************
   // * utility
   // ***************************************************************************
-  const std::string template_resizable_to_string(const size_t n) {
+  inline const std::string template_size_to_string(const size_t n) {
     if (n == 0) {
       return std::string("dynamic");
     }

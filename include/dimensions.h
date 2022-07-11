@@ -89,7 +89,7 @@ namespace mathq {
       using namespace display;
       std::string s = "Dimensions";
       s += StyledString::get(ANGLE1).get();
-      s += template_resizable_to_string(rank_);
+      s += template_size_to_string(rank_);
       s += StyledString::get(ANGLE2).get();
       return s;
     }
@@ -249,7 +249,7 @@ namespace mathq {
       using namespace display;
       std::string s = "RecursiveDimensions";
       s += StyledString::get(ANGLE1).get();
-      s += template_resizable_to_string(depth_);
+      s += template_size_to_string(depth_);
       s += StyledString::get(ANGLE2).get();
       return s;
     }

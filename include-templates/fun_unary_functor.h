@@ -28,7 +28,7 @@ public:
     sout = functor_style.apply("##FUNCTION##")+"("+ sa + ")";
     return sout;
   }
-    inline const std::string expression_name() const {
+  inline const std::string expression_name() const {
     using namespace display;
     Element e;
     return functor_namestyle.apply("FUNCTOR_##FUNCTORNAME##")+display::bracketAndStyleTypename(e);

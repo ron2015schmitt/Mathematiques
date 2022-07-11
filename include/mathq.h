@@ -28,12 +28,9 @@
 #include <string>
 #include <type_traits> 
 #include <typeinfo>
-#include <utility>
 #include <valarray>
 #include <vector>
 
-
-// Mathematiques
 
 #include "version_mathq.h"  // auto generated
 
@@ -48,61 +45,63 @@
 #include "math_imag.h"
 #include "math_quaternion.h"
 
-#include "indices.h"
-#include "dimensions.h"
-#include "slices.h"
-#include "util.h"
-#include "debug.h"
+// #include "indices.h"
+// #include "slices.h"
+// #include "util.h"
+// #include "debug.h"
 
-#include "multi-array-expressions.h"
-
-#include "multi-array.h"
-#include "multi-array-constant.h"
-#include "multi-array-repeat-vec.h"
-#include "multi-array-outer-product.h"
-
-#include "scalar.h"
+#include "expressionR.h"
+#include "expressionRW.h"
 #include "vector.h"
-#include "vector-constant.h"
+#include "dimensions.h"
 
-#include "matrix.h"
-#include "matrix_constdiag.h"
-#include "matrix_diagonal.h"
-#include "matrix_exchange.h"
-#include "matrix_hermitian.h"
-#include "matrix_identity.h"
-#include "matrix_lowertriangle.h"
-#include "matrix_revdiag.h"
-#include "matrix_repcol.h"
-#include "matrix_reprow.h"
-#include "matrix_rep.h"
-#include "matrix_skewhermitian.h"
-#include "matrix_skewsymmetric.h"
-#include "matrix_symmetric.h"
-#include "matrix_toeplitz.h"
-#include "matrix_uppertriangle.h"
-#include "matrix_vandermonde.h"
-#include "matrix_zero.h"
-#include "matrix-constant.h"
-#include "matrix-repeat-vec.h"
-#include "matrix-outer-product.h"
 
-#include "multi-array3.h"
-#include "multi-array4.h"
+// #include "multi-array.h"
+// #include "multi-array-constant.h"
+// #include "multi-array-repeat-vec.h"
+// #include "multi-array-outer-product.h"
+
+// #include "scalar.h"
+// #include "vector-constant.h"
+
+// #include "matrix.h"
+// #include "matrix_constdiag.h"
+// #include "matrix_diagonal.h"
+// #include "matrix_exchange.h"
+// #include "matrix_hermitian.h"
+// #include "matrix_identity.h"
+// #include "matrix_lowertriangle.h"
+// #include "matrix_revdiag.h"
+// #include "matrix_repcol.h"
+// #include "matrix_reprow.h"
+// #include "matrix_rep.h"
+// #include "matrix_skewhermitian.h"
+// #include "matrix_skewsymmetric.h"
+// #include "matrix_symmetric.h"
+// #include "matrix_toeplitz.h"
+// #include "matrix_uppertriangle.h"
+// #include "matrix_vandermonde.h"
+// #include "matrix_zero.h"
+// #include "matrix-constant.h"
+// #include "matrix-repeat-vec.h"
+// #include "matrix-outer-product.h"
+
+// #include "multi-array3.h"
+// #include "multi-array4.h"
 
 #include "expressionsR.h"
-#include "expressionsRW.h"
+// #include "expressionsRW.h"
 
 #include "fun_unary_AUTO.h"
-#include "fun_binary_AUTO.h"
-#include "fun_ternary_AUTO.h"
-#include "functions_misc.h"
-#include "functions_structure.h"
-#include "functions_products.h"
-#include "functions_user.h"
+// #include "fun_binary_AUTO.h"
+// #include "fun_ternary_AUTO.h"
+// #include "functions_misc.h"
+// #include "functions_structure.h"
+// #include "functions_products.h"
+// #include "functions_user.h"
 
-#include "fileio.h"
-#include "coda.h"
+// #include "fileio.h"
+// #include "coda.h"
 
 
 #endif

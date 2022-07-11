@@ -29,7 +29,7 @@ include $(DIR_MATHQ)/make-lib/info.mk
 include $(DIR_MATHQ)/make-lib/help.mk
 
 
-libmathq.a: display.o debug.o slices.o 
+libmathq.a: display.o debug.o #slices.o 
 	@echo "generating libmathq.a `cat $(TAG_FILE_MATHQ)`"
 	@\ar rUuv libmathq.a $?
 
