@@ -18,7 +18,7 @@ today = datetime.datetime.now().strftime("%d %B %Y")
 cmd = "python3 " + ' '.join(sys.argv)
 
 usage="""
-USAGE: python3 createdocbranch.py TAG_FILE_MATHQ --chapters CHAPTER1 ... [--branches CHAPTER_WITH_OWN_MAKEFILE1 ...]
+USAGE: python3 createdocbranch.py TAG_FILE_MATHQ --chapters CHAPTER1 ... [--branches CHAPExpr_R_WITH_OWN_MAKEFILE1 ...]
 
 """
 

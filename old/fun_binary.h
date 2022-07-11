@@ -57,7 +57,7 @@ namespace mathq {
   // template <class NT1, class NT2, class A, class B> 
   //   inline auto operator&&(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   // {
-  //   return  TER_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_And<NT1,NT2>>(a,b);
+  //   return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_And<NT1,NT2>>(a,b);
   // }
 
 
@@ -66,7 +66,7 @@ namespace mathq {
   // template <class NT1, class A> 
   //   inline auto operator&&(const ExpressionR<NT1,A>& a, const bool& b)
   //   {
-  //     return  TER_Binary<ExpressionR<NT1,A>,bool,NT1,bool,Fun_And<NT1,bool>>(a,b);
+  //     return  Expr_R_Binary<ExpressionR<NT1,A>,bool,NT1,bool,Fun_And<NT1,bool>>(a,b);
   //   }
 
   
@@ -75,7 +75,7 @@ namespace mathq {
   // template <class NT2, class B>
   //   inline auto operator&&(const bool& a, const ExpressionR<NT2,B>& b)
   //   {
-  //     return  TER_Binary<bool,ExpressionR<NT2,B>,bool,NT2,Fun_And<bool,NT2>>(a,b);
+  //     return  Expr_R_Binary<bool,ExpressionR<NT2,B>,bool,NT2,Fun_And<bool,NT2>>(a,b);
   //   }
 
     
@@ -84,7 +84,7 @@ namespace mathq {
   // template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
   //   inline auto operator&&(const ExpressionR<T,A>& a, const T& b)
   //   {
-  //     return  TER_Binary<ExpressionR<T,A>,T,T,T,Fun_And<T,T>>(a,b);
+  //     return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_And<T,T>>(a,b);
   //   }
     
 
@@ -93,7 +93,7 @@ namespace mathq {
   // template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
   //   inline auto operator&&(const T& a, const ExpressionR<T,B>& b)
   //   {
-  //     return  TER_Binary<T,ExpressionR<T,B>,T,T,Fun_And<T,T>>(a,b);
+  //     return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_And<T,T>>(a,b);
   //   }
 
 

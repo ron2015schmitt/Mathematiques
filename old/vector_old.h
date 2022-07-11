@@ -168,14 +168,14 @@ namespace mathq {
 
 
     // *** this is used for resize-by-assignment ***
-    TERW_Resize<Number>  resize(void) { 
-      return  TERW_Resize<Number>(*this);
+    Expr_RW_Resize<Number>  resize(void) { 
+      return  Expr_RW_Resize<Number>(*this);
     }
 
     // this is used to empty the vector of its datastore
-    TERW_Resize<Number>  resize(void) const {
+    Expr_RW_Resize<Number>  resize(void) const {
       this->resize(0);
-      return  TERW_Resize<Number>(*this);
+      return  Expr_RW_Resize<Number>(*this);
     }
 
     // --------------------- .resize(N) ---------------------
@@ -244,10 +244,10 @@ namespace mathq {
 
     // Accessing a slice of values
     
-    TERW_Subset<Number> operator[](const slc& slice)  { 
+    Expr_RW_Subset<Number> operator[](const slc& slice)  { 
       return (*this)[slice.toIndexVector(size())];
     }
-    const TERW_Subset<Number>  operator[](const slc& slice) const  {
+    const Expr_RW_Subset<Number>  operator[](const slc& slice) const  {
       //      display::log3("Vector","operator[]","(const slc& slice)\n");
       return (*this)[slice.toIndexVector(size())];
     }
@@ -256,11 +256,11 @@ namespace mathq {
 
     // Accessing a SET of values using a vector of ints
 
-    TERW_Subset<Number> operator[](const Vector<size_t>& ii) {
-      return TERW_Subset<Number>(*this, ii);
+    Expr_RW_Subset<Number> operator[](const Vector<size_t>& ii) {
+      return Expr_RW_Subset<Number>(*this, ii);
     }
-    const TERW_Subset<Number> operator[](const Vector<size_t>& ii) const {
-      return TERW_Subset<Number>(*this, ii);
+    const Expr_RW_Subset<Number> operator[](const Vector<size_t>& ii) const {
+      return Expr_RW_Subset<Number>(*this, ii);
     }
 
 
@@ -268,22 +268,22 @@ namespace mathq {
     
     // Accessing a SET of values using a MASK
     
-    TERW_Submask<Number> operator[](const Vector<bool>& mask)  {
-      return  TERW_Submask<Number>(*this,mask);
+    Expr_RW_Submask<Number> operator[](const Vector<bool>& mask)  {
+      return  Expr_RW_Submask<Number>(*this,mask);
     }
-    const TERW_Submask<Number> operator[](const Vector<bool>& mask)  const {
-      return  TERW_Submask<Number>(*this,mask);
+    const Expr_RW_Submask<Number> operator[](const Vector<bool>& mask)  const {
+      return  Expr_RW_Submask<Number>(*this,mask);
     }
 
 
 
     //Accessing a SET of values using a list
 
-    TERW_Subset<Number> operator[](const std::initializer_list<size_t>& list) {
-      return  TERW_Subset<Number>(*this, list);
+    Expr_RW_Subset<Number> operator[](const std::initializer_list<size_t>& list) {
+      return  Expr_RW_Subset<Number>(*this, list);
     }
-    const TERW_Subset<Number> operator[](const std::initializer_list<size_t>& list) const {
-      return  TERW_Subset<Number>(*this, list);
+    const Expr_RW_Subset<Number> operator[](const std::initializer_list<size_t>& list) const {
+      return  Expr_RW_Subset<Number>(*this, list);
     }
 
 
@@ -322,10 +322,10 @@ namespace mathq {
 
     // Accessing a slice of values
     
-    TERW_Subset<Number> operator()(const slc& slice)  { 
+    Expr_RW_Subset<Number> operator()(const slc& slice)  { 
       return (*this)[slice.toIndexVector(size())];
     }
-    const TERW_Subset<Number>  operator()(const slc& slice) const  {
+    const Expr_RW_Subset<Number>  operator()(const slc& slice) const  {
       //      display::log3("Vector","operator[]","(const slc& slice)\n");
       return (*this)[slice.toIndexVector(size())];
     }
@@ -334,11 +334,11 @@ namespace mathq {
 
     // Accessing a SET of values using a vector of ints
 
-    TERW_Subset<Number> operator()(const Vector<size_t>& ii) {
-      return TERW_Subset<Number>(*this, ii);
+    Expr_RW_Subset<Number> operator()(const Vector<size_t>& ii) {
+      return Expr_RW_Subset<Number>(*this, ii);
     }
-    const TERW_Subset<Number> operator()(const Vector<size_t>& ii) const {
-      return TERW_Subset<Number>(*this, ii);
+    const Expr_RW_Subset<Number> operator()(const Vector<size_t>& ii) const {
+      return Expr_RW_Subset<Number>(*this, ii);
     }
 
 
@@ -346,22 +346,22 @@ namespace mathq {
     
     // Accessing a SET of values using a MASK
     
-    TERW_Submask<Number> operator()(const Vector<bool>& mask)  {
-      return  TERW_Submask<Number>(*this,mask);
+    Expr_RW_Submask<Number> operator()(const Vector<bool>& mask)  {
+      return  Expr_RW_Submask<Number>(*this,mask);
     }
-    const TERW_Submask<Number> operator()(const Vector<bool>& mask)  const {
-      return  TERW_Submask<Number>(*this,mask);
+    const Expr_RW_Submask<Number> operator()(const Vector<bool>& mask)  const {
+      return  Expr_RW_Submask<Number>(*this,mask);
     }
 
 
 
     //Accessing a SET of values using a list
 
-    TERW_Subset<Number> operator()(const std::initializer_list<size_t>& list) {
-      return  TERW_Subset<Number>(*this, list);
+    Expr_RW_Subset<Number> operator()(const std::initializer_list<size_t>& list) {
+      return  Expr_RW_Subset<Number>(*this, list);
     }
-    const TERW_Subset<Number> operator()(const std::initializer_list<size_t>& list) const {
-      return  TERW_Subset<Number>(*this, list);
+    const Expr_RW_Subset<Number> operator()(const std::initializer_list<size_t>& list) const {
+      return  Expr_RW_Subset<Number>(*this, list);
     }
 
 
@@ -514,7 +514,7 @@ namespace mathq {
       return equals(v2);
     }
     template <class B>
-    Vector<Number>& operator=(const TERW_Resize<Number>& b) { 
+    Vector<Number>& operator=(const Expr_RW_Resize<Number>& b) { 
       return *this;
     }
 

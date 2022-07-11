@@ -18,10 +18,10 @@ CREATE_DOC_BRANCH := $(DIR_MATHQ)/scripts/doc_create_subnodes.py
 CREATE_DOC_LEAF := $(DIR_MATHQ)/scripts/doc_create_leaf.py
 
 # CHAPTERS must be defined in the "incuder" file
-CHAPTER_NODE_FILES = $(addsuffix /node.json,$(CHAPTERS))
-CHAPTER_BRANCHES = $(subst /,,$(MAKE_SUBDIRS))
-CHAPTER_LEAVES = $(filter-out $(CHAPTER_BRANCHES),$(CHAPTERS))
+CHAPExpr_R_NODE_FILES = $(addsuffix /node.json,$(CHAPTERS))
+CHAPExpr_R_BRANCHES = $(subst /,,$(MAKE_SUBDIRS))
+CHAPExpr_R_LEAVES = $(filter-out $(CHAPExpr_R_BRANCHES),$(CHAPTERS))
 
-LEAF_READMES = $(addsuffix /README.md,$(CHAPTER_LEAVES))
+LEAF_READMES = $(addsuffix /README.md,$(CHAPExpr_R_LEAVES))
 
 

@@ -8,10 +8,10 @@ namespace mathq {
 
 
   //---------------------------------------------------------------------------
-  // TERW_Subset   Subset Expression
+  // Expr_RW_Subset   Subset Expression
   //---------------------------------------------------------------------------
   template<typename Number>
-  class TERW_Subset : public  ExpressionRW<TERW_Subset<Number>, Number, Number, 1, 1> {
+  class Expr_RW_Subset : public  ExpressionRW<Expr_RW_Subset<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int depth_value = 1;
@@ -28,20 +28,20 @@ namespace mathq {
   public:
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
-    TERW_Subset(Vector<Number>& x, const Vector<size_t>& ii)
+    Expr_RW_Subset(Vector<Number>& x, const Vector<size_t>& ii)
       : x_(x), ii_(ii), delete_ii_(false) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
       vptrs->add(&ii_);
     }
-    TERW_Subset(Vector<Number>& x, const std::initializer_list<size_t>& list)
+    Expr_RW_Subset(Vector<Number>& x, const std::initializer_list<size_t>& list)
       : x_(x), ii_(*(new Vector<size_t>(list))), delete_ii_(true) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
       vptrs->add(&ii_);
     }
 
-    ~TERW_Subset() {
+    ~Expr_RW_Subset() {
       if (delete_ii_) delete& ii_;
       delete vptrs;
     }
@@ -78,11 +78,11 @@ namespace mathq {
     }
 
     template <class Y, class NT2>
-    TERW_Subset<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
+    Expr_RW_Subset<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
       return this->equals(rhs);
     }
 
-    TERW_Subset<Number>& operator=(const Number d) {
+    Expr_RW_Subset<Number>& operator=(const Number d) {
       return this->equals(d);
     }
 
@@ -141,14 +141,14 @@ namespace mathq {
       }
     }
     std::string expression_name() const {
-      return "TERW_Subset";
+      return "Expr_RW_Subset";
     }
 
 
 #if MATRICKS_DEBUG>=1
     std::string expression(void) const {
       return "";
-      //return expression_TERW_Subset(a_.expression(),ii_.expression());
+      //return expression_Expr_RW_Subset(a_.expression(),ii_.expression());
     }
 #endif
   };
@@ -156,10 +156,10 @@ namespace mathq {
 
 
   //--------------------------------------------------------------------------
-  // TERW_Submask   Submask Expression
+  // Expr_RW_Submask   Submask Expression
   //--------------------------------------------------------------------------
   template<typename Number>
-  class TERW_Submask : public  ExpressionRW<TERW_Submask<Number>, Number, Number, 1, 1> {
+  class Expr_RW_Submask : public  ExpressionRW<Expr_RW_Submask<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int depth_value = 1;
@@ -176,13 +176,13 @@ namespace mathq {
   public:
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
-    TERW_Submask(Vector<Number>& x, const Vector<bool>& mask)
+    Expr_RW_Submask(Vector<Number>& x, const Vector<bool>& mask)
       : x_(x), ii_(*(new Vector<size_t>(findtrue(mask)))) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
       vptrs->add(&ii_);
     }
-    ~TERW_Submask() {
+    ~Expr_RW_Submask() {
       delete& ii_;
       delete vptrs;
     }
@@ -207,11 +207,11 @@ namespace mathq {
     }
 
     template <class Y, class NT2>
-    TERW_Submask<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
+    Expr_RW_Submask<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
       return this->equals(rhs);
     }
 
-    TERW_Submask<Number>& operator=(const Number d) {
+    Expr_RW_Submask<Number>& operator=(const Number d) {
       return this->equals(d);
     }
 
@@ -270,7 +270,7 @@ namespace mathq {
       }
     }
     std::string expression_name() const {
-      return "TERW_Submask";
+      return "Expr_RW_Submask";
     }
 
 
@@ -279,7 +279,7 @@ namespace mathq {
 #if MATRICKS_DEBUG>=1
     std::string expression(void) const {
       return "";
-      //return expression_TERW_Submask(a_.expression(),ii_.expression());
+      //return expression_Expr_RW_Submask(a_.expression(),ii_.expression());
     }
 #endif
   };
@@ -291,7 +291,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class X, class Y, class Element, typename Number, int depth>
-  class TERW_Join : public  ExpressionRW<TERW_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
+  class Expr_RW_Join : public  ExpressionRW<Expr_RW_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int depth_value = depth;
@@ -309,14 +309,14 @@ namespace mathq {
 
 
 
-    TERW_Join(X& x, Y& y) : x_(x), y_(y) {
+    Expr_RW_Join(X& x, Y& y) : x_(x), y_(y) {
       vptrs = new VectorofPtrs();
       vptrs->add(x_.getAddresses());
       vptrs->add(y_.getAddresses());
       // DISP3(x);
     }
 
-    ~TERW_Join() {
+    ~Expr_RW_Join() {
       delete vptrs;
     }
 
@@ -354,14 +354,14 @@ namespace mathq {
     }
 
     template <class Z>
-    TERW_Join<X, Y, Element, Number, depth>& operator=(const ExpressionR<Z, Element, Number, depth, 1>& rhs) {
+    Expr_RW_Join<X, Y, Element, Number, depth>& operator=(const ExpressionR<Z, Element, Number, depth, 1>& rhs) {
       return this->equals(rhs);
     }
 
-    TERW_Join<X, Y, Element, Number, depth>& operator=(const Number d) {
+    Expr_RW_Join<X, Y, Element, Number, depth>& operator=(const Number d) {
       return this->equals(d);
     }
-    TERW_Join<X, Y, Element, Number, depth>& operator=(const Element& e) {
+    Expr_RW_Join<X, Y, Element, Number, depth>& operator=(const Element& e) {
       return this->equals(e);
     }
 
@@ -427,7 +427,7 @@ namespace mathq {
     }
 
     std::string expression_name() const {
-      return "TERW_Join";
+      return "Expr_RW_Join";
     }
 
 
@@ -447,10 +447,10 @@ namespace mathq {
 
 
   //   //---------------------------------------------------------------------------
-  //   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
+  //   // Expr_RW_RealFromComplex  used for accessing real/imag part of complex vector
   //   //---------------------------------------------------------------------------
   //   template <typename Number, class OP, int depth>
-  //     class TERW_RealFromComplex : public  ExpressionRW<Number,TERW_RealFromComplex<Number,OP,depth> > {
+  //     class Expr_RW_RealFromComplex : public  ExpressionRW<Number,Expr_RW_RealFromComplex<Number,OP,depth> > {
   //   private:
     // can't be constant since we alow to be on left hand side
   //     Vector<std::complex<Number> >& a_;
@@ -460,13 +460,13 @@ namespace mathq {
   //     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  //   TERW_RealFromComplex(Vector<std::complex<Number> >& a)
+  //   Expr_RW_RealFromComplex(Vector<std::complex<Number> >& a)
   //     :   a_(a) { 
   //       vptrs = new VectorofPtrs();
   //       vptrs->add(&a_);
   //     }
 
-  //     ~TERW_RealFromComplex() {
+  //     ~Expr_RW_RealFromComplex() {
   //       delete vptrs;
   //     }
 
@@ -525,16 +525,16 @@ namespace mathq {
   //       }
   //     }
   //     std::string expression_name() const {
-  //       return "TERW_RealFromComplex";
+  //       return "Expr_RW_RealFromComplex";
   //     }
 
 
   //     template <class NT2, class B>
-  //       TERW_RealFromComplex<Number,OP,depth>& operator=(const ExpressionR<NT2,B>& rhs) { 
+  //       Expr_RW_RealFromComplex<Number,OP,depth>& operator=(const ExpressionR<NT2,B>& rhs) { 
   //       return this->equals(rhs);
   //     }
 
-  //     TERW_RealFromComplex<Number,OP,depth>& operator=(const MyNumberType d) { 
+  //     Expr_RW_RealFromComplex<Number,OP,depth>& operator=(const MyNumberType d) { 
   //       return this->equals(d);
   //     }
 

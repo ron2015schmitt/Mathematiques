@@ -10,11 +10,11 @@ namespace matricks {
   
 
   //---------------------------------------------------------------------------
-  // TER_Unary    unary expressions
+  // Expr_R_Unary    unary expressions
   //---------------------------------------------------------------------------
     
     template <class Element, class A, typename Number, int depth, FUNC> 
-      class TER_Unary  : public  ExpressionR<Number,TER_Unary<Number,A,FUNC,depth>> {
+      class Expr_R_Unary  : public  ExpressionR<Number,Expr_R_Unary<Number,A,FUNC,depth>> {
     public:
       typedef ExpressionR<Element,A,Number,depth> TIN;
   
@@ -26,13 +26,13 @@ namespace matricks {
 
 
 
-  TER_Unary(const TIN& a) : a_(a) {
+  Expr_R_Unary(const TIN& a) : a_(a) {
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
       DISP3(a);
     }
     
-  ~TER_Unary() {
+  ~Expr_R_Unary() {
       delete vptrs;
     }
 
@@ -89,7 +89,7 @@ namespace matricks {
   }
 
   std::string classname() const {
-      return "TER_Unary";
+      return "Expr_R_Unary";
   }
 
 
@@ -105,12 +105,12 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TER_Binary    binary operator expressions
+  // Expr_R_Binary    binary operator expressions
   //               note that there is no easy way to define the first template
   //               of ExpressionR<> below so use NT1
   //---------------------------------------------------------------------------
   template<class A, class B, class NT1, class NT2, class OP, int D1, int D2>
-    class TER_Binary : public  ExpressionR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Binary<A,B,NT1,NT2,OP,D1,D2> > {
+    class Expr_R_Binary : public  ExpressionR<typename ResultType<NT1,NT2,typename OP::Type>::Type,Expr_R_Binary<A,B,NT1,NT2,OP,D1,D2> > {
   public:
     typedef typename std::conditional<D1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<D2==0,const B,const B&>::type TypeB;
@@ -127,12 +127,12 @@ namespace matricks {
     typedef typename ResultType<NT1,NT2,typename OP::Type>::Type MultiArrayTypeOut;
     
 
-  TER_Binary(TypeA a, TypeB b)
+  Expr_R_Binary(TypeA a, TypeB b)
     : a_(a), b_(b) {
       vptrs = new VectorofPtrs();
     }
 
-    ~TER_Binary() {
+    ~Expr_R_Binary() {
       delete vptrs;
     }
 
@@ -234,7 +234,7 @@ namespace matricks {
     }
 
     std::string classname() const {
-      return "TER_Binary";
+      return "Expr_R_Binary";
     }
 
 
@@ -258,12 +258,12 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TER_Ternary    ternary operator expressions
+  // Expr_R_Ternary    ternary operator expressions
   //               note that there is no easy way to define the first template
   //               of ExpressionR<> below so use NT1
   //---------------------------------------------------------------------------
   template<class A, class B, class C, class NT1, class NT2, class NT3, class OP, int D1, int D2, int D3>
-    class TER_Ternary : public  ExpressionR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Ternary<A,B,C,NT1,NT2,NT3,OP,D1,D2,D3> > {
+    class Expr_R_Ternary : public  ExpressionR<typename ResultType<NT1,NT2,typename OP::Type>::Type,Expr_R_Ternary<A,B,C,NT1,NT2,NT3,OP,D1,D2,D3> > {
   public:
     typedef typename std::conditional<D1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<D2==0,const B,const B&>::type TypeB;
@@ -283,12 +283,12 @@ namespace matricks {
     typedef typename OP::Type NumTypeOut;
     
 
-  TER_Ternary(TypeA a, TypeB b, TypeC c)
+  Expr_R_Ternary(TypeA a, TypeB b, TypeC c)
     : a_(a), b_(b), c_(c) {
       vptrs = new VectorofPtrs();
     }
 
-    ~TER_Ternary() {
+    ~Expr_R_Ternary() {
       delete vptrs;
     }
 
@@ -400,7 +400,7 @@ namespace matricks {
     }
 
     std::string classname() const {
-      return "TER_Ternary";
+      return "Expr_R_Ternary";
     }
 
 
@@ -428,10 +428,10 @@ namespace matricks {
   
 
   //---------------------------------------------------------------------------
-  // TERW_Subset   Subset Expression
+  // Expr_RW_Subset   Subset Expression
   //---------------------------------------------------------------------------
   template<typename Number, int depth>
-    class TERW_Subset :  public  ExpressionRW<Number,TERW_Subset<Number,depth> > {
+    class Expr_RW_Subset :  public  ExpressionRW<Number,Expr_RW_Subset<Number,depth> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<Number>& a_;
@@ -441,20 +441,20 @@ namespace matricks {
   public:
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
-  TERW_Subset(Vector<Number>& a, const Vector<size_t>& ii)
+  Expr_RW_Subset(Vector<Number>& a, const Vector<size_t>& ii)
     : a_(a), ii_(ii), delete_ii_(false) {
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
       vptrs->add(&ii_);
   }
-  TERW_Subset(Vector<Number>& a, const std::initializer_list<size_t>& list)
+  Expr_RW_Subset(Vector<Number>& a, const std::initializer_list<size_t>& list)
     : a_(a), ii_(*(new Vector<size_t>(list))), delete_ii_(true) {
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
       vptrs->add(&ii_);
   }
     
-    ~TERW_Subset() {
+    ~Expr_RW_Subset() {
       if (delete_ii_) delete &ii_;
       delete vptrs;
     }
@@ -531,16 +531,16 @@ namespace matricks {
       }
     }
     std::string classname() const {
-      return "TERW_Subset";
+      return "Expr_RW_Subset";
     }
 
 
     template <class NT2, class B>
-      TERW_Subset<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
+      Expr_RW_Subset<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_Subset<Number>& operator=(const MyNumberType d) { 
+    Expr_RW_Subset<Number>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -548,7 +548,7 @@ namespace matricks {
 #if MATRICKS_DEBUG>=1
     std::string expression(void) const {
       return "";
-      //return expression_TERW_Subset(a_.expression(),ii_.expression());
+      //return expression_Expr_RW_Subset(a_.expression(),ii_.expression());
     }
 #endif
 
@@ -567,10 +567,10 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TERW_Submask   subset of a tensor from a mask
+  // Expr_RW_Submask   subset of a tensor from a mask
   //---------------------------------------------------------------------------
   template<typename Number, int depth>
-    class TERW_Submask :  public  ExpressionRW<Number,TERW_Submask<Number,depth> > {
+    class Expr_RW_Submask :  public  ExpressionRW<Number,Expr_RW_Submask<Number,depth> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<Number>& a_;
@@ -581,7 +581,7 @@ namespace matricks {
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TERW_Submask(Vector<Number>& a, const Vector<bool>& mask)
+  Expr_RW_Submask(Vector<Number>& a, const Vector<bool>& mask)
     : a_(a), ii_(new Vector<size_t>(findtrue(mask))) { 
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
@@ -589,7 +589,7 @@ namespace matricks {
     }
 
 
-    ~TERW_Submask(){ 
+    ~Expr_RW_Submask(){ 
       delete  ii_;
       delete vptrs;
     }
@@ -652,17 +652,17 @@ namespace matricks {
       }
     }
     std::string classname() const {
-      return "TERW_Submask";
+      return "Expr_RW_Submask";
     }
 
 
 
     template <class NT2, class B>
-      TERW_Submask<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
+      Expr_RW_Submask<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_Submask<Number>& operator=(const MyNumberType d) { 
+    Expr_RW_Submask<Number>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -671,7 +671,7 @@ namespace matricks {
 #if MATRICKS_DEBUG>=1
     std::string expression(void) const {
       return "";
-      //      return expression_TERW_Submask(a_.expression(),ii_->expression());
+      //      return expression_Expr_RW_Submask(a_.expression(),ii_->expression());
     }
 #endif 
 
@@ -687,10 +687,10 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TERW_RealFromComplex  used for accessing real/imag part of complex vector
+  // Expr_RW_RealFromComplex  used for accessing real/imag part of complex vector
   //---------------------------------------------------------------------------
   template <typename Number, class OP, int depth>
-    class TERW_RealFromComplex : public  ExpressionRW<Number,TERW_RealFromComplex<Number,OP,depth> > {
+    class Expr_RW_RealFromComplex : public  ExpressionRW<Number,Expr_RW_RealFromComplex<Number,OP,depth> > {
   private:
     Vector<std::complex<Number> >& a_;
     VectorofPtrs *vptrs;
@@ -699,13 +699,13 @@ namespace matricks {
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TERW_RealFromComplex(Vector<std::complex<Number> >& a)
+  Expr_RW_RealFromComplex(Vector<std::complex<Number> >& a)
     :   a_(a) { 
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
     }
 
-    ~TERW_RealFromComplex() {
+    ~Expr_RW_RealFromComplex() {
       delete vptrs;
     }
 
@@ -764,16 +764,16 @@ namespace matricks {
       }
     }
     std::string classname() const {
-      return "TERW_RealFromComplex";
+      return "Expr_RW_RealFromComplex";
     }
 
 
     template <class NT2, class B>
-      TERW_RealFromComplex<Number,OP,depth>& operator=(const ExpressionR<NT2,B>& rhs) { 
+      Expr_RW_RealFromComplex<Number,OP,depth>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_RealFromComplex<Number,OP,depth>& operator=(const MyNumberType d) { 
+    Expr_RW_RealFromComplex<Number,OP,depth>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -791,11 +791,11 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TER_Series    used for Taylor and Maclaurin series
+  // Expr_R_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
   template<typename Number, class A, class X, int depth>
-    class TER_Series : public  ExpressionR<Number,TER_Series<Number,A,X,depth> > {
+    class Expr_R_Series : public  ExpressionR<Number,Expr_R_Series<Number,A,X,depth> > {
 
   private:
     const A& a_;
@@ -808,20 +808,20 @@ namespace matricks {
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TER_Series(const A& a, const X& x, const int N, const Number x0)
+  Expr_R_Series(const A& a, const X& x, const int N, const Number x0)
     : a_(a), x_(x), N_(N), x0_(x0) { 
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
       vptrs->add(x_.getAddresses());
     }
-  TER_Series(const A& a, const X& x, const int N)
+  Expr_R_Series(const A& a, const X& x, const int N)
     : a_(a), x_(x), N_(N), x0_(0) { 
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
       vptrs->add(x_.getAddresses());
     }
 
-    ~TER_Series() {
+    ~Expr_R_Series() {
       delete vptrs;
     }
 
@@ -885,7 +885,7 @@ namespace matricks {
       }
     }
     std::string classname() const {
-      return "TER_Series";
+      return "Expr_R_Series";
     }
   
 
@@ -910,11 +910,11 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TER_Series2    used for fourier series
+  // Expr_R_Series2    used for fourier series
   //---------------------------------------------------------------------------
   
   template<typename Number, class A, class B, class X, class OP1, class OP2, int depth>
-    class TER_Series2 : public  ExpressionR<Number,TER_Series2< Number, A, B, X, OP1, OP2> > {
+    class Expr_R_Series2 : public  ExpressionR<Number,Expr_R_Series2< Number, A, B, X, OP1, OP2> > {
 
   private:
     const A& a_;
@@ -930,7 +930,7 @@ namespace matricks {
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TER_Series2(const A& a, const A& b, const X& x, const int N, const Number k1)
+  Expr_R_Series2(const A& a, const A& b, const X& x, const int N, const Number k1)
     : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<Number>(N))) {
       
       vptrs = new VectorofPtrs();
@@ -943,7 +943,7 @@ namespace matricks {
 	k_[n] = n*k1_;
       }
     }
-    ~TER_Series2(){
+    ~Expr_R_Series2(){
       delete &k_;
       delete vptrs;
     }
@@ -1006,7 +1006,7 @@ namespace matricks {
       }
     }
     std::string classname() const {
-      return "TER_Series2";
+      return "Expr_R_Series2";
     }
 
 
@@ -1044,11 +1044,11 @@ namespace matricks {
 
 
   //-----------------------------------------------------------------------------
-  // TERW_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
+  // Expr_RW_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
   template<typename Number, class A, class FUNC, int depth>
-    class TERW_Transpose  : public  ExpressionRW<Number,TERW_Transpose<Number,A,FUNC,depth> > {
+    class Expr_RW_Transpose  : public  ExpressionRW<Number,Expr_RW_Transpose<Number,A,FUNC,depth> > {
   
   private:
     A& a_;
@@ -1059,13 +1059,13 @@ namespace matricks {
 
 
 
-  TERW_Transpose(A& a) : a_(a) {
+  Expr_RW_Transpose(A& a) : a_(a) {
       rdims = &(a_.dims().getReverse());
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
     }
     
-    ~TERW_Transpose() {
+    ~Expr_RW_Transpose() {
       delete rdims;
       delete vptrs;
     }
@@ -1125,15 +1125,15 @@ namespace matricks {
       }
     }
     std::string classname() const {
-      return "TERW_Transpose";
+      return "Expr_RW_Transpose";
     }
 
     template <class NT2, class B>
-      TERW_Submask<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
+      Expr_RW_Submask<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_Submask<Number>& operator=(const MyNumberType d) { 
+    Expr_RW_Submask<Number>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
@@ -1154,11 +1154,11 @@ namespace matricks {
 
 
   //-----------------------------------------------------------------------------
-  // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
+  // Expr_R_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
   template<typename Number, class A, class FUNC, int depth>
-    class TER_Transpose  : public  ExpressionR<Number,TER_Transpose<Number,A,FUNC,depth> > {
+    class Expr_R_Transpose  : public  ExpressionR<Number,Expr_R_Transpose<Number,A,FUNC,depth> > {
   
   private:
     const A& a_;
@@ -1170,13 +1170,13 @@ namespace matricks {
 
 
 
-  TER_Transpose(const A& a) : a_(a) {
+  Expr_R_Transpose(const A& a) : a_(a) {
       rdims = &(a_.dims().getReverse());
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
     }
     
-    ~TER_Transpose() {
+    ~Expr_R_Transpose() {
       delete rdims;
       delete vptrs;
     }
@@ -1228,7 +1228,7 @@ namespace matricks {
       }
     }
     std::string classname() const {
-      return "TER_Transpose";
+      return "Expr_R_Transpose";
     }
 
 
@@ -1422,7 +1422,7 @@ namespace matricks {
       return "VERW_Join";
     }
 
-    VERW_Join<Number,A,B>& operator=(TERW_Resize<Number>& b) { 
+    VERW_Join<Number,A,B>& operator=(Expr_RW_Resize<Number>& b) { 
       return this->equals(b);
     }
 

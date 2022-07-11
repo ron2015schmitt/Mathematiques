@@ -10,7 +10,7 @@ include $(DIR_MATHQ)/make-lib/help.mk
 
 # add subdir nodefiles as target
 README.md: $(CREATE_DOC_BRANCH) $(TAG_FILE_MATHQ) body.temp.md title.src.md
-	python3 $(CREATE_DOC_BRANCH) $(TAG_FILE_MATHQ)  --chapters $(CHAPTERS)  --branches $(CHAPTER_BRANCHES)
+	python3 $(CREATE_DOC_BRANCH) $(TAG_FILE_MATHQ)  --chapters $(CHAPTERS)  --branches $(CHAPExpr_R_BRANCHES)
 
 
 # MAKE all subdir README files (used for dsubdirs that do NOT have a Makefile)
@@ -35,7 +35,7 @@ README.md: $(CREATE_DOC_BRANCH) $(TAG_FILE_MATHQ) body.temp.md title.src.md
 	./$*.bash > $@
 
 clean:: 
-	\rm -f README.md $(LEAF_READMES) $(CHAPTER_NODE_FILES) 
+	\rm -f README.md $(LEAF_READMES) $(CHAPExpr_R_NODE_FILES) 
 
 info::
 	@echo
@@ -45,8 +45,8 @@ info::
 	@$(call echovar,MAKEFILE_REL)
 	@$(call echovar,CREATE_DOC_BRANCH)
 	@$(call echovar,CREATE_DOC_LEAF)
-	@$(call echovar,CHAPTER_NODE_FILES)
-	@$(call echovar,CHAPTER_BRANCHES)
-	@$(call echovar,CHAPTER_LEAVES)
+	@$(call echovar,CHAPExpr_R_NODE_FILES)
+	@$(call echovar,CHAPExpr_R_BRANCHES)
+	@$(call echovar,CHAPExpr_R_LEAVES)
 	@$(call echovar,LEAF_READMES)
 

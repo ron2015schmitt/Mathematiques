@@ -81,7 +81,7 @@ namespace mathq {
   template <class NT2, class X, class Element, typename Number, int depth, int rank>
   auto numbercast(const ExpressionR<X, Element, Number, depth, rank>& x) {
     typedef typename NumberTrait<Element, NT2>::ReplacedNumberType EOUT;
-    return  TER_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Number, NT2>>(x);
+    return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Number, NT2>>(x);
   }
 
 
@@ -137,7 +137,7 @@ namespace mathq {
   auto roundzero(const ExpressionR<X, Element, Number, depth, rank>& x, const typename SimpleNumberTrait<Number>::Type& tol = Functions<typename SimpleNumberTrait<Number>::Type>::tolerance) {
 
     typedef typename SimpleNumberTrait<Number>::Type DTOL;
-    return  TER_Binary<ExpressionR<X, Element, Number, depth, rank>,
+    return  Expr_R_Binary<ExpressionR<X, Element, Number, depth, rank>,
       DTOL,
       Element, DTOL, Element, Number, DTOL, Number, depth, 0, depth, rank, 0, rank,
       FUNCTOR_roundzero<Element, Number>>(x, tol);
@@ -243,7 +243,7 @@ namespace mathq {
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3;
-    return  TER_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
+    return  Expr_R_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
       ExpressionR<B, E2, NT2, depth, rank>,
       DTOL,
       E1, E2, DTOL, E3, NT1, NT2, DTOL, NT3, depth, depth, 0, depth, rank, rank, 0, rank,
@@ -258,7 +258,7 @@ namespace mathq {
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3;
-    return  TER_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
+    return  Expr_R_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
       NT2,
       DTOL,
       E1, NT2, DTOL, E3, NT1, NT2, DTOL, NT3, depth, 0, 0, depth, rank, 0, 0, rank,
@@ -275,7 +275,7 @@ namespace mathq {
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
     typedef typename NumberTrait<E2, NT3>::ReplacedNumberType E3;
-    return  TER_Ternary<NT1,
+    return  Expr_R_Ternary<NT1,
       ExpressionR<B, E2, NT2, depth, rank>,
       DTOL,
       NT1, E2, DTOL, E3, NT1, NT2, DTOL, NT3, 0, depth, 0, depth, 0, rank, 0, rank,
@@ -2050,14 +2050,14 @@ namespace mathq {
 
   template <class A, class X, class Element, typename Number, int D1, int D2, int R1, int R2, typename = EnableIf<(D1==1)&&(R1==1)>>
   auto maclaurin(const ExpressionR<A, Number, Number, D1, R1>& a, const ExpressionR<X, Element, Number, D2, R2>& x, const int N, const Number x0) {
-    return TER_Series<ExpressionR<A, Number, Number, D1, R1>, ExpressionR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N, x0);
+    return Expr_R_Series<ExpressionR<A, Number, Number, D1, R1>, ExpressionR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N, x0);
   }
 
   // // taylor(vector coefs, vector vals, max N)
 
   template <class A, class X, class Element, typename Number, int D1, int D2, int R1, int R2, typename = EnableIf<(D1==1)&&(R1==1)>>
   auto taylor(const ExpressionR<A, Number, Number, D1, R1>& a, const ExpressionR<X, Element, Number, D2, R2>& x, const int N) {
-    return TER_Series<ExpressionR<A, Number, Number, D1, R1>, ExpressionR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N);
+    return Expr_R_Series<ExpressionR<A, Number, Number, D1, R1>, ExpressionR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N);
   }
 
   // // ifourier(vector cos coefs, vector sin coefs, vector vals, max N, k1=2pi/wavelength or 2pi/period)
@@ -2065,7 +2065,7 @@ namespace mathq {
 
   template <class A, class B, class X, typename Number, int depth, int rank, typename = EnableIf<(depth==1)&&(rank==1)> >
   auto ifourier(const ExpressionR<A, Number, Number, depth, rank>& Acos, const ExpressionR<B, Number, Number, depth, rank>& Bsin, const ExpressionR<X, Number, Number, depth, rank>& x, const int N, const Number k1) {
-    return  TER_Series2<ExpressionR<A, Number, Number, depth, rank>, ExpressionR<B, Number, Number, depth, rank>, ExpressionR<X, Number, Number, depth, rank>, Number, FUNCTOR_cos<Number, Number, Number, Number>, FUNCTOR_sin<Number, Number, Number, Number> >(Acos, Bsin, x, N, k1);
+    return  Expr_R_Series2<ExpressionR<A, Number, Number, depth, rank>, ExpressionR<B, Number, Number, depth, rank>, ExpressionR<X, Number, Number, depth, rank>, Number, FUNCTOR_cos<Number, Number, Number, Number>, FUNCTOR_sin<Number, Number, Number, Number> >(Acos, Bsin, x, N, k1);
   }
 
 

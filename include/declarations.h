@@ -241,37 +241,37 @@ namespace mathq {
 
 
   template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
-  class TER_Unary;
+  class Expr_R_Unary;
 
   template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t D1, size_t D2, size_t D3, size_t R1, size_t R2, size_t R3, class OP>
-  class TER_Binary;
+  class Expr_R_Binary;
 
   template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4, size_t D1, size_t D2, size_t D3, size_t M4, size_t R1, size_t R2, size_t R3, size_t R4, class OP>
-  class TER_Ternary;
+  class Expr_R_Ternary;
 
   template <class A, class X, typename Element, typename Number, size_t depth, size_t rank>
-  class TER_Series;
+  class Expr_R_Series;
 
   template <class A, class B, class X, typename Number, class OP1, class OP2>
-  class TER_Series2;
+  class Expr_R_Series2;
 
   template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
-  class TER_Transpose;
+  class Expr_R_Transpose;
 
   template <class A, typename Number>
-  class TER_Rep;
+  class Expr_R_Rep;
 
   template <class X, class Y, typename Element, typename Number, size_t depth>
-  class TER_Join;
+  class Expr_R_Join;
 
   template <typename Number>
-  class TERW_Subset;
+  class Expr_RW_Subset;
 
   template <typename Number>
-  class TERW_Submask;
+  class Expr_RW_Submask;
 
   template <class X, class Y, typename Element, typename Number, size_t depth>
-  class TERW_Join;
+  class Expr_RW_Join;
 
 
   // ***************************************************************************
