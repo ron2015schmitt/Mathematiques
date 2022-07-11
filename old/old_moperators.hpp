@@ -307,10 +307,10 @@ namespace mathq {
   // mcast(vector)
 
   template <class D2, class D1, class A> 
-  inline MFuncVec<D2,MArrayExpR<D1,A>,Fun_Cast<D1,D2> > 
-  mcast(const MArrayExpR<D1,A>& a, const size_t NR, const size_t NC)
+  inline MFuncVec<D2,ExpressionR<D1,A>,Fun_Cast<D1,D2> > 
+  mcast(const ExpressionR<D1,A>& a, const size_t NR, const size_t NC)
   {
-    return  MFuncVec<D2,MArrayExpR<D1,A>,Fun_Cast<D1,D2> >(a,NR,NC);
+    return  MFuncVec<D2,ExpressionR<D1,A>,Fun_Cast<D1,D2> >(a,NR,NC);
   }
 
 

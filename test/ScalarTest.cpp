@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     // printStart(++testnum);
     // Scalar<int> s1 = 1;
     // testtext( "dynamic casting" );
-    // MArrayExpRW<int,Scalar<int> > &s2 = s1;
+    // ExpressionRW<int,Scalar<int> > &s2 = s1;
     // Scalar<int> *sp1 = dynamic_cast<Scalar<int>*>(&s2);
     // void* result = (void*)&s1;
     // void* expected = (void*)sp1;

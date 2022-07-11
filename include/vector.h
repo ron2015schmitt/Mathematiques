@@ -22,9 +22,14 @@
 namespace mathq {
 
   template <typename Element, size_t N1>
-  class MultiArray<Element, 1, N1>
-    // : public MexpRW {
-  {
+  class MultiArray<Element, 1, N1> :
+    public ExpressionRW<
+    Vector<Element, N1>,  // Derived
+    Element,  // Element
+    typename NumberTrait<Element>::Type, // Number
+    1 + NumberTrait<Element>::depth(),  // depth
+    1  // rank
+    > {
   public:
 
 
@@ -43,13 +48,12 @@ namespace mathq {
 
     using Type = MultiArray<Element, rank_value, N1>;
     using ConcreteType = Vector<Element, N1>;
+
     using ElementType = Element;
-    using DimensionsType = Dimensions<rank_value>;
-    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     using NumberType = typename NumberTrait<Element>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-    using ParentType = MArrayExpRW<
+    using ParentType = ExpressionRW<
       ConcreteType,  // Derived
       Element,  // Element
       NumberType, // Number
@@ -57,6 +61,8 @@ namespace mathq {
       rank_value  // rank
     >;
 
+    using DimensionsType = Dimensions<rank_value>;
+    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
 
     using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
 
@@ -80,8 +86,18 @@ namespace mathq {
     //**********************************************************************
 
 
-    // -------------------  DEFAULT  CONSTRUCTOR: Vector()  --------------------
+    // -------------------  default  --------------------
     explicit MultiArray() {
+      constructorHelper();
+    }
+
+    // --------------------- copy constructor --------------------
+    template<size_t NE2>
+    MultiArray(const Vector<Element, NE2>& var) {
+      if (is_dynamic_value) {
+        resize(var.size());
+      }
+      *this = var;
       constructorHelper();
     }
 
@@ -122,20 +138,9 @@ namespace mathq {
       constructorHelper();
     }
 
-    // --------------------- copy constructor --------------------
-    template<size_t NE2>
-    MultiArray(const Vector<Element, NE2>& var) {
-      if (is_dynamic_value) {
-        resize(var.size());
-      }
-      *this = var;
-      constructorHelper();
-    }
-
-
     // --------------------- EXPRESSION CONSTRUCTOR --------------------
     // template <class X>
-    // MultiArray(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
+    // MultiArray(const ExpressionR<X, Element, NumberType, depth, rank_value>& x) {
     //   if constexpr (is_dynamic_value) {
     //     this->resize(x.size());
     //   }
@@ -299,12 +304,9 @@ namespace mathq {
     }
 
 
-
     //**********************************************************************
     //                          Resize
     //**********************************************************************
-
-    // --------------------- .resize(N) ---------------------
 
     template<bool temp = is_dynamic_value, EnableIf<temp> = 0>
     Type& resize(const size_t N) {
@@ -340,6 +342,8 @@ namespace mathq {
       }
       return *this;
     }
+
+
     //**********************************************************************
     //                        Dimensions
     //**********************************************************************
@@ -594,7 +598,7 @@ namespace mathq {
     //************************** ASSIGNMENT ********************************
     //**********************************************************************
 
-    // Any new assignment operators should also be addedc to MArrayExpRW for consistency.
+    // Any new assignment operators should also be addedc to ExpressionRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
@@ -642,10 +646,10 @@ namespace mathq {
     // }
 
 
-    // // ------------------------ Vector = MArrayExpR ----------------
+    // // ------------------------ Vector = ExpressionR ----------------
 
     // template <class X>
-    // Vector<Element, N1>& operator=(const MArrayExpR<X, Element, NumberType, depth_value, rank_value>& x) {
+    // Vector<Element, N1>& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
 
     //   if constexpr (depth_value<=1) {
     //     if constexpr (is_dynamic_value) {
@@ -1521,7 +1525,7 @@ namespace mathq {
       const size_t N = size();
       std::list<Element> y(N);
       for (size_t i = 0; i<N; i++) {
-          y.push_back(13);
+        y.push_back(13);
       }
       return y;
     }

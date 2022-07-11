@@ -12,7 +12,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Matrix<std::complex<D> >
-  operator^(const MArrayExpR<std::complex<D>,A>& a, const MArrayExpR<D,B>& b)
+  operator^(const ExpressionR<std::complex<D>,A>& a, const ExpressionR<D,B>& b)
   {
     const size_t NC = a.size();
     const size_t NR = b.size();
@@ -32,7 +32,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Matrix<std::complex<D> >
-  operator^(const MArrayExpR<D,A>& a, const MArrayExpR<std::complex<D>,B>& b)
+  operator^(const ExpressionR<D,A>& a, const ExpressionR<std::complex<D>,B>& b)
   {
     const size_t NC = a.size();
     const size_t NR = b.size();
@@ -59,7 +59,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
-  operator|( const MorE<std::complex<D> ,A>& a, const  MArrayExpR<D,B>& b ) {
+  operator|( const MorE<std::complex<D> ,A>& a, const  ExpressionR<D,B>& b ) {
     const size_t NR = a.Nrows();
     const size_t M = a.Ncols();
     const size_t C1 = NR*M;
@@ -88,7 +88,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
-  operator|( const MArrayExpR<D,A>& a, const  MorE<std::complex<D> ,B>& b ) {
+  operator|( const ExpressionR<D,A>& a, const  MorE<std::complex<D> ,B>& b ) {
     const size_t NC = b.Ncols();
     const size_t M = b.Nrows();
 
@@ -120,7 +120,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
-  operator|( const MorE<D,A>& a, const  MArrayExpR<std::complex<D> ,B>& b ) {
+  operator|( const MorE<D,A>& a, const  ExpressionR<std::complex<D> ,B>& b ) {
     const size_t NR = a.Nrows();
     const size_t M = a.Ncols();
     const size_t C1 = NR*M;
@@ -149,7 +149,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<std::complex<D> >
-  operator|( const MArrayExpR<std::complex<D> ,A>& a, const  MorE<D,B>& b ) {
+  operator|( const ExpressionR<std::complex<D> ,A>& a, const  MorE<D,B>& b ) {
     const size_t NC = b.Ncols();
     const size_t M = b.Nrows();
 

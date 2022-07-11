@@ -71,10 +71,10 @@ namespace mathq
    // TODO: rewrite for only floating point base types
 
    // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-   // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> dot(const MArrayExpR<A, E1, NT1, depth, rank> &a, const MArrayExpR<B, E2, NT2, depth, rank> &b)
+   // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> dot(const ExpressionR<A, E1, NT1, depth, rank> &a, const ExpressionR<B, E2, NT2, depth, rank> &b)
    // {
 
-   //   // MArrayExpRW<Matrix<Element,NR,NC,Number,depth>,Element,Number,depth,2> x;
+   //   // ExpressionRW<Matrix<Element,NR,NC,Number,depth>,Element,Number,depth,2> x;
 
    //   typedef typename MultType<NT1, NT2>::Type NT3;
    //   typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
@@ -91,7 +91,7 @@ namespace mathq
    // // dot(a,b)
 
    // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-   // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> operator|(const MArrayExpR<A, E1, NT1, depth, rank> &a, const MArrayExpR<B, E2, NT2, depth, rank> &b)
+   // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> operator|(const ExpressionR<A, E1, NT1, depth, rank> &a, const ExpressionR<B, E2, NT2, depth, rank> &b)
    // {
    //   return dot(a, b);
    // }
@@ -102,12 +102,12 @@ namespace mathq
    // TODO: implement this
 
    // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-   // auto operator|(const MArrayExpR<A, E1, NT1, depth, rank> &x1, const MArrayExpR<B, E2, NT2, depth, rank> &x2)
+   // auto operator|(const ExpressionR<A, E1, NT1, depth, rank> &x1, const ExpressionR<B, E2, NT2, depth, rank> &x2)
    // {
    //   typedef typename AddType<NT1, NT2>::Type NT3;
    //   typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
-   //   return TER_Binary<MArrayExpR<A, E1, NT1, depth, rank>,
-   //                     MArrayExpR<B, E2, NT2, depth, rank>,
+   //   return TER_Binary<ExpressionR<A, E1, NT1, depth, rank>,
+   //                     ExpressionR<B, E2, NT2, depth, rank>,
    //                     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
    //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3>>(x1, x2);
    // }
@@ -115,7 +115,7 @@ namespace mathq
    // (1B: V • V) Vector<E1(NT1)> | Vector<E2(NT2)>
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
-  auto operator|(const MArrayExpR<A, E1, NT1, depth, 1>& v1, const MArrayExpR<B, E2, NT2, depth, 1>& v2) {
+  auto operator|(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
     E3* result = new E3;
@@ -131,7 +131,7 @@ namespace mathq
   //             Vector -> rank = 1
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
-  auto operator|(const MArrayExpR<A, E1, NT1, depth, 2>& m1, const MArrayExpR<B, E2, NT2, depth, 1>& v2) {
+  auto operator|(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
@@ -156,7 +156,7 @@ namespace mathq
   //             Matrix -> rank = 2
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
-  auto operator|(const MArrayExpR<A, E1, NT1, depth, 1>& v1, const MArrayExpR<B, E2, NT2, depth, 2>& m2) {
+  auto operator|(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
@@ -182,7 +182,7 @@ namespace mathq
   //             Matrix -> rank = 2
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
-  auto operator|(const MArrayExpR<A, E1, NT1, depth, 2>& m1, const MArrayExpR<B, E2, NT2, depth, 2>& m2) {
+  auto operator|(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
@@ -221,20 +221,20 @@ namespace mathq
   // TODO: implement
   // template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
   //           EnableIf<(D1 >= 2) && (D2 == 1) && (IsMultiArrayOrExpression< E1>::value)> = 0>
-  // auto operator|(const MArrayExpR<A, E1, NT1, D1, rank> &x1, const MArrayExpR<B, NT2, NT2, D2, rank> &x2)
+  // auto operator|(const ExpressionR<A, E1, NT1, D1, rank> &x1, const ExpressionR<B, NT2, NT2, D2, rank> &x2)
   // {
 
   //   // NOT SURE WHICH OF THE THREE IS BEST
   //   //    typedef typename B::ConcreteType E2;
   //   //    typedef B E2;
-  //   typedef MArrayExpR<B, NT2, NT2, D2, rank> E2;
+  //   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   //   typedef typename AddType<NT1, NT2>::Type NT3;
   //   typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
   //   constexpr int D3 = D1;
   //   //    MOUT << "C" <<std::endl;
-  //   return TER_Binary<MArrayExpR<A, E1, NT1, D1, rank>,
-  //                     MArrayExpR<B, NT2, NT2, D2, rank>,
+  //   return TER_Binary<ExpressionR<A, E1, NT1, D1, rank>,
+  //                     ExpressionR<B, NT2, NT2, D2, rank>,
   //                     E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
   //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3>>(x1, x2);
   // }
@@ -251,18 +251,18 @@ namespace mathq
 
   // template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
   //           EnableIf<(D1 == 1) && (D2 >= 2) && (IsMultiArrayOrExpression< E2>::value)> = 0>
-  // auto operator|(const MArrayExpR<A, NT1, NT1, D1, rank> &x1, const MArrayExpR<B, E2, NT2, D2, rank> &x2)
+  // auto operator|(const ExpressionR<A, NT1, NT1, D1, rank> &x1, const ExpressionR<B, E2, NT2, D2, rank> &x2)
   // {
   //   // NOT SURE WHICH OF THE THREE IS BEST
   //   //    typedef typename A::ConcreteType E1;
   //   //    typedef A E1;
-  //   typedef MArrayExpR<A, NT1, NT1, D1, rank> E1;
+  //   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   //   typedef typename AddType<NT1, NT2>::Type NT3;
   //   typedef typename NumberTrait<E2, NT3>::ReplacedNumberType E3; // see TODO note above
   //   constexpr int D3 = D2;
   //   //    MOUT << "Number" <<std::endl;
-  //   return TER_Binary<MArrayExpR<A, NT1, NT1, D1, rank>,
-  //                     MArrayExpR<B, E2, NT2, D2, rank>,
+  //   return TER_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
+  //                     ExpressionR<B, E2, NT2, D2, rank>,
   //                     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
   //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3>>(x1, x2);
   // }
@@ -293,7 +293,7 @@ namespace mathq
     // -------------------- antisymmetric (wedge)  product -----------------------
 
     /****************************************************************************
-     *  product: MArrayExpR MArrayExpR
+     *  product: ExpressionR ExpressionR
      ****************************************************************************
      */
      // --------------------  dot (inner) product --------------------------------
@@ -301,7 +301,7 @@ namespace mathq
      //   // (a|b)
 
      // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-     // auto operator|(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
+     // auto operator|(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //   typedef typename MultType<NT1,NT2>::Type NT3;
      //   typedef typename NumberTrait<E1,NT3>::ReplacedNumberType E3;   // see TODO note above
 
@@ -323,7 +323,7 @@ namespace mathq
      //   // dot(a,b)
 
      // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-     // auto dot(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
+     // auto dot(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //     return (a|b);
      //   }
 
@@ -332,7 +332,7 @@ namespace mathq
      //   // (a&b)
 
      // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-     // auto operator&(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
+     // auto operator&(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //   typedef typename MultType<NT1,NT2>::Type NT3;
      //   typedef typename NumberTrait<E1,NT3>::ReplacedNumberType E3;   // see TODO note above
 
@@ -346,7 +346,7 @@ namespace mathq
      //   // prodt(a,b)
 
      // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-     // auto prodt(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
+     // auto prodt(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //     return (a&b);
      //   }
 
@@ -355,7 +355,7 @@ namespace mathq
      //   // (a^b)
 
      // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-     // auto operator^(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
+     // auto operator^(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //   typedef typename MultType<NT1,NT2>::Type NT3;
      //   typedef typename NumberTrait<E1,NT3>::ReplacedNumberType E3;   // see TODO note above
 
@@ -369,7 +369,7 @@ namespace mathq
      //   // prodw(a,b)
 
      // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-     // auto prodw(const MArrayExpR<A,E1,NT1,depth,rank>& a, const MArrayExpR<B,E2,NT2,depth,rank>& b) {
+     // auto prodw(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //     return (a^b);
      //   }
 };

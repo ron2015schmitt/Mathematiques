@@ -15,7 +15,7 @@ namespace mathq {
    */
 
   template <typename Number> class Vector :
-    public MArrayExpRW<Number,Vector<Number> > {
+    public ExpressionRW<Number,Vector<Number> > {
   private:
 
     // *********************** OBJECT DATA ***********************************
@@ -98,7 +98,7 @@ namespace mathq {
     // --------------------- EXPRESSION CONSTRUCTOR --------------------
 
     template <class A>
-    Vector<Number>(const MArrayExpR<Number,A>& x) 
+    Vector<Number>(const ExpressionR<Number,A>& x) 
     {
       const size_t N = x.size();
       data_ = new std::valarray<Number>(N);
@@ -389,7 +389,7 @@ namespace mathq {
     //************************** ASSIGNMENT **************************************
     //**********************************************************************
 
-    // Any new assignment operators should also be addedc to MArrayExpRW for consistency.
+    // Any new assignment operators should also be addedc to ExpressionRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
@@ -405,7 +405,7 @@ namespace mathq {
 
 
     // Assignment to a vector expression
-    template <class A>  Vector<Number>& equals(const MArrayExpR<Number,A>& x) {  
+    template <class A>  Vector<Number>& equals(const ExpressionR<Number,A>& x) {  
 
       // resize to avoid segmentation faults
       resize(x.size());
@@ -427,30 +427,30 @@ namespace mathq {
       return *this; 
     }
     
-    template <class A>  Vector<Number>& operator=(const MArrayExpR<Number,A>& x) {  
+    template <class A>  Vector<Number>& operator=(const ExpressionR<Number,A>& x) {  
       return equals(x);
     }
     
 
 
     // doesn't work
-    //    template <class A, class B>  Vector<Number>& equals(const MArrayExpR<MArrayExpR<Number,A>,B>& x) {  
-    //    template <class A, class B>  Vector<Number>& operator=(MArrayExpR<MArrayExpR<typename SimpleNumberTrait<Number>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(MArrayExpR<MArrayExpR<Number,A>,B>) {
+    //    template <class A, class B>  Vector<Number>& equals(const ExpressionR<ExpressionR<Number,A>,B>& x) {  
+    //    template <class A, class B>  Vector<Number>& operator=(ExpressionR<ExpressionR<typename SimpleNumberTrait<Number>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(ExpressionR<ExpressionR<Number,A>,B>) {
     //    template <class A>  Vector<Number>& operator=(A& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename SimpleNumberTrait<Number>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename SimpleNumberTrait<Number>::Type,A>,B> x) {
-    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const MArrayExpR<A<Number,B>,C>& x) {
-    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const MArrayExpR<A<PrimDataType,B>,C>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const ExpressionR<ExpressionR<typename SimpleNumberTrait<Number>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const ExpressionR<ExpressionR<typename SimpleNumberTrait<Number>::Type,A>,B> x) {
+    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const ExpressionR<A<Number,B>,C>& x) {
+    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const ExpressionR<A<PrimDataType,B>,C>& x) {
    // WORKS
     //    template <class A>  Vector<Number>& operator=(A x) {
     //    template <class A>  Vector<Number>& operator=(const A x) {
     //    template <class A>  Vector<Number>& operator=(const A& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<A,B> x) {
-    //  template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<A,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const ExpressionR<A,B> x) {
+    //  template <class A, class B>  Vector<Number>& operator=(const ExpressionR<A,B>& x) {
  
 
-    template <class X, class Y>  Vector<Number>& operator=(const MArrayExpR<X,Y>& x) {
+    template <class X, class Y>  Vector<Number>& operator=(const ExpressionR<X,Y>& x) {
       MOUT << __FUNCTION__ <<" ";
       //      return *this;
       const Y& y = x.derived();

@@ -614,7 +614,7 @@ namespace mathq {
     //assign to vector(expression)
     
     template <class B>
-    Matrix<D>& operator=(const MArrayExpR<D,B>& rhs) { 
+    Matrix<D>& operator=(const ExpressionR<D,B>& rhs) { 
       const size_t N =size();
 
 

@@ -11,7 +11,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Matrix<D>
-  operator^(const MArrayExpR<D,A>& a, const MArrayExpR<D,B>& b)
+  operator^(const ExpressionR<D,A>& a, const ExpressionR<D,B>& b)
   {
     const size_t NC = a.size();
     const size_t NR = b.size();
@@ -56,7 +56,7 @@ namespace mathq {
 
   template <class D, class A> 
   inline Matrix<D>
-  diagmat(const MArrayExpR<D,A>& a)
+  diagmat(const ExpressionR<D,A>& a)
   {
     const size_t N = a.size();
     Matrix<D> y(N,N);
@@ -75,7 +75,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<D>
-  operator|( const MorE<D,A>& a, const  MArrayExpR<D,B>& b ) {
+  operator|( const MorE<D,A>& a, const  ExpressionR<D,B>& b ) {
     const size_t NR = a.Nrows();
     const size_t M = a.Ncols();
     const size_t C1 = NR*M;
@@ -104,7 +104,7 @@ namespace mathq {
 
   template <class D, class A, class B> 
   inline Vector<D>
-  operator|( const MArrayExpR<D,A>& a, const  MorE<D,B>& b ) {
+  operator|( const ExpressionR<D,A>& a, const  MorE<D,B>& b ) {
     const size_t NC = b.Ncols();
     const size_t M = b.Nrows();
 

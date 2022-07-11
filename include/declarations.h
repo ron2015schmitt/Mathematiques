@@ -135,10 +135,10 @@ namespace mathq {
   // * MultiArray Expressions
   // ********************************************************************
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
-  class MArrayExpR;
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
-  class MArrayExpRW;
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, size_t... ints>
+  class ExpressionR;
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, size_t... ints>
+  class ExpressionRW;
 
 
   // *********************************************************************

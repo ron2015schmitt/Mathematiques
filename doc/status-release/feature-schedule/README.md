@@ -123,12 +123,12 @@
 * element wise dotproducts (in process)
 * refactor: `::Type` to `::type`
 * Add support for the rest of the [common math functions](https://en.cppreference.com/w/cpp/numeric/math) introduced in `C++11` and `C++20`: `frexp`, `isnan` etc, `ldexp`, `logb`, `ilogb`, `modf`, `div`, `remiander`, `remqou`, `fmod`, `ispow2`, `trunc`, `nearbyint`, `ceil2`, `floor2`, etc.
-* `MArrayExpRW` implementation of `real(t)` and `imag(t)`
-* `MArrayExpRW` implementation of `A.row(r)` and `A.col(r)`
+* `ExpressionRW` implementation of `real(t)` and `imag(t)`
+* `ExpressionRW` implementation of `A.row(r)` and `A.col(r)`
 * `Matrix` constructor and assignment using parameter pack (or list?) of `Vector`, as either cols or rows
 * Modify Taylor Series to operate at top level (not deep level.)  Test with Scalar<Matrix> and Vector <Matrix> 
    * dat(i) must call [i].
-   * perhaps have a boolean in all MArrayExpR subclasses that denotes which is faster: [i] or dat(i)
+   * perhaps have a boolean in all ExpressionR subclasses that denotes which is faster: [i] or dat(i)
 * `Vector` size modifications. Refer to [C++ Containers library](https://en.cppreference.com/w/cpp/container)
    * implement `join` functions for Vector and a scalar
    * Implement `insert(i)`, `remove(i)`,`pop_front`,`push_front`, `pop_back`,`push_back`, methods to `Vector` class

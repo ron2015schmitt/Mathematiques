@@ -14,9 +14,9 @@ namespace matricks {
   //---------------------------------------------------------------------------
     
     template <class Element, class A, typename Number, int depth, FUNC> 
-      class TER_Unary  : public  MArrayExpR<Number,TER_Unary<Number,A,FUNC,depth>> {
+      class TER_Unary  : public  ExpressionR<Number,TER_Unary<Number,A,FUNC,depth>> {
     public:
-      typedef MArrayExpR<Element,A,Number,depth> TIN;
+      typedef ExpressionR<Element,A,Number,depth> TIN;
   
   private:
     const TIN& a_;
@@ -107,10 +107,10 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TER_Binary    binary operator expressions
   //               note that there is no easy way to define the first template
-  //               of MArrayExpR<> below so use NT1
+  //               of ExpressionR<> below so use NT1
   //---------------------------------------------------------------------------
   template<class A, class B, class NT1, class NT2, class OP, int D1, int D2>
-    class TER_Binary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Binary<A,B,NT1,NT2,OP,D1,D2> > {
+    class TER_Binary : public  ExpressionR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Binary<A,B,NT1,NT2,OP,D1,D2> > {
   public:
     typedef typename std::conditional<D1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<D2==0,const B,const B&>::type TypeB;
@@ -260,10 +260,10 @@ namespace matricks {
   //---------------------------------------------------------------------------
   // TER_Ternary    ternary operator expressions
   //               note that there is no easy way to define the first template
-  //               of MArrayExpR<> below so use NT1
+  //               of ExpressionR<> below so use NT1
   //---------------------------------------------------------------------------
   template<class A, class B, class C, class NT1, class NT2, class NT3, class OP, int D1, int D2, int D3>
-    class TER_Ternary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Ternary<A,B,C,NT1,NT2,NT3,OP,D1,D2,D3> > {
+    class TER_Ternary : public  ExpressionR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Ternary<A,B,C,NT1,NT2,NT3,OP,D1,D2,D3> > {
   public:
     typedef typename std::conditional<D1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<D2==0,const B,const B&>::type TypeB;
@@ -431,7 +431,7 @@ namespace matricks {
   // TERW_Subset   Subset Expression
   //---------------------------------------------------------------------------
   template<typename Number, int depth>
-    class TERW_Subset :  public  MArrayExpRW<Number,TERW_Subset<Number,depth> > {
+    class TERW_Subset :  public  ExpressionRW<Number,TERW_Subset<Number,depth> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<Number>& a_;
@@ -536,7 +536,7 @@ namespace matricks {
 
 
     template <class NT2, class B>
-      TERW_Subset<Number>& operator=(const MArrayExpR<NT2,B>& rhs) { 
+      TERW_Subset<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -570,7 +570,7 @@ namespace matricks {
   // TERW_Submask   subset of a tensor from a mask
   //---------------------------------------------------------------------------
   template<typename Number, int depth>
-    class TERW_Submask :  public  MArrayExpRW<Number,TERW_Submask<Number,depth> > {
+    class TERW_Submask :  public  ExpressionRW<Number,TERW_Submask<Number,depth> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<Number>& a_;
@@ -658,7 +658,7 @@ namespace matricks {
 
 
     template <class NT2, class B>
-      TERW_Submask<Number>& operator=(const MArrayExpR<NT2,B>& rhs) { 
+      TERW_Submask<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -690,7 +690,7 @@ namespace matricks {
   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //---------------------------------------------------------------------------
   template <typename Number, class OP, int depth>
-    class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,depth> > {
+    class TERW_RealFromComplex : public  ExpressionRW<Number,TERW_RealFromComplex<Number,OP,depth> > {
   private:
     Vector<std::complex<Number> >& a_;
     VectorofPtrs *vptrs;
@@ -769,7 +769,7 @@ namespace matricks {
 
 
     template <class NT2, class B>
-      TERW_RealFromComplex<Number,OP,depth>& operator=(const MArrayExpR<NT2,B>& rhs) { 
+      TERW_RealFromComplex<Number,OP,depth>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -795,7 +795,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
   template<typename Number, class A, class X, int depth>
-    class TER_Series : public  MArrayExpR<Number,TER_Series<Number,A,X,depth> > {
+    class TER_Series : public  ExpressionR<Number,TER_Series<Number,A,X,depth> > {
 
   private:
     const A& a_;
@@ -914,7 +914,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
   
   template<typename Number, class A, class B, class X, class OP1, class OP2, int depth>
-    class TER_Series2 : public  MArrayExpR<Number,TER_Series2< Number, A, B, X, OP1, OP2> > {
+    class TER_Series2 : public  ExpressionR<Number,TER_Series2< Number, A, B, X, OP1, OP2> > {
 
   private:
     const A& a_;
@@ -1048,7 +1048,7 @@ namespace matricks {
   //-----------------------------------------------------------------------------
 
   template<typename Number, class A, class FUNC, int depth>
-    class TERW_Transpose  : public  MArrayExpRW<Number,TERW_Transpose<Number,A,FUNC,depth> > {
+    class TERW_Transpose  : public  ExpressionRW<Number,TERW_Transpose<Number,A,FUNC,depth> > {
   
   private:
     A& a_;
@@ -1129,7 +1129,7 @@ namespace matricks {
     }
 
     template <class NT2, class B>
-      TERW_Submask<Number>& operator=(const MArrayExpR<NT2,B>& rhs) { 
+      TERW_Submask<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -1158,7 +1158,7 @@ namespace matricks {
   //-----------------------------------------------------------------------------
 
   template<typename Number, class A, class FUNC, int depth>
-    class TER_Transpose  : public  MArrayExpR<Number,TER_Transpose<Number,A,FUNC,depth> > {
+    class TER_Transpose  : public  ExpressionR<Number,TER_Transpose<Number,A,FUNC,depth> > {
   
   private:
     const A& a_;
@@ -1249,7 +1249,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
   template<typename Number, class A, class B, int depth>
-    class VER_Join : public  MArrayExpR<Number,VER_Join<Number,A,B,depth> > {
+    class VER_Join : public  ExpressionR<Number,VER_Join<Number,A,B,depth> > {
 
   private:
     const A& a_;
@@ -1341,7 +1341,7 @@ namespace matricks {
 
 
   template<typename Number, class A, class B, int depth>
-    class VERW_Join : public  MArrayExpRW<Number,VERW_Join<Number,A,B,depth> > {
+    class VERW_Join : public  ExpressionRW<Number,VERW_Join<Number,A,B,depth> > {
 
   private:
     A& a_;
@@ -1427,14 +1427,14 @@ namespace matricks {
     }
 
     template <class C>
-      VERW_Join<Number,A,B>& operator=(const MArrayExpR<Number,C>& rhs) { 
-      PRINTF2("VERW_Join<Number,A,B>& operator=(const MArrayExpR<Number,C>& rhs)\n");
+      VERW_Join<Number,A,B>& operator=(const ExpressionR<Number,C>& rhs) { 
+      PRINTF2("VERW_Join<Number,A,B>& operator=(const ExpressionR<Number,C>& rhs)\n");
       return this->equals(rhs);
     }
 
 
     template <class NT2, class C>
-      VERW_Join<Number,A,B>& operator=(const MArrayExpR<NT2,C>& rhs) { 
+      VERW_Join<Number,A,B>& operator=(const ExpressionR<NT2,C>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -1463,7 +1463,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
   template<typename Number, class A, int depth>
-    class VER_Rep : public  MArrayExpR<Number,VER_Rep<Number,A,depth> > {
+    class VER_Rep : public  ExpressionR<Number,VER_Rep<Number,A,depth> > {
 
   private:
     const A& a_;

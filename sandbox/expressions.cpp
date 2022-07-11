@@ -36,6 +36,8 @@
 #include "math_imag.h"
 #include "math_quaternion.h"
 
+#include "multi-array-expressions.h"
+
 #include "vector.h"
 #include "dimensions.h"
 
@@ -45,7 +47,6 @@
 // #include "util.h"
 // #include "debug.h"
 
-// #include "multi-array-expressions.h"
 
 // #include "multi-array.h"
 // #include "multi-array-constant.h"
@@ -111,6 +112,8 @@ int main(int argc, char* argv[]) {
 
   CR();
   ECHO_CODE(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
+  TRDISP(v3);
+
   TRDISP(v3);
 
 

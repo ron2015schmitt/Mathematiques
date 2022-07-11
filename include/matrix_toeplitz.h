@@ -19,7 +19,7 @@ namespace mathq {
 
    //, typename = EnableIf<NumberTrait<Number>::value>
   template <typename Number, int NR, int NC >
-  class MatrixToeplitz : public MArrayExpRW<MatrixToeplitz<Number, NR, NC>, Number, Number, 1, 2> {
+  class MatrixToeplitz : public ExpressionRW<MatrixToeplitz<Number, NR, NC>, Number, Number, 1, 2> {
 
   public:
     constexpr static int rank = 2;
@@ -393,7 +393,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixToeplitz<Number, NR, NC>& operator=(const MArrayExpR<X, Number, Number, 1, 1>& v) {
+    MatrixToeplitz<Number, NR, NC>& operator=(const ExpressionR<X, Number, Number, 1, 1>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }

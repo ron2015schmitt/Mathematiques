@@ -17,7 +17,7 @@ namespace mathq {
    */
 
   template <typename Number>
-  class MatrixRepRowAndCol : public MArrayExpRW<MatrixRepRowAndCol<Number>, Number, Number, 1, 2> {
+  class MatrixRepRowAndCol : public ExpressionRW<MatrixRepRowAndCol<Number>, Number, Number, 1, 2> {
 
   public:
     constexpr static int rank = 2;
@@ -324,7 +324,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixRepRowAndCol<Number>& operator=(const MArrayExpR<X, Number, Number, 1, 1>& v) {
+    MatrixRepRowAndCol<Number>& operator=(const ExpressionR<X, Number, Number, 1, 1>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }

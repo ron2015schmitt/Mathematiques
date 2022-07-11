@@ -55,45 +55,45 @@ namespace mathq {
   // // MultiArray<NT1> && MultiArray<NT2>
 
   // template <class NT1, class NT2, class A, class B> 
-  //   inline auto operator&&(const MArrayExpR<NT1,A>& a, const MArrayExpR<NT2,B>& b)
+  //   inline auto operator&&(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   // {
-  //   return  TER_Binary<MArrayExpR<NT1,A>,MArrayExpR<NT2,B>,NT1,NT2,Fun_And<NT1,NT2>>(a,b);
+  //   return  TER_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_And<NT1,NT2>>(a,b);
   // }
 
 
   // // MultiArray<NT1> && bool
 
   // template <class NT1, class A> 
-  //   inline auto operator&&(const MArrayExpR<NT1,A>& a, const bool& b)
+  //   inline auto operator&&(const ExpressionR<NT1,A>& a, const bool& b)
   //   {
-  //     return  TER_Binary<MArrayExpR<NT1,A>,bool,NT1,bool,Fun_And<NT1,bool>>(a,b);
+  //     return  TER_Binary<ExpressionR<NT1,A>,bool,NT1,bool,Fun_And<NT1,bool>>(a,b);
   //   }
 
   
   // // bool && MultiArray<NT2>
 
   // template <class NT2, class B>
-  //   inline auto operator&&(const bool& a, const MArrayExpR<NT2,B>& b)
+  //   inline auto operator&&(const bool& a, const ExpressionR<NT2,B>& b)
   //   {
-  //     return  TER_Binary<bool,MArrayExpR<NT2,B>,bool,NT2,Fun_And<bool,NT2>>(a,b);
+  //     return  TER_Binary<bool,ExpressionR<NT2,B>,bool,NT2,Fun_And<bool,NT2>>(a,b);
   //   }
 
     
   // // MultiArray<T> && T
     
   // template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
-  //   inline auto operator&&(const MArrayExpR<T,A>& a, const T& b)
+  //   inline auto operator&&(const ExpressionR<T,A>& a, const T& b)
   //   {
-  //     return  TER_Binary<MArrayExpR<T,A>,T,T,T,Fun_And<T,T>>(a,b);
+  //     return  TER_Binary<ExpressionR<T,A>,T,T,T,Fun_And<T,T>>(a,b);
   //   }
     
 
   // // T && MultiArray<T>
 
   // template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
-  //   inline auto operator&&(const T& a, const MArrayExpR<T,B>& b)
+  //   inline auto operator&&(const T& a, const ExpressionR<T,B>& b)
   //   {
-  //     return  TER_Binary<T,MArrayExpR<T,B>,T,T,Fun_And<T,T>>(a,b);
+  //     return  TER_Binary<T,ExpressionR<T,B>,T,T,Fun_And<T,T>>(a,b);
   //   }
 
 

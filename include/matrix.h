@@ -36,7 +36,7 @@ namespace mathq {
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
     // ---- same for all subtypes --------
-    using ParentType = MArrayExpRW<
+    using ParentType = ExpressionRW<
       ConcreteType,  // Derived
       Element,  // Element
       typename NumberTrait<Element>::Type, // Number
@@ -198,7 +198,7 @@ namespace mathq {
 
 
     template <class X>
-    Matrix<Element, N1, N2>(const MArrayExpR<X, Element, NumberType, depth_value, rank>& x) {
+    Matrix<Element, N1, N2>(const ExpressionR<X, Element, NumberType, depth_value, rank>& x) {
       resize(x.dims()[0], x.dims()[1]);
       *this = x;
     }
@@ -798,7 +798,7 @@ namespace mathq {
     //************************** ASSIGNMENT **************************************
     //**********************************************************************
 
-    // Any new assignment operators should also be addedc to MArrayExpRW for consistency.
+    // Any new assignment operators should also be addedc to ExpressionRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
@@ -842,9 +842,9 @@ namespace mathq {
     }
 
 
-    // ----------------- matrix = MArrayExpR<X,Element,NumberType,depth_value,rank> ----------------
+    // ----------------- matrix = ExpressionR<X,Element,NumberType,depth_value,rank> ----------------
     template <class X> Matrix<Element, N1, N2>&
-      operator=(const MArrayExpR<X, Element, NumberType, depth_value, rank>& x) {
+      operator=(const ExpressionR<X, Element, NumberType, depth_value, rank>& x) {
 
       if constexpr (depth_value<=1) {
         resize(x.dims());

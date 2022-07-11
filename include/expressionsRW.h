@@ -11,7 +11,7 @@ namespace mathq {
   // TERW_Subset   Subset Expression
   //---------------------------------------------------------------------------
   template<typename Number>
-  class TERW_Subset : public  MArrayExpRW<TERW_Subset<Number>, Number, Number, 1, 1> {
+  class TERW_Subset : public  ExpressionRW<TERW_Subset<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int depth_value = 1;
@@ -78,7 +78,7 @@ namespace mathq {
     }
 
     template <class Y, class NT2>
-    TERW_Subset<Number>& operator=(const MArrayExpR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
+    TERW_Subset<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
       return this->equals(rhs);
     }
 
@@ -159,7 +159,7 @@ namespace mathq {
   // TERW_Submask   Submask Expression
   //--------------------------------------------------------------------------
   template<typename Number>
-  class TERW_Submask : public  MArrayExpRW<TERW_Submask<Number>, Number, Number, 1, 1> {
+  class TERW_Submask : public  ExpressionRW<TERW_Submask<Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int depth_value = 1;
@@ -207,7 +207,7 @@ namespace mathq {
     }
 
     template <class Y, class NT2>
-    TERW_Submask<Number>& operator=(const MArrayExpR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
+    TERW_Submask<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
       return this->equals(rhs);
     }
 
@@ -291,7 +291,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class X, class Y, class Element, typename Number, int depth>
-  class TERW_Join : public  MArrayExpRW<TERW_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
+  class TERW_Join : public  ExpressionRW<TERW_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int depth_value = depth;
@@ -354,7 +354,7 @@ namespace mathq {
     }
 
     template <class Z>
-    TERW_Join<X, Y, Element, Number, depth>& operator=(const MArrayExpR<Z, Element, Number, depth, 1>& rhs) {
+    TERW_Join<X, Y, Element, Number, depth>& operator=(const ExpressionR<Z, Element, Number, depth, 1>& rhs) {
       return this->equals(rhs);
     }
 
@@ -450,7 +450,7 @@ namespace mathq {
   //   // TERW_RealFromComplex  used for accessing real/imag part of complex vector
   //   //---------------------------------------------------------------------------
   //   template <typename Number, class OP, int depth>
-  //     class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,depth> > {
+  //     class TERW_RealFromComplex : public  ExpressionRW<Number,TERW_RealFromComplex<Number,OP,depth> > {
   //   private:
     // can't be constant since we alow to be on left hand side
   //     Vector<std::complex<Number> >& a_;
@@ -530,7 +530,7 @@ namespace mathq {
 
 
   //     template <class NT2, class B>
-  //       TERW_RealFromComplex<Number,OP,depth>& operator=(const MArrayExpR<NT2,B>& rhs) { 
+  //       TERW_RealFromComplex<Number,OP,depth>& operator=(const ExpressionR<NT2,B>& rhs) { 
   //       return this->equals(rhs);
   //     }
 

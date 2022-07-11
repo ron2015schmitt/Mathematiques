@@ -41,7 +41,7 @@ namespace mathq {
     using NestedDimensionsType = RecursiveDimensions<DimensionsType, ElementDimensionsType>;
 
     // ---- same for all subtypes --------
-    using ParentType = MArrayExpRW<
+    using ParentType = ExpressionRW<
       ConcreteType,  // Derived
       Element,  // Element
       typename NumberTrait<Element>::Type, // Number
@@ -153,7 +153,7 @@ namespace mathq {
     // // ************* Expression CONSTRUCTOR---------------------
 
     // template <class X>
-    // MultiArray(const MArrayExpR<X, Element, NumberType, depth, rank>& x)   {
+    // MultiArray(const ExpressionR<X, Element, NumberType, depth, rank>& x)   {
     //   *this = x;
     //   constructorHelper();
     // }
@@ -589,7 +589,7 @@ namespace mathq {
     //************************** ASSIGNMENT **************************************
     //**********************************************************************
 
-    // Any new assignment operators should also be addedc to MArrayExpRW for consistency.
+    // Any new assignment operators should also be addedc to ExpressionRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
@@ -635,10 +635,10 @@ namespace mathq {
       return *this;
     }
 
-    // ----------------- tensor = MArrayExpR<X,Element,NumberType,depth,rank> ----------------
+    // ----------------- tensor = ExpressionR<X,Element,NumberType,depth,rank> ----------------
     template <class X>
     MultiArray<Element, rank>&
-      operator=(const MArrayExpR<X, Element, NumberType, depth, rank>& x) {
+      operator=(const ExpressionR<X, Element, NumberType, depth, rank>& x) {
 
       if constexpr (depth <= 1) {
         resize(x.dims());

@@ -79,9 +79,9 @@ namespace mathq {
   //----------------------------------------------
 
   template <class NT2, class X, class Element, typename Number, int depth, int rank>
-  auto numbercast(const MArrayExpR<X, Element, Number, depth, rank>& x) {
+  auto numbercast(const ExpressionR<X, Element, Number, depth, rank>& x) {
     typedef typename NumberTrait<Element, NT2>::ReplacedNumberType EOUT;
-    return  TER_Unary<MArrayExpR<X, Element, Number, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Number, NT2>>(x);
+    return  TER_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Number, NT2>>(x);
   }
 
 
@@ -134,10 +134,10 @@ namespace mathq {
   //         
   // -------------------------------------------------------------------
   template <class X, class Element, typename Number, int depth, int rank>
-  auto roundzero(const MArrayExpR<X, Element, Number, depth, rank>& x, const typename SimpleNumberTrait<Number>::Type& tol = Functions<typename SimpleNumberTrait<Number>::Type>::tolerance) {
+  auto roundzero(const ExpressionR<X, Element, Number, depth, rank>& x, const typename SimpleNumberTrait<Number>::Type& tol = Functions<typename SimpleNumberTrait<Number>::Type>::tolerance) {
 
     typedef typename SimpleNumberTrait<Number>::Type DTOL;
-    return  TER_Binary<MArrayExpR<X, Element, Number, depth, rank>,
+    return  TER_Binary<ExpressionR<X, Element, Number, depth, rank>,
       DTOL,
       Element, DTOL, Element, Number, DTOL, Number, depth, 0, depth, rank, 0, rank,
       FUNCTOR_roundzero<Element, Number>>(x, tol);
@@ -151,7 +151,7 @@ namespace mathq {
   //         checks dimensions first
   // -------------------------------------------------------------------
   template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-  bool equal(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2) {
+  bool equal(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
     if (!dimequiv(x1, x2)) {
       return false;
     }
@@ -238,13 +238,13 @@ namespace mathq {
   // (11) MultiArray<E1(NT1)> , MultiArray<E2(NT2)> 
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-  auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  auto approx(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3;
-    return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
-      MArrayExpR<B, E2, NT2, depth, rank>,
+    return  TER_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
+      ExpressionR<B, E2, NT2, depth, rank>,
       DTOL,
       E1, E2, DTOL, E3, NT1, NT2, DTOL, NT3, depth, depth, 0, depth, rank, rank, 0, rank,
       FUNCTOR_approx<E1, E2, E3, NT1, NT2, NT3> >(x1, x2, tol);
@@ -253,12 +253,12 @@ namespace mathq {
   // (10) MultiArray<E1(NT1)> , NT2 
 
   template <class A, class E1, class NT1, class NT2, int depth, int rank>
-  auto approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  auto approx(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3;
-    return  TER_Ternary<MArrayExpR<A, E1, NT1, depth, rank>,
+    return  TER_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
       NT2,
       DTOL,
       E1, NT2, DTOL, E3, NT1, NT2, DTOL, NT3, depth, 0, 0, depth, rank, 0, 0, rank,
@@ -270,13 +270,13 @@ namespace mathq {
   // (01) NT1, MultiArray<E2(NT2)> 
 
   template <class B, class E2, class NT1, class NT2, int depth, int rank>
-  auto approx(NT1& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  auto approx(NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
     typedef typename NumberTrait<E2, NT3>::ReplacedNumberType E3;
     return  TER_Ternary<NT1,
-      MArrayExpR<B, E2, NT2, depth, rank>,
+      ExpressionR<B, E2, NT2, depth, rank>,
       DTOL,
       NT1, E2, DTOL, E3, NT1, NT2, DTOL, NT3, 0, depth, 0, depth, 0, rank, 0, rank,
       FUNCTOR_approx<NT1, E2, E3, NT1, NT2, NT3> >(x1, x2, tol);
@@ -289,7 +289,7 @@ namespace mathq {
   //          checks dimensions first
   // -------------------------------------------------------------------
   template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
-  bool equal_approx(const MArrayExpR<A, E1, NT1, depth, rank>& x1, const MArrayExpR<B, E2, NT2, depth, rank>& x2, const  typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type tol = Functions< typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  bool equal_approx(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const  typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type tol = Functions< typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     if (!dimequiv(x1, x2)) {
       return false;
@@ -309,7 +309,7 @@ namespace mathq {
    // alltrue(a)
 
   template <class X, class Element, typename Number, int depth, int rank, typename = EnableIf<std::is_same<Number, bool>::value> >
-  bool alltrue(const MArrayExpR<X, Element, Number, depth, rank>& x) {
+  bool alltrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
 
     for (size_t i = 0; i< x.total_size(); i++) {
       if (!x.dat(i)) {
@@ -324,7 +324,7 @@ namespace mathq {
   // anytrue(a)
 
   template <class X, class Element, typename Number, int depth, int rank, typename = EnableIf<std::is_same<Number, bool>::value> >
-  bool anytrue(const MArrayExpR<X, Element, Number, depth, rank>& x) {
+  bool anytrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
 
     for (size_t i = 0; i< x.total_size(); i++) {
       if (x.dat(i)) {
@@ -339,7 +339,7 @@ namespace mathq {
   // numtrue(a)
 
   template <class X, class Element, typename Number, int depth, int rank, typename = EnableIf<std::is_same<Number, bool>::value> >
-  size_t numtrue(const MArrayExpR<X, Element, Number, depth, rank>& x) {
+  size_t numtrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
 
     size_t result = 0;
 
@@ -360,7 +360,7 @@ namespace mathq {
 
   template <class X, class Element, typename Number, int depth, int rank>
   EnableMethodIf<std::is_same<Number, bool>::value, Vector<size_t>&>
-    findtrue(const MArrayExpR<X, Element, Number, depth, rank>& x) {
+    findtrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
     size_t N = numtrue(x);
     Vector<size_t>* y = new Vector<size_t>(N);
 
@@ -381,7 +381,7 @@ namespace mathq {
    // sum(a)
 
   template <class X, class Element, typename Number, int depth, int rank >
-  Element sum(const MArrayExpR<X, Element, Number, depth, rank>& v) {
+  Element sum(const ExpressionR<X, Element, Number, depth, rank>& v) {
 
 
     const size_t N = v.size();
@@ -403,7 +403,7 @@ namespace mathq {
   // prod(a)
 
   template <class X, class Element, typename Number, int depth, int rank >
-  Element prod(const MArrayExpR<X, Element, Number, depth, rank>& v) {
+  Element prod(const ExpressionR<X, Element, Number, depth, rank>& v) {
 
 
     const size_t N = v.size();
@@ -430,7 +430,7 @@ namespace mathq {
   // min(a)
 
   template <class X, class Element, typename Number, int depth, int rank>
-  Number min(const MArrayExpR<X, Element, Number, depth, rank>& v) {
+  Number min(const ExpressionR<X, Element, Number, depth, rank>& v) {
 
     const size_t N = v.total_size();
     if (N==0) {
@@ -452,7 +452,7 @@ namespace mathq {
   // max(a)
 
   template <class X, class Element, typename Number, int depth, int rank>
-  Number max(const MArrayExpR<X, Element, Number, depth, rank>& v) {
+  Number max(const ExpressionR<X, Element, Number, depth, rank>& v) {
 
     const size_t N = v.total_size();
     if (N==0) {
@@ -471,7 +471,7 @@ namespace mathq {
   // sumofsqrs(a)
 
   template <class X, class Element, typename Number, int depth, int rank>
-  Number sumofsqrs(const MArrayExpR<X, Element, Number, depth, rank>& v) {
+  Number sumofsqrs(const ExpressionR<X, Element, Number, depth, rank>& v) {
     Number result = Number();
     for (size_t i = 0; i < v.size(); i++) {
       result += normsqr(v[i]);
@@ -482,7 +482,7 @@ namespace mathq {
   // norm(a)  - L2 norm
 
   template <class X, class Element, typename Number, int depth, int rank>
-  Number norm(const MArrayExpR<X, Element, Number, depth, rank>& v) {
+  Number norm(const ExpressionR<X, Element, Number, depth, rank>& v) {
     return std::sqrt(sumofsqrs(v));
   }
 
@@ -1788,7 +1788,7 @@ namespace mathq {
   // reverse
 
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&> reverse(const MArrayExpR<X, Element, Number, depth, rank>& f) {
+  EnableMethodIf<rank==1, Vector<Element>&> reverse(const ExpressionR<X, Element, Number, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->reverse();
@@ -1799,7 +1799,7 @@ namespace mathq {
   // cumsum() -- cumulative sum
 
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumsum(const MArrayExpR<X, Element, Number, depth, rank>& f) {
+  EnableMethodIf<rank==1, Vector<Element>&> cumsum(const ExpressionR<X, Element, Number, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumsum();
@@ -1809,7 +1809,7 @@ namespace mathq {
   // cumprod()  --  cumulative product
 
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumprod(const MArrayExpR<X, Element, Number, depth, rank>& f) {
+  EnableMethodIf<rank==1, Vector<Element>&> cumprod(const ExpressionR<X, Element, Number, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumprod();
@@ -1820,7 +1820,7 @@ namespace mathq {
   // cumtrapz() -- cumulative trapezoidal summation
 
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumtrapz(const MArrayExpR<X, Element, Number, depth, rank>& f) {
+  EnableMethodIf<rank==1, Vector<Element>&> cumtrapz(const ExpressionR<X, Element, Number, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumtrapz();
@@ -1832,7 +1832,7 @@ namespace mathq {
   //     0  rectangular
   //     1  trapazoidal
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&> integrate_a2x(const MArrayExpR<X, Element, Number, depth, rank>& f, const Number a, const Number b, const int order = 1) {
+  EnableMethodIf<rank==1, Vector<Element>&> integrate_a2x(const ExpressionR<X, Element, Number, depth, rank>& f, const Number a, const Number b, const int order = 1) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->integrate_a2x(a, b, order);
@@ -1843,7 +1843,7 @@ namespace mathq {
   // cumsumrev() -- cumulative sum -- from last to first
 
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumsum_rev(const MArrayExpR<X, Element, Number, depth, rank>& f) {
+  EnableMethodIf<rank==1, Vector<Element>&> cumsum_rev(const ExpressionR<X, Element, Number, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumsum_rev();
@@ -1853,7 +1853,7 @@ namespace mathq {
   // cumprodrev()  --  cumulative product  -- from last to first
 
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumprod_rev(const MArrayExpR<X, Element, Number, depth, rank>& f) {
+  EnableMethodIf<rank==1, Vector<Element>&> cumprod_rev(const ExpressionR<X, Element, Number, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumprod_rev();
@@ -1864,7 +1864,7 @@ namespace mathq {
   // cumtrapz() -- cumulative trapezoidal summation -- from last to first
 
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumtrapz_rev(const MArrayExpR<X, Element, Number, depth, rank>& f) {
+  EnableMethodIf<rank==1, Vector<Element>&> cumtrapz_rev(const ExpressionR<X, Element, Number, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumtrapz_rev();
@@ -1878,7 +1878,7 @@ namespace mathq {
   //     0  rectangular
   //     1  trapazoidal
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&> integrate_x2b(const MArrayExpR<X, Element, Number, depth, rank>& f, const Number a, const Number b, const int order = 1) {
+  EnableMethodIf<rank==1, Vector<Element>&> integrate_x2b(const ExpressionR<X, Element, Number, depth, rank>& f, const Number a, const Number b, const int order = 1) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->integrate_x2b(a, b, order);
@@ -1889,7 +1889,7 @@ namespace mathq {
 
   // diff   (v[n] = v[n] - v[n-1])
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&>  diff(const MArrayExpR<X, Element, Number, depth, rank>& f, const bool periodic = false) {
+  EnableMethodIf<rank==1, Vector<Element>&>  diff(const ExpressionR<X, Element, Number, depth, rank>& f, const bool periodic = false) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->diff(periodic);
@@ -1898,7 +1898,7 @@ namespace mathq {
 
   // diff_rev   (v[n] = v[n+1] - v[n])
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&>  diff_rev(const MArrayExpR<X, Element, Number, depth, rank>& f, const bool periodic = false) {
+  EnableMethodIf<rank==1, Vector<Element>&>  diff_rev(const ExpressionR<X, Element, Number, depth, rank>& f, const bool periodic = false) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->diff_rev(periodic);
@@ -1910,7 +1910,7 @@ namespace mathq {
   // any change in the default parameters must be likewise made in Vector.deriv(...)
 
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<rank==1, Vector<Element>&>  deriv(const MArrayExpR<X, Element, Number, depth, rank>& f, const Number a, const Number b, const int n = 1, int Dpts = 7, const bool periodic = false) {
+  EnableMethodIf<rank==1, Vector<Element>&>  deriv(const ExpressionR<X, Element, Number, depth, rank>& f, const Number a, const Number b, const int n = 1, int Dpts = 7, const bool periodic = false) {
     //    MDISP(a,b,n,Dpts,periodic,f.size());
     Vector<Element>* df = new Vector<Element>(f.size());
     //    TLDISP(*df);
@@ -1928,7 +1928,7 @@ namespace mathq {
   //     4  Boole
 
   template <class X, class Element, typename Number, int depth, int rank>
-  EnableMethodIf<(depth==1)&&(rank==1), Number> integrate_a2b(const MArrayExpR<X, Element, Number, depth, rank>& v, const Number a, const Number b, const int order = 1) {
+  EnableMethodIf<(depth==1)&&(rank==1), Number> integrate_a2b(const ExpressionR<X, Element, Number, depth, rank>& v, const Number a, const Number b, const int order = 1) {
 
 
     const size_t N = v.size();
@@ -2049,23 +2049,23 @@ namespace mathq {
   // maclaurin(vector coefs, vector vals, max N, x0)
 
   template <class A, class X, class Element, typename Number, int D1, int D2, int R1, int R2, typename = EnableIf<(D1==1)&&(R1==1)>>
-  auto maclaurin(const MArrayExpR<A, Number, Number, D1, R1>& a, const MArrayExpR<X, Element, Number, D2, R2>& x, const int N, const Number x0) {
-    return TER_Series<MArrayExpR<A, Number, Number, D1, R1>, MArrayExpR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N, x0);
+  auto maclaurin(const ExpressionR<A, Number, Number, D1, R1>& a, const ExpressionR<X, Element, Number, D2, R2>& x, const int N, const Number x0) {
+    return TER_Series<ExpressionR<A, Number, Number, D1, R1>, ExpressionR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N, x0);
   }
 
   // // taylor(vector coefs, vector vals, max N)
 
   template <class A, class X, class Element, typename Number, int D1, int D2, int R1, int R2, typename = EnableIf<(D1==1)&&(R1==1)>>
-  auto taylor(const MArrayExpR<A, Number, Number, D1, R1>& a, const MArrayExpR<X, Element, Number, D2, R2>& x, const int N) {
-    return TER_Series<MArrayExpR<A, Number, Number, D1, R1>, MArrayExpR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N);
+  auto taylor(const ExpressionR<A, Number, Number, D1, R1>& a, const ExpressionR<X, Element, Number, D2, R2>& x, const int N) {
+    return TER_Series<ExpressionR<A, Number, Number, D1, R1>, ExpressionR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N);
   }
 
   // // ifourier(vector cos coefs, vector sin coefs, vector vals, max N, k1=2pi/wavelength or 2pi/period)
   // // sin coefs must include a coef for n=0 even though its irrelevant
 
   template <class A, class B, class X, typename Number, int depth, int rank, typename = EnableIf<(depth==1)&&(rank==1)> >
-  auto ifourier(const MArrayExpR<A, Number, Number, depth, rank>& Acos, const MArrayExpR<B, Number, Number, depth, rank>& Bsin, const MArrayExpR<X, Number, Number, depth, rank>& x, const int N, const Number k1) {
-    return  TER_Series2<MArrayExpR<A, Number, Number, depth, rank>, MArrayExpR<B, Number, Number, depth, rank>, MArrayExpR<X, Number, Number, depth, rank>, Number, FUNCTOR_cos<Number, Number, Number, Number>, FUNCTOR_sin<Number, Number, Number, Number> >(Acos, Bsin, x, N, k1);
+  auto ifourier(const ExpressionR<A, Number, Number, depth, rank>& Acos, const ExpressionR<B, Number, Number, depth, rank>& Bsin, const ExpressionR<X, Number, Number, depth, rank>& x, const int N, const Number k1) {
+    return  TER_Series2<ExpressionR<A, Number, Number, depth, rank>, ExpressionR<B, Number, Number, depth, rank>, ExpressionR<X, Number, Number, depth, rank>, Number, FUNCTOR_cos<Number, Number, Number, Number>, FUNCTOR_sin<Number, Number, Number, Number> >(Acos, Bsin, x, N, k1);
   }
 
 

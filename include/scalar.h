@@ -35,7 +35,7 @@ namespace mathq {
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
     // ---- same for all subtypes --------
-    using ParentType = MArrayExpRW<
+    using ParentType = ExpressionRW<
       MultiArray<Element, rank_value>,  // Derived
       Element,  // Element
       typename NumberTrait<Element>::Type,  // Number
@@ -133,7 +133,7 @@ namespace mathq {
 
 
     template <class X>
-    Scalar<Element>(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
+    Scalar<Element>(const ExpressionR<X, Element, NumberType, depth, rank_value>& x) {
 
       *this = x;
       constructorHelper();
@@ -495,7 +495,7 @@ namespace mathq {
 
 
     template <class X>
-    Scalar<Element>& operator=(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
+    Scalar<Element>& operator=(const ExpressionR<X, Element, NumberType, depth, rank_value>& x) {
       if constexpr (depth<=1) {
         data = x[0];
       }

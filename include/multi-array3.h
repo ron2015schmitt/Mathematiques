@@ -39,7 +39,7 @@ namespace mathq {
     using ElementDimensionsType = typename std::conditional< (depth_value == 1), NullDims, Element::DimensionsType>::type;
 
     // ---- same for all subtypes --------
-    using ParentType = MArrayExpRW<
+    using ParentType = ExpressionRW<
       ConcreteType,  // Derived
       Element,  // Element
       typename NumberTrait<Element>::Type, // Number

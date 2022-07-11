@@ -60,9 +60,9 @@ namespace mathq {
   //   typedef typename NumberTrait<T,CType>::ReplacedElementType Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
-  //   Complexify<MArrayExpR<Element,A,Number,depth,rank> > {
+  //   Complexify<ExpressionR<Element,A,Number,depth,rank> > {
   // public:
-  //   typedef MArrayExpR<typename Complexify<Element>::Type,A,typename Complexify<Number>::Type, depth,rank> Type;
+  //   typedef ExpressionR<typename Complexify<Element>::Type,A,typename Complexify<Number>::Type, depth,rank> Type;
   // };
 
 
@@ -73,9 +73,9 @@ namespace mathq {
   //   typedef typename NumberTrait<T,OrderedNumberType>::ReplacedElementType Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
-  //   Realify<MArrayExpR<Element,A,Number,depth,rank> > {
+  //   Realify<ExpressionR<Element,A,Number,depth,rank> > {
   // public:
-  //   typedef MArrayExpR<typename Realify<Element>::Type,A,typename Realify<Number>::Type,depth,rank> Type;
+  //   typedef ExpressionR<typename Realify<Element>::Type,A,typename Realify<Number>::Type,depth,rank> Type;
   // };
 
 
@@ -88,9 +88,9 @@ namespace mathq {
   //   typedef typename NumberTrait<T,IType>::ReplacedElementType Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
-  //   Imaginarify<MArrayExpR<Element,A,Number,depth,rank> > {
+  //   Imaginarify<ExpressionR<Element,A,Number,depth,rank> > {
   // public:
-  //   typedef MArrayExpR<typename Imaginarify<Element>::Type,A,typename Imaginarify<Number>::Type, depth,rank> Type;
+  //   typedef ExpressionR<typename Imaginarify<Element>::Type,A,typename Imaginarify<Number>::Type, depth,rank> Type;
   // };
 
 

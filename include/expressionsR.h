@@ -13,7 +13,7 @@ namespace mathq {
   //       only the function/functor needs the input types
 
   template <class X, class Element, typename Number, int depth, int rank, class FUNC>
-  class TER_Unary : public MArrayExpR<TER_Unary<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
+  class TER_Unary : public ExpressionR<TER_Unary<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
   public:
     typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
@@ -119,7 +119,7 @@ namespace mathq {
   //       only the function/functor needs the input types
 
   template <class X, class Element, typename Number, int depth, int rank>
-  class TER_Unary_User : public MArrayExpR<TER_Unary_User<X, Element, Number, depth, rank>, Element, Number, depth, rank> {
+  class TER_Unary_User : public ExpressionR<TER_Unary_User<X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
     typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
@@ -224,7 +224,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, int D1, int D2, int D3, int R1, int R2, int R3, class OP>
-  class TER_Binary : public MArrayExpR<TER_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>, E3, NT3, D3, R3> {
+  class TER_Binary : public ExpressionR<TER_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>, E3, NT3, D3, R3> {
   public:
     typedef E3 ElementType;
     typedef NT3 NumberType;
@@ -558,7 +558,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, int D1, int D2, int D3, int R1, int R2, int R3>
-  class TER_Binary_User : public MArrayExpR<TER_Binary_User<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3>, E3, NT3, D3, R3> {
+  class TER_Binary_User : public ExpressionR<TER_Binary_User<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3>, E3, NT3, D3, R3> {
   public:
     typedef E3 ElementType;
     typedef NT3 NumberType;
@@ -890,7 +890,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4, int D1, int D2, int D3, int M4, int R1, int R2, int R3, int R4, class OP>
-  class TER_Ternary : public MArrayExpR<TER_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, NT3, D4, D1, D2, D3, M4, R1, R2, R3, R4, OP>, E4, D4, M4, R4> {
+  class TER_Ternary : public ExpressionR<TER_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, NT3, D4, D1, D2, D3, M4, R1, R2, R3, R4, OP>, E4, D4, M4, R4> {
   public:
     typedef E4 ElementType;
     typedef D4 NumberType;
@@ -1107,7 +1107,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class X, class Element, typename Number, int depth, int rank>
-  class TER_Series : public MArrayExpR<TER_Series<A, X, Element, Number, depth, rank>, Element, Number, depth, rank> {
+  class TER_Series : public ExpressionR<TER_Series<A, X, Element, Number, depth, rank>, Element, Number, depth, rank> {
   public:
     typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
@@ -1249,7 +1249,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, class B, class X, typename Number, class OP1, class OP2>
-  class TER_Series2 : public MArrayExpR<TER_Series2<A, B, X, Number, OP1, OP2>, Number, Number, 1, 1> {
+  class TER_Series2 : public ExpressionR<TER_Series2<A, B, X, Number, OP1, OP2>, Number, Number, 1, 1> {
   public:
     typedef Materialize<Number, Number, 1, 1> ConcreteType;
     typedef Number ElementType;
@@ -1379,7 +1379,7 @@ namespace mathq {
   //-----------------------------------------------------------------------------
 
   template <class X, class Element, typename Number, int depth, int rank, class FUNC>
-  class TER_Transpose : public MArrayExpR<TER_Transpose<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
+  class TER_Transpose : public ExpressionR<TER_Transpose<X, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
   public:
     typedef Materialize<Element, Number, depth, rank> ConcreteType;
     typedef Element ElementType;
@@ -1481,7 +1481,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class X, class Y, class Element, typename Number, int depth>
-  class TER_Join : public MArrayExpR<TER_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
+  class TER_Join : public ExpressionR<TER_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int depth_value = depth;
@@ -1600,7 +1600,7 @@ namespace mathq {
   //---------------------------------------------------------------------------
 
   template <class A, typename Number>
-  class TER_Rep : public MArrayExpR<TER_Rep<A, Number>, Number, Number, 1, 1> {
+  class TER_Rep : public ExpressionR<TER_Rep<A, Number>, Number, Number, 1, 1> {
   public:
     constexpr static int rank_value = 1;
     constexpr static int depth_value = 1;

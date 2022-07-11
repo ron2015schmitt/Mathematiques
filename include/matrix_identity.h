@@ -19,7 +19,7 @@ namespace mathq {
 
    //, typename = EnableIf<NumberTrait<Number>::value>
   template <typename Number, int NR, int NC >
-  class MatrixIdentity : public MArrayExpRW<MatrixIdentity<Number, NR, NC>, Number, Number, 1, 2> {
+  class MatrixIdentity : public ExpressionRW<MatrixIdentity<Number, NR, NC>, Number, Number, 1, 2> {
 
   public:
     constexpr static int rank = 2;

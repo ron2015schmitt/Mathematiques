@@ -115,28 +115,28 @@ int main(int argc, char* argv[]) {
   cout << "IsMultiArrayOrExpression" << std::endl;
   cout << "double: " << IsMultiArrayOrExpression<double>::value << "\n";
   cout << "Vector: " << IsMultiArrayOrExpression<Vector<double>>::value << "\n";
-  cout << "MArrayExpR: " << IsMultiArrayOrExpression<MArrayExpR<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
-  cout << "MArrayExpRW: " << IsMultiArrayOrExpression<MArrayExpRW<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
+  cout << "ExpressionR: " << IsMultiArrayOrExpression<ExpressionR<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
+  cout << "ExpressionRW: " << IsMultiArrayOrExpression<ExpressionRW<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
   cout << std::endl;
 
   cout << "IsMultiArray" << std::endl;
   cout << "double: " << IsMultiArray<double>::value << "\n";
   cout << "Vector: " << IsMultiArray<Vector<double>>::value << "\n";
-  cout << "MArrayExpR: " << IsMultiArray<MArrayExpR<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
+  cout << "ExpressionR: " << IsMultiArray<ExpressionR<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
   cout << std::endl;
 
   cout << "IsMultiArrayExp" << std::endl;
   cout << "double: " << IsMultiArrayExp<double>::value << "\n";
   cout << "Vector: " << IsMultiArrayExp<Vector<double>>::value << "\n";
-  cout << "MArrayExpR: " << IsMultiArrayExp<MArrayExpR<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
-  cout << "MArrayExpRW: " << IsMultiArrayExp<MArrayExpRW<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
+  cout << "ExpressionR: " << IsMultiArrayExp<ExpressionR<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
+  cout << "ExpressionRW: " << IsMultiArrayExp<ExpressionRW<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
   cout << std::endl;
 
   cout << "IsMultiArrayExpRW" << std::endl;
   cout << "double: " << IsMultiArrayExpRW<double>::value << "\n";
   cout << "Vector: " << IsMultiArrayExpRW<Vector<double>>::value << "\n";
-  cout << "MArrayExpR: " << IsMultiArrayExpRW<MArrayExpR<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
-  cout << "MArrayExpRW: " << IsMultiArrayExpRW<MArrayExpRW<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
+  cout << "ExpressionR: " << IsMultiArrayExpRW<ExpressionR<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
+  cout << "ExpressionRW: " << IsMultiArrayExpRW<ExpressionRW<Vector<double>, double, double, 1, 1, NullDims>>::value << "\n";
   cout << std::endl;
 
 
@@ -149,8 +149,8 @@ int main(int argc, char* argv[]) {
   typename NumberTrait<Vector<double>>::Type x;
   TRDISP(NumberTrait<Vector<double, 1>, double>::Type());
   TRDISP(NumberTrait<Vector<std::complex<double>>>::Type());
-  TRDISP(NumberTrait<MArrayExpR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
-  TRDISP(NumberTrait<MArrayExpRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
+  TRDISP(NumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
+  TRDISP(NumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
   cout << std::endl;
 
   cout << "NumberTrait" << std::endl;
@@ -161,8 +161,8 @@ int main(int argc, char* argv[]) {
   // DISP(NumberTrait<std::complex<Vector<bool>>>::depth());
   DISP(NumberTrait<Vector<double>>::depth());
   DISP(NumberTrait<Vector<std::complex<double>>>::depth());
-  DISP(NumberTrait<MArrayExpR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
-  DISP(NumberTrait<MArrayExpRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
+  DISP(NumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
+  DISP(NumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
   cout << std::endl;
 
 
@@ -174,8 +174,8 @@ int main(int argc, char* argv[]) {
   TRDISP(SimpleNumberTrait<std::complex<Vector<bool>>>::Type());
   TRDISP(SimpleNumberTrait<Vector<double>>::Type());
   TRDISP(SimpleNumberTrait<Vector<std::complex<double>>>::Type());
-  TRDISP(SimpleNumberTrait<MArrayExpR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
-  TRDISP(SimpleNumberTrait<MArrayExpRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
+  TRDISP(SimpleNumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
+  TRDISP(SimpleNumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::Type());
   cout << std::endl;
 
   cout << "SimpleNumberTrait" << std::endl;
@@ -186,8 +186,8 @@ int main(int argc, char* argv[]) {
   DISP(SimpleNumberTrait<std::complex<Vector<bool>>>::depth());
   DISP(SimpleNumberTrait<Vector<double>>::depth());
   DISP(SimpleNumberTrait<Vector<std::complex<double>>>::depth());
-  DISP(SimpleNumberTrait<MArrayExpR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
-  DISP(SimpleNumberTrait<MArrayExpRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
+  DISP(SimpleNumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
+  DISP(SimpleNumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1, NullDims>>::depth());
   cout << std::endl;
 
   std::array<size_t  , 7> ron{ 1, 5};

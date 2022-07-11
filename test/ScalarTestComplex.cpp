@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
     // printStart(++testnum);
     // Scalar<ComplexInt> s1 = ComplexInt(1,1);
     // testtext( "dynamic casting" );
-    // MArrayExpRW<ComplexInt, Scalar<ComplexInt> > &s2 = s1;
+    // ExpressionRW<ComplexInt, Scalar<ComplexInt> > &s2 = s1;
     // Scalar<ComplexInt> *sp1 = dynamic_cast< Scalar<ComplexInt>* >(&s2);
     // void* result = (void*)&s1;
     // void* expected = (void*)sp1;

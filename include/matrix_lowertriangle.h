@@ -17,7 +17,7 @@ namespace mathq {
    */
 
   template <typename Number, int N>
-  class MatrixLowerTriangle : public MArrayExpRW<MatrixLowerTriangle<Number, N>, Number, Number, 1, 2> {
+  class MatrixLowerTriangle : public ExpressionRW<MatrixLowerTriangle<Number, N>, Number, Number, 1, 2> {
 
   public:
     constexpr static int rank = 2;
@@ -84,7 +84,7 @@ namespace mathq {
     // --------------------- Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<(NN>0)> = 0>
 
-    explicit MatrixLowerTriangle<Number, N>(const MArrayExpR<X, Number, Number, 1, 2> A) {
+    explicit MatrixLowerTriangle<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
       // TODO: chekc that A is N x N
       resize(N);
       *this = A;
@@ -124,7 +124,7 @@ namespace mathq {
     // --------------------- variable-size Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixLowerTriangle<Number, N>(const MArrayExpR<X, Number, Number, 1, 2> A) {
+    explicit MatrixLowerTriangle<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
       const size_t depth = A.Nrows();
       // TODO: chekc that A is square
       resize(depth);
@@ -396,7 +396,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixLowerTriangle<Number, N>& operator=(const MArrayExpR<X, Number, Number, 1, 1>& v) {
+    MatrixLowerTriangle<Number, N>& operator=(const ExpressionR<X, Number, Number, 1, 1>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -404,7 +404,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixLowerTriangle<Number, N>& operator=(const MArrayExpR<X, Number, Number, 1, 2>& A) {
+    MatrixLowerTriangle<Number, N>& operator=(const ExpressionR<X, Number, Number, 1, 2>& A) {
       const size_t NN = A.dims()[0];
       // TODO: check that A is square
       resize(NN);
