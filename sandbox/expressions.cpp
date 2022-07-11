@@ -41,8 +41,8 @@
 // #include "util.h"
 // #include "debug.h"
 
-#include "expressionR.h"
-#include "expressionRW.h"
+#include "expression-r.h"
+#include "expression-rw.h"
 #include "vector.h"
 #include "dimensions.h"
 
@@ -114,6 +114,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v3);
 
   TRDISP(-v3);
+  TRDISP(exp(v3));
 
 
   return 0;

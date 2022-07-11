@@ -54,12 +54,8 @@ namespace mathq {
     //**********************************************************************
 
     TER_Unary(const Derived& x) : x_(x) {
-      OUTPUT("in TER_Unary");
-      TRDISP(x);
       vptrs = new VectorofPtrs();
       vptrs->add(x_.getAddresses());
-      TRDISP(x);
-      // TRDISP(vptrs);
       // DISP3(x);
     }
 

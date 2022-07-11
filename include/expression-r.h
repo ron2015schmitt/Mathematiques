@@ -169,15 +169,12 @@ namespace mathq {
     }
 
     inline const std::string classname() const {
-      OUTPUT("ExpressionR::classname");
       ConcreteType temp;
-      TRDISP(temp);
       return temp.classname();
     }
 
 
     friend std::ostream& operator<<(std::ostream& stream, const ExpressionR<Derived, Element, Number, depth_value, rank_value>& expression) {
-      OUTPUT("ExpressionR::operator<<");
       ConcreteType temp;
       temp = expression;
       stream << temp;
