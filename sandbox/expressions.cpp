@@ -36,16 +36,14 @@
 #include "math_imag.h"
 #include "math_quaternion.h"
 
-#include "multi-array-expressions.h"
-
-#include "vector.h"
-#include "dimensions.h"
-
-
 // #include "indices.h"
 // #include "slices.h"
 // #include "util.h"
 // #include "debug.h"
+
+#include "multi-array-expressions.h"
+#include "vector.h"
+#include "dimensions.h"
 
 
 // #include "multi-array.h"
@@ -81,10 +79,10 @@
 // #include "multi-array3.h"
 // #include "multi-array4.h"
 
-// #include "expressionsR.h"
+#include "expressionsR.h"
 // #include "expressionsRW.h"
 
-// #include "fun_unary_AUTO.h"
+#include "fun_unary_AUTO.h"
 // #include "fun_binary_AUTO.h"
 // #include "fun_ternary_AUTO.h"
 // #include "functions_misc.h"
@@ -114,7 +112,7 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
   TRDISP(v3);
 
-  TRDISP(v3);
+  TRDISP(-v3);
 
 
   return 0;

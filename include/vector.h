@@ -22,14 +22,13 @@
 namespace mathq {
 
   template <typename Element, size_t N1>
-  class MultiArray<Element, 1, N1> :
-    public ExpressionRW<
+  class MultiArray<Element, 1, N1> : public ExpressionRW<
     Vector<Element, N1>,  // Derived
     Element,  // Element
     typename NumberTrait<Element>::Type, // Number
     1 + NumberTrait<Element>::depth(),  // depth
     1  // rank
-    > {
+  > {
   public:
 
 
@@ -138,15 +137,15 @@ namespace mathq {
       constructorHelper();
     }
 
-    // --------------------- EXPRESSION CONSTRUCTOR --------------------
-    // template <class X>
-    // MultiArray(const ExpressionR<X, Element, NumberType, depth, rank_value>& x) {
-    //   if constexpr (is_dynamic_value) {
-    //     this->resize(x.size());
-    //   }
-    //   *this = x;
-    //   constructorHelper();
-    // }
+    //--------------------- EXPRESSION CONSTRUCTOR --------------------
+    template <class Derived, size_t... ints>
+    MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
+      if constexpr (is_dynamic_value) {
+        this->resize(x.size());
+      }
+      *this = x;
+      constructorHelper();
+    }
 
 
     //**********************************************************************
@@ -648,27 +647,27 @@ namespace mathq {
 
     // // ------------------------ Vector = ExpressionR ----------------
 
-    // template <class X>
-    // Vector<Element, N1>& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+    template <class X>
+    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
 
-    //   if constexpr (depth_value<=1) {
-    //     if constexpr (is_dynamic_value) {
-    //       if (this->size() != x.size()) {
-    //         resize(x.size());
-    //       }
-    //     }
-    //     for (size_t i = 0; i < size(); i++) {
-    //       (*this)[i] = x[i];
-    //     }
-    //   }
-    //   else {
-    //     resize(x.recursive_dims());
-    //     for (size_t i = 0; i < total_size(); i++) {
-    //       this->dat(i) = x.dat(i);
-    //     }
-    //   }
-    //   return *this;
-    // }
+      if constexpr (depth_value<=1) {
+        if constexpr (is_dynamic_value) {
+          if (this->size() != x.size()) {
+            resize(x.size());
+          }
+        }
+        for (size_t i = 0; i < size(); i++) {
+          (*this)[i] = x[i];
+        }
+      }
+      else {
+        resize(x.recursive_dims());
+        for (size_t i = 0; i < total_size(); i++) {
+          this->dat(i) = x.dat(i);
+        }
+      }
+      return *this;
+    }
 
 
 
@@ -1568,12 +1567,12 @@ namespace mathq {
     }
 
 
+    };
+
+
+
+
   };
-
-
-
-
-};
 
 
 #endif 

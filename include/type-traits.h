@@ -60,7 +60,7 @@ namespace mathq {
   template <typename Element, size_t rank, size_t... ints>
   class Materialize {
   public:
-    using Type = typename MultiArray<Element, rank, ints...>::Type;
+    using Type = MultiArray<Element, rank, ints...>;
   };
 
 

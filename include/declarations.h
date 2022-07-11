@@ -135,9 +135,9 @@ namespace mathq {
   // * MultiArray Expressions
   // ********************************************************************
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, size_t... ints>
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
   class ExpressionR;
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank, size_t... ints>
+  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
   class ExpressionRW;
 
 
@@ -238,6 +238,7 @@ namespace mathq {
   // *********************************************************************
   // * Expressions
   // ********************************************************************
+
 
   template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
   class TER_Unary;
