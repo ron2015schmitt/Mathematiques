@@ -103,10 +103,10 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& recursive_dims(void) const {
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
       return x_.recursive_dims();
     }
-    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+    RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
       return x_.recursive_dims(parentdims);
     }
 
@@ -140,7 +140,7 @@ namespace mathq {
         return (this->size())*(this->el_total_size());
       }
     }
-    std::string classname() const {
+    std::string expression_name() const {
       return "TERW_Subset";
     }
 
@@ -232,10 +232,10 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& recursive_dims(void) const {
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
       return x_.recursive_dims();
     }
-    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+    RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
       return x_.recursive_dims(parentdims);
     }
 
@@ -269,7 +269,7 @@ namespace mathq {
         return (this->size())*(this->el_total_size());
       }
     }
-    std::string classname() const {
+    std::string expression_name() const {
       return "TERW_Submask";
     }
 
@@ -382,13 +382,13 @@ namespace mathq {
     Dimensions template_dims(void) const {
       return this->dims();
     }
-    std::vector<Dimensions>& recursive_dims(void) const {
-      std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      RecursiveDimensions<depth_value>& ddims = *(new RecursiveDimensions<depth_value>);
       return recursive_dims(ddims);
     }
-    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+    RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
       const int N = parentdims.size();
-      std::vector<Dimensions>& ddims = x_.recursive_dims(parentdims);
+      RecursiveDimensions<depth_value>& ddims = x_.recursive_dims(parentdims);
       ddims[N] = this->dims();
       return ddims;
     }
@@ -426,7 +426,7 @@ namespace mathq {
       }
     }
 
-    std::string classname() const {
+    std::string expression_name() const {
       return "TERW_Join";
     }
 
@@ -524,7 +524,7 @@ namespace mathq {
   // 	return (this->size())*(this->el_total_size());
   //       }
   //     }
-  //     std::string classname() const {
+  //     std::string expression_name() const {
   //       return "TERW_RealFromComplex";
   //     }
 

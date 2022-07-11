@@ -32,8 +32,8 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using ParentType = NullType;
-    using Type = ExpressionRW<Derived, Element, Number, depth_value, rank_value>;
+    using Type = TER_Unary<Derived, Element, Number, depth_, rank_, FUNC>;
+    using ParentType = ExpressionR<Type, Element, Number, depth_, rank_>;
     using ConcreteType = MultiArray<Element, rank_value, 0>;
 
     using ElementType = Element;
@@ -135,11 +135,11 @@ namespace mathq {
       return x_.recursive_dims();
     }
 
-    template <size_t full_depth>
-    const Type& recurse_dims(RecursiveDimensions<full_depth>& parent_rdims, const size_t di = 0) const {
-      x_.recurse_dims(parent_rdims, di);
-      return this;
-    }
+    // template <size_t full_depth>
+    // const Type& recurse_dims(RecursiveDimensions<full_depth>& parent_rdims, const size_t di = 0) const {
+    //   x_.recurse_dims(parent_rdims, di);
+    //   return *this;
+    // }
 
 
     //**********************************************************************
@@ -176,339 +176,410 @@ namespace mathq {
   };
 
 
-  //   //---------------------------------------------------------------------------
-  //   // TER_Binary    binary expressions
-  //   //---------------------------------------------------------------------------
+  //---------------------------------------------------------------------------
+  // TER_Binary    binary expressions
+  //---------------------------------------------------------------------------
 
-  //   template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t D1, size_t D2, size_t D3, size_t R1, size_t R2, size_t R3, class OP>
-  //   class TER_Binary : public ExpressionR<TER_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>, E3, NT3, D3, R3> {
-  //   public:
-  //     typedef E3 ElementType;
-  //     typedef NT3 NumberType;
-  //     typedef typename std::conditional<D1 == 0, B, A>::type::ConcreteType TempA;
-  //     typedef typename std::conditional<D2 == 0, A, B>::type::ConcreteType TempB;
-  //     typedef Materialize<E3, NT3, D3, R3> ConcreteType;
-  //     constexpr static size_t depth_value = D3;
-  //     constexpr static size_t rank_value = R3;
+  template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t D1, size_t D2, size_t D3, size_t R1, size_t R2, size_t R3, class OP>
+  class TER_Binary : public ExpressionR<TER_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>, E3, NT3, D3, R3> {
+  public:
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
 
-  //     typedef typename std::conditional<D1 == 0, const A, const A&>::type TypeA;
-  //     typedef typename std::conditional<D2 == 0, const B, const B&>::type TypeB;
+    constexpr static size_t rank_value = R3;
+    constexpr static size_t depth_value = D3;
 
-  //   private:
-  //     TypeA a_;
-  //     TypeB b_;
-  //     VectorofPtrs* vptrs;
+    // the size of an expression cannot be changed
+    constexpr static bool is_dynamic() noexcept {
+      return false;
+    }
 
-  //   public:
-  //     TER_Binary(const A& a, const B& b) : a_(a), b_(b) {
-  //       vptrs = new VectorofPtrs();
-  //       if constexpr (D1 > 0) {
-  //         vptrs->add(a_.getAddresses());
-  //       }
-  //       if constexpr (D2 > 0) {
-  //         vptrs->add(b_.getAddresses());
-  //       }
-  //       // DISP3(a);
-  //       // DISP3(b);
-  //       // DISP3(vptrs);
-  //       // TLDISP3(E3());
-  //       // TLDISP3(NT3());
-  //       // MDISP3(D3, R3);
-  //     }
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
 
-  //     ~TER_Binary() {
-  //       // DISP3(vptrs);
-  //       delete vptrs;
-  //     }
+    using Type = TER_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>;
+    using ParentType = ExpressionR<Type, E3, NT3, D3, R3>;
+    using ConcreteType = MultiArray<E3, R3, 0>;
 
-  //     //**********************************************************************
-  //     //******************** DEEP ACCESS: x.dat(n) ***************************
-  //     //**********************************************************************
+    using ElementType = E3;
+    using NumberType = NT3;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-  //     const NT3 dat(const size_t i) const {
-  //       if constexpr ((D1 == 0) && (D2 == 0)) {
-  //         return OP::apply(a_, b_);
-  //       }
-  //       else if constexpr ((D1 == 0) && (D2 > 0)) {
-  //         return OP::apply(a_, b_.dat(i));
-  //       }
-  //       else if constexpr ((D1 > 0) && (D2 == 0)) {
-  //         return OP::apply(a_.dat(i), b_);
-  //       }
-  //       else {
-  //         if constexpr (D1 == D2) {
-  //           return OP::apply(a_.dat(i), b_.dat(i));
-  //         }
-  //         else if constexpr (D1 == D2 + 1) {
-  //           if constexpr ((D2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
-  //             if ((a_.size() == b_.size()) && (a_.element_size() == b_.size())) {
-  //               return dat_el1(i); // note this is chosen by fiat
-  //             }
-  //             else if (a_.size() == b_.size()) {
-  //               return dat_top1(i);
-  //             }
-  //             else if (a_.element_size() == b_.size()) {
-  //               return dat_el1(i);
-  //             }
-  //             else {
-  //               // TODO: error
-  //               return 0;
-  //             }
-  //           }
-  //           else if constexpr ((D2 == 1) && (R2 == R1)) {
-  //             return dat_top1(i);
-  //           }
-  //           else if constexpr (R2 == E1::rank_value) {
-  //             return dat_el1(i);
-  //           }
-  //           else {
-  //             // TODO: error
-  //             return 0;
-  //           }
-  //         }
-  //         else if constexpr (D2 == D1 + 1) {
-  //           if constexpr ((D1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
-  //             if ((a_.size() == b_.size()) && (a_.size() == b_.element_size())) {
-  //               return dat_top2(i); // note this is chosen by fiat
-  //             }
-  //             else if (a_.size() == b_.size()) {
-  //               return dat_top2(i);
-  //             }
-  //             else if (a_.size() == b_.element_size()) {
-  //               return dat_el2(i);
-  //             }
-  //             else {
-  //               // TODO: error
-  //               return 0;
-  //             }
-  //           }
-  //           else if constexpr ((D1 == 1) && (R1 == R2)) {
-  //             return dat_top2(i);
-  //           }
-  //           else if constexpr (R1 == E2::rank_value) {
-  //             return dat_el2(i);
-  //           }
-  //           else {
-  //             // TODO: error
-  //             return 0;
-  //           }
-  //         }
-  //         else {
-  //           // TODO: error
-  //           return 0;
-  //         }
-  //       }
-  //     }
+    using DimensionsType = Dimensions<rank_value>;
+    using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
-  //     // helper for: T<Element> + T
-  //     const NT3 dat_top1(const size_t i) const {
-  //       size_t j = i / a_.element_size();
-  //       return OP::apply(a_.dat(i), b_.dat(j));
-  //     }
-  //     // helper for: T<Element> + Element
-  //     const NT3 dat_el1(const size_t i) const {
-  //       size_t j = i % b_.total_size();
-  //       return OP::apply(a_.dat(i), b_.dat(j));
-  //     }
+    using TempA = typename std::conditional<D1 == 0, B, A>::type::ConcreteType;
+    using TempB = typename std::conditional<D2 == 0, A, B>::type::ConcreteType;
 
-  //     // helper for: T + T<Element>
-  //     const NT3 dat_top2(const size_t i) const {
-  //       size_t j = i / b_.element_size();
-  //       return OP::apply(a_.dat(j), b_.dat(i));
-  //     }
-  //     // helper for: Element + T<Element>
-  //     const NT3 dat_el2(const size_t i) const {
-  //       size_t j = i % a_.total_size();
-  //       return OP::apply(a_.dat(j), b_.dat(i));
-  //     }
+    using TypeA = typename std::conditional<D1 == 0, const A, const A&>::type;
+    using TypeB = typename std::conditional<D2 == 0, const B, const B&>::type;
 
-  //     //**********************************************************************
-  //     //************* Array-style Element Access: x[n] ***********************
-  //     //**********************************************************************
-  //     const E3 operator[](const size_t i) const {
-  //       if constexpr ((D1 == 0) && (D2 == 0)) {
-  //         return OP::apply(a_, b_);
-  //       }
-  //       else if constexpr ((D1 == 0) && (D2 > 0)) {
-  //         return OP::apply(a_, b_[i]);
-  //       }
-  //       else if constexpr ((D1 > 0) && (D2 == 0)) {
-  //         return OP::apply(a_[i], b_);
-  //       }
-  //       else {
-  //         if constexpr (D1 == D2) {
-  //           return OP::apply(a_[i], b_[i]);
-  //         }
-  //         else if constexpr (D1 == D2 + 1) {
-  //           if constexpr ((D2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
-  //             if ((a_.size() == b_.size()) && (a_.element_size() == b_.size())) {
-  //               return el1(i); // note this is chosen by fiat
-  //             }
-  //             else if (a_.size() == b_.size()) {
-  //               return top1(i);
-  //             }
-  //             else if (a_.element_size() == b_.size()) {
-  //               return el1(i);
-  //             }
-  //             else {
-  //               // TODO: error
-  //               E3* e;
-  //               return *e;
-  //             }
-  //           }
-  //           else if constexpr ((D2 == 1) && (R2 == R1)) {
-  //             return top1(i);
-  //           }
-  //           else if constexpr (R2 == E1::rank_value) {
-  //             return el1(i);
-  //           }
-  //           else {
-  //             // TODO: error
-  //             E3* e;
-  //             return *e;
-  //           }
-  //         }
-  //         else if constexpr (D2 == D1 + 1) {
-  //           if constexpr ((D1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
-  //             if ((a_.size() == b_.size()) && (a_.size() == b_.element_size())) {
-  //               return top2(i); // note this is chosen by fiat
-  //             }
-  //             else if (a_.size() == b_.size()) {
-  //               return top2(i);
-  //             }
-  //             else if (a_.size() == b_.element_size()) {
-  //               return el2(i);
-  //             }
-  //             else {
-  //               // TODO: error
-  //               E3* e;
-  //               return *e;
-  //             }
-  //           }
-  //           else if constexpr ((D1 == 1) && (R1 == R2)) {
-  //             return top2(i);
-  //           }
-  //           else if constexpr (R1 == E2::rank_value) {
-  //             return el2(i);
-  //           }
-  //           else {
-  //             // TODO: error
-  //             E3* e;
-  //             return *e;
-  //           }
-  //         }
-  //         else {
-  //           // TODO: error
-  //           E3* e;
-  //           return *e;
-  //         }
-  //       }
-  //     }
+  private:
+    TypeA a_;
+    TypeB b_;
+    VectorofPtrs* vptrs;
 
-  //     // helper for: T<Element> + T
-  //     const E3 top1(const size_t i) const {
-  //       return OP::apply(a_[i], b_[i]);
-  //     }
-  //     // helper for: T<Element> + Element
-  //     const E3 el1(const size_t i) const {
-  //       return OP::apply(a_[i], b_);
-  //     }
+  public:
+    //**********************************************************************
+    //                      Constructors
+    //**********************************************************************
 
-  //     // helper for: T + T<Element>
-  //     const E3 top2(const size_t i) const {
-  //       return OP::apply(a_[i], b_[i]);
-  //     }
-  //     // helper for: Element + T<Element>
-  //     const E3 el2(const size_t i) const {
-  //       return OP::apply(a_, b_[i]);
-  //     }
+    TER_Binary(const A& a, const B& b) : a_(a), b_(b) {
+      vptrs = new VectorofPtrs();
+      if constexpr (D1 > 0) {
+        vptrs->add(a_.getAddresses());
+      }
+      if constexpr (D2 > 0) {
+        vptrs->add(b_.getAddresses());
+      }
+      // DISP3(a);
+      // DISP3(b);
+      // DISP3(vptrs);
+      // TLDISP3(E3());
+      // TLDISP3(NT3());
+      // MDISP3(D3, R3);
+    }
 
-  //     VectorofPtrs getAddresses(void) const {
-  //       return *vptrs;
-  //     }
-  //     size_t size(void) const {
-  //       if constexpr (D1 >= D2) {
-  //         return a_.size();
-  //       }
-  //       else {
-  //         return b_.size();
-  //       }
-  //     }
-  //     size_t rank(void) const {
-  //       return dims().size();
-  //     }
-  //     Dimensions dims(void) const {
-  //       if constexpr (D1 >= D2) {
-  //         return a_.dims();
-  //       }
-  //       else {
-  //         return b_.dims();
-  //       }
-  //     }
-  //     std::vector<Dimensions>& recursive_dims(void) const {
-  //       if constexpr (D1 >= D2) {
-  //         return a_.recursive_dims();
-  //       }
-  //       else {
-  //         return b_.recursive_dims();
-  //       }
-  //     }
-  //     std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
-  //       if constexpr (D1 >= D2) {
-  //         return a_.recursive_dims(parentdims);
-  //       }
-  //       else {
-  //         return b_.recursive_dims(parentdims);
-  //       }
-  //     }
-  //     bool isExpression(void) const {
-  //       return true;
-  //     }
-  //     size_t depth(void) const {
-  //       if constexpr (D1 >= D2) {
-  //         return D1;
-  //       }
-  //       else {
-  //         return D2;
-  //       }
-  //     }
-  //     size_t element_size(void) const {
-  //       if constexpr (D1 >= D2) {
-  //         return a_.element_size();
-  //       }
-  //       else {
-  //         return b_.element_size();
-  //       }
-  //     }
-  //     size_t el_total_size(void) const {
-  //       if constexpr (D1 >= D2) {
-  //         return a_.el_total_size();
-  //       }
-  //       else {
-  //         return b_.el_total_size();
-  //       }
-  //     }
-  //     size_t total_size(void) const {
-  //       if constexpr (D1 >= D2) {
-  //         return a_.total_size();
-  //       }
-  //       else {
-  //         return b_.total_size();
-  //       }
-  //     }
+    ~TER_Binary() {
+      // DISP3(vptrs);
+      delete vptrs;
+    }
 
-  //     std::string classname() const {
-  //       return "TER_Binary";
-  //     }
 
-  // #if MATHQ_DEBUG >= 1
-  //     std::string expression(void) const {
-  //       std::string sx = a_.expression();
-  //       std::string sy = a_.expression();
-  //       return OP::expression(sx, sy);
-  //     }
-  // #endif
-  //   };
+    //**********************************************************************
+    //                         Basic characteristics
+    //**********************************************************************
+
+    bool isExpression(void) const {
+      return true;
+    }
+
+    VectorofPtrs getAddresses(void) const {
+      return *vptrs;
+    }
+
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
+
+    size_t rank(void) const {
+      return dims().size();
+    }
+
+    size_t depth(void) const {
+      if constexpr (D1 >= D2) {
+        return D1;
+      }
+      else {
+        return D2;
+      }
+    }
+
+    size_t size(void) const {
+      if constexpr (D1 >= D2) {
+        return a_.size();
+      }
+      else {
+        return b_.size();
+      }
+    }
+
+    size_t total_size(void) const {
+      if constexpr (D1 >= D2) {
+        return a_.total_size();
+      }
+      else {
+        return b_.total_size();
+      }
+    }
+
+    size_t element_size(void) const {
+      if constexpr (D1 >= D2) {
+        return a_.element_size();
+      }
+      else {
+        return b_.element_size();
+      }
+    }
+
+    size_t el_total_size(void) const {
+      if constexpr (D1 >= D2) {
+        return a_.el_total_size();
+      }
+      else {
+        return b_.el_total_size();
+      }
+    }
+
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+
+    DimensionsType& dims(void) const {
+      if constexpr (D1 >= D2) {
+        return a_.dims();
+      }
+      else {
+        return b_.dims();
+      }
+    }
+
+    ElementDimensionsType& element_dims(void) const {
+      if constexpr (D1 >= D2) {
+        return a_.element_dims();
+      }
+      else {
+        return b_.element_dims();
+      }
+    }
+
+    const RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      if constexpr (D1 >= D2) {
+        a_.recursive_dims();
+      }
+      else {
+        b_.recursive_dims();
+      }
+    }
+
+    // template <size_t full_depth>
+    // const Type& recurse_dims(RecursiveDimensions<full_depth>& parent_rdims, const size_t di = 0) const {
+    //   if constexpr (D1 >= D2) {
+    //     a_.recurse_dims(parentdims);
+    //   }
+    //   else {
+    //     b_.recurse_dims(parentdims);
+    //   }
+    //   return *this;
+    // }
+
+
+    //**********************************************************************
+    //******************** DEEP ACCESS: x.dat(n) ***************************
+    //**********************************************************************
+
+    const NT3 dat(const size_t i) const {
+      if constexpr ((D1 == 0) && (D2 == 0)) {
+        return OP::apply(a_, b_);
+      }
+      else if constexpr ((D1 == 0) && (D2 > 0)) {
+        return OP::apply(a_, b_.dat(i));
+      }
+      else if constexpr ((D1 > 0) && (D2 == 0)) {
+        return OP::apply(a_.dat(i), b_);
+      }
+      else {
+        if constexpr (D1 == D2) {
+          return OP::apply(a_.dat(i), b_.dat(i));
+        }
+        else if constexpr (D1 == D2 + 1) {
+          if constexpr ((D2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
+            if ((a_.size() == b_.size()) && (a_.element_size() == b_.size())) {
+              return dat_el1(i); // note this is chosen by fiat
+            }
+            else if (a_.size() == b_.size()) {
+              return dat_top1(i);
+            }
+            else if (a_.element_size() == b_.size()) {
+              return dat_el1(i);
+            }
+            else {
+              // TODO: error
+              return 0;
+            }
+          }
+          else if constexpr ((D2 == 1) && (R2 == R1)) {
+            return dat_top1(i);
+          }
+          else if constexpr (R2 == E1::rank_value) {
+            return dat_el1(i);
+          }
+          else {
+            // TODO: error
+            return 0;
+          }
+        }
+        else if constexpr (D2 == D1 + 1) {
+          if constexpr ((D1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
+            if ((a_.size() == b_.size()) && (a_.size() == b_.element_size())) {
+              return dat_top2(i); // note this is chosen by fiat
+            }
+            else if (a_.size() == b_.size()) {
+              return dat_top2(i);
+            }
+            else if (a_.size() == b_.element_size()) {
+              return dat_el2(i);
+            }
+            else {
+              // TODO: error
+              return 0;
+            }
+          }
+          else if constexpr ((D1 == 1) && (R1 == R2)) {
+            return dat_top2(i);
+          }
+          else if constexpr (R1 == E2::rank_value) {
+            return dat_el2(i);
+          }
+          else {
+            // TODO: error
+            return 0;
+          }
+        }
+        else {
+          // TODO: error
+          return 0;
+        }
+      }
+    }
+
+    // helper for: T<Element> + T
+    const NT3 dat_top1(const size_t i) const {
+      size_t j = i / a_.element_size();
+      return OP::apply(a_.dat(i), b_.dat(j));
+    }
+    // helper for: T<Element> + Element
+    const NT3 dat_el1(const size_t i) const {
+      size_t j = i % b_.total_size();
+      return OP::apply(a_.dat(i), b_.dat(j));
+    }
+
+    // helper for: T + T<Element>
+    const NT3 dat_top2(const size_t i) const {
+      size_t j = i / b_.element_size();
+      return OP::apply(a_.dat(j), b_.dat(i));
+    }
+    // helper for: Element + T<Element>
+    const NT3 dat_el2(const size_t i) const {
+      size_t j = i % a_.total_size();
+      return OP::apply(a_.dat(j), b_.dat(i));
+    }
+
+    //**********************************************************************
+    //************* Array-style Element Access: x[n] ***********************
+    //**********************************************************************
+    const E3 operator[](const size_t i) const {
+      if constexpr ((D1 == 0) && (D2 == 0)) {
+        return OP::apply(a_, b_);
+      }
+      else if constexpr ((D1 == 0) && (D2 > 0)) {
+        return OP::apply(a_, b_[i]);
+      }
+      else if constexpr ((D1 > 0) && (D2 == 0)) {
+        return OP::apply(a_[i], b_);
+      }
+      else {
+        if constexpr (D1 == D2) {
+          return OP::apply(a_[i], b_[i]);
+        }
+        else if constexpr (D1 == D2 + 1) {
+          if constexpr ((D2 == 1) && (R2 == R1) && (R2 == E1::rank_value)) {
+            if ((a_.size() == b_.size()) && (a_.element_size() == b_.size())) {
+              return el1(i); // note this is chosen by fiat
+            }
+            else if (a_.size() == b_.size()) {
+              return top1(i);
+            }
+            else if (a_.element_size() == b_.size()) {
+              return el1(i);
+            }
+            else {
+              // TODO: error
+              E3* e;
+              return *e;
+            }
+          }
+          else if constexpr ((D2 == 1) && (R2 == R1)) {
+            return top1(i);
+          }
+          else if constexpr (R2 == E1::rank_value) {
+            return el1(i);
+          }
+          else {
+            // TODO: error
+            E3* e;
+            return *e;
+          }
+        }
+        else if constexpr (D2 == D1 + 1) {
+          if constexpr ((D1 == 1) && (R1 == R2) && (R1 == E2::rank_value)) {
+            if ((a_.size() == b_.size()) && (a_.size() == b_.element_size())) {
+              return top2(i); // note this is chosen by fiat
+            }
+            else if (a_.size() == b_.size()) {
+              return top2(i);
+            }
+            else if (a_.size() == b_.element_size()) {
+              return el2(i);
+            }
+            else {
+              // TODO: error
+              E3* e;
+              return *e;
+            }
+          }
+          else if constexpr ((D1 == 1) && (R1 == R2)) {
+            return top2(i);
+          }
+          else if constexpr (R1 == E2::rank_value) {
+            return el2(i);
+          }
+          else {
+            // TODO: error
+            E3* e;
+            return *e;
+          }
+        }
+        else {
+          // TODO: error
+          E3* e;
+          return *e;
+        }
+      }
+    }
+
+    // helper for: T<Element> + T
+    const E3 top1(const size_t i) const {
+      return OP::apply(a_[i], b_[i]);
+    }
+    // helper for: T<Element> + Element
+    const E3 el1(const size_t i) const {
+      return OP::apply(a_[i], b_);
+    }
+
+    // helper for: T + T<Element>
+    const E3 top2(const size_t i) const {
+      return OP::apply(a_[i], b_[i]);
+    }
+    // helper for: Element + T<Element>
+    const E3 el2(const size_t i) const {
+      return OP::apply(a_, b_[i]);
+    }
+
+
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
+
+    std::string expression_name() const {
+      return "TER_Binary";
+    }
+
+#if MATHQ_DEBUG >= 1
+    std::string expression(void) const {
+      std::string sx = a_.expression();
+      std::string sy = a_.expression();
+      return OP::expression(sx, sy);
+    }
+#endif
+
+
+  };
+
+
+
 
   //   //---------------------------------------------------------------------------
   //   // TER_Binary_User    binary expressions
@@ -777,7 +848,7 @@ namespace mathq {
   //         return b_.dims();
   //       }
   //     }
-  //     std::vector<Dimensions>& recursive_dims(void) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(void) const {
   //       if constexpr (D1 >= D2) {
   //         return a_.recursive_dims();
   //       }
@@ -785,7 +856,7 @@ namespace mathq {
   //         return b_.recursive_dims();
   //       }
   //     }
-  //     std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
   //       if constexpr (D1 >= D2) {
   //         return a_.recursive_dims(parentdims);
   //       }
@@ -829,7 +900,7 @@ namespace mathq {
   //       }
   //     }
 
-  //     std::string classname() const {
+  //     std::string expression_name() const {
   //       return "TER_Binary_User";
   //     }
 
@@ -975,7 +1046,7 @@ namespace mathq {
   //         return c_.dims();
   //       }
   //     }
-  //     std::vector<Dimensions>& recursive_dims(void) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(void) const {
   //       if constexpr (D1 > 0) {
   //         return a_.recursive_dims();
   //       }
@@ -986,7 +1057,7 @@ namespace mathq {
   //         return c_.recursive_dims();
   //       }
   //     }
-  //     std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
   //       if constexpr (D1 > 0) {
   //         return a_.recursive_dims(parentdims);
   //       }
@@ -1045,7 +1116,7 @@ namespace mathq {
   //       }
   //     }
 
-  //     std::string classname() const {
+  //     std::string expression_name() const {
   //       return "TER_Ternary";
   //     }
 
@@ -1149,10 +1220,10 @@ namespace mathq {
   //     Dimensions template_dims(void) const {
   //       return this->dims();
   //     }
-  //     std::vector<Dimensions>& recursive_dims(void) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(void) const {
   //       return x_.recursive_dims();
   //     }
-  //     std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
   //       return x_.recursive_dims(parentdims);
   //     }
   //     bool isExpression(void) const {
@@ -1189,7 +1260,7 @@ namespace mathq {
   //       }
   //     }
 
-  //     std::string classname() const {
+  //     std::string expression_name() const {
   //       return "TER_Series";
   //     }
 
@@ -1279,10 +1350,10 @@ namespace mathq {
   //     Dimensions template_dims(void) const {
   //       return this->dims();
   //     }
-  //     std::vector<Dimensions>& recursive_dims(void) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(void) const {
   //       return x_.recursive_dims();
   //     }
-  //     std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
   //       return x_.recursive_dims(parentdims);
   //     }
   //     bool isExpression(void) const {
@@ -1319,7 +1390,7 @@ namespace mathq {
   //       }
   //     }
 
-  //     std::string classname() const {
+  //     std::string expression_name() const {
   //       return "TER_Series2";
   //     }
 
@@ -1421,7 +1492,7 @@ namespace mathq {
   //         return (this->size()) * (this->el_total_size());
   //       }
   //     }
-  //     std::string classname() const {
+  //     std::string expression_name() const {
   //       return "TER_Transpose";
   //     }
 
@@ -1496,13 +1567,13 @@ namespace mathq {
   //     Dimensions template_dims(void) const {
   //       return this->dims();
   //     }
-  //     std::vector<Dimensions>& recursive_dims(void) const {
-  //       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
+  //     RecursiveDimensions<depth_value>& recursive_dims(void) const {
+  //       RecursiveDimensions<depth_value>& ddims = *(new RecursiveDimensions<depth_value>);
   //       return recursive_dims(ddims);
   //     }
-  //     std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
   //       const size_t N = parentdims.size();
-  //       std::vector<Dimensions>& ddims = x_.recursive_dims(parentdims);
+  //       RecursiveDimensions<depth_value>& ddims = x_.recursive_dims(parentdims);
   //       ddims[N] = this->dims();
   //       return ddims;
   //     }
@@ -1540,7 +1611,7 @@ namespace mathq {
   //       }
   //     }
 
-  //     std::string classname() const {
+  //     std::string expression_name() const {
   //       return "TER_Join";
   //     }
 
@@ -1603,10 +1674,10 @@ namespace mathq {
   //     Dimensions template_dims(void) const {
   //       return this->dims();
   //     }
-  //     std::vector<Dimensions>& recursive_dims(void) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(void) const {
   //       return a_.recursive_dims();
   //     }
-  //     std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
+  //     RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
   //       return a_.recursive_dims(parentdims);
   //     }
   //     bool isExpression(void) const {
@@ -1639,7 +1710,7 @@ namespace mathq {
   //         return (this->size()) * (this->el_total_size());
   //       }
   //     }
-  //     std::string classname() const {
+  //     std::string expression_name() const {
   //       return "TER_Rep";
   //     }
 

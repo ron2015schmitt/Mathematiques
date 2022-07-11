@@ -80,11 +80,11 @@
 // #include "multi-array3.h"
 // #include "multi-array4.h"
 
-#include "expressionsR.h"
-// #include "expressionsRW.h"
+#include "expressions-r.h"
+// #include "expressions-rw.h"
 
 #include "fun_unary_AUTO.h"
-// #include "fun_binary_AUTO.h"
+#include "fun_binary_AUTO.h"
 // #include "fun_ternary_AUTO.h"
 // #include "functions_misc.h"
 // #include "functions_structure.h"
@@ -115,6 +115,7 @@ int main(int argc, char* argv[]) {
 
   TRDISP(-v3);
   TRDISP(exp(v3));
+  TRDISP(v2+v3);
 
 
   return 0;

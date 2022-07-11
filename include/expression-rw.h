@@ -125,11 +125,11 @@ namespace mathq {
       return derived().recursive_dims();
     }
 
-    template <size_t full_depth>
-    const Type& recurse_dims(RecursiveDimensions<full_depth>& parent_rdims, const size_t di = 0) const {
-      derived().recurse_dims(parent_rdims, di);
-      return this;
-    }
+    // template <size_t full_depth>
+    // const Type& recurse_dims(RecursiveDimensions<full_depth>& parent_rdims, const size_t di = 0) const {
+    //   derived().recurse_dims(parent_rdims, di);
+    //   return this;
+    // }
 
 
     //**********************************************************************

@@ -89,8 +89,8 @@
 // #include "multi-array3.h"
 // #include "multi-array4.h"
 
-#include "expressionsR.h"
-// #include "expressionsRW.h"
+#include "expressions-r.h"
+// #include "expressions-rw.h"
 
 #include "fun_unary_AUTO.h"
 // #include "fun_binary_AUTO.h"
