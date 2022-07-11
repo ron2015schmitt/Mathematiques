@@ -41,7 +41,8 @@
 // #include "util.h"
 // #include "debug.h"
 
-#include "multi-array-expressions.h"
+#include "expressionR.h"
+#include "expressionRW.h"
 #include "vector.h"
 #include "dimensions.h"
 
