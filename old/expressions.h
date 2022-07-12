@@ -93,7 +93,7 @@ namespace matricks {
   }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       std::string sa = a_.expression();
       return FUNC::expression(sa);
@@ -238,7 +238,7 @@ namespace matricks {
     }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       /* std::string sa = a_.expression(); */
       /* if (a_.vetype() != VE_Vector)  */
@@ -404,7 +404,7 @@ namespace matricks {
     }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       /* std::string sa = a_.expression(); */
       /* if (a_.vetype() != VE_Vector)  */
@@ -545,7 +545,7 @@ namespace matricks {
     }
     
    
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //return expression_ExpressionRW_Subset(a_.expression(),ii_.expression());
@@ -668,7 +668,7 @@ namespace matricks {
     
 
     
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //      return expression_ExpressionRW_Submask(a_.expression(),ii_->expression());
@@ -778,7 +778,7 @@ namespace matricks {
     }
     
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return a_.expression();
       //      return expression_VSliceObj(a_.expression(),start_,end_,step_);
@@ -889,7 +889,7 @@ namespace matricks {
     }
   
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       // TODO: get this working
       /* std::string sa = a_.expression(); */
@@ -1010,7 +1010,7 @@ namespace matricks {
     }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       // TODO: get this working
       /* std::string sa = a_.expression(); */
@@ -1139,7 +1139,7 @@ namespace matricks {
     
     
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       std::string sa = a_.expression();
       return FUNC::expression(sa);
@@ -1232,7 +1232,7 @@ namespace matricks {
     }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       std::string sa = a_.expression();
       return FUNC::expression(sa);
@@ -1324,7 +1324,7 @@ namespace matricks {
       return "VER_Join";
     }
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //      return expression_VER_Join(a_.expression(),ii_.expression());
@@ -1444,7 +1444,7 @@ namespace matricks {
     
 
     
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //      return expression_VER_Join(a_.expression(),ii_.expression());
@@ -1537,7 +1537,7 @@ namespace matricks {
       return "VER_Rep";
     }
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //      return expression_VER_Join(a_.expression(),ii_.expression());

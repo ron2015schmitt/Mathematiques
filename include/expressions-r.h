@@ -32,16 +32,16 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = ExpressionR_Unary<Derived, Element, Number, depth_, rank_, FUNC>;
-    using ParentType = ExpressionR<Type, Element, Number, depth_, rank_>;
-    using ConcreteType = MultiArray<Element, rank_value, 0>;
-
     using ElementType = Element;
-    using NumberType = typename NumberTrait<Element>::Type;
+    using NumberType = typename NumberTrait<ElementType>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
+    using Type = ExpressionR_Unary<Derived, Element, Number, depth_, rank_, FUNC>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
+
     using DimensionsType = Dimensions<rank_value>;
-    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
+    using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
     const Derived& x_;
@@ -200,16 +200,16 @@ namespace mathq {
     //**********************************************************************
     using FUNC = typename FunctionType1<Number, Number>::type;
 
-    using Type = ExpressionR_Unary_User<Derived, Element, Number, depth_, rank_>;
-    using ParentType = ExpressionR<Type, Element, Number, depth_, rank_>;
-    using ConcreteType = MultiArray<Element, rank_value, 0>;
-
     using ElementType = Element;
-    using NumberType = typename NumberTrait<Element>::Type;
+    using NumberType = typename NumberTrait<ElementType>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
+    using Type = ExpressionR_Unary_User<Derived, Element, Number, depth_, rank_>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
+
     using DimensionsType = Dimensions<rank_value>;
-    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
+    using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
     const Derived& x_;
@@ -359,13 +359,13 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = ExpressionR_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>;
-    using ParentType = ExpressionR<Type, E3, NT3, D3, R3>;
-    using ConcreteType = MultiArray<E3, R3, 0>;
-
     using ElementType = E3;
     using NumberType = NT3;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using Type = ExpressionR_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -756,13 +756,13 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = ExpressionR_Binary_User<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3>;
-    using ParentType = ExpressionR<Type, E3, NT3, D3, R3>;
-    using ConcreteType = MultiArray<E3, R3, 0>;
-
     using ElementType = E3;
     using NumberType = NT3;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using Type = ExpressionR_Binary_User<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -1145,13 +1145,13 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = ExpressionR_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, NT3, NT4, D1, D2, D3, D4, R1, R2, R3, R4, OP>;
-    using ParentType = ExpressionR<Type, E4, NT4, D4, R4>;
-    using ConcreteType = MultiArray<E4, R4, 0>;
-
     using ElementType = E4;
     using NumberType = typename NumberTrait<ElementType>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using Type = ExpressionR_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, NT3, NT4, D1, D2, D3, D4, R1, R2, R3, R4, OP>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -1424,16 +1424,16 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = ExpressionR_Series<A, Derived, Element, Number, depth_, rank_>;
-    using ParentType = ExpressionR<Type, Element, Number, depth_, rank_>;
-    using ConcreteType = MultiArray<Element, rank_value, 0>;
-
     using ElementType = Element;
-    using NumberType = typename NumberTrait<Element>::Type;
+    using NumberType = typename NumberTrait<ElementType>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    
+    using Type = ExpressionR_Series<A, Derived, Element, Number, depth_, rank_>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
 
     using DimensionsType = Dimensions<rank_value>;
-    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
+    using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
     const A& a_;
@@ -1632,9 +1632,9 @@ namespace mathq {
     using NumberType = Number;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-    using Type = ExpressionR_Series2<A, B, Derived, Number, OP1, OP2>;
-    using ParentType = ExpressionR<Type, ElementType, Number, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value, 0>;
+    using Type = ExpressionR_Series2<A, B, Derived, NumberType, OP1, OP2>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -1800,14 +1800,35 @@ namespace mathq {
   //   // ExpressionR_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //   //-----------------------------------------------------------------------------
 
-  //   template <class Derived, class Element, typename Number, size_t depth, size_t rank, class FUNC>
-  //   class ExpressionR_Transpose : public ExpressionR<ExpressionR_Transpose<Derived, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
+  //   template <class Derived, class Element, typename Number, size_t depth_, size_t rank_, class FUNC>
+  //   class ExpressionR_Transpose : public ExpressionR<ExpressionR_Transpose<Derived, Element, Number, depth_, rank_, FUNC>, Element, Number, depth_, rank_> {
   //   public:
-  //     typedef Materialize<Element, Number, depth, rank> ConcreteType;
-  //     typedef Element ElementType;
-  //     typedef Number NumberType;
-  //     constexpr static size_t rank_value = rank;
-  //     constexpr static size_t depth_value = depth;
+  //   //**********************************************************************
+  //   //                  Compile Time Constant
+  //   //**********************************************************************
+
+  //   constexpr static size_t rank_value = rank_;
+  //   constexpr static size_t depth_value = depth_;
+
+  //   // the size of an expression cannot be changed
+  //   constexpr static bool is_dynamic() noexcept {
+  //     return false;
+  //   }
+
+  //   //**********************************************************************
+  //   //                            TYPES 
+  //   //**********************************************************************
+
+  //   using ElementType = Element;
+  //   using NumberType = typename NumberTrait<ElementType>::Type;
+  //   using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+  //   using Type = ExpressionR_Transpose<Derived, Element, Number, depth_value, rank_value, FUNC>;
+    // using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    // using ConcreteType = MultiArray<ElementType, rank_value>;
+
+  //   using DimensionsType = Dimensions<rank_value>;
+  //   using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   //   private:
   //     const Derived& x_;
@@ -1890,7 +1911,7 @@ namespace mathq {
   //       return "ExpressionR_Transpose";
   //     }
 
-  // #if MATRICKS_DEBUG >= 1
+  // #if MATHQ_DEBUG >= 1
   //     std::string expression(void) const {
   //       std::string sa = x_.expression();
   //       return FUNC::expression(sa);
@@ -2116,7 +2137,7 @@ namespace mathq {
   //       return "ExpressionR_Rep";
   //     }
 
-  // #if MATRICKS_DEBUG >= 1
+  // #if MATHQ_DEBUG >= 1
   //     std::string expression(void) const {
   //       return "";
   //       //      return expression_VER_Join(a_.expression(),ii_.expression());

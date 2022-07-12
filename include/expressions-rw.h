@@ -145,7 +145,7 @@ namespace mathq {
     }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //return expression_ExpressionRW_Subset(a_.expression(),ii_.expression());
@@ -276,7 +276,7 @@ namespace mathq {
 
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //return expression_ExpressionRW_Submask(a_.expression(),ii_.expression());
@@ -539,7 +539,7 @@ namespace mathq {
   //     }
 
 
-  // #if MATRICKS_DEBUG>=1
+  // #if MATHQ_DEBUG>=1
   //     std::string expression(void) const {
   //       return a_.expression();
   //       //      return expression_VSliceObj(a_.expression(),start_,end_,step_);
