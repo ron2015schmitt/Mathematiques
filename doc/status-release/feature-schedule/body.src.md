@@ -131,8 +131,9 @@
   // this seems to works for ints. if problems, use a helper class to determine which exp to call: expf expl, exp
 ```
 * make all temp README.md files read-only
+* change replaceable strings in include-templates files from ##NAME## to __NAME__ so as to make syntax highlighting work properly
 * conjugate OPERTOR~ for real ints wil give negative!!  make sure you dont take ~ of built-in types
-* what about equals for (double = 0) == Imaginary<double>(0)
+* what about equals for (double = 0) == Imaginary<double>(0)? How shoudl this be defined?
 * refactor the headers so that 
   * vectors, matrices display tensors Scalar are broken out into different headers
   * use copious #ifdefs so that order of inclusion matters

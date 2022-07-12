@@ -39,7 +39,7 @@
 #include "math_imag.h"
 #include "math_quaternion.h"
 
-// #include "indices.h"
+#include "indices.h"
 // #include "slices.h"
 
 #include "expression-r.h"
