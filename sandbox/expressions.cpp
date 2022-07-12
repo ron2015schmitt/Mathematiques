@@ -85,7 +85,7 @@
 
 #include "fun_unary_AUTO.h"
 #include "fun_binary_AUTO.h"
-// #include "fun_ternary_AUTO.h"
+#include "fun_ternary_AUTO.h"
 // #include "functions_misc.h"
 // #include "functions_structure.h"
 // #include "functions_products.h"
@@ -93,6 +93,8 @@
 
 // #include "fileio.h"
 // #include "coda.h"
+
+
 
 int main(int argc, char* argv[]) {
   using namespace std;
@@ -116,6 +118,8 @@ int main(int argc, char* argv[]) {
   TRDISP(-v3);
   TRDISP(exp(v3));
   TRDISP(v2+v3);
+  TRDISP(std::sph_legendre(3, 0, 1.2345));
+  TRDISP(sph_legendre(2, 1, v3));
 
 
   return 0;
