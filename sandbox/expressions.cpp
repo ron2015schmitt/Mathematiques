@@ -142,6 +142,7 @@ int main(int argc, char* argv[]) {
   TRDISP(k);
   TRDISP(transpose(k));
 
+  TRDISP(join(k,k));
 
   return 0;
 }

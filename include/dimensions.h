@@ -253,6 +253,12 @@ namespace mathq {
       }
     }
 
+    RecursiveDimensions& reverse_all() {
+      for (size_t d = 0; d < depth_value; d++) {
+        (*this[d]).reverse();
+      }
+      return* this;
+    }
 
 
     inline std::string classname() const {

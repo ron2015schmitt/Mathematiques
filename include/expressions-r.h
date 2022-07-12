@@ -1917,6 +1917,12 @@ namespace mathq {
     DimensionsType dims(void) const {
       return *reverse_dims;
     }
+    DimensionsType element_dims(void) const {
+      return x_.element_dims().reverse();
+    }
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      return x_.recursive_dims().reverse_all();
+    }
 
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
@@ -1966,124 +1972,169 @@ namespace mathq {
 
 
 
-  //   //---------------------------------------------------------------------------
-  //   // VER_Join   joining two Vectors (RHS only)
-  //   //---------------------------------------------------------------------------
+  //---------------------------------------------------------------------------
+  // VER_Join   joining two Vectors (RHS only)
+  //---------------------------------------------------------------------------
 
-  //   template <class Derived, class Y, class Element, typename Number, size_t depth>
-  //   class ExpressionR_Join : public ExpressionR<ExpressionR_Join<Derived, Y, Element, Number, depth>, Element, Number, depth, 1> {
-  //   public:
-  //     constexpr static size_t rank_value = 1;
-  //     constexpr static size_t depth_value = depth;
-  //     typedef Materialize<Element, Number, depth, rank_value> ConcreteType;
-  //     typedef Element ElementType;
-  //     typedef Number NumberType;
+  template <class X, class Y, class Element, typename Number, size_t depth_>
+  class ExpressionR_Join : public ExpressionR<ExpressionR_Join<X, Y, Element, Number, depth_>, Element, Number, depth_, 1> {
+  public:
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
 
-  //   private:
-  //     const Derived& x_;
-  //     const Y& y_;
-  //     VectorofPtrs* vptrs;
+    constexpr static size_t rank_value = 1;
+    constexpr static size_t depth_value = depth_;
 
-  //   public:
-  //     ExpressionR_Join(const Derived& x, const Y& y) : x_(x), y_(y) {
-  //       vptrs = new VectorofPtrs();
-  //       vptrs->add(x_.getAddresses());
-  //       vptrs->add(y_.getAddresses());
-  //       DISP3(x);
-  //     }
+    // the size of an expression cannot be changed
+    constexpr static bool is_dynamic() noexcept {
+      return false;
+    }
 
-  //     ~ExpressionR_Join() {
-  //       delete vptrs;
-  //     }
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
 
-  //     const Number dat(const size_t i) const {
-  //       if (i < x_.total_size()) {
-  //         return x_.dat(i);
-  //       }
-  //       else {
-  //         return y_.dat(i - x_.total_size());
-  //       }
-  //     }
-  //     const Element operator[](const size_t i) const {
-  //       if (i < x_.size()) {
-  //         return x_[i];
-  //       }
-  //       else {
-  //         return y_[i - x_.size()];
-  //       }
-  //     }
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<ElementType>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-  //     VectorofPtrs getAddresses(void) const {
-  //       return *vptrs;
-  //     }
-  //     size_t size(void) const {
-  //       return x_.size() + y_.size();
-  //     }
-  //     size_t rank(void) const {
-  //       return rank_value;
-  //     }
-  //     DimensionsType dims(void) const {
-  //       DimensionsType d(x_.size() + y_.size());
-  //       return d;
-  //     }
-  //     DimensionsType template_dims(void) const {
-  //       return this->dims();
-  //     }
-  //     RecursiveDimensions<depth_value>& recursive_dims(void) const {
-  //       RecursiveDimensions<depth_value>& ddims = *(new RecursiveDimensions<depth_value>);
-  //       return recursive_dims(ddims);
-  //     }
-  //     RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
-  //       const size_t N = parentdims.size();
-  //       RecursiveDimensions<depth_value>& ddims = x_.recursive_dims(parentdims);
-  //       ddims[N] = this->dims();
-  //       return ddims;
-  //     }
-  //     bool isExpression(void) const {
-  //       return true;
-  //     }
-  //     size_t depth(void) const {
-  //       return depth;
-  //     }
-  //     DimensionsType element_dims(void) const {
-  //       return x_.element_dims();
-  //     }
-  //     size_t element_size(void) const {
-  //       if constexpr (depth <= 1) {
-  //         return 1;
-  //       }
-  //       else {
-  //         return x_.element_size();
-  //       }
-  //     }
-  //     size_t el_total_size(void) const {
-  //       if constexpr (depth <= 1) {
-  //         return 1;
-  //       }
-  //       else {
-  //         return x_.el_total_size();
-  //       }
-  //     }
-  //     size_t total_size(void) const {
-  //       if constexpr (depth <= 1) {
-  //         return this->size();
-  //       }
-  //       else {
-  //         return x_.total_size() + y_.total_size();
-  //       }
-  //     }
+    using Type = ExpressionR_Join<X, Y, Element, Number, depth_>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
 
-  //     std::string expression_name() const {
-  //       return "ExpressionR_Join";
-  //     }
+    using DimensionsType = Dimensions<rank_value>;
+    using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
+  private:
+    const X& x_;
+    const Y& y_;
+    VectorofPtrs* vptrs;
 
-  // #if MATHQ_DEBUG >= 1
-  //     std::string expression(void) const {
-  //       std::string sx = x_.expression();
-  //       return sx;
-  //     }
-  // #endif
-  //   };
+  public:
+    //**********************************************************************
+    //                      Constructors
+    //**********************************************************************
+
+    ExpressionR_Join(const X& x, const Y& y) : x_(x), y_(y) {
+      vptrs = new VectorofPtrs();
+      vptrs->add(x_.getAddresses());
+      vptrs->add(y_.getAddresses());
+      // DISP3(x);
+    }
+
+    ~ExpressionR_Join() {
+      delete vptrs;
+    }
+
+    //**********************************************************************
+    //                         Basic characteristics
+    //**********************************************************************
+
+    bool isExpression(void) const {
+      return true;
+    }
+
+    VectorofPtrs getAddresses(void) const {
+      return *vptrs;
+    }
+
+
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
+
+    size_t rank(void) const {
+      return rank_value;
+    }
+    size_t depth(void) const {
+      return depth;
+    }
+    size_t size(void) const {
+      return x_.size() + y_.size();
+    }
+    size_t total_size(void) const {
+      if constexpr (depth <= 1) {
+        return this->size();
+      }
+      else {
+        return x_.total_size() + y_.total_size();
+      }
+    }
+    size_t element_size(void) const {
+      if constexpr (depth <= 1) {
+        return 1;
+      }
+      else {
+        return x_.element_size();
+      }
+    }
+    size_t el_total_size(void) const {
+      if constexpr (depth <= 1) {
+        return 1;
+      }
+      else {
+        return x_.el_total_size();
+      }
+    }
+
+
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+    DimensionsType dims(void) const {
+      DimensionsType d(x_.size() + y_.size());
+      return d;
+    }
+    DimensionsType element_dims(void) const {
+      return x_.element_dims();
+    }
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      RecursiveDimensions<depth_value> rdims = x_.recursive_dims() + y_.recursive_dims();
+      return rdims;
+    }
+
+    //**********************************************************************
+    //******************** DEEP ACCESS: x.dat(n) ***************************
+    //**********************************************************************
+
+    const Number dat(const size_t i) const {
+      if (i < x_.total_size()) {
+        return x_.dat(i);
+      }
+      else {
+        return y_.dat(i - x_.total_size());
+      }
+    }
+    //**********************************************************************
+    //************* Array-style Element Access: x[n] ***********************
+    //**********************************************************************
+
+    const Element operator[](const size_t i) const {
+      if (i < x_.size()) {
+        return x_[i];
+      }
+      else {
+        return y_[i - x_.size()];
+      }
+    }
+
+
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
+
+
+    std::string expression_name() const {
+      return "ExpressionR_Join";
+    }
+
+#if MATHQ_DEBUG >= 1
+    std::string expression(void) const {
+      std::string sx = x_.expression();
+      return sx;
+    }
+#endif
+  };
 
 
 

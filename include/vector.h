@@ -919,21 +919,19 @@ namespace mathq {
     // }
 
 
-    // Vector<Element, N1>& reverse() {
+    Vector<Element, N1>& reverse() {
+      const size_t N = size();
+      if (N==0)
+        return *this;
 
-    //   const size_t N = size();
-    //   if (N==0)
-    //     return *this;
+      for (size_t i = 0; i < N/2; i++) {
+        Element temp = data_[i];
+        data_[i] = data_[N-i-1];
+        data_[N-i-1] = temp;
+      }
 
-    //   for (size_t i = 0; i < N/2; i++) {
-    //     Element temp = data_[i];
-    //     data_[i] = data_[N-i-1];
-    //     data_[N-i-1] = temp;
-    //   }
-
-    //   return *this;
-
-    // }
+      return *this;
+    }
 
 
     // // .cumsum() -- cumulative sum
