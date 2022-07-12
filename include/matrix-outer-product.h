@@ -1,5 +1,5 @@
-#ifndef MATHQ__MATRIX_OUExpr_R_PRODUCT_H
-#define MATHQ__MATRIX_OUExpr_R_PRODUCT_H 1
+#ifndef MATHQ__MATRIX_OUExpressionR_PRODUCT_H
+#define MATHQ__MATRIX_OUExpressionR_PRODUCT_H 1
 
 namespace mathq {
 

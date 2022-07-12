@@ -24,7 +24,7 @@ template <class A, class B, class C, class E1, class E2, class E3, class NT1, cl
 auto ##FUNCTION##(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<NT1, NT2>::Type, NT3>::Type NT4;
   typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
-  return  Expr_R_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
+  return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
     E1, E2, E3, E4, NT1, NT2, NT3, NT4, depth, depth, depth, depth, rank, rank, rank, rank,
@@ -39,7 +39,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3,
 auto ##FUNCTION##(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<NT1, NT2>::Type, NT3>::Type NT4;
   typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
-  return  Expr_R_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
+  return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
     E1, E2, NT3, E4, NT1, NT2, NT3, NT4, depth, depth, 0, depth, rank, rank, rank, rank,
@@ -52,7 +52,7 @@ template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3,
 auto ##FUNCTION##(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<NT1, NT2>::Type, NT3>::Type NT4;
   typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
-  return  Expr_R_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
+  return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
     E1, NT2, E3, E4, NT1, NT2, NT3, NT4, depth, 0, depth, depth, rank, rank, rank, rank,
@@ -65,7 +65,7 @@ template <class A, class E1, class NT1, class NT2, class NT3, size_t depth, size
 auto ##FUNCTION##(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<NT1, NT2>::Type, NT3>::Type NT4;
   typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
-  return  Expr_R_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
+  return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
     E1, NT2, NT3, E4, NT1, NT2, NT3, NT4, depth, 0, 0, depth, rank, rank, rank, rank,
@@ -78,7 +78,7 @@ template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3,
 auto ##FUNCTION##(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<NT1, NT2>::Type, NT3>::Type NT4;
   typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
-  return  Expr_R_Ternary<NT1,
+  return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
     NT1, E2, E3, E4, NT1, NT2, NT3, NT4, 0, depth, depth, depth, rank, rank, rank, rank,
@@ -92,7 +92,7 @@ template <class B, class E2, class NT1, class NT2, class NT3, size_t depth, size
 auto ##FUNCTION##(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<NT1, NT2>::Type, NT3>::Type NT4;
   typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
-  return  Expr_R_Ternary<NT1,
+  return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
     NT1, E2, NT3, E4, NT1, NT2, NT3, NT4, 0, depth, 0, depth, rank, rank, rank, rank,
@@ -105,7 +105,7 @@ template <class C, class E3, class NT1, class NT2, class NT3, size_t depth, size
 auto ##FUNCTION##(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename ##TYPECLASS##<typename ##TYPECLASS##<NT1, NT2>::Type, NT3>::Type NT4;
   typedef typename NumberTrait<E3, NT4>::ReplacedNumberType E4;   // see TODO note above
-  return  Expr_R_Ternary<NT1,
+  return  ExpressionR_Ternary<NT1,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
     NT1, NT2, E3, E4, NT1, NT2, NT3, NT4, 0, 0, depth, depth, rank, rank, rank, rank,

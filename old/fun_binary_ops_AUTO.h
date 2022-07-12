@@ -298,7 +298,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int depth,
 auto operator+(const ExpressionR<A,E1,NT1,depth,rank>& x1, const ExpressionR<B,E2,NT2,depth,rank>& x2) {
   typedef typename AddType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,depth,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,depth,rank>,
 		     ExpressionR<B,E2,NT2,depth,rank>,
 		     E1,E2,E3,NT1,NT2,NT3,depth,depth,depth,rank,rank,rank,
 		     FUNCTOR_add<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -313,7 +313,7 @@ template <class A, class NT2, class Element, class NT1, int depth, int rank, typ
 auto operator+(const ExpressionR<A,Element,NT1,depth,rank>& x1, const NT2& x2) {
   typedef typename AddType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
-  return  Expr_R_Binary<ExpressionR<A,Element,NT1,depth,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,Element,NT1,depth,rank>,
 		     NT2,
 		     Element,NullType,E3,NT1,NT2,NT3,depth,0,depth,rank,rank,rank,
 		     FUNCTOR_add<Element,NullType,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -327,7 +327,7 @@ template <class NT1, class B, class Element, class NT2, int depth, int rank, typ
 auto operator+(const NT1& x1, const ExpressionR<B,Element,NT2,depth,rank>& x2) {
   typedef typename AddType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
-  return  Expr_R_Binary<NT1,
+  return  ExpressionR_Binary<NT1,
 		     ExpressionR<B,Element,NT2,depth,rank>,
 		     NullType,Element,E3,NT1,NT2,NT3,0,depth,depth,rank,rank,rank,
 		     FUNCTOR_add<NullType,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -349,7 +349,7 @@ auto operator+(const ExpressionR<A,E1,NT1,D1,R1>& x1, const ExpressionR<B,E2,NT2
   constexpr int D3 = D1;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;
   //    MOUT << "A" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,R1>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,R1>,
 		     ExpressionR<B,E2,NT2,D2,R2>,
 		     E1,E2,E3,NT1,NT2,NT3,D1,D2,D3,R1,R2,R3,
 		     FUNCTOR_add<Element,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -369,7 +369,7 @@ auto operator+(const ExpressionR<A,E1,NT1,D1,R1>& x1, const ExpressionR<B,E2,NT2
   constexpr int D3 = D2;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;  
   //    MOUT << "B" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,R1>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,R1>,
 		     ExpressionR<B,E2,NT2,D2,R2>,
 		     E1,E2,E3,NT1,NT2,NT3,D1,D2,D3,R1,R2,R3,
 		     FUNCTOR_add<Element,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -397,7 +397,7 @@ auto operator+(const ExpressionR<A,E1,NT1,D1,rank>& x1, const ExpressionR<B,NT2,
   typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,rank>,
 		     ExpressionR<B,NT2,NT2,D2,rank>,
 		     E1,NT2,E3,NT1,NT2,NT3,D1,D2,D3,rank,rank,rank,
 		     FUNCTOR_add<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -422,7 +422,7 @@ auto operator+(const ExpressionR<A,NT1,NT1,D1,rank>& x1, const ExpressionR<B,E2,
   typedef typename NumberTrait<E2,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,NT1,NT1,D1,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,NT1,NT1,D1,rank>,
 		     ExpressionR<B,E2,NT2,D2,rank>,
 		     NT1,E2,E3,NT1,NT2,NT3,D1,D2,D3,rank,rank,rank,
 		     FUNCTOR_add<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -452,7 +452,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int depth,
 auto operator-(const ExpressionR<A,E1,NT1,depth,rank>& x1, const ExpressionR<B,E2,NT2,depth,rank>& x2) {
   typedef typename SubType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,depth,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,depth,rank>,
 		     ExpressionR<B,E2,NT2,depth,rank>,
 		     E1,E2,E3,NT1,NT2,NT3,depth,depth,depth,rank,rank,rank,
 		     FUNCTOR_subtract<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -467,7 +467,7 @@ template <class A, class NT2, class Element, class NT1, int depth, int rank, typ
 auto operator-(const ExpressionR<A,Element,NT1,depth,rank>& x1, const NT2& x2) {
   typedef typename SubType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
-  return  Expr_R_Binary<ExpressionR<A,Element,NT1,depth,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,Element,NT1,depth,rank>,
 		     NT2,
 		     Element,NullType,E3,NT1,NT2,NT3,depth,0,depth,rank,rank,rank,
 		     FUNCTOR_subtract<Element,NullType,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -481,7 +481,7 @@ template <class NT1, class B, class Element, class NT2, int depth, int rank, typ
 auto operator-(const NT1& x1, const ExpressionR<B,Element,NT2,depth,rank>& x2) {
   typedef typename SubType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
-  return  Expr_R_Binary<NT1,
+  return  ExpressionR_Binary<NT1,
 		     ExpressionR<B,Element,NT2,depth,rank>,
 		     NullType,Element,E3,NT1,NT2,NT3,0,depth,depth,rank,rank,rank,
 		     FUNCTOR_subtract<NullType,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -503,7 +503,7 @@ auto operator-(const ExpressionR<A,E1,NT1,D1,R1>& x1, const ExpressionR<B,E2,NT2
   constexpr int D3 = D1;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;
   //    MOUT << "A" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,R1>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,R1>,
 		     ExpressionR<B,E2,NT2,D2,R2>,
 		     E1,E2,E3,NT1,NT2,NT3,D1,D2,D3,R1,R2,R3,
 		     FUNCTOR_subtract<Element,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -523,7 +523,7 @@ auto operator-(const ExpressionR<A,E1,NT1,D1,R1>& x1, const ExpressionR<B,E2,NT2
   constexpr int D3 = D2;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;  
   //    MOUT << "B" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,R1>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,R1>,
 		     ExpressionR<B,E2,NT2,D2,R2>,
 		     E1,E2,E3,NT1,NT2,NT3,D1,D2,D3,R1,R2,R3,
 		     FUNCTOR_subtract<Element,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -551,7 +551,7 @@ auto operator-(const ExpressionR<A,E1,NT1,D1,rank>& x1, const ExpressionR<B,NT2,
   typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,rank>,
 		     ExpressionR<B,NT2,NT2,D2,rank>,
 		     E1,NT2,E3,NT1,NT2,NT3,D1,D2,D3,rank,rank,rank,
 		     FUNCTOR_subtract<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -576,7 +576,7 @@ auto operator-(const ExpressionR<A,NT1,NT1,D1,rank>& x1, const ExpressionR<B,E2,
   typedef typename NumberTrait<E2,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,NT1,NT1,D1,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,NT1,NT1,D1,rank>,
 		     ExpressionR<B,E2,NT2,D2,rank>,
 		     NT1,E2,E3,NT1,NT2,NT3,D1,D2,D3,rank,rank,rank,
 		     FUNCTOR_subtract<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -606,7 +606,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int depth,
 auto operator*(const ExpressionR<A,E1,NT1,depth,rank>& x1, const ExpressionR<B,E2,NT2,depth,rank>& x2) {
   typedef typename MultType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,depth,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,depth,rank>,
 		     ExpressionR<B,E2,NT2,depth,rank>,
 		     E1,E2,E3,NT1,NT2,NT3,depth,depth,depth,rank,rank,rank,
 		     FUNCTOR_multiply<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -621,7 +621,7 @@ template <class A, class NT2, class Element, class NT1, int depth, int rank, typ
 auto operator*(const ExpressionR<A,Element,NT1,depth,rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
-  return  Expr_R_Binary<ExpressionR<A,Element,NT1,depth,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,Element,NT1,depth,rank>,
 		     NT2,
 		     Element,NullType,E3,NT1,NT2,NT3,depth,0,depth,rank,rank,rank,
 		     FUNCTOR_multiply<Element,NullType,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -635,7 +635,7 @@ template <class NT1, class B, class Element, class NT2, int depth, int rank, typ
 auto operator*(const NT1& x1, const ExpressionR<B,Element,NT2,depth,rank>& x2) {
   typedef typename MultType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
-  return  Expr_R_Binary<NT1,
+  return  ExpressionR_Binary<NT1,
 		     ExpressionR<B,Element,NT2,depth,rank>,
 		     NullType,Element,E3,NT1,NT2,NT3,0,depth,depth,rank,rank,rank,
 		     FUNCTOR_multiply<NullType,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -657,7 +657,7 @@ auto operator*(const ExpressionR<A,E1,NT1,D1,R1>& x1, const ExpressionR<B,E2,NT2
   constexpr int D3 = D1;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;
   //    MOUT << "A" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,R1>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,R1>,
 		     ExpressionR<B,E2,NT2,D2,R2>,
 		     E1,E2,E3,NT1,NT2,NT3,D1,D2,D3,R1,R2,R3,
 		     FUNCTOR_multiply<Element,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -677,7 +677,7 @@ auto operator*(const ExpressionR<A,E1,NT1,D1,R1>& x1, const ExpressionR<B,E2,NT2
   constexpr int D3 = D2;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;  
   //    MOUT << "B" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,R1>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,R1>,
 		     ExpressionR<B,E2,NT2,D2,R2>,
 		     E1,E2,E3,NT1,NT2,NT3,D1,D2,D3,R1,R2,R3,
 		     FUNCTOR_multiply<Element,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -705,7 +705,7 @@ auto operator*(const ExpressionR<A,E1,NT1,D1,rank>& x1, const ExpressionR<B,NT2,
   typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,rank>,
 		     ExpressionR<B,NT2,NT2,D2,rank>,
 		     E1,NT2,E3,NT1,NT2,NT3,D1,D2,D3,rank,rank,rank,
 		     FUNCTOR_multiply<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -730,7 +730,7 @@ auto operator*(const ExpressionR<A,NT1,NT1,D1,rank>& x1, const ExpressionR<B,E2,
   typedef typename NumberTrait<E2,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,NT1,NT1,D1,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,NT1,NT1,D1,rank>,
 		     ExpressionR<B,E2,NT2,D2,rank>,
 		     NT1,E2,E3,NT1,NT2,NT3,D1,D2,D3,rank,rank,rank,
 		     FUNCTOR_multiply<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -760,7 +760,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, int depth,
 auto operator/(const ExpressionR<A,E1,NT1,depth,rank>& x1, const ExpressionR<B,E2,NT2,depth,rank>& x2) {
   typedef typename DivType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,depth,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,depth,rank>,
 		     ExpressionR<B,E2,NT2,depth,rank>,
 		     E1,E2,E3,NT1,NT2,NT3,depth,depth,depth,rank,rank,rank,
 		     FUNCTOR_divide<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -775,7 +775,7 @@ template <class A, class NT2, class Element, class NT1, int depth, int rank, typ
 auto operator/(const ExpressionR<A,Element,NT1,depth,rank>& x1, const NT2& x2) {
   typedef typename DivType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
-  return  Expr_R_Binary<ExpressionR<A,Element,NT1,depth,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,Element,NT1,depth,rank>,
 		     NT2,
 		     Element,NullType,E3,NT1,NT2,NT3,depth,0,depth,rank,rank,rank,
 		     FUNCTOR_divide<Element,NullType,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -789,7 +789,7 @@ template <class NT1, class B, class Element, class NT2, int depth, int rank, typ
 auto operator/(const NT1& x1, const ExpressionR<B,Element,NT2,depth,rank>& x2) {
   typedef typename DivType<NT1,NT2>::Type NT3;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;   
-  return  Expr_R_Binary<NT1,
+  return  ExpressionR_Binary<NT1,
 		     ExpressionR<B,Element,NT2,depth,rank>,
 		     NullType,Element,E3,NT1,NT2,NT3,0,depth,depth,rank,rank,rank,
 		     FUNCTOR_divide<NullType,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -811,7 +811,7 @@ auto operator/(const ExpressionR<A,E1,NT1,D1,R1>& x1, const ExpressionR<B,E2,NT2
   constexpr int D3 = D1;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;
   //    MOUT << "A" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,R1>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,R1>,
 		     ExpressionR<B,E2,NT2,D2,R2>,
 		     E1,E2,E3,NT1,NT2,NT3,D1,D2,D3,R1,R2,R3,
 		     FUNCTOR_divide<Element,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -831,7 +831,7 @@ auto operator/(const ExpressionR<A,E1,NT1,D1,R1>& x1, const ExpressionR<B,E2,NT2
   constexpr int D3 = D2;
   typedef typename NumberTrait<Element,NT3>::ReplacedElementType E3;  
   //    MOUT << "B" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,R1>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,R1>,
 		     ExpressionR<B,E2,NT2,D2,R2>,
 		     E1,E2,E3,NT1,NT2,NT3,D1,D2,D3,R1,R2,R3,
 		     FUNCTOR_divide<Element,Element,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -859,7 +859,7 @@ auto operator/(const ExpressionR<A,E1,NT1,D1,rank>& x1, const ExpressionR<B,NT2,
   typedef typename NumberTrait<E1,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D1;
   //    MOUT << "C" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,E1,NT1,D1,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,E1,NT1,D1,rank>,
 		     ExpressionR<B,NT2,NT2,D2,rank>,
 		     E1,NT2,E3,NT1,NT2,NT3,D1,D2,D3,rank,rank,rank,
 		     FUNCTOR_divide<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 
@@ -884,7 +884,7 @@ auto operator/(const ExpressionR<A,NT1,NT1,D1,rank>& x1, const ExpressionR<B,E2,
   typedef typename NumberTrait<E2,NT3>::ReplacedElementType E3;   // see TODO note above
   constexpr int D3 = D2;
   //    MOUT << "Number" <<std::endl;
-  return  Expr_R_Binary<ExpressionR<A,NT1,NT1,D1,rank>,
+  return  ExpressionR_Binary<ExpressionR<A,NT1,NT1,D1,rank>,
 		     ExpressionR<B,E2,NT2,D2,rank>,
 		     NT1,E2,E3,NT1,NT2,NT3,D1,D2,D3,rank,rank,rank,
 		     FUNCTOR_divide<E1,E2,E3,NT1,NT2,NT3> >(x1,x2); 

@@ -708,10 +708,10 @@ namespace mathq {
 
     // matrix[slice]
 
-    Expr_RW_Subset<Element> operator[](const slc& slice) {
+    ExpressionRW_Subset<Element> operator[](const slc& slice) {
       return (*this)[slice.toIndexVector(size())];
     }
-    const Expr_RW_Subset<Element>  operator[](const slc& slice) const {
+    const ExpressionRW_Subset<Element>  operator[](const slc& slice) const {
       return (*this)[slice.toIndexVector(size())];
     }
 
@@ -719,11 +719,11 @@ namespace mathq {
 
     // matrix[Vector<size_t>]
 
-    Expr_RW_Subset<Element> operator[](const Vector<size_t>& ii) {
-      return Expr_RW_Subset<Element>(*this, ii);
+    ExpressionRW_Subset<Element> operator[](const Vector<size_t>& ii) {
+      return ExpressionRW_Subset<Element>(*this, ii);
     }
-    const Expr_RW_Subset<Element> operator[](const Vector<size_t>& ii) const {
-      return Expr_RW_Subset<Element>(*this, ii);
+    const ExpressionRW_Subset<Element> operator[](const Vector<size_t>& ii) const {
+      return ExpressionRW_Subset<Element>(*this, ii);
     }
 
 
@@ -731,22 +731,22 @@ namespace mathq {
 
     // matrix[mask]
 
-    Expr_RW_Submask<Element> operator[](const Matrix<bool>& mask) {
-      return  Expr_RW_Submask<Element>(*this, mask);
+    ExpressionRW_Submask<Element> operator[](const Matrix<bool>& mask) {
+      return  ExpressionRW_Submask<Element>(*this, mask);
     }
-    const Expr_RW_Submask<Element> operator[](const Matrix<bool>& mask)  const {
-      return  Expr_RW_Submask<Element>(*this, mask);
+    const ExpressionRW_Submask<Element> operator[](const Matrix<bool>& mask)  const {
+      return  ExpressionRW_Submask<Element>(*this, mask);
     }
 
 
 
     // matrix[initializer_list]
 
-    Expr_RW_Subset<Element> operator[](const std::initializer_list<size_t>& list) {
-      return  Expr_RW_Subset<Element>(*this, list);
+    ExpressionRW_Subset<Element> operator[](const std::initializer_list<size_t>& list) {
+      return  ExpressionRW_Subset<Element>(*this, list);
     }
-    const Expr_RW_Subset<Element> operator[](const std::initializer_list<size_t>& list) const {
-      return  Expr_RW_Subset<Element>(*this, list);
+    const ExpressionRW_Subset<Element> operator[](const std::initializer_list<size_t>& list) const {
+      return  ExpressionRW_Subset<Element>(*this, list);
     }
 
 

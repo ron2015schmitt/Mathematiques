@@ -241,37 +241,37 @@ namespace mathq {
 
 
   template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
-  class Expr_R_Unary;
+  class ExpressionR_Unary;
 
   template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t D1, size_t D2, size_t D3, size_t R1, size_t R2, size_t R3, class OP>
-  class Expr_R_Binary;
+  class ExpressionR_Binary;
 
   template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4, size_t D1, size_t D2, size_t D3, size_t M4, size_t R1, size_t R2, size_t R3, size_t R4, class OP>
-  class Expr_R_Ternary;
+  class ExpressionR_Ternary;
 
   template <class A, class X, typename Element, typename Number, size_t depth, size_t rank>
-  class Expr_R_Series;
+  class ExpressionR_Series;
 
   template <class A, class B, class X, typename Number, class OP1, class OP2>
-  class Expr_R_Series2;
+  class ExpressionR_Series2;
 
   template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
-  class Expr_R_Transpose;
+  class ExpressionR_Transpose;
 
   template <class A, typename Number>
-  class Expr_R_Rep;
+  class ExpressionR_Rep;
 
   template <class X, class Y, typename Element, typename Number, size_t depth>
-  class Expr_R_Join;
+  class ExpressionR_Join;
 
   template <typename Number>
-  class Expr_RW_Subset;
+  class ExpressionRW_Subset;
 
   template <typename Number>
-  class Expr_RW_Submask;
+  class ExpressionRW_Submask;
 
   template <class X, class Y, typename Element, typename Number, size_t depth>
-  class Expr_RW_Join;
+  class ExpressionRW_Join;
 
 
   // ***************************************************************************

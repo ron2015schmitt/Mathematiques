@@ -6,14 +6,14 @@
 namespace mathq {
 
   //---------------------------------------------------------------------------
-  // Expr_R_Unary    unary expressions
+  // ExpressionR_Unary    unary expressions
   //---------------------------------------------------------------------------
 
   // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
 
   template <class Derived, class Element, typename Number, size_t depth_, size_t rank_, class FUNC>
-  class Expr_R_Unary : public ExpressionR<Expr_R_Unary<Derived, Element, Number, depth_, rank_, FUNC>, Element, Number, depth_, rank_> {
+  class ExpressionR_Unary : public ExpressionR<ExpressionR_Unary<Derived, Element, Number, depth_, rank_, FUNC>, Element, Number, depth_, rank_> {
   public:
 
     //**********************************************************************
@@ -32,7 +32,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = Expr_R_Unary<Derived, Element, Number, depth_, rank_, FUNC>;
+    using Type = ExpressionR_Unary<Derived, Element, Number, depth_, rank_, FUNC>;
     using ParentType = ExpressionR<Type, Element, Number, depth_, rank_>;
     using ConcreteType = MultiArray<Element, rank_value, 0>;
 
@@ -53,13 +53,13 @@ namespace mathq {
     //                      Constructors
     //**********************************************************************
 
-    Expr_R_Unary(const Derived& x) : x_(x) {
+    ExpressionR_Unary(const Derived& x) : x_(x) {
       vptrs = new VectorofPtrs();
       vptrs->add(x_.getAddresses());
       // DISP3(x);
     }
 
-    ~Expr_R_Unary() {
+    ~ExpressionR_Unary() {
       delete vptrs;
     }
 
@@ -157,7 +157,7 @@ namespace mathq {
     //**********************************************************************
 
     inline const std::string expression_name() const {
-      return "Expr_R_Unary";
+      return "ExpressionR_Unary";
     }
 
 
@@ -174,13 +174,13 @@ namespace mathq {
 
 
   //---------------------------------------------------------------------------
-  // Expr_R_Unary_User    unary expressions
+  // ExpressionR_Unary_User    unary expressions
   //---------------------------------------------------------------------------
 
   // NOTE: Number and Element are the output types!
   //       only the function/functor needs the input types
   template <class Derived, class Element, typename Number, size_t depth_, size_t rank_>
-  class Expr_R_Unary_User : public ExpressionR<Expr_R_Unary_User<Derived, Element, Number, depth_, rank_>, Element, Number, depth_, rank_> {
+  class ExpressionR_Unary_User : public ExpressionR<ExpressionR_Unary_User<Derived, Element, Number, depth_, rank_>, Element, Number, depth_, rank_> {
   public:
 
     //**********************************************************************
@@ -200,7 +200,7 @@ namespace mathq {
     //**********************************************************************
     using FUNC = typename FunctionType1<Number, Number>::type;
 
-    using Type = Expr_R_Unary_User<Derived, Element, Number, depth_, rank_>;
+    using Type = ExpressionR_Unary_User<Derived, Element, Number, depth_, rank_>;
     using ParentType = ExpressionR<Type, Element, Number, depth_, rank_>;
     using ConcreteType = MultiArray<Element, rank_value, 0>;
 
@@ -222,13 +222,13 @@ namespace mathq {
   //                      Constructors
   //**********************************************************************
 
-    Expr_R_Unary_User(const FUNC& f, const Derived& x) : x_(x), f_(f) {
+    ExpressionR_Unary_User(const FUNC& f, const Derived& x) : x_(x), f_(f) {
       vptrs = new VectorofPtrs();
       vptrs->add(x_.getAddresses());
       // DISP3(x);
     }
 
-    ~Expr_R_Unary_User() {
+    ~ExpressionR_Unary_User() {
       delete vptrs;
     }
 
@@ -323,7 +323,7 @@ namespace mathq {
     //**********************************************************************
 
     std::string expression_name() const {
-      return "Expr_R_Unary_User";
+      return "ExpressionR_Unary_User";
     }
 
 #if MATHQ_DEBUG >= 1
@@ -337,11 +337,11 @@ namespace mathq {
 
 
   //---------------------------------------------------------------------------
-  // Expr_R_Binary    binary expressions
+  // ExpressionR_Binary    binary expressions
   //---------------------------------------------------------------------------
 
   template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t D1, size_t D2, size_t D3, size_t R1, size_t R2, size_t R3, class OP>
-  class Expr_R_Binary : public ExpressionR<Expr_R_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>, E3, NT3, D3, R3> {
+  class ExpressionR_Binary : public ExpressionR<ExpressionR_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>, E3, NT3, D3, R3> {
   public:
     //**********************************************************************
     //                  Compile Time Constant
@@ -359,7 +359,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = Expr_R_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>;
+    using Type = ExpressionR_Binary<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3, OP>;
     using ParentType = ExpressionR<Type, E3, NT3, D3, R3>;
     using ConcreteType = MultiArray<E3, R3, 0>;
 
@@ -386,7 +386,7 @@ namespace mathq {
     //                      Constructors
     //**********************************************************************
 
-    Expr_R_Binary(const A& a, const B& b) : a_(a), b_(b) {
+    ExpressionR_Binary(const A& a, const B& b) : a_(a), b_(b) {
       vptrs = new VectorofPtrs();
       if constexpr (D1 > 0) {
         vptrs->add(a_.getAddresses());
@@ -402,7 +402,7 @@ namespace mathq {
       // MDISP3(D3, R3);
     }
 
-    ~Expr_R_Binary() {
+    ~ExpressionR_Binary() {
       // DISP3(vptrs);
       delete vptrs;
     }
@@ -714,7 +714,7 @@ namespace mathq {
     //**********************************************************************
 
     std::string expression_name() const {
-      return "Expr_R_Binary";
+      return "ExpressionR_Binary";
     }
 
 #if MATHQ_DEBUG >= 1
@@ -732,11 +732,11 @@ namespace mathq {
 
 
   //---------------------------------------------------------------------------
-  // Expr_R_Binary_User    binary expressions
+  // ExpressionR_Binary_User    binary expressions
   //---------------------------------------------------------------------------
 
   template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t D1, size_t D2, size_t D3, size_t R1, size_t R2, size_t R3>
-  class Expr_R_Binary_User : public ExpressionR<Expr_R_Binary_User<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3>, E3, NT3, D3, R3> {
+  class ExpressionR_Binary_User : public ExpressionR<ExpressionR_Binary_User<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3>, E3, NT3, D3, R3> {
   public:
 
     //**********************************************************************
@@ -756,7 +756,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = Expr_R_Binary_User<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3>;
+    using Type = ExpressionR_Binary_User<A, B, E1, E2, E3, NT1, NT2, NT3, D1, D2, D3, R1, R2, R3>;
     using ParentType = ExpressionR<Type, E3, NT3, D3, R3>;
     using ConcreteType = MultiArray<E3, R3, 0>;
 
@@ -786,7 +786,7 @@ namespace mathq {
     //**********************************************************************
     //                      Constructors
     //**********************************************************************
-    Expr_R_Binary_User(const FUNC& f, const A& a, const B& b) : f_(f), a_(a), b_(b) {
+    ExpressionR_Binary_User(const FUNC& f, const A& a, const B& b) : f_(f), a_(a), b_(b) {
       vptrs = new VectorofPtrs();
       if constexpr (D1 > 0) {
         vptrs->add(a_.getAddresses());
@@ -798,7 +798,7 @@ namespace mathq {
       // DISP3(b);
     }
 
-    ~Expr_R_Binary_User() {
+    ~ExpressionR_Binary_User() {
       delete vptrs;
     }
 
@@ -1095,7 +1095,7 @@ namespace mathq {
 
 
     std::string expression_name() const {
-      return "Expr_R_Binary_User";
+      return "ExpressionR_Binary_User";
     }
 
 #if MATHQ_DEBUG >= 1
@@ -1112,7 +1112,7 @@ namespace mathq {
 
 
   //---------------------------------------------------------------------------
-  // Expr_R_Ternary    ternary expressions
+  // ExpressionR_Ternary    ternary expressions
   //---------------------------------------------------------------------------
 
   template <
@@ -1122,8 +1122,8 @@ namespace mathq {
     size_t D1, size_t D2, size_t D3, size_t D4,
     size_t R1, size_t R2, size_t R3, size_t R4,
     class OP>
-  class Expr_R_Ternary : public ExpressionR<
-    Expr_R_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, NT3, NT4, D1, D2, D3, D4, R1, R2, R3, R4, OP>,
+  class ExpressionR_Ternary : public ExpressionR<
+    ExpressionR_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, NT3, NT4, D1, D2, D3, D4, R1, R2, R3, R4, OP>,
     E4, NT4, D4, R4
   > {
   public:
@@ -1145,7 +1145,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = Expr_R_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, NT3, NT4, D1, D2, D3, D4, R1, R2, R3, R4, OP>;
+    using Type = ExpressionR_Ternary<A, B, C, E1, E2, E3, E4, NT1, NT2, NT3, NT4, D1, D2, D3, D4, R1, R2, R3, R4, OP>;
     using ParentType = ExpressionR<Type, E4, NT4, D4, R4>;
     using ConcreteType = MultiArray<E4, R4, 0>;
 
@@ -1172,7 +1172,7 @@ namespace mathq {
     //                      Constructors
     //**********************************************************************
 
-    Expr_R_Ternary(const A& a, const B& b, const C& c) : a_(a), b_(b), c_(c) {
+    ExpressionR_Ternary(const A& a, const B& b, const C& c) : a_(a), b_(b), c_(c) {
       vptrs = new VectorofPtrs();
       if constexpr (D1 > 0) {
         vptrs->add(a_.getAddresses());
@@ -1188,7 +1188,7 @@ namespace mathq {
       // DISP3(c);
     }
 
-    ~Expr_R_Ternary() {
+    ~ExpressionR_Ternary() {
       delete vptrs;
     }
 
@@ -1382,7 +1382,7 @@ namespace mathq {
     //**********************************************************************
 
     std::string expression_name() const {
-      return "Expr_R_Ternary";
+      return "ExpressionR_Ternary";
     }
 
 #if MATHQ_DEBUG >= 1
@@ -1401,11 +1401,11 @@ namespace mathq {
 
 
     //---------------------------------------------------------------------------
-    // Expr_R_Series    used for Taylor and Maclaurin series
+    // ExpressionR_Series    used for Taylor and Maclaurin series
     //---------------------------------------------------------------------------
 
     template <class A, class Derived, class Element, typename Number, size_t depth_, size_t rank_>
-    class Expr_R_Series : public ExpressionR<Expr_R_Series<A, Derived, Element, Number, depth_, rank_>, Element, Number, depth_, rank_> {
+    class ExpressionR_Series : public ExpressionR<ExpressionR_Series<A, Derived, Element, Number, depth_, rank_>, Element, Number, depth_, rank_> {
     public:
 
       //**********************************************************************
@@ -1424,7 +1424,7 @@ namespace mathq {
       //                            TYPES 
       //**********************************************************************
 
-      using Type = Expr_R_Series<A, Derived, Element, Number, depth_, rank_>;
+      using Type = ExpressionR_Series<A, Derived, Element, Number, depth_, rank_>;
       using ParentType = ExpressionR<Type, Element, Number, depth_, rank_>;
       using ConcreteType = MultiArray<Element, rank_value, 0>;
 
@@ -1448,20 +1448,20 @@ namespace mathq {
       //                      Constructors
       //**********************************************************************
 
-      Expr_R_Series(const A& a, const Derived& x, const size_t N, const Number x0)
+      ExpressionR_Series(const A& a, const Derived& x, const size_t N, const Number x0)
         : a_(a), x_(x), N_(N), x0_(x0) {
         vptrs = new VectorofPtrs();
         vptrs->add(a_.getAddresses());
         vptrs->add(x_.getAddresses());
       }
-      Expr_R_Series(const A& a, const Derived& x, const size_t N)
+      ExpressionR_Series(const A& a, const Derived& x, const size_t N)
         : a_(a), x_(x), N_(N), x0_(0) {
         vptrs = new VectorofPtrs();
         vptrs->add(a_.getAddresses());
         vptrs->add(x_.getAddresses());
       }
 
-      ~Expr_R_Series() {
+      ~ExpressionR_Series() {
         delete vptrs;
       }
 
@@ -1589,7 +1589,7 @@ namespace mathq {
       //**********************************************************************
 
       std::string expression_name() const {
-        return "Expr_R_Series";
+        return "ExpressionR_Series";
       }
 
   #if MATHQ_DEBUG >= 1
@@ -1606,11 +1606,11 @@ namespace mathq {
 
 
     //   //---------------------------------------------------------------------------
-    //   // Expr_R_Series2    used for fourier series
+    //   // ExpressionR_Series2    used for fourier series
     //   //---------------------------------------------------------------------------
 
     //   template <class A, class B, class Derived, typename Number, class OP1, class OP2>
-    //   class Expr_R_Series2 : public ExpressionR<Expr_R_Series2<A, B, Derived, Number, OP1, OP2>, Number, Number, 1, 1> {
+    //   class ExpressionR_Series2 : public ExpressionR<ExpressionR_Series2<A, B, Derived, Number, OP1, OP2>, Number, Number, 1, 1> {
     //   public:
     //     typedef Materialize<Number, Number, 1, 1> ConcreteType;
     //     typedef Number ElementType;
@@ -1629,7 +1629,7 @@ namespace mathq {
     //     VectorofPtrs* vptrs;
 
     //   public:
-    //     Expr_R_Series2(const A& a, const A& b, const Derived& x, const size_t N, const Number k1)
+    //     ExpressionR_Series2(const A& a, const A& b, const Derived& x, const size_t N, const Number k1)
     //       : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<Number>(N))) {
 
     //       vptrs = new VectorofPtrs();
@@ -1642,7 +1642,7 @@ namespace mathq {
     //         k_[n] = n * k1_;
     //       }
     //     }
-    //     ~Expr_R_Series2() {
+    //     ~ExpressionR_Series2() {
     //       delete& k_;
     //       delete vptrs;
     //     }
@@ -1724,7 +1724,7 @@ namespace mathq {
     //     }
 
     //     std::string expression_name() const {
-    //       return "Expr_R_Series2";
+    //       return "ExpressionR_Series2";
     //     }
 
     // #if MATHQ_DEBUG >= 1
@@ -1740,11 +1740,11 @@ namespace mathq {
 
 
     //   //-----------------------------------------------------------------------------
-    //   // Expr_R_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
+    //   // ExpressionR_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
     //   //-----------------------------------------------------------------------------
 
     //   template <class Derived, class Element, typename Number, size_t depth, size_t rank, class FUNC>
-    //   class Expr_R_Transpose : public ExpressionR<Expr_R_Transpose<Derived, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
+    //   class ExpressionR_Transpose : public ExpressionR<ExpressionR_Transpose<Derived, Element, Number, depth, rank, FUNC>, Element, Number, depth, rank> {
     //   public:
     //     typedef Materialize<Element, Number, depth, rank> ConcreteType;
     //     typedef Element ElementType;
@@ -1758,13 +1758,13 @@ namespace mathq {
     //     DimensionsType* rdims;
 
     //   public:
-    //     Expr_R_Transpose(const Derived& x) : x_(x) {
+    //     ExpressionR_Transpose(const Derived& x) : x_(x) {
     //       rdims = &(x_.dims().getReverse());
     //       vptrs = new VectorofPtrs();
     //       vptrs->add(x_.getAddresses());
     //     }
 
-    //     ~Expr_R_Transpose() {
+    //     ~ExpressionR_Transpose() {
     //       delete rdims;
     //       delete vptrs;
     //     }
@@ -1830,7 +1830,7 @@ namespace mathq {
     //       }
     //     }
     //     std::string expression_name() const {
-    //       return "Expr_R_Transpose";
+    //       return "ExpressionR_Transpose";
     //     }
 
     // #if MATRICKS_DEBUG >= 1
@@ -1850,7 +1850,7 @@ namespace mathq {
     //   //---------------------------------------------------------------------------
 
     //   template <class Derived, class Y, class Element, typename Number, size_t depth>
-    //   class Expr_R_Join : public ExpressionR<Expr_R_Join<Derived, Y, Element, Number, depth>, Element, Number, depth, 1> {
+    //   class ExpressionR_Join : public ExpressionR<ExpressionR_Join<Derived, Y, Element, Number, depth>, Element, Number, depth, 1> {
     //   public:
     //     constexpr static size_t rank_value = 1;
     //     constexpr static size_t depth_value = depth;
@@ -1864,14 +1864,14 @@ namespace mathq {
     //     VectorofPtrs* vptrs;
 
     //   public:
-    //     Expr_R_Join(const Derived& x, const Y& y) : x_(x), y_(y) {
+    //     ExpressionR_Join(const Derived& x, const Y& y) : x_(x), y_(y) {
     //       vptrs = new VectorofPtrs();
     //       vptrs->add(x_.getAddresses());
     //       vptrs->add(y_.getAddresses());
     //       DISP3(x);
     //     }
 
-    //     ~Expr_R_Join() {
+    //     ~ExpressionR_Join() {
     //       delete vptrs;
     //     }
 
@@ -1953,7 +1953,7 @@ namespace mathq {
     //     }
 
     //     std::string expression_name() const {
-    //       return "Expr_R_Join";
+    //       return "ExpressionR_Join";
     //     }
 
     // #if MATHQ_DEBUG >= 1
@@ -1969,11 +1969,11 @@ namespace mathq {
 
 
     //   //---------------------------------------------------------------------------
-    //   // Expr_R_Rep  repeat a tensor
+    //   // ExpressionR_Rep  repeat a tensor
     //   //---------------------------------------------------------------------------
 
     //   template <class A, typename Number>
-    //   class Expr_R_Rep : public ExpressionR<Expr_R_Rep<A, Number>, Number, Number, 1, 1> {
+    //   class ExpressionR_Rep : public ExpressionR<ExpressionR_Rep<A, Number>, Number, Number, 1, 1> {
     //   public:
     //     constexpr static size_t rank_value = 1;
     //     constexpr static size_t depth_value = 1;
@@ -1988,13 +1988,13 @@ namespace mathq {
     //     VectorofPtrs* vptrs;
 
     //   public:
-    //     Expr_R_Rep(const A& a, const size_t m)
+    //     ExpressionR_Rep(const A& a, const size_t m)
     //       : a_(a), m_(m), N_(a_.size()) {
     //       vptrs = new VectorofPtrs();
     //       vptrs->add(a_.getAddresses());
     //     }
 
-    //     ~Expr_R_Rep() {
+    //     ~ExpressionR_Rep() {
     //       delete vptrs;
     //     }
 
@@ -2056,7 +2056,7 @@ namespace mathq {
     //       }
     //     }
     //     std::string expression_name() const {
-    //       return "Expr_R_Rep";
+    //       return "ExpressionR_Rep";
     //     }
 
     // #if MATRICKS_DEBUG >= 1

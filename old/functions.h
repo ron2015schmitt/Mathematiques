@@ -24,7 +24,7 @@ namespace matricks {
   template <class Element, class A, typename Number, int depth> 
     inline auto operator+(const ExpressionR<Element,A,Number,depth>& a)
   {
-    return  Expr_R_Unary< ExpressionR<Element,A,Number,depth>, Fun_Plus<Number> >(a);
+    return  ExpressionR_Unary< ExpressionR<Element,A,Number,depth>, Fun_Plus<Number> >(a);
   }
 
 
@@ -33,7 +33,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto operator-(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Minus<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Minus<Number> >(a);
   }
 
 
@@ -47,7 +47,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator+(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Add<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Add<NT1,NT2>>(a,b);
   }
 
 
@@ -56,7 +56,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator+(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Add<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Add<NT1,NT2>>(a,b);
     }
 
   
@@ -65,7 +65,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator+(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Add<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Add<NT1,NT2>>(a,b);
     }
 
     
@@ -74,7 +74,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator+(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_Add<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_Add<T,T>>(a,b);
     }
     
 
@@ -83,7 +83,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator+(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_Add<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_Add<T,T>>(a,b);
     }
 
 
@@ -98,7 +98,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator-(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Subtract<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Subtract<NT1,NT2>>(a,b);
   }
 
 
@@ -107,7 +107,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator-(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Subtract<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Subtract<NT1,NT2>>(a,b);
     }
 
   
@@ -116,7 +116,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator-(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Subtract<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Subtract<NT1,NT2>>(a,b);
     }
 
     
@@ -125,7 +125,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator-(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_Subtract<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_Subtract<T,T>>(a,b);
     }
     
 
@@ -134,7 +134,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator-(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_Subtract<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_Subtract<T,T>>(a,b);
     }
     
 
@@ -151,7 +151,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator*(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Multiply<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Multiply<NT1,NT2>>(a,b);
   }
 
 
@@ -160,7 +160,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator*(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Multiply<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Multiply<NT1,NT2>>(a,b);
     }
 
   
@@ -169,7 +169,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator*(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Multiply<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Multiply<NT1,NT2>>(a,b);
     }
 
     
@@ -178,7 +178,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator*(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_Multiply<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_Multiply<T,T>>(a,b);
     }
     
 
@@ -187,7 +187,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator*(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_Multiply<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_Multiply<T,T>>(a,b);
     }
 
 
@@ -200,7 +200,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator/(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Divide<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Divide<NT1,NT2>>(a,b);
   }
 
 
@@ -209,7 +209,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator/(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Divide<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Divide<NT1,NT2>>(a,b);
     }
 
   
@@ -218,7 +218,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator/(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Divide<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Divide<NT1,NT2>>(a,b);
     }
 
     
@@ -227,7 +227,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator/(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_Divide<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_Divide<T,T>>(a,b);
     }
     
 
@@ -236,7 +236,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator/(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_Divide<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_Divide<T,T>>(a,b);
     }
   
 
@@ -250,7 +250,7 @@ namespace matricks {
   template <class NT2, class NT1, class A> 
     inline auto numbercast(const ExpressionR<NT1,A>& a)
   {
-    return  Expr_R_Unary<NT2,ExpressionR<NT1,A>,Fun_Cast<NT2,NT1> >(a);
+    return  ExpressionR_Unary<NT2,ExpressionR<NT1,A>,Fun_Cast<NT2,NT1> >(a);
   }
 
 
@@ -456,7 +456,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto pow(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Pow<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Pow<NT1,NT2>>(a,b);
   }
   
   
@@ -465,7 +465,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto pow(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Pow<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Pow<NT1,NT2>>(a,b);
     }
   
   
@@ -474,7 +474,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto pow(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Pow<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Pow<NT1,NT2>>(a,b);
     }
   
   
@@ -483,7 +483,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto pow(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_Pow<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_Pow<T,T>>(a,b);
     }
   
   
@@ -492,7 +492,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto pow(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_Pow<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_Pow<T,T>>(a,b);
     }
   
 
@@ -503,7 +503,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto sqr(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Sqr<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Sqr<Number> >(a);
   }
 
   // cube(MultiArray)
@@ -511,7 +511,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto cube(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Cube<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Cube<Number> >(a);
   }
 
   // sqrt(MultiArray)
@@ -519,7 +519,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto sqrt(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Sqrt<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Sqrt<Number> >(a);
   }
 
   // exp(MultiArray)
@@ -527,7 +527,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto exp(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Exp<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Exp<Number> >(a);
   }
 
 
@@ -537,7 +537,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto log(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Log<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Log<Number> >(a);
   }
 
 
@@ -546,7 +546,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto log10(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Log10<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Log10<Number> >(a);
   }
 
 
@@ -555,7 +555,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto log2(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Log2<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Log2<Number> >(a);
   }
 
 
@@ -572,7 +572,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto sin(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Sin<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Sin<Number> >(a);
   }
 
 
@@ -581,7 +581,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto cos(const ExpressionR<Number,A>& a)
   {
-    return Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Cos<Number> >(a);
+    return ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Cos<Number> >(a);
   }
 
 
@@ -591,7 +591,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto tan(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Tan<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Tan<Number> >(a);
   }
 
 
@@ -600,7 +600,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto asin(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Asin<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Asin<Number> >(a);
   }
 
 
@@ -609,7 +609,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto acos(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Acos<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Acos<Number> >(a);
   }
 
 
@@ -618,7 +618,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto atan(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Atan<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Atan<Number> >(a);
   }
 
 
@@ -629,7 +629,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto atan2(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Atan2<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Atan2<NT1,NT2>>(a,b);
   }
   
 
@@ -639,7 +639,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto sinh(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Sinh<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Sinh<Number> >(a);
   }
 
 
@@ -648,7 +648,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto cosh(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Cosh<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Cosh<Number> >(a);
   }
 
 
@@ -657,7 +657,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto tanh(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Tanh<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Tanh<Number> >(a);
   }
 
 
@@ -671,7 +671,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto abs(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Abs<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Abs<Number> >(a);
   }
 
 
@@ -680,7 +680,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto sgn(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Sgn<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Sgn<Number> >(a);
   }
 
 
@@ -690,7 +690,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto ceil(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Ceil<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Ceil<Number> >(a);
   }
 
 
@@ -699,7 +699,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto floor(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Floor<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Floor<Number> >(a);
   }
 
 
@@ -708,7 +708,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto round(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number,ExpressionR<Number,A>,Fun_Round<Number> >(a);
+    return  ExpressionR_Unary<Number,ExpressionR<Number,A>,Fun_Round<Number> >(a);
   }
 
 
@@ -719,7 +719,7 @@ namespace matricks {
      auto roundzero(const ExpressionR<NT1,A>& a, const typename SimpleNumberTrait<NT1>::Type tolerance = MatricksHelper< typename SimpleNumberTrait<NT1>::Type >::tolerance)
     {
       typedef typename SimpleNumberTrait<NT1>::Type TOL;
-      return  Expr_R_Binary< ExpressionR<NT1,A>,TOL, NT1,TOL, Fun_Roundzero<NT1,TOL> >(a, tolerance);
+      return  ExpressionR_Binary< ExpressionR<NT1,A>,TOL, NT1,TOL, Fun_Roundzero<NT1,TOL> >(a, tolerance);
     }
   
 
@@ -734,13 +734,13 @@ namespace matricks {
   template <typename Number, typename FunctionTypes<Number>::unary_func F, class A> 
     inline auto op1(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Unary<Number, ExpressionR<Number,A>, Fun_UnaryUser<Number,F> >(a);
+    return  ExpressionR_Unary<Number, ExpressionR<Number,A>, Fun_UnaryUser<Number,F> >(a);
   }
 
   template <typename Number, typename FunctionTypes<Number>::binary_func F, class A, class B> 
     inline auto op2(const ExpressionR<Number,A>& a, const ExpressionR<Number,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<Number,A>,ExpressionR<Number,B>, Number,Number, Fun_BinaryUser<Number,Number,F>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<Number,A>,ExpressionR<Number,B>, Number,Number, Fun_BinaryUser<Number,Number,F>>(a,b);
   }
 
 
@@ -761,7 +761,7 @@ namespace matricks {
   template <class A> 
     inline auto operator!(const ExpressionR<bool,A>& a)
     {
-      return  Expr_R_Unary<bool,ExpressionR<bool,A>,Fun_Not >(a);
+      return  ExpressionR_Unary<bool,ExpressionR<bool,A>,Fun_Not >(a);
     }
   
 
@@ -775,7 +775,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator&&(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_And<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_And<NT1,NT2>>(a,b);
   }
 
 
@@ -784,7 +784,7 @@ namespace matricks {
   template <class NT1, class A> 
     inline auto operator&&(const ExpressionR<NT1,A>& a, const bool& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,bool,NT1,bool,Fun_And<NT1,bool>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,bool,NT1,bool,Fun_And<NT1,bool>>(a,b);
     }
 
   
@@ -793,7 +793,7 @@ namespace matricks {
   template <class NT2, class B>
     inline auto operator&&(const bool& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<bool,ExpressionR<NT2,B>,bool,NT2,Fun_And<bool,NT2>>(a,b);
+      return  ExpressionR_Binary<bool,ExpressionR<NT2,B>,bool,NT2,Fun_And<bool,NT2>>(a,b);
     }
 
     
@@ -802,7 +802,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator&&(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_And<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_And<T,T>>(a,b);
     }
     
 
@@ -811,7 +811,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator&&(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_And<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_And<T,T>>(a,b);
     }
 
 
@@ -828,7 +828,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator||(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Or<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Or<NT1,NT2>>(a,b);
   }
 
 
@@ -837,7 +837,7 @@ namespace matricks {
   template <class NT1, class A> 
     inline auto operator||(const ExpressionR<NT1,A>& a, const bool& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,bool,NT1,bool,Fun_Or<NT1,bool>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,bool,NT1,bool,Fun_Or<NT1,bool>>(a,b);
     }
 
   
@@ -846,7 +846,7 @@ namespace matricks {
   template <class NT2, class B>
     inline auto operator||(const bool& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<bool,ExpressionR<NT2,B>,bool,NT2,Fun_Or<bool,NT2>>(a,b);
+      return  ExpressionR_Binary<bool,ExpressionR<NT2,B>,bool,NT2,Fun_Or<bool,NT2>>(a,b);
     }
 
     
@@ -855,7 +855,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator||(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_Or<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_Or<T,T>>(a,b);
     }
     
 
@@ -864,7 +864,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator||(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_Or<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_Or<T,T>>(a,b);
     }
 
   
@@ -883,7 +883,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator==(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Equal<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Equal<NT1,NT2>>(a,b);
   }
 
 
@@ -892,7 +892,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator==(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Equal<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Equal<NT1,NT2>>(a,b);
     }
 
   
@@ -901,7 +901,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator==(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Equal<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Equal<NT1,NT2>>(a,b);
     }
 
     
@@ -910,7 +910,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator==(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_Equal<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_Equal<T,T>>(a,b);
     }
     
 
@@ -919,7 +919,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator==(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_Equal<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_Equal<T,T>>(a,b);
     }
 
   //----------------------------------------------
@@ -931,7 +931,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator!=(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_NotEqual<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_NotEqual<NT1,NT2>>(a,b);
   }
 
 
@@ -940,7 +940,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator!=(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_NotEqual<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_NotEqual<NT1,NT2>>(a,b);
     }
 
   
@@ -949,7 +949,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator!=(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_NotEqual<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_NotEqual<NT1,NT2>>(a,b);
     }
 
     
@@ -958,7 +958,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator!=(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_NotEqual<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_NotEqual<T,T>>(a,b);
     }
     
 
@@ -967,7 +967,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator!=(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_NotEqual<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_NotEqual<T,T>>(a,b);
     }
 
 
@@ -980,7 +980,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator<=(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_LessOrEqual<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_LessOrEqual<NT1,NT2>>(a,b);
   }
 
 
@@ -989,7 +989,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator<=(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_LessOrEqual<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_LessOrEqual<NT1,NT2>>(a,b);
     }
 
   
@@ -998,7 +998,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator<=(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_LessOrEqual<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_LessOrEqual<NT1,NT2>>(a,b);
     }
 
     
@@ -1007,7 +1007,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator<=(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_LessOrEqual<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_LessOrEqual<T,T>>(a,b);
     }
     
 
@@ -1016,7 +1016,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator<=(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_LessOrEqual<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_LessOrEqual<T,T>>(a,b);
     }
     
 
@@ -1029,7 +1029,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator>=(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_GreaterOrEqual<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_GreaterOrEqual<NT1,NT2>>(a,b);
   }
 
 
@@ -1038,7 +1038,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator>=(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_GreaterOrEqual<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_GreaterOrEqual<NT1,NT2>>(a,b);
     }
 
   
@@ -1047,7 +1047,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator>=(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_GreaterOrEqual<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_GreaterOrEqual<NT1,NT2>>(a,b);
     }
 
     
@@ -1056,7 +1056,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator>=(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_GreaterOrEqual<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_GreaterOrEqual<T,T>>(a,b);
     }
     
 
@@ -1065,7 +1065,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator>=(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_GreaterOrEqual<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_GreaterOrEqual<T,T>>(a,b);
     }
 
 
@@ -1078,7 +1078,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator<(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Less<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Less<NT1,NT2>>(a,b);
   }
 
 
@@ -1087,7 +1087,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator<(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Less<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Less<NT1,NT2>>(a,b);
     }
 
   
@@ -1096,7 +1096,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator<(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Less<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Less<NT1,NT2>>(a,b);
     }
 
     
@@ -1105,7 +1105,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator<(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_Less<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_Less<T,T>>(a,b);
     }
     
 
@@ -1114,7 +1114,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator<(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_Less<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_Less<T,T>>(a,b);
     }
     
   //----------------------------------------------
@@ -1126,7 +1126,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, class B> 
     inline auto operator>(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b)
   {
-    return  Expr_R_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Greater<NT1,NT2>>(a,b);
+    return  ExpressionR_Binary<ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT1,NT2,Fun_Greater<NT1,NT2>>(a,b);
   }
 
 
@@ -1135,7 +1135,7 @@ namespace matricks {
   template <class NT1, class NT2, class A, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT2>::value> > 
     inline auto operator>(const ExpressionR<NT1,A>& a, const NT2& b)
     {
-      return  Expr_R_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Greater<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<NT1,A>,NT2,NT1,NT2,Fun_Greater<NT1,NT2>>(a,b);
     }
 
   
@@ -1144,7 +1144,7 @@ namespace matricks {
   template <class NT1, class NT2, class B, typename = std::enable_if_t<!std::is_base_of<MultiArrayAbstract,NT1>::value> > 
     inline auto operator>(const NT1& a, const ExpressionR<NT2,B>& b)
     {
-      return  Expr_R_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Greater<NT1,NT2>>(a,b);
+      return  ExpressionR_Binary<NT1,ExpressionR<NT2,B>,NT1,NT2,Fun_Greater<NT1,NT2>>(a,b);
     }
 
     
@@ -1153,7 +1153,7 @@ namespace matricks {
   template <class T, class A, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator>(const ExpressionR<T,A>& a, const T& b)
     {
-      return  Expr_R_Binary<ExpressionR<T,A>,T,T,T,Fun_Greater<T,T>>(a,b);
+      return  ExpressionR_Binary<ExpressionR<T,A>,T,T,T,Fun_Greater<T,T>>(a,b);
     }
     
 
@@ -1162,7 +1162,7 @@ namespace matricks {
   template <class T, class B, typename = std::enable_if_t<std::is_base_of<MultiArrayAbstract,T>::value>> 
     inline auto operator>(const T& a, const ExpressionR<T,B>& b)
     {
-      return  Expr_R_Binary<T,ExpressionR<T,B>,T,T,Fun_Greater<T,T>>(a,b);
+      return  ExpressionR_Binary<T,ExpressionR<T,B>,T,T,Fun_Greater<T,T>>(a,b);
     }
 
     
@@ -1177,7 +1177,7 @@ namespace matricks {
   template <class NT1, class NT2, class NT3, class A, class B> 
     inline auto approxel(const ExpressionR<NT1,A>& a, const ExpressionR<NT2,B>& b, const NT3 tol = MatricksHelper<NT3>::tolerance)
   {
-    return  Expr_R_Ternary< ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT3, NT1,NT2,NT3, Fun_Approx<NT1,NT2,NT3> >(a,b,tol);
+    return  ExpressionR_Ternary< ExpressionR<NT1,A>,ExpressionR<NT2,B>,NT3, NT1,NT2,NT3, Fun_Approx<NT1,NT2,NT3> >(a,b,tol);
   }
 
 
@@ -1419,7 +1419,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto real(const ExpressionR<Number,A>& a)
   {
-    return Expr_R_Unary<typename Realify<Number>::Type, ExpressionR<Number,A>, Fun_Real<Number> >(a);
+    return ExpressionR_Unary<typename Realify<Number>::Type, ExpressionR<Number,A>, Fun_Real<Number> >(a);
   }
 
   // imag(MultiArray)
@@ -1427,7 +1427,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto imag(const ExpressionR<Number,A>& a)
   {
-    return Expr_R_Unary<typename Realify<Number>::Type, ExpressionR<Number,A>, Fun_Imag<Number> >(a);
+    return ExpressionR_Unary<typename Realify<Number>::Type, ExpressionR<Number,A>, Fun_Imag<Number> >(a);
   }
 
 
@@ -1436,7 +1436,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto conj(const ExpressionR<Number,A>& a)
   {
-    return Expr_R_Unary<typename Complexify<Number>::Type, ExpressionR<Number,A>, Fun_Conj<Number> >(a);
+    return ExpressionR_Unary<typename Complexify<Number>::Type, ExpressionR<Number,A>, Fun_Conj<Number> >(a);
   }
 
 
@@ -1446,7 +1446,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto transpose(ExpressionRW<Number,A>& a)
   {
-    return Expr_RW_Transpose<Number,ExpressionRW<Number,A>,Fun_Plus<Number> >(a);
+    return ExpressionRW_Transpose<Number,ExpressionRW<Number,A>,Fun_Plus<Number> >(a);
   }
 
   // adjoint(A) - conjugate transpose 
@@ -1454,7 +1454,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto adjoint(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Transpose<Number,ExpressionR<Number,A>,Fun_Conj<Number> >(a);
+    return  ExpressionR_Transpose<Number,ExpressionR<Number,A>,Fun_Conj<Number> >(a);
   }
 
   
@@ -1463,7 +1463,7 @@ namespace matricks {
   template <typename Number, class A> 
     inline auto operator~(const ExpressionR<Number,A>& a)
   {
-    return  Expr_R_Transpose<Number,ExpressionR<Number,A>,Fun_Conj<Number> >(a);
+    return  ExpressionR_Transpose<Number,ExpressionR<Number,A>,Fun_Conj<Number> >(a);
   }
 
 

@@ -106,7 +106,7 @@ namespace mathq
    // {
    //   typedef typename AddType<NT1, NT2>::Type NT3;
    //   typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
-   //   return Expr_R_Binary<ExpressionR<A, E1, NT1, depth, rank>,
+   //   return ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
    //                     ExpressionR<B, E2, NT2, depth, rank>,
    //                     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
    //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3>>(x1, x2);
@@ -233,7 +233,7 @@ namespace mathq
   //   typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
   //   constexpr int D3 = D1;
   //   //    MOUT << "C" <<std::endl;
-  //   return Expr_R_Binary<ExpressionR<A, E1, NT1, D1, rank>,
+  //   return ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
   //                     ExpressionR<B, NT2, NT2, D2, rank>,
   //                     E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
   //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3>>(x1, x2);
@@ -261,7 +261,7 @@ namespace mathq
   //   typedef typename NumberTrait<E2, NT3>::ReplacedNumberType E3; // see TODO note above
   //   constexpr int D3 = D2;
   //   //    MOUT << "Number" <<std::endl;
-  //   return Expr_R_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
+  //   return ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
   //                     ExpressionR<B, E2, NT2, D2, rank>,
   //                     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
   //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3>>(x1, x2);

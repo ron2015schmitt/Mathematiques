@@ -3371,7 +3371,7 @@ public:
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto operator+(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_pos<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_pos<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3390,7 +3390,7 @@ auto operator+(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto operator-(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_neg<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_neg<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3409,7 +3409,7 @@ auto operator-(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto operator!(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_not<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_not<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3428,7 +3428,7 @@ auto operator!(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto sin(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sin<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sin<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3447,7 +3447,7 @@ auto sin(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto cos(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cos<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cos<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3466,7 +3466,7 @@ auto cos(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto tan(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_tan<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_tan<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3485,7 +3485,7 @@ auto tan(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto asin(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_asin<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_asin<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3504,7 +3504,7 @@ auto asin(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto acos(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_acos<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_acos<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3523,7 +3523,7 @@ auto acos(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto atan(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_atan<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_atan<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3542,7 +3542,7 @@ auto atan(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto sinh(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sinh<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sinh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3561,7 +3561,7 @@ auto sinh(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto cosh(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cosh<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cosh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3580,7 +3580,7 @@ auto cosh(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto tanh(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_tanh<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_tanh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3599,7 +3599,7 @@ auto tanh(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto asinh(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_asinh<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_asinh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3618,7 +3618,7 @@ auto asinh(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto acosh(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_acosh<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_acosh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3637,7 +3637,7 @@ auto acosh(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto atanh(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_atanh<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_atanh<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3656,7 +3656,7 @@ auto atanh(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto sqrt(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sqrt<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sqrt<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3675,7 +3675,7 @@ auto sqrt(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto cbrt(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cbrt<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cbrt<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3694,7 +3694,7 @@ auto cbrt(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto sqr(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sqr<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sqr<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3713,7 +3713,7 @@ auto sqr(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto cube(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cube<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cube<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3732,7 +3732,7 @@ auto cube(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto exp(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_exp<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_exp<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3751,7 +3751,7 @@ auto exp(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto exp2(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_exp2<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_exp2<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3770,7 +3770,7 @@ auto exp2(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto expm1(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_expm1<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_expm1<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3789,7 +3789,7 @@ auto expm1(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto log(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_log<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_log<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3808,7 +3808,7 @@ auto log(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto log10(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_log10<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_log10<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3827,7 +3827,7 @@ auto log10(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto log2(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_log2<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_log2<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3846,7 +3846,7 @@ auto log2(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto log1p(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_log1p<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_log1p<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3865,7 +3865,7 @@ auto log1p(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto logb(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_logb<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_logb<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3884,7 +3884,7 @@ auto logb(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto sgn(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sgn<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_sgn<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3903,7 +3903,7 @@ auto sgn(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto ceil(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_ceil<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_ceil<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3922,7 +3922,7 @@ auto ceil(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto floor(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_floor<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_floor<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3941,7 +3941,7 @@ auto floor(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto round(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_round<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_round<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3960,7 +3960,7 @@ auto round(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto trunc(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_trunc<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_trunc<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3979,7 +3979,7 @@ auto trunc(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto erf(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_erf<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_erf<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -3998,7 +3998,7 @@ auto erf(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto erfc(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_erfc<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_erfc<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4017,7 +4017,7 @@ auto erfc(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto tgamma(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_tgamma<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_tgamma<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4036,7 +4036,7 @@ auto tgamma(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto lgamma(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_lgamma<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_lgamma<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4055,7 +4055,7 @@ auto lgamma(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto expint(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_expint<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_expint<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4074,7 +4074,7 @@ auto expint(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto riemann_zeta(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_riemann_zeta<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_riemann_zeta<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4093,7 +4093,7 @@ auto riemann_zeta(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto comp_ellint_1(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_comp_ellint_1<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_comp_ellint_1<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4112,7 +4112,7 @@ auto comp_ellint_1(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto comp_ellint_2(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_comp_ellint_2<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_comp_ellint_2<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4131,7 +4131,7 @@ auto comp_ellint_2(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto zero(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_zero<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_zero<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4150,7 +4150,7 @@ auto zero(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto ilogb(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, int>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, int, depth, rank, FUNCTOR_ilogb<Element, EOUT, Number, int>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, int, depth, rank, FUNCTOR_ilogb<Element, EOUT, Number, int>>(x);
 }
 
 
@@ -4169,7 +4169,7 @@ auto ilogb(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto imaginary(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_imaginary<Element, EOUT, Number, mathq::Imaginary<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_imaginary<Element, EOUT, Number, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4188,7 +4188,7 @@ auto imaginary(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto conj(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_conj_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_conj_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4207,7 +4207,7 @@ auto conj(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto real(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_real_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_real_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4226,7 +4226,7 @@ auto real(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto imag(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_imag_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_imag_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4245,7 +4245,7 @@ auto imag(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto abs(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_abs_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_abs_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4264,7 +4264,7 @@ auto abs(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto arg(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_arg_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_arg_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4283,7 +4283,7 @@ auto arg(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto proj(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_proj_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_proj_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4302,7 +4302,7 @@ auto proj(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto exp(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_exp_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_exp_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4321,7 +4321,7 @@ auto exp(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto log(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_log_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_log_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4340,7 +4340,7 @@ auto log(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto log10(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_log10_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_log10_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4359,7 +4359,7 @@ auto log10(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>&
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto sqrt(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_sqrt_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_sqrt_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4378,7 +4378,7 @@ auto sqrt(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto sin(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_sin_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_sin_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4397,7 +4397,7 @@ auto sin(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto cos(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cos_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cos_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4416,7 +4416,7 @@ auto cos(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto tan(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_tan_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_tan_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4435,7 +4435,7 @@ auto tan(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto asin(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_asin_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_asin_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4454,7 +4454,7 @@ auto asin(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto acos(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_acos_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_acos_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4473,7 +4473,7 @@ auto acos(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto atan(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_atan_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_atan_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4492,7 +4492,7 @@ auto atan(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto sinh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_sinh_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_sinh_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4511,7 +4511,7 @@ auto sinh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto cosh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cosh_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_cosh_imag<Element, EOUT, mathq::Imaginary<Number>, Number>>(x);
 }
 
 
@@ -4530,7 +4530,7 @@ auto cosh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto tanh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Imaginary<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_tanh_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, mathq::Imaginary<Number>, depth, rank, FUNCTOR_tanh_imag<Element, EOUT, mathq::Imaginary<Number>, mathq::Imaginary<Number>>>(x);
 }
 
 
@@ -4549,7 +4549,7 @@ auto tanh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto asinh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_asinh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_asinh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4568,7 +4568,7 @@ auto asinh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>&
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto acosh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_acosh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_acosh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4587,7 +4587,7 @@ auto acosh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>&
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto atanh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_atanh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_atanh_imag<Element, EOUT, mathq::Imaginary<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4606,7 +4606,7 @@ auto atanh(const ExpressionR<X, Element, mathq::Imaginary<Number>, depth, rank>&
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto conj(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_conj_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_conj_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4625,7 +4625,7 @@ auto conj(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto real(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_real_complex<Element, EOUT, std::complex<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_real_complex<Element, EOUT, std::complex<Number>, Number>>(x);
 }
 
 
@@ -4644,7 +4644,7 @@ auto real(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto imag(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_imag_complex<Element, EOUT, std::complex<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_imag_complex<Element, EOUT, std::complex<Number>, Number>>(x);
 }
 
 
@@ -4663,7 +4663,7 @@ auto imag(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto abs(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_abs_complex<Element, EOUT, std::complex<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_abs_complex<Element, EOUT, std::complex<Number>, Number>>(x);
 }
 
 
@@ -4682,7 +4682,7 @@ auto abs(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto arg(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_arg_complex<Element, EOUT, std::complex<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_arg_complex<Element, EOUT, std::complex<Number>, Number>>(x);
 }
 
 
@@ -4701,7 +4701,7 @@ auto arg(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto proj(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_proj_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_proj_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4720,7 +4720,7 @@ auto proj(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto round(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_round_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_round_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4739,7 +4739,7 @@ auto round(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto log2(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_log2_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_log2_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4758,7 +4758,7 @@ auto log2(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto floor(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_floor_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_floor_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4777,7 +4777,7 @@ auto floor(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto ceil(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_ceil_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, std::complex<Number>, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_ceil_complex<Element, EOUT, std::complex<Number>, std::complex<Number>>>(x);
 }
 
 
@@ -4796,7 +4796,7 @@ auto ceil(const ExpressionR<X, Element, std::complex<Number>, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto quaternion(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Quaternion<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, mathq::Quaternion<Number>, depth, rank, FUNCTOR_quaternion<Element, EOUT, Number, mathq::Quaternion<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, mathq::Quaternion<Number>, depth, rank, FUNCTOR_quaternion<Element, EOUT, Number, mathq::Quaternion<Number>>>(x);
 }
 
 
@@ -4815,7 +4815,7 @@ auto quaternion(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto conj(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Quaternion<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, mathq::Quaternion<Number>, depth, rank, FUNCTOR_conj_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, mathq::Quaternion<Number>, depth, rank, FUNCTOR_conj_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
 }
 
 
@@ -4834,7 +4834,7 @@ auto conj(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>&
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto real(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_real_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_real_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4853,7 +4853,7 @@ auto real(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>&
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto imag(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_imag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_imag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4872,7 +4872,7 @@ auto imag(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>&
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto jmag(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_jmag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_jmag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4891,7 +4891,7 @@ auto jmag(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>&
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto kmag(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_kmag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_kmag_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4910,7 +4910,7 @@ auto kmag(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>&
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto abs(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_abs_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_abs_quat<Element, EOUT, mathq::Quaternion<Number>, Number>>(x);
 }
 
 
@@ -4929,7 +4929,7 @@ auto abs(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto exp(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Quaternion<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, mathq::Quaternion<Number>, depth, rank, FUNCTOR_exp_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, mathq::Quaternion<Number>, depth, rank, FUNCTOR_exp_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
 }
 
 
@@ -4948,7 +4948,7 @@ auto exp(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
 auto log(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& x) {
   typedef typename NumberTrait<Element, mathq::Quaternion<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, mathq::Quaternion<Number>, depth, rank, FUNCTOR_log_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>, EOUT, mathq::Quaternion<Number>, depth, rank, FUNCTOR_log_quat<Element, EOUT, mathq::Quaternion<Number>, mathq::Quaternion<Number>>>(x);
 }
 
 
@@ -4967,7 +4967,7 @@ auto log(const ExpressionR<X, Element, mathq::Quaternion<Number>, depth, rank>& 
 template <class X, class Element, typename Number, size_t depth, size_t rank, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
 inline auto conj(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_conj_real<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_conj_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -4986,7 +4986,7 @@ inline auto conj(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
 inline auto real(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_real_real<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_real_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -5005,7 +5005,7 @@ inline auto real(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
 inline auto imag(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_imag_real<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_imag_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -5024,7 +5024,7 @@ inline auto imag(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
 inline auto abs(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_abs_real<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_abs_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -5043,7 +5043,7 @@ inline auto abs(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
 inline auto arg(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, Number>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_arg_real<Element, EOUT, Number, Number>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, Number, depth, rank, FUNCTOR_arg_real<Element, EOUT, Number, Number>>(x);
 }
 
 
@@ -5062,7 +5062,7 @@ inline auto arg(const ExpressionR<X, Element, Number, depth, rank>& x) {
 template <class X, class Element, typename Number, size_t depth, size_t rank, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
 inline auto proj(const ExpressionR<X, Element, Number, depth, rank>& x) {
   typedef typename NumberTrait<Element, std::complex<Number>>::ReplacedNumberType EOUT;
-  return  Expr_R_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_proj_real<Element, EOUT, Number, std::complex<Number>>>(x);
+  return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_proj_real<Element, EOUT, Number, std::complex<Number>>>(x);
 }
 }; // namespace mathq 
 #endif // MATHQ__FUN_UNARY_AUTO_H
