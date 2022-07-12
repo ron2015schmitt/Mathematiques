@@ -28,6 +28,9 @@
 #include "declarations.h"
 #include "type-traits.h"
 #include "display.h"
+// #include "fileio.h"
+// #include "util.h"
+// #include "debug.h"
 
 #include "type-defs.h"
 
@@ -38,24 +41,25 @@
 
 // #include "indices.h"
 // #include "slices.h"
-// #include "util.h"
-// #include "debug.h"
 
 #include "expression-r.h"
 #include "expression-rw.h"
+
+// #include "multi-array.h"
+// #include "scalar.h"
+// #include "matrix.h"
+// #include "multi-array3.h"
+// #include "multi-array4.h"
 #include "vector.h"
 #include "dimensions.h"
 
 
-// #include "multi-array.h"
 // #include "multi-array-constant.h"
 // #include "multi-array-repeat-vec.h"
 // #include "multi-array-outer-product.h"
 
-// #include "scalar.h"
 // #include "vector-constant.h"
 
-// #include "matrix.h"
 // #include "matrix_constdiag.h"
 // #include "matrix_diagonal.h"
 // #include "matrix_exchange.h"
@@ -77,8 +81,6 @@
 // #include "matrix-repeat-vec.h"
 // #include "matrix-outer-product.h"
 
-// #include "multi-array3.h"
-// #include "multi-array4.h"
 
 #include "expressions-r.h"
 // #include "expressions-rw.h"
@@ -92,7 +94,6 @@
 // #include "functions_products.h"
 // #include "functions_user.h"
 
-// #include "fileio.h"
 // #include "coda.h"
 
 
@@ -125,6 +126,18 @@ int main(int argc, char* argv[]) {
   Vector<double> J0Coeffs = Vector<double>({ 1.,0.,-0.25,0.,0.015625,0.,-0.000434028,0.,6.78168e-6,0.,-6.78168e-8,0.,4.7095e-10,0.,-2.40281e-12,0.,9.38597e-15,0.,-2.8969e-17,0. });
   Vector<double> r = linspace<double>(0, 10, 101);
   TRDISP(taylor(J0Coeffs, r, 19));
+
+
+  const size_t N = 20;
+  Vector<double> k = range<double>(0, N-1);
+  Vector<double> An = 1/k;
+  An[0] = 0.;
+  Vector<double> Bn = Vector<double>(N, 0.);
+  const double pi = 3.14159265358979323846;
+  Vector<double> t = linspace<double>(0, 2*pi, 51);
+  const double T = 2*pi;
+  const double omega = 2*pi/T;
+  TRDISP(ifourier(An, Bn, t, An.size(), omega));
 
   return 0;
 }
