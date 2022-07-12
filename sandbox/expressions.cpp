@@ -90,7 +90,7 @@
 #include "fun_ternary_AUTO.h"
 #include "functions_misc.h"
 // #include "grids.h"
-// #include "functions_structure.h"
+#include "functions_structure.h"
 // #include "functions_products.h"
 // #include "functions_user.h"
 
@@ -138,6 +138,10 @@ int main(int argc, char* argv[]) {
   const double T = 2*pi;
   const double omega = 2*pi/T;
   TRDISP(ifourier(An, Bn, t, An.size(), omega));
+  
+  TRDISP(k);
+  TRDISP(transpose(k));
+
 
   return 0;
 }

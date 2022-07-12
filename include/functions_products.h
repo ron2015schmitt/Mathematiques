@@ -70,7 +70,7 @@ namespace mathq
    // (a|b)
    // TODO: rewrite for only floating point base types
 
-   // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+   // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
    // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> dot(const ExpressionR<A, E1, NT1, depth, rank> &a, const ExpressionR<B, E2, NT2, depth, rank> &b)
    // {
 
@@ -90,7 +90,7 @@ namespace mathq
 
    // // dot(a,b)
 
-   // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+   // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
    // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> operator|(const ExpressionR<A, E1, NT1, depth, rank> &a, const ExpressionR<B, E2, NT2, depth, rank> &b)
    // {
    //   return dot(a, b);
@@ -101,7 +101,7 @@ namespace mathq
    // (1A: T • T) MultiArray<E1(NT1)> | MultiArray<E2(NT2)>
    // TODO: implement this
 
-   // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+   // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
    // auto operator|(const ExpressionR<A, E1, NT1, depth, rank> &x1, const ExpressionR<B, E2, NT2, depth, rank> &x2)
    // {
    //   typedef typename AddType<NT1, NT2>::Type NT3;
@@ -114,7 +114,7 @@ namespace mathq
 
    // (1B: V • V) Vector<E1(NT1)> | Vector<E2(NT2)>
 
-  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
   auto operator|(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
@@ -130,7 +130,7 @@ namespace mathq
   //             Matrix -> rank = 2
   //             Vector -> rank = 1
 
-  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
   auto operator|(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
@@ -155,7 +155,7 @@ namespace mathq
   //             Vector -> rank = 1
   //             Matrix -> rank = 2
 
-  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
   auto operator|(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
@@ -181,7 +181,7 @@ namespace mathq
   // (1E: depth • depth) Vector<E1(NT1)> | Matrix<E2(NT2)>
   //             Matrix -> rank = 2
 
-  template <class A, class B, class E1, class E2, class NT1, class NT2, int depth>
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
   auto operator|(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
@@ -219,7 +219,7 @@ namespace mathq
   // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
   // TODO: implement
-  // template <class A, class B, class E1, class NT1, class NT2, int D1, int D2, int rank,
+  // template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   //           EnableIf<(D1 >= 2) && (D2 == 1) && (IsMultiArrayOrExpression< E1>::value)> = 0>
   // auto operator|(const ExpressionR<A, E1, NT1, D1, rank> &x1, const ExpressionR<B, NT2, NT2, D2, rank> &x2)
   // {
@@ -231,7 +231,7 @@ namespace mathq
 
   //   typedef typename AddType<NT1, NT2>::Type NT3;
   //   typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
-  //   constexpr int D3 = D1;
+  //   constexpr size_t D3 = D1;
   //   //    MOUT << "C" <<std::endl;
   //   return ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
   //                     ExpressionR<B, NT2, NT2, D2, rank>,
@@ -249,7 +249,7 @@ namespace mathq
 
   // TODO: implement
 
-  // template <class A, class B, class E2, class NT1, class NT2, int D1, int D2, int rank,
+  // template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   //           EnableIf<(D1 == 1) && (D2 >= 2) && (IsMultiArrayOrExpression< E2>::value)> = 0>
   // auto operator|(const ExpressionR<A, NT1, NT1, D1, rank> &x1, const ExpressionR<B, E2, NT2, D2, rank> &x2)
   // {
@@ -259,7 +259,7 @@ namespace mathq
   //   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   //   typedef typename AddType<NT1, NT2>::Type NT3;
   //   typedef typename NumberTrait<E2, NT3>::ReplacedNumberType E3; // see TODO note above
-  //   constexpr int D3 = D2;
+  //   constexpr size_t D3 = D2;
   //   //    MOUT << "Number" <<std::endl;
   //   return ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
   //                     ExpressionR<B, E2, NT2, D2, rank>,
@@ -300,7 +300,7 @@ namespace mathq
 
      //   // (a|b)
 
-     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
      // auto operator|(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //   typedef typename MultType<NT1,NT2>::Type NT3;
      //   typedef typename NumberTrait<E1,NT3>::ReplacedNumberType E3;   // see TODO note above
@@ -322,7 +322,7 @@ namespace mathq
 
      //   // dot(a,b)
 
-     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
      // auto dot(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //     return (a|b);
      //   }
@@ -331,7 +331,7 @@ namespace mathq
 
      //   // (a&b)
 
-     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
      // auto operator&(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //   typedef typename MultType<NT1,NT2>::Type NT3;
      //   typedef typename NumberTrait<E1,NT3>::ReplacedNumberType E3;   // see TODO note above
@@ -345,7 +345,7 @@ namespace mathq
 
      //   // prodt(a,b)
 
-     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
      // auto prodt(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //     return (a&b);
      //   }
@@ -354,7 +354,7 @@ namespace mathq
 
      //   // (a^b)
 
-     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
      // auto operator^(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //   typedef typename MultType<NT1,NT2>::Type NT3;
      //   typedef typename NumberTrait<E1,NT3>::ReplacedNumberType E3;   // see TODO note above
@@ -368,7 +368,7 @@ namespace mathq
 
      //   // prodw(a,b)
 
-     // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank>
+     // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
      // auto prodw(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //     return (a^b);
      //   }

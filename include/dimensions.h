@@ -61,14 +61,14 @@ namespace mathq {
     }
 
     Dimensions<rank_>& getReverse() const {
-      Dimensions<rank_>& v = *(new Dimensions<rank_>());
-      v.resize(this->size());
+      Dimensions<rank_>& dd = *(new Dimensions<rank_>());
+      dd.resize(this->size());
       // reverse order
-      size_t ii = 0;
-      for (size_t k = this->size()-1; k >= 0; k--) {
-        v[ii++] = (*this)[k];
+      size_t k = this->size()-1;
+      for (size_t ii = 0; ii < this->size(); ii++, k--) {
+        dd[ii] = (*this)[k];
       }
-      return v;
+      return dd;
     }
 
     operator Dimensions<0>() {
@@ -82,6 +82,14 @@ namespace mathq {
         (*this)[i] = dims2[i];
       }
       return *this;
+    }
+
+    inline size_t size_of_multiarray(void) const {
+      size_t sz = 1;
+      for (size_t i = 0; i < this->size(); i++) {
+        sz *= (*this)[i];
+      }
+      return sz;
     }
 
 
@@ -207,8 +215,8 @@ namespace mathq {
 
   template <typename Element, size_t N1> Vector<Element, N1>&
     Vector<Element, N1>::resize(const Dimensions<dynamic>& dims) {
-    TRDISP(dims);
-    TRDISP(dims[0]);
+    // TRDISP(dims);
+    // TRDISP(dims[0]);
     return resize(3);
   }
 
@@ -244,6 +252,8 @@ namespace mathq {
         (*this)[k] = *it;
       }
     }
+
+
 
     inline std::string classname() const {
       using namespace display;

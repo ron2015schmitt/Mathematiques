@@ -1,5 +1,5 @@
 #ifndef MATHQ__INDICES_H
-#define MATHQ__INDICES_H
+#define MATHQ__INDICES_H 1
 
 
 
@@ -13,7 +13,7 @@ namespace mathq {
     typedef typename Parent::iterator Iterator;
 
 
-    template<size_t rank, typename Derived>
+    template<size_t rank>
     static size_t index(const mathq::Indices& inds, const Dimensions<rank>& dims) {
       size_t k = 0;
       for (size_t n = 0; n < rank; n++) {
@@ -25,7 +25,7 @@ namespace mathq {
     }
 
 
-    template<size_t rank, typename Derived>
+    template<size_t rank>
     static mathq::Indices& indices(const size_t k, const Dimensions<rank>& dims) {
       mathq::Indices& myinds = *(new mathq::Indices(rank));
       size_t prev = k;

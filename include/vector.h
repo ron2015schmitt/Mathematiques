@@ -307,10 +307,12 @@ namespace mathq {
     //                          Resize
     //**********************************************************************
 
-    template<bool temp = is_dynamic_value, EnableIf<temp> = 0>
+    // template<bool temp = is_dynamic_value, EnableIf<temp> = 0>  // cuases issues
     Type& resize(const size_t N) {
-      if (N != this->size()) {
-        data_.resize(N);
+      if constexpr (is_dynamic_value) {
+        if (N != this->size()) {
+          data_.resize(N);
+        }
       }
       return *this;
     }
@@ -1567,12 +1569,12 @@ namespace mathq {
     }
 
 
-    };
-
-
-
-
   };
+
+
+
+
+};
 
 
 #endif 

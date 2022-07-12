@@ -1427,7 +1427,7 @@ namespace mathq {
     using ElementType = Element;
     using NumberType = typename NumberTrait<ElementType>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
-    
+
     using Type = ExpressionR_Series<A, Derived, Element, Number, depth_, rank_>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value>;
@@ -1796,128 +1796,171 @@ namespace mathq {
 
 
 
-  //   //-----------------------------------------------------------------------------
-  //   // ExpressionR_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
-  //   //-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  // ExpressionR_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
+  //-----------------------------------------------------------------------------
 
-  //   template <class Derived, class Element, typename Number, size_t depth_, size_t rank_, class FUNC>
-  //   class ExpressionR_Transpose : public ExpressionR<ExpressionR_Transpose<Derived, Element, Number, depth_, rank_, FUNC>, Element, Number, depth_, rank_> {
-  //   public:
-  //   //**********************************************************************
-  //   //                  Compile Time Constant
-  //   //**********************************************************************
+  template <class Derived, class Element, typename Number, size_t depth_, size_t rank_, class FUNC>
+  class ExpressionR_Transpose : public ExpressionR<ExpressionR_Transpose<Derived, Element, Number, depth_, rank_, FUNC>, Element, Number, depth_, rank_> {
+  public:
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
 
-  //   constexpr static size_t rank_value = rank_;
-  //   constexpr static size_t depth_value = depth_;
+    constexpr static size_t rank_value = rank_;
+    constexpr static size_t depth_value = depth_;
 
-  //   // the size of an expression cannot be changed
-  //   constexpr static bool is_dynamic() noexcept {
-  //     return false;
-  //   }
+    // the size of an expression cannot be changed
+    constexpr static bool is_dynamic() noexcept {
+      return false;
+    }
 
-  //   //**********************************************************************
-  //   //                            TYPES 
-  //   //**********************************************************************
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
 
-  //   using ElementType = Element;
-  //   using NumberType = typename NumberTrait<ElementType>::Type;
-  //   using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<ElementType>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-  //   using Type = ExpressionR_Transpose<Derived, Element, Number, depth_value, rank_value, FUNC>;
-    // using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    // using ConcreteType = MultiArray<ElementType, rank_value>;
+    using Type = ExpressionR_Transpose<Derived, ElementType, NumberType, depth_value, rank_value, FUNC>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
 
-  //   using DimensionsType = Dimensions<rank_value>;
-  //   using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
+    using DimensionsType = Dimensions<rank_value>;
+    using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
-  //   private:
-  //     const Derived& x_;
-  //     VectorofPtrs* vptrs;
-  //     DimensionsType* rdims;
 
-  //   public:
-  //     ExpressionR_Transpose(const Derived& x) : x_(x) {
-  //       rdims = &(x_.dims().getReverse());
-  //       vptrs = new VectorofPtrs();
-  //       vptrs->add(x_.getAddresses());
-  //     }
+  private:
+    const Derived& x_;
+    VectorofPtrs* vptrs;
+    DimensionsType* reverse_dims;
 
-  //     ~ExpressionR_Transpose() {
-  //       delete rdims;
-  //       delete vptrs;
-  //     }
+  public:
+    //**********************************************************************
+    //                      Constructors
+    //**********************************************************************
 
-  //     const Number dat(const size_t i) const {
-  //       if constexpr (depth <= 1) {
-  //         return (*this[i]);
-  //       }
-  //       else {
-  //         size_t j = i / x_.element_size();
-  //         size_t k = i % x_.element_size();
-  //         return (*this[j][k]);
-  //       }
-  //     }
+    ExpressionR_Transpose(const Derived& x) : x_(x) {
+      reverse_dims = &(x_.dims().getReverse());
+      vptrs = new VectorofPtrs();
+      vptrs->add(x_.getAddresses());
+    }
 
-  //     const Element operator[](const size_t index1) const {
-  //       const Indices inds1 = rdims->indices(index1);
-  //       const Indices inds2 = inds1.getReverse();
-  //       const size_t index2 = x_.dims().index(inds2);
-  //       return FUNC::apply(x_[index2]);
-  //     }
+    ~ExpressionR_Transpose() {
+      delete reverse_dims;
+      delete vptrs;
+    }
 
-  //     VectorofPtrs getAddresses(void) const {
-  //       return *vptrs;
-  //     }
-  //     size_t size(void) const {
-  //       return rdims->datasize();
-  //     }
-  //     size_t rank(void) const {
-  //       return rdims->rank();
-  //     }
-  //     DimensionsType dims(void) const {
-  //       return *rdims;
-  //     }
-  //     bool isExpression(void) const {
-  //       return true;
-  //     }
-  //     size_t depth(void) const {
-  //       return depth;
-  //     }
-  //     size_t element_size(void) const {
-  //       if constexpr (depth < 2) {
-  //         return 1;
-  //       }
-  //       else {
-  //         return x_.element_size();
-  //       }
-  //     }
-  //     size_t el_total_size(void) const {
-  //       if constexpr (depth < 2) {
-  //         return 1;
-  //       }
-  //       else {
-  //         return x_.el_total_size();
-  //       }
-  //     }
-  //     size_t total_size(void) const {
-  //       if constexpr (depth < 2) {
-  //         return this->size();
-  //       }
-  //       else {
-  //         return (this->size()) * (this->el_total_size());
-  //       }
-  //     }
-  //     std::string expression_name() const {
-  //       return "ExpressionR_Transpose";
-  //     }
 
-  // #if MATHQ_DEBUG >= 1
-  //     std::string expression(void) const {
-  //       std::string sa = x_.expression();
-  //       return FUNC::expression(sa);
-  //     }
-  // #endif
-  //   };
+    //**********************************************************************
+    //                         Basic characteristics
+    //**********************************************************************
+
+    bool isExpression(void) const {
+      return true;
+    }
+
+    VectorofPtrs getAddresses(void) const {
+      return *vptrs;
+    }
+
+
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
+    size_t rank(void) const {
+      return rank_value;
+    }
+
+    size_t depth(void) const {
+      return depth_value;
+    }
+
+    size_t size(void) const {
+      return x_.size();
+    }
+
+    size_t total_size(void) const {
+      if constexpr (depth <= 1) {
+        return this->size();
+      }
+      else {
+        return (this->size()) * (this->el_total_size());
+      }
+    }
+
+    size_t element_size(void) const {
+      if constexpr (depth <= 1) {
+        return 1;
+      }
+      else {
+        return x_.element_size();
+      }
+    }
+
+    size_t el_total_size(void) const {
+      if constexpr (depth <= 1) {
+        return 1;
+      }
+      else {
+        return x_.el_total_size();
+      }
+    }
+
+
+
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+
+    DimensionsType dims(void) const {
+      return *reverse_dims;
+    }
+
+    //**********************************************************************
+    //******************** DEEP ACCESS: x.dat(n) ***************************
+    //**********************************************************************
+
+    const Number dat(const size_t i) const {
+      if constexpr (depth <= 1) {
+        return (*this[i]);
+      }
+      else {
+        size_t j = i / x_.element_size();
+        size_t k = i % x_.element_size();
+        return (*this[j][k]);
+      }
+    }
+
+    //**********************************************************************
+    //************* Array-style Element Access: x[n] ***********************
+    //**********************************************************************
+
+    const Element operator[](const size_t index1) const {
+      const Indices inds1 = Indices::indices<rank_value>(index1, *reverse_dims);
+      const Indices inds2 = inds1.getReverse();
+      const size_t index2 = Indices::index<rank_value>(inds2, x_.dims());
+      return FUNC::apply(x_[index2]);
+      return Element(0);
+    }
+
+
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
+
+    std::string expression_name() const {
+      return "ExpressionR_Transpose";
+    }
+
+#if MATHQ_DEBUG >= 1
+    std::string expression(void) const {
+      std::string sa = x_.expression();
+      return FUNC::expression(sa);
+    }
+#endif
+  };
 
 
 
