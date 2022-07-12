@@ -172,6 +172,170 @@ namespace mathq {
 
 
 
+
+  //---------------------------------------------------------------------------
+  // Expr_R_Unary_User    unary expressions
+  //---------------------------------------------------------------------------
+
+  // NOTE: Number and Element are the output types!
+  //       only the function/functor needs the input types
+  template <class Derived, class Element, typename Number, size_t depth_, size_t rank_>
+  class Expr_R_Unary_User : public ExpressionR<Expr_R_Unary_User<Derived, Element, Number, depth_, rank_>, Element, Number, depth_, rank_> {
+  public:
+
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = rank_;
+    constexpr static size_t depth_value = depth_;
+
+    // the size of an expression cannot be changed
+    constexpr static bool is_dynamic() noexcept {
+      return false;
+    }
+
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
+    using FUNC = typename FunctionType1<Number, Number>::type;
+
+    using Type = Expr_R_Unary_User<Derived, Element, Number, depth_, rank_>;
+    using ParentType = ExpressionR<Type, Element, Number, depth_, rank_>;
+    using ConcreteType = MultiArray<Element, rank_value, 0>;
+
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<Element>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using DimensionsType = Dimensions<rank_value>;
+    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
+
+  private:
+    const Derived& x_;
+    FUNC& f_;
+    VectorofPtrs* vptrs;
+
+  public:
+
+    //**********************************************************************
+  //                      Constructors
+  //**********************************************************************
+
+    Expr_R_Unary_User(const FUNC& f, const Derived& x) : x_(x), f_(f) {
+      vptrs = new VectorofPtrs();
+      vptrs->add(x_.getAddresses());
+      // DISP3(x);
+    }
+
+    ~Expr_R_Unary_User() {
+      delete vptrs;
+    }
+
+    //**********************************************************************
+    //                         Basic characteristics
+    //**********************************************************************
+
+    bool isExpression(void) const {
+      return true;
+    }
+
+    VectorofPtrs getAddresses(void) const {
+      return *vptrs;
+    }
+
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
+
+    size_t rank(void) const {
+      return rank_value;
+    }
+
+    size_t depth(void) const {
+      return depth_value;
+    }
+
+    size_t size(void) const {
+      return x_.size();
+    }
+
+    size_t total_size(void) const {
+      if constexpr (depth <= 1) {
+        return this->size();
+      }
+      else {
+        return (this->size()) * (this->el_total_size());
+      }
+    }
+
+    size_t element_size(void) const {
+      if constexpr (depth <= 1) {
+        return 1;
+      }
+      else {
+        return x_.element_size();
+      }
+    }
+
+    size_t el_total_size(void) const {
+      if constexpr (depth <= 1) {
+        return 1;
+      }
+      else {
+        return x_.el_total_size();
+      }
+    }
+
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+
+    const Dimensions<rank_value>& dims(void) const {
+      return x_.dims();
+    }
+
+    ElementDimensionsType& element_dims(void) const {
+      return x_.element_dims();
+    }
+
+    const RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      return x_.recursive_dims();
+    }
+
+    //**********************************************************************
+    //************************** DEEP ACCESS *******************************
+    //**********************************************************************
+    const Number dat(const size_t i) const {
+      return f_(x_.dat(i));
+    }
+
+    //**********************************************************************
+    //***************** Element ACCESS *************************************
+    //**********************************************************************
+
+    const Element operator[](const size_t i) const {
+      return f_(x_[i]);
+    }
+
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
+
+    std::string expression_name() const {
+      return "Expr_R_Unary_User";
+    }
+
+#if MATHQ_DEBUG >= 1
+    std::string expression(void) const {
+      std::string sx = x_.expression();
+      return expression(sx);
+    }
+#endif
+  };
+
+
+
   //---------------------------------------------------------------------------
   // Expr_R_Binary    binary expressions
   //---------------------------------------------------------------------------
