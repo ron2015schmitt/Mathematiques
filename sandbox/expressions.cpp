@@ -47,12 +47,11 @@
 
 // #include "multi-array.h"
 // #include "scalar.h"
+#include "vector.h"
+#include "dimensions.h"
 // #include "matrix.h"
 // #include "multi-array3.h"
 // #include "multi-array4.h"
-#include "vector.h"
-#include "dimensions.h"
-
 
 // #include "multi-array-constant.h"
 // #include "multi-array-repeat-vec.h"
@@ -83,15 +82,15 @@
 
 
 #include "expressions-r.h"
-// #include "expressions-rw.h"
+#include "expressions-rw.h"
 
 #include "fun_unary_AUTO.h"
 #include "fun_binary_AUTO.h"
 #include "fun_ternary_AUTO.h"
 #include "functions_misc.h"
 #include "functions_structure.h"
-// #include "functions_products.h"
-// #include "functions_user.h"
+#include "functions_products.h"
+#include "functions_user.h"
 // #include "grids.h"
 
 // #include "coda.h"

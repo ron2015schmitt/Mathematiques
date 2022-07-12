@@ -339,7 +339,8 @@ namespace mathq {
   template <typename Number, size_t NDIMS, size_t rank, typename G>
   class GridTraits;
 
-
+  template <class X, class Element, typename Number, size_t depth, size_t rank>
+  Vector<size_t>& findtrue(const ExpressionR<X, Element, Number, depth, rank>& x);
 
 }; // namespace mathq
 

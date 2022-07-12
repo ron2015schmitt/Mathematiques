@@ -13,19 +13,48 @@ namespace mathq {
   template<typename Number>
   class ExpressionRW_Subset : public  ExpressionRW<ExpressionRW_Subset<Number>, Number, Number, 1, 1> {
   public:
-    constexpr static int rank_value = 1;
-    constexpr static int depth_value = 1;
-    typedef Materialize<Number, Number, depth_value, rank_value> ConcreteType;
-    typedef Number ElementType;
-    typedef Number NumberType;
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = 1;
+    constexpr static size_t depth_value = 1;
+
+    // the size of an expression cannot be changed
+    constexpr static bool is_dynamic() noexcept {
+      return false;
+    }
+
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
+
+    using ElementType = Number;
+    using NumberType = typename NumberTrait<ElementType>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using Type = ExpressionRW_Subset<NumberType>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
+
+    using DimensionsType = Dimensions<rank_value>;
+    using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
+
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     // can't be constant since we alow to be on left hand side
     Vector<Number>& x_;
     const Vector<size_t>& ii_;
     const bool delete_ii_;
     VectorofPtrs* vptrs;
   public:
+
+    //**********************************************************************
+    //                      Constructors
+    //**********************************************************************
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
     ExpressionRW_Subset(Vector<Number>& x, const Vector<size_t>& ii)
@@ -46,75 +75,37 @@ namespace mathq {
       delete vptrs;
     }
 
-
-    const Number dat(const size_t i) const {
-      size_t ind = ii_[i];
-      if (ind < 0) {
-        ind = x_.size() + ind;
-      }
-      return x_.dat(ind);
-    }
-    MyNumberType& dat(const size_t i) {
-      size_t ind = ii_[i];
-      if (ind < 0) {
-        ind = x_.size() + ind;
-      }
-      return x_.dat(ind);
-    }
-
-    const Number operator[](const size_t i) const {
-      size_t ind = ii_[i];
-      if (ind < 0) {
-        ind = x_.size() + ind;
-      }
-      return x_[ind];
-    }
-    Number& operator[](const size_t i) {
-      size_t ind = ii_[i];
-      if (ind < 0) {
-        ind = x_.size() + ind;
-      }
-      return x_[ind];
-    }
-
-    template <class Y, class NT2>
-    ExpressionRW_Subset<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
-      return this->equals(rhs);
-    }
-
-    ExpressionRW_Subset<Number>& operator=(const Number d) {
-      return this->equals(d);
-    }
-
-    //----------------------------------------------
-
-    VectorofPtrs getAddresses(void) const {
-      return *vptrs;
-    }
-    size_t size(void) const {
-      return ii_.size();
-    }
-    size_t rank(void) const {
-      return x_.rank();
-    }
-    Dimensions dims(void) const {
-      return x_.dims();
-    }
-    Dimensions template_dims(void) const {
-      return this->dims();
-    }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
-      return x_.recursive_dims();
-    }
-    RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
-      return x_.recursive_dims(parentdims);
-    }
+    //**********************************************************************
+    //                         Basic characteristics
+    //**********************************************************************
 
     bool isExpression(void) const {
       return true;
     }
+
+    VectorofPtrs getAddresses(void) const {
+      return *vptrs;
+    }
+
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
+    size_t rank(void) const {
+      return x_.rank();
+    }
     size_t depth(void) const {
       return depth_value;
+    }
+    size_t size(void) const {
+      return ii_.size();
+    }
+    size_t total_size(void) const {
+      if constexpr (depth_value<=1) {
+        return this->size();
+      }
+      else {
+        return (this->size())*(this->el_total_size());
+      }
     }
     size_t element_size(void) const {
       if constexpr (depth_value<=1) {
@@ -132,14 +123,72 @@ namespace mathq {
         return x_.el_total_size();
       }
     }
-    size_t total_size(void) const {
-      if constexpr (depth_value<=1) {
-        return this->size();
-      }
-      else {
-        return (this->size())*(this->el_total_size());
-      }
+
+
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+    DimensionsType dims(void) const {
+      return x_.dims();
     }
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      return x_.recursive_dims();
+    }
+
+
+    //**********************************************************************
+    //******************** DEEP ACCESS: x.dat(n) ***************************
+    //**********************************************************************
+    const NumberType dat(const size_t i) const {
+      size_t ind = ii_[i];
+      if (ind < 0) {
+        ind = x_.size() + ind;
+      }
+      return x_.dat(ind);
+    }
+    NumberType& dat(const size_t i) {
+      size_t ind = ii_[i];
+      if (ind < 0) {
+        ind = x_.size() + ind;
+      }
+      return x_.dat(ind);
+    }
+
+    //**********************************************************************
+    //************* Array-style Element Access: x[n] ***********************
+    //**********************************************************************
+    const ElementType operator[](const size_t i) const {
+      size_t ind = ii_[i];
+      if (ind < 0) {
+        ind = x_.size() + ind;
+      }
+      return x_[ind];
+    }
+    NumberType& operator[](const size_t i) {
+      size_t ind = ii_[i];
+      if (ind < 0) {
+        ind = x_.size() + ind;
+      }
+      return x_[ind];
+    }
+
+    //**********************************************************************
+    //                        operator=
+    //**********************************************************************
+
+    template <class Y, class NT2>
+    ExpressionRW_Subset<NumberType>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
+      return this->equals(rhs);
+    }
+
+    ExpressionRW_Subset<NumberType>& operator=(const NumberType d) {
+      return this->equals(d);
+    }
+
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
+
     std::string expression_name() const {
       return "ExpressionRW_Subset";
     }
@@ -155,28 +204,56 @@ namespace mathq {
 
 
 
+
   //--------------------------------------------------------------------------
   // ExpressionRW_Submask   Submask Expression
   //--------------------------------------------------------------------------
   template<typename Number>
   class ExpressionRW_Submask : public  ExpressionRW<ExpressionRW_Submask<Number>, Number, Number, 1, 1> {
   public:
-    constexpr static int rank_value = 1;
-    constexpr static int depth_value = 1;
-    typedef Materialize<Number, Number, depth_value, rank_value> ConcreteType;
-    typedef Number ElementType;
-    typedef Number NumberType;
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = 1;
+    constexpr static size_t depth_value = 1;
+
+    // the size of an expression cannot be changed
+    constexpr static bool is_dynamic() noexcept {
+      return false;
+    }
+
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
+
+    using ElementType = Number;
+    using NumberType = typename NumberTrait<ElementType>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using Type = ExpressionRW_Submask<NumberType>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
+
+    using DimensionsType = Dimensions<rank_value>;
+    using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
+
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     // can't be constant since we alow to be on left hand side
-    Vector<Number>& x_;
+    Vector<NumberType>& x_;
     const Vector<size_t>& ii_;
     VectorofPtrs* vptrs;
 
   public:
-    typedef typename NumberTrait<Number>::Type MyNumberType;
+    //**********************************************************************
+    //                      Constructors
+    //**********************************************************************
 
-    ExpressionRW_Submask(Vector<Number>& x, const Vector<bool>& mask)
+    ExpressionRW_Submask(Vector<NumberType>& x, const Vector<bool>& mask)
       : x_(x), ii_(*(new Vector<size_t>(findtrue(mask)))) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
@@ -187,63 +264,37 @@ namespace mathq {
       delete vptrs;
     }
 
-
-    const Number dat(const size_t i) const {
-      size_t ind = ii_[i];
-      return x_.dat(ind);
-    }
-    MyNumberType& dat(const size_t i) {
-      size_t ind = ii_[i];
-      return x_.dat(ind);
-    }
-
-    const Number operator[](const size_t i) const {
-      size_t ind = ii_[i];
-      return x_[ind];
-    }
-    Number& operator[](const size_t i) {
-      size_t ind = ii_[i];
-      return x_[ind];
-    }
-
-    template <class Y, class NT2>
-    ExpressionRW_Submask<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
-      return this->equals(rhs);
-    }
-
-    ExpressionRW_Submask<Number>& operator=(const Number d) {
-      return this->equals(d);
-    }
-
-    //---------------------------------------------
-
-    VectorofPtrs getAddresses(void) const {
-      return *vptrs;
-    }
-    size_t size(void) const {
-      return ii_.size();
-    }
-    size_t rank(void) const {
-      return x_.rank();
-    }
-    Dimensions dims(void) const {
-      return x_.dims();
-    }
-    Dimensions template_dims(void) const {
-      return this->dims();
-    }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
-      return x_.recursive_dims();
-    }
-    RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
-      return x_.recursive_dims(parentdims);
-    }
+    //**********************************************************************
+    //                         Basic characteristics
+    //**********************************************************************
 
     bool isExpression(void) const {
       return true;
     }
+
+    VectorofPtrs getAddresses(void) const {
+      return *vptrs;
+    }
+
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
+    size_t rank(void) const {
+      return x_.rank();
+    }
     size_t depth(void) const {
       return depth_value;
+    }
+    size_t size(void) const {
+      return ii_.size();
+    }
+    size_t total_size(void) const {
+      if constexpr (depth_value<=1) {
+        return this->size();
+      }
+      else {
+        return (this->size())*(this->el_total_size());
+      }
     }
     size_t element_size(void) const {
       if constexpr (depth_value<=1) {
@@ -261,20 +312,62 @@ namespace mathq {
         return x_.el_total_size();
       }
     }
-    size_t total_size(void) const {
-      if constexpr (depth_value<=1) {
-        return this->size();
-      }
-      else {
-        return (this->size())*(this->el_total_size());
-      }
+
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+    DimensionsType dims(void) const {
+      return x_.dims();
     }
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      return x_.recursive_dims();
+    }
+
+    //**********************************************************************
+    //******************** DEEP ACCESS: x.dat(n) ***************************
+    //**********************************************************************
+    const NumberType dat(const size_t i) const {
+      size_t ind = ii_[i];
+      return x_.dat(ind);
+    }
+    NumberType& dat(const size_t i) {
+      size_t ind = ii_[i];
+      return x_.dat(ind);
+    }
+
+    //**********************************************************************
+    //************* Array-style Element Access: x[n] ***********************
+    //**********************************************************************
+
+    const ElementType operator[](const size_t i) const {
+      size_t ind = ii_[i];
+      return x_[ind];
+    }
+    NumberType& operator[](const size_t i) {
+      size_t ind = ii_[i];
+      return x_[ind];
+    }
+
+    //**********************************************************************
+    //                        operator=
+    //**********************************************************************
+
+    template <class Y, class NT2>
+    ExpressionRW_Submask<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
+      return this->equals(rhs);
+    }
+
+    ExpressionRW_Submask<Number>& operator=(const Number d) {
+      return this->equals(d);
+    }
+
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
+
     std::string expression_name() const {
       return "ExpressionRW_Submask";
     }
-
-
-
 
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
@@ -290,25 +383,50 @@ namespace mathq {
   // VERW_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class Element, typename Number, int depth>
-  class ExpressionRW_Join : public  ExpressionRW<ExpressionRW_Join<X, Y, Element, Number, depth>, Element, Number, depth, 1> {
+  template <class X, class Y, class Element, typename Number, size_t depth_>
+  class ExpressionRW_Join : public  ExpressionRW<ExpressionRW_Join<X, Y, Element, Number, depth_>, Element, Number, depth_, 1> {
   public:
-    constexpr static int rank_value = 1;
-    constexpr static int depth_value = depth;
-    typedef Materialize<Element, Number, depth, rank_value> ConcreteType;
-    typedef Element ElementType;
-    typedef Number NumberType;
+
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = 1;
+    constexpr static size_t depth_value = depth_;
+
+    // the size of an expression cannot be changed
+    constexpr static bool is_dynamic() noexcept {
+      return false;
+    }
+
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
+
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<ElementType>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using Type = ExpressionRW_Join<X, Y, Element, Number, depth_>;
+    using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value>;
+
+    using DimensionsType = Dimensions<rank_value>;
+    using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
-    // can't be constant since we alow to be on left hand side
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
+  // can't be constant since we alow to be on left hand side
     X& x_;
     Y& y_;
     VectorofPtrs* vptrs;
 
   public:
-
-
-
+    //**********************************************************************
+    //                      Constructors
+    //**********************************************************************
     ExpressionRW_Join(X& x, Y& y) : x_(x), y_(y) {
       vptrs = new VectorofPtrs();
       vptrs->add(x_.getAddresses());
@@ -320,6 +438,75 @@ namespace mathq {
       delete vptrs;
     }
 
+    //**********************************************************************
+    //                         Basic characteristics
+    //**********************************************************************
+
+    bool isExpression(void) const {
+      return true;
+    }
+
+    VectorofPtrs getAddresses(void) const {
+      return *vptrs;
+    }
+
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
+    size_t rank(void) const {
+      return rank_value;
+    }
+    size_t depth(void) const {
+      return depth;
+    }
+    size_t size(void) const {
+      return x_.size()+y_.size();
+    }
+    size_t total_size(void) const {
+      if constexpr (depth<=1) {
+        return this->size();
+      }
+      else {
+        return x_.total_size() + y_.total_size();
+      }
+    }
+    size_t element_size(void) const {
+      if constexpr (depth<=1) {
+        return 1;
+      }
+      else {
+        return x_.element_size();
+      }
+    }
+    size_t el_total_size(void) const {
+      if constexpr (depth<=1) {
+        return 1;
+      }
+      else {
+        return x_.el_total_size();
+      }
+    }
+
+
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+    DimensionsType dims(void) const {
+      DimensionsType d(x_.size()+y_.size());
+      return d;
+    }
+    DimensionsType element_dims(void) const {
+      return x_.element_dims();
+    }
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      RecursiveDimensions<depth_value>& ddims = *(new RecursiveDimensions<depth_value>);
+      return recursive_dims(ddims);
+    }
+
+
+    //**********************************************************************
+    //******************** DEEP ACCESS: x.dat(n) ***************************
+    //**********************************************************************
     const Number dat(const size_t i) const {
       if (i < x_.total_size()) {
         return x_.dat(i);
@@ -336,6 +523,10 @@ namespace mathq {
         return y_.dat(i-x_.total_size());
       }
     }
+
+    //**********************************************************************
+    //************* Array-style Element Access: x[n] ***********************
+    //**********************************************************************
     const Element operator[](const size_t i) const {
       if (i < x_.size()) {
         return x_[i];
@@ -353,83 +544,29 @@ namespace mathq {
       }
     }
 
+    //**********************************************************************
+    //                        operator=
+    //**********************************************************************
+
     template <class Z>
-    ExpressionRW_Join<X, Y, Element, Number, depth>& operator=(const ExpressionR<Z, Element, Number, depth, 1>& rhs) {
+    ExpressionRW_Join<X, Y, Element, Number, depth_value>& operator=(const ExpressionR<Z, Element, Number, depth_value, 1>& rhs) {
       return this->equals(rhs);
     }
 
-    ExpressionRW_Join<X, Y, Element, Number, depth>& operator=(const Number d) {
+    ExpressionRW_Join<X, Y, Element, Number, depth_value>& operator=(const Number d) {
       return this->equals(d);
     }
-    ExpressionRW_Join<X, Y, Element, Number, depth>& operator=(const Element& e) {
+    ExpressionRW_Join<X, Y, Element, Number, depth_value>& operator=(const Element& e) {
       return this->equals(e);
     }
 
-    //----------------------------------------------
-    VectorofPtrs getAddresses(void) const {
-      return *vptrs;
-    }
-    size_t size(void) const {
-      return x_.size()+y_.size();
-    }
-    size_t rank(void) const {
-      return rank_value;
-    }
-    Dimensions dims(void) const {
-      Dimensions d(x_.size()+y_.size());
-      return d;
-    }
-    Dimensions template_dims(void) const {
-      return this->dims();
-    }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
-      RecursiveDimensions<depth_value>& ddims = *(new RecursiveDimensions<depth_value>);
-      return recursive_dims(ddims);
-    }
-    RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
-      const int N = parentdims.size();
-      RecursiveDimensions<depth_value>& ddims = x_.recursive_dims(parentdims);
-      ddims[N] = this->dims();
-      return ddims;
-    }
-    bool isExpression(void) const {
-      return true;
-    }
-    size_t depth(void) const {
-      return depth;
-    }
-    Dimensions element_dims(void) const {
-      return x_.element_dims();
-    }
-    size_t element_size(void) const {
-      if constexpr (depth<=1) {
-        return 1;
-      }
-      else {
-        return x_.element_size();
-      }
-    }
-    size_t el_total_size(void) const {
-      if constexpr (depth<=1) {
-        return 1;
-      }
-      else {
-        return x_.el_total_size();
-      }
-    }
-    size_t total_size(void) const {
-      if constexpr (depth<=1) {
-        return this->size();
-      }
-      else {
-        return x_.total_size() + y_.total_size();
-      }
-    }
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
 
     std::string expression_name() const {
       return "ExpressionRW_Join";
     }
-
 
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
@@ -441,116 +578,5 @@ namespace mathq {
   };
 
 
-
-
-
-
-
-  //   //---------------------------------------------------------------------------
-  //   // ExpressionRW_RealFromComplex  used for accessing real/imag part of complex vector
-  //   //---------------------------------------------------------------------------
-  //   template <typename Number, class OP, int depth>
-  //     class ExpressionRW_RealFromComplex : public  ExpressionRW<Number,ExpressionRW_RealFromComplex<Number,OP,depth> > {
-  //   private:
-    // can't be constant since we alow to be on left hand side
-  //     Vector<std::complex<Number> >& a_;
-  //     VectorofPtrs *vptrs;
-
-  //   public:
-  //     typedef typename NumberTrait<Number>::Type MyNumberType;
-
-
-  //   ExpressionRW_RealFromComplex(Vector<std::complex<Number> >& a)
-  //     :   a_(a) { 
-  //       vptrs = new VectorofPtrs();
-  //       vptrs->add(&a_);
-  //     }
-
-  //     ~ExpressionRW_RealFromComplex() {
-  //       delete vptrs;
-  //     }
-
-  //     const Number operator[](size_t i) const{
-  //       return OP::give(a_[i]);
-  //     }
-  //     Number& operator[](size_t i) {
-  //       return OP::give(a_[i]);
-  //     }
-  //     const MyNumberType dat(const size_t i) const {
-  //       return OP::give(a_.dat(i));
-  //     }
-  //     MyNumberType& dat(const size_t i)  {
-  //       return OP::give(a_.dat(i));
-  //     }
-
-
-
-  //     VectorofPtrs getAddresses(void) const {
-  //       return *vptrs;
-  //     }
-  //     size_t size(void) const {
-  //       return a_.size();
-  //     }
-  //     size_t rank(void) const {
-  //       return a_.rank();
-  //     }
-  //     Dimensions dims(void) const {
-  //       return a_.dims();
-  //     }
-  //     bool isExpression(void) const {
-  //       return true;
-  //     }
-  //   size_t depth(void) const {
-  //       return depth;
-  //     }
-  //   size_t element_size(void) const {
-  //     if constexpr(depth<2) {
-  //       return 1;
-  //     } else {
-  //       return a_.element_size();
-  //     }
-  //   }
-  //   size_t el_total_size(void) const {
-  //     if constexpr(depth<2) {
-  //       return 1;
-  //     } else {
-  //       return a_.el_total_size();
-  //     }
-  //   }
-  //     size_t total_size(void) const {
-  //       if constexpr(depth<2) {
-  // 	  return this->size();
-  // 	} else {
-  // 	return (this->size())*(this->el_total_size());
-  //       }
-  //     }
-  //     std::string expression_name() const {
-  //       return "ExpressionRW_RealFromComplex";
-  //     }
-
-
-  //     template <class NT2, class B>
-  //       ExpressionRW_RealFromComplex<Number,OP,depth>& operator=(const ExpressionR<NT2,B>& rhs) { 
-  //       return this->equals(rhs);
-  //     }
-
-  //     ExpressionRW_RealFromComplex<Number,OP,depth>& operator=(const MyNumberType d) { 
-  //       return this->equals(d);
-  //     }
-
-
-  // #if MATHQ_DEBUG>=1
-  //     std::string expression(void) const {
-  //       return a_.expression();
-  //       //      return expression_VSliceObj(a_.expression(),start_,end_,step_);
-  //     }
-  // #endif 
-
-  //   };
-
-
-
-
 };
-
 #endif 

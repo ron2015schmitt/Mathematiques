@@ -44,6 +44,9 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     const Derived& x_;
     VectorofPtrs* vptrs;
 
@@ -140,7 +143,7 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const Number dat(const size_t i) const {
+    const NumberType dat(const size_t i) const {
       return FUNC::apply(x_.dat(i));
     }
 
@@ -212,6 +215,9 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     const Derived& x_;
     FUNC& f_;
     VectorofPtrs* vptrs;
@@ -219,8 +225,8 @@ namespace mathq {
   public:
 
     //**********************************************************************
-  //                      Constructors
-  //**********************************************************************
+    //                      Constructors
+    //**********************************************************************
 
     ExpressionR_Unary_User(const FUNC& f, const Derived& x) : x_(x), f_(f) {
       vptrs = new VectorofPtrs();
@@ -306,7 +312,7 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const Number dat(const size_t i) const {
+    const NumberType dat(const size_t i) const {
       return f_(x_.dat(i));
     }
 
@@ -377,6 +383,9 @@ namespace mathq {
     using TypeB = typename std::conditional<D2 == 0, const B, const B&>::type;
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     TypeA a_;
     TypeB b_;
     VectorofPtrs* vptrs;
@@ -776,6 +785,9 @@ namespace mathq {
     using FUNC = typename FunctionType2<NT1, NT2, NT3>::type;
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     TypeA a_;
     TypeB b_;
     FUNC& f_;
@@ -1161,6 +1173,9 @@ namespace mathq {
     using TypeC = typename std::conditional<D3 == 0, const C, const C&>::type;
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     TypeA a_;
     TypeB b_;
     TypeC c_;
@@ -1436,10 +1451,13 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     const A& a_;
     const Derived& x_;
     const size_t N_;
-    const Number x0_;
+    const NumberType x0_;
     VectorofPtrs* vptrs;
 
   public:
@@ -1448,7 +1466,7 @@ namespace mathq {
     //                      Constructors
     //**********************************************************************
 
-    ExpressionR_Series(const A& a, const Derived& x, const size_t N, const Number x0)
+    ExpressionR_Series(const A& a, const Derived& x, const size_t N, const NumberType x0)
       : a_(a), x_(x), N_(N), x0_(x0) {
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
@@ -1543,9 +1561,9 @@ namespace mathq {
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
 
-    const Number dat(const size_t i) const {
+    const NumberType dat(const size_t i) const {
 
-      const Number x = x_.dat(i) - x0_;
+      const NumberType x = x_.dat(i) - x0_;
       Number sum = 0;
       // TODO: check a_.size >= N
       Number xpow = 1;
@@ -1642,11 +1660,14 @@ namespace mathq {
 
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     const A& a_;
     const B& b_;
     const Derived& x_;
     const size_t N_;
-    const Number k1_;
+    const NumberType k1_;
     Vector<Number>& k_;
     bool initialized;
     VectorofPtrs* vptrs;
@@ -1656,7 +1677,7 @@ namespace mathq {
     //                      Constructors
     //**********************************************************************
 
-    ExpressionR_Series2(const A& a, const A& b, const Derived& x, const size_t N, const Number k1)
+    ExpressionR_Series2(const A& a, const A& b, const Derived& x, const size_t N, const NumberType k1)
       : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<Number>(N))) {
 
       vptrs = new VectorofPtrs();
@@ -1750,14 +1771,14 @@ namespace mathq {
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
 
-    const Number dat(const size_t i) const {
+    const NumberType dat(const size_t i) const {
       return (*this)[i];
     }
 
     //**********************************************************************
     //***************** Element ACCESS *************************************
     //**********************************************************************
-    const Number operator[](const size_t i) const {
+    const ElementType operator[](const size_t i) const {
       Number sum = 0;
       // TODO: check a_.size >= N
       for (size_t n = 0; n < N_; n++) {
@@ -1832,6 +1853,9 @@ namespace mathq {
 
 
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     const Derived& x_;
     VectorofPtrs* vptrs;
     DimensionsType* reverse_dims;
@@ -1928,7 +1952,7 @@ namespace mathq {
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
 
-    const Number dat(const size_t i) const {
+    const NumberType dat(const size_t i) const {
       if constexpr (depth <= 1) {
         return (*this[i]);
       }
@@ -2006,6 +2030,9 @@ namespace mathq {
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     const X& x_;
     const Y& y_;
     VectorofPtrs* vptrs;
@@ -2097,7 +2124,7 @@ namespace mathq {
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
 
-    const Number dat(const size_t i) const {
+    const NumberType dat(const size_t i) const {
       if (i < x_.total_size()) {
         return x_.dat(i);
       }
@@ -2174,6 +2201,9 @@ namespace mathq {
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
   private:
+    //**********************************************************************
+    // OBJECT DATA 
+    //**********************************************************************
     const A& a_;
     const size_t m_;
     const size_t N_;
@@ -2253,21 +2283,15 @@ namespace mathq {
     DimensionsType dims(void) const {
       return a_.dims();
     }
-    DimensionsType template_dims(void) const {
-      return this->dims();
-    }
     RecursiveDimensions<depth_value>& recursive_dims(void) const {
       return a_.recursive_dims();
-    }
-    RecursiveDimensions<depth_value>& recursive_dims(RecursiveDimensions<depth_value>& parentdims) const {
-      return a_.recursive_dims(parentdims);
     }
 
 
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const Number dat(const size_t i) const {
+    const NumberType dat(const size_t i) const {
       size_t index = size_t(i % total_size());
       return a_.dat(i);
     }
@@ -2275,7 +2299,7 @@ namespace mathq {
     //**********************************************************************
     //************* Array-style Element Access: x[n] ***********************
     //**********************************************************************
-    const Number operator[](const size_t i) const {
+    const ElementType operator[](const size_t i) const {
       size_t index = size_t(i % N_);
       //      PRINTF3("  i=%d, m_=%lu, i%%N_=%d\n",i,m_,index);
       return a_[index];
