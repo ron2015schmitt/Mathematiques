@@ -86,7 +86,8 @@
 #include "fun_unary_AUTO.h"
 #include "fun_binary_AUTO.h"
 #include "fun_ternary_AUTO.h"
-// #include "functions_misc.h"
+#include "functions_misc.h"
+// #include "grids.h"
 // #include "functions_structure.h"
 // #include "functions_products.h"
 // #include "functions_user.h"
@@ -121,6 +122,9 @@ int main(int argc, char* argv[]) {
   TRDISP(std::sph_legendre(3, 0, 1.2345));
   TRDISP(sph_legendre(2, 1, v3));
 
+  Vector<double> J0Coeffs = Vector<double>({ 1.,0.,-0.25,0.,0.015625,0.,-0.000434028,0.,6.78168e-6,0.,-6.78168e-8,0.,4.7095e-10,0.,-2.40281e-12,0.,9.38597e-15,0.,-2.8969e-17,0. });
+  Vector<double> r = linspace<double>(0, 10, 101);
+  TRDISP(taylor(J0Coeffs, r, 19));
 
   return 0;
 }
