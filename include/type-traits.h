@@ -569,7 +569,7 @@ namespace mathq {
     using InputType = MultiArray<Element, rank, ints...>;
     using DimensionsType = typename MultiArray<Element, rank, ints...>::DimensionsType;
     using Type = typename std::conditional< level == 0, DimensionsType, DimensionsTrait<Element, level-1> >::type;
-    
+
   };
 
 
@@ -972,6 +972,16 @@ namespace mathq {
     return false;
   }
 
+
+  template<size_t rank, size_t... ints>
+  constexpr size_t calc_size() {
+    constexpr size_t N = sizeof...(ints);
+    if constexpr (N < rank) {
+      return 0;
+    }
+    constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
+    return compile_time_product<size_t,N>(A);
+  }
 
 
 

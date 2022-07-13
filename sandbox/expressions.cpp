@@ -45,7 +45,7 @@
 #include "expression-r.h"
 #include "expression-rw.h"
 
-// #include "multi-array.h"
+#include "multi-array.h"
 // #include "scalar.h"
 #include "vector.h"
 #include "dimensions.h"
@@ -53,11 +53,8 @@
 // #include "multi-array3.h"
 // #include "multi-array4.h"
 
-// #include "multi-array-constant.h"
-// #include "multi-array-repeat-vec.h"
-// #include "multi-array-outer-product.h"
-
 // #include "vector-constant.h"
+// #include "vector-sparse.h"
 
 // #include "matrix_constdiag.h"
 // #include "matrix_diagonal.h"
@@ -71,6 +68,7 @@
 // #include "matrix_rep.h"
 // #include "matrix_skewhermitian.h"
 // #include "matrix_skewsymmetric.h"
+// #include "matrix_sparse.h"
 // #include "matrix_symmetric.h"
 // #include "matrix_toeplitz.h"
 // #include "matrix_uppertriangle.h"
@@ -79,6 +77,18 @@
 // #include "matrix-constant.h"
 // #include "matrix-repeat-vec.h"
 // #include "matrix-outer-product.h"
+
+// #include "multi-array3-constant.h"
+// #include "multi-array3-repeat-vec.h"
+// #include "multi-array3-outer-product.h"
+
+// #include "multi-array4-constant.h"
+// #include "multi-array4-repeat-vec.h"
+// #include "multi-array5-outer-product.h"
+
+// #include "multi-array-constant.h"
+// #include "multi-array-repeat-vec.h"
+// #include "multi-array-outer-product.h"
 
 
 #include "expressions-r.h"
@@ -144,6 +154,12 @@ int main(int argc, char* argv[]) {
   TRDISP(join(k,k));
 
   TRDISP(rep(k,3));
+
+
+  CR();
+  ECHO_CODE(MultiArray<double,1> x1);
+  TRDISP(x1);
+
 
   return 0;
 }
