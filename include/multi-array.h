@@ -36,7 +36,7 @@ namespace mathq {
     //                  Compile Time Constant
     //**********************************************************************
 
-    constexpr static size_t rank_value = 1;
+    constexpr static size_t rank_value = rank_;
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = check_dynamic<rank_value, ints...>();
     constexpr static size_t compile_time_size = calc_size<rank_value, ints...>();
@@ -84,175 +84,275 @@ namespace mathq {
 
 
     //**********************************************************************
-    //************************** CONSTRUCTORS ******************************
+    //                            CONSTRUCTORS 
     //**********************************************************************
 
     // --------------------- default CONSTRUCTOR ---------------------
 
     explicit MultiArray() {
-      // std::vector<size_t> dv(rank);
-      // resize(new Dimensions(dv));
-      // constructorHelper();
     }
 
-    // --------------------- constant=0 CONSTRUCTOR ---------------------
-
-    // explicit MultiArray(const Dimensions& dims)   {
-    //   resize(dims);
-    //   constructorHelper();
-    // }
-
-    // // --------------------- constant Element CONSTRUCTOR ---------------------
-
-    // explicit MultiArray(const Dimensions& dims, const Element& e)   {
-    //   resize(dims);
-    //   constructorHelper();
-    //   *this = e;
-    // }
-
-    // // --------------------- constant Element CONSTRUCTOR ---------------------
-
-    // template <size_t D1 = depth, EnableIf<(D1 > 0)> = 0>
-
-    //   explicit MultiArray(const Dimensions& dims, const NumberType d)   {
-    //   resize(dims);
-    //   constructorHelper();
-    //   *this = d;
-    // }
-
-    // // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    // MultiArray(const NestedInitializerList<Element, rank>& mylist)   {
-    //   *this = mylist;
-    //   constructorHelper();
-    // }
-
-    // // ************* Expression CONSTRUCTOR---------------------
-
-    // template <class X>
-    // MultiArray(const ExpressionR<X, Element, NumberType, depth, rank>& x)   {
-    //   *this = x;
-    //   constructorHelper();
-    // }
 
 
-    // // ************* Vector Constructor---------------------
-    // template <int NE>
-    // MultiArray(const Vector<Element, NE>& v)   {
-    //   resize(v.recursive_dims());
-    //   for (int c = 0; c < v.total_size(); c++) {
-    //     (*this)[c] = v[c];
-    //   }
-    //   constructorHelper();
-    // }
 
 
-    // --------------------- constructorHelper() --------------------
+
+
+    //**********************************************************************
+    //                    CONSTRUCTORS: Dynamic size  
+    //**********************************************************************
+
+    // --------------------- DYNAMIC SIZE: set size from int  ---------------------
+
+    template<typename...T, mathq::EnableIf<(is_dynamic_value&& std::conjunction<std::is_integral<T>...>::value)> = 0>
+    explicit MultiArray(T... args) {
+      const size_t N = sizeof...(args);
+      std::valarray<size_t> A = { (static_cast<size_t>(args))... };
+      size_t product = 1;
+      for (size_t i = 0; i < N; ++i) {
+        product *= A[i];
+      }
+      data_.resize(product);
+    }
+
+    // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
+
+    template<size_t TEMP = is_dynamic_value, EnableIf<TEMP> = 1>
+    explicit MultiArray(const Dimensions<0>& dims) {
+      // TRDISP(dims);
+      this->resize(dims);
+    }
+
+
+
+
+    // old----------------------
+        // --------------------- constant=0 CONSTRUCTOR ---------------------
+
+        // explicit MultiArray(const Dimensions& dims)   {
+        //   resize(dims);
+        //   constructorHelper();
+        // }
+
+        // // --------------------- constant Element CONSTRUCTOR ---------------------
+
+        // explicit MultiArray(const Dimensions& dims, const Element& e)   {
+        //   resize(dims);
+        //   constructorHelper();
+        //   *this = e;
+        // }
+
+        // // --------------------- constant Element CONSTRUCTOR ---------------------
+
+        // template <size_t D1 = depth, EnableIf<(D1 > 0)> = 0>
+
+        //   explicit MultiArray(const Dimensions& dims, const NumberType d)   {
+        //   resize(dims);
+        //   constructorHelper();
+        //   *this = d;
+        // }
+
+        // // ************* C++11 initializer_list CONSTRUCTOR---------------------
+        // MultiArray(const NestedInitializerList<Element, rank>& mylist)   {
+        //   *this = mylist;
+        //   constructorHelper();
+        // }
+
+        // // ************* Expression CONSTRUCTOR---------------------
+
+        // template <class X>
+        // MultiArray(const ExpressionR<X, Element, NumberType, depth, rank>& x)   {
+        //   *this = x;
+        //   constructorHelper();
+        // }
+
+
+        // // ************* Vector Constructor---------------------
+        // template <int NE>
+        // MultiArray(const Vector<Element, NE>& v)   {
+        //   resize(v.recursive_dims());
+        //   for (int c = 0; c < v.total_size(); c++) {
+        //     (*this)[c] = v[c];
+        //   }
+        //   constructorHelper();
+        // }
+
+
+        // --------------------- constructorHelper() --------------------
 
     void constructorHelper() {
     }
 
     //**********************************************************************
-    //************************** DESTRUCTOR ******************************
+    //                             DESTRUCTOR 
     //**********************************************************************
 
     ~MultiArray() {
       // remove from directory
     }
 
+
     //**********************************************************************
-    //************************** Size related  ******************************
+    //                         Basic characteristics
     //**********************************************************************
 
-    // inline size_t size(void) const {
-    //   return data_.size();
-    // }
-    // size_t getRank(void) const {
-    //   return rank_value;
-    // }
-    // Dimensions dims(void) const {
-    //   return *dimensions_;
-    // }
-    // bool isExpression(void) const {
-    //   return false;
-    // }
-    // MultiArrays getEnum() const {
-    //   return T_TENSOR;
-    // }
+    bool isExpression(void) const {
+      return false;
+    }
+    VectorofPtrs getAddresses(void) const {
+      VectorofPtrs myaddr((void*)this);
+      return myaddr;
+    }
 
-    // VectorofPtrs getAddresses(void) const {
-    //   VectorofPtrs myaddr((void*)this);
-    //   return myaddr;
-    // }
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
 
+    size_t rank(void) const {
+      return rank_value;
+    }
 
-    // inline size_t depth(void) const {
-    //   return depth;
-    // }
+    inline size_t depth(void) const {
+      return depth_value;
+    }
 
-    // Dimensions element_dims(void) const {
-    //   Dimensions dimensions();
-    //   if constexpr (depth > 1) {
-    //     if (size() > 0) {
-    //       return data_[0].dims();
-    //     }
-    //   }
-    //   return *(new Dimensions());
-    // }
-
-    // // the size of each element
-    // inline size_t element_size(void) const {
-    //   if constexpr (depth < 2) {
-    //     return 1;
-    //   }
-    //   else {
-    //     const size_t Nelements = this->size();
-    //     if (Nelements == 0) {
-    //       return 0;
-    //     }
-    //     else {
-    //       return data_[0].size();
-    //     }
-    //   }
-    // }
-
-    // // the deep size of an element: the total number of numbers in an element
-    // inline size_t el_total_size(void) const {
-    //   if constexpr (depth < 2) {
-    //     return 1;
-    //   }
-    //   else {
-    //     const size_t Nelements = this->size();
-    //     if (Nelements == 0) {
-    //       return 0;
-    //     }
-    //     else {
-    //       return data_[0].total_size();
-    //     }
-    //   }
-    // }
+    inline size_t size(void) const {
+      return data_.size();
+    }
 
     // // the total number of numbers in this data structure
-    // size_t total_size(void) const {
-    //   if constexpr (depth < 2) {
-    //     return this->size();
-    //   }
-    //   else {
-    //     return (this->size()) * (this->el_total_size());
-    //   }
-    // }
-    // std::vector<Dimensions>& recursive_dims(void) const {
-    //   std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-    //   return recursive_dims(ddims);
-    // }
-    // std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
-    //   parentdims.push_back(dims());
-    //   if constexpr (depth > 1) {
-    //     if (size() > 0) {
-    //       data_[0].recursive_dims(parentdims);
-    //     }
-    //   }
-    //   return parentdims;
-    // }
+    size_t total_size(void) const {
+      if constexpr (depth_value<2) {
+        return this->size();
+      }
+      else {
+        return (this->size())*(this->el_total_size());
+      }
+    }
+
+    // the size of each element
+    inline size_t element_size(void) const {
+      if constexpr (depth_value<2) {
+        return 1;
+      }
+      else {
+        if (size() > 0) {
+          return data_[0].size();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.size();
+        }
+      }
+    }
+
+    // the total number of numbers in an element
+    inline size_t el_total_size(void) const {
+      if constexpr (depth_value<2) {
+        return 1;
+      }
+      else {
+        if (size() > 0) {
+          return data_[0].total_size();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.total_size();
+        }
+      }
+    }
+
+
+    //**********************************************************************
+    //                          Resize
+    //**********************************************************************
+
+    // template<bool temp = is_dynamic_value, EnableIf<temp> = 0>  // cuases issues
+    Type& resize(const size_t N) {
+      if constexpr (is_dynamic_value) {
+        if (N != this->size()) {
+          data_.resize(N);
+        }
+      }
+      return *this;
+    }
+
+    Type& resize(const Dimensions<dynamic>& dims) {
+      return resize(dims.product());
+    }
+
+
+    // resize_depth <= depth_value
+    template <size_t resize_depth>
+    Type& resize(const RecursiveDimensions<resize_depth>& new_rdims) {
+      return recurse_resize(new_rdims, 0);
+    }
+
+    // helper functions
+    template <size_t resize_depth>
+    Type& recurse_resize(const RecursiveDimensions<resize_depth>& parent_rdims, size_t di = 0) {
+      size_t depth_index = di;
+      const size_t newSize = parent_rdims[depth_index++];
+      if constexpr (is_dynamic_value) {
+        resize(newSize);
+      }
+      if constexpr (depth_value >= 1) {
+        if (depth_index < resize_depth) {
+          for (size_t ii = 0; ii < size(); ii++) {
+            data_[ii].recurse_resize(parent_rdims, depth_index);
+          }
+        }
+      }
+      return *this;
+    }
+
+
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+
+    // defined later since Dimensions is dependent on Vector
+    Dimensions<rank_value>& dims(void) const {
+      return *(new Dimensions<rank_value>({ this->size() }));
+    }
+
+    ElementDimensionsType& element_dims(void) const {
+      if constexpr (depth_value>1) {
+        if (this->size()>0) {
+          return data_[0].dims();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.dims();
+        }
+      }
+      return *(new ElementDimensionsType{});
+    }
+
+
+    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+      RecursiveDimensions<depth_value>& rdims = *(new RecursiveDimensions<depth_value>);
+      recurse_dims(rdims, 0);
+      return rdims;
+    }
+
+    template <size_t full_depth>
+    const Type& recurse_dims(RecursiveDimensions<full_depth>& parent_rdims, const size_t di = 0) const {
+      size_t depth_index = di;
+      parent_rdims[depth_index++] = dims();
+      if constexpr (depth_value>1) {
+        if (size()>0) {
+          data_[0].recurse_dims(parent_rdims, depth_index);
+        }
+        else {
+          Element& x = *(new Element);
+          x.recurse_dims(parent_rdims, depth_index);
+        }
+      }
+      return *this;
+    }
+
+
 
     //**********************************************************************
     //********************* Resize ********************** ******************
@@ -680,6 +780,21 @@ namespace mathq {
       s += StyledString::get(COMMA).get();
       s += "rank=";
       s += num2string(rank_value);
+      size_t product = 1;
+      for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
+        product *= static_dims_array[ii];
+      }
+      if (product > 0) {
+        for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
+          if (ii == 0) {
+            s += StyledString::get(COMMA).get();
+          }
+          else {
+            s += "⨯";
+          }
+          s += template_size_to_string(static_dims_array[ii]);
+        }
+      }
       s += StyledString::get(ANGLE2).get();
       return s;
     }
@@ -745,27 +860,19 @@ namespace mathq {
 
     // TODO: implement format
 
-    friend std::ostream& operator<<(std::ostream& stream, const Type& t) {
-      using namespace display;
-      size_t n = 0;
-      // t.send(stream, n, t.dims());
-      return stream;
-    }
+    // friend std::ostream& operator<<(std::ostream& stream, const Type& t) {
+    //   using namespace display;
+    //   size_t n = 0;
+    //   // t.send(stream, n, t.dims());
+    //   return stream;
+    // }
 
-    // template <typename NumberType>
-    friend inline std::istream& operator>>(const std::string s, Type& x) {
-      std::istringstream st(s);
-      return (st >> x);
-    }
+    // // template <typename NumberType>
+    // friend inline std::istream& operator>>(const std::string s, Type& x) {
+    //   std::istringstream st(s);
+    //   return (st >> x);
+    // }
 
-    // stream >> operator
-    // TODO: implement
-
-    friend std::istream& operator>>(std::istream& stream, Type& x) {
-      return stream;
-    }
-
-    // --------------------- FRIENDS ---------------------
   };
 
 }; // namespace mathq

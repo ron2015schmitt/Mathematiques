@@ -84,7 +84,7 @@ namespace mathq {
       return *this;
     }
 
-    inline size_t size_of_multiarray(void) const {
+    inline size_t product(void) const {
       size_t sz = 1;
       for (size_t i = 0; i < this->size(); i++) {
         sz *= (*this)[i];
@@ -217,7 +217,7 @@ namespace mathq {
     Vector<Element, N1>::resize(const Dimensions<dynamic>& dims) {
     // TRDISP(dims);
     // TRDISP(dims[0]);
-    return resize(3);
+    return resize(dims[0]);
   }
 
 

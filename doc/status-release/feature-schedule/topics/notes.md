@@ -79,3 +79,13 @@ struct Empty {};
       }
     }
 ```
+
+1. How to specialize an alias template
+  * [alias-template-specialisation](https://stackoverflow.com/questions/6622452/alias-template-specialisation)
+```C++
+template<class Vector> struct new_style2_aux;
+template<class T> struct new_style2_aux<std::vector<T> >{
+   typedef typename std::vector<T>::value_type type;
+};
+template<class Vector> using new_style2 = typename new_style2_aux<Vector>::type;
+```

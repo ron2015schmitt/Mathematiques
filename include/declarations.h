@@ -163,6 +163,7 @@ namespace mathq {
   template <typename Element>
   using Scalar = MultiArray<Element, 0>;
 
+
   template <typename Element, size_t N1 = 0>
   using Vector = MultiArray<Element, 1, N1>;
 

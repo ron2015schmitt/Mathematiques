@@ -87,7 +87,6 @@ namespace mathq {
 
     // -------------------  default  --------------------
     explicit MultiArray() {
-      constructorHelper();
     }
 
     // --------------------- copy constructor --------------------
@@ -97,7 +96,6 @@ namespace mathq {
         resize(var.size());
       }
       *this = var;
-      constructorHelper();
     }
 
     // ----------------------- initializer_list ---------------------
@@ -106,7 +104,6 @@ namespace mathq {
         resize(var.size());
       }
       *this = var;
-      constructorHelper();
     }
 
     // ----------------------- std::vector ---------------------
@@ -115,7 +112,6 @@ namespace mathq {
         resize(var.size());
       }
       *this = var;
-      constructorHelper();
     }
 
     // ----------------------- std::valarray ---------------------
@@ -124,7 +120,6 @@ namespace mathq {
         resize(var.size());
       }
       *this = var;
-      constructorHelper();
     }
 
     // ----------------------- std::array ---------------------
@@ -134,7 +129,6 @@ namespace mathq {
         resize(var.size());
       }
       *this = var;
-      constructorHelper();
     }
 
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
@@ -144,7 +138,6 @@ namespace mathq {
         this->resize(x.size());
       }
       *this = x;
-      constructorHelper();
     }
 
 
@@ -157,7 +150,6 @@ namespace mathq {
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
     explicit MultiArray(const size_t N) {
       data_.resize(N);
-      constructorHelper();
     }
 
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
@@ -166,7 +158,6 @@ namespace mathq {
     explicit MultiArray(const Dimensions<0>& dims) {
       // TRDISP(dims);
       this->resize(dims);
-      constructorHelper();
     }
 
     // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
@@ -175,7 +166,6 @@ namespace mathq {
     explicit MultiArray(const RecursiveDimensions<dim_depth>& recursive_dims) {
       // TRDISP(recursive_dims);
       this->resize(recursive_dims);
-      constructorHelper();
     }
 
 
@@ -186,7 +176,6 @@ namespace mathq {
     explicit MultiArray(const size_t N, const Element val) {
       data_.resize(N);
       *this = val;
-      constructorHelper();
     }
 
     // --------------------- array[]  CONSTRUCTOR ---------------------
@@ -195,7 +184,6 @@ namespace mathq {
     MultiArray(const size_t N, const Element(vals)[]) {
       data_.resize(N);
       *this = vals;
-      constructorHelper();
     }
 
 
@@ -208,7 +196,6 @@ namespace mathq {
     template<size_t NE1 = N1, EnableIf< (NE1 > 0) > = 1>
       explicit MultiArray(const Element val) {
       *this = val;
-      constructorHelper();
     }
 
     // --------------------- FIXED SIZE: set all Elements to same value   ---------------------
@@ -216,12 +203,6 @@ namespace mathq {
     template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth_value>1)&&(!std::is_same<Element, NumberType>::value)> = 1>
       explicit MultiArray(const NumberType val) {
       *this = val;
-      constructorHelper();
-    }
-
-    // --------------------- constructorHelper() --------------------
-
-    void constructorHelper() {
     }
 
     //**********************************************************************

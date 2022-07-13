@@ -45,10 +45,10 @@
 #include "expression-r.h"
 #include "expression-rw.h"
 
-#include "multi-array.h"
-// #include "scalar.h"
 #include "vector.h"
 #include "dimensions.h"
+#include "multi-array.h"
+// #include "scalar.h"
 // #include "matrix.h"
 // #include "multi-array3.h"
 // #include "multi-array4.h"
@@ -157,8 +157,48 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(MultiArray<double,1> x1);
-  TRDISP(x1);
+  ECHO_CODE(Vector<double> v1a);
+  TRDISP(v1a.classname());  // Vector
+
+  CR();
+  ECHO_CODE(Vector<double,0> v1b);
+  TRDISP(v1b.classname());  // Vector
+
+  CR();
+  ECHO_CODE(Vector<double,1> v1c);
+  TRDISP(v1c.classname());  // Vector
+
+  CR();
+  ECHO_CODE(MultiArray<double,1> x1a);
+  TRDISP(x1a.classname());  // Vector
+
+  CR();
+  ECHO_CODE(MultiArray<double,1,0> x1b);
+  TRDISP(x1b.classname());  // Vector
+
+  CR();
+  ECHO_CODE(MultiArray<double,1,1> x1c);
+  TRDISP(x1c.classname());  // Vector
+
+  CR();
+  ECHO_CODE(MultiArray<double,2> x2);
+  TRDISP(x2.classname());
+  TRDISP(x2.rank());
+  TRDISP(x2.depth());
+  TRDISP(x2.size());
+  TRDISP(x2.dims());
+
+  CR();
+  ECHO_CODE(MultiArray<double,2,3,2> x3);
+  TRDISP(x3.classname());
+  TRDISP(x3.rank());
+  TRDISP(x3.depth());
+  TRDISP(x3.size());
+  TRDISP(x3.dims());
+
+  // CR();
+  // ECHO_CODE(MultiArray<double,2> x2(1,2));
+  // TRDISP(x1);
 
 
   return 0;
