@@ -29,10 +29,12 @@ namespace mathq {
 
     template <size_t rank2>
     Dimensions(const Dimensions<rank2>& dims2) {
-      this->resize(dims2.size());
-      for (size_t n = 0; n < this->size(); n++) {
-        (*this)[n] = dims2[n];
-      }
+      *this = dims2;
+    }
+
+    template <size_t rank2>
+    Dimensions(const std::array<size_t, rank2>& dims2) {
+      *this = dims2;
     }
 
     Dimensions(const std::initializer_list<size_t>& ilist) {
@@ -83,6 +85,16 @@ namespace mathq {
       }
       return *this;
     }
+
+    template <size_t rank1 = rank_, size_t rank2, EnableIf<(rank1 == 0)> = 0>
+    Dimensions<rank1>& operator=(const std::array<size_t, rank2>& dims2) {
+      this->resize(dims2.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = dims2[i];
+      }
+      return *this;
+    }
+
 
     inline size_t product(void) const {
       size_t sz = 1;
@@ -257,7 +269,7 @@ namespace mathq {
       for (size_t d = 0; d < depth_value; d++) {
         (*this[d]).reverse();
       }
-      return* this;
+      return*this;
     }
 
 

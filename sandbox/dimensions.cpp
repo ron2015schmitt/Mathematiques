@@ -28,6 +28,9 @@
 #include "declarations.h"
 #include "type-traits.h"
 #include "display.h"
+// #include "fileio.h"
+// #include "util.h"
+// #include "debug.h"
 
 #include "type-defs.h"
 
@@ -36,26 +39,23 @@
 #include "math_imag.h"
 #include "math_quaternion.h"
 
+#include "indices.h"
+// #include "slices.h"
+
+#include "expression-r.h"
+#include "expression-rw.h"
+
 #include "vector.h"
 #include "dimensions.h"
-
-
-// #include "indices.h"
-// #include "slices.h"
-// #include "util.h"
-// #include "debug.h"
-
-// #include "multi-array-expressions.h"
-
-// #include "multi-array.h"
-// #include "multi-array-constant.h"
-// #include "multi-array-repeat-vec.h"
-// #include "multi-array-outer-product.h"
-
+#include "multi-array.h"
 // #include "scalar.h"
-// #include "vector-constant.h"
-
 // #include "matrix.h"
+// #include "multi-array3.h"
+// #include "multi-array4.h"
+
+// #include "vector-constant.h"
+// #include "vector-sparse.h"
+
 // #include "matrix_constdiag.h"
 // #include "matrix_diagonal.h"
 // #include "matrix_exchange.h"
@@ -68,6 +68,7 @@
 // #include "matrix_rep.h"
 // #include "matrix_skewhermitian.h"
 // #include "matrix_skewsymmetric.h"
+// #include "matrix_sparse.h"
 // #include "matrix_symmetric.h"
 // #include "matrix_toeplitz.h"
 // #include "matrix_uppertriangle.h"
@@ -77,22 +78,34 @@
 // #include "matrix-repeat-vec.h"
 // #include "matrix-outer-product.h"
 
-// #include "multi-array3.h"
-// #include "multi-array4.h"
+// #include "multi-array3-constant.h"
+// #include "multi-array3-repeat-vec.h"
+// #include "multi-array3-outer-product.h"
 
-// #include "expressionsR.h"
-// #include "expressionsRW.h"
+// #include "multi-array4-constant.h"
+// #include "multi-array4-repeat-vec.h"
+// #include "multi-array5-outer-product.h"
 
-// #include "fun_unary_AUTO.h"
-// #include "fun_binary_AUTO.h"
-// #include "fun_ternary_AUTO.h"
-// #include "functions_misc.h"
-// #include "functions_structure.h"
-// #include "functions_products.h"
-// #include "functions_user.h"
+// #include "multi-array-constant.h"
+// #include "multi-array-repeat-vec.h"
+// #include "multi-array-outer-product.h"
 
-// #include "fileio.h"
+
+#include "expressions-r.h"
+#include "expressions-rw.h"
+
+#include "fun_unary_AUTO.h"
+#include "fun_binary_AUTO.h"
+#include "fun_ternary_AUTO.h"
+#include "functions_misc.h"
+#include "functions_structure.h"
+#include "functions_products.h"
+#include "functions_user.h"
+// #include "grids.h"
+
 // #include "coda.h"
+
+
 
 int main(int argc, char* argv[]) {
   using namespace std;

@@ -39,9 +39,7 @@ namespace mathq {
     constexpr static size_t depth_value = depth_;
 
     // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+    constexpr static bool is_dynamic_value = false;
 
     //**********************************************************************
     //                            TYPES 

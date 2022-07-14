@@ -147,13 +147,13 @@ int main(int argc, char* argv[]) {
   const double T = 2*pi;
   const double omega = 2*pi/T;
   TRDISP(ifourier(An, Bn, t, An.size(), omega));
-  
+
   TRDISP(k);
   TRDISP(transpose(k));
 
-  TRDISP(join(k,k));
+  TRDISP(join(k, k));
 
-  TRDISP(rep(k,3));
+  TRDISP(rep(k, 3));
 
 
   CR();
@@ -161,40 +161,61 @@ int main(int argc, char* argv[]) {
   TRDISP(v1a.classname());  // Vector
 
   CR();
-  ECHO_CODE(Vector<double,0> v1b);
+  ECHO_CODE(Vector<double, 0> v1b);
   TRDISP(v1b.classname());  // Vector
 
   CR();
-  ECHO_CODE(Vector<double,1> v1c);
+  ECHO_CODE(Vector<double, 1> v1c);
   TRDISP(v1c.classname());  // Vector
 
   CR();
-  ECHO_CODE(MultiArray<double,1> x1a);
+  ECHO_CODE(MultiArray<double, 1> x1a);
   TRDISP(x1a.classname());  // Vector
 
   CR();
-  ECHO_CODE(MultiArray<double,1,0> x1b);
+  ECHO_CODE(MultiArray<double, 1, 0> x1b);
   TRDISP(x1b.classname());  // Vector
 
   CR();
-  ECHO_CODE(MultiArray<double,1,1> x1c);
+  ECHO_CODE(MultiArray<double, 1, 1> x1c);
   TRDISP(x1c.classname());  // Vector
 
   CR();
-  ECHO_CODE(MultiArray<double,2> x2);
+  ECHO_CODE(MultiArray<double, 2> x2);
   TRDISP(x2.classname());
+  TRDISP(x2.is_dynamic_value);
+  TRDISP(x2.compile_time_size);
+  TRDISP(x2.static_dims_array);
+  TRDISP(x2.dims_array());
   TRDISP(x2.rank());
   TRDISP(x2.depth());
-  TRDISP(x2.size());
   TRDISP(x2.dims());
 
+  TRDISP(x2.size());
+  TRDISP(x2.data_);
+  TRDISP(sizeof(x2.data_)/sizeof(double));
+  TRDISP(sizeof(x2)/sizeof(double));
+
+  ECHO_CODE(x2.resize(6));
+  TRDISP(x2.size());
+  TRDISP(x2.data_);
+  TRDISP(sizeof(x2.data_)/sizeof(double));
+  TRDISP(sizeof(x2)/sizeof(double));
+
   CR();
-  ECHO_CODE(MultiArray<double,2,3,2> x3);
+  ECHO_CODE(MultiArray<double, 2, 3, 2> x3);
   TRDISP(x3.classname());
+  TRDISP(x3.is_dynamic_value);
+  TRDISP(x3.compile_time_size);
+  TRDISP(x3.static_dims_array);
+  TRDISP(x3.dims_array());
   TRDISP(x3.rank());
   TRDISP(x3.depth());
   TRDISP(x3.size());
   TRDISP(x3.dims());
+  TRDISP(x3.data_);
+  TRDISP(sizeof(x3.data_)/sizeof(double));
+  TRDISP(sizeof(x3)/sizeof(double));
 
   // CR();
   // ECHO_CODE(MultiArray<double,2> x2(1,2));

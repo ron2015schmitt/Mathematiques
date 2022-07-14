@@ -3,6 +3,18 @@
 
 namespace mathq {
 
+
+  template <typename Element, size_t rank, bool is_dynamic>
+  struct DimensionsStorage {
+  };
+
+  template <typename Element, size_t rank>
+  struct DimensionsStorage<Element, rank, true> {
+    std::array<Element, rank> dims_array;
+  };
+
+
+
   /********************************************************************
    * MultiArray<Element>      -- MultiArray of 0 rank (scalar)
    *                   Element  = type for elements
@@ -43,7 +55,6 @@ namespace mathq {
     constexpr static std::array<size_t, rank_value> static_dims_array = { (static_cast<size_t>(ints))... };
 
 
-
     //**********************************************************************
     //                            TYPES 
     //**********************************************************************
@@ -69,17 +80,14 @@ namespace mathq {
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
 
 
-  private:
-    // *********************** OBJECT DATA ***********************************
-    //
-    // do NOT declare any other storage.
-    // keep the instances lightweight
+    // private:
+      // *********************** OBJECT DATA ***********************************
+      //
+      // do NOT declare any other storage.
+      // keep the instances lightweight
     MyArrayType data_;
 
-
   public:
-
-    // std::array<size_t, rank_value>& dims_array = static_dims_array;
 
 
 
@@ -90,6 +98,8 @@ namespace mathq {
     // --------------------- default CONSTRUCTOR ---------------------
 
     explicit MultiArray() {
+      // resize is mandatory because we store the dynamic dimensions in the data_ obj
+      // resize(0);
     }
 
 
@@ -112,7 +122,7 @@ namespace mathq {
       for (size_t i = 0; i < N; ++i) {
         product *= A[i];
       }
-      data_.resize(product);
+      // resize(product);
     }
 
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
@@ -120,7 +130,7 @@ namespace mathq {
     template<size_t TEMP = is_dynamic_value, EnableIf<TEMP> = 1>
     explicit MultiArray(const Dimensions<0>& dims) {
       // TRDISP(dims);
-      this->resize(dims);
+      // resize(dims);
     }
 
 
@@ -217,6 +227,18 @@ namespace mathq {
     }
 
     inline size_t size(void) const {
+      if constexpr (is_dynamic_value) {
+        return data_.size() - rank_value;
+      }
+      else {
+        return data_.size();
+      }
+    }
+
+
+
+
+    inline size_t size_true(void) const {
       return data_.size();
     }
 
@@ -269,11 +291,14 @@ namespace mathq {
 
     // template<bool temp = is_dynamic_value, EnableIf<temp> = 0>  // cuases issues
     Type& resize(const size_t N) {
-      if constexpr (is_dynamic_value) {
-        if (N != this->size()) {
-          data_.resize(N);
-        }
-      }
+      OUTPUT("resize(N)");
+      // if constexpr (is_dynamic_value) {
+      //   if (N != this->size()) {
+      //     std::array<size_t, rank_value> dints = dims_array();
+      //     data_.resize(N+rank_value);
+      //     dims_array(dints);
+      //   }
+      // }
       return *this;
     }
 
@@ -315,6 +340,39 @@ namespace mathq {
     Dimensions<rank_value>& dims(void) const {
       return *(new Dimensions<rank_value>({ this->size() }));
     }
+
+
+    inline std::array<size_t, rank_value> dims_array(void) const {
+      if constexpr (is_dynamic_value) {
+        std::array<size_t, rank_value> dints;
+        const size_t NN = size();
+        if (NN == 0) {
+          dints = static_dims_array;
+        }
+        else {
+          for (size_t ii = 0; ii < rank_value; ii++) {
+            dints[ii] = data_[NN + ii];
+          }
+        }
+        return dints;
+      }
+      else {
+        return static_dims_array;
+      }
+    }
+
+    inline const Type& dims_array(const std::array<size_t, rank_value>& new_dims_array) {
+      if constexpr (is_dynamic_value) {
+        const size_t NN = size();
+        for (size_t ii = 0; ii < rank_value; ii++) {
+          data_[NN + ii] = new_dims_array[ii];
+        }
+      }
+      else {
+      }
+      return *this;
+    }
+
 
     ElementDimensionsType& element_dims(void) const {
       if constexpr (depth_value>1) {
@@ -873,8 +931,8 @@ namespace mathq {
     //   return (st >> x);
     // }
 
-  };
+    };
 
-}; // namespace mathq
+  }; // namespace mathq
 
 #endif

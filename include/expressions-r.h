@@ -23,10 +23,7 @@ namespace mathq {
     constexpr static size_t rank_value = rank_;
     constexpr static size_t depth_value = depth_;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
     //**********************************************************************
     //                            TYPES 
@@ -193,10 +190,7 @@ namespace mathq {
     constexpr static size_t rank_value = rank_;
     constexpr static size_t depth_value = depth_;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
     //**********************************************************************
     //                            TYPES 
@@ -356,10 +350,7 @@ namespace mathq {
     constexpr static size_t rank_value = R3;
     constexpr static size_t depth_value = D3;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
     //**********************************************************************
     //                            TYPES 
@@ -755,10 +746,7 @@ namespace mathq {
     constexpr static size_t rank_value = R3;
     constexpr static size_t depth_value = D3;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
 
     //**********************************************************************
@@ -1147,10 +1135,7 @@ namespace mathq {
     constexpr static size_t rank_value = R4;
     constexpr static size_t depth_value = D4;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
 
     //**********************************************************************
@@ -1430,10 +1415,7 @@ namespace mathq {
     constexpr static size_t rank_value = rank_;
     constexpr static size_t depth_value = depth_;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
     //**********************************************************************
     //                            TYPES 
@@ -1637,10 +1619,7 @@ namespace mathq {
     constexpr static size_t rank_value = 1;
     constexpr static size_t depth_value = 1;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
     //**********************************************************************
     //                            TYPES 
@@ -1831,10 +1810,7 @@ namespace mathq {
     constexpr static size_t rank_value = rank_;
     constexpr static size_t depth_value = depth_;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
     //**********************************************************************
     //                            TYPES 
@@ -2010,10 +1986,7 @@ namespace mathq {
     constexpr static size_t rank_value = 1;
     constexpr static size_t depth_value = depth_;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
     //**********************************************************************
     //                            TYPES 
@@ -2181,10 +2154,7 @@ namespace mathq {
     constexpr static size_t rank_value = 1;
     constexpr static size_t depth_value = 1;
 
-    // the size of an expression cannot be changed
-    constexpr static bool is_dynamic() noexcept {
-      return false;
-    }
+
 
     //**********************************************************************
     //                            TYPES 
