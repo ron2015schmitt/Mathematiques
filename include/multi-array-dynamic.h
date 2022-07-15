@@ -331,13 +331,14 @@ namespace mathq {
     }
 
 
-    inline std::array<size_t, rank_value> dims_array(void) const {
-        std::array<size_t, rank_value> dints;
-        const size_t NN = size();
+    inline const std::array<size_t, rank_value>& dims_array(void) const {
+        auto& darray = *(new std::array<size_t, rank_value>{});
+        TRDISP(darray);
+        TRDISP(dims_);
           for (size_t ii = 0; ii < rank_value; ii++) {
-            dints[ii] = data_[NN + ii];
+            darray[ii] = dims_[ii];
           }
-        return dints;
+        return darray;
     }
 
     inline const Type& dims_array(const std::array<size_t, rank_value>& new_dims_array) {

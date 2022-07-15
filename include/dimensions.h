@@ -9,7 +9,8 @@ namespace mathq {
   // ***************************************************************************
   // Dimensions 
   //
-  // need to use resiable because we need the same exact type for RecursiveDimensions elements
+  // size = rank of the MultiArray that the Dimensions correspond to
+  // Cannot size by template parameter because because we need the same exact type for RecursiveDimensions elements
   // ***************************************************************************
 
   template <size_t rank_>

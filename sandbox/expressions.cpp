@@ -231,7 +231,7 @@ int main(int argc, char* argv[]) {
   TRDISP(x2.classname());
   TRDISP(x2.is_dynamic_value);
   TRDISP(x2.compile_time_size);
-  // TRDISP(x2.dims_array());
+  TRDISP(x2.dims_array());
   TRDISP(x2.rank());
   TRDISP(x2.depth());
   TRDISP(x2.dims());
@@ -248,6 +248,10 @@ int main(int argc, char* argv[]) {
   // TRDISP(sizeof(x2)/sizeof(double));
 
   CR();
+  CR();
+  OUTPUT("Static MultiArray");
+
+  CR();
   ECHO_CODE(MultiArray<double, 2, 3, 2> x3);
   TRDISP(x3.classname());
   TRDISP(x3.is_dynamic_value);
@@ -256,7 +260,7 @@ int main(int argc, char* argv[]) {
   TRDISP(x3.size());
   TRDISP(x3.rank());
   TRDISP(x3.depth());
-  // TRDISP(x3.dims_array());
+  TRDISP(x3.dims_array());
   // TRDISP(x3.dims());
   TRDISP(x3.data_);
   TRDISP(sizeof(x3.data_)/sizeof(double));
