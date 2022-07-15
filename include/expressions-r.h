@@ -35,7 +35,7 @@ namespace mathq {
 
     using Type = ExpressionR_Unary<Derived, ElementType, NumberType, depth_value, rank_value, FUNC>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value, dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -203,7 +203,7 @@ namespace mathq {
 
     using Type = ExpressionR_Unary_User<Derived, ElementType, NumberType, depth_value, rank_value>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -362,7 +362,7 @@ namespace mathq {
 
     using Type = ExpressionR_Binary<A, B, E1, E2, ElementType, NT1, NT2, NumberType, D1, D2, depth_value, R1, R2, rank_value, OP>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -759,7 +759,7 @@ namespace mathq {
 
     using Type = ExpressionR_Binary_User<A, B, E1, E2, ElementType, NT1, NT2, NumberType, D1, D2, depth_value, R1, R2, rank_value>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -1148,7 +1148,7 @@ namespace mathq {
 
     using Type = ExpressionR_Ternary<A, B, C, E1, E2, E3, ElementType, NT1, NT2, NT3, NumberType, D1, D2, D3, depth_value, R1, R2, R3, rank_value, OP>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -1427,7 +1427,7 @@ namespace mathq {
 
     using Type = ExpressionR_Series<A, Derived, ElementType, NumberType, depth_value, rank_value>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -1631,7 +1631,7 @@ namespace mathq {
 
     using Type = ExpressionR_Series2<A, B, Derived, NumberType, OP1, OP2>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -1822,7 +1822,7 @@ namespace mathq {
 
     using Type = ExpressionR_Transpose<Derived, ElementType, NumberType, depth_value, rank_value, FUNC>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -1998,7 +1998,7 @@ namespace mathq {
 
     using Type = ExpressionR_Join<X, Y, Element, Number, depth_>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -2166,7 +2166,7 @@ namespace mathq {
 
     using Type = ExpressionR_Rep<A, NumberType>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;

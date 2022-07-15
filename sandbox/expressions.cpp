@@ -208,12 +208,17 @@ int main(int argc, char* argv[]) {
   TRDISP(v1b.classname());  // Vector
 
   CR();
-  ECHO_CODE(Vector<double, 1> v1c);
+  ECHO_CODE(Vector<double, 5> v1c);
   TRDISP(v1c.classname());  // Vector
 
   CR();
-  ECHO_CODE(MultiArray<double, 1> x1a);
+  ECHO_CODE(MultiArray<double, 1, dynamic> x1a);
   TRDISP(x1a.classname());  // Vector
+
+  CR();
+  ECHO_CODE(MultiArray<double, 1, 5> x1b);
+  TRDISP(x1b.classname());  // Vector
+
 
   // CR();
   // ECHO_CODE(MultiArray<double, 1, 0> x1b);
@@ -266,12 +271,12 @@ int main(int argc, char* argv[]) {
   // ECHO_CODE(MultiArray<double,2> x2(1,2));
   // TRDISP(x1);
 
-  Test<double,1> test1;
-  Test<double,1,2,3> test2;
-  Test<double,1,0> test3;
+  // Test<double,1> test1;
+  // Test<double,1,2,3> test2;
+  // Test<double,1,0> test3;
 
-  Test2<double,1, 2> foo1;
-  Test2<double,3, 2,4,12> foo2;
+  // Test2<double,1, 2> foo1;
+  // Test2<double,3, 2,4,12> foo2;
   // Test2<double,3, 0,4,12> foo3;
 
 

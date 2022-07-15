@@ -35,7 +35,7 @@ namespace mathq {
 
     using ParentType = NullType;
     using Type = ExpressionRW<Derived, Element, Number, depth_value, rank_value>;
-    using ConcreteType = MultiArray<Element, rank_value, 0>;
+    using ConcreteType = MultiArray<Element, rank_value, dynamic>;
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;

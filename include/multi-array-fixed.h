@@ -16,7 +16,7 @@ namespace mathq {
 
 
 
-  template <typename Element, size_t rank_, size_t... dim_ints> 
+  template <typename Element, size_t rank_, size_t... dim_ints> requires (validate_multi_array<rank_, dim_ints...>())
   class MultiArray :public ExpressionRW<
     MultiArray<Element, rank_, dim_ints...>,  // Derived
     Element,  // Element

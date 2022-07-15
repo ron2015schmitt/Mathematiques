@@ -32,7 +32,7 @@ namespace mathq {
 
     using Type = ExpressionRW_Subset<NumberType>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -227,7 +227,7 @@ namespace mathq {
 
     using Type = ExpressionRW_Submask<NumberType>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
@@ -400,7 +400,7 @@ namespace mathq {
 
     using Type = ExpressionRW_Join<X, Y, Element, Number, depth_>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
-    using ConcreteType = MultiArray<ElementType, rank_value>;
+    using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;

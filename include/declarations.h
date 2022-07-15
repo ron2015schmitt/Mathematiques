@@ -152,7 +152,26 @@ namespace mathq {
   //   return true;
   // }
 
-  template <typename Element, size_t rank, size_t... dims > 
+
+  template<size_t rank, size_t... ints>
+  constexpr bool validate_multi_array() {
+    constexpr size_t N = sizeof...(ints);
+    constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
+
+    if constexpr ((N == 1) && (A[0] == 0)) {
+      return true;
+    }
+    if constexpr (N != rank) {
+      return false;
+    }
+    for (size_t i = 0; i < N; ++i) {
+      if (A[i] == 0) return false;
+    }
+    return true;
+  }
+
+
+  template <typename Element, size_t rank, size_t... dim_ints > requires (validate_multi_array<rank, dim_ints...>())
   class MultiArray;
 
 

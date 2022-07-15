@@ -1256,11 +1256,9 @@ namespace mathq {
       s += StyledString::get(ANGLE1).get();
       Element d;
       s += getTypeName(d);
-      if (N1!=0) {
-        s += StyledString::get(COMMA).get();
-        s += "N1=";
-        s += template_size_to_string(N1);
-      }
+      s += StyledString::get(COMMA).get();
+      s += "N1=";
+      s += template_size_to_string(N1);
       //    if (depth_value>1) {
       //      s += StyledString::get(COMMA).get();
       //      s += "depth_value=";

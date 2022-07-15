@@ -825,6 +825,8 @@ namespace mathq {
       s += StyledString::get(COMMA).get();
       s += "rank=";
       s += num2string(rank_value);
+      s += StyledString::get(COMMA).get();
+      s += "dynamic";
       s += StyledString::get(ANGLE2).get();
       return s;
     }
