@@ -47,7 +47,8 @@
 
 #include "vector.h"
 #include "dimensions.h"
-#include "multi-array.h"
+#include "multi-array-fixed.h"
+#include "multi-array-dynamic.h"
 // #include "scalar.h"
 // #include "matrix.h"
 // #include "multi-array3.h"
@@ -104,6 +105,48 @@
 // #include "grids.h"
 
 // #include "coda.h"
+
+
+
+template <typename Element, size_t rank, size_t... dims > requires (rank < 100)
+class Test;
+
+
+template <typename Element, size_t rank, size_t... dims > requires (rank < 100)
+class Test {
+public:
+  Test() {
+    using namespace mathq;
+    using namespace display;
+    OUTPUT("\nInside main Test constructor");
+    TRDISP(rank);
+  }
+};
+
+template <typename Element, size_t rank> requires (rank < 100)
+class Test<Element, rank> {
+public:
+  Test() {
+    using namespace mathq;
+    using namespace display;
+    OUTPUT("\nInside specialization Test constructor");
+    TRDISP(rank);
+  }
+};
+
+
+
+template <typename Element, size_t rank, size_t... dims > requires (!mathq::check_dynamic<rank,dims...>())
+class Test2 {
+public:
+  Test2() {
+    using namespace mathq;
+    using namespace display;
+    OUTPUT("\nInside main Test2 constructor");
+    TRDISP(rank);
+  }
+};
+
 
 
 
@@ -172,54 +215,64 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(MultiArray<double, 1> x1a);
   TRDISP(x1a.classname());  // Vector
 
-  CR();
-  ECHO_CODE(MultiArray<double, 1, 0> x1b);
-  TRDISP(x1b.classname());  // Vector
+  // CR();
+  // ECHO_CODE(MultiArray<double, 1, 0> x1b);
+  // TRDISP(x1b.classname());  // Vector
 
-  CR();
-  ECHO_CODE(MultiArray<double, 1, 1> x1c);
-  TRDISP(x1c.classname());  // Vector
+  // CR();
+  // ECHO_CODE(MultiArray<double, 1, 1> x1c);
+  // TRDISP(x1c.classname());  // Vector
 
-  CR();
-  ECHO_CODE(MultiArray<double, 2> x2);
-  TRDISP(x2.classname());
-  TRDISP(x2.is_dynamic_value);
-  TRDISP(x2.compile_time_size);
-  TRDISP(x2.static_dims_array);
-  TRDISP(x2.dims_array());
-  TRDISP(x2.rank());
-  TRDISP(x2.depth());
-  TRDISP(x2.dims());
+  // CR();
+  // ECHO_CODE(MultiArray<double, 2> x2);
+  // TRDISP(x2.classname());
+  // TRDISP(x2.is_dynamic_value);
+  // TRDISP(x2.compile_time_size);
+  // TRDISP(x2.static_dims_array);
+  // TRDISP(x2.dims_array());
+  // TRDISP(x2.rank());
+  // TRDISP(x2.depth());
+  // TRDISP(x2.dims());
 
-  TRDISP(x2.size());
-  TRDISP(x2.data_);
-  TRDISP(sizeof(x2.data_)/sizeof(double));
-  TRDISP(sizeof(x2)/sizeof(double));
+  // TRDISP(x2.size());
+  // TRDISP(x2.data_);
+  // TRDISP(sizeof(x2.data_)/sizeof(double));
+  // TRDISP(sizeof(x2)/sizeof(double));
 
-  ECHO_CODE(x2.resize(6));
-  TRDISP(x2.size());
-  TRDISP(x2.data_);
-  TRDISP(sizeof(x2.data_)/sizeof(double));
-  TRDISP(sizeof(x2)/sizeof(double));
+  // ECHO_CODE(x2.resize(6));
+  // TRDISP(x2.size());
+  // TRDISP(x2.data_);
+  // TRDISP(sizeof(x2.data_)/sizeof(double));
+  // TRDISP(sizeof(x2)/sizeof(double));
 
   CR();
   ECHO_CODE(MultiArray<double, 2, 3, 2> x3);
   TRDISP(x3.classname());
-  TRDISP(x3.is_dynamic_value);
-  TRDISP(x3.compile_time_size);
-  TRDISP(x3.static_dims_array);
-  TRDISP(x3.dims_array());
-  TRDISP(x3.rank());
-  TRDISP(x3.depth());
-  TRDISP(x3.size());
-  TRDISP(x3.dims());
-  TRDISP(x3.data_);
-  TRDISP(sizeof(x3.data_)/sizeof(double));
-  TRDISP(sizeof(x3)/sizeof(double));
+  // TRDISP(x3.is_dynamic_value);
+  // TRDISP(x3.compile_time_size);
+  // TRDISP(x3.static_dims_array);
+  // TRDISP(x3.size_true());
+  // TRDISP(x3.size());
+  // TRDISP(x3.dims_array());
+  // TRDISP(x3.rank());
+  // TRDISP(x3.depth());
+  // TRDISP(x3.size());
+  // TRDISP(x3.dims());
+  // TRDISP(x3.data_);
+  // TRDISP(sizeof(x3.data_)/sizeof(double));
+  // TRDISP(sizeof(x3)/sizeof(double));
 
   // CR();
   // ECHO_CODE(MultiArray<double,2> x2(1,2));
   // TRDISP(x1);
+
+  Test<double,1> test1;
+  Test<double,1,2,3> test2;
+  Test<double,1,0> test3;
+
+  Test2<double,1, 2> foo1;
+  Test2<double,3, 2,4,12> foo2;
+  // Test2<double,3, 0,4,12> foo3;
 
 
   return 0;

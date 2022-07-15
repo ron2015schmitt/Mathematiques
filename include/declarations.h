@@ -152,7 +152,7 @@ namespace mathq {
   //   return true;
   // }
 
-  template <typename Element, size_t rank, size_t... dims >
+  template <typename Element, size_t rank, size_t... dims > 
   class MultiArray;
 
 

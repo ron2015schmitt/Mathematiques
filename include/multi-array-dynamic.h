@@ -1,40 +1,22 @@
-#ifndef MATHQ__TENSOR_H
-#define MATHQ__TENSOR_H 1
+#ifndef MATHQ__MULTI_ARRAY_DYNAMIC
+#define MATHQ__MULTI_ARRAY_DYNAMIC 1
 
 namespace mathq {
 
 
-  template <typename Element, size_t rank, bool is_dynamic>
-  struct DimensionsStorage {
-  };
-
-  template <typename Element, size_t rank>
-  struct DimensionsStorage<Element, rank, true> {
-    std::array<Element, rank> dims_array;
-  };
-
-
 
   /********************************************************************
-   * MultiArray<Element>      -- MultiArray of 0 rank (scalar)
-   *                   Element  = type for elements
    * MultiArray<Element,rank> -- MultiArray of rank rank
    *                   rank = number of rank (0=scalar,1=vector,2=matrix,etc)
    *
-   *                 The defaults are defined in the declaration in
-   *                 declarations.h
-   *                 NumberType = number type
-   *                   = underlying algebraic field
-   *                     ex. int, double, std::complex<double>
-   *                 depth = tensor depth. if Element=NumberType, then depth=1.
    ********************************************************************
    */
 
 
 
-  template <typename Element, size_t rank_, size_t... ints>
-  class MultiArray :public ExpressionRW<
-    MultiArray<Element, rank_, ints...>,  // Derived
+  template <typename Element, size_t rank_> 
+  class MultiArray<Element, rank_> :public ExpressionRW<
+    MultiArray<Element, rank_>,  // Derived
     Element,  // Element
     typename NumberTrait<Element>::Type, // Number
     1 + NumberTrait<Element>::depth(),  // depth
@@ -50,16 +32,16 @@ namespace mathq {
 
     constexpr static size_t rank_value = rank_;
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = check_dynamic<rank_value, ints...>();
-    constexpr static size_t compile_time_size = calc_size<rank_value, ints...>();
-    constexpr static std::array<size_t, rank_value> static_dims_array = { (static_cast<size_t>(ints))... };
+    constexpr static bool is_dynamic_value = check_dynamic<rank_value>();
+    constexpr static size_t compile_time_size = calc_size<rank_value>();
+    // constexpr static std::array<size_t, rank_value> static_dims_array = { (static_cast<size_t>(dim_ints))... };
 
 
     //**********************************************************************
     //                            TYPES 
     //**********************************************************************
 
-    using Type = MultiArray<Element, rank_value, ints...>;
+    using Type = MultiArray<Element, rank_value>;
     using ConcreteType = Type;
 
     using ElementType = Element;
@@ -227,16 +209,20 @@ namespace mathq {
     }
 
     inline size_t size(void) const {
+      size_t Ntotal = size_true();
+      TRDISP(Ntotal);
       if constexpr (is_dynamic_value) {
-        return data_.size() - rank_value;
+        if (rank_value <= Ntotal) {
+          return Ntotal - rank_value;
+        }
+        else {
+          return 0;
+        }
       }
       else {
         return data_.size();
       }
     }
-
-
-
 
     inline size_t size_true(void) const {
       return data_.size();
@@ -290,15 +276,14 @@ namespace mathq {
     //**********************************************************************
 
     // template<bool temp = is_dynamic_value, EnableIf<temp> = 0>  // cuases issues
-    Type& resize(const size_t N) {
+    Type& clear_size() {
       OUTPUT("resize(N)");
-      // if constexpr (is_dynamic_value) {
-      //   if (N != this->size()) {
-      //     std::array<size_t, rank_value> dints = dims_array();
-      //     data_.resize(N+rank_value);
-      //     dims_array(dints);
-      //   }
-      // }
+      if constexpr (is_dynamic_value) {
+        data_.resize(rank_value);
+        // for (size_t ii = 0; ii < rank_value; ii++) {
+        //   data_[ii] = 0;
+        // }
+      }
       return *this;
     }
 
@@ -338,27 +323,29 @@ namespace mathq {
 
     // defined later since Dimensions is dependent on Vector
     Dimensions<rank_value>& dims(void) const {
+      const size_t N = this->size();
+
       return *(new Dimensions<rank_value>({ this->size() }));
     }
 
 
     inline std::array<size_t, rank_value> dims_array(void) const {
-      if constexpr (is_dynamic_value) {
-        std::array<size_t, rank_value> dints;
-        const size_t NN = size();
-        if (NN == 0) {
-          dints = static_dims_array;
-        }
-        else {
-          for (size_t ii = 0; ii < rank_value; ii++) {
-            dints[ii] = data_[NN + ii];
-          }
-        }
-        return dints;
-      }
-      else {
-        return static_dims_array;
-      }
+      // if constexpr (is_dynamic_value) {
+      //   std::array<size_t, rank_value> dints;
+      //   const size_t NN = size();
+      //   if (NN == 0) {
+      //     dints = static_dims_array;
+      //   }
+      //   else {
+      //     for (size_t ii = 0; ii < rank_value; ii++) {
+      //       dints[ii] = data_[NN + ii];
+      //     }
+      //   }
+      //   return dints;
+      // }
+      // else {
+      //   return static_dims_array;
+      // }
     }
 
     inline const Type& dims_array(const std::array<size_t, rank_value>& new_dims_array) {
@@ -838,21 +825,6 @@ namespace mathq {
       s += StyledString::get(COMMA).get();
       s += "rank=";
       s += num2string(rank_value);
-      size_t product = 1;
-      for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
-        product *= static_dims_array[ii];
-      }
-      if (product > 0) {
-        for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
-          if (ii == 0) {
-            s += StyledString::get(COMMA).get();
-          }
-          else {
-            s += "⨯";
-          }
-          s += template_size_to_string(static_dims_array[ii]);
-        }
-      }
       s += StyledString::get(ANGLE2).get();
       return s;
     }
@@ -931,8 +903,8 @@ namespace mathq {
     //   return (st >> x);
     // }
 
-    };
+  };
 
-  }; // namespace mathq
+}; // namespace mathq
 
 #endif

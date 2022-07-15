@@ -89,3 +89,44 @@ template<class T> struct new_style2_aux<std::vector<T> >{
 };
 template<class Vector> using new_style2 = typename new_style2_aux<Vector>::type;
 ```
+
+1. `size_t` performance
+
+[performance of size_t in c](https://stackoverflow.com/questions/17384606/performance-of-size-t-in-c)
+
+1. template `requires` size of param pack
+
+```C++
+  template <typename Element, size_t rank_, size_t... dim_ints> requires (sizeof...(dim_ints) > 0)
+```
+
+1. `requires` on size of argument
+
+```C++
+template <typename Element, size_t rank, size_t... dims > requires (rank < 100)
+class Test;
+
+
+template <typename Element, size_t rank, size_t... dims > requires (rank < 100)
+class Test {
+public:
+  Test() {
+    using namespace mathq;
+    using namespace display;
+    OUTPUT("\nInside main Test constructor");
+    TRDISP(rank);
+  }
+};
+
+template <typename Element, size_t rank> requires (rank < 100)
+class Test<Element, rank> {
+public:
+  Test() {
+    using namespace mathq;
+    using namespace display;
+    OUTPUT("\nInside specialization Test constructor");
+    TRDISP(rank);
+  }
+};
+```
+
