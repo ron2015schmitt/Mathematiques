@@ -21,6 +21,7 @@ namespace mathq {
 
 
     Dimensions() {
+      this->resize(0);
     }
 
     Dimensions(const size_t N) {

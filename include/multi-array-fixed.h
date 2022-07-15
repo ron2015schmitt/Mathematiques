@@ -11,10 +11,9 @@ namespace mathq {
    *            rank = number of rank (0=scalar,1=vector,2=matrix,etc)
    *            dim_ints
    *
+   * This is the template definition, ie not a specialization
    ********************************************************************
    */
-
-
 
   template <typename Element, size_t rank_, size_t... dim_ints> requires (validate_multi_array<rank_, dim_ints...>())
   class MultiArray :public ExpressionRW<
@@ -34,10 +33,9 @@ namespace mathq {
 
     constexpr static size_t rank_value = rank_;
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = check_dynamic<rank_value, dim_ints...>();
+    constexpr static bool is_dynamic_value = false;
     constexpr static size_t compile_time_size = calc_size<rank_value, dim_ints...>();
     constexpr static std::array<size_t, rank_value> static_dims_array = { (static_cast<size_t>(dim_ints))... };
-
 
     //**********************************************************************
     //                            TYPES 
@@ -82,40 +80,8 @@ namespace mathq {
     // --------------------- default CONSTRUCTOR ---------------------
 
     explicit MultiArray() {
-      // resize is mandatory because we store the dynamic dimensions in the data_ obj
-      // resize(0);
     }
 
-
-
-
-
-
-
-    //**********************************************************************
-    //                    CONSTRUCTORS: Dynamic size  
-    //**********************************************************************
-
-    // --------------------- DYNAMIC SIZE: set size from int  ---------------------
-
-    template<typename...T, mathq::EnableIf<(is_dynamic_value&& std::conjunction<std::is_integral<T>...>::value)> = 0>
-    explicit MultiArray(T... args) {
-      const size_t N = sizeof...(args);
-      std::valarray<size_t> A = { (static_cast<size_t>(args))... };
-      size_t product = 1;
-      for (size_t i = 0; i < N; ++i) {
-        product *= A[i];
-      }
-      // resize(product);
-    }
-
-    // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
-
-    template<size_t TEMP = is_dynamic_value, EnableIf<TEMP> = 1>
-    explicit MultiArray(const Dimensions<0>& dims) {
-      // TRDISP(dims);
-      // resize(dims);
-    }
 
 
 
@@ -124,8 +90,6 @@ namespace mathq {
         // --------------------- constant=0 CONSTRUCTOR ---------------------
 
         // explicit MultiArray(const Dimensions& dims)   {
-        //   resize(dims);
-        //   constructorHelper();
         // }
 
         // // --------------------- constant Element CONSTRUCTOR ---------------------
@@ -273,26 +237,6 @@ namespace mathq {
     }
 
 
-    //**********************************************************************
-    //                          Resize
-    //**********************************************************************
-
-    // template<bool temp = is_dynamic_value, EnableIf<temp> = 0>  // cuases issues
-    Type& clear_size() {
-      OUTPUT("resize(N)");
-      if constexpr (is_dynamic_value) {
-        data_.resize(rank_value);
-        // for (size_t ii = 0; ii < rank_value; ii++) {
-        //   data_[ii] = 0;
-        // }
-      }
-      return *this;
-    }
-
-    Type& resize(const Dimensions<dynamic>& dims) {
-      return resize(dims.product());
-    }
-
 
     // resize_depth <= depth_value
     template <size_t resize_depth>
@@ -302,12 +246,12 @@ namespace mathq {
 
     // helper functions
     template <size_t resize_depth>
-    Type& recurse_resize(const RecursiveDimensions<resize_depth>& parent_rdims, size_t di = 0) {
+    Type& recurse_resize(const RecursiveDimensions<resize_depth>& parent_rdims, const size_t di = 0) {
       size_t depth_index = di;
-      const size_t newSize = parent_rdims[depth_index++];
-      if constexpr (is_dynamic_value) {
-        resize(newSize);
-      }
+      // const size_t newSize = parent_rdims[depth_index++];
+      // if constexpr (is_dynamic_value) {
+      //   resize(newSize);
+      // }
       if constexpr (depth_value >= 1) {
         if (depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {
@@ -332,36 +276,8 @@ namespace mathq {
 
 
     inline std::array<size_t, rank_value> dims_array(void) const {
-      if constexpr (is_dynamic_value) {
-        std::array<size_t, rank_value> dints;
-        const size_t NN = size();
-        if (NN == 0) {
-          dints = static_dims_array;
-        }
-        else {
-          for (size_t ii = 0; ii < rank_value; ii++) {
-            dints[ii] = data_[NN + ii];
-          }
-        }
-        return dints;
-      }
-      else {
         return static_dims_array;
-      }
     }
-
-    inline const Type& dims_array(const std::array<size_t, rank_value>& new_dims_array) {
-      if constexpr (is_dynamic_value) {
-        const size_t NN = size();
-        for (size_t ii = 0; ii < rank_value; ii++) {
-          data_[NN + ii] = new_dims_array[ii];
-        }
-      }
-      else {
-      }
-      return *this;
-    }
-
 
     ElementDimensionsType& element_dims(void) const {
       if constexpr (depth_value>1) {
@@ -401,39 +317,6 @@ namespace mathq {
 
 
 
-    //**********************************************************************
-    //********************* Resize ********************** ******************
-    //**********************************************************************
-
-    // MultiArray& resize(const Dimensions& dims_in) {
-    //   Dimensions dims = dims_in;
-    //   while (dims.rank() < rank) {
-    //     dims.push_back(0);
-    //   }
-    //   dimensions_ = new Dimensions(dims);
-    //   data_.resize(dimensions_->datasize());
-    //   return *this;
-    // }
-
-    // MultiArray& resize(const Dimensions* dims_in) {
-    //   return resize(*dims_in);
-    // }
-
-    // // TODO: should just pass an index and make recursive_dims const
-
-    // MultiArray<Element, rank>& resize(const std::vector<Dimensions>& deepdims_in) {
-    //   std::vector<Dimensions> recursive_dims(deepdims_in);
-    //   Dimensions newdims = recursive_dims[0];
-    //   resize(newdims);
-    //   if constexpr (depth > 1) {
-    //     recursive_dims.erase(recursive_dims.begin());
-    //     for (size_t i = 0; i < size(); i++) {
-    //       std::vector<Dimensions> ddims(recursive_dims);
-    //       data_[i].resize(ddims);
-    //     }
-    //   }
-    //   return *this;
-    // }
 
     //**********************************************************************
     //********************* Direct access to data_  ***********************************

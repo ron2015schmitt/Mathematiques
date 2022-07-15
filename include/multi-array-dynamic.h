@@ -6,17 +6,22 @@ namespace mathq {
 
 
   /********************************************************************
-   * MultiArray<Element,rank> -- MultiArray of rank rank
+   * MultiArray<Element,rank> -- specialization
    *                   rank = number of rank (0=scalar,1=vector,2=matrix,etc)
    *
+   * We need a separate specialization for dynamic MultiArrays because
+   * for these we need an instance datastructure for the dimensions, and
+   * we don't want to take up added space in the fixed-size specialization.
+   * Moreover, we can't put these values into the data array because the
+   * elements are a different data type from size_t:  double, complex, MultiArray, etc.
    ********************************************************************
    */
 
 
 
-  template <typename Element, size_t rank_> 
-  class MultiArray<Element, rank_> :public ExpressionRW<
-    MultiArray<Element, rank_>,  // Derived
+  template <typename Element, size_t rank_> requires (rank_ != 1)
+  class MultiArray<Element, rank_, dynamic> : public ExpressionRW<
+    MultiArray<Element, rank_, dynamic>,  // Derived
     Element,  // Element
     typename NumberTrait<Element>::Type, // Number
     1 + NumberTrait<Element>::depth(),  // depth
@@ -31,17 +36,16 @@ namespace mathq {
     //**********************************************************************
 
     constexpr static size_t rank_value = rank_;
-    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = check_dynamic<rank_value>();
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    
+    constexpr static bool is_dynamic_value = true;
     constexpr static size_t compile_time_size = calc_size<rank_value>();
-    // constexpr static std::array<size_t, rank_value> static_dims_array = { (static_cast<size_t>(dim_ints))... };
 
 
     //**********************************************************************
     //                            TYPES 
     //**********************************************************************
 
-    using Type = MultiArray<Element, rank_value>;
+    using Type = MultiArray<Element, rank_value, dynamic>;
     using ConcreteType = Type;
 
     using ElementType = Element;
@@ -68,7 +72,7 @@ namespace mathq {
       // do NOT declare any other storage.
       // keep the instances lightweight
     MyArrayType data_;
-
+    Dimensions<rank_value> dims_;
   public:
 
 
@@ -79,9 +83,7 @@ namespace mathq {
 
     // --------------------- default CONSTRUCTOR ---------------------
 
-    explicit MultiArray() {
-      // resize is mandatory because we store the dynamic dimensions in the data_ obj
-      // resize(0);
+    explicit MultiArray() : dims_(Dimensions<rank_value>()) {
     }
 
 
@@ -330,22 +332,12 @@ namespace mathq {
 
 
     inline std::array<size_t, rank_value> dims_array(void) const {
-      // if constexpr (is_dynamic_value) {
-      //   std::array<size_t, rank_value> dints;
-      //   const size_t NN = size();
-      //   if (NN == 0) {
-      //     dints = static_dims_array;
-      //   }
-      //   else {
-      //     for (size_t ii = 0; ii < rank_value; ii++) {
-      //       dints[ii] = data_[NN + ii];
-      //     }
-      //   }
-      //   return dints;
-      // }
-      // else {
-      //   return static_dims_array;
-      // }
+        std::array<size_t, rank_value> dints;
+        const size_t NN = size();
+          for (size_t ii = 0; ii < rank_value; ii++) {
+            dints[ii] = data_[NN + ii];
+          }
+        return dints;
     }
 
     inline const Type& dims_array(const std::array<size_t, rank_value>& new_dims_array) {
@@ -818,7 +810,7 @@ namespace mathq {
 
     inline std::string classname() const {
       using namespace display;
-      std::string s = "MultiArray";
+      std::string s = "MultiArray~";
       s += StyledString::get(ANGLE1).get();
       Element d;
       s += getTypeName(d);
