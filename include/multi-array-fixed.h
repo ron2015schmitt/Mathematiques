@@ -44,6 +44,8 @@ namespace mathq {
     using Type = MultiArray<Element, rank_value, dim_ints...>;
     using ConcreteType = Type;
 
+    constexpr static size_t rank_array = NumberTrait<Type>::rank_array();
+    
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
@@ -58,6 +60,7 @@ namespace mathq {
 
     using DimensionsType = Dimensions<rank_value>;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
+    // using DeepDimensionsType = NumberTrait<Type>::rank_array()
 
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
 
