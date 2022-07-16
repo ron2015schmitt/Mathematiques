@@ -252,6 +252,9 @@ namespace mathq {
     constexpr static size_t depth() {
       return 0;
     }
+    constexpr static const std::valarray<size_t> rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+      return rank_array;
+    }
     inline static size_t size(NullType x) {
       return 0;
     }
@@ -275,6 +278,10 @@ namespace mathq {
     constexpr static size_t depth() {
       return 0;
     }
+    constexpr static const std::valarray<size_t> rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+      return rank_array;
+    }
+
     inline static size_t size(const Number x) {
       return 1;
     }
@@ -297,6 +304,10 @@ namespace mathq {
     constexpr static size_t depth() {
       return 0;
     }
+    constexpr static const std::valarray<size_t> rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+      return rank_array;
+    }
+
     inline static size_t size(const Number x) {
       return 1;
     }
@@ -320,6 +331,10 @@ namespace mathq {
     constexpr static size_t depth() {
       return 0;
     }
+    constexpr static const std::valarray<size_t> rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+      return rank_array;
+    }
+
     inline static size_t size(const Number x) {
       return 1;
     }
@@ -341,6 +356,9 @@ namespace mathq {
     constexpr static bool value = true;
     constexpr static size_t depth() {
       return 0;
+    }
+    constexpr static const std::valarray<size_t> rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+      return rank_array;
     }
     inline static size_t size(const Number x) {
       return 1;
@@ -366,6 +384,15 @@ namespace mathq {
     constexpr static bool value = false;
     constexpr static size_t depth() {
       return 1 + NumberTrait<Element, NewNumber>::depth();
+    }
+    constexpr static const std::valarray<size_t> rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+      std::valarray<size_t> new_array(rank_array.size() + 1);
+      for (size_t ii = 0; ii < rank_array.size(); ii++) {
+        new_array[ii] = rank_array[ii];
+      }
+      new_array[new_array.size()-1] = rank;
+      auto x =  NumberTrait<Element>::rank_array(new_array);
+      return x;
     }
     inline static size_t size(const InputType& x) {
       return x.size();
@@ -395,6 +422,15 @@ namespace mathq {
     constexpr static size_t depth() {
       return depth_in;
     }
+    constexpr static const std::valarray<size_t> rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+      std::valarray<size_t> new_array(rank_array.size() + 1);
+      for (size_t ii = 0; ii < rank_array.size(); ii++) {
+        new_array[ii] = rank_array[ii];
+      }
+      new_array[new_array.size()-1] = rank;
+      auto x =  NumberTrait<Element>::rank_array(new_array);
+      return x;
+    }
     inline static size_t size(const InputType& x) {
       return x.size();
     }
@@ -420,6 +456,15 @@ namespace mathq {
     constexpr static bool value = false;
     constexpr static size_t depth() {
       return depth_in;
+    }
+    constexpr static const std::valarray<size_t> rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+      std::valarray<size_t> new_array(rank_array.size() + 1);
+      for (size_t ii = 0; ii < rank_array.size(); ii++) {
+        new_array[ii] = rank_array[ii];
+      }
+      new_array[new_array.size()-1] = rank;
+      auto x =  NumberTrait<Element>::rank_array(new_array);
+      return x;
     }
     inline static size_t size(const InputType& x) {
       return x.size();

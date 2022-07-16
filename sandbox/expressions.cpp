@@ -235,11 +235,17 @@ int main(int argc, char* argv[]) {
   TRDISP(x2.rank());
   TRDISP(x2.depth());
   TRDISP(x2.dims());
+  TRDISP(x2.size());
+  TRDISP(sizeof(x2)/sizeof(double));
 
-  // TRDISP(x2.size());
+  TRDISP(std::array<size_t, 0>{});
+  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::depth());
+  TRDISP(std::valarray<size_t>{});
+  TRDISP(NumberTrait<double>::rank_array());
+  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::rank_array());
+
   // TRDISP(x2.data_);
   // TRDISP(sizeof(x2.data_)/sizeof(double));
-  // TRDISP(sizeof(x2)/sizeof(double));
 
   // ECHO_CODE(x2.resize(6));
   // TRDISP(x2.size());
@@ -261,10 +267,11 @@ int main(int argc, char* argv[]) {
   TRDISP(x3.rank());
   TRDISP(x3.depth());
   TRDISP(x3.dims_array());
-  // TRDISP(x3.dims());
+  TRDISP(x3.dims());
   TRDISP(x3.data_);
   TRDISP(sizeof(x3.data_)/sizeof(double));
   TRDISP(sizeof(x3)/sizeof(double));
+  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3, 2, 1 , 1>>::rank_array());
 
   // CR();
   // ECHO_CODE(MultiArray<double,2> x2(1,2));
