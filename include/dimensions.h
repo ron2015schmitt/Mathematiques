@@ -13,11 +13,10 @@ namespace mathq {
   // Cannot size by template parameter because because we need the same exact type for RecursiveDimensions elements
   // ***************************************************************************
 
-  template <size_t rank_>
-  class Dimensions : public Vector<size_t, rank_> {
+  class Dimensions : public std::valarray<size_t> {
   public:
-    using Type = Dimensions<rank_>;
-    using Parent = Vector<size_t>;
+    using Type = Dimensions;
+    using Parent = std::valarray<size_t>;
     using ElementType = size_t;
 
 
@@ -29,43 +28,66 @@ namespace mathq {
       this->resize(N);
     }
 
-    template <size_t rank2>
-    Dimensions(const Dimensions<rank2>& dims2) {
-      *this = dims2;
+    Dimensions(const Dimensions& var) {
+      *this = var;
+    }
+
+    Dimensions(const std::vector<size_t>& var) {
+      *this = var;
+    }
+
+    Dimensions(const std::valarray<size_t>& var) {
+      *this = var;
     }
 
     template <size_t rank2>
-    Dimensions(const std::array<size_t, rank2>& dims2) {
-      *this = dims2;
+    Dimensions(const std::array<size_t, rank2>& var) {
+      *this = var;
     }
 
-    Dimensions(const std::initializer_list<size_t>& ilist) {
-      if constexpr (this->is_dynamic_value) {
-        this->resize(ilist.size());
-      }
-      size_t k = 0;
-      typename std::initializer_list<size_t>::iterator it;
-      for (it = ilist.begin(); it != ilist.end(); ++it, k++) {
-        (*this)[k] = *it;
-      }
+    Dimensions(const std::initializer_list<size_t>& var) {
+      *this = var;
     }
 
-    Dimensions<0>& getReducedDims() const {
-      Dimensions<0>& v = *(new Dimensions{});
-      v.resize(this->size());
+    Dimensions& getReducedDims() const {
+      // remove all dimensiosn equal to 1
+      Dimensions& v = *(new Dimensions{});
+  
+      size_t N = 0;
       for (size_t i = 0; i < this->size(); i++) {
-        v[i] = (*this)[i];
+        if((*this)[i] > 1) {
+          N++;
+        }
+      }
+      v.resize(N);
+  
+      size_t n = 0;
+      for (size_t i = 0; i < this->size(); i++) {
+        if((*this)[i] > 1) {
+          v[n++] = (*this)[i];
+        }
       }
       return v;
     }
 
-    template <size_t rank2>
-    bool equiv(const Dimensions<rank2>& dims2) const {
-      return (this->getReducedDims() == dims2.getReducedDims());
+    bool operator==(const Dimensions& var) const {
+      if (size() != var.size()) return false;
+      for (size_t i = 0; i < this->size(); i++) {
+        if ((*this)[i] != var[i]) {
+          return false;
+        }
+      }
+      return true;
     }
 
-    Dimensions<rank_>& getReverse() const {
-      Dimensions<rank_>& dd = *(new Dimensions<rank_>());
+
+    bool equiv(const Dimensions& var) const {
+      return (this->getReducedDims() == var.getReducedDims());
+    }
+
+    Dimensions& getReverse() const {
+      Dimensions& dd = *(new Dimensions());
+
       dd.resize(this->size());
       // reverse order
       size_t k = this->size()-1;
@@ -74,29 +96,6 @@ namespace mathq {
       }
       return dd;
     }
-
-    operator Dimensions<0>() {
-      return *(new Dimensions<0>(*this));
-    }
-
-    template <size_t rank1 = rank_, size_t rank2, EnableIf<(rank1 == 0)> = 0>
-    Dimensions<rank1>& operator=(const Dimensions<rank2>& dims2) {
-      this->resize(dims2.size());
-      for (size_t i = 0; i < this->size(); i++) {
-        (*this)[i] = dims2[i];
-      }
-      return *this;
-    }
-
-    template <size_t rank1 = rank_, size_t rank2, EnableIf<(rank1 == 0)> = 0>
-    Dimensions<rank1>& operator=(const std::array<size_t, rank2>& dims2) {
-      this->resize(dims2.size());
-      for (size_t i = 0; i < this->size(); i++) {
-        (*this)[i] = dims2[i];
-      }
-      return *this;
-    }
-
 
     inline size_t product(void) const {
       size_t sz = 1;
@@ -107,14 +106,80 @@ namespace mathq {
     }
 
 
+    Dimensions& operator=(const Dimensions& var) {
+      this->resize(var.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = var[i];
+      }
+      return *this;
+    }
+
+    Dimensions& operator=(const std::vector<size_t>& var) {
+      this->resize(var.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = var[i];
+      }
+      return *this;
+    }
+
+    Dimensions& operator=(const std::valarray<size_t>& var) {
+      this->resize(var.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = var[i];
+      }
+      return *this;
+    }
+
+    template <size_t rank2>
+    Dimensions& operator=(const std::array<size_t, rank2>& var) {
+      this->resize(var.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = var[i];
+      }
+      return *this;
+    }
+
+    Dimensions& operator=(const std::initializer_list<size_t>& ilist) {
+      this->resize(ilist.size());
+      size_t k = 0;
+      typename std::initializer_list<size_t>::iterator it;
+      for (it = ilist.begin(); it != ilist.end(); ++it, k++) {
+        (*this)[k] = *it;
+      }
+      return *this;
+    }
+
+
+
     inline std::string classname() const {
       using namespace display;
       std::string s = "Dimensions";
-      s += StyledString::get(ANGLE1).get();
-      s += template_size_to_string(rank_);
-      s += StyledString::get(ANGLE2).get();
       return s;
     }
+
+    // stream << operator
+
+    friend std::ostream& operator<<(std::ostream& stream, const Dimensions& v) {
+      using namespace display;
+      Style& style = FormatDataVector::style_for_punctuation;
+      stream << style.apply(FormatDataVector::string_opening);
+      const size_t N = FormatDataVector::max_elements_per_line;
+      size_t k = 0;
+      for (size_t ii = 0; ii < v.size(); ii++, k++) {
+        if (k >= N) {
+          stream << style.apply(FormatDataVector::string_endofline);
+          k = 0;
+        }
+        dispval_strm(stream, v[ii]);
+        if (ii < v.size()-1) {
+          stream << style.apply(FormatDataVector::string_delimeter);
+        }
+      }
+      stream << style.apply(FormatDataVector::string_closing);
+
+      return stream;
+    }
+
 
   };
 
@@ -127,14 +192,14 @@ namespace mathq {
   // std::complex, Imaginary, Quarternion, etc
   // ********************************************************************************
 
-  class NullDimensions : public Dimensions<0> {
+  class NullDimensions : public Dimensions {
   public:
     using Type = NullDimensions;
-    using Parent = Dimensions<0>;
+    using Parent = Dimensions;
     using ElementType = size_t;
 
-
     NullDimensions() {
+      resize(0);
     }
 
 
@@ -154,13 +219,15 @@ namespace mathq {
   // This class is used for the dimensions of the Scalar class
   // ********************************************************************************
 
-  class ScalarDimensions : public Dimensions<0> {
+  class ScalarDimensions : public Dimensions {
   public:
     using Type = ScalarDimensions;
-    using Parent = Dimensions<0>;
+    using Parent = Dimensions;
     using ElementType = size_t;
 
     ScalarDimensions() {
+      resize(1);
+      (*this)[0] = 1;
     }
 
     inline std::string classname() const {
@@ -172,32 +239,32 @@ namespace mathq {
 
 
 
-  // ***************************************************************************
-  // NumberTrait specialization for  Dimensions
-  //
-  // Compiler can't compile this until after Dimensions has been defined
-  // ***************************************************************************
+  // // ***************************************************************************
+  // // NumberTrait specialization for  Dimensions
+  // //
+  // // Compiler can't compile this until after Dimensions has been defined
+  // // ***************************************************************************
 
-  template <typename NewNumber, size_t rank>
-  class
-    NumberTrait<Dimensions<rank>, NewNumber> {
-  public:
-    using InputType = Vector<size_t>;
-    using Type = typename NumberTrait<size_t>::Type;
-    using ReplacedNumberType = Vector<typename NumberTrait<size_t, NewNumber>::ReplacedNumberType>;
-    using ReplacedElementType = Vector<NewNumber>; // this is correct, see comment above
+  // template <typename NewNumber, size_t rank>
+  // class
+  //   NumberTrait<Dimensions, NewNumber> {
+  // public:
+  //   using InputType = Vector<size_t>;
+  //   using Type = typename NumberTrait<size_t>::Type;
+  //   using ReplacedNumberType = Vector<typename NumberTrait<size_t, NewNumber>::ReplacedNumberType>;
+  //   using ReplacedElementType = Vector<NewNumber>; // this is correct, see comment above
 
-    constexpr static bool value = false;
-    constexpr static size_t depth() {
-      return 1 + NumberTrait<size_t, NewNumber>::depth();
-    }
-    inline static size_t size(const InputType& x) {
-      return x.size();
-    }
-    inline static size_t total_size(const InputType& x) {
-      return x.total_size();
-    }
-  };
+  //   constexpr static bool value = false;
+  //   constexpr static size_t depth() {
+  //     return 1 + NumberTrait<size_t, NewNumber>::depth();
+  //   }
+  //   inline static size_t size(const InputType& x) {
+  //     return x.size();
+  //   }
+  //   inline static size_t total_size(const InputType& x) {
+  //     return x.total_size();
+  //   }
+  // };
 
 
 
@@ -207,32 +274,31 @@ namespace mathq {
   // stand-alone function for two Dimensions instances
   // ***************************************************************************
 
-  template <size_t rank1, size_t rank2>
-  inline bool equiv(const Dimensions<rank1>& dims1, const Dimensions<rank2>& dims2) {
-    return dims1.equiv(dims2);
+  inline bool equiv(const Dimensions& dims1, const Dimensions& var) {
+    return dims1.equiv(var);
   }
 
 
 
 
-  // ********************************************************************************
-  // Vector method definiitions
-  //
-  // The compiler can't compile these until after Dimensiosn class has been defined.
-  // Thus we define them here.
-  // ********************************************************************************
+  // // ********************************************************************************
+  // // Vector method definiitions
+  // //
+  // // The compiler can't compile these until after Dimensiosn class has been defined.
+  // // Thus we define them here.
+  // // ********************************************************************************
 
-  template <typename Element, size_t N1> Dimensions<Vector<Element, N1>::rank_value>&
-    Vector<Element, N1>::dims(void) const {
-    return *(new Dimensions<rank_value>({ this->size() }));
-  }
+  // template <typename Element, size_t N1> Dimensions&
+  //   Vector<Element, N1>::dims(void) const {
+  //   return *(new Dimensions({ this->size() }));
+  // }
 
-  template <typename Element, size_t N1> Vector<Element, N1>&
-    Vector<Element, N1>::resize(const Dimensions<dynamic>& dims) {
-    // TRDISP(dims);
-    // TRDISP(dims[0]);
-    return resize(dims[0]);
-  }
+  // template <typename Element, size_t N1> Vector<Element, N1>&
+  //   Vector<Element, N1>::resize(const Dimensions& dims) {
+  //   // TRDISP(dims);
+  //   // TRDISP(dims[0]);
+  //   return resize(dims[0]);
+  // }
 
 
 
@@ -242,10 +308,10 @@ namespace mathq {
   // ***************************************************************************
 
   template<size_t depth_>
-  class RecursiveDimensions : public Vector<Dimensions<0>, depth_> {
+  class RecursiveDimensions : public std::array<Dimensions, depth_> {
 
   public:
-    using Parent = Vector<Dimensions<0>, depth_>;
+    using Parent = std::array<Dimensions, depth_>;
     constexpr static size_t depth_value = depth_;
 
     RecursiveDimensions() {
@@ -256,12 +322,12 @@ namespace mathq {
       this->resize(depth);
     }
 
-    RecursiveDimensions(const std::initializer_list<Dimensions<0>>& ilist) {
+    RecursiveDimensions(const std::initializer_list<Dimensions>& ilist) {
       if constexpr (this->is_dynamic_value) {
         this->resize(ilist.size());
       }
       size_t k = 0;
-      typename std::initializer_list<Dimensions<0>>::iterator it;
+      typename std::initializer_list<Dimensions>::iterator it;
       for (it = ilist.begin(); it != ilist.end(); ++it, k++) {
         (*this)[k] = *it;
       }

@@ -73,7 +73,6 @@ namespace mathq {
   // Dimensions classes
   // ***************************************************************************
 
-  template <size_t rank_ = 0>
   class Dimensions;
   class ScalarDimensions;
   class NullDimensions;
