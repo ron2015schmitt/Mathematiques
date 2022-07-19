@@ -58,7 +58,7 @@ namespace mathq {
       rank_value  // rank
     >;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     // using DeepDimensionsType = NumberTrait<Type>::rank_array()
 
@@ -271,10 +271,10 @@ namespace mathq {
     //**********************************************************************
 
     // defined later since Dimensions is dependent on Vector
-    Dimensions<rank_value>& dims(void) const {
+    Dimensions& dims(void) const {
       const size_t N = this->size();
 
-      return *(new Dimensions<rank_value>({ this->size() }));
+      return *(new Dimensions({ this->size() }));
     }
 
 
@@ -296,8 +296,8 @@ namespace mathq {
     }
 
 
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
-      RecursiveDimensions<depth_value>& rdims = *(new RecursiveDimensions<depth_value>);
+    RecursiveDimensions& recursive_dims(void) const {
+      RecursiveDimensions& rdims = *(new RecursiveDimensions);
       recurse_dims(rdims, 0);
       return rdims;
     }

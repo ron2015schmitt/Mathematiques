@@ -60,7 +60,7 @@ namespace mathq {
       rank_value  // rank
     >;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
 
     using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
@@ -155,7 +155,7 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
     template<size_t NE1 = N1, EnableIf<(NE1 == 0)> = 1>
-    explicit MultiArray(const Dimensions<0>& dims) {
+    explicit MultiArray(const Dimensions& dims) {
       // TRDISP(dims);
       this->resize(dims);
     }
@@ -163,7 +163,7 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
 
     template<size_t NE1 = N1, size_t dim_depth, EnableIf<(NE1 == 0)> = 1>
-    explicit MultiArray(const RecursiveDimensions<dim_depth>& recursive_dims) {
+    explicit MultiArray(const RecursiveDimensions& recursive_dims) {
       // TRDISP(recursive_dims);
       this->resize(recursive_dims);
     }
@@ -298,19 +298,18 @@ namespace mathq {
       return *this;
     }
 
-    Type& resize(const Dimensions<dynamic>& dims);
+    Type& resize(const Dimensions& dims);
 
 
-    // resize_depth <= depth_value
-    template <size_t resize_depth>
-    Type& resize(const RecursiveDimensions<resize_depth>& new_rdims) {
+    // new_rdims.size() <= depth_value
+    Type& resize(const RecursiveDimensions& new_rdims) {
       return recurse_resize(new_rdims, 0);
     }
 
     // helper functions
-    template <size_t resize_depth>
-    Type& recurse_resize(const RecursiveDimensions<resize_depth>& parent_rdims, size_t di = 0) {
+    Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
       size_t depth_index = di;
+      size_t resize_depth = parent_rdims.size();
       const size_t newSize = parent_rdims[depth_index++];
       if constexpr (is_dynamic_value) {
         resize(newSize);
@@ -331,7 +330,7 @@ namespace mathq {
     //**********************************************************************
 
     // defined later since Dimensions is dependent on Vector
-    Dimensions<rank_value>& dims(void) const;
+    Dimensions& dims(void) const;
 
     ElementDimensionsType& element_dims(void) const {
       if constexpr (depth_value>1) {
@@ -347,14 +346,14 @@ namespace mathq {
     }
 
 
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
-      RecursiveDimensions<depth_value>& rdims = *(new RecursiveDimensions<depth_value>);
+    RecursiveDimensions& recursive_dims(void) const {
+      RecursiveDimensions& rdims = *(new RecursiveDimensions);
       recurse_dims(rdims, 0);
       return rdims;
     }
 
     template <size_t full_depth>
-    const Type& recurse_dims(RecursiveDimensions<full_depth>& parent_rdims, const size_t di = 0) const {
+    const Type& recurse_dims(RecursiveDimensions& parent_rdims, const size_t di = 0) const {
       size_t depth_index = di;
       parent_rdims[depth_index++] = dims();
       if constexpr (depth_value>1) {

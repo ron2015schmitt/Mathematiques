@@ -53,7 +53,7 @@ namespace mathq {
     using NumberType = typename NumberTrait<Element>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
 
 
@@ -123,7 +123,7 @@ namespace mathq {
     //                        Dimensions
     //**********************************************************************
 
-    const Dimensions<rank_value>& dims(void) const {
+    const DimensionsType& dims(void) const {
       return derived().dims();
     }
 
@@ -131,7 +131,7 @@ namespace mathq {
       return derived().element_dims();
     }
 
-    const RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    const RecursiveDimensions& recursive_dims(void) const {
       return derived().recursive_dims();
     }
 

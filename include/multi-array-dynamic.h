@@ -60,7 +60,7 @@ namespace mathq {
       rank_value  // rank
     >;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
 
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
@@ -72,7 +72,7 @@ namespace mathq {
       // do NOT declare any other storage.
       // keep the instances lightweight
     MyArrayType data_;
-    Dimensions<rank_value> dims_;
+    Dimensions dims_;
   public:
 
 
@@ -83,7 +83,7 @@ namespace mathq {
 
     // --------------------- default CONSTRUCTOR ---------------------
 
-    explicit MultiArray() : dims_(Dimensions<rank_value>()) {
+    explicit MultiArray() : dims_(Dimensions()) {
     }
 
 
@@ -324,10 +324,10 @@ namespace mathq {
     //**********************************************************************
 
     // defined later since Dimensions is dependent on Vector
-    Dimensions<rank_value>& dims(void) const {
+    Dimensions& dims(void) const {
       const size_t N = this->size();
 
-      return *(new Dimensions<rank_value>({ this->size() }));
+      return *(new Dimensions({ this->size() }));
     }
 
 
@@ -368,8 +368,8 @@ namespace mathq {
     }
 
 
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
-      RecursiveDimensions<depth_value>& rdims = *(new RecursiveDimensions<depth_value>);
+    RecursiveDimensions& recursive_dims(void) const {
+      RecursiveDimensions& rdims = *(new RecursiveDimensions);
       recurse_dims(rdims, 0);
       return rdims;
     }

@@ -34,7 +34,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
 
@@ -128,7 +128,7 @@ namespace mathq {
     DimensionsType dims(void) const {
       return x_.dims();
     }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims();
     }
 
@@ -229,7 +229,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
 
@@ -313,7 +313,7 @@ namespace mathq {
     DimensionsType dims(void) const {
       return x_.dims();
     }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims();
     }
 
@@ -402,7 +402,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
@@ -489,8 +489,8 @@ namespace mathq {
     DimensionsType element_dims(void) const {
       return x_.element_dims();
     }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
-      RecursiveDimensions<depth_value>& ddims = *(new RecursiveDimensions<depth_value>);
+    RecursiveDimensions& recursive_dims(void) const {
+      RecursiveDimensions& ddims = *(new RecursiveDimensions);
       return recursive_dims(ddims);
     }
 

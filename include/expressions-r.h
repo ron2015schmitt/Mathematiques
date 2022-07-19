@@ -37,7 +37,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value, dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
@@ -123,7 +123,7 @@ namespace mathq {
     //**********************************************************************
 
 
-    const Dimensions<rank_value>& dims(void) const {
+    const Dimensions& dims(void) const {
       return x_.dims();
     }
 
@@ -131,7 +131,7 @@ namespace mathq {
       return x_.element_dims();
     }
 
-    const RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    const RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims();
     }
 
@@ -205,7 +205,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
@@ -291,7 +291,7 @@ namespace mathq {
     //                        Dimensions
     //**********************************************************************
 
-    const Dimensions<rank_value>& dims(void) const {
+    const Dimensions& dims(void) const {
       return x_.dims();
     }
 
@@ -299,7 +299,7 @@ namespace mathq {
       return x_.element_dims();
     }
 
-    const RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    const RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims();
     }
 
@@ -364,7 +364,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
     using TempA = typename std::conditional<D1 == 0, B, A>::type::ConcreteType;
@@ -495,7 +495,7 @@ namespace mathq {
       }
     }
 
-    const RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    const RecursiveDimensions& recursive_dims(void) const {
       if constexpr (D1 >= D2) {
         a_.recursive_dims();
       }
@@ -761,7 +761,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
     using TempA = typename std::conditional<D1 == 0, B, A>::type::ConcreteType;
@@ -876,7 +876,7 @@ namespace mathq {
         return b_.dims();
       }
     }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       if constexpr (D1 >= D2) {
         return a_.recursive_dims();
       }
@@ -1150,7 +1150,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
     using TypeA = typename std::conditional<D1 == 0, const A, const A&>::type;
@@ -1302,7 +1302,7 @@ namespace mathq {
     }
 
 
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       if constexpr (D1 > 0) {
         return a_.recursive_dims();
       }
@@ -1429,7 +1429,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
   private:
@@ -1526,7 +1526,7 @@ namespace mathq {
     //**********************************************************************
 
 
-    const Dimensions<rank_value>& dims(void) const {
+    const Dimensions& dims(void) const {
       return x_.dims();
     }
 
@@ -1534,7 +1534,7 @@ namespace mathq {
       return x_.element_dims();
     }
 
-    const RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    const RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims();
     }
 
@@ -1633,7 +1633,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
 
@@ -1740,7 +1740,7 @@ namespace mathq {
     DimensionsType element_dims(void) const {
       return x_.element_dims();
     }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims();
     }
 
@@ -1824,7 +1824,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
 
 
@@ -1920,7 +1920,7 @@ namespace mathq {
     DimensionsType element_dims(void) const {
       return x_.element_dims().reverse();
     }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims().reverse_all();
     }
 
@@ -2000,7 +2000,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
   private:
     //**********************************************************************
@@ -2088,8 +2088,8 @@ namespace mathq {
     DimensionsType element_dims(void) const {
       return x_.element_dims();
     }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
-      RecursiveDimensions<depth_value> rdims = x_.recursive_dims() + y_.recursive_dims();
+    RecursiveDimensions& recursive_dims(void) const {
+      RecursiveDimensions rdims = x_.recursive_dims() + y_.recursive_dims();
       return rdims;
     }
 
@@ -2168,7 +2168,7 @@ namespace mathq {
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value,dynamic>;
 
-    using DimensionsType = Dimensions<rank_value>;
+    using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
   private:
     //**********************************************************************
@@ -2253,7 +2253,7 @@ namespace mathq {
     DimensionsType dims(void) const {
       return a_.dims();
     }
-    RecursiveDimensions<depth_value>& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       return a_.recursive_dims();
     }
 

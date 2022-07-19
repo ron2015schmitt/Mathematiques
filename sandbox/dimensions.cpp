@@ -43,10 +43,10 @@
 #include "indices.h"
 // #include "slices.h"
 
-// #include "expression-r.h"
-// #include "expression-rw.h"
+#include "expression-r.h"
+#include "expression-rw.h"
 
-// #include "vector.h"
+#include "vector.h"
 // #include "multi-array.h"
 // #include "scalar.h"
 // #include "matrix.h"
