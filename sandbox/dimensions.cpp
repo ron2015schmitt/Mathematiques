@@ -46,9 +46,10 @@
 #include "expression-r.h"
 #include "expression-rw.h"
 
-#include "vector.h"
-// #include "multi-array.h"
+#include "multi-array-fixed.h"
+#include "multi-array-dynamic.h"
 // #include "scalar.h"
+#include "vector.h"
 // #include "matrix.h"
 // #include "multi-array3.h"
 // #include "multi-array4.h"

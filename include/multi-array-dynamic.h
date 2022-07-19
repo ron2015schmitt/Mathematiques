@@ -112,7 +112,7 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
     template<size_t TEMP = is_dynamic_value, EnableIf<TEMP> = 1>
-    explicit MultiArray(const Dimensions<0>& dims) {
+    explicit MultiArray(const Dimensions& dims) {
       // TRDISP(dims);
       // resize(dims);
     }
@@ -289,25 +289,22 @@ namespace mathq {
       return *this;
     }
 
-    Type& resize(const Dimensions<dynamic>& dims) {
+    Type& resize(const Dimensions& dims) {
       return resize(dims.product());
     }
 
 
     // resize_depth <= depth_value
-    template <size_t resize_depth>
-    Type& resize(const RecursiveDimensions<resize_depth>& new_rdims) {
+    Type& resize(const RecursiveDimensions& new_rdims) {
       return recurse_resize(new_rdims, 0);
     }
 
     // helper functions
-    template <size_t resize_depth>
-    Type& recurse_resize(const RecursiveDimensions<resize_depth>& parent_rdims, size_t di = 0) {
+    Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
       size_t depth_index = di;
+      size_t resize_depth = parent_rdims.size();
       const size_t newSize = parent_rdims[depth_index++];
-      if constexpr (is_dynamic_value) {
-        resize(newSize);
-      }
+      resize(newSize);
       if constexpr (depth_value >= 1) {
         if (depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {
@@ -375,7 +372,7 @@ namespace mathq {
     }
 
     template <size_t full_depth>
-    const Type& recurse_dims(RecursiveDimensions<full_depth>& parent_rdims, const size_t di = 0) const {
+    const Type& recurse_dims(RecursiveDimensions& parent_rdims, const size_t di = 0) const {
       size_t depth_index = di;
       parent_rdims[depth_index++] = dims();
       if constexpr (depth_value>1) {

@@ -12,6 +12,9 @@ namespace mathq {
    *                   = underlying algebraic field
    *                     ex. int, double, std::complex<double>
    *                 depth = tensor depth. if Element=NumberType, then depth=1.
+   *
+   * Note that a scalar has depth = 0, rank = 0, size = 0
+   *             Scalar     depth >= 1, rank = 0, size = 1
   *********************************************************************************
    */
 
