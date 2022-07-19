@@ -6,7 +6,6 @@
 #ifndef MATHQ_H
 #define MATHQ_H
 
-// list C++ headers alphabetically
 #include <cassert>
 #include <cstddef>
 #include <cstdlib>
@@ -48,26 +47,23 @@
 #include "math_imag.h"
 #include "math_quaternion.h"
 
+#include "dimensions.h"
 #include "indices.h"
 // #include "slices.h"
 
 #include "expression-r.h"
 #include "expression-rw.h"
 
-// #include "multi-array.h"
+#include "multi-array-fixed.h"
+#include "multi-array-dynamic.h"
 // #include "scalar.h"
+#include "vector.h"
 // #include "matrix.h"
 // #include "multi-array3.h"
 // #include "multi-array4.h"
-#include "vector.h"
-#include "dimensions.h"
-
-
-// #include "multi-array-constant.h"
-// #include "multi-array-repeat-vec.h"
-// #include "multi-array-outer-product.h"
 
 // #include "vector-constant.h"
+// #include "vector-sparse.h"
 
 // #include "matrix_constdiag.h"
 // #include "matrix_diagonal.h"
@@ -81,6 +77,7 @@
 // #include "matrix_rep.h"
 // #include "matrix_skewhermitian.h"
 // #include "matrix_skewsymmetric.h"
+// #include "matrix_sparse.h"
 // #include "matrix_symmetric.h"
 // #include "matrix_toeplitz.h"
 // #include "matrix_uppertriangle.h"
@@ -90,20 +87,33 @@
 // #include "matrix-repeat-vec.h"
 // #include "matrix-outer-product.h"
 
+// #include "multi-array3-constant.h"
+// #include "multi-array3-repeat-vec.h"
+// #include "multi-array3-outer-product.h"
+
+// #include "multi-array4-constant.h"
+// #include "multi-array4-repeat-vec.h"
+// #include "multi-array5-outer-product.h"
+
+// #include "multi-array-constant.h"
+// #include "multi-array-repeat-vec.h"
+// #include "multi-array-outer-product.h"
+
 
 #include "expressions-r.h"
-// #include "expressions-rw.h"
+#include "expressions-rw.h"
 
 #include "fun_unary_AUTO.h"
 #include "fun_binary_AUTO.h"
 #include "fun_ternary_AUTO.h"
 #include "functions_misc.h"
-// #include "grids.h"
 #include "functions_structure.h"
-// #include "functions_products.h"
-// #include "functions_user.h"
+#include "functions_products.h"
+#include "functions_user.h"
+// #include "grids.h"
 
 // #include "coda.h"
+
 
 
 #endif

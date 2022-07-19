@@ -92,16 +92,16 @@
 // #include "multi-array-outer-product.h"
 
 
-// #include "expressions-r.h"
-// #include "expressions-rw.h"
+#include "expressions-r.h"
+#include "expressions-rw.h"
 
-// #include "fun_unary_AUTO.h"
-// #include "fun_binary_AUTO.h"
-// #include "fun_ternary_AUTO.h"
-// #include "functions_misc.h"
-// #include "functions_structure.h"
-// #include "functions_products.h"
-// #include "functions_user.h"
+#include "fun_unary_AUTO.h"
+#include "fun_binary_AUTO.h"
+#include "fun_ternary_AUTO.h"
+#include "functions_misc.h"
+#include "functions_structure.h"
+#include "functions_products.h"
+#include "functions_user.h"
 // #include "grids.h"
 
 // #include "coda.h"

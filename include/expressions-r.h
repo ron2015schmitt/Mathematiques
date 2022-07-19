@@ -497,10 +497,10 @@ namespace mathq {
 
     const RecursiveDimensions& recursive_dims(void) const {
       if constexpr (D1 >= D2) {
-        a_.recursive_dims();
+        return a_.recursive_dims();
       }
       else {
-        b_.recursive_dims();
+        return b_.recursive_dims();
       }
     }
 
@@ -1921,7 +1921,7 @@ namespace mathq {
       return x_.element_dims().reverse();
     }
     RecursiveDimensions& recursive_dims(void) const {
-      return x_.recursive_dims().reverse_all();
+      return x_.recursive_dims().reverse_each();
     }
 
     //**********************************************************************
@@ -1944,9 +1944,9 @@ namespace mathq {
     //**********************************************************************
 
     const Element operator[](const size_t index1) const {
-      const Indices inds1 = Indices::indices<rank_value>(index1, *reverse_dims);
+      const Indices inds1 = Indices::indices(index1, *reverse_dims);
       const Indices inds2 = inds1.getReverse();
-      const size_t index2 = Indices::index<rank_value>(inds2, x_.dims());
+      const size_t index2 = Indices::index(inds2, x_.dims());
       return FUNC::apply(x_[index2]);
       return Element(0);
     }
