@@ -273,6 +273,7 @@ int main(int argc, char* argv[]) {
   TRDISP(u.el_total_size());
   TRDISP(u.total_size());
   TRDISP(u.dims());
+  TRDISP(u.dims_array());
   TRDISP(u.depth());
   TRDISP(u.recursive_dims());
   TRDISP(u.element_dims());

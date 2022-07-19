@@ -191,14 +191,14 @@ namespace mathq {
     //                    CONSTRUCTORS: FIXED size  
     //**********************************************************************
 
-    // --------------------- FIXED SIZE: set all to same value   ---------------------
+    // --------------------- FIXED SIZE: set all elements to same value   ---------------------
 
     template<size_t NE1 = N1, EnableIf< (NE1 > 0) > = 1>
       explicit MultiArray(const Element val) {
       *this = val;
     }
 
-    // --------------------- FIXED SIZE: set all Elements to same value   ---------------------
+    // --------------------- FIXED SIZE: set all bottom elements to same value   ---------------------
 
     template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth_value>1)&&(!std::is_same<Element, NumberType>::value)> = 1>
       explicit MultiArray(const NumberType val) {
@@ -288,7 +288,6 @@ namespace mathq {
     //                          Resize
     //**********************************************************************
 
-    // template<bool temp = is_dynamic_value, EnableIf<temp> = 0>  // cuases issues
     Type& resize(const size_t N) {
       if constexpr (is_dynamic_value) {
         if (N != this->size()) {
@@ -332,6 +331,10 @@ namespace mathq {
 
     Dimensions& dims(void) const {
       return *(new Dimensions({ this->size() }));
+    }
+
+    inline std::array<size_t, rank_value> dims_array(void) const {
+        return *(new std::array<size_t, rank_value>{ this->size() });
     }
 
 
@@ -634,7 +637,7 @@ namespace mathq {
     template <class X>
     Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
 
-      if constexpr (depth_value<=1) {
+      if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
           if (this->size() != x.size()) {
             resize(x.size());
@@ -669,7 +672,6 @@ namespace mathq {
 
     Vector<Element, N1>& operator=(const std::list<Element>& mylist) {
       if constexpr (is_dynamic_value) {
-        // TODO: warn if not in constructor
         if (this->size() != mylist.size()) {
           resize(mylist.size());
         }
@@ -686,9 +688,8 @@ namespace mathq {
 
     Vector<Element, N1>& operator=(const std::initializer_list<Element>& mylist) {
       if constexpr (is_dynamic_value) {
-        // TODO: warn if not in constructor
         if (this->size() != mylist.size()) {
-          data_.resize(mylist.size());
+          resize(mylist.size());
         }
       }
 
@@ -705,7 +706,6 @@ namespace mathq {
     // ------------------------ Vector = std::vector ----------------
 
     Vector<Element, N1>& operator=(const std::vector<Element>& vstd) {
-      // resize to avoid segmentation faults
       if constexpr (is_dynamic_value) {
         if (this->size() != vstd.size()) {
           resize(vstd.size());
@@ -721,7 +721,6 @@ namespace mathq {
 
     template <size_t N>
     Vector<Element, N1>& operator=(const std::array<NumberType, N>& varray) {
-      // resize to avoid segmentation faults
       if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
           resize(varray.size());
@@ -739,7 +738,6 @@ namespace mathq {
 
     Vector<Element, N1>& operator=(const std::valarray<Element>& varray) {
 
-      // resize to avoid segmentation faults
       if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
           resize(varray.size());
@@ -1504,7 +1502,7 @@ namespace mathq {
       const size_t N = size();
       std::list<Element> y(N);
       for (size_t i = 0; i<N; i++) {
-        y.push_back(13);
+        y.push_back();
       }
       return y;
     }

@@ -13,10 +13,10 @@ namespace mathq {
   // Cannot size by template parameter because because we need the same exact type for RecursiveDimensions elements
   // ***************************************************************************
 
-  class Dimensions : public std::valarray<size_t> {
+  class Dimensions : public std::vector<size_t> {
   public:
     using Type = Dimensions;
-    using Parent = std::valarray<size_t>;
+    using Parent = std::vector<size_t>;
     using ElementType = size_t;
 
 
@@ -85,6 +85,11 @@ namespace mathq {
       return (this->getReducedDims() == var.getReducedDims());
     }
 
+
+    size_t rank() const {
+      return size();
+    }
+
     Dimensions& reverse() {
       // reverse order
       size_t k = size()-1;
@@ -108,6 +113,12 @@ namespace mathq {
       }
       return sz;
     }
+
+
+    bool equal_num_elements(const Dimensions& var) const {
+      return (this->product() == var.product());
+    }
+
 
 
     Dimensions& operator=(const Dimensions& var) {
@@ -282,6 +293,10 @@ namespace mathq {
     return dims1.equiv(dims2);
   }
 
+
+  inline bool equal_num_elements(const Dimensions& dims1, const Dimensions& dims2) {
+    return dims1.equal_num_elements(dims2);
+  }
 
 
 

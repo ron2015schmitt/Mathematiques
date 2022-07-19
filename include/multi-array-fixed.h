@@ -85,64 +85,62 @@ namespace mathq {
     explicit MultiArray() {
     }
 
-
-
-
-
-    // old----------------------
-        // --------------------- constant=0 CONSTRUCTOR ---------------------
-
-        // explicit MultiArray(const Dimensions& dims)   {
-        // }
-
-        // // --------------------- constant Element CONSTRUCTOR ---------------------
-
-        // explicit MultiArray(const Dimensions& dims, const Element& e)   {
-        //   resize(dims);
-        //   constructorHelper();
-        //   *this = e;
-        // }
-
-        // // --------------------- constant Element CONSTRUCTOR ---------------------
-
-        // template <size_t D1 = depth, EnableIf<(D1 > 0)> = 0>
-
-        //   explicit MultiArray(const Dimensions& dims, const NumberType d)   {
-        //   resize(dims);
-        //   constructorHelper();
-        //   *this = d;
-        // }
-
-        // // ************* C++11 initializer_list CONSTRUCTOR---------------------
-        // MultiArray(const NestedInitializerList<Element, rank>& mylist)   {
-        //   *this = mylist;
-        //   constructorHelper();
-        // }
-
-        // // ************* Expression CONSTRUCTOR---------------------
-
-        // template <class X>
-        // MultiArray(const ExpressionR<X, Element, NumberType, depth, rank>& x)   {
-        //   *this = x;
-        //   constructorHelper();
-        // }
-
-
-        // // ************* Vector Constructor---------------------
-        // template <int NE>
-        // MultiArray(const Vector<Element, NE>& v)   {
-        //   resize(v.recursive_dims());
-        //   for (int c = 0; c < v.total_size(); c++) {
-        //     (*this)[c] = v[c];
-        //   }
-        //   constructorHelper();
-        // }
-
-
-        // --------------------- constructorHelper() --------------------
-
-    void constructorHelper() {
+    // --------------------- copy constructor --------------------
+    MultiArray(const Type& var) {
+      *this = var;
     }
+
+
+    // --------------------- dynamic MultiArray --------------------
+    MultiArray(const MultiArray<Element, rank_value, dynamic>& var) {
+      *this = var;
+    }
+
+    // ----------------------- initializer_list ---------------------
+    MultiArray(const std::initializer_list<Element>& var) {
+      *this = var;
+    }
+
+    // ----------------------- std::vector ---------------------
+    MultiArray(const std::vector<Element>& var) {
+      *this = var;
+    }
+
+    // ----------------------- std::valarray ---------------------
+    MultiArray(const std::valarray<Element>& var) {
+      *this = var;
+    }
+
+    // ----------------------- std::array ---------------------
+    template<size_t NE2>
+    MultiArray(const std::array<Element, NE2>& var) {
+      *this = var;
+    }
+
+    //--------------------- EXPRESSION CONSTRUCTOR --------------------
+    template <class Derived, size_t... ints>
+    MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
+      *this = x;
+    }
+
+
+    //**********************************************************************
+    //                    CONSTRUCTORS: FIXED size  
+    //**********************************************************************
+
+    // --------------------- FIXED SIZE: set all to same value   ---------------------
+
+    explicit MultiArray(const Element val) {
+      *this = val;
+    }
+
+    // --------------------- FIXED SIZE: set all bottom Elements to same value   ---------------------
+
+    template<typename NT = NumberType, EnableIf<(depth_value>1)&&(!std::is_same<Element, NT>::value)> = 1>
+      explicit MultiArray(const NumberType val) {
+      *this = val;
+    }
+
 
     //**********************************************************************
     //                             DESTRUCTOR 
@@ -178,28 +176,13 @@ namespace mathq {
     }
 
     inline size_t size(void) const {
-      size_t Ntotal = size_true();
-      TRDISP(Ntotal);
-      if constexpr (is_dynamic_value) {
-        if (rank_value <= Ntotal) {
-          return Ntotal - rank_value;
-        }
-        else {
-          return 0;
-        }
-      }
-      else {
-        return data_.size();
-      }
-    }
-
-    inline size_t size_true(void) const {
       return data_.size();
     }
 
+
     // // the total number of numbers in this data structure
     size_t total_size(void) const {
-      if constexpr (depth_value<2) {
+      if constexpr (depth_value <= 1) {
         return this->size();
       }
       else {
@@ -209,7 +192,7 @@ namespace mathq {
 
     // the size of each element
     inline size_t element_size(void) const {
-      if constexpr (depth_value<2) {
+      if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
@@ -225,7 +208,7 @@ namespace mathq {
 
     // the total number of numbers in an element
     inline size_t el_total_size(void) const {
-      if constexpr (depth_value<2) {
+      if constexpr (depth_value <= 1) {
         return 1;
       }
       else {
@@ -239,44 +222,22 @@ namespace mathq {
       }
     }
 
+    //**********************************************************************
+    //                          Resize
+    // Not allowed. reshape is not allowed either since the dimensions were
+    // specified at compile time.
+    //**********************************************************************
 
-
-    // resize_depth <= depth_value
-    template <size_t resize_depth>
-    Type& resize(const RecursiveDimensions& new_rdims) {
-      return recurse_resize(new_rdims, 0);
-    }
-
-    // helper functions
-    template <size_t resize_depth>
-    Type& recurse_resize(const RecursiveDimensions& parent_rdims, const size_t di = 0) {
-      size_t depth_index = di;
-      // const size_t newSize = parent_rdims[depth_index++];
-      // if constexpr (is_dynamic_value) {
-      //   resize(newSize);
-      // }
-      if constexpr (depth_value >= 1) {
-        if (depth_index < resize_depth) {
-          for (size_t ii = 0; ii < size(); ii++) {
-            data_[ii].recurse_resize(parent_rdims, depth_index);
-          }
-        }
-      }
-      return *this;
-    }
 
 
     //**********************************************************************
     //                        Dimensions
     //**********************************************************************
 
-    // defined later since Dimensions is dependent on Vector
+    // defined later since Dimensions is dependent on MultiArray
     Dimensions& dims(void) const {
-      const size_t N = this->size();
-
-      return *(new Dimensions({ this->size() }));
+      return *(new Dimensions(dims_array()));
     }
-
 
     inline std::array<size_t, rank_value> dims_array(void) const {
         return static_dims_array;
@@ -297,17 +258,16 @@ namespace mathq {
 
 
     RecursiveDimensions& recursive_dims(void) const {
-      RecursiveDimensions& rdims = *(new RecursiveDimensions);
-      recurse_dims(rdims, 0);
+      RecursiveDimensions& rdims = *(new RecursiveDimensions(depth_value));
+      this->recurse_dims(rdims, 0);
       return rdims;
     }
 
     const Type& recurse_dims(RecursiveDimensions& parent_rdims, const size_t di = 0) const {
-      size_t resize_depth = parent_rdims.size();
       size_t depth_index = di;
       parent_rdims[depth_index++] = dims();
       if constexpr (depth_value>1) {
-        if (size()>0) {
+        if (size() > 0) {
           data_[0].recurse_dims(parent_rdims, depth_index);
         }
         else {
@@ -470,27 +430,27 @@ namespace mathq {
     //   }
     // }
 
-    //**********************************************************************
-    //************* Array-style Element Access: x[n] ***********************
-    //**********************************************************************
+    // **********************************************************************
+    // ************* Array-style Element Access: x[n] ***********************
+    // **********************************************************************
 
-    // // "read/write"
-    // Element& operator[](const size_t n) {
-    //   int k = n;
-    //   if (k < 0) {
-    //     k += size();
-    //   }
-    //   return data_[k];
-    // }
+    // "read/write"
+    Element& operator[](const size_t n) {
+      // int k = n;
+      // if (k < 0) {
+      //   k += size();
+      // }
+      return data_[n];
+    }
 
-    // // read
-    // const Element& operator[](const size_t n) const {
-    //   int k = n;
-    //   if (k < 0) {
-    //     k += size();
-    //   }
-    //   return data_[k];
-    // }
+    // read
+    const Element& operator[](const size_t n) const {
+      // int k = n;
+      // if (k < 0) {
+      //   k += size();
+      // }
+      return data_[n];
+    }
 
     //**********************************************************************
     //*******MultiArray-style Element Access: A(i,j,k,...) *********************
@@ -591,114 +551,150 @@ namespace mathq {
     //   return (*this)[k];
     // }
 
+
+
     //**********************************************************************
-    //************************** ASSIGNMENT **************************************
+    //************************** ASSIGNMENT ********************************
     //**********************************************************************
 
     // Any new assignment operators should also be addedc to ExpressionRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
-    // // ----------------- tensor = e ----------------
-    // MultiArray<Element, rank>&
-    //   operator=(const Element e) {
-    //   for (size_t i = size(); i--;)
-    //     data_[i] = e;
-    //   return *this;
-    // }
+    // Assign all elements to the same constant value
+    Type& operator=(const Element& e) {
+      for (size_t i = 0; i < size(); i++) {
+        (*this)[i] = e;
+      }
+      return *this;
+    }
 
-    // // ----------------- tensor = d ----------------
-    // template <class T = Element>
-    // typename std::enable_if<!std::is_same<T, NumberType>::value, MultiArray<T, rank>&>::type operator=(const NumberType& d) {
+    // set bottom elements to same value
+    template <class T = Element>
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type operator=(const NumberType& d) {
+      for (size_t i = 0; i < total_size(); i++) {
+        (*this).dat(i) = d;
+      }
+      return *this;
+    }
 
-    //   for (size_t i = 0; i < total_size(); i++) {
-    //     data_.dat(i) = d;
-    //   }
-    //   return *this;
-    // }
 
-    // // ----------------- tensor = C++11 init list
-    // MultiArray<Element, rank>& operator=(const NestedInitializerList<Element, rank>& mylist) {
-    //   // MOUT << "operator=: ";
-    //   // TLDISP(mylist);
-    //   int i = 0;
-    //   Dimensions dims = NestedInitializerListDef<Element, rank>::dims(mylist);
-    //   resize(dims);
-    //   NestedInitializerListDef<Element, rank>::compute(*this, mylist, i);
-    //   return *this;
-    // }
 
-    // // ----------------- tensor = MultiArray<Element,rank,NumberType,depth> ----------------
-    // template <int R1>
-    // MultiArray<Element, rank>&
-    //   operator=(const MultiArray<Element, R1>& x) {
-    //   // TODO: issue warning
-    //   // TRDISP(x);
-    //   resize(x.dims());
-    //   for (size_t i = size(); i--;) {
-    //     data_[i] = x[i]; // Inlined expression
-    //   }
-    //   return *this;
-    // }
 
-    // // ----------------- tensor = ExpressionR<X,Element,NumberType,depth,rank> ----------------
-    // template <class X>
-    // MultiArray<Element, rank>&
-    //   operator=(const ExpressionR<X, Element, NumberType, depth, rank>& x) {
+    // // ------------------------ MultiArray = MultiArray<Element,NE2,NumberType,depth_value> ----------------
 
-    //   if constexpr (depth <= 1) {
-    //     resize(x.dims());
+    // template <int NE2>
+    // Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
+    //   if constexpr (depth_value<=1) {
+    //     if constexpr (is_dynamic_value) {
+    //       if (this->size() != v.size()) {
+    //         resize(v.size());
+    //       }
+    //     }
     //     for (size_t i = 0; i < size(); i++) {
-    //       (*this)[i] = x[i];
+    //       (*this)[i] = v[i];
     //     }
     //   }
     //   else {
-    //     resize(x.recursive_dims());
+    //     resize(v.recursive_dims());
     //     for (size_t i = 0; i < total_size(); i++) {
-    //       this->dat(i) = x.dat(i);
+    //       this->dat(i) = v.dat(i);
     //     }
     //   }
     //   return *this;
     // }
 
-    // //*********************************************************
-    // //                   1D assignment
-    // //********************************************************
 
-    // // ------------- tensor = array[] ----------------
+    // // ------------------------ MultiArray = ExpressionR ----------------
 
-    // MultiArray<Element, rank>&
-    //   operator=(const Element array1[]) {
-    //   for (size_t i = 0; i < size(); i++) {
-    //     (*this)[i] = array1[i];
-    //   }
-    //   return *this;
-    // }
+    template <class X>
+    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
 
-    // //**********************************************************************
-    // //************************** MATH **************************************
-    // //**********************************************************************
+      if constexpr (depth_value <= 1) {
+        if constexpr (is_dynamic_value) {
+          if (this->size() != x.size()) {
+            resize(x.size());
+          }
+        }
+        for (size_t i = 0; i < size(); i++) {
+          (*this)[i] = x[i];
+        }
+      }
+      else {
+        resize(x.recursive_dims());
+        for (size_t i = 0; i < total_size(); i++) {
+          this->dat(i) = x.dat(i);
+        }
+      }
+      return *this;
+    }
 
-    // //----------------- .roundzero(tol) ---------------------------
-    // // NOTE: in-place
 
-    // MultiArray<Element, rank>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
-    //   for (size_t i = size(); i--;) {
-    //     data_[i] = mathq::roundzero(data_[i], tolerance);
-    //   }
-    //   return *this;
-    // }
 
-    // //----------------- .conj() ---------------------------
-    // // NOTE: in-place
+    // ------------------------ MultiArray = array[] ----------------
 
-    // template <typename T = NumberType>
-    // typename std::enable_if<is_complex<T>{}, MultiArray<T>&>::type conj() {
-    //   for (size_t i = size(); i--;) {
-    //     data_[i] = std::conj(data_[i]);
-    //   }
-    //   return *this;
-    // }
+    Type& operator=(const Element array[]) {
+      for (size_t i = 0; i < size(); i++) {
+        (*this)(i) = array[i];
+      }
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = list ----------------
+
+    Type& operator=(const std::list<Element>& mylist) {
+      size_t i = 0;
+      for (typename std::list<Element>::const_iterator it = mylist.begin(); it != mylist.end(); ++it) {
+        (*this)(i++) = *it;
+      }
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = initializer_list ----------------
+
+    Type& operator=(const std::initializer_list<Element>& mylist) {
+      size_t k = 0;
+      typename std::initializer_list<Element>::iterator it;
+      for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+        data_[k] = *it;
+      }
+
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = std::vector ----------------
+
+    Type& operator=(const std::vector<Element>& vstd) {
+      for (size_t i = 0; i < size(); i++)
+        (*this)(i) = vstd[i];
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = std::array ----------------
+
+    template <size_t N>
+    Type& operator=(const std::array<NumberType, N>& varray) {
+      for (size_t i = 0; i < size(); i++)
+        (*this)(i) = varray[i];
+
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = std::valarray ----------------
+
+    Type& operator=(const std::valarray<Element>& varray) {
+      for (size_t i = 0; i < size(); i++)
+        (*this)(i) = varray[i];
+
+      return *this;
+    }
+
+
 
     //**********************************************************************
     //************************** Text and debugging ************************
@@ -738,73 +734,72 @@ namespace mathq {
     }
 #endif
 
-    // std::ostream& send(std::ostream& stream, size_t& n, const Dimensions& dim) const {
-    //   using namespace display;
-    //   Style& style = FormatDataVector::style_for_punctuation;
-    //   //      MDISP(n,dim);
-    //   const int delta = this->rank() - dim.rank();
-    //   if (delta == 0) {
-    //     stream << std::endl;
-    //   }
-    //   std::string indent = "";
-    //   for (size_t j = 0; j < delta; j++) {
-    //     indent += "  ";
-    //   }
-    //   stream << indent << style.apply("{");
-
-    //   if (dim.rank() > 1) {
-    //     stream << std::endl;
-    //   }
-    //   if (dim.rank() > 0) {
-    //     Dimensions newdim(dim);
-    //     newdim.erase(newdim.begin());
-    //     for (size_t j = 0; j < dim[0]; j++) {
-    //       if (dim.rank() > 1) {
-    //         Dimensions newdim(dim);
-    //         newdim.erase(newdim.begin());
-    //         this->send(stream, n, newdim);
-    //         if (j < dim[0] - 1) {
-    //           stream << style.apply(",") << std::endl;
-    //         }
-    //       }
-    //       else {
-    //         dispval_strm(stream, (*this)[n++]);
-    //         if (j < dim[0] - 1) {
-    //           stream << style.apply(", ");
-    //         }
-    //       }
-    //     }
-    //   }
-    //   if (dim.rank() == 1) {
-    //     stream << style.apply("}");
-    //   }
-    //   else if (dim.rank() == this->rank()) {
-    //     stream << std::endl
-    //       << indent << style.apply("}");
-    //   }
-    //   else {
-    //     stream << std::endl
-    //       << indent << style.apply("}");
-    //   }
-    //   return stream;
-    // }
-
-    // stream << operator
-
+    // this is recursive 
     // TODO: implement format
 
-    // friend std::ostream& operator<<(std::ostream& stream, const Type& t) {
-    //   using namespace display;
-    //   size_t n = 0;
-    //   // t.send(stream, n, t.dims());
-    //   return stream;
-    // }
+    std::ostream& send(std::ostream& stream, size_t& n, const Dimensions& dim) const {
+      using namespace display;
+      Style& style = FormatDataVector::style_for_punctuation;
+      // MDISP(n,dim);
+      const int delta = this->rank() - dim.rank();
+      if (delta == 0) {
+        stream << std::endl;
+      }
+      std::string indent = "";
+      for (size_t j = 0; j < delta; j++) {
+        indent += "  ";
+      }
+      stream << indent << style.apply("{");
 
-    // // template <typename NumberType>
-    // friend inline std::istream& operator>>(const std::string s, Type& x) {
-    //   std::istringstream st(s);
-    //   return (st >> x);
-    // }
+      if (dim.rank() > 1) {
+        stream << std::endl;
+      }
+      if (dim.rank() > 0) {
+        Dimensions newdim(dim);
+        newdim.erase(newdim.begin());
+        for (size_t j = 0; j < dim[0]; j++) {
+          if (dim.rank() > 1) {
+            Dimensions newdim(dim);
+            newdim.erase(newdim.begin());
+            this->send(stream, n, newdim);
+            if (j < dim[0] - 1) {
+              stream << style.apply(",") << std::endl;
+            }
+          }
+          else {
+            dispval_strm(stream, (*this)[n++]);
+            if (j < dim[0] - 1) {
+              stream << style.apply(", ");
+            }
+          }
+        }
+      }
+      if (dim.rank() == 1) {
+        stream << style.apply("}");
+      }
+      else if (dim.rank() == this->rank()) {
+        stream << std::endl
+          << indent << style.apply("}");
+      }
+      else {
+        stream << std::endl
+          << indent << style.apply("}");
+      }
+      return stream;
+    }
+
+    friend std::ostream& operator<<(std::ostream& stream, const Type& t) {
+      using namespace display;
+      size_t n = 0;
+      t.send(stream, n, t.dims());
+      return stream;
+    }
+
+    // template <typename NumberType>
+    friend inline std::istream& operator>>(const std::string s, Type& x) {
+      std::istringstream st(s);
+      return (st >> x);
+    }
 
   };
 
