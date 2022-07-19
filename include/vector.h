@@ -298,8 +298,9 @@ namespace mathq {
       return *this;
     }
 
-    Type& resize(const Dimensions& dims);
-
+    Type& resize(const Dimensions& dims) {
+      return resize(dims[0]);
+    }
 
     // new_rdims.size() <= depth_value
     Type& resize(const RecursiveDimensions& new_rdims) {
@@ -329,8 +330,10 @@ namespace mathq {
     //                        Dimensions
     //**********************************************************************
 
-    // defined later since Dimensions is dependent on Vector
-    Dimensions& dims(void) const;
+    Dimensions& dims(void) const {
+      return *(new Dimensions({ this->size() }));
+    }
+
 
     ElementDimensionsType& element_dims(void) const {
       if constexpr (depth_value>1) {
@@ -347,17 +350,16 @@ namespace mathq {
 
 
     RecursiveDimensions& recursive_dims(void) const {
-      RecursiveDimensions& rdims = *(new RecursiveDimensions);
-      recurse_dims(rdims, 0);
+      RecursiveDimensions& rdims = *(new RecursiveDimensions(depth_value));
+      this->recurse_dims(rdims, 0);
       return rdims;
     }
 
-    template <size_t full_depth>
     const Type& recurse_dims(RecursiveDimensions& parent_rdims, const size_t di = 0) const {
       size_t depth_index = di;
       parent_rdims[depth_index++] = dims();
       if constexpr (depth_value>1) {
-        if (size()>0) {
+        if (size() > 0) {
           data_[0].recurse_dims(parent_rdims, depth_index);
         }
         else {

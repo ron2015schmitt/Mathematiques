@@ -285,24 +285,6 @@ namespace mathq {
 
 
 
-  // // ********************************************************************************
-  // // Vector method definiitions
-  // //
-  // // The compiler can't compile these until after Dimensiosn class has been defined.
-  // // Thus we define them here.
-  // // ********************************************************************************
-
-  // template <typename Element, size_t N1> Dimensions&
-  //   Vector<Element, N1>::dims(void) const {
-  //   return *(new Dimensions({ this->size() }));
-  // }
-
-  // template <typename Element, size_t N1> Vector<Element, N1>&
-  //   Vector<Element, N1>::resize(const Dimensions& dims) {
-  //   // TRDISP(dims);
-  //   // TRDISP(dims[0]);
-  //   return resize(dims[0]);
-  // }
 
 
 

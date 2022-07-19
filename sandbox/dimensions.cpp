@@ -118,45 +118,45 @@ int main(int argc, char* argv[]) {
   cout << "running: " <<myname << std::endl;
   cout << std::endl;
 
-  // CR();
-  // ECHO_CODE(Vector<double, 3> v1);
-  // TRDISP(v1.size());
-  // TRDISP(v1.is_dynamic_value);
-  // // TRDISP(v1.data_);
-  // TRDISP(v1.static_dims_array);
-  // TRDISP(v1);
-  // v1[0] = 2.2;
-  // TRDISP(v1);
-  // v1 = { 2.2, 4.4, -100.1 };
-  // TRDISP(v1);
-  // TRDISP(v1.dims());
-  // TRDISP(sizeof(v1)/(v1.total_size()*sizeof(double)));
+  CR();
+  ECHO_CODE(Vector<double, 3> v1);
+  TRDISP(v1.size());
+  TRDISP(v1.is_dynamic_value);
+  // TRDISP(v1.data_);
+  TRDISP(v1.static_dims_array);
+  TRDISP(v1);
+  v1[0] = 2.2;
+  TRDISP(v1);
+  v1 = { 2.2, 4.4, -100.1 };
+  TRDISP(v1);
+  TRDISP(v1.dims());
+  TRDISP(sizeof(v1)/(v1.total_size()*sizeof(double)));
 
 
-  // CR();
-  // ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
-  // TRDISP(v2.size());
-  // TRDISP(v2.dims());
-  // TRDISP(v2.is_dynamic_value);
-  // // TRDISP(v2.data_);
-  // TRDISP(v2.static_dims_array);
-  // TRDISP(v2.resize(4));
+  CR();
+  ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
+  TRDISP(v2.size());
+  TRDISP(v2.dims());
+  TRDISP(v2.is_dynamic_value);
+  // TRDISP(v2.data_);
+  TRDISP(v2.static_dims_array);
+  TRDISP(v2.resize(4));
 
-  // CR();
-  // ECHO_CODE(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
-  // TRDISP(v3.size());
-  // TRDISP(v3.is_dynamic_value);
-  // // TRDISP(v3.data_);
-  // TRDISP(v3.static_dims_array);
-  // TRDISP(v3.dims());
+  CR();
+  ECHO_CODE(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
+  TRDISP(v3.size());
+  TRDISP(v3.is_dynamic_value);
+  // TRDISP(v3.data_);
+  TRDISP(v3.static_dims_array);
+  TRDISP(v3.dims());
 
-  // CR();
-  // ECHO_CODE(Vector<double> v4);
-  // TRDISP(v4.size());
-  // TRDISP(v4.is_dynamic_value);
-  // // TRDISP(v4.data_);
-  // TRDISP(v4.static_dims_array);
-  // TRDISP(v4.dims());
+  CR();
+  ECHO_CODE(Vector<double> v4);
+  TRDISP(v4.size());
+  TRDISP(v4.is_dynamic_value);
+  // TRDISP(v4.data_);
+  TRDISP(v4.static_dims_array);
+  TRDISP(v4.dims());
 
 
   CR();
@@ -207,14 +207,6 @@ int main(int argc, char* argv[]) {
 
 
 
-
-  // CR();
-  // TRDISP(sizeof(RecursiveDimensions<0>)/sizeof(size_t));
-  // TRDISP(sizeof(RecursiveDimensions<1>)/sizeof(size_t));
-  // TRDISP(sizeof(RecursiveDimensions<2>)/sizeof(size_t));
-  // TRDISP(sizeof(RecursiveDimensions<10>)/sizeof(size_t));
-
-
   CR();
   ECHO_CODE(RecursiveDimensions ndims1(2));
   TRDISP(ndims1.size());
@@ -223,7 +215,6 @@ int main(int argc, char* argv[]) {
   ndims1[1] = dims3;
   TRDISP(ndims1);
 
-  // // ECHO_CODE(RecursiveDimensions<2> ndims2(5));  // shoudl cause compiler error
 
   CR();
   ECHO_CODE(RecursiveDimensions ndims2(2));
@@ -241,163 +232,113 @@ int main(int argc, char* argv[]) {
   TRDISP(ndims4);
   TRDISP(ndims4.getEverse());
 
-  // CR();
-  // TRDISP(v1);
-  // TRDISP(v1.size());
-  // TRDISP(v1.element_size());
-  // TRDISP(v1.total_size());
-  // TRDISP(v1.dims());
-  // TRDISP(v1.depth());
-  // TRDISP(v1.recursive_dims());
-  // TRDISP(v1.element_dims());
+  CR();
+  TRDISP(v1);
+  TRDISP(v1.size());
+  TRDISP(v1.element_size());
+  TRDISP(v1.total_size());
+  TRDISP(v1.dims());
+  TRDISP(v1.depth());
+  TRDISP(v1.recursive_dims());
+  TRDISP(v1.element_dims());
 
 
-  // CR();
-  // ECHO_CODE(Vector<Vector<double, 2>, dynamic> u2);
-  // TRDISP(u2);
-  // TRDISP(u2.size());
-  // TRDISP(u2.element_size());
-  // TRDISP(u2.total_size());
-  // TRDISP(u2.dims());
-  // TRDISP(u2.depth());
-  // TRDISP(u2.recursive_dims());
-  // TRDISP(u2.element_dims());
+  CR();
+  ECHO_CODE(Vector<Vector<double, 2>, dynamic> u2);
+  TRDISP(u2);
+  TRDISP(u2.size());
+  TRDISP(u2.element_size());
+  TRDISP(u2.total_size());
+  TRDISP(u2.dims());
+  TRDISP(u2.depth());
+  TRDISP(u2.recursive_dims());
+  TRDISP(u2.element_dims());
 
 
-  // CR();
-  // ECHO_CODE(Vector<Vector<double, 2>, 3> u);
-  // TRDISP(u.size());
-  // TRDISP(u.element_size());
-  // TRDISP(u.dims());
-  // u[0] = { 1,2 };
-  // u[1] = { 3,4 };
-  // u[2] = { 5,6 };
-  // TRDISP(u);
-  // TRDISP(u.recursive_dims());
-  // u = { {11,12}, {13,14}, {15,16} };
-  // TRDISP(u);
-  // TRDISP(u);
-  // TRDISP(u.size());
-  // TRDISP(u.element_size());
-  // TRDISP(u.el_total_size());
-  // TRDISP(u.total_size());
-  // TRDISP(u.dims());
-  // TRDISP(u.depth());
-  // TRDISP(u.recursive_dims());
-  // TRDISP(u.element_dims());
+  CR();
+  ECHO_CODE(Vector<Vector<double, 2>, 3> u);
+  TRDISP(u.size());
+  TRDISP(u.element_size());
+  TRDISP(u.dims());
+  u[0] = { 1,2 };
+  u[1] = { 3,4 };
+  u[2] = { 5,6 };
+  TRDISP(u);
+  TRDISP(u.recursive_dims());
+  u = { {11,12}, {13,14}, {15,16} };
+  TRDISP(u);
+  TRDISP(u);
+  TRDISP(u.size());
+  TRDISP(u.element_size());
+  TRDISP(u.el_total_size());
+  TRDISP(u.total_size());
+  TRDISP(u.dims());
+  TRDISP(u.depth());
+  TRDISP(u.recursive_dims());
+  TRDISP(u.element_dims());
 
-  // TRDISP(sizeof(u)/(u.total_size()*sizeof(double)));
-
-
-  // CR();
-  // ECHO_CODE(Vector<double> v6(3));
-  // TRDISP(v6.size());
-  // TRDISP(v6.element_size());
-  // TRDISP(v6.dims());
-  // v6[0] = { 1 };
-  // v6[1] = { 3 };
-  // v6[2] = { 5 };
-  // TRDISP(v6);
-
-  // CR();
-  // ECHO_CODE(Dimensions dims7({3}));
-  // TRDISP(dims7);
-  // ECHO_CODE(Vector<double> v7(dims7));
-  // TRDISP(v7.size());
-  // TRDISP(v7.element_size());
-  // TRDISP(v7.dims());
-  // v7[0] = { 1 };
-  // v7[1] = { 3 };
-  // v7[2] = { 5 };
-  // TRDISP(v7);
+  TRDISP(sizeof(u)/(u.total_size()*sizeof(double)));
 
 
-  // CR();
-  // ECHO_CODE(Vector<double> v9(6, 7));
-  // TRDISP(v9.size());
-  // TRDISP(v9.element_size());
-  // TRDISP(v9.dims());
-  // TRDISP(v9);
+  CR();
+  ECHO_CODE(Vector<double> v6(3));
+  TRDISP(v6.size());
+  TRDISP(v6.element_size());
+  TRDISP(v6.dims());
+  v6[0] = { 1 };
+  v6[1] = { 3 };
+  v6[2] = { 5 };
+  TRDISP(v6);
 
-  // CR();
-  // ECHO_CODE(Vector<double> v10({ 2.2, 3.3, 4.4 }));
-  // TRDISP(v10.size());
-  // TRDISP(v10.element_size());
-  // TRDISP(v10.dims());
-  // TRDISP(v10);
-
-  // CR();
-  // ECHO_CODE(Vector<double> v11{ 2.2, 3.3, 4.4 });
-  // TRDISP(v11.size());
-  // TRDISP(v11.element_size());
-  // TRDISP(v11.dims());
-  // TRDISP(v11);
-
-  // CR();
-  // ECHO_CODE(Vector<double,3> v12({ 2.2, 3.3, 4.4 }));
-  // TRDISP(v12.size());
-  // TRDISP(v12.element_size());
-  // TRDISP(v12.dims());
-  // TRDISP(v12);
-
-  // CR();
-  // ECHO_CODE(Vector<double,3> v13{ 2.2, 3.3, 4.4 });
-  // TRDISP(v13.size());
-  // TRDISP(v13.element_size());
-  // TRDISP(v13.dims());
-  // TRDISP(v13);
-  // TRDISP( static_cast<std::valarray<double>>(v13) );
+  CR();
+  ECHO_CODE(Dimensions dims7({3}));
+  TRDISP(dims7);
+  ECHO_CODE(Vector<double> v7(dims7));
+  TRDISP(v7.size());
+  TRDISP(v7.element_size());
+  TRDISP(v7.dims());
+  v7[0] = { 1 };
+  v7[1] = { 3 };
+  v7[2] = { 5 };
+  TRDISP(v7);
 
 
-  // CR();
-  // ECHO_CODE(Dimensions<2> dims5);
-  // TRDISP(dims5.is_dynamic_value);
-  // TRDISP(dims5.rank());
-  // TRDISP(dims5.size());
-  // TRDISP(dims5);
+  CR();
+  ECHO_CODE(Vector<double> v9(6, 7));
+  TRDISP(v9.size());
+  TRDISP(v9.element_size());
+  TRDISP(v9.dims());
+  TRDISP(v9);
 
-  // CR();
-  // ECHO_CODE(Dimensions<2> dims6(5, 2));
-  // TRDISP(dims6.is_dynamic_value);
-  // TRDISP(dims6.rank());
-  // TRDISP(dims6.size());
-  // TRDISP(dims6);
+  CR();
+  ECHO_CODE(Vector<double> v10({ 2.2, 3.3, 4.4 }));
+  TRDISP(v10.size());
+  TRDISP(v10.element_size());
+  TRDISP(v10.dims());
+  TRDISP(v10);
 
-  // CR();
-  // ECHO_CODE(Dimensions<1> dims7(42));
-  // TRDISP(dims7.is_dynamic_value);
-  // TRDISP(dims7.rank());
-  // TRDISP(dims7.size());
-  // TRDISP(dims7);
+  CR();
+  ECHO_CODE(Vector<double> v11{ 2.2, 3.3, 4.4 });
+  TRDISP(v11.size());
+  TRDISP(v11.element_size());
+  TRDISP(v11.dims());
+  TRDISP(v11);
 
+  CR();
+  ECHO_CODE(Vector<double,3> v12({ 2.2, 3.3, 4.4 }));
+  TRDISP(v12.size());
+  TRDISP(v12.element_size());
+  TRDISP(v12.dims());
+  TRDISP(v12);
 
+  CR();
+  ECHO_CODE(Vector<double,3> v13{ 2.2, 3.3, 4.4 });
+  TRDISP(v13.size());
+  TRDISP(v13.element_size());
+  TRDISP(v13.dims());
+  TRDISP(v13);
+  TRDISP( static_cast<std::valarray<double>>(v13) );
 
-  // CR();
-  // ECHO_CODE(Dimensions<2> dims8(42, 13));
-  // TRDISP(dims8.is_dynamic_value);
-  // TRDISP(dims8.rank());
-  // TRDISP(dims8.size());
-  // TRDISP(dims8);
-
-
-  // CR();
-  // ECHO_CODE(Dimensions<3> dims9({ 12, 5, 81 }));
-  // TRDISP(dims9.is_dynamic_value);
-  // TRDISP(dims9.rank());
-  // TRDISP(dims9.size());
-  // TRDISP(dims9);
-
-  // CR();
-  // ECHO_CODE(RecursiveDimensions<decltype(dims9)> ndims1(dims9));
-  // TRDISP(ndims1);
-  // TRDISP(ndims1.rank());
-  // TRDISP(ndims1.depth());
-
-  // CR();
-  // ECHO_CODE(RecursiveDimensions<decltype(dims), decltype(ndims1)> ndims2(dims, ndims1));
-  // TRDISP(ndims2);
-  // TRDISP(ndims2.rank());
-  // TRDISP(ndims2.depth());
 
   return 0;
 }
