@@ -173,6 +173,13 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(Dimensions dims2);
   ECHO_CODE(dims2 = { 3,2,1 });
   TRDISP(dims2);
+  TRDISP(dims2.getReducedDims());
+  ECHO_CODE(Dimensions dims2b);
+  ECHO_CODE(dims2b = { 3,1,2,1 });
+  TRDISP(dims2b);
+  TRDISP(dims2b.getReducedDims());
+  TRDISP(equiv(dims2,dims2b));
+
 
 
   CR();
@@ -193,6 +200,12 @@ int main(int argc, char* argv[]) {
   TRDISP(dims5);
   ECHO_CODE(dims5 = { 13, 42, 56, 99 });
   TRDISP(dims5);
+  TRDISP(dims5.getReducedDims());
+  TRDISP(dims5.product());
+  TRDISP(dims5.product() == 13*42*56*99);
+
+
+
 
   // CR();
   // TRDISP(sizeof(RecursiveDimensions<0>)/sizeof(size_t));
@@ -201,26 +214,31 @@ int main(int argc, char* argv[]) {
   // TRDISP(sizeof(RecursiveDimensions<10>)/sizeof(size_t));
 
 
-  // CR();
-  // ECHO_CODE(RecursiveDimensions<2> ndims1);
-  // TRDISP(ndims1.size());
-  // TRDISP(ndims1);
-  // ndims1[0] = dims;
-  // ndims1[1] = dims3;
-  // TRDISP(ndims1);
+  CR();
+  ECHO_CODE(RecursiveDimensions ndims1(2));
+  TRDISP(ndims1.size());
+  TRDISP(ndims1);
+  ndims1[0] = dims;
+  ndims1[1] = dims3;
+  TRDISP(ndims1);
 
   // // ECHO_CODE(RecursiveDimensions<2> ndims2(5));  // shoudl cause compiler error
 
-  // CR();
-  // ECHO_CODE(RecursiveDimensions<0> ndims2(2));
-  // TRDISP(ndims2.size());
-  // TRDISP(ndims2);
-  // ndims2 = { dims, dims3 };
-  // TRDISP(ndims2);
+  CR();
+  ECHO_CODE(RecursiveDimensions ndims2(2));
+  TRDISP(ndims2.size());
+  TRDISP(ndims2);
+  ndims2 = { dims, dims3 };
+  TRDISP(ndims2);
 
-  // CR();
-  // ECHO_CODE(RecursiveDimensions<> ndims3{ dims, dims3 });
-  // TRDISP(ndims3);
+  CR();
+  ECHO_CODE(RecursiveDimensions ndims3{ dims, dims3 });
+  TRDISP(ndims3);
+
+  CR();
+  ECHO_CODE(RecursiveDimensions ndims4{ {3,2}, {5,7,1}, {3} });
+  TRDISP(ndims4);
+  TRDISP(ndims4.getEverse());
 
   // CR();
   // TRDISP(v1);

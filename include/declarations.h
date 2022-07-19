@@ -76,9 +76,6 @@ namespace mathq {
   class Dimensions;
   class ScalarDimensions;
   class NullDimensions;
-
-
-  template<size_t depth_ = 0>
   class RecursiveDimensions;
 
   template<typename Element, int L>

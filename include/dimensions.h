@@ -85,16 +85,20 @@ namespace mathq {
       return (this->getReducedDims() == var.getReducedDims());
     }
 
-    Dimensions& getReverse() const {
-      Dimensions& dd = *(new Dimensions());
-
-      dd.resize(this->size());
+    Dimensions& reverse() {
       // reverse order
-      size_t k = this->size()-1;
-      for (size_t ii = 0; ii < this->size(); ii++, k--) {
-        dd[ii] = (*this)[k];
+      size_t k = size()-1;
+      for (size_t ii = 0; ii < this->size()/2; ii++, k--) {
+        size_t temp = (*this)[ii];
+        (*this)[ii] = (*this)[k];
+        (*this)[k] = temp;
       }
-      return dd;
+      return *this;
+    }
+
+    Dimensions& getReverse() const {
+      Dimensions& dd = *(new Dimensions(*this));
+      return dd.reverse();
     }
 
     inline size_t product(void) const {
@@ -274,8 +278,8 @@ namespace mathq {
   // stand-alone function for two Dimensions instances
   // ***************************************************************************
 
-  inline bool equiv(const Dimensions& dims1, const Dimensions& var) {
-    return dims1.equiv(var);
+  inline bool equiv(const Dimensions& dims1, const Dimensions& dims2) {
+    return dims1.equiv(dims2);
   }
 
 
@@ -307,47 +311,177 @@ namespace mathq {
   //
   // ***************************************************************************
 
-  template<size_t depth_>
-  class RecursiveDimensions : public std::array<Dimensions, depth_> {
+  class RecursiveDimensions : public std::valarray<Dimensions> {
 
   public:
-    using Parent = std::array<Dimensions, depth_>;
-    constexpr static size_t depth_value = depth_;
+    using Parent = std::valarray<Dimensions>;
 
     RecursiveDimensions() {
+      this->resize(0);
     }
 
-    template<size_t dyn = Parent::is_dynamic_value, EnableIf<dyn> = 0>
     RecursiveDimensions(const size_t depth) {
       this->resize(depth);
     }
 
-    RecursiveDimensions(const std::initializer_list<Dimensions>& ilist) {
-      if constexpr (this->is_dynamic_value) {
-        this->resize(ilist.size());
+    RecursiveDimensions(const RecursiveDimensions& var) {
+      *this = var;
+    }
+
+    RecursiveDimensions(const std::vector<size_t>& var) {
+      *this = var;
+    }
+
+    RecursiveDimensions(const std::valarray<size_t>& var) {
+      *this = var;
+    }
+
+    template <size_t rank2>
+    RecursiveDimensions(const std::array<size_t, rank2>& var) {
+      *this = var;
+    }
+
+    RecursiveDimensions(const std::initializer_list<size_t>& var) {
+      *this = var;
+    }
+
+
+    RecursiveDimensions(const std::initializer_list<Dimensions>& var) {
+      *this = var;
+    }
+
+    RecursiveDimensions(const std::initializer_list<std::initializer_list<size_t>>& var) {
+      *this = var;
+    }
+
+
+
+    RecursiveDimensions& reverse_each() {
+      for (size_t d = 0; d < size(); d++) {
+        (*this)[d].reverse();
       }
+      return*this;
+    }
+
+    RecursiveDimensions& getReverseEach() {
+      RecursiveDimensions& dd = *(new RecursiveDimensions(*this));
+      return dd.reverse_each();
+    }
+
+    RecursiveDimensions& evert() {
+      // evert = turn inside out
+      size_t k = size()-1;
+      for (size_t ii = 0; ii < this->size()/2; ii++, k--) {
+        Dimensions temp = (*this)[ii];
+        (*this)[ii] = (*this)[k];
+        (*this)[k] = temp;
+      }
+      return *this;
+    }
+
+    RecursiveDimensions& getEverse() {
+      RecursiveDimensions& dd = *(new RecursiveDimensions(*this));
+      return dd.evert();
+    }
+
+
+    RecursiveDimensions& operator=(const RecursiveDimensions& var) {
+      this->resize(var.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = var[i];
+      }
+      return *this;
+    }
+
+    RecursiveDimensions& operator=(const std::vector<Dimensions>& var) {
+      this->resize(var.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = var[i];
+      }
+      return *this;
+    }
+
+    RecursiveDimensions& operator=(const std::valarray<Dimensions>& var) {
+      this->resize(var.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = var[i];
+      }
+      return *this;
+    }
+
+    template <size_t rank2>
+    RecursiveDimensions& operator=(const std::array<Dimensions, rank2>& var) {
+      this->resize(var.size());
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = var[i];
+      }
+      return *this;
+    }
+
+    RecursiveDimensions& operator=(const std::initializer_list<Dimensions>& ilist) {
+      this->resize(ilist.size());
       size_t k = 0;
       typename std::initializer_list<Dimensions>::iterator it;
       for (it = ilist.begin(); it != ilist.end(); ++it, k++) {
         (*this)[k] = *it;
       }
+      return *this;
     }
 
-    RecursiveDimensions& reverse_all() {
-      for (size_t d = 0; d < depth_value; d++) {
-        (*this[d]).reverse();
+    RecursiveDimensions& operator=(const std::initializer_list<std::initializer_list<size_t>>& ilist) {
+      this->resize(ilist.size());
+      size_t k = 0;
+      typename std::initializer_list<std::initializer_list<size_t>>::iterator it;
+      for (it = ilist.begin(); it != ilist.end(); ++it, k++) {
+        Dimensions d;
+        d = *it;
+        (*this)[k] = d;
       }
-      return*this;
+      return *this;
+    }
+
+
+
+
+
+    bool operator==(const RecursiveDimensions& var) const {
+      if (size() != var.size()) return false;
+      for (size_t i = 0; i < this->size(); i++) {
+        if ((*this)[i] != var[i]) {
+          return false;
+        }
+      }
+      return true;
     }
 
 
     inline std::string classname() const {
       using namespace display;
       std::string s = "RecursiveDimensions";
-      s += StyledString::get(ANGLE1).get();
-      s += template_size_to_string(depth_);
-      s += StyledString::get(ANGLE2).get();
       return s;
+    }
+
+    // stream << operator
+
+    friend std::ostream& operator<<(std::ostream& stream, const RecursiveDimensions& v) {
+      using namespace display;
+      Style& style = FormatDataVector::style_for_punctuation;
+      stream << style.apply(FormatDataVector::string_opening);
+      const size_t N = FormatDataVector::max_elements_per_line;
+      size_t k = 0;
+      for (size_t ii = 0; ii < v.size(); ii++, k++) {
+        if (k >= N) {
+          stream << style.apply(FormatDataVector::string_endofline);
+          k = 0;
+        }
+        dispval_strm(stream, v[ii]);
+        if (ii < v.size()-1) {
+          stream << style.apply(FormatDataVector::string_delimeter);
+        }
+      }
+      stream << style.apply(FormatDataVector::string_closing);
+
+      return stream;
     }
 
   };
