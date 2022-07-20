@@ -14,36 +14,44 @@ namespace mathq {
 
     //**********************************************************************
     //                         Static methods
+    //
     //**********************************************************************
 
-    static size_t index(const mathq::Indices& inds, const Dimensions& dims) {
-      const size_t rank = dims.size();
-      size_t k = 0;
-      for (size_t n = 0; n < rank; n++) {
-        size_t N = dims[n];
-        size_t j = inds[n];
-        k = N*k + j;
-      }
-      return k;
-    }
+    // static size_t index(const mathq::Indices& inds, const Dimensions& dims) {
+    //   const size_t rank = dims.size();
+    //   size_t k = 0;
+    //   for (size_t n = 0; n < rank; n++) {
+    //     size_t N = dims[n];
+    //     size_t j = inds[n];
+    //     k = N*k + j;
+    //   }
+    //   return k;
+    // }
 
+    // static mathq::Indices& indices(const size_t k, const Dimensions& dims) {
+    //   const size_t rank = dims.size();
+    //   mathq::Indices& myinds = *(new mathq::Indices(rank));
+    //   size_t prev = k;
+    //   // This loop must go in reverse order.  Do NOT change.
+    //   for (size_t n = rank-1; n > 0; n--) {
+    //     size_t N = dims[n];
+    //     size_t temp = prev/N;
+    //     myinds[n] = prev - N*temp;
+    //     prev = temp;
+    //   }
+    //   if (rank>0) {
+    //     myinds[0] = prev;
+    //   }
+    //   return myinds;
+    // }
 
     static mathq::Indices& indices(const size_t k, const Dimensions& dims) {
       const size_t rank = dims.size();
-      mathq::Indices& myinds = *(new mathq::Indices(rank));
-      size_t prev = k;
-      // This loop must go in reverse order.  Do NOT change.
-      for (size_t n = rank-1; n > 0; n--) {
-        size_t N = dims[n];
-        size_t temp = prev/N;
-        myinds[n] = prev - N*temp;
-        prev = temp;
-      }
-      if (rank>0) {
-        myinds[0] = prev;
-      }
+      mathq::Indices& myinds = *(new mathq::Indices(k, dims));
       return myinds;
     }
+
+
 
     //**********************************************************************
     //                            CONSTRUCTORS 
@@ -55,6 +63,22 @@ namespace mathq {
 
     Indices(const size_t N) {
       this->resize(N);
+    }
+
+    Indices(const size_t k, const Dimensions& dims) {
+      const size_t rank = dims.size();
+      this->resize(rank);
+      size_t prev = k;
+      // This loop must go in reverse order.  Do NOT change.
+      for (size_t n = rank-1; n > 0; n--) {
+        size_t N = dims[n];
+        size_t temp = prev/N;
+        (*this)[n] = prev - N*temp;
+        prev = temp;
+      }
+      if (rank > 0) {
+        (*this)[0] = prev;
+      }
     }
 
     Indices(const Indices& var) {
@@ -79,6 +103,17 @@ namespace mathq {
     }
 
 
+
+    size_t index(const Dimensions& dims) const {
+      const size_t rank = dims.size();
+      size_t k = 0;
+      for (size_t n = 0; n < rank; n++) {
+        size_t N = dims[n];
+        size_t j = (*this)[n];
+        k = N*k + j;
+      }
+      return k;
+    }
 
 
     bool operator==(const Indices& var) const {

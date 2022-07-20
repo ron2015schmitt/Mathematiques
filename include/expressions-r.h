@@ -1946,7 +1946,7 @@ namespace mathq {
     const Element operator[](const size_t index1) const {
       const Indices inds1 = Indices::indices(index1, *reverse_dims);
       const Indices inds2 = inds1.getReverse();
-      const size_t index2 = Indices::index(inds2, x_.dims());
+      const size_t index2 = inds2.index(x_.dims());
       return FUNC::apply(x_[index2]);
       return Element(0);
     }

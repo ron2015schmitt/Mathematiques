@@ -160,6 +160,14 @@ int main(int argc, char* argv[]) {
   cout << "running: " <<myname << std::endl;
   cout << std::endl;
 
+  Test<double,1> test1;
+  Test<double,1,2,3> test2;
+  Test<double,1,0> test3;
+
+  Test2<double,1, 2> foo1;
+  Test2<double,3, 2,4,12> foo2;
+  // Test2<double,3, 0,4,12> foo3;  // FAILS check_dynamic
+
 
   CR();
   ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
@@ -258,7 +266,7 @@ int main(int argc, char* argv[]) {
   OUTPUT("Static MultiArray");
 
   CR();
-  ECHO_CODE(MultiArray<double, 2, 3, 2> x3{ 1,2,3,4,5,6});
+  ECHO_CODE(MultiArray<double, 2, 3, 2> x3{10.0, 10.1, 11.0, 11.1, 12.0, 12.1});
   TRDISP(x3.classname());
   TRDISP(x3.is_dynamic_value);
   TRDISP(x3.compile_time_size);
@@ -272,20 +280,21 @@ int main(int argc, char* argv[]) {
   TRDISP(x3.data_);
   TRDISP(sizeof(x3.data_)/sizeof(double));
   TRDISP(sizeof(x3)/sizeof(double));
-  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3, 2, 1 , 1>>::rank_array());
+  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3,2,1,1>>::rank_array());
   TRDISP(x3);
+  TRDISP(x3[2]);
+  TRDISP(x3.indices(2));
+  TRDISP(x3.index({1,0}));
+  TRDISP(x3.index(Indices({1,0})));
+  TRDISP(x3.index(1,0));
+  TRDISP(x3(Indices({1,0})));
+  TRDISP(x3(1,0));
+  TRDISP(x3({1,0}));
 
   CR();
   // ECHO_CODE(MultiArray<double,2> x2(1,2));
   // TRDISP(x1);
 
-  // Test<double,1> test1;
-  // Test<double,1,2,3> test2;
-  // Test<double,1,0> test3;
-
-  // Test2<double,1, 2> foo1;
-  // Test2<double,3, 2,4,12> foo2;
-  // Test2<double,3, 0,4,12> foo3;
 
 
   return 0;
