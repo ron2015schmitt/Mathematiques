@@ -19,6 +19,10 @@ namespace mathq {
     using Parent = std::vector<size_t>;
     using ElementType = size_t;
 
+    //**********************************************************************
+    //                            CONSTRUCTORS 
+    //**********************************************************************
+
 
     Dimensions() {
       this->resize(0);
@@ -312,6 +316,11 @@ namespace mathq {
 
   public:
     using Parent = std::valarray<Dimensions>;
+
+
+    //**********************************************************************
+    //                            CONSTRUCTORS 
+    //**********************************************************************
 
     RecursiveDimensions() {
       this->resize(0);

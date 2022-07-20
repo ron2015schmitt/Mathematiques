@@ -78,27 +78,16 @@ namespace mathq {
   class NullDimensions;
   class RecursiveDimensions;
 
-  template<typename Element, int L>
-  class NestedInitializerListDef;
-
-
-  class VectorofPtrs;
-
-  template <class DAT> class Pair;
-
   class Indices;
-
-
-
-  class Indices;
+  class DeepIndices;
 
   inline bool equiv(const Indices& inds1, const Indices& inds2);
 
-  template <typename RecursiveDimensions>
-  class DeepIndices;
-
-  template<typename Element, int L>
+  template<typename Element, size_t L>
   class NestedInitializerListDef;
+
+  class VectorofPtrs;
+  template <class DAT> class Pair;
 
   //*******************************************************
   //          Trait classes
@@ -106,9 +95,6 @@ namespace mathq {
 
   template <typename T, typename NewNumber = T, typename dummy = void>
   class NumberTrait;
-
-
-
 
   template <typename T, typename B = void> T zero();
   template <typename T, typename B = void> T one();
