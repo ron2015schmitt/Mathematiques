@@ -115,6 +115,10 @@ namespace mathq {
       return dd.reverse();
     }
 
+    //**********************************************************************
+    //************************** ASSIGNMENT ********************************
+    //**********************************************************************
+
     Indices& operator=(const Indices& var) {
       this->resize(var.size());
       for (size_t i = 0; i < this->size(); i++) {
@@ -157,6 +161,10 @@ namespace mathq {
       }
       return *this;
     }
+
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
 
     std::string classname() const {
       return "Indices";
@@ -272,6 +280,10 @@ namespace mathq {
       return dd.evert();
     }
 
+    //**********************************************************************
+    //************************** ASSIGNMENT ********************************
+    //**********************************************************************
+
 
     DeepIndices& operator=(const DeepIndices& var) {
       this->resize(var.size());
@@ -377,6 +389,10 @@ namespace mathq {
       return *this;  // should never get here
     }
 
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
+
 
     inline std::string classname() const {
       using namespace display;
@@ -432,7 +448,7 @@ namespace mathq {
     static Dimensions& dims(const type& list) {
       Dimensions& dims = *(new Dimensions());
       return NestedInitializerListDef::dims(list, dims);
-      
+
     }
     static Dimensions& dims(const type& list, Dimensions& dims) {
       const size_t nl = list.size();
