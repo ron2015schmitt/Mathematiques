@@ -279,76 +279,6 @@ namespace mathq {
     }
 
 
-
-
-    //**********************************************************************
-    //********************* Direct access to data_  ***********************************
-    //**********************************************************************
-
-    // -------------------- dataobj() --------------------
-    // "read/write" to the wrapped valarray/aray
-    auto& dataobj() {
-      return data_;
-    }
-
-    // get C pointer to raw data
-    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-    Element* data() {
-      // MutltiArrays are always wrap avalarray<Element>
-      return &(data_[0]);
-    }
-
-    // **********************************************************************
-    // ************* Array-style Element Access: x[n] ***********************
-    // **********************************************************************
-
-    // "read/write"
-    Element& operator[](const size_t n) {
-      // int k = n;
-      // if (k < 0) {
-      //   k += size();
-      // }
-      return data_[n];
-    }
-
-    // read
-    const Element& operator[](const size_t n) const {
-      // int k = n;
-      // if (k < 0) {
-      //   k += size();
-      // }
-      return data_[n];
-    }
-
-
-    //**********************************************************************
-    //*******MultiArray-style Element Access: A(i,j,k,...) *********************
-    //**********************************************************************
-
-    // template <typename... U>
-    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, Element&>::type operator()(const U... args) {
-
-    //   // const int size = sizeof...(args);
-    //   // int argarray[size] = {args...};
-    //   size_t k = this->index(args...);
-
-    //   return (*this)[k];
-    // }
-    // template <typename... U>
-    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, const Element>::type operator()(const U... args) const {
-    //   return (*this)(args...);
-    // }
-
-    // // ---------------- tensor({i,j,...})--------------
-    // Element& operator()(const std::initializer_list<size_t>& mylist) {
-    //   size_t k = this->index(mylist);
-    //   return (*this)[k];
-    // }
-    // const Element operator()(const std::initializer_list<size_t>& mylist) const {
-    //   size_t k = this->index(mylist);
-    //   return (*this)[k];
-    // }
-
     //**********************************************************************
     //*******indexing  *********************
     //**********************************************************************
@@ -403,8 +333,79 @@ namespace mathq {
     // // TODO: test this code
     // // TODO: bounds check on k
 
-    // inline Indices& indices(const size_t k) const {
-    //   return dimensions_->indices(k);
+    inline Indices& indices(const size_t k) const {
+      return Indices::indices(k, dims());
+    }
+
+
+    //**********************************************************************
+    //********************* Direct access to data_  ***********************************
+    //**********************************************************************
+
+    // -------------------- dataobj() --------------------
+    // "read/write" to the wrapped valarray/aray
+    auto& dataobj() {
+      return data_;
+    }
+
+    // get C pointer to raw data
+    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+    Element* data() {
+      // MutltiArrays are always wrap avalarray<Element>
+      return &(data_[0]);
+    }
+
+    // **********************************************************************
+    // ************* Array-style Element Access: x[n] ***********************
+    // **********************************************************************
+
+    // "read/write"
+    Element& operator[](const size_t n) {
+      // int k = n;
+      // if (k < 0) {
+      //   k += size();
+      // }
+      return data_[n];
+    }
+
+    // read
+    const Element& operator[](const size_t n) const {
+      // int k = n;
+      // if (k < 0) {
+      //   k += size();
+      // }
+      return data_[n];
+    }
+
+
+    //**********************************************************************
+    //*******MultiArray-style Element Access: A(i,j,k,...) *********************
+    //**********************************************************************
+
+    // template <typename... U>
+    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, Element&>::type operator()(const U... args) {
+    //   // const int size = sizeof...(args);
+    //   // int argarray[size] = {args...};
+    //   size_t k = this->index(args...);
+    //   return (*this)[k];
+    // }
+
+    // template <typename... U>
+    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, const Element>::type operator()(const U... args) const {
+    //   return (*this)(args...);
+    // }
+
+    //**********************************************************************
+    //*******initializer_list Element Access: A({i,j,k,...}) *********************
+    //**********************************************************************
+
+    // Element& operator()(const std::initializer_list<size_t>& mylist) {
+    //   size_t k = this->index(mylist);
+    //   return (*this)[k];
+    // }
+    // const Element operator()(const std::initializer_list<size_t>& mylist) const {
+    //   size_t k = this->index(mylist);
+    //   return (*this)[k];
     // }
 
     // //**********************************************************************
@@ -420,6 +421,8 @@ namespace mathq {
     //   size_t k = this->indexOf(inds);
     //   return (*this)[k];
     // }
+
+
 
 
     //**********************************************************************
