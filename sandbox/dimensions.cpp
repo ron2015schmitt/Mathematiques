@@ -341,5 +341,11 @@ int main(int argc, char* argv[]) {
   TRDISP( static_cast<std::valarray<double>>(v13) );
 
 
+  CR();
+  ECHO_CODE(Indices ind1{2});
+  TRDISP(ind1);
+  TRDISP(v13(ind1));
+
+
   return 0;
 }

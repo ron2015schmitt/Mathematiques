@@ -376,6 +376,93 @@ namespace mathq {
 
 
     //**********************************************************************
+    //************* Array-style Element Access: x[n] ***********************
+    //**********************************************************************
+
+    // "read/write"
+    Element& operator[](const size_t n) {
+      return data_[n];
+    }
+
+    // read
+    const Element& operator[](const size_t n)  const {
+      return data_[n];
+    }
+
+
+    //**********************************************************************
+    //***************MultiArray-style Element Access: v(n) *********************
+    //**********************************************************************
+
+
+    // "read/write"
+    Element& operator()(const size_t n) {
+      return data_[n];
+    }
+
+    // "read only"
+    const Element& operator()(const size_t n)  const {
+      return data_[n];
+    }
+
+
+    // "read/write"
+    Element& operator()(const Indices& inds) {
+      return data_[inds[0]];
+    }
+
+    // "read only"
+    const Element& operator()(const Indices& inds)  const {
+      return data_[inds[0]];
+    }
+
+
+
+    // Accessing a slice of values
+
+    // ExpressionRW_Subset<Element> operator[](const slc& slice) {
+    //   return (*this)[slice.toIndexVector(size())];
+    // }
+    // const ExpressionRW_Subset<Element>  operator[](const slc& slice) const {
+    //   //      display::log3("Vector","operator[]","(const slc& slice)\n");
+    //   return (*this)[slice.toIndexVector(size())];
+    // }
+
+
+    // Accessing a SET of values using a vector of ints
+
+    ExpressionRW_Subset<Element> operator[](const Vector<size_t>& ii) {
+      return ExpressionRW_Subset<Element>(*this, ii);
+    }
+    const ExpressionRW_Subset<Element> operator[](const Vector<size_t>& ii) const {
+      return ExpressionRW_Subset<Element>(*this, ii);
+    }
+
+
+
+
+    // Accessing a SET of values using a MASK
+
+    ExpressionRW_Submask<Element> operator[](const Vector<bool>& mask) {
+      return  ExpressionRW_Submask<Element>(*this, mask);
+    }
+    const ExpressionRW_Submask<Element> operator[](const Vector<bool>& mask)  const {
+      return  ExpressionRW_Submask<Element>(*this, mask);
+    }
+
+
+    //Accessing a SET of values using a list
+
+    ExpressionRW_Subset<Element> operator[](const std::initializer_list<size_t>& list) {
+      return  ExpressionRW_Subset<Element>(*this, list);
+    }
+    const ExpressionRW_Subset<Element> operator[](const std::initializer_list<size_t>& list) const {
+      return  ExpressionRW_Subset<Element>(*this, list);
+    }
+
+
+
+    //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
     // NOTE: indexes over [0] to [total_size()] and note return type
@@ -479,81 +566,6 @@ namespace mathq {
     //   }
     // }
 
-    //**********************************************************************
-    //************* Array-style Element Access: x[n] ***********************
-    //**********************************************************************
-
-    // "read/write"
-    Element& operator[](const size_t n) {
-      return data_[n];
-    }
-
-    // read
-    const Element& operator[](const size_t n)  const {
-      return data_[n];
-    }
-
-
-    //**********************************************************************
-    //***************MultiArray-style Element Access: v(n) *********************
-    //**********************************************************************
-
-
-    // "read/write"
-    Element& operator()(const size_t n) {
-      return data_[n];
-    }
-
-    // "read only"
-    const Element& operator()(const size_t n)  const {
-      return data_[n];
-    }
-
-
-    // Accessing a slice of values
-
-    // ExpressionRW_Subset<Element> operator[](const slc& slice) {
-    //   return (*this)[slice.toIndexVector(size())];
-    // }
-    // const ExpressionRW_Subset<Element>  operator[](const slc& slice) const {
-    //   //      display::log3("Vector","operator[]","(const slc& slice)\n");
-    //   return (*this)[slice.toIndexVector(size())];
-    // }
-
-
-    // Accessing a SET of values using a vector of ints
-
-    ExpressionRW_Subset<Element> operator[](const Vector<size_t>& ii) {
-      return ExpressionRW_Subset<Element>(*this, ii);
-    }
-    const ExpressionRW_Subset<Element> operator[](const Vector<size_t>& ii) const {
-      return ExpressionRW_Subset<Element>(*this, ii);
-    }
-
-
-
-
-    // Accessing a SET of values using a MASK
-
-    ExpressionRW_Submask<Element> operator[](const Vector<bool>& mask) {
-      return  ExpressionRW_Submask<Element>(*this, mask);
-    }
-    const ExpressionRW_Submask<Element> operator[](const Vector<bool>& mask)  const {
-      return  ExpressionRW_Submask<Element>(*this, mask);
-    }
-
-
-    //Accessing a SET of values using a list
-
-    ExpressionRW_Subset<Element> operator[](const std::initializer_list<size_t>& list) {
-      return  ExpressionRW_Subset<Element>(*this, list);
-    }
-    const ExpressionRW_Subset<Element> operator[](const std::initializer_list<size_t>& list) const {
-      return  ExpressionRW_Subset<Element>(*this, list);
-    }
-
-
-
 
 
     //**********************************************************************
@@ -608,28 +620,30 @@ namespace mathq {
 
 
 
-    // // ------------------------ Vector = Vector<Element,NE2,NumberType,depth_value> ----------------
+    // ------------------------ Vector = Vector----------------
 
-    // template <int NE2>
-    // Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
-    //   if constexpr (depth_value<=1) {
-    //     if constexpr (is_dynamic_value) {
-    //       if (this->size() != v.size()) {
-    //         resize(v.size());
-    //       }
-    //     }
-    //     for (size_t i = 0; i < size(); i++) {
-    //       (*this)[i] = v[i];
-    //     }
-    //   }
-    //   else {
-    //     resize(v.recursive_dims());
-    //     for (size_t i = 0; i < total_size(); i++) {
-    //       this->dat(i) = v.dat(i);
-    //     }
-    //   }
-    //   return *this;
-    // }
+    template <int NE2>
+    Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
+      if constexpr (depth_value <= 1) {
+        if constexpr (is_dynamic_value) {
+          if (this->size() != v.size()) {
+            resize(v.size());
+          }
+        }
+        for (size_t i = 0; i < size(); i++) {
+          (*this)[i] = v[i];
+        }
+      }
+      else {
+        if constexpr (is_dynamic_value) {
+          resize(v.recursive_dims());
+        }
+        for (size_t i = 0; i < total_size(); i++) {
+          this->dat(i) = v.dat(i);
+        }
+      }
+      return *this;
+    }
 
 
     // // ------------------------ Vector = ExpressionR ----------------
