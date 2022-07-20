@@ -298,6 +298,129 @@ namespace mathq {
       return &(data_[0]);
     }
 
+    // **********************************************************************
+    // ************* Array-style Element Access: x[n] ***********************
+    // **********************************************************************
+
+    // "read/write"
+    Element& operator[](const size_t n) {
+      // int k = n;
+      // if (k < 0) {
+      //   k += size();
+      // }
+      return data_[n];
+    }
+
+    // read
+    const Element& operator[](const size_t n) const {
+      // int k = n;
+      // if (k < 0) {
+      //   k += size();
+      // }
+      return data_[n];
+    }
+
+
+    //**********************************************************************
+    //*******MultiArray-style Element Access: A(i,j,k,...) *********************
+    //**********************************************************************
+
+    // template <typename... U>
+    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, Element&>::type operator()(const U... args) {
+
+    //   // const int size = sizeof...(args);
+    //   // int argarray[size] = {args...};
+    //   size_t k = this->index(args...);
+
+    //   return (*this)[k];
+    // }
+    // template <typename... U>
+    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, const Element>::type operator()(const U... args) const {
+    //   return (*this)(args...);
+    // }
+
+    // // ---------------- tensor({i,j,...})--------------
+    // Element& operator()(const std::initializer_list<size_t>& mylist) {
+    //   size_t k = this->index(mylist);
+    //   return (*this)[k];
+    // }
+    // const Element operator()(const std::initializer_list<size_t>& mylist) const {
+    //   size_t k = this->index(mylist);
+    //   return (*this)[k];
+    // }
+
+    //**********************************************************************
+    //*******indexing  *********************
+    //**********************************************************************
+
+    // size_t indexOf(const Indices& inds) const {
+    //   return dimensions_->index(inds);
+    // }
+
+    /* template<typename... Ts> size_t index(int i, const Ts... args){ */
+    /* const int size = sizeof...(args); */
+    /* int argarray[size] = {args...}; */
+    /*   Indices& inds = *(new Indices(rank())); */
+    /*   const size_t depth = this->rank(); */
+    /*   inds[0] = i;  */
+    /*   for(size_t n = 1; n < depth; n++) { */
+    /* 	inds[n] = argarray[n];  */
+    /*   } */
+    /*   size_t k = this->index(inds); */
+    /*   return k; */
+    /* } */
+
+    // template <typename... U>
+    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, size_t>::type index(const U... args) {
+
+    //   const size_t size = sizeof...(args);
+    //   size_t argarray[size] = { std::make_unsigned<int>::type(args)... };
+    //   Indices& inds = *(new Indices(rank()));
+    //   const size_t NN = this->rank();
+    //   for (size_t n = 0; n < NN; n++) {
+    //     inds[n] = argarray[n];
+    //   }
+    //   size_t k = this->indexOf(inds);
+    //   return k;
+    // }
+
+    // size_t index(const std::initializer_list<size_t>& mylist) const {
+    //   // TODO: check size
+    //   const size_t NN = this->rank();
+    //   const size_t N = mylist.size();
+    //   size_t k = 0;
+    //   size_t n = 0;
+    //   typename std::initializer_list<size_t>::iterator it;
+    //   for (it = mylist.begin(); it != mylist.end(); ++it, n++) {
+    //     size_t N = (*dimensions_)[n];
+    //     size_t j = *it;
+    //     k = N * k + j;
+    //   }
+    //   return k;
+    // }
+
+    // // indices - This is the inverse of the above function
+    // // TODO: test this code
+    // // TODO: bounds check on k
+
+    // inline Indices& indices(const size_t k) const {
+    //   return dimensions_->indices(k);
+    // }
+
+    // //**********************************************************************
+    // //************************** ACCESS(Indices) ***********************************
+    // //**********************************************************************
+
+    // // ---------------- tensor(Indices)--------------
+    // Element& operator()(const Indices& inds) {
+    //   size_t k = this->indexOf(inds);
+    //   return (*this)[k];
+    // }
+    // const Element operator()(const Indices& inds) const {
+    //   size_t k = this->indexOf(inds);
+    //   return (*this)[k];
+    // }
+
 
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
@@ -429,128 +552,6 @@ namespace mathq {
     //     return (*this)(inds);
     //   }
     // }
-
-    // **********************************************************************
-    // ************* Array-style Element Access: x[n] ***********************
-    // **********************************************************************
-
-    // "read/write"
-    Element& operator[](const size_t n) {
-      // int k = n;
-      // if (k < 0) {
-      //   k += size();
-      // }
-      return data_[n];
-    }
-
-    // read
-    const Element& operator[](const size_t n) const {
-      // int k = n;
-      // if (k < 0) {
-      //   k += size();
-      // }
-      return data_[n];
-    }
-
-    //**********************************************************************
-    //*******MultiArray-style Element Access: A(i,j,k,...) *********************
-    //**********************************************************************
-
-    // size_t indexOf(const Indices& inds) const {
-    //   return dimensions_->index(inds);
-    // }
-
-    /* template<typename... Ts> size_t index(int i, const Ts... args){ */
-    /* const int size = sizeof...(args); */
-    /* int argarray[size] = {args...}; */
-    /*   Indices& inds = *(new Indices(rank())); */
-    /*   const size_t depth = this->rank(); */
-    /*   inds[0] = i;  */
-    /*   for(size_t n = 1; n < depth; n++) { */
-    /* 	inds[n] = argarray[n];  */
-    /*   } */
-    /*   size_t k = this->index(inds); */
-    /*   return k; */
-    /* } */
-
-    // template <typename... U>
-    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, size_t>::type index(const U... args) {
-
-    //   const size_t size = sizeof...(args);
-    //   size_t argarray[size] = { std::make_unsigned<int>::type(args)... };
-    //   Indices& inds = *(new Indices(rank()));
-    //   const size_t NN = this->rank();
-    //   for (size_t n = 0; n < NN; n++) {
-    //     inds[n] = argarray[n];
-    //   }
-    //   size_t k = this->indexOf(inds);
-    //   return k;
-    // }
-
-    // size_t index(const std::initializer_list<size_t>& mylist) const {
-    //   // TODO: check size
-    //   const size_t NN = this->rank();
-    //   const size_t N = mylist.size();
-    //   size_t k = 0;
-    //   size_t n = 0;
-    //   typename std::initializer_list<size_t>::iterator it;
-    //   for (it = mylist.begin(); it != mylist.end(); ++it, n++) {
-    //     size_t N = (*dimensions_)[n];
-    //     size_t j = *it;
-    //     k = N * k + j;
-    //   }
-    //   return k;
-    // }
-
-    // // indices - This is the inverse of the above function
-    // // TODO: test this code
-    // // TODO: bounds check on k
-
-    // inline Indices& indices(const size_t k) const {
-    //   return dimensions_->indices(k);
-    // }
-
-    // //**********************************************************************
-    // //************************** ACCESS() ***********************************
-    // //**********************************************************************
-
-    // // ---------------- tensor(Indices)--------------
-    // Element& operator()(const Indices& inds) {
-    //   size_t k = this->indexOf(inds);
-    //   return (*this)[k];
-    // }
-    // const Element operator()(const Indices& inds) const {
-    //   size_t k = this->indexOf(inds);
-    //   return (*this)[k];
-    // }
-
-    // // ---------------- tensor(i,j,...)--------------
-
-
-    // template <typename... U>
-    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, Element&>::type operator()(const U... args) {
-
-    //   // const int size = sizeof...(args);
-    //   // int argarray[size] = {args...};
-    //   size_t k = this->index(args...);
-
-    //   return (*this)[k];
-    // }
-    // template <typename... U>
-    // typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, const Element>::type operator()(const U... args) const {
-    //   return (*this)(args...);
-    // }
-
-    // // ---------------- tensor({i,j,...})--------------
-    // Element& operator()(const std::initializer_list<size_t>& mylist) {
-    //   size_t k = this->index(mylist);
-    //   return (*this)[k];
-    // }
-    // const Element operator()(const std::initializer_list<size_t>& mylist) const {
-    //   size_t k = this->index(mylist);
-    //   return (*this)[k];
-    // }
-
 
 
     //**********************************************************************

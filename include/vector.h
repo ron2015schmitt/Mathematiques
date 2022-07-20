@@ -373,6 +373,28 @@ namespace mathq {
       return *this;
     }
 
+    //**********************************************************************
+    //********************* Direct access to data_  ***********************************
+    //**********************************************************************
+
+    // -------------------- dataobj() --------------------
+    // "read/write" to the wrapped valarray/aray
+    auto& data_obj() {
+      return data_;
+    }
+
+    // get C pointer to raw data
+    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+    Element* data() {
+      if constexpr (is_dynamic_value) {
+        // valarray<Element>
+        return &(data_[0]);
+      }
+      else {
+        // array<Element>
+        return data_.data();
+      }
+    }
 
 
     //**********************************************************************
@@ -568,28 +590,6 @@ namespace mathq {
 
 
 
-    //**********************************************************************
-    //********************* Direct access to data_  ***********************************
-    //**********************************************************************
-
-    // -------------------- dataobj() --------------------
-    // "read/write" to the wrapped valarray/aray
-    auto& data_obj() {
-      return data_;
-    }
-
-    // get C pointer to raw data
-    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-    Element* data() {
-      if constexpr (is_dynamic_value) {
-        // valarray<Element>
-        return &(data_[0]);
-      }
-      else {
-        // array<Element>
-        return data_.data();
-      }
-    }
 
 
     //**********************************************************************
