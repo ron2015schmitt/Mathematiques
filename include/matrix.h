@@ -973,7 +973,7 @@ namespace mathq {
     // NOTE: in-place
 
     Matrix<Element, N1, N2>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
-      for (size_t i = size(); i--;) {
+      for (size_t i = 0; i < size(); i++) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
       return *this;
@@ -985,7 +985,7 @@ namespace mathq {
 
     template< typename T = NumberType >
     typename std::enable_if<is_complex<T>{}, Matrix<T>& >::type conj() {
-      for (size_t i = size(); i--;) {
+      for (size_t i = 0; i < size(); i++) {
         data_[i] = std::conj(data_[i]);
       }
       return *this;

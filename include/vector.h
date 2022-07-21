@@ -187,6 +187,49 @@ namespace mathq {
     }
 
 
+    template<typename T, size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
+    MultiArray(const Element N, const slc<T>& s) {
+      T mystart = s.start();
+      if (mystart < 0) {
+        mystart += N;
+      }
+      T myend = s.end();
+      if (myend < 0) {
+        myend += N;
+      }
+
+      T mystep = s.step();
+      std::queue<T> indices;
+
+      if (myend - mystart >= 0) {
+        if (mystep > 0) {
+          for (T k = mystart; k <= myend; k += mystep) {
+            if (k < 0) continue;
+            if (k >= N) break;
+            indices.push(k);
+          }
+        }
+      }
+      else {
+        if (mystep < 0) {
+          for (T k = mystart; k >= myend; k += mystep) {
+            if (k >= N) continue;
+            if (k < 0)  break;
+            indices.push(k);
+          }
+        }
+      }
+
+      const Element Nnew = indices.size();
+      data_.resize(Nnew);
+      for (T i = 0; i < Nnew; i++) {
+        (*this)[i] = static_cast<Element>(indices.front());
+        indices.pop();
+      }
+
+    }
+
+
     //**********************************************************************
     //                    CONSTRUCTORS: FIXED size  
     //**********************************************************************
@@ -444,21 +487,6 @@ namespace mathq {
       return data_[n];
     }
 
-
-    //**********************************************************************
-    //                              v[slice]
-    //**********************************************************************
-
-    // Accessing a slice of values
-
-    ExpressionRW_Subset<Element> operator[](const slc& slice) {
-      return (*this)[slice.toIndexVector(size())];
-    }
-    const ExpressionRW_Subset<Element>  operator[](const slc& slice) const {
-      //      display::log3("Vector","operator[]","(const slc& slice)\n");
-      return (*this)[slice.toIndexVector(size())];
-    }
-
     //**********************************************************************
     //                          subset: v[Vector]      
     //**********************************************************************
@@ -495,6 +523,24 @@ namespace mathq {
     }
     const ExpressionRW_Subset<Element> operator[](const std::initializer_list<size_t>& list) const {
       return  ExpressionRW_Subset<Element>(*this, list);
+    }
+
+
+    //**********************************************************************
+    //                              v[slice]
+    //**********************************************************************
+
+    // Accessing a slice of values
+    template <typename T>
+    ExpressionRW_Subset<Element> operator[](const slc<T>& slice) {
+      Vector<size_t>& ii = *(new Vector<size_t>(size(), slice));
+      return ExpressionRW_Subset<Element>(*this, ii);
+    }
+
+    template <typename T>
+    const ExpressionRW_Subset<Element> operator[](const slc<T>& slice) const {
+      Vector<size_t>& ii = *(new Vector<size_t>(size(), slice));
+      return ExpressionRW_Subset<Element>(*this, ii);
     }
 
 
@@ -568,45 +614,6 @@ namespace mathq {
         return (*this)(n);
       }
     }
-
-    // -------------------------------------------------------------
-    //                    auto x.dat(Indices)
-    //  Not sure what this is.
-    // -------------------------------------------------------------
-
-    // // "read/write": x.dat(Indices)
-    // NumberType& dat(const Indices& inds) {
-    //   Indices inds_next(inds);
-    //   // MOUT << "Vector: "<<std::endl;
-    //   // error if (inds.size() != sum recursive_dims[i].rank
-    //   size_t n = inds_next[0];
-    //   // MOUT << "  ";
-    //   inds_next.erase(inds_next.begin());
-    //   if constexpr (depth_value>1) {
-    //     return (*this)(n).dat(inds_next);
-    //   }
-    //   else {
-    //     return (*this)(n);
-    //   }
-    // }
-
-    // // "read": x.dat(Indices)
-    // const NumberType dat(const Indices& inds)  const {
-    //   Indices inds_next(inds);
-    //   // error if (inds.size() != sum recursive_dims[i].rank
-    //   size_t n = inds_next[0];
-    //   inds_next.erase(inds_next.begin());
-    //   if constexpr (depth_value>1) {
-    //     return (*this)(n).dat(inds_next);
-    //   }
-    //   else {
-    //     return (*this)(n);
-    //   }
-    // }
-
-
-
-
 
     //**********************************************************************
     //************************** ASSIGNMENT ********************************
@@ -783,16 +790,18 @@ namespace mathq {
 
 
 
-    //**********************************************************************
-    //************************** MATH **************************************
-    //**********************************************************************
 
+
+
+
+    //**********************************************************************
+    //***************** in-place modification********************************
+    //**********************************************************************
 
     //----------------- .roundzero(tol) ---------------------------
-    // NOTE: in-place
 
     Vector<Element, N1>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
-      for (size_t i = size(); i--;) {
+      for (size_t i = 0; i < size(); i++) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
       return *this;
@@ -800,23 +809,15 @@ namespace mathq {
 
 
     //----------------- .conj() ---------------------------
-    // NOTE: in-place
 
     template<typename T = NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&>
-
     conj() {
       using std::conj;
-      for (size_t i = size(); i--;) {
+      for (size_t i = 0; i < size(); i++) {
         data_[i] = conj(data_[i]);
       }
       return *this;
     }
-
-
-
-    //**********************************************************************
-    //***************** in-place modification********************************
-    //**********************************************************************
 
     // // .sort()
     // //         sorts in place and returns the permuted indices

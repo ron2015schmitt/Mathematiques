@@ -80,6 +80,7 @@ namespace mathq {
 
   class Indices;
   class DeepIndices;
+  template <typename T = size_t> class slc;
 
   inline bool equiv(const Indices& inds1, const Indices& inds2);
 

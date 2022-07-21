@@ -363,6 +363,14 @@ int main(int argc, char* argv[]) {
   TRDISP(ind1);
   TRDISP(v13(ind1));
 
+  CR();
+  ECHO_CODE(Vector<double> k = 100*range<double>(0, 10));
+  TRDISP(k);
+  TRDISP(SLC::even);
+  ECHO_CODE(Vector<size_t> vindex(11, SLC::even));
+  TRDISP(vindex);
+  TRDISP(k[vindex]);
+  TRDISP(k[SLC::even]);
 
   return 0;
 }
