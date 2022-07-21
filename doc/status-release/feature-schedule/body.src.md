@@ -113,6 +113,7 @@
 
 
 ### Miscellaneous Small Features
+* add `static inline std::string ClassName()` to each class. see `Vector` for how to set up
 * create template versions of all C++ functions so that there is never overload ambiguity. Put inside namespace
   * use python to create
 ```C++

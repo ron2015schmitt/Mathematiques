@@ -66,10 +66,6 @@ namespace mathq {
     // use to static_cast a Vector to another type of container
     //**********************************************************************
 
-    operator Vector<T>() const {
-      return *(new Vector<T>(*this));
-    }
-
   };
 
 
