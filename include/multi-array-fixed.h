@@ -328,19 +328,11 @@ namespace mathq {
 
     // "read/write"
     Element& operator[](const size_t n) {
-      // int k = n;
-      // if (k < 0) {
-      //   k += size();
-      // }
       return data_[n];
     }
 
     // read
     const Element& operator[](const size_t n) const {
-      // int k = n;
-      // if (k < 0) {
-      //   k += size();
-      // }
       return data_[n];
     }
 

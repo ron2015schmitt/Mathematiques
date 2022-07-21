@@ -819,115 +819,115 @@ namespace mathq {
       return *this;
     }
 
-    // // .sort()
-    // //         sorts in place and returns the permuted indices
+    // .sort()
+    //         sorts in place and returns the permuted indices
 
-    // Vector<size_t>& sort() {
+    Vector<size_t>& sort() {
 
-    //   const size_t N = size();
-    //   Vector<size_t>& ivec = *(new Vector<size_t>(N));
+      const size_t N = size();
+      Vector<size_t>& ivec = *(new Vector<size_t>(N));
 
-    //   if (N==0)
-    //     return ivec;
+      if (N==0)
+        return ivec;
 
-    //   std::vector<Pair<Element> > temp(N);
+      std::vector<Pair<Element> > temp(N);
 
-    //   for (size_t i = 0; i < N; i++) {
-    //     temp[i].index = i;
-    //     temp[i].data = data_[i];
-    //   }
-
-
-    //   std::sort(temp.begin(), temp.end());
+      for (size_t i = 0; i < N; i++) {
+        temp[i].index = i;
+        temp[i].data = data_[i];
+      }
 
 
-    //   for (size_t i = 0; i < N; i++) {
-    //     ivec(i) = temp[i].index;
-    //     data_[i] = temp[i].data;
-    //   }
-
-    //   return ivec;
-
-    // }
+      std::sort(temp.begin(), temp.end());
 
 
-    // // .quniq()
-    // //         removes adjacent duplicates
-    // //  template<typename T=NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&> 
-    // template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
+      for (size_t i = 0; i < N; i++) {
+        ivec(i) = temp[i].index;
+        data_[i] = temp[i].data;
+      }
 
-    // quniq() {
+      return ivec;
 
-    //   const size_t N = size();
-
-    //   if (N==0)
-    //     return *(new Vector<size_t>(0));
-
-    //   std::queue<Pair<Element> > unique;
-
-    //   Pair<Element> prevpair(0, data_[0]);
-    //   unique.push(prevpair);
-    //   for (size_t i = 1; i < N; i++) {
-    //     Pair<Element> mypair(i, data_[i]);
-    //     if (mypair.data != prevpair.data) {
-    //       unique.push(mypair);
-    //       prevpair = mypair;
-    //     }
-    //   }
-
-    //   const size_t Nnew = unique.size();
-    //   Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
-    //   resize(Nnew);
-    //   for (size_t i = 0; i < Nnew; i++) {
-    //     Pair<Element> mypair = unique.front();
-    //     unique.pop();
-    //     indexvec(i) = mypair.index;
-    //     data_[i] = mypair.data;
-    //   }
-
-    //   return indexvec;
-    // }
+    }
 
 
-    // // .uniq()
-    // //         removes all duplicates
-    // template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
+    // .quniq()
+    //         removes adjacent duplicates
+    //  template<typename T=NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&> 
+    template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
 
-    // uniq() {
+    quniq() {
 
-    //   const size_t N = size();
+      const size_t N = size();
 
-    //   if (N==0)
-    //     return *(new Vector<size_t>(0));
+      if (N==0)
+        return *(new Vector<size_t>(0));
 
-    //   std::map<size_t, NumberType> mymap;
-    //   for (size_t j = 0; j < N; j++) {
-    //     mymap[j] = data_[j];
-    //   }
+      std::queue<Pair<Element> > unique;
 
-    //   for (size_t j = 0; j < N; j++) {
-    //     if (mymap.find(j) == mymap.end()) continue;
-    //     Pair<Element> pair1(j, data_[j]);
-    //     for (size_t k = j+1; k < N; k++) {
-    //       if (mymap.find(k) == mymap.end()) continue;
-    //       Pair<Element> pair2(k, data_[k]);
-    //       if (pair1.data == pair2.data) {
-    //         mymap.erase(k);
-    //       }
-    //     }
-    //   }
+      Pair<Element> prevpair(0, data_[0]);
+      unique.push(prevpair);
+      for (size_t i = 1; i < N; i++) {
+        Pair<Element> mypair(i, data_[i]);
+        if (mypair.data != prevpair.data) {
+          unique.push(mypair);
+          prevpair = mypair;
+        }
+      }
 
-    //   const size_t Nnew = mymap.size();
-    //   Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
-    //   resize(Nnew);
-    //   size_t k = 0;
-    //   for (typename std::map<size_t, NumberType>::iterator it = mymap.begin(); it != mymap.end(); ++it) {
-    //     indexvec(k) = it->first;
-    //     data_[k++] = it->second;
-    //   }
+      const size_t Nnew = unique.size();
+      Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
+      resize(Nnew);
+      for (size_t i = 0; i < Nnew; i++) {
+        Pair<Element> mypair = unique.front();
+        unique.pop();
+        indexvec(i) = mypair.index;
+        data_[i] = mypair.data;
+      }
 
-    //   return indexvec;
-    // }
+      return indexvec;
+    }
+
+
+    // .uniq()
+    //         removes all duplicates
+    template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
+
+    uniq() {
+
+      const size_t N = size();
+
+      if (N==0)
+        return *(new Vector<size_t>(0));
+
+      std::map<size_t, NumberType> mymap;
+      for (size_t j = 0; j < N; j++) {
+        mymap[j] = data_[j];
+      }
+
+      for (size_t j = 0; j < N; j++) {
+        if (mymap.find(j) == mymap.end()) continue;
+        Pair<Element> pair1(j, data_[j]);
+        for (size_t k = j+1; k < N; k++) {
+          if (mymap.find(k) == mymap.end()) continue;
+          Pair<Element> pair2(k, data_[k]);
+          if (pair1.data == pair2.data) {
+            mymap.erase(k);
+          }
+        }
+      }
+
+      const size_t Nnew = mymap.size();
+      Vector<size_t>& indexvec = *(new Vector<size_t>(Nnew));
+      resize(Nnew);
+      size_t k = 0;
+      for (typename std::map<size_t, NumberType>::iterator it = mymap.begin(); it != mymap.end(); ++it) {
+        indexvec(k) = it->first;
+        data_[k++] = it->second;
+      }
+
+      return indexvec;
+    }
 
 
     Vector<Element, N1>& reverse() {
