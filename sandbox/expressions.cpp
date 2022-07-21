@@ -41,7 +41,7 @@
 
 #include "dimensions.h"
 #include "indices.h"
-// #include "slices.h"
+#include "slices.h"
 
 #include "expression-r.h"
 #include "expression-rw.h"
@@ -292,10 +292,6 @@ int main(int argc, char* argv[]) {
   TRDISP(x3({1,0}));
 
   CR();
-  // ECHO_CODE(MultiArray<double,2> x2(1,2));
-  // TRDISP(x1);
-
-
 
   return 0;
 }

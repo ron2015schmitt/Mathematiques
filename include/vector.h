@@ -398,7 +398,7 @@ namespace mathq {
 
 
     //**********************************************************************
-    //************* Array-style Element Access: x[n] ***********************
+    //************* Array-style Element Access: v[n] ***********************
     //**********************************************************************
 
     // "read/write"
@@ -412,8 +412,25 @@ namespace mathq {
     }
 
 
+
     //**********************************************************************
-    //***************MultiArray-style Element Access: v(n) *********************
+    //************************** v(Indices) ***********************************
+    //**********************************************************************
+
+
+    // "read/write"
+    Element& operator()(const Indices& inds) {
+      return data_[inds[0]];
+    }
+
+    // "read only"
+    const Element& operator()(const Indices& inds)  const {
+      return data_[inds[0]];
+    }
+
+
+    //**********************************************************************
+    //                              v(n) 
     //**********************************************************************
 
 
@@ -428,28 +445,23 @@ namespace mathq {
     }
 
 
-    // "read/write"
-    Element& operator()(const Indices& inds) {
-      return data_[inds[0]];
-    }
-
-    // "read only"
-    const Element& operator()(const Indices& inds)  const {
-      return data_[inds[0]];
-    }
-
-
+    //**********************************************************************
+    //                              v[slice]
+    //**********************************************************************
 
     // Accessing a slice of values
 
-    // ExpressionRW_Subset<Element> operator[](const slc& slice) {
-    //   return (*this)[slice.toIndexVector(size())];
-    // }
-    // const ExpressionRW_Subset<Element>  operator[](const slc& slice) const {
-    //   //      display::log3("Vector","operator[]","(const slc& slice)\n");
-    //   return (*this)[slice.toIndexVector(size())];
-    // }
+    ExpressionRW_Subset<Element> operator[](const slc& slice) {
+      return (*this)[slice.toIndexVector(size())];
+    }
+    const ExpressionRW_Subset<Element>  operator[](const slc& slice) const {
+      //      display::log3("Vector","operator[]","(const slc& slice)\n");
+      return (*this)[slice.toIndexVector(size())];
+    }
 
+    //**********************************************************************
+    //                          subset: v[Vector]      
+    //**********************************************************************
 
     // Accessing a SET of values using a vector of ints
 
@@ -461,6 +473,9 @@ namespace mathq {
     }
 
 
+    //**********************************************************************
+    //                              V[mask]
+    //**********************************************************************
 
 
     // Accessing a SET of values using a MASK
@@ -528,34 +543,35 @@ namespace mathq {
     // -------------------- auto x.dat(DeepIndices) --------------------
     // -------------------------------------------------------------
 
-    // // "read/write": x.dat(DeepIndices)
-    // NumberType& dat(const DeepIndices& dinds) {
-    //   const size_t mydepth = dinds.size();
-    //   size_t n = dinds[mydepth -depth_value][0];
+    // "read/write": x.dat(DeepIndices)
+    NumberType& dat(const DeepIndices& dinds) {
+      const size_t mydepth = dinds.size();
+      size_t n = dinds[mydepth - depth_value][0];
 
-    //   if constexpr (depth_value>1) {
-    //     return (*this)(n).dat(dinds);
-    //   }
-    //   else {
-    //     return (*this)(n);
-    //   }
-    // }
+      if constexpr (depth_value > 1) {
+        return (*this)(n).dat(dinds);
+      }
+      else {
+        return (*this)(n);
+      }
+    }
 
-    // // "read": x.dat(DeerIndices)
-    // const NumberType dat(const DeepIndices& dinds)  const {
-    //   const size_t mydepth = dinds.size();
-    //   size_t n = dinds[mydepth -depth_value][0];
+    // "read": x.dat(DeepIndices)
+    const NumberType dat(const DeepIndices& dinds)  const {
+      const size_t mydepth = dinds.size();
+      size_t n = dinds[mydepth - depth_value][0];
 
-    //   if constexpr (depth_value>1) {
-    //     return (*this)(n).dat(dinds);
-    //   }
-    //   else {
-    //     return (*this)(n);
-    //   }
-    // }
+      if constexpr (depth_value > 1) {
+        return (*this)(n).dat(dinds);
+      }
+      else {
+        return (*this)(n);
+      }
+    }
 
-
-    // -------------------- auto x.dat(Indices) --------------------
+    // -------------------------------------------------------------
+    //                    auto x.dat(Indices)
+    //  Not sure what this is.
     // -------------------------------------------------------------
 
     // // "read/write": x.dat(Indices)
@@ -1258,12 +1274,15 @@ namespace mathq {
     //************************** Text and debugging ************************
     //**********************************************************************
 
-    std::string bottom() {
-      typename SimpleNumberTrait<Element>::Type d;
-      return display::getTypeName(d);
-    }
+    // instance classname() method 
 
     inline std::string classname() const {
+      return ClassName();
+    }
+
+    // static ClassName() method 
+
+    static inline std::string ClassName() {
       using namespace display;
       std::string s = "Vector";
       s += StyledString::get(ANGLE1).get();
@@ -1280,7 +1299,6 @@ namespace mathq {
       s += StyledString::get(ANGLE2).get();
       return s;
     }
-
 
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {

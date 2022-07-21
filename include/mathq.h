@@ -49,7 +49,7 @@
 
 #include "dimensions.h"
 #include "indices.h"
-// #include "slices.h"
+#include "slices.h"
 
 #include "expression-r.h"
 #include "expression-rw.h"

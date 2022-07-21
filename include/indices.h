@@ -257,33 +257,23 @@ namespace mathq {
       *this = var;
     }
 
-    DeepIndices(const std::vector<size_t>& var) {
+    DeepIndices(const std::vector<Indices>& var) {
       *this = var;
     }
 
-    DeepIndices(const std::valarray<size_t>& var) {
+    DeepIndices(const std::valarray<Indices>& var) {
       *this = var;
     }
 
     template <size_t rank2>
-    DeepIndices(const std::array<size_t, rank2>& var) {
+    DeepIndices(const std::array<Indices, rank2>& var) {
       *this = var;
     }
 
-    DeepIndices(const std::initializer_list<size_t>& var) {
-      *this = var;
-    }
-
-
+    // this works for std::initializer_list<std::initializer_list<size_t>> as well
     DeepIndices(const std::initializer_list<Indices>& var) {
       *this = var;
     }
-
-    DeepIndices(const std::initializer_list<std::initializer_list<size_t>>& var) {
-      *this = var;
-    }
-
-
 
 
     DeepIndices& reverse_each() {

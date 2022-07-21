@@ -41,7 +41,7 @@
 
 #include "dimensions.h"
 #include "indices.h"
-// #include "slices.h"
+#include "slices.h"
 
 #include "expression-r.h"
 #include "expression-rw.h"
@@ -267,7 +267,6 @@ int main(int argc, char* argv[]) {
   TRDISP(u.recursive_dims());
   u = { {11,12}, {13,14}, {15,16} };
   TRDISP(u);
-  TRDISP(u);
   TRDISP(u.size());
   TRDISP(u.element_size());
   TRDISP(u.el_total_size());
@@ -277,7 +276,25 @@ int main(int argc, char* argv[]) {
   TRDISP(u.depth());
   TRDISP(u.recursive_dims());
   TRDISP(u.element_dims());
+  TRDISP(u[0]);
+  TRDISP(u[2]);
+  TRDISP(u.dat(0));
+  TRDISP(u.dat(5));
 
+  TRDISP(Indices{1,1});
+  TRDISP(DeepIndices{{0},{0}});
+  TRDISP(u.dat(DeepIndices{{0},{0}}));
+  TRDISP(DeepIndices{{0},{1}});
+  TRDISP(u.dat(DeepIndices{{0},{1}}));
+  TRDISP(DeepIndices{{1},{0}});
+  TRDISP(u.dat(DeepIndices{{1},{0}}));
+  TRDISP(DeepIndices{{1},{1}});
+  TRDISP(u.dat(DeepIndices{{1},{1}}));
+  TRDISP(DeepIndices{{2},{0}});
+  TRDISP(u.dat(DeepIndices{{2},{0}}));
+  TRDISP(DeepIndices{{2},{1}});
+  TRDISP(u.dat(DeepIndices{{2},{1}}));
+  
   TRDISP(sizeof(u)/(u.total_size()*sizeof(double)));
 
 
