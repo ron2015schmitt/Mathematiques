@@ -13,12 +13,16 @@ namespace mathq {
   // Cannot size by template parameter because because we need the same exact type for RecursiveDimensions elements
   // ***************************************************************************
 
-  class Dimensions : public std::vector<size_t> {
+  class Dimensions {
+  
+  private:
+    std::vector<size_t> data_;
+
   public:
     using Type = Dimensions;
-    using Parent = std::vector<size_t>;
     using ElementType = size_t;
-
+    using iterator = std::vector<size_t>::iterator;
+    using const_iterator = std::vector<size_t>::const_iterator;
     //**********************************************************************
     //                            CONSTRUCTORS 
     //**********************************************************************
@@ -53,6 +57,36 @@ namespace mathq {
       *this = var;
     }
 
+
+    size_t size() const {
+      return data_.size();
+    }
+    Dimensions& resize(const size_t N) {
+      data_.resize(N);
+      return *this;
+    }
+    Dimensions& push_back(const size_t item) {
+      data_.push_back(item);
+      return *this;
+    }
+    Dimensions& erase(const iterator it) {
+      data_.erase(it);
+      return *this;
+    }
+    iterator begin() {
+      return data_.begin();
+    }
+    const_iterator begin() const {
+      return data_.begin();
+    }
+    iterator end() {
+      return data_.end();
+    }
+    const_iterator end() const {
+      return data_.end();
+    }
+
+
     Dimensions& getReducedDims() const {
       // remove all dimensiosn equal to 1
       Dimensions& v = *(new Dimensions{});
@@ -72,6 +106,20 @@ namespace mathq {
         }
       }
       return v;
+    }
+
+   //**********************************************************************
+    //************* Array-style Element Access: v[n] ***********************
+    //**********************************************************************
+
+    // "read/write"
+    size_t& operator[](const size_t n) {
+      return data_[n];
+    }
+
+    // read
+    const size_t& operator[](const size_t n)  const {
+      return data_[n];
     }
 
     bool operator==(const Dimensions& var) const {
