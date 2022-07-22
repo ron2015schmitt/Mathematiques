@@ -456,20 +456,6 @@ namespace mathq {
 
 
 
-    //**********************************************************************
-    //************************** v(Indices) ***********************************
-    //**********************************************************************
-
-
-    // "read/write"
-    Element& operator()(const Indices& inds) {
-      return data_[inds[0]];
-    }
-
-    // "read only"
-    const Element& operator()(const Indices& inds)  const {
-      return data_[inds[0]];
-    }
 
 
     //**********************************************************************
@@ -486,6 +472,51 @@ namespace mathq {
     const Element& operator()(const size_t n)  const {
       return data_[n];
     }
+
+    //**********************************************************************
+    //************************** v(Indices) ***********************************
+    //**********************************************************************
+
+
+    // "read/write"
+    Element& operator[](const Indices& inds) {
+      return data_[inds[0]];
+    }
+
+    // "read only"
+    const Element& operator[](const Indices& inds)  const {
+      return data_[inds[0]];
+    }
+
+    // -------------------- [DeepIndices] --------------------
+    // -------------------------------------------------------------
+
+    // "read/write"
+    NumberType& operator[](const DeepIndices& dinds) {
+      const size_t mydepth = dinds.size();
+      size_t n = dinds[mydepth - depth_value][0];
+
+      if constexpr (depth_value > 1) {
+        return (*this)(n)[dinds];
+      }
+      else {
+        return (*this)(n);
+      }
+    }
+
+    // "read"
+    const NumberType& operator[](const DeepIndices& dinds) const {
+      const size_t mydepth = dinds.size();
+      size_t n = dinds[mydepth - depth_value][0];
+
+      if constexpr (depth_value > 1) {
+        return (*this)(n)[dinds];
+      }
+      else {
+        return (*this)(n);
+      }
+    }
+
 
     //**********************************************************************
     //                          subset: v[Vector]      
@@ -583,35 +614,6 @@ namespace mathq {
         const int j = n / Ndeep;
         const int k = n % Ndeep;
         return data_[j].dat(k);
-      }
-    }
-
-    // -------------------- [DeepIndices] --------------------
-    // -------------------------------------------------------------
-
-    // "read/write"
-    NumberType& operator[](const DeepIndices& dinds) {
-      const size_t mydepth = dinds.size();
-      size_t n = dinds[mydepth - depth_value][0];
-
-      if constexpr (depth_value > 1) {
-        return (*this)(n)[dinds];
-      }
-      else {
-        return (*this)(n);
-      }
-    }
-
-    // "read"
-    const NumberType& operator[](const DeepIndices& dinds) const {
-      const size_t mydepth = dinds.size();
-      size_t n = dinds[mydepth - depth_value][0];
-
-      if constexpr (depth_value > 1) {
-        return (*this)(n)[dinds];
-      }
-      else {
-        return (*this)(n);
       }
     }
 

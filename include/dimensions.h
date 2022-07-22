@@ -36,7 +36,7 @@ namespace mathq {
       *this = var;
     }
 
-    explicit Dimensions(const size_t N) {
+    Dimensions(const size_t N) {
       this->resize(N);
     }
 
@@ -394,37 +394,32 @@ namespace mathq {
       this->resize(0);
     }
 
-    RecursiveDimensions(const size_t depth) {
-      this->resize(depth);
-    }
-
     RecursiveDimensions(const RecursiveDimensions& var) {
       *this = var;
     }
 
-    RecursiveDimensions(const std::vector<size_t>& var) {
+    RecursiveDimensions(const size_t depth) {
+      this->resize(depth);
+    }
+
+    explicit RecursiveDimensions(const std::vector<Dimensions>& var) {
       *this = var;
     }
 
-    RecursiveDimensions(const std::valarray<size_t>& var) {
+    explicit RecursiveDimensions(const std::valarray<Dimensions>& var) {
       *this = var;
     }
 
     template <size_t rank2>
-    RecursiveDimensions(const std::array<size_t, rank2>& var) {
+    explicit RecursiveDimensions(const std::array<Dimensions, rank2>& var) {
       *this = var;
     }
 
-    RecursiveDimensions(const std::initializer_list<size_t>& var) {
+    explicit RecursiveDimensions(const std::initializer_list<Dimensions>& var) {
       *this = var;
     }
 
-
-    RecursiveDimensions(const std::initializer_list<Dimensions>& var) {
-      *this = var;
-    }
-
-    RecursiveDimensions(const std::initializer_list<std::initializer_list<size_t>>& var) {
+    explicit RecursiveDimensions(const std::initializer_list<std::initializer_list<size_t>>& var) {
       *this = var;
     }
 

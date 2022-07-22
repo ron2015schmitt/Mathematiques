@@ -361,7 +361,7 @@ int main(int argc, char* argv[]) {
   CR();
   ECHO_CODE(Indices ind1{2});
   TRDISP(ind1);
-  TRDISP(v13(ind1));
+  TRDISP(v13[ind1]);
 
   CR();
   ECHO_CODE(Vector<double> k = 100*range<double>(0, 10));
