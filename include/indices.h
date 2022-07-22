@@ -201,8 +201,11 @@ namespace mathq {
     //************************** Text and debugging ************************
     //**********************************************************************
 
-    std::string classname() const {
-      return "Indices";
+    inline std::string classname() const {
+      return ClassName();
+    }
+
+    static inline std::string ClassName() {      return "Indices";
     }
 
 
@@ -420,7 +423,10 @@ namespace mathq {
 
 
     inline std::string classname() const {
-      using namespace display;
+      return ClassName();
+    }
+
+    static inline std::string ClassName() {      using namespace display;
       std::string s = "DeepIndices";
       return s;
     }

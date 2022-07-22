@@ -660,8 +660,11 @@ namespace mathq {
     //**********************************************************************
     //************************** Text and debugging ************************
     //**********************************************************************
-
     inline std::string classname() const {
+      return ClassName();
+    }
+
+    static inline std::string ClassName() {
       using namespace display;
       std::string s = "MultiArray";
       s += StyledString::get(ANGLE1).get();

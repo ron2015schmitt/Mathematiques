@@ -179,6 +179,10 @@ namespace mathq {
 
 
     inline std::string classname() const {
+      return ClassName();
+    }
+
+    static inline std::string ClassName() {
       using namespace display;
       std::string s = "Dimensions";
       return s;
@@ -231,7 +235,10 @@ namespace mathq {
 
 
     inline std::string classname() const {
-      using namespace display;
+      return ClassName();
+    }
+
+    static inline std::string ClassName() {      using namespace display;
       std::string s = "NullDimensions";
       return s;
     }
@@ -258,7 +265,10 @@ namespace mathq {
     }
 
     inline std::string classname() const {
-      using namespace display;
+      return ClassName();
+    }
+
+    static inline std::string ClassName() {      using namespace display;
       std::string s = "ScalarDimensions";
       return s;
     }
@@ -477,7 +487,10 @@ namespace mathq {
 
 
     inline std::string classname() const {
-      using namespace display;
+      return ClassName();
+    }
+
+    static inline std::string ClassName() {      using namespace display;
       std::string s = "RecursiveDimensions";
       return s;
     }
