@@ -32,28 +32,28 @@ namespace mathq {
       this->resize(0);
     }
 
-    Dimensions(const size_t N) {
-      this->resize(N);
-    }
-
     Dimensions(const Dimensions& var) {
       *this = var;
     }
 
-    Dimensions(const std::vector<size_t>& var) {
+    explicit Dimensions(const size_t N) {
+      this->resize(N);
+    }
+
+    explicit Dimensions(const std::vector<size_t>& var) {
       *this = var;
     }
 
-    Dimensions(const std::valarray<size_t>& var) {
+    explicit Dimensions(const std::valarray<size_t>& var) {
       *this = var;
     }
 
     template <size_t rank2>
-    Dimensions(const std::array<size_t, rank2>& var) {
+    explicit Dimensions(const std::array<size_t, rank2>& var) {
       *this = var;
     }
 
-    Dimensions(const std::initializer_list<size_t>& var) {
+    explicit Dimensions(const std::initializer_list<size_t>& var) {
       *this = var;
     }
 
