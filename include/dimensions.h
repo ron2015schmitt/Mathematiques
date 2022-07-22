@@ -378,10 +378,12 @@ namespace mathq {
   //
   // ***************************************************************************
 
-  class RecursiveDimensions : public std::valarray<Dimensions> {
+  class RecursiveDimensions {
+
+  private:
+    std::valarray<Dimensions> data_;
 
   public:
-    using Parent = std::valarray<Dimensions>;
 
 
     //**********************************************************************
@@ -427,6 +429,13 @@ namespace mathq {
     }
 
 
+    size_t size() const {
+      return data_.size();
+    }
+    RecursiveDimensions& resize(const size_t N) {
+      data_.resize(N);
+      return *this;
+    }
 
     RecursiveDimensions& reverse_each() {
       for (size_t d = 0; d < size(); d++) {
@@ -455,6 +464,22 @@ namespace mathq {
       RecursiveDimensions& dd = *(new RecursiveDimensions(*this));
       return dd.evert();
     }
+
+       //**********************************************************************
+    //************* Array-style Element Access: v[n] ***********************
+    //**********************************************************************
+
+    // "read/write"
+    Dimensions& operator[](const size_t n) {
+      return data_[n];
+    }
+
+    // read
+    const Dimensions& operator[](const size_t n)  const {
+      return data_[n];
+    }
+
+
 
     //**********************************************************************
     //************************** ASSIGNMENT ********************************
