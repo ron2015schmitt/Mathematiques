@@ -82,7 +82,7 @@ namespace mathq {
 
     // --------------------- default CONSTRUCTOR ---------------------
 
-    explicit MultiArray() {
+    MultiArray() {
     }
 
     // --------------------- copy constructor --------------------
@@ -90,36 +90,35 @@ namespace mathq {
       *this = var;
     }
 
-
     // --------------------- dynamic MultiArray --------------------
     MultiArray(const MultiArray<Element, rank_value, dynamic>& var) {
       *this = var;
     }
 
     // ----------------------- initializer_list ---------------------
-    MultiArray(const std::initializer_list<Element>& var) {
+    explicit MultiArray(const std::initializer_list<Element>& var) {
       *this = var;
     }
 
     // ----------------------- std::vector ---------------------
-    MultiArray(const std::vector<Element>& var) {
+    explicit MultiArray(const std::vector<Element>& var) {
       *this = var;
     }
 
     // ----------------------- std::valarray ---------------------
-    MultiArray(const std::valarray<Element>& var) {
+    explicit MultiArray(const std::valarray<Element>& var) {
       *this = var;
     }
 
     // ----------------------- std::array ---------------------
     template<size_t NE2>
-    MultiArray(const std::array<Element, NE2>& var) {
+    explicit MultiArray(const std::array<Element, NE2>& var) {
       *this = var;
     }
 
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
     template <class Derived, size_t... ints>
-    MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
+    explicit MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
       *this = x;
     }
 
