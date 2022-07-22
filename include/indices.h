@@ -65,11 +65,15 @@ namespace mathq {
       this->resize(0);
     }
 
-    Indices(const size_t N) {
+    Indices(const Indices& var) {
+      *this = var;
+    }
+
+    explicit Indices(const size_t N) {
       this->resize(N);
     }
 
-    Indices(const size_t k, const Dimensions& dims) {
+    explicit Indices(const size_t k, const Dimensions& dims) {
       const size_t rank = dims.size();
       this->resize(rank);
       size_t prev = k;
@@ -85,24 +89,20 @@ namespace mathq {
       }
     }
 
-    Indices(const Indices& var) {
+    explicit Indices(const std::vector<size_t>& var) {
       *this = var;
     }
 
-    Indices(const std::vector<size_t>& var) {
-      *this = var;
-    }
-
-    Indices(const std::valarray<size_t>& var) {
+    explicit Indices(const std::valarray<size_t>& var) {
       *this = var;
     }
 
     template <size_t rank2>
-    Indices(const std::array<size_t, rank2>& var) {
+    explicit Indices(const std::array<size_t, rank2>& var) {
       *this = var;
     }
 
-    Indices(const std::initializer_list<size_t>& var) {
+    explicit Indices(const std::initializer_list<size_t>& var) {
       *this = var;
     }
 
@@ -322,11 +322,13 @@ namespace mathq {
       *this = var;
     }
 
-    // this works for std::initializer_list<std::initializer_list<size_t>> as well
     DeepIndices(const std::initializer_list<Indices>& var) {
       *this = var;
     }
 
+    DeepIndices(const std::initializer_list<std::initializer_list<size_t>>& var) {
+      *this = var;
+    }
 
     DeepIndices& reverse_each() {
       for (size_t d = 0; d < size(); d++) {
