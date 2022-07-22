@@ -238,10 +238,12 @@ namespace mathq {
   // Deepindices - class to full indices of nested MultiArrays
   // -------------------------------------------------------------------
 
-  class DeepIndices : public std::vector<Indices> {
+  class DeepIndices {
+  private:
+    std::valarray<Indices> data_;
+
 
   public:
-    using Parent = std::vector<Indices>;
 
 
     //**********************************************************************
@@ -306,6 +308,28 @@ namespace mathq {
     DeepIndices& getEverse() {
       DeepIndices& dd = *(new DeepIndices(*this));
       return dd.evert();
+    }
+
+    size_t size() const {
+      return data_.size();
+    }
+    DeepIndices& resize(const size_t N) {
+      data_.resize(N);
+      return *this;
+    }
+
+       //**********************************************************************
+    //************* Array-style Element Access: v[n] ***********************
+    //**********************************************************************
+
+    // "read/write"
+    Indices& operator[](const size_t n) {
+      return data_[n];
+    }
+
+    // read
+    const Indices& operator[](const size_t n)  const {
+      return data_[n];
     }
 
     //**********************************************************************
@@ -383,13 +407,13 @@ namespace mathq {
       size_t m = N;
       while (true) {
         if (m == 0) {
-          this->clear();
+          this->resize(0);
           return *this;
         }
         m--;
         while ((*this)[m].size() == 0) {
           if (m == 0) {
-            this->clear();
+            this->resize(0);
             return *this;
           }
           m--;
