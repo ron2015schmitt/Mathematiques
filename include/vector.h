@@ -586,29 +586,29 @@ namespace mathq {
       }
     }
 
-    // -------------------- auto x.dat(DeepIndices) --------------------
+    // -------------------- [DeepIndices] --------------------
     // -------------------------------------------------------------
 
-    // "read/write": x.dat(DeepIndices)
-    NumberType& dat(const DeepIndices& dinds) {
+    // "read/write"
+    NumberType& operator[](const DeepIndices& dinds) {
       const size_t mydepth = dinds.size();
       size_t n = dinds[mydepth - depth_value][0];
 
       if constexpr (depth_value > 1) {
-        return (*this)(n).dat(dinds);
+        return (*this)(n)[dinds];
       }
       else {
         return (*this)(n);
       }
     }
 
-    // "read": x.dat(DeepIndices)
-    const NumberType dat(const DeepIndices& dinds)  const {
+    // "read"
+    const NumberType& operator[](const DeepIndices& dinds) const {
       const size_t mydepth = dinds.size();
       size_t n = dinds[mydepth - depth_value][0];
 
       if constexpr (depth_value > 1) {
-        return (*this)(n).dat(dinds);
+        return (*this)(n)[dinds];
       }
       else {
         return (*this)(n);

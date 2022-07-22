@@ -283,17 +283,17 @@ int main(int argc, char* argv[]) {
 
   TRDISP(Indices{1,1});
   TRDISP(DeepIndices{{0},{0}});
-  TRDISP(u.dat(DeepIndices{{0},{0}}));
+  TRDISP(u[DeepIndices{{0},{0}}]);
   TRDISP(DeepIndices{{0},{1}});
-  TRDISP(u.dat(DeepIndices{{0},{1}}));
+  TRDISP(u[DeepIndices{{0},{1}}]);
   TRDISP(DeepIndices{{1},{0}});
-  TRDISP(u.dat(DeepIndices{{1},{0}}));
+  TRDISP(u[DeepIndices{{1},{0}}]);
   TRDISP(DeepIndices{{1},{1}});
-  TRDISP(u.dat(DeepIndices{{1},{1}}));
+  TRDISP(u[DeepIndices{{1},{1}}]);
   TRDISP(DeepIndices{{2},{0}});
-  TRDISP(u.dat(DeepIndices{{2},{0}}));
+  TRDISP(u[DeepIndices{{2},{0}}]);
   TRDISP(DeepIndices{{2},{1}});
-  TRDISP(u.dat(DeepIndices{{2},{1}}));
+  TRDISP(u[DeepIndices{{2},{1}}]);
   
   TRDISP(sizeof(u)/(u.total_size()*sizeof(double)));
 

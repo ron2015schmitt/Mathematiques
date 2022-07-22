@@ -383,49 +383,50 @@ namespace mathq {
 
 
     //**********************************************************************
-    //******************** DEEP ACCESS: x.dat(n) ***************************
+    //******************** BOTTOM ELEMENT ACCESS: x.dat(n) *****************
     //**********************************************************************
     // NOTE: indexes over [0] to [total_size()] and note return type
 
-    // // "read/write"
-    // NumberType& dat(const size_t n) {
-    //   using namespace ::display;
-    //   //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
-    //   if constexpr (depth < 2) {
-    //     int k = n;
-    //     if (k < 0) {
-    //       k += size();
-    //     }
-    //     return data_[k];
-    //   }
-    //   else {
-    //     const int Ndeep = this->el_total_size();
-    //     const int j = n / Ndeep;
-    //     const int k = n % Ndeep;
-    //     return data_[j].dat(k);
-    //   }
-    // }
+    // "read/write"
+    NumberType& dat(const size_t n) {
+      using namespace ::display;
+      //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
+      if constexpr (depth_value <= 1) {
+        int k = n;
+        if (k < 0) {
+          k += size();
+        }
+        return data_[k];
+      }
+      else {
+        const int Ndeep = this->el_total_size();
+        const int j = n / Ndeep;
+        const int k = n % Ndeep;
+        return data_[j].dat(k);
+      }
+    }
 
-    // // read
-    // const NumberType& dat(const size_t n) const {
-    //   using namespace ::display;
-    //   //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
-    //   if constexpr (depth < 2) {
-    //     int k = n;
-    //     if (k < 0) {
-    //       k += size();
-    //     }
-    //     return data_[k];
-    //   }
-    //   else {
-    //     const int Ndeep = this->el_total_size();
-    //     const int j = n / Ndeep;
-    //     const int k = n % Ndeep;
-    //     return data_[j].dat(k);
-    //   }
-    // }
+    // read
+    const NumberType& dat(const size_t n) const {
+      using namespace ::display;
+      //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
+      if constexpr (depth_value <= 1) {
+        int k = n;
+        if (k < 0) {
+          k += size();
+        }
+        return data_[k];
+      }
+      else {
+        const int Ndeep = this->el_total_size();
+        const int j = n / Ndeep;
+        const int k = n % Ndeep;
+        return data_[j].dat(k);
+      }
+    }
 
     // -------------------- auto x.dat(Indices) --------------------
+    // ??
     // -------------------------------------------------------------
 
     // // "read/write": x.dat(Indices)
