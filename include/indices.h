@@ -6,12 +6,16 @@
 namespace mathq {
 
 
-  class Indices : public std::vector<size_t> {
-  private:
-  public:
-    typedef typename std::vector<size_t> Parent;
-    typedef typename Parent::iterator Iterator;
+  class Indices {
+      private:
+    std::vector<size_t> data_;
 
+  public:
+    using Type = Dimensions;
+    using ElementType = size_t;
+    using iterator = std::vector<size_t>::iterator;
+    using const_iterator = std::vector<size_t>::const_iterator;
+  
     //**********************************************************************
     //                         Static methods
     //
@@ -100,6 +104,49 @@ namespace mathq {
 
     Indices(const std::initializer_list<size_t>& var) {
       *this = var;
+    }
+
+
+    size_t size() const {
+      return data_.size();
+    }
+    Indices& resize(const size_t N) {
+      data_.resize(N);
+      return *this;
+    }
+    Indices& push_back(const size_t item) {
+      data_.push_back(item);
+      return *this;
+    }
+    Indices& erase(const iterator it) {
+      data_.erase(it);
+      return *this;
+    }
+    iterator begin() {
+      return data_.begin();
+    }
+    const_iterator begin() const {
+      return data_.begin();
+    }
+    iterator end() {
+      return data_.end();
+    }
+    const_iterator end() const {
+      return data_.end();
+    }
+
+   //**********************************************************************
+    //************* Array-style Element Access: v[n] ***********************
+    //**********************************************************************
+
+    // "read/write"
+    size_t& operator[](const size_t n) {
+      return data_[n];
+    }
+
+    // read
+    const size_t& operator[](const size_t n)  const {
+      return data_[n];
     }
 
 
