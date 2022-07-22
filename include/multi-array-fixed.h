@@ -96,7 +96,7 @@ namespace mathq {
     }
 
     // ----------------------- initializer_list ---------------------
-    explicit MultiArray(const std::initializer_list<Element>& var) {
+    MultiArray(const std::initializer_list<Element>& var) {
       *this = var;
     }
 
@@ -118,7 +118,7 @@ namespace mathq {
 
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
     template <class Derived, size_t... ints>
-    explicit MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
+    MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
       *this = x;
     }
 

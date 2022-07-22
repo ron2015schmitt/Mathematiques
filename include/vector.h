@@ -86,7 +86,7 @@ namespace mathq {
 
 
     // -------------------  default  --------------------
-    explicit MultiArray() {
+    MultiArray() {
     }
 
     // --------------------- copy constructor --------------------
@@ -107,7 +107,7 @@ namespace mathq {
     }
 
     // ----------------------- std::vector ---------------------
-    MultiArray(const std::vector<Element>& var) {
+    explicit MultiArray(const std::vector<Element>& var) {
       if (is_dynamic_value) {
         resize(var.size());
       }
@@ -115,7 +115,7 @@ namespace mathq {
     }
 
     // ----------------------- std::valarray ---------------------
-    MultiArray(const std::valarray<Element>& var) {
+    explicit MultiArray(const std::valarray<Element>& var) {
       if (is_dynamic_value) {
         resize(var.size());
       }
@@ -124,7 +124,7 @@ namespace mathq {
 
     // ----------------------- std::array ---------------------
     template<size_t NE2>
-    MultiArray(const std::array<Element, NE2>& var) {
+    explicit MultiArray(const std::array<Element, NE2>& var) {
       if (is_dynamic_value) {
         resize(var.size());
       }
@@ -148,7 +148,7 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from int  ---------------------
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
-    explicit MultiArray(const size_t N) {
+    MultiArray(const size_t N) {
       data_.resize(N);
     }
 
@@ -181,14 +181,14 @@ namespace mathq {
     // --------------------- array[]  CONSTRUCTOR ---------------------
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
-    MultiArray(const size_t N, const Element(vals)[]) {
+    explicit MultiArray(const size_t N, const Element(vals)[]) {
       data_.resize(N);
       *this = vals;
     }
 
 
     template<typename T, size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
-    MultiArray(const Element N, const slc<T>& s) {
+    explicit MultiArray(const Element N, const slc<T>& s) {
       T mystart = s.start();
       if (mystart < 0) {
         mystart += N;
