@@ -69,7 +69,7 @@ namespace mathq {
       *this = var;
     }
 
-    explicit Indices(const size_t N) {
+    Indices(const size_t N) {
       this->resize(N);
     }
 
@@ -309,24 +309,24 @@ namespace mathq {
       *this = var;
     }
 
-    DeepIndices(const std::vector<Indices>& var) {
+    explicit DeepIndices(const std::vector<Indices>& var) {
       *this = var;
     }
 
-    DeepIndices(const std::valarray<Indices>& var) {
+    explicit DeepIndices(const std::valarray<Indices>& var) {
       *this = var;
     }
 
     template <size_t rank2>
-    DeepIndices(const std::array<Indices, rank2>& var) {
+    explicit DeepIndices(const std::array<Indices, rank2>& var) {
       *this = var;
     }
 
-    DeepIndices(const std::initializer_list<Indices>& var) {
+    explicit DeepIndices(const std::initializer_list<Indices>& var) {
       *this = var;
     }
 
-    DeepIndices(const std::initializer_list<std::initializer_list<size_t>>& var) {
+    explicit DeepIndices(const std::initializer_list<std::initializer_list<size_t>>& var) {
       *this = var;
     }
 
