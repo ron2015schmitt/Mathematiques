@@ -440,23 +440,6 @@ namespace mathq {
     }
 
 
-    //**********************************************************************
-    //************* Array-style Element Access: v[n] ***********************
-    //**********************************************************************
-
-    // "read/write"
-    Element& operator[](const size_t n) {
-      return data_[n];
-    }
-
-    // read
-    const Element& operator[](const size_t n)  const {
-      return data_[n];
-    }
-
-
-
-
 
     //**********************************************************************
     //                              v(n) 
@@ -472,6 +455,64 @@ namespace mathq {
     const Element& operator()(const size_t n)  const {
       return data_[n];
     }
+
+
+    //**********************************************************************
+    //******************** DEEP ACCESS: x.dat(n) ***************************
+    //**********************************************************************
+    // NOTE: indexes over [0] to [total_size()] and note return type
+
+    // "read/write"
+    NumberType& dat(const size_t n) {
+      using namespace::display;
+      if constexpr (depth_value < 2) {
+        int k = n;
+        if (k < 0) {
+          k += size();
+        }
+        return data_[k];
+      }
+      else {
+        const int Ndeep = this->el_total_size();
+        const int j = n / Ndeep;
+        const int k = n % Ndeep;
+        return data_[j].dat(k);
+      }
+    }
+
+    // read
+    const NumberType& dat(const size_t n)  const {
+      using namespace::display;
+      if constexpr (depth_value < 2) {
+        int k = n;
+        if (k < 0) {
+          k += size();
+        }
+        return data_[k];
+      }
+      else {
+        const int Ndeep = this->el_total_size();
+        const int j = n / Ndeep;
+        const int k = n % Ndeep;
+        return data_[j].dat(k);
+      }
+    }
+
+
+    //**********************************************************************
+    //************* Array-style Element Access: v[n] ***********************
+    //**********************************************************************
+
+    // "read/write"
+    Element& operator[](const size_t n) {
+      return data_[n];
+    }
+
+    // read
+    const Element& operator[](const size_t n)  const {
+      return data_[n];
+    }
+
 
     //**********************************************************************
     //************************** v(Indices) ***********************************
@@ -575,47 +616,6 @@ namespace mathq {
     }
 
 
-
-    //**********************************************************************
-    //******************** DEEP ACCESS: x.dat(n) ***************************
-    //**********************************************************************
-    // NOTE: indexes over [0] to [total_size()] and note return type
-
-    // "read/write"
-    NumberType& dat(const size_t n) {
-      using namespace::display;
-      if constexpr (depth_value < 2) {
-        int k = n;
-        if (k < 0) {
-          k += size();
-        }
-        return data_[k];
-      }
-      else {
-        const int Ndeep = this->el_total_size();
-        const int j = n / Ndeep;
-        const int k = n % Ndeep;
-        return data_[j].dat(k);
-      }
-    }
-
-    // read
-    const NumberType& dat(const size_t n)  const {
-      using namespace::display;
-      if constexpr (depth_value < 2) {
-        int k = n;
-        if (k < 0) {
-          k += size();
-        }
-        return data_[k];
-      }
-      else {
-        const int Ndeep = this->el_total_size();
-        const int j = n / Ndeep;
-        const int k = n % Ndeep;
-        return data_[j].dat(k);
-      }
-    }
 
     //**********************************************************************
     //************************** ASSIGNMENT ********************************
