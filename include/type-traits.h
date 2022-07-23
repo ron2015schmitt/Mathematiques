@@ -404,6 +404,74 @@ namespace mathq {
 
 
 
+  // ************************************************************************************************
+  // NumberTrait<InputType, NewNumber>
+  //
+  // This operates recursively to find the base number type
+  //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
+  // Thsi can also be used to replace the number type
+  //
+  //  InputType:           Type that was passed in as first arg
+  //  Type:                Depends on InputType
+  //                         numbers: InputType
+  //                         MultiArray: The number type at the bottom of the nested MultiArrays
+  //                         MArrayR{,W}Exp: The number type of the Expression
+  //  ReplacedNumberType:  Depends on InputType
+  //                         numbers: NewNumber
+  //                         MultiArray: The InputType with the number type (at the bottom) replaced by NewNumber
+  //                         MArrayR{,W}Exp: The type of the MultiArray at the bottom of the nested expressions
+  //                                         with the number type replaced by NewNumber
+  //  ReplacedElementType: Depends on InputType
+  //                         numbers: NewNumber
+  //                         MultiArray: The InputType with the number type (at the bottom) replaced by NewNumber
+  //                         MArrayR{,W}Exp: The expression with Element replaced? see TODO below
+  //  depth():             Depth to the number type at the bottom
+  // ************************************************************************************************
+
+  template <typename T> 
+  class InitializerTrait {
+  public:
+    using Type = T;
+    using ElementType = NullType;
+    using BottomType = T;
+
+    constexpr static bool is_initializer_list = false;
+    constexpr static size_t depth() {
+      return 0;
+    }
+    inline static size_t size(ElementType x) {
+      return 0;
+    }
+    inline static size_t total_size(ElementType x) {
+      return 0;
+    }
+  };
+
+
+  //  std::initializer_list<Element>
+
+  template <typename Element>
+  class
+    InitializerTrait<std::initializer_list<Element>> {
+  public:
+    using Type = std::initializer_list<Element>;
+    using ElementType = Element;
+    using BottomType = InitializerTrait<Element>::BottomType;
+
+    constexpr static bool is_initializer_list = true;
+    constexpr static size_t depth() {
+      return 1 + InitializerTrait<Element>::depth();
+    }
+    inline static size_t size(const ElementType& x) {
+      return x.size();
+    }
+    inline static size_t total_size(const ElementType& x) {
+      return x.total_size();
+    }
+  };
+
+
+
 
   //  ExpressionR
 
@@ -947,7 +1015,6 @@ namespace mathq {
   // ***************************************************************************
   template <class T = void>
   class Nabla;
-  constexpr size_t dynamic = 0;
 
 
 

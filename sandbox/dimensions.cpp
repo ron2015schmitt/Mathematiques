@@ -371,6 +371,21 @@ int main(int argc, char* argv[]) {
   TRDISP(vindex);
   TRDISP(k[vindex]);
   TRDISP(k[SLC::even]);
+  TRDISP(k[-1]);
+  TRDISP(k[-2]);
+
+
+  TRDISP(InitializerTrait< std::initializer_list<double> >::depth());
+  {
+    ECHO_CODE(typename InitializerTrait< std::initializer_list<double> >::BottomType temp{0});
+    TRDISP(temp);
+  }
+  TRDISP(InitializerTrait< std::initializer_list<std::initializer_list<double>> >::depth());
+  {
+    ECHO_CODE(typename InitializerTrait< std::initializer_list<std::initializer_list<double>> >::BottomType temp{0});
+    TRDISP(temp);
+  }
+
 
   return 0;
 }

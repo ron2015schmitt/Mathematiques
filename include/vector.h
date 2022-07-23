@@ -91,7 +91,7 @@ namespace mathq {
 
     // --------------------- copy constructor --------------------
     template<size_t NE2>
-    MultiArray(const Vector<Element, NE2>& var) {
+    explicit MultiArray(const Vector<Element, NE2>& var) {
       if (is_dynamic_value) {
         resize(var.size());
       }
@@ -99,12 +99,15 @@ namespace mathq {
     }
 
     // ----------------------- initializer_list ---------------------
+    // not explicit: allows use of nested init lists when depth_value > 1
     MultiArray(const std::initializer_list<Element>& var) {
       if (is_dynamic_value) {
         resize(var.size());
       }
       *this = var;
     }
+
+   
 
     // ----------------------- std::vector ---------------------
     explicit MultiArray(const std::vector<Element>& var) {
@@ -328,47 +331,6 @@ namespace mathq {
 
 
     //**********************************************************************
-    //                          Resize
-    //**********************************************************************
-
-    Type& resize(const size_t N) {
-      if constexpr (is_dynamic_value) {
-        if (N != this->size()) {
-          data_.resize(N);
-        }
-      }
-      return *this;
-    }
-
-    Type& resize(const Dimensions& dims) {
-      return resize(dims[0]);
-    }
-
-    // new_rdims.size() <= depth_value
-    Type& resize(const RecursiveDimensions& new_rdims) {
-      return recurse_resize(new_rdims, 0);
-    }
-
-    // helper functions
-    Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
-      size_t depth_index = di;
-      size_t resize_depth = parent_rdims.size();
-      const size_t newSize = parent_rdims[depth_index++];
-      if constexpr (is_dynamic_value) {
-        resize(newSize);
-      }
-      if constexpr (depth_value >= 1) {
-        if (depth_index < resize_depth) {
-          for (size_t ii = 0; ii < size(); ii++) {
-            data_[ii].recurse_resize(parent_rdims, depth_index);
-          }
-        }
-      }
-      return *this;
-    }
-
-
-    //**********************************************************************
     //                        Dimensions
     //**********************************************************************
 
@@ -416,6 +378,49 @@ namespace mathq {
       return *this;
     }
 
+
+    //**********************************************************************
+    //                          Resize
+    //**********************************************************************
+
+    Type& resize(const size_t N) {
+      if constexpr (is_dynamic_value) {
+        if (N != this->size()) {
+          data_.resize(N);
+        }
+      }
+      return *this;
+    }
+
+    Type& resize(const Dimensions& dims) {
+      return resize(dims[0]);
+    }
+
+    // new_rdims.size() <= depth_value
+    Type& resize(const RecursiveDimensions& new_rdims) {
+      return recurse_resize(new_rdims, 0);
+    }
+
+    // helper functions
+    Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
+      size_t depth_index = di;
+      size_t resize_depth = parent_rdims.size();
+      const size_t newSize = parent_rdims[depth_index++];
+      if constexpr (is_dynamic_value) {
+        resize(newSize);
+      }
+      if constexpr (depth_value >= 1) {
+        if (depth_index < resize_depth) {
+          for (size_t ii = 0; ii < size(); ii++) {
+            data_[ii].recurse_resize(parent_rdims, depth_index);
+          }
+        }
+      }
+      return *this;
+    }
+
+
+
     //**********************************************************************
     //********************* Direct access to data_  ***********************************
     //**********************************************************************
@@ -439,12 +444,9 @@ namespace mathq {
       }
     }
 
-
-
     //**********************************************************************
-    //                              v(n) 
+    //                              v(n) - tensor access
     //**********************************************************************
-
 
     // "read/write"
     Element& operator()(const size_t n) {
@@ -452,7 +454,7 @@ namespace mathq {
     }
 
     // "read only"
-    const Element& operator()(const size_t n)  const {
+    const Element& operator()(const size_t n) const {
       return data_[n];
     }
 
@@ -504,18 +506,36 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write"
-    Element& operator[](const size_t n) {
+    template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
+    Element& operator[](const T n) {
       return data_[n];
     }
 
     // read
-    const Element& operator[](const size_t n)  const {
+    template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
+    const Element& operator[](const T n)  const {
       return data_[n];
+    }
+
+    // "read/write"
+    template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
+    Element& operator[](const T n) {
+      T m = n;
+      while (m < 0) m += size();
+      return data_[m];
+    }
+
+    // read
+    template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
+    const Element& operator[](const T n)  const {
+      T m = n;
+      while (m < 0) m += size();
+      return data_[m];
     }
 
 
     //**********************************************************************
-    //************************** v(Indices) ***********************************
+    //************************** v[Indices] ***********************************
     //**********************************************************************
 
 
@@ -529,7 +549,8 @@ namespace mathq {
       return data_[inds[0]];
     }
 
-    // -------------------- [DeepIndices] --------------------
+    // -------------------------------------------------------------
+    //                        [DeepIndices] 
     // -------------------------------------------------------------
 
     // "read/write"
@@ -538,10 +559,10 @@ namespace mathq {
       size_t n = dinds[mydepth - depth_value][0];
 
       if constexpr (depth_value > 1) {
-        return (*this)(n)[dinds];
+        return (*this)[n][dinds];
       }
       else {
-        return (*this)(n);
+        return (*this)[n];
       }
     }
 
@@ -551,10 +572,10 @@ namespace mathq {
       size_t n = dinds[mydepth - depth_value][0];
 
       if constexpr (depth_value > 1) {
-        return (*this)(n)[dinds];
+        return (*this)[n][dinds];
       }
       else {
-        return (*this)(n);
+        return (*this)[n];
       }
     }
 

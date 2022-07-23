@@ -287,9 +287,9 @@ int main(int argc, char* argv[]) {
   TRDISP(x3.index({1,0}));
   TRDISP(x3.index(Indices({1,0})));
   TRDISP(x3.index(1,0));
-  TRDISP(x3(Indices({1,0})));
+  TRDISP(x3[Indices({1,0})]);
+  TRDISP(x3[{1,0}]);
   TRDISP(x3(1,0));
-  TRDISP(x3({1,0}));
 
   CR();
   ECHO_CODE(Vector<double> x4{ 1 , 3.5, 200, -1, 50, 2, -3});

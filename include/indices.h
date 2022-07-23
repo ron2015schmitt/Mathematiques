@@ -69,7 +69,7 @@ namespace mathq {
       *this = var;
     }
 
-    Indices(const size_t N) {
+    explicit Indices(const size_t N) {
       this->resize(N);
     }
 
@@ -102,10 +102,9 @@ namespace mathq {
       *this = var;
     }
 
-    explicit Indices(const std::initializer_list<size_t>& var) {
+    Indices(const std::initializer_list<size_t>& var) {
       *this = var;
     }
-
 
     size_t size() const {
       return data_.size();
@@ -301,7 +300,7 @@ namespace mathq {
       this->resize(0);
     }
 
-    DeepIndices(const size_t depth) {
+    explicit DeepIndices(const size_t depth) {
       this->resize(depth);
     }
 

@@ -62,6 +62,8 @@ namespace mathq {
 
   using signed_t = typename std::make_signed<size_t>::type;
 
+  constexpr size_t dynamic = 0;
+
 
   // TODO: need to figure out how to handle this. need a signed type
   // maximum subcript size for vectors and matrices (since we allow negative indexing)
@@ -152,6 +154,31 @@ namespace mathq {
     }
     return true;
   }
+
+
+  template<size_t rank1, size_t rank2, size_t... ints>
+  constexpr bool multi_array_compatibility() {
+
+    constexpr size_t N = sizeof...(ints);
+    constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
+
+    if constexpr (rank1 != rank2) {
+      return false;
+    }
+    constexpr size_t rank = rank1;
+    if constexpr (N == 2*rank) {
+      for (size_t i = 0; i < rank; ++i) {
+        if (A[i] != A[i+rank]) return false;
+      }
+      return true;
+    } else if constexpr ((N == rank + 1) && ((A[0] == dynamic) || (A[rank] == dynamic))) {
+      return true;
+    } else if constexpr ((N == 2) && (A[0] == dynamic) && (A[1] == dynamic))  {
+      return true;
+    }
+    return false;
+  }
+
 
 
   template <typename Element, size_t rank, size_t... dim_ints > requires (validate_multi_array<rank, dim_ints...>())

@@ -91,14 +91,21 @@ namespace mathq {
     }
 
     // --------------------- dynamic MultiArray --------------------
-    MultiArray(const MultiArray<Element, rank_value, dynamic>& var) {
+    explicit MultiArray(const MultiArray<Element, rank_value, dynamic>& var) {
       *this = var;
     }
 
     // ----------------------- initializer_list ---------------------
+    // not explicit: allows use of nested init lists when depth_value > 1
     MultiArray(const std::initializer_list<Element>& var) {
       *this = var;
     }
+
+    template <typename T> requires ( (InitializerTrait<T>::is_initializer_list) && (InitializerTrait<T>::depth() == rank_value))
+    MultiArray(const T& var) {
+      *this = var;
+    }
+
 
     // ----------------------- std::vector ---------------------
     explicit MultiArray(const std::vector<Element>& var) {
@@ -117,7 +124,7 @@ namespace mathq {
     }
 
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
-    template <class Derived, size_t... ints>
+    template <class Derived>
     MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
       *this = x;
     }
@@ -221,13 +228,6 @@ namespace mathq {
       }
     }
 
-    //**********************************************************************
-    //                          Resize
-    // Not allowed. reshape is not allowed either since the dimensions were
-    // specified at compile time.
-    //**********************************************************************
-
-
 
     //**********************************************************************
     //                        Dimensions
@@ -277,6 +277,51 @@ namespace mathq {
       return *this;
     }
 
+    //**********************************************************************
+    //                          Resize
+    // Not allowed. reshape is not allowed either since the dimensions were
+    // specified at compile time.
+    //**********************************************************************
+
+    // new_rdims.size() <= depth_value
+    Type& resize(const RecursiveDimensions& new_rdims) {
+      return recurse_resize(new_rdims, 0);
+    }
+
+    // helper functions
+    Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
+      size_t depth_index = di;
+      size_t resize_depth = parent_rdims.size();
+      const size_t newSize = parent_rdims[depth_index++];
+      // if constexpr (is_dynamic_value) {
+      //   resize(newSize);
+      // }
+      if constexpr (depth_value >= 1) {
+        if (depth_index < resize_depth) {
+          for (size_t ii = 0; ii < size(); ii++) {
+            data_[ii].recurse_resize(parent_rdims, depth_index);
+          }
+        }
+      }
+      return *this;
+    }
+
+    //**********************************************************************
+    //********************* Direct access to data_  ***********************************
+    //**********************************************************************
+
+    // -------------------- dataobj() --------------------
+    // "read/write" to the wrapped valarray/aray
+    auto& dataobj() {
+      return data_;
+    }
+
+    // get C pointer to raw data
+    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+    Element* data() {
+      // MutltiArrays are always wrap avalarray<Element>
+      return &(data_[0]);
+    }
 
     //**********************************************************************
     //*******indexing  *********************
@@ -303,53 +348,6 @@ namespace mathq {
       return index(*(new mathq::Indices(arr)));
     }
 
-
-    //**********************************************************************
-    //********************* Direct access to data_  ***********************************
-    //**********************************************************************
-
-    // -------------------- dataobj() --------------------
-    // "read/write" to the wrapped valarray/aray
-    auto& dataobj() {
-      return data_;
-    }
-
-    // get C pointer to raw data
-    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-    Element* data() {
-      // MutltiArrays are always wrap avalarray<Element>
-      return &(data_[0]);
-    }
-
-    // **********************************************************************
-    // ************* Array-style Element Access: x[n] ***********************
-    // **********************************************************************
-
-    // "read/write"
-    Element& operator[](const size_t n) {
-      return data_[n];
-    }
-
-    // read
-    const Element& operator[](const size_t n) const {
-      return data_[n];
-    }
-
-    //**********************************************************************
-    //************************** A(Indices) ***********************************
-    //**********************************************************************
-
-    // ---------------- A(Indices)--------------
-    Element& operator()(const Indices& inds) {
-      size_t k = this->index(inds);
-      return (*this)[k];
-    }
-    const Element operator()(const Indices& inds) const {
-      size_t k = this->index(inds);
-      return (*this)[k];
-    }
-
-
     //**********************************************************************
     //******* A(i,j,k,...) *********************
     //**********************************************************************
@@ -364,19 +362,6 @@ namespace mathq {
     template <typename... U>
     typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, const Element>::type operator()(const U... args) const {
       size_t k = this->index(args...);
-      return (*this)[k];
-    }
-
-    //**********************************************************************
-    //******* A({i,j,k,...}) *********************
-    //**********************************************************************
-
-    Element& operator()(const std::initializer_list<size_t>& mylist) {
-      size_t k = this->index(mylist);
-      return (*this)[k];
-    }
-    const Element operator()(const std::initializer_list<size_t>& mylist) const {
-      size_t k = this->index(mylist);
       return (*this)[k];
     }
 
@@ -424,94 +409,82 @@ namespace mathq {
       }
     }
 
-    // -------------------- auto x.dat(Indices) --------------------
-    // ??
+
+    // **********************************************************************
+    // ************* Array-style Element Access: x[n] ***********************
+    // **********************************************************************
+
+    // "read/write"
+    template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
+    Element& operator[](const T n) {
+      return data_[n];
+    }
+
+    // read
+    template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
+    const Element& operator[](const T n)  const {
+      return data_[n];
+    }
+
+    // "read/write"
+    template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
+    Element& operator[](const T n) {
+      T m = n;
+      while (m < 0) m += size();
+      return data_[m];
+    }
+
+    // read
+    template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
+    const Element& operator[](const T n)  const {
+      T m = n;
+      while (m < 0) m += size();
+      return data_[m];
+    }
+
+    //**********************************************************************
+    //************************** A[Indices] ***********************************
+    //**********************************************************************
+
+    // ---------------- A[Indices]--------------
+    Element& operator[](const Indices& inds) {
+      size_t k = this->index(inds);
+      return (*this)[k];
+    }
+    const Element operator[](const Indices& inds) const {
+      size_t k = this->index(inds);
+      return (*this)[k];
+    }
+
+    // -------------------------------------------------------------
+    //                        [DeepIndices] 
     // -------------------------------------------------------------
 
-    // // "read/write": x.dat(Indices)
-    // NumberType& dat(const Indices& inds) {
-    //   // printf("MultiArray.dat(Indices)\n");
-    //   // MOUT << "  ";
-    //   // TLDISP(inds.size());
-    //   // MOUT << "  ";
-    //   // TLDISP(inds);
-    //   // MOUT << "  ";
-    //   // TLDISP(rank());
-    //   Indices inds_next(inds);
-    //   // error if (inds.size() != sum recursive_dims[i].rank
-    //   Indices mine;
-    //   for (int i = 0; i < rank(); i++) {
-    //     mine.push_back(inds_next[0]);
-    //     inds_next.erase(inds_next.begin());
-    //   }
-    //   // MOUT << "  ";
-    //   // TLDISP(mine);
-    //   // MOUT << "  ";
-    //   // TLDISP(inds_next);
-    //   if constexpr (depth > 1) {
-    //     return (*this)(mine).dat(inds_next);
-    //   }
-    //   else {
-    //     return (*this)(mine);
-    //   }
-    // }
+    // "read/write"
+    NumberType& operator[](const DeepIndices& dinds) {
+      const size_t mydepth = dinds.size();
+      size_t inds = dinds[mydepth - depth_value];
 
-    // // "read": x.dat(Indices)
-    // const NumberType dat(const Indices& inds) const {
-    //   // printf("MultiArray.dat(Indices) const\n");
-    //   // MOUT << "  ";
-    //   // TLDISP(inds.size());
-    //   // MOUT << "  ";
-    //   // TLDISP(inds);
-    //   // MOUT << "  ";
-    //   // TLDISP(rank());
-    //   Indices inds_next(inds);
-    //   // error if (inds.size() != sum recursive_dims[i].rank
-    //   Indices mine;
-    //   for (int i = 0; i < rank(); i++) {
-    //     mine.push_back(inds_next[0]);
-    //     inds_next.erase(inds_next.begin());
-    //   }
-    //   // MOUT << "  ";
-    //   // TLDISP(mine);
-    //   // MOUT << "  ";
-    //   // TLDISP(inds_next);
-    //   if constexpr (depth > 1) {
-    //     return (*this)(mine).dat(inds_next);
-    //   }
-    //   else {
-    //     return (*this)(mine);
-    //   }
-    // }
+      if constexpr (depth_value > 1) {
+        return (*this)[inds][dinds];
+      }
+      else {
+        return (*this)[inds];
+      }
+    }
 
-    // -------------------- auto x.dat(DeepIndices) --------------------
-    // -------------------------------------------------------------
+    // "read"
+    const NumberType& operator[](const DeepIndices& dinds) const {
+      const size_t mydepth = dinds.size();
+      size_t inds = dinds[mydepth - depth_value];
 
-    // // "read/write": x.dat(DeepIndices)
-    // NumberType& dat(const DeepIndices& dinds) {
-    //   const size_t mydepth = dinds.size();
-    //   const Indices& inds = dinds[mydepth  - depth];
-
-    //   if constexpr (depth > 1) {
-    //     return (*this)(inds).dat(dinds);
-    //   }
-    //   else {
-    //     return (*this)(inds);
-    //   }
-    // }
-
-    // // "read": x.dat(DeepIndices)
-    // const NumberType dat(const DeepIndices& dinds) const {
-    //   const size_t mydepth = dinds.size();
-    //   const Indices& inds = dinds[mydepth  - depth];
-
-    //   if constexpr (depth > 1) {
-    //     return (*this)(inds).dat(dinds);
-    //   }
-    //   else {
-    //     return (*this)(inds);
-    //   }
-    // }
+      if constexpr (depth_value > 1) {
+        return (*this)[inds][dinds];
+      }
+      else {
+        return (*this)[inds];
+      }
+    }
 
 
     //**********************************************************************
@@ -532,7 +505,8 @@ namespace mathq {
 
     // set bottom elements to same value
     template <class T = Element>
-    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type operator=(const NumberType& d) {
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type 
+    operator=(const NumberType& d) {
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
@@ -542,35 +516,21 @@ namespace mathq {
 
 
 
-    // // ------------------------ MultiArray = MultiArray<Element,NE2,NumberType,depth_value> ----------------
+    // ------------------------ MultiArray = MultiArray<Element,NE2,NumberType,depth_value> ----------------
 
-    // template <int NE2>
-    // Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
-    //   if constexpr (depth_value<=1) {
-    //     if constexpr (is_dynamic_value) {
-    //       if (this->size() != v.size()) {
-    //         resize(v.size());
-    //       }
-    //     }
-    //     for (size_t i = 0; i < size(); i++) {
-    //       (*this)[i] = v[i];
-    //     }
-    //   }
-    //   else {
-    //     resize(v.recursive_dims());
-    //     for (size_t i = 0; i < total_size(); i++) {
-    //       this->dat(i) = v.dat(i);
-    //     }
-    //   }
-    //   return *this;
-    // }
+    template <size_t... sizes> requires (multi_array_compatibility<rank_value,rank_value,dim_ints...,sizes...>())
+    Type& operator=(const MultiArray<Element, rank_value, sizes...>& v) {
+      for (size_t i = 0; i < size(); i++) {
+        (*this)[i] = v[i];
+      }
+      return *this;
+    }
 
 
-    // // ------------------------ MultiArray = ExpressionR ----------------
+    // ------------------------ MultiArray = ExpressionR ----------------
 
     template <class X>
     Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
-
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
           if (this->size() != x.size()) {
@@ -621,7 +581,18 @@ namespace mathq {
       for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
         data_[k] = *it;
       }
+      return *this;
+    }
 
+    // // ------------------------ MultiArray = initializer_list ----------------
+
+    template <typename T> requires ( (InitializerTrait<T>::is_initializer_list) && (InitializerTrait<T>::depth() == rank_value))
+    Type& operator=(const T& mylist) {
+      size_t k = 0;
+      typename T::iterator it;
+      for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+        data_[k] = *it;
+      }
       return *this;
     }
 
