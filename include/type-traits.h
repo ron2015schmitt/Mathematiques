@@ -338,12 +338,6 @@ namespace mathq {
     constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
       return rank_array;
     }
-    inline static size_t size(NullType x) {
-      return 0;
-    }
-    inline static size_t total_size(NullType x) {
-      return 0;
-    }
   };
 
 
@@ -367,13 +361,6 @@ namespace mathq {
     template <size_t Nin = 0>
     constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
       return rank_array;
-    }
-
-    inline static size_t size(const Number x) {
-      return 1;
-    }
-    inline static size_t total_size(const Number& x) {
-      return 1;
     }
   };
 
@@ -399,12 +386,6 @@ namespace mathq {
       return rank_array;
     }
 
-    inline static size_t size(const Number x) {
-      return 1;
-    }
-    inline static size_t total_size(const Number& x) {
-      return 1;
-    }
   };
 
 
@@ -430,12 +411,6 @@ namespace mathq {
       return rank_array;
     }
 
-    inline static size_t size(const Number x) {
-      return 1;
-    }
-    inline static size_t total_size(const Number& x) {
-      return 1;
-    }
   };
 
   // quaternion number enclosing an ordered number
@@ -458,12 +433,6 @@ namespace mathq {
     template <size_t Nin = 0>
     constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
       return rank_array;
-    }
-    inline static size_t size(const Number x) {
-      return 1;
-    }
-    inline static size_t total_size(const Number& x) {
-      return 1;
     }
   };
 
@@ -500,16 +469,6 @@ namespace mathq {
       return x;
     }
 
-    //
-    // run-time functions
-    //
-
-    inline static size_t size(const InputType& x) {
-      return x.size();
-    }
-    inline static size_t total_size(const InputType& x) {
-      return x.total_size();
-    }
   };
 
 
