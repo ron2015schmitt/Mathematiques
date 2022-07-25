@@ -655,7 +655,7 @@ namespace mathq {
       return *this;
     }
 
-    // set elements to same value
+    // set bottom elements to same value
     template <class T = Element>
     typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N1>& >::type operator=(const NumberType& d) {
       for (size_t i = 0; i < total_size(); i++) {
