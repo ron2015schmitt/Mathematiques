@@ -25,6 +25,16 @@ namespace mathq {
   // ***************************************************************************
 
 
+  template<typename T, T val, size_t N>
+  constexpr auto array_of_one_value() {
+    std::array<T, N> A;
+    for (size_t i = 0; i < N; ++i) {
+      A[i] = val;
+    }
+    return A;
+  }
+
+
   constexpr bool is_all_zeros(std::initializer_list<size_t> list) {
     for (auto elem : list) {
       if (elem != 0) return false;

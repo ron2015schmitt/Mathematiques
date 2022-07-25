@@ -387,5 +387,7 @@ int main(int argc, char* argv[]) {
   }
 
 
+  TRDISP(array_of_one_value<int, -1,7>());
+
   return 0;
 }
