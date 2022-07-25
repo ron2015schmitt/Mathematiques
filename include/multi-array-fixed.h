@@ -100,10 +100,9 @@ namespace mathq {
       *this = var;
     }
 
-    template <typename T> requires ( (InitializerTrait<T>::is_initializer_list) && (InitializerTrait<T>::depth() == rank_value))
-    MultiArray(const T& var) {
-      *this = var;
-    }
+    // MultiArray(const MakeInitializer<double, NumberTrait<Type>::sum_of_ranks() >::Type& var) {
+    //   *this = var;
+    // }
 
 
     // ----------------------- std::vector ---------------------
@@ -585,15 +584,14 @@ namespace mathq {
 
     // // ------------------------ MultiArray = initializer_list ----------------
 
-    template <typename T> requires ( (InitializerTrait<T>::is_initializer_list) && (InitializerTrait<T>::depth() == rank_value))
-    Type& operator=(const T& mylist) {
-      size_t k = 0;
-      typename T::iterator it;
-      for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
-        data_[k] = *it;
-      }
-      return *this;
-    }
+    // Type& operator=(const MakeInitializer<double, NumberTrait<Type>::sum_of_ranks() >::Type& mylist) {
+    //   size_t k = 0;
+    //   typename T::iterator it;
+    //   for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+    //     data_[k] = *it;
+    //   }
+    //   return *this;
+    // }
 
 
     // ------------------------ MultiArray = std::vector ----------------

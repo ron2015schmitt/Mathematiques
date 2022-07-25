@@ -303,5 +303,12 @@ int main(int argc, char* argv[]) {
   TRDISP(x4.sort());
   TRDISP(x4);
 
+  ECHO_CODE(typename MakeInitializer<double,0>::Type init0{3});
+  TRDISP(init0);
+  ECHO_CODE(typename MakeInitializer<double,1>::Type init1{3,2,1});
+  TRDISP(init1);
+  ECHO_CODE(typename MakeInitializer<double,2>::Type init2{{1}, {1,2}, {1,2,3}});
+  TRDISP(init2);
+
   return 0;
 }

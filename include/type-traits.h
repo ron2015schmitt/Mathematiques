@@ -472,10 +472,30 @@ namespace mathq {
   };
 
 
+  // ************************************************************************************************
+  //  MakeInitializer
+  // 
+  // ************************************************************************************************
+
+  template <typename T, size_t depth> 
+  class MakeInitializer {
+  public:
+    using Type = std::initializer_list<typename MakeInitializer<T,(depth-1)>::Type>;
+  };
+  template <typename T> 
+  class MakeInitializer<T,0> {
+  public:
+    using Type = T;
+  };
+
+
+
+
+
 
 
   // ************************************************************************************************
-
+  //  InitializerTrait
   // ************************************************************************************************
 
   template <typename T> 
@@ -489,14 +509,7 @@ namespace mathq {
     constexpr static size_t depth() {
       return 0;
     }
-    inline static size_t size(ElementType x) {
-      return 0;
-    }
-    inline static size_t total_size(ElementType x) {
-      return 0;
-    }
   };
-
 
   //  std::initializer_list<Element>
 
@@ -511,12 +524,6 @@ namespace mathq {
     constexpr static bool is_initializer_list = true;
     constexpr static size_t depth() {
       return 1 + InitializerTrait<Element>::depth();
-    }
-    inline static size_t size(const ElementType& x) {
-      return x.size();
-    }
-    inline static size_t total_size(const ElementType& x) {
-      return x.total_size();
     }
   };
 
