@@ -5,6 +5,85 @@
 
 namespace mathq {
 
+
+
+  // ***************************************************************************
+  // * utility
+  // ***************************************************************************
+  inline const std::string template_size_to_string(const size_t n) {
+    if (n == 0) {
+      return std::string("dynamic");
+    }
+    else {
+      return std::to_string(n);
+    }
+  }
+
+
+  // ***************************************************************************
+  // * compile time functions
+  // ***************************************************************************
+
+
+  constexpr bool is_all_zeros(std::initializer_list<size_t> list) {
+    for (auto elem : list) {
+      if (elem != 0) return false;
+    }
+    return true;
+  }
+
+  constexpr bool is_all_nonzero(std::initializer_list<size_t> list) {
+    for (auto elem : list) {
+      if (elem == 0) return false;
+    }
+    return true;
+  }
+
+  template<typename T, size_t N>
+  constexpr T compile_time_summation(const std::array<T, N>& A) {
+    T sum(T(0));
+    for (size_t i = 0; i < N; ++i) {
+      sum += A[i];
+    }
+    return sum;
+  }
+
+  // note this returns 1 for arrays of size == 0
+  template<typename T, size_t N>
+  constexpr T compile_time_product(const std::array<T, N>& A) {
+    T product(T(1));
+    for (size_t i = 0; i < N; ++i) {
+      product *= A[i];
+    }
+    return product;
+  }
+
+
+  template<size_t rank, size_t... ints>
+  constexpr bool check_dynamic() {
+    constexpr size_t N = sizeof...(ints);
+    if constexpr (N < rank) {
+      return true;
+    }
+    constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
+    for (size_t i = 0; i < N; ++i) {
+      if (A[i] == 0) return true;
+    }
+    return false;
+  }
+
+
+  template<size_t rank, size_t... ints>
+  constexpr size_t calc_size() {
+    constexpr size_t N = sizeof...(ints);
+    if constexpr (N < rank) {
+      return 0;
+    }
+    constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
+    return compile_time_product<size_t,N>(A);
+  }
+
+
   //*******************************************************
   //          Typedefs
   //*******************************************************
@@ -385,15 +464,27 @@ namespace mathq {
     constexpr static size_t depth() {
       return 1 + NumberTrait<Element, NewNumber>::depth();
     }
+
+    // constexpr static const size_t rank_array_sum() {
+    //   std::valarray<size_t> myvalarray = rank_array;
+    //   std::array<size_t,myvalarray.size()> myarray = myvalarray;
+    //   return compile_time_summation(myarray);
+    // }
+
     constexpr static const std::valarray<size_t> rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
       std::valarray<size_t> new_array(rank_array.size() + 1);
       for (size_t ii = 0; ii < rank_array.size(); ii++) {
         new_array[ii] = rank_array[ii];
       }
       new_array[new_array.size()-1] = rank;
-      auto x =  NumberTrait<Element>::rank_array(new_array);
+      auto x = NumberTrait<Element>::rank_array(new_array);
       return x;
     }
+
+    //
+    // run-time functions
+    //
+
     inline static size_t size(const InputType& x) {
       return x.size();
     }
@@ -405,27 +496,7 @@ namespace mathq {
 
 
   // ************************************************************************************************
-  // NumberTrait<InputType, NewNumber>
-  //
-  // This operates recursively to find the base number type
-  //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
-  // Thsi can also be used to replace the number type
-  //
-  //  InputType:           Type that was passed in as first arg
-  //  Type:                Depends on InputType
-  //                         numbers: InputType
-  //                         MultiArray: The number type at the bottom of the nested MultiArrays
-  //                         MArrayR{,W}Exp: The number type of the Expression
-  //  ReplacedNumberType:  Depends on InputType
-  //                         numbers: NewNumber
-  //                         MultiArray: The InputType with the number type (at the bottom) replaced by NewNumber
-  //                         MArrayR{,W}Exp: The type of the MultiArray at the bottom of the nested expressions
-  //                                         with the number type replaced by NewNumber
-  //  ReplacedElementType: Depends on InputType
-  //                         numbers: NewNumber
-  //                         MultiArray: The InputType with the number type (at the bottom) replaced by NewNumber
-  //                         MArrayR{,W}Exp: The expression with Element replaced? see TODO below
-  //  depth():             Depth to the number type at the bottom
+
   // ************************************************************************************************
 
   template <typename T> 
@@ -456,7 +527,7 @@ namespace mathq {
   public:
     using Type = std::initializer_list<Element>;
     using ElementType = Element;
-    using BottomType = InitializerTrait<Element>::BottomType;
+    using BottomType = typename InitializerTrait<Element>::BottomType;
 
     constexpr static bool is_initializer_list = true;
     constexpr static size_t depth() {
@@ -1018,82 +1089,6 @@ namespace mathq {
 
 
 
-
-  // ***************************************************************************
-  // * utility
-  // ***************************************************************************
-  inline const std::string template_size_to_string(const size_t n) {
-    if (n == 0) {
-      return std::string("dynamic");
-    }
-    else {
-      return std::to_string(n);
-    }
-  }
-
-
-  // ***************************************************************************
-  // * compile time functions
-  // ***************************************************************************
-
-
-  constexpr bool is_all_zeros(std::initializer_list<size_t> list) {
-    for (auto elem : list) {
-      if (elem != 0) return false;
-    }
-    return true;
-  }
-
-  constexpr bool is_all_nonzero(std::initializer_list<size_t> list) {
-    for (auto elem : list) {
-      if (elem == 0) return false;
-    }
-    return true;
-  }
-
-  template<typename T, size_t N>
-  constexpr T compile_time_summation(const std::array<T, N>& A) {
-    T sum(T(0));
-    for (size_t i = 0; i < N; ++i) {
-      sum += A[i];
-    }
-    return sum;
-  }
-
-  // note this returns 1 for arrays of size == 0
-  template<typename T, size_t N>
-  constexpr T compile_time_product(const std::array<T, N>& A) {
-    T product(T(1));
-    for (size_t i = 0; i < N; ++i) {
-      product *= A[i];
-    }
-    return product;
-  }
-
-
-  template<size_t rank, size_t... ints>
-  constexpr bool check_dynamic() {
-    constexpr size_t N = sizeof...(ints);
-    if constexpr (N < rank) {
-      return true;
-    }
-    constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
-    for (size_t i = 0; i < N; ++i) {
-      if (A[i] == 0) return true;
-    }
-    return false;
-  }
-
-
-  template<size_t rank, size_t... ints>
-  constexpr size_t calc_size() {
-    constexpr size_t N = sizeof...(ints);
-    if constexpr (N < rank) {
-      return 0;
-    }
-    constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
-    return compile_time_product<size_t,N>(A);
-  }
 
 
 
