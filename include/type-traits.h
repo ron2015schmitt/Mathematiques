@@ -151,8 +151,13 @@ namespace mathq {
       MyArrayType data_;
   };
 
+  //
+  // specialization for dynamic arrays of rank 2 (ie a matrix) or higher
+  //
+  // These dynamic arrays need a dynamic_dims_array to keep track of the dimensions
+
   template <typename Element, size_t rank> requires (rank >= 2)
-  class MultiArrayData<Element,rank,dynamic> {
+  class MultiArrayData<Element, rank, dynamic> {
     public: 
       constexpr static size_t compile_time_size = calc_size<rank, 0>();
       using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
