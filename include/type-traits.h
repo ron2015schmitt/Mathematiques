@@ -300,8 +300,7 @@ namespace mathq {
   //
   // This operates recursively to find the base number type
   //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
-  // Thsi can also be used to replace the number type
-  //
+  
   //  InputType:           Type that was passed in as first arg
   //  Type:                Depends on InputType
   //                         numbers: InputType
@@ -317,6 +316,7 @@ namespace mathq {
   //                         MultiArray: The InputType with the number type (at the bottom) replaced by NewNumber
   //                         MArrayR{,W}Exp: The expression with Element replaced? see TODO below
   //  depth():             Depth to the number type at the bottom
+  //  value                True if unput type is a number
   // ************************************************************************************************
 
   template <typename NewNumber>
@@ -470,6 +470,7 @@ namespace mathq {
     }
 
   };
+
 
 
 
