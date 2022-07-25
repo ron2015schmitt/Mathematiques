@@ -16,7 +16,8 @@ namespace mathq {
    */
 
   template <typename Element, size_t rank_, size_t... dim_ints> requires (validate_multi_array<rank_, dim_ints...>())
-  class MultiArray : public ExpressionRW<
+  class MultiArray : public MultiArrayData<Element, rank_, dim_ints...>, 
+    public ExpressionRW<
     MultiArray<Element, rank_, dim_ints...>,  // Derived
     Element,  // Element
     typename NumberTrait<Element>::Type, // Number
@@ -49,6 +50,7 @@ namespace mathq {
     using NumberType = typename NumberTrait<Element>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
+    using ParentDataType = MultiArrayData<Element, rank_, dim_ints...>;
     using ParentType = ExpressionRW<
       ConcreteType,  // Derived
       Element,  // Element
@@ -70,7 +72,7 @@ namespace mathq {
       // keep the instances lightweight
 
     // private:
-    MyArrayType data_;
+    // MyArrayType data_;
 
   public:
 
@@ -91,6 +93,7 @@ namespace mathq {
     }
 
     // --------------------- dynamic MultiArray --------------------
+    template<bool enable = !is_dynamic_value> requires (enable)
     explicit MultiArray(const MultiArray<Element, rank_value, dynamic>& var) {
       *this = var;
     }
@@ -184,7 +187,7 @@ namespace mathq {
     }
 
     inline size_t size(void) const {
-      return data_.size();
+      return ParentDataType::data_.size();
     }
 
 
@@ -205,7 +208,7 @@ namespace mathq {
       }
       else {
         if (size() > 0) {
-          return data_[0].size();
+          return ParentDataType::data_[0].size();
         }
         else {
           Element& x = *(new Element);
@@ -221,7 +224,7 @@ namespace mathq {
       }
       else {
         if (size() > 0) {
-          return data_[0].total_size();
+          return ParentDataType::data_[0].total_size();
         }
         else {
           Element& x = *(new Element);
@@ -247,7 +250,7 @@ namespace mathq {
     ElementDimensionsType& element_dims(void) const {
       if constexpr (depth_value>1) {
         if (this->size()>0) {
-          return data_[0].dims();
+          return ParentDataType::data_[0].dims();
         }
         else {
           Element& x = *(new Element);
@@ -269,7 +272,7 @@ namespace mathq {
       parent_rdims[depth_index++] = dims();
       if constexpr (depth_value>1) {
         if (size() > 0) {
-          data_[0].recurse_dims(parent_rdims, depth_index);
+          ParentDataType::data_[0].recurse_dims(parent_rdims, depth_index);
         }
         else {
           Element& x = *(new Element);
@@ -301,7 +304,7 @@ namespace mathq {
       if constexpr (depth_value >= 1) {
         if (depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {
-            data_[ii].recurse_resize(parent_rdims, depth_index);
+            ParentDataType::data_[ii].recurse_resize(parent_rdims, depth_index);
           }
         }
       }
@@ -309,20 +312,20 @@ namespace mathq {
     }
 
     //**********************************************************************
-    //********************* Direct access to data_  ***********************************
+    //********************* Direct access to ParentDataType::data_  ***********************************
     //**********************************************************************
 
     // -------------------- dataobj() --------------------
     // "read/write" to the wrapped valarray/aray
     auto& dataobj() {
-      return data_;
+      return ParentDataType::data_;
     }
 
     // get C pointer to raw data
     // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
     Element* data() {
       // MutltiArrays are always wrap avalarray<Element>
-      return &(data_[0]);
+      return &(ParentDataType::data_[0]);
     }
 
     //**********************************************************************
@@ -382,13 +385,13 @@ namespace mathq {
         if (k < 0) {
           k += size();
         }
-        return data_[k];
+        return ParentDataType::data_[k];
       }
       else {
         const int Ndeep = this->el_total_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
-        return data_[j].dat(k);
+        return ParentDataType::data_[j].dat(k);
       }
     }
 
@@ -401,13 +404,13 @@ namespace mathq {
         if (k < 0) {
           k += size();
         }
-        return data_[k];
+        return ParentDataType::data_[k];
       }
       else {
         const int Ndeep = this->el_total_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
-        return data_[j].dat(k);
+        return ParentDataType::data_[j].dat(k);
       }
     }
 
@@ -419,13 +422,13 @@ namespace mathq {
     // "read/write"
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
     Element& operator[](const T n) {
-      return data_[n];
+      return ParentDataType::data_[n];
     }
 
     // read
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
     const Element& operator[](const T n)  const {
-      return data_[n];
+      return ParentDataType::data_[n];
     }
 
     // "read/write"
@@ -433,7 +436,7 @@ namespace mathq {
     Element& operator[](const T n) {
       T m = n;
       while (m < 0) m += size();
-      return data_[m];
+      return ParentDataType::data_[m];
     }
 
     // read
@@ -441,7 +444,7 @@ namespace mathq {
     const Element& operator[](const T n)  const {
       T m = n;
       while (m < 0) m += size();
-      return data_[m];
+      return ParentDataType::data_[m];
     }
 
     //**********************************************************************
@@ -581,7 +584,7 @@ namespace mathq {
       size_t k = 0;
       typename std::initializer_list<Element>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
-        data_[k] = *it;
+        ParentDataType::data_[k] = *it;
       }
       return *this;
     }
@@ -592,7 +595,7 @@ namespace mathq {
     //   size_t k = 0;
     //   typename T::iterator it;
     //   for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
-    //     data_[k] = *it;
+    //     ParentDataType::data_[k] = *it;
     //   }
     //   return *this;
     // }
