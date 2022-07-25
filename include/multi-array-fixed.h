@@ -190,7 +190,6 @@ namespace mathq {
       return ParentDataType::data_.size();
     }
 
-
     // // the total number of numbers in this data structure
     size_t total_size(void) const {
       if constexpr (depth_value <= 1) {

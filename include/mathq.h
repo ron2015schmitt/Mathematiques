@@ -55,7 +55,7 @@
 #include "expression-rw.h"
 
 #include "multi-array-fixed.h"
-#include "multi-array-dynamic.h"
+// #include "multi-array-dynamic.h"
 // #include "scalar.h"
 #include "vector.h"
 // #include "matrix.h"
