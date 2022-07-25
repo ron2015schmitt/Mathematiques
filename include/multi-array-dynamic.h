@@ -73,7 +73,7 @@ namespace mathq {
       // do NOT declare any other storage.
       // keep the instances lightweight
     MyArrayType data_;
-
+    std::array<size_t, rank_value> dynamic_dims_array;
   public:
 
 

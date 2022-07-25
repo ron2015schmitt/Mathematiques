@@ -139,6 +139,28 @@ namespace mathq {
   };
 
 
+
+
+
+
+  template <typename Element, size_t rank, size_t... dim_ints > requires (validate_multi_array<rank, dim_ints...>())
+  class MultiArrayData {
+    public: 
+      constexpr static size_t compile_time_size = calc_size<rank, dim_ints...>();
+      using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
+      MyArrayType data;
+  };
+
+  template <typename Element, size_t rank> requires (rank >= 2)
+  class MultiArrayData<Element,rank,dynamic> {
+    public: 
+      constexpr static size_t compile_time_size = calc_size<rank, 0>();
+      using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
+      MyArrayType data;
+      std::array<size_t, rank> dynamic_dims_array;      
+  };
+
+
   // ***************************************************************************
   // Materialize 
   //

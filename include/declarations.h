@@ -181,6 +181,8 @@ namespace mathq {
 
 
 
+
+
   template <typename Element, size_t rank, size_t... dim_ints > requires (validate_multi_array<rank, dim_ints...>())
   class MultiArray;
 

@@ -28,9 +28,9 @@
 #include "declarations.h"
 #include "type-traits.h"
 #include "display.h"
-// #include "fileio.h"
-// #include "util.h"
-// #include "debug.h"
+#include "fileio.h"
+#include "util.h"
+#include "debug.h"
 
 #include "type-defs.h"
 
@@ -104,7 +104,7 @@
 #include "functions_user.h"
 // #include "grids.h"
 
-// #include "coda.h"
+#include "coda.h"
 
 
 
@@ -309,6 +309,19 @@ int main(int argc, char* argv[]) {
   TRDISP(init1);
   ECHO_CODE(typename MakeInitializer<double,2>::Type init2{{1}, {1,2}, {1,2,3}});
   TRDISP(init2);
+
+
+  ECHO_CODE(MultiArrayData<double,2, 3,4> testdata1);
+  TRDISP(testdata1.data);
+  // TRDISP(testdata1.dynamic_dims_array);
+
+  ECHO_CODE(MultiArrayData<double,1, 10> testdata2);
+  TRDISP(testdata2.data);
+  // TRDISP(testdata2.dynamic_dims_array);
+
+  ECHO_CODE(MultiArrayData<double,2,dynamic> testdata3);
+  TRDISP(testdata3.data);
+  TRDISP(testdata3.dynamic_dims_array);
 
   return 0;
 }
