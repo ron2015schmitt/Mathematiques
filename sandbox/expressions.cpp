@@ -245,12 +245,14 @@ int main(int argc, char* argv[]) {
   TRDISP(x2.dims());
   TRDISP(x2.size());
   TRDISP(sizeof(x2)/sizeof(double));
+  TRDISP(NumberTrait<decltype(x2)>::sum_of_ranks());
 
   TRDISP(std::array<size_t, 0>{});
   TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::depth());
+  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::sum_of_ranks());
   TRDISP(std::valarray<size_t>{});
-  TRDISP(NumberTrait<double>::rank_array());
-  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::rank_array());
+  TRDISP(NumberTrait<double>::get_rank_array());
+  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::get_rank_array());
 
   TRDISP(x2.data_);
   TRDISP(sizeof(x2.data_)/sizeof(double));
@@ -277,10 +279,12 @@ int main(int argc, char* argv[]) {
   TRDISP(x3.dims_array());
   TRDISP(x3.dims());
   TRDISP(x3.recursive_dims());
+  TRDISP(NumberTrait<decltype(x3)>::sum_of_ranks());
   TRDISP(x3.data_);
   TRDISP(sizeof(x3.data_)/sizeof(double));
   TRDISP(sizeof(x3)/sizeof(double));
-  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3,2,1,1>>::rank_array());
+  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3,2,1,1>>::sum_of_ranks());
+  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3,2,1,1>>::get_rank_array());
   TRDISP(x3);
   TRDISP(x3[2]);
   TRDISP(x3.indices(2));
@@ -293,6 +297,7 @@ int main(int argc, char* argv[]) {
 
   CR();
   ECHO_CODE(Vector<double> x4{ 1 , 3.5, 200, -1, 50, 2, -3});
+  TRDISP(NumberTrait<decltype(x4)>::sum_of_ranks());
   TRDISP(x4);
   TRDISP(x4.sort());
   TRDISP(x4);

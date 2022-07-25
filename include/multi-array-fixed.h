@@ -44,7 +44,6 @@ namespace mathq {
     using Type = MultiArray<Element, rank_value, dim_ints...>;
     using ConcreteType = Type;
 
-    constexpr static size_t rank_array = NumberTrait<Type>::rank_array();
     
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
