@@ -68,17 +68,7 @@ namespace mathq {
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
 
 
-      // *********************** OBJECT DATA ***********************************
-      //
-      // do NOT declare any other storage.
-      // keep the instances lightweight
-
-    // private:
-    // MyArrayType data_;
-
   public:
-
-
 
     //**********************************************************************
     //                            CONSTRUCTORS 
@@ -130,7 +120,7 @@ namespace mathq {
 
 
     //**********************************************************************
-    //                    CONSTRUCTORS: FIXED size  
+    //                    CONSTRUCTORS: FIXED dimensions  
     //**********************************************************************
 
     // --------------------- dynamic MultiArray --------------------
@@ -156,6 +146,48 @@ namespace mathq {
       *this = val;
     }
 
+    //**********************************************************************
+    //                    CONSTRUCTORS: DYNAMIC dimensions  
+    //**********************************************************************
+
+    // --------------------- dynamic MultiArray --------------------
+
+    template<size_t...mysizes> requires (is_dynamic_value)
+    explicit MultiArray(const MultiArray<Element, rank_value, mysizes...>& var) {
+      *this = var;
+    }
+
+
+    // --------------------- DYNAMIC SIZE: set size from int  ---------------------
+
+    template<bool enable = is_dynamic_value> requires (enable)
+    MultiArray(const size_t N) {
+      resize(N);
+    }
+
+    // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
+
+    template<bool enable = is_dynamic_value> requires (enable)
+    explicit MultiArray(const Dimensions& dims) {
+      // TRDISP(dims);
+      this->resize(dims);
+    }
+
+    // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
+    template<bool enable = is_dynamic_value> requires (enable)
+    explicit MultiArray(const RecursiveDimensions& recursive_dims) {
+      // TRDISP(recursive_dims);
+      this->resize(recursive_dims);
+    }
+
+
+    // --------------------- DYNAMIC SIZE: set size = N and set all to same value  ---------------------
+
+    template<bool enable = is_dynamic_value> requires (enable)
+    explicit MultiArray(const size_t N, const Element val) {
+      resize(N);
+      *this = val;
+    }
 
     //**********************************************************************
     //                             DESTRUCTOR 

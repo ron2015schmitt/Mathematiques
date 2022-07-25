@@ -146,6 +146,24 @@ namespace mathq {
 
 
     //**********************************************************************
+    //                    CONSTRUCTORS: FIXED size  
+    //**********************************************************************
+
+    // --------------------- FIXED SIZE: set all elements to same value   ---------------------
+
+    template<size_t NE1 = N1, EnableIf< (NE1 > 0) > = 1>
+      explicit MultiArray(const Element val) {
+      *this = val;
+    }
+
+    // --------------------- FIXED SIZE: set all bottom elements to same value   ---------------------
+
+    template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth_value>1)&&(!std::is_same<Element, NumberType>::value)> = 1>
+      explicit MultiArray(const NumberType val) {
+      *this = val;
+    }
+
+    //**********************************************************************
     //                    CONSTRUCTORS: Dynamic size  
     //**********************************************************************
 
@@ -153,7 +171,7 @@ namespace mathq {
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
     MultiArray(const size_t N) {
-      data_.resize(N);
+      resize(N);
     }
 
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
@@ -178,7 +196,7 @@ namespace mathq {
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
     explicit MultiArray(const size_t N, const Element val) {
-      data_.resize(N);
+      resize(N);
       *this = val;
     }
 
@@ -186,10 +204,12 @@ namespace mathq {
 
     template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
     explicit MultiArray(const size_t N, const Element(vals)[]) {
-      data_.resize(N);
+      resize(N);
       *this = vals;
     }
 
+
+    // --------------------- slice  CONSTRUCTOR ---------------------
 
     template<typename T, size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
     explicit MultiArray(const Element N, const slc<T>& s) {
@@ -234,23 +254,6 @@ namespace mathq {
     }
 
 
-    //**********************************************************************
-    //                    CONSTRUCTORS: FIXED size  
-    //**********************************************************************
-
-    // --------------------- FIXED SIZE: set all elements to same value   ---------------------
-
-    template<size_t NE1 = N1, EnableIf< (NE1 > 0) > = 1>
-      explicit MultiArray(const Element val) {
-      *this = val;
-    }
-
-    // --------------------- FIXED SIZE: set all bottom elements to same value   ---------------------
-
-    template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth_value>1)&&(!std::is_same<Element, NumberType>::value)> = 1>
-      explicit MultiArray(const NumberType val) {
-      *this = val;
-    }
 
     //**********************************************************************
     //                             DESTRUCTOR 
