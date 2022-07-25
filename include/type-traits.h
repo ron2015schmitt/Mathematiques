@@ -334,7 +334,8 @@ namespace mathq {
     constexpr static const size_t sum_of_ranks() {
       return 0;
     }
-    constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
       return rank_array;
     }
     inline static size_t size(NullType x) {
@@ -363,7 +364,8 @@ namespace mathq {
     constexpr static const size_t sum_of_ranks() {
       return 0;
     }
-    constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
       return rank_array;
     }
 
@@ -392,7 +394,8 @@ namespace mathq {
     constexpr static const size_t sum_of_ranks() {
       return 0;
     }
-    constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
       return rank_array;
     }
 
@@ -422,7 +425,8 @@ namespace mathq {
     constexpr static const size_t sum_of_ranks() {
       return 0;
     }
-    constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
       return rank_array;
     }
 
@@ -451,7 +455,8 @@ namespace mathq {
     constexpr static const size_t sum_of_ranks() {
       return 0;
     }
-    constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
       return rank_array;
     }
     inline static size_t size(const Number x) {
@@ -484,13 +489,13 @@ namespace mathq {
       return rank + NumberTrait<Element, NewNumber>::sum_of_ranks();
     }
 
-    template <size_t N = 0>
-    constexpr static const auto get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
-      std::valarray<size_t> new_array(rank_array.size() + 1);
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t, Nin+depth()> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
+      std::array<size_t,Nin+1> new_array{};
       for (size_t ii = 0; ii < rank_array.size(); ii++) {
         new_array[ii] = rank_array[ii];
       }
-      new_array[new_array.size()-1] = rank;
+      new_array[Nin] = rank;
       auto x = NumberTrait<Element>::get_rank_array(new_array);
       return x;
     }

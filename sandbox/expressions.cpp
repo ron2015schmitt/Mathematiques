@@ -249,9 +249,10 @@ int main(int argc, char* argv[]) {
 
   TRDISP(std::array<size_t, 0>{});
   TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::depth());
-  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::sum_of_ranks());
   TRDISP(std::valarray<size_t>{});
+  TRDISP(NumberTrait<double>::sum_of_ranks());
   TRDISP(NumberTrait<double>::get_rank_array());
+  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::sum_of_ranks());
   TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::get_rank_array());
 
   TRDISP(x2.data_);
