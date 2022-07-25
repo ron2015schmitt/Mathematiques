@@ -331,26 +331,35 @@ int main(int argc, char* argv[]) {
   TRDISP(sizeof(testdata3.dynamic_dims_array)/sizeof(size_t));
 
 
-  ECHO_CODE(MultiArray<double,2, 3,4> testmultiarray1);
-  TRDISP(testmultiarray1.data_);
-  TRDISP(sizeof(testmultiarray1)/sizeof(double));
-  TRDISP(sizeof(testmultiarray1.data_)/sizeof(double));
-  // TRDISP(testmultiarray1.dynamic_dims_array);
+  ECHO_CODE(MultiArray<double,2, 3,4> A1(3.14));
+  TRDISP(A1.data_);
+  TRDISP(sizeof(A1)/sizeof(double));
+  TRDISP(sizeof(A1.data_)/sizeof(double));
+  // TRDISP(A1.dynamic_dims_array);
 
-  ECHO_CODE(MultiArray<double,1, 10> testmultiarray2);
-  TRDISP(testmultiarray2.data_);
-  TRDISP(sizeof(testmultiarray2)/sizeof(double));
-  TRDISP(sizeof(testmultiarray2.data_)/sizeof(double));
-  // TRDISP(testmultiarray2.dynamic_dims_array);
+  ECHO_CODE(MultiArray<double,1, 10> A2);
+  TRDISP(A2.data_);
+  TRDISP(sizeof(A2)/sizeof(double));
+  TRDISP(sizeof(A2.data_)/sizeof(double));
+  // TRDISP(A2.dynamic_dims_array);
 
-  ECHO_CODE(MultiArray<double,2,dynamic> testmultiarray3);
-  TRDISP(testmultiarray3.data_);
-  TRDISP(testmultiarray3.dynamic_dims_array);
-  TRDISP(sizeof(testmultiarray3)/sizeof(double));
-  TRDISP(sizeof(testmultiarray3.data_)/sizeof(double));
-  TRDISP(sizeof(testmultiarray3.dynamic_dims_array)/sizeof(size_t));
+  ECHO_CODE(MultiArray<double,2,dynamic> A3);
+  TRDISP(A3);
+  TRDISP(A3.data_);
+  TRDISP(A3.dynamic_dims_array);
+  TRDISP(sizeof(A3)/sizeof(double));
+  TRDISP(sizeof(A3.data_)/sizeof(double));
+  TRDISP(sizeof(A3.dynamic_dims_array)/sizeof(size_t));
 
 
+  ECHO_CODE(MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3,2,1,1> A4(42.42));
+  TRDISP(A4.data_);
+  TRDISP(A4.rank());
+  TRDISP(A4.size());
+  TRDISP(A4.dims());
+  TRDISP(A4.recursive_dims());
+
+  // TRDISP(A4);
 
   return 0;
 }

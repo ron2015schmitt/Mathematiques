@@ -132,6 +132,7 @@
   // this seems to works for ints. if problems, use a helper class to determine which exp to call: expf expl, exp
 ```
 * make all temp README.md files read-only
+* need to fix up printing of nested MultiArrays
 * change replaceable strings in include-templates files from ##NAME## to __NAME__ so as to make syntax highlighting work properly
 * conjugate OPERTOR~ for real ints wil give negative!!  make sure you dont take ~ of built-in types
 * what about equals for (double = 0) == Imaginary<double>(0)? How shoudl this be defined?

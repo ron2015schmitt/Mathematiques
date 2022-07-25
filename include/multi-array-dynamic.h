@@ -728,6 +728,7 @@ namespace mathq {
     friend std::ostream& operator<<(std::ostream& stream, const Type& t) {
       using namespace display;
       size_t n = 0;
+      // stream << "dynamics: ";
       t.send(stream, n, t.dims());
       return stream;
     }

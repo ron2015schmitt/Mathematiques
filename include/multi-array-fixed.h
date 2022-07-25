@@ -16,7 +16,7 @@ namespace mathq {
    */
 
   template <typename Element, size_t rank_, size_t... dim_ints> requires (validate_multi_array<rank_, dim_ints...>())
-  class MultiArray :public ExpressionRW<
+  class MultiArray : public ExpressionRW<
     MultiArray<Element, rank_, dim_ints...>,  // Derived
     Element,  // Element
     typename NumberTrait<Element>::Type, // Number
@@ -135,13 +135,16 @@ namespace mathq {
 
     // --------------------- FIXED SIZE: set all to same value   ---------------------
 
+    template<bool enable = !is_dynamic_value> requires (enable)
     explicit MultiArray(const Element val) {
       *this = val;
     }
 
     // --------------------- FIXED SIZE: set all bottom Elements to same value   ---------------------
 
-    template<typename NT = NumberType, EnableIf<(depth_value>1)&&(!std::is_same<Element, NT>::value)> = 1>
+    // template<typename NT = NumberType, EnableIf<(!is_dynamic_value)&&(depth_value>1)&&(!std::is_same<Element, NT>::value)> = 1>
+
+    template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value>1) && (!std::is_same<Element, NumberType>::value) )
       explicit MultiArray(const NumberType val) {
       *this = val;
     }
