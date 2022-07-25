@@ -148,7 +148,7 @@ namespace mathq {
     public: 
       constexpr static size_t compile_time_size = calc_size<rank, dim_ints...>();
       using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
-      MyArrayType data;
+      MyArrayType data_;
   };
 
   template <typename Element, size_t rank> requires (rank >= 2)
@@ -156,7 +156,7 @@ namespace mathq {
     public: 
       constexpr static size_t compile_time_size = calc_size<rank, 0>();
       using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
-      MyArrayType data;
+      MyArrayType data_;
       std::array<size_t, rank> dynamic_dims_array;      
   };
 

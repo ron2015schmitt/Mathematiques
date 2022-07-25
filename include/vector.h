@@ -63,7 +63,6 @@ namespace mathq {
 
     using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
-
     using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
 
 
@@ -76,7 +75,7 @@ namespace mathq {
     // size is taken from data_.size
     //**********************************************************************
 
-  private:
+  // private:
     MyArrayType data_;
 
   public:

@@ -20,7 +20,7 @@ namespace mathq {
 
 
   template <typename Element, size_t rank_> requires (rank_ != 1)
-  class MultiArray<Element, rank_, dynamic> : public ExpressionRW<
+  class MultiArray<Element, rank_, dynamic> : public MultiArrayData<Element, rank_, 0>, public ExpressionRW<
     MultiArray<Element, rank_, dynamic>,  // Derived
     Element,  // Element
     typename NumberTrait<Element>::Type, // Number
@@ -67,11 +67,12 @@ namespace mathq {
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
 
 
-    // private:
       // *********************** OBJECT DATA ***********************************
       //
       // do NOT declare any other storage.
       // keep the instances lightweight
+
+    // private:
     MyArrayType data_;
     std::array<size_t, rank_value> dynamic_dims_array;
   public:

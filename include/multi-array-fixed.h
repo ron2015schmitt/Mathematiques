@@ -64,11 +64,12 @@ namespace mathq {
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
 
 
-    // private:
       // *********************** OBJECT DATA ***********************************
       //
       // do NOT declare any other storage.
       // keep the instances lightweight
+
+    // private:
     MyArrayType data_;
 
   public:
