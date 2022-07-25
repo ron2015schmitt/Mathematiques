@@ -62,7 +62,6 @@ namespace mathq {
 
   using signed_t = typename std::make_signed<size_t>::type;
 
-  constexpr size_t dynamic = 0;
 
 
   // TODO: need to figure out how to handle this. need a signed type
@@ -138,14 +137,17 @@ namespace mathq {
   // }
 
 
-  template<size_t rank, size_t... ints>
+  template<size_t rank, size_t... sizes>
   constexpr bool validate_multi_array() {
-    constexpr size_t N = sizeof...(ints);
-    constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
+    constexpr size_t N = sizeof...(sizes);
+    constexpr std::array<size_t, N> A = { (static_cast<size_t>(sizes))... };
 
-    if constexpr ((N == 1) && (A[0] == 0)) {
+    if constexpr (N == 0) {
       return true;
     }
+    // if constexpr ((N == 1) && (A[0] == 0)) {
+    //   return true;
+    // }
     if constexpr (N != rank) {
       return false;
     }
@@ -162,18 +164,23 @@ namespace mathq {
     constexpr size_t N = sizeof...(ints);
     constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
 
+    // what about for multiarrays that have dimensions of size one, ie reduced?
     if constexpr (rank1 != rank2) {
       return false;
     }
+
     constexpr size_t rank = rank1;
     if constexpr (N == 2*rank) {
+      // both arrays are fixed-dimensions
       for (size_t i = 0; i < rank; ++i) {
         if (A[i] != A[i+rank]) return false;
       }
       return true;
-    } else if constexpr ((N == rank + 1) && ((A[0] == dynamic) || (A[rank] == dynamic))) {
+    } else if constexpr ((N == rank)) {
+      // one array is fixed-dimensions. the other array is dynamic
       return true;
-    } else if constexpr ((N == 2) && (A[0] == dynamic) && (A[1] == dynamic))  {
+    } else if constexpr (N == 0)  {
+      // both arrays are dynamic-dimensions
       return true;
     }
     return false;
@@ -183,7 +190,7 @@ namespace mathq {
 
 
 
-  template <typename Element, size_t rank, size_t... dim_ints > requires (validate_multi_array<rank, dim_ints...>())
+  template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
   class MultiArray;
 
 
@@ -195,17 +202,17 @@ namespace mathq {
   using Scalar = MultiArray<Element, 0>;
 
 
-  template <typename Element, size_t N1 = 0>
-  using Vector = MultiArray<Element, 1, N1>;
+  template <typename Element, size_t... sizes>
+  using Vector = MultiArray<Element, 1, sizes...>;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  using Matrix = MultiArray<Element, 2, NR, NC>;
+  template <typename Element, size_t... sizes>
+  using Matrix = MultiArray<Element, 2, sizes...>;
 
-  template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0>
-  using MultiArray3 = MultiArray<Element, 3, N1, N2, N3>;
+  template <typename Element, size_t... sizes>
+  using MultiArray3 = MultiArray<Element, 3, sizes...>;
 
-  template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0, size_t N4 = 0>
-  using MultiArray4 = MultiArray<Element, 4, N1, N2, N3, N4>;
+  template <typename Element, size_t... sizes>
+  using MultiArray4 = MultiArray<Element, 4, sizes...>;
 
 
 

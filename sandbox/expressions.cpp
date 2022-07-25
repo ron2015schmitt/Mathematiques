@@ -211,7 +211,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v1a.classname());  // Vector
 
   CR();
-  ECHO_CODE(Vector<double, 0> v1b);
+  ECHO_CODE(Vector<double> v1b);
   TRDISP(v1b.classname());  // Vector
 
   CR();
@@ -222,7 +222,7 @@ int main(int argc, char* argv[]) {
   CR();
   OUTPUT("The following MultiArrays should use the Vector specialization");
   CR();
-  ECHO_CODE(MultiArray<double, 1, dynamic> x1a);
+  ECHO_CODE(MultiArray<double, 1> x1a);
   TRDISP(x1a.classname());  // Vector
 
   CR();
@@ -234,10 +234,12 @@ int main(int argc, char* argv[]) {
   CR();
   OUTPUT("Dynamic MultiArray");
 
-  ECHO_CODE(MultiArray<double, 2, dynamic> x2);
+  ECHO_CODE(MultiArray<double, 2> x2);
   TRDISP(x2.classname());
   TRDISP(x2.is_dynamic_value);
   TRDISP(x2.compile_time_size);
+  TRDISP(x2.static_dims_array);
+  TRDISP(std::get<0>(x2.static_dims_array));
   // TRDISP(x2.dims_array());
   TRDISP(x2.rank());
   TRDISP(x2.depth());
@@ -247,12 +249,12 @@ int main(int argc, char* argv[]) {
   TRDISP(NumberTrait<decltype(x2)>::sum_of_ranks());
 
   TRDISP(std::array<size_t, 0>{});
-  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::depth());
+  TRDISP(NumberTrait<MultiArray<double, 2>>::depth());
   TRDISP(std::valarray<size_t>{});
   TRDISP(NumberTrait<double>::sum_of_ranks());
   TRDISP(NumberTrait<double>::get_rank_array());
-  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::sum_of_ranks());
-  TRDISP(NumberTrait<MultiArray<double, 2, dynamic>>::get_rank_array());
+  TRDISP(NumberTrait<MultiArray<double, 2>>::sum_of_ranks());
+  TRDISP(NumberTrait<MultiArray<double, 2>>::get_rank_array());
 
   TRDISP(x2.data_);
   TRDISP(sizeof(x2.data_)/sizeof(double));
@@ -273,6 +275,7 @@ int main(int argc, char* argv[]) {
   TRDISP(x3.is_dynamic_value);
   TRDISP(x3.compile_time_size);
   TRDISP(x3.static_dims_array);
+  TRDISP(std::get<0>(x3.static_dims_array));
   TRDISP(x3.size());
   TRDISP(x3.rank());
   TRDISP(x3.depth());
@@ -322,7 +325,7 @@ int main(int argc, char* argv[]) {
   TRDISP(sizeof(testdata2.data_)/sizeof(double));
   // TRDISP(testdata2.dynamic_dims_array);
 
-  ECHO_CODE(MultiArrayData<double,2,dynamic> testdata3);
+  ECHO_CODE(MultiArrayData<double,2> testdata3);
   TRDISP(testdata3.data_);
   TRDISP(testdata3.dynamic_dims_array);
   TRDISP(sizeof(testdata3)/sizeof(double));
@@ -342,7 +345,7 @@ int main(int argc, char* argv[]) {
   TRDISP(sizeof(A2.data_)/sizeof(double));
   // TRDISP(A2.dynamic_dims_array);
 
-  ECHO_CODE(MultiArray<double,2,dynamic> A3);
+  ECHO_CODE(MultiArray<double,2> A3);
   TRDISP(A3);
   TRDISP(A3.data_);
   TRDISP(A3.dynamic_dims_array);

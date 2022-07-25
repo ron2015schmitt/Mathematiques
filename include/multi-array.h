@@ -36,6 +36,8 @@ namespace mathq {
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = false;
     constexpr static size_t compile_time_size = calc_size<rank_value, dim_ints...>();
+
+    // note that the following will be all zeroes for dyanmic multi-arrays
     constexpr static std::array<size_t, rank_value> static_dims_array = { (static_cast<size_t>(dim_ints))... };
 
     //**********************************************************************
@@ -92,11 +94,6 @@ namespace mathq {
       *this = var;
     }
 
-    // --------------------- dynamic MultiArray --------------------
-    template<bool enable = !is_dynamic_value> requires (enable)
-    explicit MultiArray(const MultiArray<Element, rank_value, dynamic>& var) {
-      *this = var;
-    }
 
     // ----------------------- initializer_list ---------------------
     // not explicit: allows use of nested init lists when depth_value > 1
@@ -135,6 +132,13 @@ namespace mathq {
     //**********************************************************************
     //                    CONSTRUCTORS: FIXED size  
     //**********************************************************************
+
+    // --------------------- dynamic MultiArray --------------------
+
+    template<bool enable = !is_dynamic_value> requires (enable)
+    explicit MultiArray(const MultiArray<Element, rank_value>& var) {
+      *this = var;
+    }
 
     // --------------------- FIXED SIZE: set all to same value   ---------------------
 
@@ -646,12 +650,8 @@ namespace mathq {
       s += getTypeName(d);
       s += StyledString::get(COMMA).get();
       s += "rank=";
-      s += num2string(rank_value);
-      size_t product = 1;
-      for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
-        product *= static_dims_array[ii];
-      }
-      if (product > 0) {
+      s += std::to_string(rank_value);
+      if constexpr (!is_dynamic_value) {
         for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
           if (ii == 0) {
             s += StyledString::get(COMMA).get();
@@ -659,7 +659,7 @@ namespace mathq {
           else {
             s += "⨯";
           }
-          s += template_size_to_string(static_dims_array[ii]);
+          s += std::to_string(static_dims_array[ii]);
         }
       }
       s += StyledString::get(ANGLE2).get();

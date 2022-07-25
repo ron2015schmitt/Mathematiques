@@ -21,9 +21,9 @@
 
 namespace mathq {
 
-  template <typename Element, size_t N1>
-  class MultiArray<Element, 1, N1> : public ExpressionRW<
-    Vector<Element, N1>,  // Derived
+  template <typename Element, size_t... sizes>
+  class MultiArray<Element, 1, sizes...> : public ExpressionRW<
+    Vector<Element, sizes...>,  // Derived
     Element,  // Element
     typename NumberTrait<Element>::Type, // Number
     1 + NumberTrait<Element>::depth(),  // depth
@@ -37,17 +37,18 @@ namespace mathq {
     //**********************************************************************
 
     constexpr static size_t rank_value = 1;
+    constexpr static std::array<size_t, rank_value> static_dims_array = { sizes... };
+    constexpr static size_t N1 = get<0>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = (N1 == 0);
     constexpr static size_t compile_time_size = calc_size<rank_value, N1>();
-    constexpr static std::array<size_t, rank_value> static_dims_array = { N1 };
 
     //**********************************************************************
     //                            TYPES 
     //**********************************************************************
 
-    using Type = MultiArray<Element, rank_value, N1>;
-    using ConcreteType = Vector<Element, N1>;
+    using Type = MultiArray<Element, rank_value, sizes...>;
+    using ConcreteType = Vector<Element, sizes...>;
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
@@ -647,7 +648,7 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
-    Vector<Element, N1>& operator=(const Element& e) {
+    Type& operator=(const Element& e) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = e;
       }
@@ -669,7 +670,7 @@ namespace mathq {
     // ------------------------ Vector = Vector----------------
 
     template <int NE2>
-    Vector<Element, N1>& operator=(const Vector<Element, NE2>& v) {
+    Type& operator=(const Vector<Element, NE2>& v) {
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
           if (this->size() != v.size()) {
@@ -720,7 +721,7 @@ namespace mathq {
 
     // ------------------------ Vector = array[] ----------------
 
-    Vector<Element, N1>& operator=(const Element array[]) {
+    Type& operator=(const Element array[]) {
       for (size_t i = 0; i < size(); i++) {
         (*this)(i) = array[i];
       }
@@ -730,7 +731,7 @@ namespace mathq {
 
     // ------------------------ Vector = list ----------------
 
-    Vector<Element, N1>& operator=(const std::list<Element>& mylist) {
+    Type& operator=(const std::list<Element>& mylist) {
       if constexpr (is_dynamic_value) {
         if (this->size() != mylist.size()) {
           resize(mylist.size());
@@ -746,7 +747,7 @@ namespace mathq {
 
     // ------------------------ Vector = initializer_list ----------------
 
-    Vector<Element, N1>& operator=(const std::initializer_list<Element>& mylist) {
+    Type& operator=(const std::initializer_list<Element>& mylist) {
       if constexpr (is_dynamic_value) {
         if (this->size() != mylist.size()) {
           resize(mylist.size());
@@ -765,7 +766,7 @@ namespace mathq {
 
     // ------------------------ Vector = std::vector ----------------
 
-    Vector<Element, N1>& operator=(const std::vector<Element>& vstd) {
+    Type& operator=(const std::vector<Element>& vstd) {
       if constexpr (is_dynamic_value) {
         if (this->size() != vstd.size()) {
           resize(vstd.size());
@@ -780,7 +781,7 @@ namespace mathq {
     // ------------------------ Vector = std::array ----------------
 
     template <size_t N>
-    Vector<Element, N1>& operator=(const std::array<NumberType, N>& varray) {
+    Type& operator=(const std::array<NumberType, N>& varray) {
       if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
           resize(varray.size());
@@ -796,7 +797,7 @@ namespace mathq {
 
     // ------------------------ Vector = std::valarray ----------------
 
-    Vector<Element, N1>& operator=(const std::valarray<Element>& varray) {
+    Type& operator=(const std::valarray<Element>& varray) {
 
       if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
@@ -823,7 +824,7 @@ namespace mathq {
 
     //----------------- .roundzero(tol) ---------------------------
 
-    Vector<Element, N1>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
       for (size_t i = 0; i < size(); i++) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
@@ -953,7 +954,7 @@ namespace mathq {
     }
 
 
-    Vector<Element, N1>& reverse() {
+    Type& reverse() {
       const size_t N = size();
       if (N==0)
         return *this;
@@ -970,7 +971,7 @@ namespace mathq {
 
     // .cumsum() -- cumulative sum
 
-    Vector<Element, N1>& cumsum() {
+    Type& cumsum() {
       const size_t N = size();
       Element sum = 0;
       for (size_t i = 0; i < N; i++) {
@@ -982,7 +983,7 @@ namespace mathq {
 
     // .cumprod()  --  cumulative product
 
-    Vector<Element, N1>& cumprod() {
+    Type& cumprod() {
       const size_t N = size();
       Element prod = 1;
       for (size_t i = 0; i < N; i++) {
@@ -995,7 +996,7 @@ namespace mathq {
 
     // .cumtrapz() -- cumulative trapezoidal summation
 
-    Vector<Element, N1>& cumtrapz() {
+    Type& cumtrapz() {
       const size_t N = size();
       if (N==0) return *this;
       Element sum = data_[0]/2;
@@ -1011,7 +1012,7 @@ namespace mathq {
     // order  name
     //     0  rectangular
     //     1  trapazoidal
-    Vector<Element, N1>& integrate_a2x(const Element a, const Element b, const int order = 1) {
+    Type& integrate_a2x(const Element a, const Element b, const int order = 1) {
 
       const size_t N = size();
 
@@ -1038,7 +1039,7 @@ namespace mathq {
 
     // .cumsumrev() -- cumulative sum -- from last to first
 
-    Vector<Element, N1>& cumsum_rev() {
+    Type& cumsum_rev() {
       const size_t N = size();
 
       Element sum = 0;
@@ -1051,7 +1052,7 @@ namespace mathq {
 
     // .cumprodrev()  --  cumulative product  -- from last to first
 
-    Vector<Element, N1>& cumprod_rev() {
+    Type& cumprod_rev() {
       const size_t N = size();
 
       Element prod = 1;
@@ -1065,7 +1066,7 @@ namespace mathq {
 
     // .cumtrapz() -- cumulative trapezoidal summation -- from last to first
 
-    Vector<Element, N1>& cumtrapz_rev() {
+    Type& cumtrapz_rev() {
       const size_t N = size();
       if (N==0) return *this;
 
@@ -1084,7 +1085,7 @@ namespace mathq {
     // order  name
     //     0  rectangular
     //     1  trapazoidal
-    Vector<Element, N1>& integrate_x2b(const Element a, const Element b, const int order = 1) {
+    Type& integrate_x2b(const Element a, const Element b, const int order = 1) {
       const size_t N = size();
 
       if (order == 0) {
@@ -1110,7 +1111,7 @@ namespace mathq {
 
 
     // diff   (v[n] = v[n] - v[n-1])
-    Vector<Element, N1>& diff(const bool periodic = false) {
+    Type& diff(const bool periodic = false) {
       const size_t N = size();
       if (N<=1) return *this;
 
@@ -1131,7 +1132,7 @@ namespace mathq {
     }
 
     // diff_rev   (v[n] = v[n+1] - v[n])
-    Vector<Element, N1>& diff_rev(const bool periodic = false) {
+    Type& diff_rev(const bool periodic = false) {
       const size_t N = size();
       if (N<=1) return *this;
 
@@ -1159,7 +1160,7 @@ namespace mathq {
     // periodic: if true, perform derivative with start and end connected: 
     //           dat[-1] == dat[n-1], dat[n] == dat[0] etc
 
-    Vector<Element, N1>& deriv(const Element a, const Element b, const int n = 1, int Dpts = 7, const bool periodic = false) {
+    Type& deriv(const Element a, const Element b, const int n = 1, int Dpts = 7, const bool periodic = false) {
       //MDISP(a,b,n,Dpts,periodic);
       const size_t N = size();
       if (N<=1) return *this;
@@ -1312,14 +1313,11 @@ namespace mathq {
       s += StyledString::get(ANGLE1).get();
       Element d;
       s += getTypeName(d);
-      s += StyledString::get(COMMA).get();
-      s += "N1=";
-      s += template_size_to_string(N1);
-      //    if (depth_value>1) {
-      //      s += StyledString::get(COMMA).get();
-      //      s += "depth_value=";
-      //      s += num2string(depth_value);
-      //    }
+      if constexpr (!is_dynamic_value) {
+        s += StyledString::get(COMMA).get();
+        s += "N1=";
+        s += std::to_string(N1);
+      }
       s += StyledString::get(ANGLE2).get();
       return s;
     }
@@ -1333,7 +1331,7 @@ namespace mathq {
 
     // stream << operator
 
-    friend std::ostream& operator<<(std::ostream& stream, const Vector<Element, N1>& v) {
+    friend std::ostream& operator<<(std::ostream& stream, const Type& v) {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       stream << style.apply(FormatDataVector::string_opening);
@@ -1355,7 +1353,7 @@ namespace mathq {
     }
 
 
-    friend inline std::istream& operator>>(const std::string s, Vector<Element, N1>& x) {
+    friend inline std::istream& operator>>(const std::string s, Type& x) {
       std::istringstream st(s);
       return (st >> x);
     }
@@ -1363,7 +1361,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, Vector<Element, N1>& x) {
+    friend std::istream& operator>>(std::istream& stream, Type& x) {
       // const size_t LINESZ = 32768;
       // char line[LINESZ];
       // std::vector<Element> v;

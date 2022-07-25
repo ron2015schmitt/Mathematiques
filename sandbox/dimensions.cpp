@@ -243,7 +243,7 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Vector<Vector<double, 2>, dynamic> u2);
+  ECHO_CODE(Vector<Vector<double, 2>> u2);
   TRDISP(u2);
   TRDISP(u2.size());
   TRDISP(u2.element_size());

@@ -7,18 +7,6 @@ namespace mathq {
 
 
 
-  // ***************************************************************************
-  // * utility
-  // ***************************************************************************
-  inline const std::string template_size_to_string(const size_t n) {
-    if (n == 0) {
-      return std::string("dynamic");
-    }
-    else {
-      return std::to_string(n);
-    }
-  }
-
 
   // ***************************************************************************
   // * compile time functions
@@ -157,7 +145,7 @@ namespace mathq {
   // These dynamic arrays need a dynamic_dims_array to keep track of the dimensions
 
   template <typename Element, size_t rank> requires (rank >= 2)
-  class MultiArrayData<Element, rank, dynamic> {
+  class MultiArrayData<Element, rank> {
     public: 
       constexpr static size_t compile_time_size = calc_size<rank, 0>();
       using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
