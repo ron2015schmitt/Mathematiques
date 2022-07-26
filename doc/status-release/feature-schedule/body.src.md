@@ -2,22 +2,30 @@
 
 
 ### v0.40 Multi-Array Refactoring and Vector Calculus started
-1. add variable for the C++ version used, currently C++20.  append to version string. 
-1. using g++ 10.4
-1. Refactor `Dimensions` class
-1. New `RecursiveDimensions` class
+1. Refactor `Dimensions` and `Indices` classes
+1. New `RecursiveDimensions`  and `DeepIndices` classes
 1. Refactor all multi-arrays
   * Simplifly the templates to only have `Element` type and (top level) `Dimensions`
   * Renamed `Tensor` -> `MultiArray` ->? `AlgebraTensor`
   * Refactor `Scalar`, `Vector` and `Matrix` to be type aliases for `MultiArray`
-1. Vector calculus
-  * create `RealSet` and `MultiSet` classes
-  * create Grid classes
-  * Start `CurvilinearCoords` and `CurvilinearField` classes
+1. C++ dialect 
+  * Add a compiler version file
+  * In variables.mk, have C++ version taken from file in version directory (`CPPC = g++ -pipe -std=c++17`)
+  * add variable for the C++ version used, currently C++20.  append to version string. 
+  * using g++ 10.4
 
-### Vector Calculus
+
+
+### v0.41 Vector Calculus
+1. refactor `Grid` classes: inherit from nested MultiArray. Two types ArrayofGrids. GridOfArrays
+1. refactor `RealSet` and `MultiSet` classes
+  * should not have inflate nor a grid local variable.  createGrid method instead
+1. refactor and complete `CurvilinearCoords` 
+  * 2D Cartesian
+  * 2D Polar
+  * Put grad, and div as static functions inside CurvilinearCoords 
+1. refactor `CurvilinearField` class: inherit from Grid
 1. [2D and 3D Curvilinear Coordinate Systems](topics/coordsystems.md)
-1. [Functions: R^n -> R^m](topics/functions.md)
 
 
 ## Future work
@@ -48,7 +56,6 @@
 1. refactor Style, StyledString, Terminal, and Display, Log
   1. reformat all files using VSCode C++ extension
   1. StyleStrgn should allow chnage of the Style
-  1. replace anti-pattern `*(new Display())` as `Display()` for all classes. This is not Java
   1. don't use pointers
   1. DISPLAY: Allow to use different strigns for ```=``` and ```;``` when displaying results by adding ability to chaneg expression SyledString etc
     * have profiles for text ("->", ""), matlab ("=", ";"), mathematica ("=", ";")
@@ -67,28 +74,30 @@
    1. Mathematica
    1. Matlab
    2. python
-1. move the SPECIALIZE_getTypeName into .h file and python script
+1. move the SPECIALIZE_getTypeName into .h file and python script. shorten to typename_str
+* need to fix up printing of nested MultiArrays: need to add an argument: indent_string = ""
+* each MultiArray should have a dynamic cast to a list
+* need function in display that converts (nested) lists to a string
+* need to parse string lists into a list
+* need to fix up printing of nested MultiArrays: need to add an argument: indent_string = ""
+* each MultiArray should have a dynamic cast to a list
+* need function in display that converts (nested) lists to a string
+
 
 ### Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary
 1. create benchmarks, include display of memory sizes
+1. test speed of size_t indexing vs unsigned int indexing. Does compiler optimize for small fixed-size MultiArrays ?
 
 ### Indexing Refactoring
-1. Rename MultiArray, ExpressionR and ExpressionRW to Array or MArray
 1. Refactor of vector/matrix/tensor indexing, including
+  + support for constexpr bool column_major;
   + new index/iterator types such as slices similar to C++ stdlib, Fortran, and Python, including negative indices
   + [Index class and new indexing methodology](topics/index.md)
-  + slcies to get row or col of matrix
-1. use size_t instead of these  (searc and replace everywhere)
-  * typedef std::vector<double>size_t size_t;
-  * typedef int size_t;
-  * typedef long double extended;  -> quad?
-1. use [C++20 Ranges](https://en.cppreference.com/w/cpp/ranges)
+  + slices to get row or col of matrix
+  + dope vector
+  + use [C++20 Ranges](https://en.cppreference.com/w/cpp/ranges)
 1. add vararg constructor for Dimensions or parameter pack 
-1. change recursive_dims from std::vector<Dimensions> to initlist<Dimensions>. define a class recursive_dims
-1. allow VEctor, Matrix, MultiArray to be initialized from deep dims
-1. create a Array3 type
 1. consts: `o` and `all`
-
 
 ### I/O Refactoring
 1. [Save tensor to file](topics/filesave.md)
@@ -132,18 +141,17 @@
   // this seems to works for ints. if problems, use a helper class to determine which exp to call: expf expl, exp
 ```
 * make all temp README.md files read-only
-* need to fix up printing of nested MultiArrays: need to add an argument: indent_string = ""
-* each MultiArray should have a dynamic cast to a list
-* need function in display that converts (nested) lists to a string
-* need to parse string lists into a list
 * change replaceable strings in include-templates files from ##NAME## to __NAME__ so as to make syntax highlighting work properly
-* conjugate OPERTOR~ for real ints wil give negative!!  make sure you dont take ~ of built-in types
+* `operator=`.  have a constexpr that allows / disallows resizing durign equals
+
+* conjugate OPERTOR~ for real ints wil give negative!!  make sure you dont take ~ of built-in types.  Use C++20 `requires` ?
 * what about equals for (double = 0) == Imaginary<double>(0)? How shoudl this be defined?
 * refactor the headers so that 
   * vectors, matrices display tensors Scalar are broken out into different headers
   * use copious #ifdefs so that order of inclusion matters
   * use [C++20 modules](https://en.cppreference.com/w/cpp/language/modules)?
 * reformat all files using VSCode plugin: all done except sandbox
+
 * constant `MultiArray`, ie every element is the same.  Matrix and Vector versions should inherit
 * Grid stuff
   * 2D
@@ -155,6 +163,7 @@
     * create MultiArray4 for xyzt: (rows,columns, floors, moments)
     * MArray4Rep
 *  `class` -> `typename` usage in templates?
+
 * formalize template notation for the following: types with ordering (ints and reals), division algebras, Multiarrays, Tensors
 * use https://github.com/cheshirekow/kwargs for named arguments?
 * replace std::enable_if<std::is_arithmetic<D>::value, D>::type> with mathq version that accepts Imaginary and Quaternions
@@ -257,6 +266,7 @@
   * utilize `RepColMatrix` and `RepRowMatrix`
 1. Integrals and derivatives along each dimension of Matrix or Tenspr
    *  best way to re-use code?
+1. [Functions: R^n -> R^m](topics/functions.md)
 
 ### Matrix Math via uBlas (transition from LAPACK)
 1. [Boost libs](https://www.boost.org/doc/libs/)

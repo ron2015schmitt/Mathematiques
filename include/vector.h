@@ -533,19 +533,19 @@ namespace mathq {
       return data_[n];
     }
 
+    // NOTE: if you feed literals, the following will be called, unless you use the `u` suffix, eg `10000u`
     // "read/write"
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
     Element& operator[](const T n) {
-      T m = n;
-      while (m < 0) m += size();
+      T m = signed_index_to_unsigned_index(n, size());
       return data_[m];
     }
 
     // read
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
     const Element& operator[](const T n)  const {
-      T m = n;
-      while (m < 0) m += size();
+      
+      T m = signed_index_to_unsigned_index(n, size());
       return data_[m];
     }
 

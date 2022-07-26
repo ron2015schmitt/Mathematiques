@@ -28,9 +28,9 @@
 #include "declarations.h"
 #include "type-traits.h"
 #include "display.h"
-// #include "fileio.h"
-// #include "util.h"
-// #include "debug.h"
+#include "fileio.h"
+#include "util.h"
+#include "debug.h"
 
 #include "type-defs.h"
 
@@ -47,7 +47,7 @@
 #include "expression-rw.h"
 
 #include "multi-array.h"
-// #include "scalar.h"
+#include "scalar.h"
 #include "vector.h"
 // #include "matrix.h"
 // #include "multi-array3.h"
@@ -103,7 +103,7 @@
 #include "functions_user.h"
 // #include "grids.h"
 
-// #include "coda.h"
+#include "coda.h"
 
 
 
@@ -335,12 +335,12 @@ int main(int argc, char* argv[]) {
   TRDISP(v7);
 
 
-  // CR();
-  // ECHO_CODE(Vector<double> v9(6, 7));
-  // TRDISP(v9.size());
-  // TRDISP(v9.element_size());
-  // TRDISP(v9.dims());
-  // TRDISP(v9);
+  CR();
+  ECHO_CODE(Vector<double> v9(6, 7));
+  TRDISP(v9.size());
+  TRDISP(v9.element_size());
+  TRDISP(v9.dims());
+  TRDISP(v9);
 
   CR();
   ECHO_CODE(Vector<double> v10({ 2.2, 3.3, 4.4 }));
@@ -377,16 +377,16 @@ int main(int argc, char* argv[]) {
   TRDISP(ind1);
   TRDISP(v13[ind1]);
 
-  // CR();
-  // ECHO_CODE(Vector<double> k = 100*range<double>(0, 10));
-  // TRDISP(k);
-  // TRDISP(SLC::even);
-  // ECHO_CODE(Vector<size_t> vindex(11, SLC::even));
-  // TRDISP(vindex);
-  // TRDISP(k[vindex]);
-  // TRDISP(k[SLC::even]);
-  // TRDISP(k[-1]);
-  // TRDISP(k[-2]);
+  CR();
+  ECHO_CODE(Vector<double> k = 100*range<double>(0, 10));
+  TRDISP(k);
+  TRDISP(SLC::even);
+  ECHO_CODE(Vector<size_t> vindex(11, SLC::even));
+  TRDISP(vindex);
+  TRDISP(k[vindex]);
+  TRDISP(k[SLC::even]);
+  TRDISP(k[-1]);
+  TRDISP(k[-2]);
 
 
   TRDISP(InitializerTrait< std::initializer_list<double> >::depth());

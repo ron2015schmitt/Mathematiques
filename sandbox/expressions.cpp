@@ -47,7 +47,7 @@
 #include "expression-rw.h"
 
 #include "multi-array.h"
-// #include "scalar.h"
+#include "scalar.h"
 #include "vector.h"
 // #include "matrix.h"
 // #include "multi-array3.h"

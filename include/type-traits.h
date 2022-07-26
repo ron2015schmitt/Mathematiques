@@ -82,6 +82,16 @@ namespace mathq {
   }
 
 
+
+  template<typename U> requires (std::is_integral<U>::value)
+    size_t signed_index_to_unsigned_index(const U& index, const size_t& N) {
+      U temp = index;
+      while (temp < U(0)) {
+        temp += U(N);
+      }
+      return size_t(temp);
+    }
+
   //*******************************************************
   //          Typedefs
   //*******************************************************

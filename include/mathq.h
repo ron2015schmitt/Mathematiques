@@ -36,9 +36,9 @@
 #include "declarations.h"
 #include "type-traits.h"
 #include "display.h"
-// #include "fileio.h"
-// #include "util.h"
-// #include "debug.h"
+#include "fileio.h"
+#include "util.h"
+#include "debug.h"
 
 #include "type-defs.h"
 
@@ -55,7 +55,7 @@
 #include "expression-rw.h"
 
 #include "multi-array.h"
-// #include "scalar.h"
+#include "scalar.h"
 #include "vector.h"
 // #include "matrix.h"
 // #include "multi-array3.h"
@@ -111,7 +111,7 @@
 #include "functions_user.h"
 // #include "grids.h"
 
-// #include "coda.h"
+#include "coda.h"
 
 
 

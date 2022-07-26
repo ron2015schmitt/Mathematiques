@@ -328,7 +328,7 @@ namespace mathq {
     // resize / reshape is not allowed unless fixed-dimensions 
     //**********************************************************************
 
-    template <typename... U> requires ( (is_dynamic_value) && (std::conjunction<std::is_convertible<U, size_t>...>::value) && (sizeof...(U) == rank_value) ) 
+    template <typename... U> requires ( (is_dynamic_value) && (std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == rank_value) ) 
     Type& resize(const U... args) {
       std::array<size_t,rank_value> new_dims_array { size_t(args)... };
       if (ParentDataType::dynamic_dims_array != new_dims_array) {
@@ -410,7 +410,7 @@ namespace mathq {
     }
 
     template <typename... U>
-    typename std::enable_if<(std::conjunction<std::is_convertible<U, size_t>...>::value) && (sizeof...(U) == rank_value), size_t>::type 
+    typename std::enable_if<(std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == rank_value), size_t>::type 
     index(const U... args) {
       std::array<size_t,rank_value> arr { std::make_unsigned<int>::type(args)... };
       return index(*(new mathq::Indices(arr)));
@@ -421,16 +421,30 @@ namespace mathq {
     //**********************************************************************
 
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, Element&>::type operator()(const U... args) {
+    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_unsigned<U>...>::value, Element&>::type operator()(const U... args) {
       // const int size = sizeof...(args);
       size_t k = this->index(args...);
       return (*this)[k];
     }
 
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_convertible<U, size_t>...>::value, const Element>::type operator()(const U... args) const {
+    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_unsigned<U>...>::value, const Element>::type operator()(const U... args) const {
       size_t k = this->index(args...);
       return (*this)[k];
+    }
+
+    // negative indexing 
+    template <typename... U>
+    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value, Element&>::type operator()(const U... args) {
+      // const int size = sizeof...(args);
+      Indices inds({ signed_index_to_unsigned_index(args, size())... });
+      return (*this)[inds];
+    }
+
+    template <typename... U>
+    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value, const Element>::type operator()(const U... args) const {
+      Indices inds({ signed_index_to_unsigned_index(args, size())... });
+      return (*this)[inds];
     }
 
 

@@ -148,3 +148,5 @@ public:
   * for `requires` put all the conditions in the requies clause.  put only one bool if using an enable bool 
 
 1. `is_unsigned`: 0 and positive ints are of type `int` by default, so feeding such constants to a constructor requiring `is_unsigned` will fail.  Work-aroud: 1) Use 0u or 1u, or don't use `unsigned` and check in real time.
+
+1. `std::is_convertible<float,size_t>` is truem so use `is_integral`
