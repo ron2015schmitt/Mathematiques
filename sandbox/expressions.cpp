@@ -167,6 +167,16 @@ int main(int argc, char* argv[]) {
   Test2<double,3, 2,4,12> foo2;
   // Test2<double,3, 0,4,12> foo3;  // FAILS check_dynamic
 
+  TRDISP(std::array<size_t, 0>{});
+  TRDISP(NumberTrait<MultiArray<double, 2>>::depth());
+  TRDISP(std::valarray<size_t>{});
+  TRDISP(NumberTrait<double>::sum_of_ranks());
+  TRDISP(NumberTrait<double>::get_rank_array());
+  TRDISP(NumberTrait<MultiArray<double, 2>>::sum_of_ranks());
+  TRDISP(NumberTrait<MultiArray<double, 2>>::get_rank_array());
+  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3,2,1,1>>::sum_of_ranks());
+  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3,2,1,1>>::get_rank_array());
+
 
   CR();
   ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
@@ -248,13 +258,6 @@ int main(int argc, char* argv[]) {
   TRDISP(sizeof(x2)/sizeof(double));
   TRDISP(NumberTrait<decltype(x2)>::sum_of_ranks());
 
-  TRDISP(std::array<size_t, 0>{});
-  TRDISP(NumberTrait<MultiArray<double, 2>>::depth());
-  TRDISP(std::valarray<size_t>{});
-  TRDISP(NumberTrait<double>::sum_of_ranks());
-  TRDISP(NumberTrait<double>::get_rank_array());
-  TRDISP(NumberTrait<MultiArray<double, 2>>::sum_of_ranks());
-  TRDISP(NumberTrait<MultiArray<double, 2>>::get_rank_array());
 
   TRDISP(x2.data_);
   TRDISP(sizeof(x2.data_)/sizeof(double));
@@ -286,8 +289,6 @@ int main(int argc, char* argv[]) {
   TRDISP(x3.data_);
   TRDISP(sizeof(x3.data_)/sizeof(double));
   TRDISP(sizeof(x3)/sizeof(double));
-  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3,2,1,1>>::sum_of_ranks());
-  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1,2,3>, 4, 3,2,1,1>>::get_rank_array());
   TRDISP(x3);
   TRDISP(x3[2]);
   TRDISP(x3.indices(2));
@@ -297,6 +298,14 @@ int main(int argc, char* argv[]) {
   TRDISP(x3[Indices({1,0})]);
   TRDISP(x3[{1,0}]);
   TRDISP(x3(1,0));
+  // flat list
+  ECHO_CODE(x3 = {100.0, 100.1, 100.2, 100.3, 100.4, 100.5});
+  TRDISP(x3);
+  // nested list (indices)
+  ECHO_CODE(x3 = {{-9900, -9901}, {-9910, -9911}, {-9920, -9921}});
+  TRDISP(x3);
+
+
 
   CR();
   ECHO_CODE(Vector<double> x4{ 1 , 3.5, 200, -1, 50, 2, -3});

@@ -130,3 +130,11 @@ public:
 };
 ```
 
+1.  Approach to use of `std::initializer_list`:
+  * define constructor and `operator=` for `std::initializer_list<Element>`. For top-level, we then use 
+    * a flat list:
+    * for nexted MultiArrays, the compiler will recursive traverse the nested `initializer_list`s
+  * also define constructor and `operator=` for `MakeInitializer<Element, rank_value>::Type`. For top-level, we then use 
+    * a nested `initializer_list` with depth equal to the number of indicies
+    * for nexted MultiArrays, the compiler will recursive traverse the nested `initializer_list`s via the definition of `Element`
+

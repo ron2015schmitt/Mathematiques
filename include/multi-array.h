@@ -85,16 +85,17 @@ namespace mathq {
     }
 
 
-    // ----------------------- initializer_list ---------------------
+    // ----------------------- flat initializer_list ---------------------
     // not explicit: allows use of nested init lists when depth_value > 1
     MultiArray(const std::initializer_list<Element>& var) {
       *this = var;
     }
 
-    // MultiArray(const MakeInitializer<double, NumberTrait<Type>::sum_of_ranks() >::Type& var) {
-    //   *this = var;
-    // }
-
+    // ----------------------- indices initializer_list ---------------------
+    // not explicit: allows use of nested init lists when depth_value > 1
+    MultiArray(const MakeInitializer<Element, rank_value >::Type& var) {
+      *this = var;
+    }
 
     // ----------------------- std::vector ---------------------
     explicit MultiArray(const std::vector<Element>& var) {
@@ -626,14 +627,31 @@ namespace mathq {
 
     // // ------------------------ MultiArray = initializer_list ----------------
 
-    // Type& operator=(const MakeInitializer<double, NumberTrait<Type>::sum_of_ranks() >::Type& mylist) {
-    //   size_t k = 0;
-    //   typename T::iterator it;
-    //   for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
-    //     ParentDataType::data_[k] = *it;
-    //   }
-    //   return *this;
-    // }
+    Type& operator=(const typename MakeInitializer<Element, rank_value>::Type& mylist) {
+      Indices& inds = *(new Indices(rank_value));
+      list_helper<rank_value>(mylist, inds);
+      return *this;
+    }
+
+    template <size_t list_depth> requires (list_depth > 1)
+    Type& list_helper(const typename MakeInitializer<Element, list_depth>::Type& mylist, Indices& inds) {
+      size_t k = 0;
+      typename MakeInitializer<Element, list_depth>::Type::iterator it;
+      for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+        inds[rank_value-list_depth] = k;
+        list_helper(*it, inds);
+      }
+      return *this;
+    }
+    Type& list_helper(const std::initializer_list<Element>& mylist, Indices& inds) {
+      size_t k = 0;
+      typename std::initializer_list<Element>::iterator it;
+      for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+        inds[rank_value-1] = k;
+        (*this)[inds] = *it;
+      }
+      return *this;
+    }
 
 
     // ------------------------ MultiArray = std::vector ----------------
