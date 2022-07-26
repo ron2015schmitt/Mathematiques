@@ -280,12 +280,16 @@ namespace mathq {
     }
 
     inline std::array<size_t, rank_value> dims_array(void) const {
+      if constexpr (is_dynamic_value) {
+        return ParentDataType::dynamic_dims_array;
+      } else {
         return static_dims_array;
+      }
     }
 
     ElementDimensionsType& element_dims(void) const {
-      if constexpr (depth_value>1) {
-        if (this->size()>0) {
+      if constexpr (depth_value > 1) {
+        if (this->size() > 0) {
           return ParentDataType::data_[0].dims();
         }
         else {
@@ -320,9 +324,19 @@ namespace mathq {
 
     //**********************************************************************
     //                          Resize
-    // Not allowed. reshape is not allowed either since the dimensions were
-    // specified at compile time.
+    //
+    // resize / reshape is not allowed unless fixed-dimensions 
     //**********************************************************************
+
+    template <bool enabled = is_dynamic_value> requires (enabled)
+    Type& resize(const Dimensions& new_dims) {
+      auto new_dims_array = std::array<Element, rank_value>(new_dims);
+      if (ParentDataType::dynamic_dims_array != new_dims_array) {
+        ParentDataType::dynamic_dims_array = new_dims_array; 
+        ParentDataType::data_.resize( new_dims.product() );
+      }
+      return *this;
+    }
 
     // new_rdims.size() <= depth_value
     Type& resize(const RecursiveDimensions& new_rdims) {
@@ -334,9 +348,9 @@ namespace mathq {
       size_t depth_index = di;
       size_t resize_depth = parent_rdims.size();
       const size_t newSize = parent_rdims[depth_index++];
-      // if constexpr (is_dynamic_value) {
-      //   resize(newSize);
-      // }
+      if constexpr (is_dynamic_value) {
+        resize(newSize);
+      }
       if constexpr (depth_value >= 1) {
         if (depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {

@@ -396,8 +396,8 @@ namespace mathq {
       return *this;
     }
 
-    Type& resize(const Dimensions& dims) {
-      return resize(dims[0]);
+    Type& resize(const Dimensions& new_dims) {
+      return resize(new_dims[0]);
     }
 
     // new_rdims.size() <= depth_value
@@ -1540,7 +1540,7 @@ namespace mathq {
 
     //**********************************************************************
     //                      CONVERSION OPERATORS 
-    // use to static_cast a Vector to another type of container
+    // use to dynamic_cast a Vector to another type of container
     //**********************************************************************
 
     operator Element* () const {

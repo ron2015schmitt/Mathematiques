@@ -259,6 +259,22 @@ namespace mathq {
       return stream;
     }
 
+    //**********************************************************************
+    //                      CONVERSION OPERATORS 
+    // use to dynamic_cast to another type of container
+    //**********************************************************************
+
+    // array<size_t,NE2>
+    template <size_t NE2>
+    operator std::array<size_t, NE2>() const {
+      const size_t N = size();
+      std::array<size_t, NE2> y(N);
+      for (size_t i = 0; i<N; i++) {
+        y[i] = (*this)[i];
+      }
+      return y;
+    }
+
 
   };
 
@@ -585,6 +601,14 @@ namespace mathq {
 
       return stream;
     }
+
+    //**********************************************************************
+    //                      CONVERSION OPERATORS 
+    // use to dynamic_cast to another type of container
+    //**********************************************************************
+
+
+
 
   };
 
