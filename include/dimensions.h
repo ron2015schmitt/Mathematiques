@@ -267,14 +267,22 @@ namespace mathq {
     // array<size_t,NE2>
     template <size_t NE2>
     operator std::array<size_t, NE2>() const {
-      const size_t N = size();
-      std::array<size_t, NE2> y(N);
-      for (size_t i = 0; i<N; i++) {
+      std::array<size_t, NE2> y;
+      for (size_t i = 0; i < size(); i++) {
         y[i] = (*this)[i];
       }
       return y;
     }
 
+
+    template <size_t NE2> std::array<size_t, NE2>
+    toArray() const {
+      std::array<size_t, NE2> y;
+      for (size_t i = 0; i < size(); i++) {
+        y[i] = (*this)[i];
+      }
+      return y;
+    }
 
   };
 

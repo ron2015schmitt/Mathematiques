@@ -752,9 +752,7 @@ namespace mathq {
 
     Type& operator=(const std::initializer_list<Element>& mylist) {
       if constexpr (is_dynamic_value) {
-        if (this->size() != mylist.size()) {
-          resize(mylist.size());
-        }
+        resize(mylist.size());
       }
 
       size_t k = 0;

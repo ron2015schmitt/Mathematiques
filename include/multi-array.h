@@ -34,7 +34,7 @@ namespace mathq {
 
     constexpr static size_t rank_value = rank_;
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = false;
+    constexpr static bool is_dynamic_value = (sizeof...(dim_ints) == 0);
     constexpr static size_t compile_time_size = calc_size<rank_value, dim_ints...>();
 
     // note that the following will be all zeroes for dyanmic multi-arrays
@@ -329,11 +329,11 @@ namespace mathq {
     //**********************************************************************
 
     template <typename... U> requires ( (is_dynamic_value) && (std::conjunction<std::is_convertible<U, size_t>...>::value) && (sizeof...(U) == rank_value) ) 
-        Type& resize(const U... args) {
+    Type& resize(const U... args) {
       std::array<size_t,rank_value> new_dims_array { size_t(args)... };
       if (ParentDataType::dynamic_dims_array != new_dims_array) {
         ParentDataType::dynamic_dims_array = new_dims_array;      
-        size_t new_size = std::accumulate(new_dims_array.begin(), new_dims_array.end(), 1, std::multiplies<size_t>());
+        size_t new_size = std::accumulate(new_dims_array.begin(), new_dims_array.end(), 1, std::multiplies<size_t>());  // product of elements
         ParentDataType::data_.resize( new_size );
       }
       return *this;
@@ -343,7 +343,7 @@ namespace mathq {
 
     template <bool enabled = is_dynamic_value> requires (enabled)
     Type& resize(const Dimensions& new_dims) {
-      auto new_dims_array = std::array<Element, rank_value>(new_dims);
+      auto new_dims_array = new_dims.toArray<rank_value>();
       if (ParentDataType::dynamic_dims_array != new_dims_array) {
         ParentDataType::dynamic_dims_array = new_dims_array; 
         ParentDataType::data_.resize( new_dims.product() );
@@ -602,7 +602,7 @@ namespace mathq {
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
           if (this->size() != x.size()) {
-            resize(x.size());
+            resize(x.dims());
           }
         }
         for (size_t i = 0; i < size(); i++) {
