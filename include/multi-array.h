@@ -328,6 +328,19 @@ namespace mathq {
     // resize / reshape is not allowed unless fixed-dimensions 
     //**********************************************************************
 
+    template <typename... U> requires ( (is_dynamic_value) && (std::conjunction<std::is_convertible<U, size_t>...>::value) && (sizeof...(U) == rank_value) ) 
+        Type& resize(const U... args) {
+      std::array<size_t,rank_value> new_dims_array { size_t(args)... };
+      if (ParentDataType::dynamic_dims_array != new_dims_array) {
+        ParentDataType::dynamic_dims_array = new_dims_array;      
+        size_t new_size = std::accumulate(new_dims_array.begin(), new_dims_array.end(), 1, std::multiplies<size_t>());
+        ParentDataType::data_.resize( new_size );
+      }
+      return *this;
+    }
+
+    
+
     template <bool enabled = is_dynamic_value> requires (enabled)
     Type& resize(const Dimensions& new_dims) {
       auto new_dims_array = std::array<Element, rank_value>(new_dims);
@@ -340,7 +353,7 @@ namespace mathq {
 
     // new_rdims.size() <= depth_value
     Type& resize(const RecursiveDimensions& new_rdims) {
-      return recurse_resize(new_rdims, 0);
+      return recurse_resize(new_rdims);
     }
 
     // helper functions

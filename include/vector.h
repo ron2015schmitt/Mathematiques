@@ -402,7 +402,7 @@ namespace mathq {
 
     // new_rdims.size() <= depth_value
     Type& resize(const RecursiveDimensions& new_rdims) {
-      return recurse_resize(new_rdims, 0);
+      return recurse_resize(new_rdims);
     }
 
     // helper functions
