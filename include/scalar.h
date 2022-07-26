@@ -409,30 +409,12 @@ namespace mathq {
 
 
 
-//     // ------------------------ Vector = Vector----------------
+    // ------------------------  Scalar----------------
 
-//     template <int NE2>
-//     Type& operator=(const Vector<Element, NE2>& v) {
-//       if constexpr (depth_value <= 1) {
-//         if constexpr (is_dynamic_value) {
-//           if (this->size() != v.size()) {
-//             resize(v.size());
-//           }
-//         }
-//         for (size_t i = 0; i < size(); i++) {
-//           (*this)[i] = v[i];
-//         }
-//       }
-//       else {
-//         if constexpr (is_dynamic_value) {
-//           resize(v.recursive_dims());
-//         }
-//         for (size_t i = 0; i < total_size(); i++) {
-//           this->dat(i) = v.dat(i);
-//         }
-//       }
-//       return *this;
-//     }
+    Type& operator=(const Type& x) {
+      data_ = x();
+      return *this;
+    }
 
 
     // // ------------------------ Vector = ExpressionR ----------------
