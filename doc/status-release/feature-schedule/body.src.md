@@ -142,7 +142,7 @@
 ```
 * make all temp README.md files read-only
 * change replaceable strings in include-templates files from ##NAME## to __NAME__ so as to make syntax highlighting work properly
-* `operator=`.  have a constexpr that allows / disallows resizing durign equals
+* `operator=`.  have a constexpr that allows / disallows resizing durign equals. or resizable(x) =, where sizable gives an ExpressionRW
 
 * conjugate OPERTOR~ for real ints wil give negative!!  make sure you dont take ~ of built-in types.  Use C++20 `requires` ?
 * what about equals for (double = 0) == Imaginary<double>(0)? How shoudl this be defined?

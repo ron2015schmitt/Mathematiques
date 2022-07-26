@@ -889,10 +889,8 @@ namespace mathq {
 
 
     // .quniq()
-    //         removes adjacent duplicates
-    //  template<typename T=NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&> 
+    //         returns a new vector with the preserved indices
     template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
-
     quniq() {
 
       const size_t N = size();
@@ -928,8 +926,8 @@ namespace mathq {
 
     // .uniq()
     //         removes all duplicates
+    //         returns a new vector with the preserved indices
     template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
-
     uniq() {
 
       const size_t N = size();

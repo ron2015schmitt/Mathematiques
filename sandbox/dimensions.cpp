@@ -216,8 +216,8 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(dims5 = { 13, 42, 56, 99 });
   TRDISP(dims5);
   TRDISP(dims5.getReducedDims());
-  TRDISP(dims5.product());
-  TRDISP(dims5.product() == 13*42*56*99);
+  TRDISP(dims5.num_elements());
+  TRDISP(dims5.num_elements() == 13*42*56*99);
 
 
 

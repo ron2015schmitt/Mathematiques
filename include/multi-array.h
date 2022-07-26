@@ -346,7 +346,7 @@ namespace mathq {
       auto new_dims_array = new_dims.toArray<rank_value>();
       if (ParentDataType::dynamic_dims_array != new_dims_array) {
         ParentDataType::dynamic_dims_array = new_dims_array; 
-        ParentDataType::data_.resize( new_dims.product() );
+        ParentDataType::data_.resize( new_dims.num_elements() );
       }
       return *this;
     }

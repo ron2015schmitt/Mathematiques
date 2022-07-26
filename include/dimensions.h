@@ -57,6 +57,20 @@ namespace mathq {
       *this = var;
     }
 
+    inline size_t num_elements(void) const {
+      if (rank() == 0) {
+        return 1;
+      }
+      size_t sz = 1;
+      for (size_t i = 0; i < this->size(); i++) {
+        sz *= (*this)[i];
+      }
+      return sz;
+    }
+
+    size_t rank() const {
+      return size();
+    }
 
     size_t size() const {
       return data_.size();
@@ -137,11 +151,6 @@ namespace mathq {
       return (this->getReducedDims() == var.getReducedDims());
     }
 
-
-    size_t rank() const {
-      return size();
-    }
-
     Dimensions& reverse() {
       // reverse order
       size_t k = size()-1;
@@ -158,17 +167,9 @@ namespace mathq {
       return dd.reverse();
     }
 
-    inline size_t product(void) const {
-      size_t sz = 1;
-      for (size_t i = 0; i < this->size(); i++) {
-        sz *= (*this)[i];
-      }
-      return sz;
-    }
-
 
     bool equal_num_elements(const Dimensions& var) const {
-      return (this->product() == var.product());
+      return (this->num_elements() == var.num_elements());
     }
 
 
@@ -265,6 +266,7 @@ namespace mathq {
     //**********************************************************************
 
     // array<size_t,NE2>
+    // Does this provide any utility?
     template <size_t NE2>
     operator std::array<size_t, NE2>() const {
       std::array<size_t, NE2> y;
@@ -318,62 +320,6 @@ namespace mathq {
   };
 
 
-
-  // ********************************************************************************
-  // ScalarDimensions 
-  //
-  // This class is used for the dimensions of the Scalar class
-  // ********************************************************************************
-
-  class ScalarDimensions : public Dimensions {
-  public:
-    using Type = ScalarDimensions;
-    using Parent = Dimensions;
-    using ElementType = size_t;
-
-    ScalarDimensions() {
-      resize(1);
-      (*this)[0] = 1;
-    }
-
-    inline std::string classname() const {
-      return ClassName();
-    }
-
-    static inline std::string ClassName() {      using namespace display;
-      std::string s = "ScalarDimensions";
-      return s;
-    }
-  };
-
-
-
-  // // ***************************************************************************
-  // // NumberTrait specialization for  Dimensions
-  // //
-  // // Compiler can't compile this until after Dimensions has been defined
-  // // ***************************************************************************
-
-  // template <typename NewNumber, size_t rank>
-  // class
-  //   NumberTrait<Dimensions, NewNumber> {
-  // public:
-  //   using InputType = Vector<size_t>;
-  //   using Type = typename NumberTrait<size_t>::Type;
-  //   using ReplacedNumberType = Vector<typename NumberTrait<size_t, NewNumber>::ReplacedNumberType>;
-  //   using ReplacedElementType = Vector<NewNumber>; // this is correct, see comment above
-
-  //   constexpr static bool value = false;
-  //   constexpr static size_t depth() {
-  //     return 1 + NumberTrait<size_t, NewNumber>::depth();
-  //   }
-  //   inline static size_t size(const InputType& x) {
-  //     return x.size();
-  //   }
-  //   inline static size_t total_size(const InputType& x) {
-  //     return x.total_size();
-  //   }
-  // };
 
 
 
