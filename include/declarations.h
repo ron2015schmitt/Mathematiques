@@ -85,9 +85,6 @@ namespace mathq {
 
   inline bool equiv(const Indices& inds1, const Indices& inds2);
 
-  template<typename Element, size_t L>
-  class NestedInitializerListDef;
-
   class VectorofPtrs;
   template <class DAT> class Pair;
 

@@ -138,3 +138,13 @@ public:
     * a nested `initializer_list` with depth equal to the number of indicies
     * for nexted MultiArrays, the compiler will recursive traverse the nested `initializer_list`s via the definition of `Element`
 
+1. Approach to *constructors*: use `explicit` except in certain cases: default and copy constructors should be implicit.
+  * `MultiArray`s `initializer_list` constructors should be implicit so that compiler can recurse through nexted MultiArrays
+  * `Indices` `initializer_list` constructors should be implicit so that initializer_lists can be converted to Indices by the compiler
+  * Should `DeepIndices` `initializer_list` constructors be implicit? 
+  * Should `Dimensions` and `DeepDimensions` `initializer_list` constructors be implicit? No, this will cause problems with initializer_list constructors of `MultiArray`s
+
+1. Using `requires` and `std::enable_f` for a method: it must be templated and the boolean clause must contain one of the templated variables.
+  * for `requires` put all the conditions in the requies clause.  put only one bool if using an enable bool 
+
+1. `is_unsigned`: 0 and positive ints are of type `int` by default, so feeding such constants to a constructor requiring `is_unsigned` will fail.  Work-aroud: 1) Use 0u or 1u, or don't use `unsigned` and check in real time.

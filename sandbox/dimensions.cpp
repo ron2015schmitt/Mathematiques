@@ -121,7 +121,6 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(Vector<double, 3> v1);
   TRDISP(v1.size());
   TRDISP(v1.is_dynamic_value);
-  // TRDISP(v1.data_);
   TRDISP(v1.static_dims_array);
   TRDISP(v1);
   v1[0] = 2.2;
@@ -134,28 +133,44 @@ int main(int argc, char* argv[]) {
 
   CR();
   ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
+  TRDISP(v2);
   TRDISP(v2.size());
   TRDISP(v2.dims());
   TRDISP(v2.is_dynamic_value);
-  // TRDISP(v2.data_);
   TRDISP(v2.static_dims_array);
   TRDISP(v2.resize(4));
 
   CR();
   ECHO_CODE(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
+  TRDISP(v3);
   TRDISP(v3.size());
   TRDISP(v3.is_dynamic_value);
-  // TRDISP(v3.data_);
   TRDISP(v3.static_dims_array);
   TRDISP(v3.dims());
 
   CR();
   ECHO_CODE(Vector<double> v4);
+  TRDISP(v4);
   TRDISP(v4.size());
   TRDISP(v4.is_dynamic_value);
-  // TRDISP(v4.data_);
   TRDISP(v4.static_dims_array);
   TRDISP(v4.dims());
+
+  CR();
+  ECHO_CODE(Vector<double> v4b(3));  // size 3
+  TRDISP(v4b);
+  TRDISP(v4b.size());
+  TRDISP(v4b.is_dynamic_value);
+  TRDISP(v4b.static_dims_array);
+  TRDISP(v4b.dims());
+
+  CR();
+  ECHO_CODE(Vector<double,5> v4c(3.14));  // set all vlaues to 3.14
+  TRDISP(v4c);
+  TRDISP(v4c.size());
+  TRDISP(v4c.is_dynamic_value);
+  TRDISP(v4c.static_dims_array);
+  TRDISP(v4c.dims());
 
 
   CR();
@@ -320,12 +335,12 @@ int main(int argc, char* argv[]) {
   TRDISP(v7);
 
 
-  CR();
-  ECHO_CODE(Vector<double> v9(6, 7));
-  TRDISP(v9.size());
-  TRDISP(v9.element_size());
-  TRDISP(v9.dims());
-  TRDISP(v9);
+  // CR();
+  // ECHO_CODE(Vector<double> v9(6, 7));
+  // TRDISP(v9.size());
+  // TRDISP(v9.element_size());
+  // TRDISP(v9.dims());
+  // TRDISP(v9);
 
   CR();
   ECHO_CODE(Vector<double> v10({ 2.2, 3.3, 4.4 }));
@@ -362,16 +377,16 @@ int main(int argc, char* argv[]) {
   TRDISP(ind1);
   TRDISP(v13[ind1]);
 
-  CR();
-  ECHO_CODE(Vector<double> k = 100*range<double>(0, 10));
-  TRDISP(k);
-  TRDISP(SLC::even);
-  ECHO_CODE(Vector<size_t> vindex(11, SLC::even));
-  TRDISP(vindex);
-  TRDISP(k[vindex]);
-  TRDISP(k[SLC::even]);
-  TRDISP(k[-1]);
-  TRDISP(k[-2]);
+  // CR();
+  // ECHO_CODE(Vector<double> k = 100*range<double>(0, 10));
+  // TRDISP(k);
+  // TRDISP(SLC::even);
+  // ECHO_CODE(Vector<size_t> vindex(11, SLC::even));
+  // TRDISP(vindex);
+  // TRDISP(k[vindex]);
+  // TRDISP(k[SLC::even]);
+  // TRDISP(k[-1]);
+  // TRDISP(k[-2]);
 
 
   TRDISP(InitializerTrait< std::initializer_list<double> >::depth());
@@ -387,6 +402,14 @@ int main(int argc, char* argv[]) {
 
 
   TRDISP(array_of_one_value<int, -1,7>());
+
+  TRDISP((std::is_unsigned<decltype(1)>::value));
+  TRDISP((std::is_unsigned<decltype(1u)>::value));
+  TRDISP((std::is_unsigned<decltype(0)>::value));
+  TRDISP((std::is_unsigned<decltype(0u)>::value));
+  TRDISP((std::is_convertible<decltype(0), size_t>::value));
+  TRDISP((std::is_convertible<decltype(-1), size_t>::value));
+  TRDISP((std::is_convertible<decltype(3.14), size_t>::value));
 
   return 0;
 }

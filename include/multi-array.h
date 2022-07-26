@@ -124,7 +124,7 @@ namespace mathq {
     //                    CONSTRUCTORS: FIXED dimensions  
     //**********************************************************************
 
-    // --------------------- dynamic MultiArray --------------------
+    // --------------------- FIXED SIZE: from dynamic MultiArray --------------------
 
     template<bool enable = !is_dynamic_value> requires (enable)
     explicit MultiArray(const MultiArray<Element, rank_value>& var) {

@@ -40,7 +40,7 @@ namespace mathq {
     constexpr static std::array<size_t, rank_value> static_dims_array = { sizes... };
     constexpr static size_t N1 = get<0>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = (N1 == 0);
+    constexpr static bool is_dynamic_value = ( sizeof...(sizes) == 0 );
     constexpr static size_t compile_time_size = calc_size<rank_value, N1>();
 
     //**********************************************************************
@@ -91,11 +91,7 @@ namespace mathq {
     }
 
     // --------------------- copy constructor --------------------
-    template<size_t NE2>
-    explicit MultiArray(const Vector<Element, NE2>& var) {
-      if (is_dynamic_value) {
-        resize(var.size());
-      }
+    MultiArray(const Type& var) {
       *this = var;
     }
 
@@ -136,7 +132,7 @@ namespace mathq {
     }
 
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
-    template <class Derived, size_t... ints>
+    template <class Derived>
     MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
       if constexpr (is_dynamic_value) {
         this->resize(x.size());
@@ -149,16 +145,22 @@ namespace mathq {
     //                    CONSTRUCTORS: FIXED size  
     //**********************************************************************
 
+    // --------------------- FIXED SIZE: from dynamic size --------------------
+    template<bool enabled = !is_dynamic_value> requires (enabled)
+    explicit MultiArray(const Vector<Element>& var) {
+      *this = var;
+    }
+
     // --------------------- FIXED SIZE: set all elements to same value   ---------------------
 
-    template<size_t NE1 = N1, EnableIf< (NE1 > 0) > = 1>
-      explicit MultiArray(const Element val) {
+    template<bool enabled = !is_dynamic_value> requires (enabled)
+    explicit MultiArray(const Element val) {
       *this = val;
     }
 
     // --------------------- FIXED SIZE: set all bottom elements to same value   ---------------------
 
-    template<size_t NE1 = N1, EnableIf<(NE1 > 0)&&(depth_value>1)&&(!std::is_same<Element, NumberType>::value)> = 1>
+    template<bool enabled = !is_dynamic_value> requires (enabled && (depth_value > 1) && (!std::is_same<Element, NumberType>::value) )
       explicit MultiArray(const NumberType val) {
       *this = val;
     }
@@ -167,16 +169,24 @@ namespace mathq {
     //                    CONSTRUCTORS: Dynamic size  
     //**********************************************************************
 
-    // --------------------- DYNAMIC SIZE: set size from int  ---------------------
+    // --------------------- copy constructor --------------------
+    template<size_t NE2, bool enabled = is_dynamic_value> requires (enabled)
+    MultiArray(const Vector<Element, NE2>& var) {
+      resize(var.size());
+      *this = var;
+    }
 
-    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
-    MultiArray(const size_t N) {
+    // --------------------- DYNAMIC SIZE: set size from int  ---------------------
+    // need condition otherwise floats can be converted
+    // can't have is_unsigned because 0 and positive ints are of type `int` by default.
+    template<typename T> requires (is_dynamic_value && (std::is_integral<T>::value))
+    explicit MultiArray(const T N) {
       resize(N);
     }
 
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
-    template<size_t NE1 = N1, EnableIf<(NE1 == 0)> = 1>
+    template<bool enabled = is_dynamic_value> requires (enabled)
     explicit MultiArray(const Dimensions& dims) {
       // TRDISP(dims);
       this->resize(dims);
@@ -184,7 +194,7 @@ namespace mathq {
 
     // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
 
-    template<size_t NE1 = N1, size_t dim_depth, EnableIf<(NE1 == 0)> = 1>
+    template<size_t dim_depth> requires ( is_dynamic_value && (dim_depth <= depth_value) )
     explicit MultiArray(const RecursiveDimensions& recursive_dims) {
       // TRDISP(recursive_dims);
       this->resize(recursive_dims);
@@ -194,7 +204,7 @@ namespace mathq {
 
     // --------------------- DYNAMIC SIZE: set size = N and set all to same value  ---------------------
 
-    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
+    template<bool enabled = is_dynamic_value> requires (enabled)
     explicit MultiArray(const size_t N, const Element val) {
       resize(N);
       *this = val;
@@ -202,7 +212,7 @@ namespace mathq {
 
     // --------------------- array[]  CONSTRUCTOR ---------------------
 
-    template<size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
+    template<bool enabled = is_dynamic_value> requires (enabled)
     explicit MultiArray(const size_t N, const Element(vals)[]) {
       resize(N);
       *this = vals;
@@ -210,9 +220,11 @@ namespace mathq {
 
 
     // --------------------- slice  CONSTRUCTOR ---------------------
+    // N is the length that the slice is referenced to. 
+    // The Vector will have size of the slice referenced to N
 
-    template<typename T, size_t NE1 = N1, EnableIf<NE1 == 0> = 1>
-    explicit MultiArray(const Element N, const slc<T>& s) {
+    template<typename T, bool enabled = is_dynamic_value> requires (enabled)
+    explicit MultiArray(const size_t N, const slc<T>& s) {
       T mystart = s.start();
       if (mystart < 0) {
         mystart += N;
@@ -886,7 +898,7 @@ namespace mathq {
       const size_t N = size();
 
       if (N==0)
-        return *(new Vector<size_t>(0));
+        return *(new Vector<size_t>());
 
       std::queue<Pair<Element> > unique;
 
@@ -923,7 +935,7 @@ namespace mathq {
       const size_t N = size();
 
       if (N==0)
-        return *(new Vector<size_t>(0));
+        return *(new Vector<size_t>(0u));
 
       std::map<size_t, NumberType> mymap;
       for (size_t j = 0; j < N; j++) {
