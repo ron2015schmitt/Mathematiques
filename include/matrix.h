@@ -556,7 +556,7 @@ namespace mathq {
     // -------------------------- adjoint() --------------------------------
 
     template< typename T = NumberType >
-    typename std::enable_if<is_complex<T>{}, Matrix<T>& >::type adjoint() {
+    typename std::enable_if<is_complex<T>::value, Matrix<T>& >::type adjoint() {
       this->conj();
       this->transpose();
       return *this;
@@ -984,7 +984,7 @@ namespace mathq {
     // NOTE: in-place
 
     template< typename T = NumberType >
-    typename std::enable_if<is_complex<T>{}, Matrix<T>& >::type conj() {
+    typename std::enable_if<is_complex<T>::value, Matrix<T>& >::type conj() {
       for (size_t i = 0; i < size(); i++) {
         data_[i] = std::conj(data_[i]);
       }

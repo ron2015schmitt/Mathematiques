@@ -509,8 +509,8 @@ namespace mathq {
 
     //----------------- .conj() ---------------------------
 
-    template<typename T = NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&>
-    conj() {
+    template<typename T = NumberType> requires(is_complex<T>::value)
+    Type& conj() {
       using std::conj;
       data_ = conj(data_);
       return *this;
@@ -526,7 +526,6 @@ namespace mathq {
 
     // .quniq()
     //         removes adjacent duplicates
-    //  template<typename T=NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&> 
     Scalar<size_t>& quniq() {
       return *(new Scalar<size_t>(0));
     }
@@ -546,13 +545,13 @@ namespace mathq {
 
     // .cumsum() -- cumulative sum
 
-    Element cumsum() {
+    Type& cumsum() {
       return *this;
     }
 
     // .cumprod()  --  cumulative product
 
-    Element cumprod() {
+    Type& cumprod() {
       return *this;
     }
 

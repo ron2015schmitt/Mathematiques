@@ -847,7 +847,7 @@ namespace mathq {
 
     //----------------- .conj() ---------------------------
 
-    template<typename T = NumberType> EnableMethodIf<is_complex<T>{}, Vector<T>&>
+    template<typename T = NumberType> EnableMethodIf<is_complex<T>::value, Vector<T>&>
     conj() {
       using std::conj;
       for (size_t i = 0; i < size(); i++) {

@@ -262,7 +262,7 @@ namespace mathq {
     // -------------------------- adjoint() --------------------------------
 
     template< typename T = Number >
-    typename std::enable_if<is_complex<T>{}, MatrixHermitian<Number, N>& >::type adjoint() {
+    typename std::enable_if<is_complex<T>::value, MatrixHermitian<Number, N>& >::type adjoint() {
       return *this;
     }
 
@@ -458,7 +458,7 @@ namespace mathq {
     // NOTE: in-place
 
     template< typename T = Number >
-    typename std::enable_if<is_complex<T>{}, MatrixHermitian<Number, N>& >::type conj() {
+    typename std::enable_if<is_complex<T>::value, MatrixHermitian<Number, N>& >::type conj() {
       return *this;
     }
 

@@ -39,7 +39,7 @@ namespace mathq {
 
   template<typename T, size_t N>
   constexpr T compile_time_summation(const std::array<T, N>& A) {
-    T sum(T(0));
+    T sum{T(0)};
     for (size_t i = 0; i < N; ++i) {
       sum += A[i];
     }
@@ -49,7 +49,7 @@ namespace mathq {
   // note this returns 1 for arrays of size == 0
   template<typename T, size_t N>
   constexpr T compile_time_product(const std::array<T, N>& A) {
-    T product(T(1));
+    T product{T(1)};
     for (size_t i = 0; i < N; ++i) {
       product *= A[i];
     }

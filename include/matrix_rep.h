@@ -371,7 +371,7 @@ namespace mathq {
     // NOTE: in-place
 
     template< typename T = Number >
-    typename std::enable_if<is_complex<T>{}, MatrixRepRowAndCol<Number>& >::type conj() {
+    typename std::enable_if<is_complex<T>::value, MatrixRepRowAndCol<Number>& >::type conj() {
       return *this;
     }
 
