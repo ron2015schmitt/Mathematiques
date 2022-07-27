@@ -5,51 +5,18 @@ namespace mathq
 {
 
 
-
-  // --------------------  tensor (outer) product --------------------------------
-
-  // prodt(a,b)
-
-  template <class E1, class E2>
-  auto prodt(const Scalar<E1>& a, const Scalar<E2>& b) {
-    return a() * b();
-  }
-
-  // (a&b)
-  // TODO: rewrite for only floating point base types
-
-  template <class E1, class E2>
-  auto operator&(const Scalar<E1>& a, const Scalar<E2>& b) {
-    return prodt(a, b);
-  }
-
-  // -------------------- antisymmetric (wedge)  product -----------------------
-
-  // prodw(a,b)
-
-  template <class E1, class E2>
-  auto prodw(const Scalar<E1>& a, const Scalar<E2>& b) {
-    return 0;
-  }
-
-  // (a^b)
-  // TODO: rewrite for only floating point base types
-
-  template <class E1, class E2>
-  auto operator^(const Scalar<E1>& a, const Scalar<E2>& b) {
-    return prodw(a, b);
-  }
-
   /****************************************************************************
-   *  products: Vector Vector
+   * dot(a,b) 
+   *
+   * dot product (inner product)
+   *  
+   * for non-integer Numbers can also use (a|b) notation
    ****************************************************************************
    */
 
-   // --------------------  dot (inner) product --------------------------------
 
-   // dot(a,b) <==> (a|b)
-   // TODO: rewrite so that (a|b) is defined only floating point base types so that bitwise operators can be used
-
+  // OPERATOR |
+  // TODO: rewrite so that (a|b) is defined only floating point base types so that bitwise operators can be used
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2> 
   auto operator|(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
@@ -57,7 +24,12 @@ namespace mathq
     return dot(x1, x2);
   }
 
-   // dot(a,b)
+
+  // ----------------------------------------------------
+  //                 Equal Depth
+  // ----------------------------------------------------
+
+  // dot(a,b)
 
   template <class E1, class E2>
   auto dot(const Scalar<E1>& a, const Scalar<E2>& b) {
@@ -117,7 +89,7 @@ namespace mathq
     return *result;
   }
 
-  // (1C: depth • V) Matrix<E1(NT1)> | Vector<E2(NT2)>
+  // (1C: M • V) Matrix<E1(NT1)> | Vector<E2(NT2)>
   //             Matrix -> rank = 2
   //             Vector -> rank = 1
 
@@ -143,7 +115,7 @@ namespace mathq
     return vout;
   }
 
-  // (1D: V • depth) Vector<E1(NT1)> | Matrix<E2(NT2)>
+  // (1D: V • M) Vector<E1(NT1)> | Matrix<E2(NT2)>
   //             Vector -> rank = 1
   //             Matrix -> rank = 2
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
@@ -169,7 +141,7 @@ namespace mathq
     return vout;
   }
 
-  // (1E: depth • depth) Matrix<E1(NT1)> | Matrix<E2(NT2)>
+  // (1E: M • M) Matrix<E1(NT1)> | Matrix<E2(NT2)>
   //             Matrix -> rank = 2
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
@@ -200,6 +172,10 @@ namespace mathq
     }
     return m3;
   }
+
+  // ----------------------------------------------------
+  //                 Different Depths
+  // ----------------------------------------------------
 
   // (4A) MultiArray<NT1,rank,depth> + MultiArray<NT2,rank,1>
 
@@ -258,67 +234,33 @@ namespace mathq
   //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3>>(x1, x2);
   // }
 
-  // --------------------  tensor (outer) product --------------------------------
 
-  // -------------------- antisymmetric (wedge)  product -----------------------
 
-  // -------------------- cross  product -----------------------
 
   /****************************************************************************
-   *  product: Matrix Matrix
+   * prodt(a,b) 
+   *
+   * tensor product (outer product)
+   *  
+   * for non-integer Numbers can also use (a&b) notation
    ****************************************************************************
    */
 
-   // --------------------  dot (inner) product --------------------------------
-   // --------------------  tensor (outer) product --------------------------------
+  // OPERATOR &
+  // TODO: rewrite so that (a&b) is defined only floating point base types so that bitwise operators can be used
 
-   // -------------------- antisymmetric (wedge)  product -----------------------
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2> 
+  auto operator&(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
+    // OUTPUT("operator|");
+    return prodt(x1, x2);
+  }
 
-   /****************************************************************************
-    *  product: Matrix Vector
-    ****************************************************************************
-    */
-    // --------------------  dot (inner) product --------------------------------
-    // --------------------  tensor (outer) product --------------------------------
+  // scalar scalar
 
-    // -------------------- antisymmetric (wedge)  product -----------------------
-
-    /****************************************************************************
-     *  product: ExpressionR ExpressionR
-     ****************************************************************************
-     */
-     // --------------------  dot (inner) product --------------------------------
-
-     //   // (a|b)
-
-     // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-     // auto dot(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
-     //   typedef typename MultType<NT1,NT2>::Type NT3;
-     //   typedef typename NumberTrait<E1,NT3>::ReplacedNumberType E3;   // see TODO note above
-
-     //     // (Scalar|Scalar)
-     //     if ((a.rank() == 0) && (b.rank() == 0)) {
-     //       return a[0]*b[0];
-     //     }
-
-     //     // (Vector|Vector)
-     //     if ((a.rank() == 1) && (b.rank() == 1)) {
-     //       Number result = Number(0);
-     //       for (size_t i = a.total_size(); i--;) {
-     // 	result += a[i]*b[i];
-     //       }
-     //       return result;
-     //     }
-     //   }
-
-     //   // dot(a,b)
-
-     // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-     // auto dot(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
-     //     return (a|b);
-     //   }
-
-     //   // --------------------  tensor (outer) product --------------------------------
+  template <class E1, class E2>
+  auto prodt(const Scalar<E1>& a, const Scalar<E2>& b) {
+    return a() * b();
+  }
 
      //   // (a&b)
 
@@ -341,7 +283,33 @@ namespace mathq
      //     return (a&b);
      //   }
 
-     //   // -------------------- antisymmetric (wedge)  product -----------------------
+
+   /****************************************************************************
+   * prodt(a,b) 
+   *
+   * antisymmetric tensor product (wedge product)
+   *  
+   * for non-integer Numbers can also use (a^b) notation
+   ****************************************************************************
+   */
+
+  // OPERATOR &
+  // TODO: rewrite so that (a&b) is defined only floating point base types so that bitwise operators can be used
+
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2> 
+  auto operator^(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
+    // OUTPUT("operator|");
+    return prodw(x1, x2);
+  }
+
+  // prodw(a,b)
+
+  template <class E1, class E2>
+  auto prodw(const Scalar<E1>& a, const Scalar<E2>& b) {
+    return 0;
+  }
+
+
 
      //   // (a^b)
 
@@ -363,6 +331,19 @@ namespace mathq
      // auto prodw(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //     return (a^b);
      //   }
+
+
+   /****************************************************************************
+   * prodt(a,b) 
+   *
+   * vector cross product 
+   *  
+   * for non-integer Numbers can also use (a^b) notation
+   ****************************************************************************
+   */
+
+  
+
 };
 
 #endif
