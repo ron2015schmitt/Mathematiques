@@ -70,9 +70,9 @@ namespace mathq {
 
   public:
 
-//     //**********************************************************************
-//     //                            CONSTRUCTORS 
-//     //**********************************************************************
+    //**********************************************************************
+    //                            CONSTRUCTORS 
+    //**********************************************************************
 
 
     // -------------------  default  --------------------
@@ -92,17 +92,14 @@ namespace mathq {
 
     // --------------------- FIXED SIZE: set all bottom elements to same value   ---------------------
 
-    // template<size_t depth = depth_value> requires ( (depth > 1) && (!std::is_same<Element, NumberType>::value) )
-    //   explicit MultiArray(const NumberType val) {
-    //   *this = val;
-    // }
+    template<size_t depth = depth_value> requires ( (depth > 1) && (!std::is_same<Element, NumberType>::value) )
+      explicit MultiArray(const NumberType val) {
+      *this = val;
+    }
 
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
     template <class Derived>
     MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
-      if constexpr (is_dynamic_value) {
-        this->resize(x.size());
-      }
       *this = x;
     }
 
@@ -301,6 +298,7 @@ namespace mathq {
     //************* Array-style Element Access: v[n] ***********************
     //**********************************************************************
 
+
     // "read/write"
     template <typename T> requires (std::is_integral<T>::value)
     Element& operator[](const T n) {
@@ -439,12 +437,6 @@ namespace mathq {
       data_ = varray[0];
       return *this;
     }
-
-
-
-
-
-
 
 
     //**********************************************************************
