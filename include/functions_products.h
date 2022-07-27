@@ -53,7 +53,7 @@ namespace mathq
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2> 
   auto operator|(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
-    OUTPUT("operator|");
+    // OUTPUT("operator|");
     return dot(x1, x2);
   }
 
@@ -126,7 +126,7 @@ namespace mathq
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
-    DISP(m1);
+    // DISP(m1);
     size_t Nrows = m1.dims()[0];
     size_t Ncols = m1.dims()[1];
     size_t i = 0;

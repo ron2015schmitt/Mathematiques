@@ -400,6 +400,9 @@ int main(int argc, char* argv[]) {
     TRDISP(temp);
   }
 
+  DISP(InitializerTrait< std::initializer_list<double> >::get_size_array({ 1 , 2, 3 }) );
+  DISP(InitializerTrait< std::initializer_list< std::initializer_list<double> > >::get_size_array({ {1, 2}, {3, 4}, {5, 6} }) );
+
 
   TRDISP(array_of_one_value<int, -1,7>());
 

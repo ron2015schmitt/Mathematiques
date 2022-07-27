@@ -67,6 +67,7 @@ namespace mathq {
 
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
 
+    using InitializerType = typename MakeInitializer<Element, rank_value >::Type;
 
   public:
 
@@ -85,16 +86,14 @@ namespace mathq {
     }
 
 
-    // ----------------------- flat initializer_list ---------------------
-    // not explicit: allows use of nested init lists when depth_value > 1
-    MultiArray(const std::initializer_list<Element>& var) {
-      *this = var;
-    }
 
     // ----------------------- indices initializer_list ---------------------
     // not explicit: allows use of nested init lists when depth_value > 1
-    MultiArray(const MakeInitializer<Element, rank_value >::Type& var) {
-      OUTPUT("MultiArray(const MakeInitializer<Element, rank_value >::Type& var)");
+    MultiArray(const InitializerType& var) {
+      if constexpr (is_dynamic_value) {
+        auto mysizes = InitializerTrait< InitializerType >::get_size_array(var);
+        resize(Dimensions(mysizes));
+      }
       *this = var;
     }
 
@@ -146,6 +145,13 @@ namespace mathq {
     template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value>1) && (!std::is_same<Element, NumberType>::value) )
       explicit MultiArray(const NumberType val) {
       *this = val;
+    }
+
+    // ----------------------- FIXED SIZE: flat initializer_list ---------------------
+    // not explicit: allows use of nested init lists when depth_value > 1
+    template<bool enable = !is_dynamic_value> requires (enable)
+    MultiArray(const std::initializer_list<Element>& var) {
+      *this = var;
     }
 
     //**********************************************************************
@@ -352,6 +358,15 @@ namespace mathq {
       return *this;
     }
 
+
+    Type& resize(const InitializerType& var) {
+      auto mysizes = InitializerTrait< InitializerType >::get_size_array(var);
+      resize(Dimensions(mysizes));
+      return *this;
+    }
+
+
+
     // new_rdims.size() <= depth_value
     Type& resize(const RecursiveDimensions& new_rdims) {
       return recurse_resize(new_rdims);
@@ -500,26 +515,21 @@ namespace mathq {
     // "read/write"
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
     Element& operator[](const T n) {
-      OUTPUT("[] 1");
-      DISP(n);
-      DISP( display::getTypeName< ParentDataType >());
-      DISP( ParentDataType::compile_time_size );
+      // OUTPUT("[] 1");
       return ParentDataType::data_[n];
     }
 
     // read
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
     const Element& operator[](const T n)  const {
-      OUTPUT("[] 2");
-      DISP(n);
+      // OUTPUT("[] 2");
       return ParentDataType::data_[n];
     }
 
     // "read/write"
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
     Element& operator[](const T n) {
-      OUTPUT("[] 3");
-      DISP(n);
+      // OUTPUT("[] 3");
       T m = n;
       while (m < 0) m += size();
       return ParentDataType::data_[m];
@@ -528,8 +538,7 @@ namespace mathq {
     // read
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
     const Element& operator[](const T n)  const {
-      OUTPUT("[] 4");
-      DISP(n);
+      // OUTPUT("[] 4");
       T m = n;
       while (m < 0) m += size();
       return ParentDataType::data_[m];
@@ -541,9 +550,7 @@ namespace mathq {
 
     // ---------------- A[Indices]--------------
     Element& operator[](const Indices& inds) {
-      DISP(inds);
       size_t k = this->index(inds);
-      DISP(k);
       return (*this)[k];
     }
     const Element operator[](const Indices& inds) const {
@@ -689,41 +696,25 @@ namespace mathq {
 
     template <size_t list_depth> requires ((list_depth > 1) && (list_depth <= rank_value))
     Type& list_helper(const typename MakeInitializer<Element, list_depth>::Type& mylist, Indices& inds) {
-      DISP(list_depth);
-      DISP(mylist);
-      DISP(inds);
-      DISP(display::getTypeName<double>());
-      DISP(display::getTypeName< std::initializer_list<Element> >());
       size_t k = 0;
       using ListType = typename MakeInitializer<Element, list_depth>::Type;
-      DISP(display::getTypeName< ListType >());
-      DISP(display::getTypeName< typename ListType::iterator >());
       using Iterator = typename MakeInitializer<Element, list_depth>::Type::iterator;
       ListType temp;
-      DISP(temp);
       Iterator it = mylist.begin();
-      DISP(*it);
 
       for (it = mylist.begin(); it != mylist.end(); it++, k++) {
         inds[rank_value-list_depth] = k;
-        DISP(inds);
         list_helper(*it, inds);
       }
       return *this;
     }
+
     Type& list_helper(const std::initializer_list<Element>& mylist, Indices& inds) {
-      OUTPUT("bottom list_helper");
       size_t k = 0;
       using Iterator = typename std::initializer_list<Element>::iterator;
       Iterator it = mylist.begin();
-      DISP(*it);
       for (it = mylist.begin(); it != mylist.end(); it++, k++) {
-        DISP(*it);
-        DISP(inds);
-        DISP(rank_value-1);
         inds[rank_value-1] = k;
-        DISP(inds);
-        DISP((*this)[inds]);
         (*this)[inds] = *it;
       }
       return *this;

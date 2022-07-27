@@ -743,11 +743,6 @@ namespace mathq {
   };
 
 
-
-
-
-
-
   // ************************************************************************************************
   //  InitializerTrait
   // ************************************************************************************************
@@ -763,6 +758,15 @@ namespace mathq {
     constexpr static size_t depth() {
       return 0;
     }
+    constexpr static size_t size() {
+      return 0;
+    }
+
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t,Nin> get_size_array( const Type& mylist, const std::array<size_t,Nin>& size_array = std::array<size_t,Nin>{} ) {
+      return size_array;
+    }
+
   };
 
   //  std::initializer_list<Element>
@@ -779,6 +783,18 @@ namespace mathq {
     constexpr static size_t depth() {
       return 1 + InitializerTrait<Element>::depth();
     }
+
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t, Nin+depth()> get_size_array( const Type& mylist, const std::array<size_t,Nin>& size_array = std::array<size_t,Nin>{} ) {
+      std::array<size_t,Nin+1> new_array{};
+      for (size_t ii = 0; ii < size_array.size(); ii++) {
+        new_array[ii] = size_array[ii];
+      }
+      new_array[Nin] = mylist.size();
+      auto x = InitializerTrait<Element>::get_size_array(*(mylist.begin()), new_array);
+      return x;
+    }
+
   };
 
 
