@@ -94,6 +94,7 @@ namespace mathq {
     // ----------------------- indices initializer_list ---------------------
     // not explicit: allows use of nested init lists when depth_value > 1
     MultiArray(const MakeInitializer<Element, rank_value >::Type& var) {
+      OUTPUT("MultiArray(const MakeInitializer<Element, rank_value >::Type& var)");
       *this = var;
     }
 
@@ -182,11 +183,11 @@ namespace mathq {
     }
 
 
-    // --------------------- DYNAMIC SIZE: set size = N and set all to same value  ---------------------
+    // --------------------- DYNAMIC SIZE: set dims and set all to same value  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray(const size_t N, const Element val) {
-      resize(N);
+    explicit MultiArray(const Dimensions& dims, const Element val) {
+      this->resize(dims);
       *this = val;
     }
 
@@ -499,18 +500,26 @@ namespace mathq {
     // "read/write"
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
     Element& operator[](const T n) {
+      OUTPUT("[] 1");
+      DISP(n);
+      DISP( display::getTypeName< ParentDataType >());
+      DISP( ParentDataType::compile_time_size );
       return ParentDataType::data_[n];
     }
 
     // read
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
     const Element& operator[](const T n)  const {
+      OUTPUT("[] 2");
+      DISP(n);
       return ParentDataType::data_[n];
     }
 
     // "read/write"
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
     Element& operator[](const T n) {
+      OUTPUT("[] 3");
+      DISP(n);
       T m = n;
       while (m < 0) m += size();
       return ParentDataType::data_[m];
@@ -519,6 +528,8 @@ namespace mathq {
     // read
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
     const Element& operator[](const T n)  const {
+      OUTPUT("[] 4");
+      DISP(n);
       T m = n;
       while (m < 0) m += size();
       return ParentDataType::data_[m];
@@ -530,7 +541,9 @@ namespace mathq {
 
     // ---------------- A[Indices]--------------
     Element& operator[](const Indices& inds) {
+      DISP(inds);
       size_t k = this->index(inds);
+      DISP(k);
       return (*this)[k];
     }
     const Element operator[](const Indices& inds) const {
@@ -648,7 +661,7 @@ namespace mathq {
 
     Type& operator=(const std::list<Element>& mylist) {
       size_t i = 0;
-      for (typename std::list<Element>::const_iterator it = mylist.begin(); it != mylist.end(); ++it) {
+      for (typename std::list<Element>::const_iterator it = mylist.begin(); it != mylist.end(); it++) {
         (*this)(i++) = *it;
       }
       return *this;
@@ -660,7 +673,7 @@ namespace mathq {
     Type& operator=(const std::initializer_list<Element>& mylist) {
       size_t k = 0;
       typename std::initializer_list<Element>::iterator it;
-      for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+      for (it = mylist.begin(); it != mylist.end(); it++, k++) {
         ParentDataType::data_[k] = *it;
       }
       return *this;
@@ -674,21 +687,43 @@ namespace mathq {
       return *this;
     }
 
-    template <size_t list_depth> requires (list_depth > 1)
+    template <size_t list_depth> requires ((list_depth > 1) && (list_depth <= rank_value))
     Type& list_helper(const typename MakeInitializer<Element, list_depth>::Type& mylist, Indices& inds) {
+      DISP(list_depth);
+      DISP(mylist);
+      DISP(inds);
+      DISP(display::getTypeName<double>());
+      DISP(display::getTypeName< std::initializer_list<Element> >());
       size_t k = 0;
-      typename MakeInitializer<Element, list_depth>::Type::iterator it;
-      for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+      using ListType = typename MakeInitializer<Element, list_depth>::Type;
+      DISP(display::getTypeName< ListType >());
+      DISP(display::getTypeName< typename ListType::iterator >());
+      using Iterator = typename MakeInitializer<Element, list_depth>::Type::iterator;
+      ListType temp;
+      DISP(temp);
+      Iterator it = mylist.begin();
+      DISP(*it);
+
+      for (it = mylist.begin(); it != mylist.end(); it++, k++) {
         inds[rank_value-list_depth] = k;
+        DISP(inds);
         list_helper(*it, inds);
       }
       return *this;
     }
     Type& list_helper(const std::initializer_list<Element>& mylist, Indices& inds) {
+      OUTPUT("bottom list_helper");
       size_t k = 0;
-      typename std::initializer_list<Element>::iterator it;
-      for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+      using Iterator = typename std::initializer_list<Element>::iterator;
+      Iterator it = mylist.begin();
+      DISP(*it);
+      for (it = mylist.begin(); it != mylist.end(); it++, k++) {
+        DISP(*it);
+        DISP(inds);
+        DISP(rank_value-1);
         inds[rank_value-1] = k;
+        DISP(inds);
+        DISP((*this)[inds]);
         (*this)[inds] = *it;
       }
       return *this;
@@ -721,6 +756,31 @@ namespace mathq {
       for (size_t i = 0; i < size(); i++)
         (*this)(i) = varray[i];
 
+      return *this;
+    }
+
+
+    //**********************************************************************
+    //***************** in-place modification*******************************
+    //**********************************************************************
+
+    Type& transpose() {
+      Indices& inds = *(new Indices(rank_value));
+      inds.clear();
+      transpose_helper(inds);
+      return *this;
+    }
+
+    Type& transpose_helper(Indices& inds, const size_t& index_number = 0) {
+      for (size_t ii = 0; ii < dims()[index_number]; ii++) {
+        inds[index_number] = ii;
+        if (index_number < rank_value - 1) {
+          transpose_helper(inds, index_number - 1);
+        } else {
+          // we've reached the bottom
+          (*this)[inds] = (*this)[inds.getReverse()];
+        }
+      }
       return *this;
     }
 

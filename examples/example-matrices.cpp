@@ -39,13 +39,13 @@ int main(int argc, char* argv[]) {
   print_mathq_info();
   printoptsfile();
 
-  Vector<double> v1({ 2, -1 });
-  Vector<double> v2;
-  v2 = 10 * sin(pi / 2 * v1) + 5;
+  ECHO_CODE(Vector<double> v1({ 2, -1 }));
+  ECHO_CODE(Vector<double> v2 = { 5, -5 });
 
   DISP(v1);
   DISP(v2);
   DISP(v1 + v2);
+  DISP(v1 | v2);
 
   // FormatDataVector::max_elements_per_line = 10;
   // FormatDataVector::string_opening = "[\n  ";
@@ -62,19 +62,19 @@ int main(int argc, char* argv[]) {
   FormatDataMatrix::string_endofline = "\n";
   FormatDataMatrix::string_closing = "\n]";
 
-  Matrix<double> m1(2, 2);
+
+  ECHO_CODE(Matrix<double> m = { {1, 2}, {3, 4}, {5, 6} });
+  OUTPUT("1");
+  DISP(m);
+  OUTPUT("before");
+  Vector<double> v3  = (m | v1);
+  OUTPUT("after");
+  DISP((m | v1));
+
+  ECHO_CODE(Matrix<double, 2, 2> m1);
   m1 = { 10, 20, 30, 40 };
-  Matrix<double> m2(2, 2);
+  ECHO_CODE(Matrix<double, 2, 2> m2);
   m2 = { -1, -2, -3, -4 };
-
-  Matrix<double> m3({ {1, 2}, {3, 4}, {5, 6} });
-  // m3 = {{1, 2}, {3, 4}, {5, 6}};
-  // dot product
-  DISP(v1 | v2);
-
-  DISP(v1);
-  DISP(m3);
-  DISP((m3 | v1));
 
   DISP(m1);
   DISP(m2);
@@ -85,8 +85,8 @@ int main(int argc, char* argv[]) {
 
   DISP(m1 | m2);
 
-  DISP(m3 | m1);
-  DISP(m2 | m3.transpose());
+  DISP(m | m1);
+  DISP(m2 | m.transpose());
 
   Vector<double> v({ 2, -1 });
   Vector<double> u({ 1, -2, 4 });

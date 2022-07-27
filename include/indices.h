@@ -114,6 +114,12 @@ namespace mathq {
       data_.resize(N);
       return *this;
     }
+    Indices& clear() {
+      for (size_t ii = 0; ii < rank(); ii++) {
+        (*this)[ii] = 0;
+      }
+      return *this;
+    }
     Indices& push_back(const size_t item) {
       data_.push_back(item);
       return *this;

@@ -4,27 +4,7 @@
 namespace mathq
 {
 
-  /****************************************************************************
-   *  products: Scalar Scalar
-   ****************************************************************************
-   */
 
-   // --------------------  dot (inner) product --------------------------------
-
-   // dot(a,b)
-
-  template <class E1, class E2>
-  auto dot(const Scalar<E1>& a, const Scalar<E2>& b) {
-    return a() * b();
-  }
-
-  // (a|b)
-
-  // TODO: rewrite for only floating point base types
-  template <class E1, class E2>
-  auto operator|(const Scalar<E1>& a, const Scalar<E2>& b) {
-    return dot(a, b);
-  }
 
   // --------------------  tensor (outer) product --------------------------------
 
@@ -67,60 +47,71 @@ namespace mathq
 
    // --------------------  dot (inner) product --------------------------------
 
-   // (a|b)
-   // TODO: rewrite for only floating point base types
+   // dot(a,b) <==> (a|b)
+   // TODO: rewrite so that (a|b) is defined only floating point base types so that bitwise operators can be used
 
-   // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-   // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> dot(const ExpressionR<A, E1, NT1, depth, rank> &a, const ExpressionR<B, E2, NT2, depth, rank> &b)
-   // {
 
-   //   // ExpressionRW<Matrix<Element,NR,NC,Number,depth>,Element,Number,depth,2> x;
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2> 
+  auto operator|(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
+    OUTPUT("operator|");
+    return dot(x1, x2);
+  }
 
-   //   typedef typename MultType<NT1, NT2>::Type NT3;
-   //   typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
+   // dot(a,b)
 
-   //   E3 *result = new E3;
-   //   *result = 0;
-   //   for (size_t i = 0; i < a.total_size(); i++)
-   //   {
-   //     *result += a[i] * b[i];
-   //   }
-   //   return *result;
-   // }
-
-   // // dot(a,b)
-
-   // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-   // EnableMethodIf<rank == 1, typename MultType<NT1, NT2>::Type &> operator|(const ExpressionR<A, E1, NT1, depth, rank> &a, const ExpressionR<B, E2, NT2, depth, rank> &b)
-   // {
-   //   return dot(a, b);
-   // }
+  template <class E1, class E2>
+  auto dot(const Scalar<E1>& a, const Scalar<E2>& b) {
+    return a() * b();
+  }
 
    // TODO: realtime check (in debug mode) that deep dimensions of E1 and E2 are compatible
 
-   // (1A: T • T) MultiArray<E1(NT1)> | MultiArray<E2(NT2)>
-   // TODO: implement this
 
-   // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-   // auto operator|(const ExpressionR<A, E1, NT1, depth, rank> &x1, const ExpressionR<B, E2, NT2, depth, rank> &x2)
-   // {
-   //   typedef typename AddType<NT1, NT2>::Type NT3;
-   //   typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
-   //   return ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
-   //                     ExpressionR<B, E2, NT2, depth, rank>,
-   //                     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
-   //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3>>(x1, x2);
-   // }
+   // (1A: T • T) MultiArray<E1(NT1)> | MultiArray<E2(NT2)>
+
+    // TODO:" finish this"
+  //  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank1, size_t rank2>
+  //  auto dot(const ExpressionR<A, E1, NT1, depth, rank1> &x1, const ExpressionR<B, E2, NT2, depth, 2> &x2)
+  //  {
+  //    typedef typename AddType<NT1, NT2>::Type NT3;
+  //    typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
+  //     const size_t dims1 = x1.dims();
+  //     const size_t dims2 = x2.dims();
+  //     const size_t rank3 = rank1 + rank2 - 2;
+
+  //     DISP(dims1);
+
+  //     // const size_t M1 = dims1[rank1-1];
+  //     // const size_t M2 = dims2[0];
+  //     // const size_t& M = M1;
+  //     // Dimensions dims3 = Dimensions::reduce(dims1, dims2);
+  //     // MultiArray<E3,rank3>& result = *(new MultiArray<E3,rank3>(dims3));
+
+  //     // result = 0;
+  //     // Indices inds1(rank);
+  //     // inds1.clear();
+  //     // Indices inds2(rank);
+  //     // inds2.clear();
+  //     // for (size_t ii = 0; ii < N1; ii++) {
+  //     //   inds1[rank-1] = ii;
+  //     //   inds2[0] = ii;
+  //     //   *result += v1[ii] * v2[ii];
+  //     // }
+  //     // return result;
+  //     return 0;
+  //  }
+
+
 
    // (1B: V • V) Vector<E1(NT1)> | Vector<E2(NT2)>
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
-  auto operator|(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
+  auto dot(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
     E3* result = new E3;
     *result = 0;
-    for (size_t i = 0; i < v1.total_size(); i++) {
+    for (size_t i = 0; i < v1.size(); i++) {
       *result += v1[i] * v2[i];
     }
     return *result;
@@ -131,10 +122,11 @@ namespace mathq
   //             Vector -> rank = 1
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
-  auto operator|(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
+  auto dot(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
+    DISP(m1);
     size_t Nrows = m1.dims()[0];
     size_t Ncols = m1.dims()[1];
     size_t i = 0;
@@ -154,9 +146,8 @@ namespace mathq
   // (1D: V • depth) Vector<E1(NT1)> | Matrix<E2(NT2)>
   //             Vector -> rank = 1
   //             Matrix -> rank = 2
-
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
-  auto operator|(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
+  auto dot(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
@@ -178,11 +169,11 @@ namespace mathq
     return vout;
   }
 
-  // (1E: depth • depth) Vector<E1(NT1)> | Matrix<E2(NT2)>
+  // (1E: depth • depth) Matrix<E1(NT1)> | Matrix<E2(NT2)>
   //             Matrix -> rank = 2
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
-  auto operator|(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
+  auto dot(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
 
@@ -192,7 +183,7 @@ namespace mathq
     size_t i = 0;
     size_t j = 0;
     size_t k = 0;
-    Matrix<E3> m3(Nrows, Ncols);
+    Matrix<E3> m3(Dimensions({Nrows, Ncols}));
     E3* temp = new E3;
     // row major
     for (size_t r = 0; r < Nrows; r++) {
@@ -221,7 +212,7 @@ namespace mathq
   // TODO: implement
   // template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   //           EnableIf<(D1 >= 2) && (D2 == 1) && (IsMultiArrayOrExpression< E1>::value)> = 0>
-  // auto operator|(const ExpressionR<A, E1, NT1, D1, rank> &x1, const ExpressionR<B, NT2, NT2, D2, rank> &x2)
+  // auto dot(const ExpressionR<A, E1, NT1, D1, rank> &x1, const ExpressionR<B, NT2, NT2, D2, rank> &x2)
   // {
 
   //   // NOT SURE WHICH OF THE THREE IS BEST
@@ -251,7 +242,7 @@ namespace mathq
 
   // template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   //           EnableIf<(D1 == 1) && (D2 >= 2) && (IsMultiArrayOrExpression< E2>::value)> = 0>
-  // auto operator|(const ExpressionR<A, NT1, NT1, D1, rank> &x1, const ExpressionR<B, E2, NT2, D2, rank> &x2)
+  // auto dot(const ExpressionR<A, NT1, NT1, D1, rank> &x1, const ExpressionR<B, E2, NT2, D2, rank> &x2)
   // {
   //   // NOT SURE WHICH OF THE THREE IS BEST
   //   //    typedef typename A::ConcreteType E1;
@@ -301,7 +292,7 @@ namespace mathq
      //   // (a|b)
 
      // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-     // auto operator|(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
+     // auto dot(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
      //   typedef typename MultType<NT1,NT2>::Type NT3;
      //   typedef typename NumberTrait<E1,NT3>::ReplacedNumberType E3;   // see TODO note above
 

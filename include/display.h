@@ -918,6 +918,7 @@ namespace display {
 
 //    getTypeName(const T& var, std::string prefix = "", std::string postfix = "") {
 
+
   template <class T>
   typename std::enable_if<!std::is_pointer<T>::value && !std::is_const<T>::value, std::string>::type
     getTypeName(const T& var) {
@@ -1168,6 +1169,12 @@ namespace display {
   // s += StyledString::get(COMMA).get();
   // s += getTypeName(d2);
   // s += StyledString::get(ANGLE2).get();
+
+  template <typename T>
+  std::string getTypeName() {
+    return getTypeName(T());
+  }
+
 
 
 //---------------------------------------------------------------------------------

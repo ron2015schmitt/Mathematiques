@@ -160,7 +160,12 @@ namespace mathq {
       constexpr static size_t compile_time_size = calc_size<rank, 0>();
       using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
       MyArrayType data_;
-      std::array<size_t, rank> dynamic_dims_array;      
+      std::array<size_t, rank> dynamic_dims_array;  
+      
+      // MultiArrayData() {
+      //   std::cout << "constructor MultiArrayData " << compile_time_size << "\n";
+      //   std::cout << data_ << "\n";
+      // }
   };
 
 
@@ -506,65 +511,6 @@ namespace mathq {
 
   };
 
-
-  // ************************************************************************************************
-  //  MakeInitializer
-  // 
-  // ************************************************************************************************
-
-  template <typename T, size_t depth> 
-  class MakeInitializer {
-  public:
-    using Type = std::initializer_list<typename MakeInitializer<T,(depth-1)>::Type>;
-  };
-  template <typename T> 
-  class MakeInitializer<T,0> {
-  public:
-    using Type = T;
-  };
-
-
-
-
-
-
-
-  // ************************************************************************************************
-  //  InitializerTrait
-  // ************************************************************************************************
-
-  template <typename T> 
-  class InitializerTrait {
-  public:
-    using Type = T;
-    using ElementType = NullType;
-    using BottomType = T;
-
-    constexpr static bool is_initializer_list = false;
-    constexpr static size_t depth() {
-      return 0;
-    }
-  };
-
-  //  std::initializer_list<Element>
-
-  template <typename Element>
-  class
-    InitializerTrait<std::initializer_list<Element>> {
-  public:
-    using Type = std::initializer_list<Element>;
-    using ElementType = Element;
-    using BottomType = typename InitializerTrait<Element>::BottomType;
-
-    constexpr static bool is_initializer_list = true;
-    constexpr static size_t depth() {
-      return 1 + InitializerTrait<Element>::depth();
-    }
-  };
-
-
-
-
   //  ExpressionR
 
   template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank>
@@ -776,6 +722,66 @@ namespace mathq {
     using Type = typename std::conditional< level == 0, DimensionsType, DimensionsTrait<Element, level-1> >::type;
 
   };
+
+
+
+
+  // ************************************************************************************************
+  //  MakeInitializer
+  // 
+  // ************************************************************************************************
+
+  template <typename T, size_t depth> 
+  class MakeInitializer {
+  public:
+    using Type = std::initializer_list< typename MakeInitializer<T,(depth-1)>::Type >;
+  };
+  template <typename T> 
+  class MakeInitializer<T,0> {
+  public:
+    using Type = T;
+  };
+
+
+
+
+
+
+
+  // ************************************************************************************************
+  //  InitializerTrait
+  // ************************************************************************************************
+
+  template <typename T> 
+  class InitializerTrait {
+  public:
+    using Type = T;
+    using ElementType = NullType;
+    using BottomType = T;
+
+    constexpr static bool is_initializer_list = false;
+    constexpr static size_t depth() {
+      return 0;
+    }
+  };
+
+  //  std::initializer_list<Element>
+
+  template <typename Element>
+  class
+    InitializerTrait<std::initializer_list<Element>> {
+  public:
+    using Type = std::initializer_list<Element>;
+    using ElementType = Element;
+    using BottomType = typename InitializerTrait<Element>::BottomType;
+
+    constexpr static bool is_initializer_list = true;
+    constexpr static size_t depth() {
+      return 1 + InitializerTrait<Element>::depth();
+    }
+  };
+
+
 
 
 

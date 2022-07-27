@@ -75,6 +75,7 @@
    1. Matlab
    2. python
 1. move the SPECIALIZE_getTypeName into .h file and python script. shorten to typename_str
+* add default arg so that it can be called without arguments
 * need to fix up printing of nested MultiArrays: need to add an argument: indent_string = ""
 * each MultiArray should have a dynamic cast to a list
 * need function in display that converts (nested) lists to a string

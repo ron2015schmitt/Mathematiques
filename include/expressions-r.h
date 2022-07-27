@@ -131,7 +131,7 @@ namespace mathq {
       return x_.element_dims();
     }
 
-    const RecursiveDimensions& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims();
     }
 
@@ -299,7 +299,7 @@ namespace mathq {
       return x_.element_dims();
     }
 
-    const RecursiveDimensions& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims();
     }
 
@@ -495,7 +495,7 @@ namespace mathq {
       }
     }
 
-    const RecursiveDimensions& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       if constexpr (D1 >= D2) {
         return a_.recursive_dims();
       }
@@ -1534,7 +1534,7 @@ namespace mathq {
       return x_.element_dims();
     }
 
-    const RecursiveDimensions& recursive_dims(void) const {
+    RecursiveDimensions& recursive_dims(void) const {
       return x_.recursive_dims();
     }
 
