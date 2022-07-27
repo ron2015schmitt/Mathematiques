@@ -281,10 +281,7 @@ namespace mathq {
         return data_;
       }
       else {
-        const int Ndeep = this->el_total_size();
-        const int j = n / Ndeep;
-        const int k = n % Ndeep;
-        return data_[j].dat(k);
+        return data_.dat(n);
       }
     }
 
@@ -295,10 +292,7 @@ namespace mathq {
         return data_;
       }
       else {
-        const int Ndeep = this->el_total_size();
-        const int j = n / Ndeep;
-        const int k = n % Ndeep;
-        return data_[j].dat(k);
+        return data_.dat(n);
       }
     }
 
@@ -308,29 +302,14 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write"
-    template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
+    template <typename T> requires (std::is_integral<T>::value)
     Element& operator[](const T n) {
       return data_;
     }
 
     // read
-    template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
+    template <typename T> requires (std::is_integral<T>::value)
     const Element& operator[](const T n)  const {
-      return data_;
-    }
-
-    // NOTE: if you feed literals, the following will be called, unless you use the `u` suffix, eg `10000u`
-    // "read/write"
-    template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    Element& operator[](const T n) {
-      T m = signed_index_to_unsigned_index(n, size());
-      return data_;
-    }
-
-    // read
-    template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    const Element& operator[](const T n)  const {
-      T m = signed_index_to_unsigned_index(n, size());
       return data_;
     }
 
@@ -350,35 +329,32 @@ namespace mathq {
       return data_;
     }
 
-//     // -------------------------------------------------------------
-//     //                        [DeepIndices] 
-//     // -------------------------------------------------------------
+    // -------------------------------------------------------------
+    //                        [DeepIndices] 
+    // -------------------------------------------------------------
 
-//     // "read/write"
-//     NumberType& operator[](const DeepIndices& dinds) {
-//       const size_t mydepth = dinds.size();
-//       size_t n = dinds[mydepth - depth_value][0];
+    // "read/write"
+    NumberType& operator[](const DeepIndices& dinds) {
+      const size_t mydepth = dinds.size();
 
-//       if constexpr (depth_value > 1) {
-//         return (*this)[n][dinds];
-//       }
-//       else {
-//         return (*this)[n];
-//       }
-//     }
+      if constexpr (depth_value > 1) {
+        return data_[dinds];
+      }
+      else {
+        return data_;
+      }
+    }
 
-//     // "read"
-//     const NumberType& operator[](const DeepIndices& dinds) const {
-//       const size_t mydepth = dinds.size();
-//       size_t n = dinds[mydepth - depth_value][0];
-
-//       if constexpr (depth_value > 1) {
-//         return (*this)[n][dinds];
-//       }
-//       else {
-//         return (*this)[n];
-//       }
-//     }
+    // "read"
+    const NumberType& operator[](const DeepIndices& dinds) const {
+      const size_t mydepth = dinds.size();
+      if constexpr (depth_value > 1) {
+        return data_[dinds];
+      }
+      else {
+        return data_;
+      }
+    }
 
 
 
@@ -406,9 +382,6 @@ namespace mathq {
       return *this;
     }
 
-
-
-
     // ------------------------  Scalar----------------
 
     Type& operator=(const Type& x) {
@@ -417,7 +390,7 @@ namespace mathq {
     }
 
 
-    // // ------------------------ Vector = ExpressionR ----------------
+    // // ------------------------ ExpressionR ----------------
 
     template <class X>
     Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
@@ -438,11 +411,7 @@ namespace mathq {
     // ------------------------ Vector = initializer_list ----------------
 
     Type& operator=(const std::initializer_list<Element>& mylist) {
-      size_t k = 0;
-      typename std::initializer_list<Element>::iterator it;
-      for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
-        data_[k] = *it;
-      }
+      data_ = *(mylist.begin());
       return *this;
     }
 
