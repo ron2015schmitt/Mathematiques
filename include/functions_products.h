@@ -29,7 +29,7 @@ namespace mathq
   //                 Equal Depth
   // ----------------------------------------------------
 
-  // dot(a,b)
+   // (0: S • S) Scalar<E1(NT1)> | Scalar<E2(NT2)>
 
   template <class E1, class E2>
   auto dot(const Scalar<E1>& a, const Scalar<E2>& b) {
@@ -42,36 +42,37 @@ namespace mathq
    // (1A: T • T) MultiArray<E1(NT1)> | MultiArray<E2(NT2)>
 
     // TODO:" finish this"
-  //  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank1, size_t rank2>
-  //  auto dot(const ExpressionR<A, E1, NT1, depth, rank1> &x1, const ExpressionR<B, E2, NT2, depth, 2> &x2)
-  //  {
-  //    typedef typename AddType<NT1, NT2>::Type NT3;
-  //    typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
-  //     const size_t dims1 = x1.dims();
-  //     const size_t dims2 = x2.dims();
-  //     const size_t rank3 = rank1 + rank2 - 2;
+   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank1, size_t rank2>
+   auto dot(const ExpressionR<A, E1, NT1, depth, rank1> &x1, const ExpressionR<B, E2, NT2, depth, 2> &x2)
+   {
+     typedef typename AddType<NT1, NT2>::Type NT3;
+     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
+      const size_t dims1 = x1.dims();
+      const size_t dims2 = x2.dims();
+      const size_t rank3 = rank1 + rank2 - 2;
 
-  //     DISP(dims1);
+      DISP(dims1);
+      DISP(dims1);
 
-  //     // const size_t M1 = dims1[rank1-1];
-  //     // const size_t M2 = dims2[0];
-  //     // const size_t& M = M1;
-  //     // Dimensions dims3 = Dimensions::reduce(dims1, dims2);
-  //     // MultiArray<E3,rank3>& result = *(new MultiArray<E3,rank3>(dims3));
+      // const size_t M1 = dims1[rank1-1];
+      // const size_t M2 = dims2[0];
+      // const size_t& M = M1;
+      // Dimensions dims3 = Dimensions::reduce(dims1, dims2);
+      // MultiArray<E3,rank3>& result = *(new MultiArray<E3,rank3>(dims3));
 
-  //     // result = 0;
-  //     // Indices inds1(rank);
-  //     // inds1.clear();
-  //     // Indices inds2(rank);
-  //     // inds2.clear();
-  //     // for (size_t ii = 0; ii < N1; ii++) {
-  //     //   inds1[rank-1] = ii;
-  //     //   inds2[0] = ii;
-  //     //   *result += v1[ii] * v2[ii];
-  //     // }
-  //     // return result;
-  //     return 0;
-  //  }
+      // result = 0;
+      // Indices inds1(rank);
+      // inds1.clear();
+      // Indices inds2(rank);
+      // inds2.clear();
+      // for (size_t ii = 0; ii < N1; ii++) {
+      //   inds1[rank-1] = ii;
+      //   inds2[0] = ii;
+      //   *result += v1[ii] * v2[ii];
+      // }
+      // return result;
+      return 0;
+   }
 
 
 
