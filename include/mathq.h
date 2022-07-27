@@ -3,8 +3,8 @@
 // Including this file provides full vector/matrix functionality
 
 
-#ifndef MATHQ_H
-#define MATHQ_H
+#ifndef MATHQ
+#define MATHQ
 
 #include <cassert>
 #include <cstddef>

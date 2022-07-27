@@ -1,5 +1,5 @@
-#ifndef MATHQ__INDICES_H
-#define MATHQ__INDICES_H 1
+#ifndef MATHQ__INDICES
+#define MATHQ__INDICES 1
 
 
 

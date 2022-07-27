@@ -1,5 +1,5 @@
-#ifndef MATHQ__DIMENSIONS_H
-#define MATHQ__DIMENSIONS_H
+#ifndef MATHQ__DIMENSIONS
+#define MATHQ__DIMENSIONS
 
 
 

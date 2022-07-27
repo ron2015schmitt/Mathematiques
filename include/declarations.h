@@ -1,5 +1,5 @@
-#ifndef MATHQ__PREFACE_H
-#define MATHQ__PREFACE_H
+#ifndef MATHQ__PREFACE
+#define MATHQ__PREFACE
 
 
 #define CPP11 (__cplusplus >= 201100L)

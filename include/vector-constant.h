@@ -1,5 +1,5 @@
-#ifndef MATHQ__VECTOR_CONSTANT_H
-#define MATHQ__VECTOR_CONSTANT_H 1
+#ifndef MATHQ__VECTOR_CONSTANT
+#define MATHQ__VECTOR_CONSTANT 1
 
 namespace mathq {
 

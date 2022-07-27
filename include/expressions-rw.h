@@ -1,5 +1,5 @@
-#ifndef MATHQ__EXPRESSIONSRW_H
-#define MATHQ__EXPRESSIONSRW_H
+#ifndef MATHQ__EXPRESSIONSRW
+#define MATHQ__EXPRESSIONSRW
 
 
 namespace mathq {

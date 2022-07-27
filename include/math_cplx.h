@@ -1,5 +1,5 @@
-#ifndef MATHQ__MATH_CPLX_H
-#define MATHQ__MATH_CPLX_H
+#ifndef MATHQ__MATH_CPLX
+#define MATHQ__MATH_CPLX
 
 
 namespace mathq {

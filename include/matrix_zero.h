@@ -1,5 +1,5 @@
-#ifndef MATHQ__ZEROMATRIX_H
-#define MATHQ__ZEROMATRIX_H 1
+#ifndef MATHQ__ZEROMATRIX
+#define MATHQ__ZEROMATRIX 1
 
 
 

@@ -1,5 +1,5 @@
-#ifndef MATHQ__MATRIX_H
-#define MATHQ__MATRIX_H 1
+#ifndef MATHQ__MATRIX
+#define MATHQ__MATRIX 1
 
 namespace mathq {
 

@@ -1,5 +1,5 @@
-#ifndef MATHQ__MULTI_ARRAY_OUExpressionR_PRODUCT_H
-#define MATHQ__MULTI_ARRAY_OUExpressionR_PRODUCT_H 1
+#ifndef MATHQ__MULTI_ARRAY_OUExpressionR_PRODUCT
+#define MATHQ__MULTI_ARRAY_OUExpressionR_PRODUCT 1
 
 namespace mathq {
 

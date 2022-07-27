@@ -1,4 +1,4 @@
-#ifndef MATHQ__FUNCTIONS_USER_H
+#ifndef MATHQ__FUNCTIONS_USER
 #define MATHQ__FUNCTIONS_USER 1
 
 
@@ -42,4 +42,4 @@ namespace mathq {
 
 
 }; // namespace mathq 
-#endif // MATHQ__FUNCTIONS_USER_H
+#endif // MATHQ__FUNCTIONS_USER

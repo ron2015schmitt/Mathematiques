@@ -1,5 +1,5 @@
-#ifndef MATHQ__GRIDS_H
-#define MATHQ__GRIDS_H 1
+#ifndef MATHQ__GRIDS
+#define MATHQ__GRIDS 1
 
 
 namespace mathq {

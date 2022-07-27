@@ -1,5 +1,5 @@
-#ifndef MATHQ__REPMATRIX_H
-#define MATHQ__REPMATRIX_H 1
+#ifndef MATHQ__REPMATRIX
+#define MATHQ__REPMATRIX 1
 
 
 

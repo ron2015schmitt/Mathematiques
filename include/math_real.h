@@ -1,5 +1,5 @@
-#ifndef MATHQ__MATH_REAL_H
-#define MATHQ__MATH_REAL_H
+#ifndef MATHQ__MATH_REAL
+#define MATHQ__MATH_REAL
 
 
 namespace mathq {

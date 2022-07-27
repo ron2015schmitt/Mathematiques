@@ -1,5 +1,5 @@
-#ifndef MATHQ__MATH_QUATERNION_H
-#define MATHQ__MATH_QUATERNION_H
+#ifndef MATHQ__MATH_QUATERNION
+#define MATHQ__MATH_QUATERNION
 
 #include <sstream>
 

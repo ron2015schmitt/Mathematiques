@@ -51,8 +51,6 @@ namespace display {
     ;
     StyledString* warning = new StyledString(CREATESTYLE(BOLD + ORANGE), "** mathq WARNING: ");
     StyledString::add(SSEnum::WARNING, *warning);
-    StyledString* mathq = new StyledString(CREATESTYLE(BOLD + BLUE2), "mathq");
-    StyledString::add(SSEnum::MATHQ, *mathq);
 
     StyledString* mathematiques = new StyledString(CREATESTYLE(BOLD + BLUE2), "Mathématiques");
     StyledString::add(SSEnum::MATHEMATIQUES, *mathematiques);

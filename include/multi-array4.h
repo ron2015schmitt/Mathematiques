@@ -1,5 +1,5 @@
-#ifndef MATHQ__MULTI_ARRAY4_H
-#define MATHQ__MULTI_ARRAY4_H 1
+#ifndef MATHQ__MULTI_ARRAY4
+#define MATHQ__MULTI_ARRAY4 1
 
 namespace mathq {
 

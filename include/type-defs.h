@@ -1,5 +1,5 @@
-#ifndef MATHQ__TYPE_DEFS_H
-#define MATHQ__TYPE_DEFS_H
+#ifndef MATHQ__TYPE_DEFS
+#define MATHQ__TYPE_DEFS
 
 
 

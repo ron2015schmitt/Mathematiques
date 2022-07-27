@@ -1,5 +1,5 @@
-#ifndef MATHQ__TYPETRAITS_H
-#define MATHQ__TYPETRAITS_H
+#ifndef MATHQ__TYPETRAITS
+#define MATHQ__TYPETRAITS
 
 
 

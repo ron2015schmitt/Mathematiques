@@ -1,6 +1,6 @@
 
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef MATHQ_UTIL
+#define MATHQ_UTIL
 
 
 

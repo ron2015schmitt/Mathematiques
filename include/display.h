@@ -701,7 +701,6 @@ namespace display {
     INDENT,
     ERROR,
     WARNING,
-    MATHQ,
     MATHEMATIQUES,
     VERSION,
     DLEVEL0,

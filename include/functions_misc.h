@@ -1,5 +1,5 @@
-#ifndef MATHQ__FUNCTIONS_MISC_H
-#define MATHQ__FUNCTIONS_MISC_H 1
+#ifndef MATHQ__FUNCTIONS_MISC
+#define MATHQ__FUNCTIONS_MISC 1
 
 
 namespace mathq {

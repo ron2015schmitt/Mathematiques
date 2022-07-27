@@ -1,5 +1,5 @@
-#ifndef MATHQ__EXPRESSIONSR_H
-#define MATHQ__EXPRESSIONSR_H
+#ifndef MATHQ__EXPRESSIONSR
+#define MATHQ__EXPRESSIONSR
 
 // "READ ONLY"  expressions
 

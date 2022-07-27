@@ -1,5 +1,5 @@
-#ifndef MATHQ__VECTOR_H
-#define MATHQ__VECTOR_H 1
+#ifndef MATHQ__VECTOR
+#define MATHQ__VECTOR 1
 
 
 /********************************************************************

@@ -1,5 +1,5 @@
-#ifndef MATHQ__SLICES_H
-#define MATHQ__SLICES_H
+#ifndef MATHQ__SLICES
+#define MATHQ__SLICES
 
 
 namespace mathq {
