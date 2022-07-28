@@ -4,3 +4,6 @@
 /dimensions
 /expressions
 /dotproducts
+/type-traits
+/math_real
+/math_imag

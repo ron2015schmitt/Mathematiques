@@ -12,7 +12,7 @@ MAKEFILE_REL := $(subst $(DIR_MATHQ)/,,$(MAKEFILE))
 
 
 NONEXEC = 
-EXEC += dimensions expressions dotproducts  # type-traits math_real math_imag multiarrays-conversion printing testing testing2 tfoverloading depth indexing imaginary enableexperiment selfmethod parmpack recurseadd testunary testunary2 testunary3 test4deep insideout typeinfo testbinary testrelops testternary testjoin classes specialmats containerdata parmpacktwo pointersandrefs 
+EXEC += dimensions expressions dotproducts type-traits math_real math_imag # multiarrays-conversion printing testing testing2 tfoverloading depth indexing imaginary enableexperiment selfmethod parmpack recurseadd testunary testunary2 testunary3 test4deep insideout typeinfo testbinary testrelops testternary testjoin classes specialmats containerdata parmpacktwo pointersandrefs 
 ALL += run gitignore
 
 # overide the default compiler options

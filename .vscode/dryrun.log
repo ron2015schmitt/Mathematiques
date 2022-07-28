@@ -5,5 +5,6 @@ make -C /home/rs2015/Mathematiques/include -j all
 \cd /home/rs2015/Mathematiques/src && make -j all
 \cd /home/rs2015/Mathematiques/examples && make -j all 
 \cd /home/rs2015/Mathematiques/benchmark && make -j all 
+\cd /home/rs2015/Mathematiques/sandbox && make -j all 
 make: Leaving directory '/home/rs2015/Mathematiques'
  
