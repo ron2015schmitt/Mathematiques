@@ -14,8 +14,8 @@ MAKEFILE_REL := $(subst $(DIR_MATHQ)/,,$(MAKEFILE))
 NONEXEC = 
 EXEC += dimensions expressions dotproducts type-traits math_real math_imag multiarrays-conversion parmpacktwo \
         parmpack pointersandrefs testing2 tfoverloading indexing imaginary enableexperiment selfmethod typeinfo \
-				# testunary testunary2 testunary3 test4deep insideout  testbinary testrelops testternary testjoin classes specialmats containerdata \
-				#recurseadd printing testing depth         
+				classes testrelops \
+				## need to fix: recurseadd printing testing depth test4deep insideout containerdata testunary testunary2 testunary3 testbinary  testternary testjoin  specialmats
 ALL += run gitignore
 
 # overide the default compiler options so that build happens faster
