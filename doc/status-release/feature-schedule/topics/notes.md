@@ -150,3 +150,9 @@ public:
 1. `is_unsigned`: 0 and positive ints are of type `int` by default, so feeding such constants to a constructor requiring `is_unsigned` will fail.  Work-aroud: 1) Use 0u or 1u, or don't use `unsigned` and check in real time.
 
 1. `std::is_convertible<float,size_t>` is truem so use `is_integral`
+
+1. fix for the following error is to encure that (1) a non-explicit copy constructor exists as well as (2) a non-explicit ELEMENT constructor existsa
+```C++
+testunary.cpp:65:25: error: conversion from ‘double’ to non-scalar type ‘mathq::Scalar<double>’ {aka ‘mathq::MultiArray<double, 0>’} requested
+   65 |     Scalar<double> s5 = 4.4;
+```

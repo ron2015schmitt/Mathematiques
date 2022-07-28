@@ -47,7 +47,8 @@ int main(int argc, char *argv[]) {
   MOUT << bold.apply("Scalar") << endl;
   {
     CR();
-    Scalar<double> s = 1.1;
+    // Scalar<double> s = 1.1;
+    Scalar<double> s(1.1);
     TLDISP(s);
     TLDISP(s());
     TLDISP(s.dims());
@@ -55,7 +56,22 @@ int main(int argc, char *argv[]) {
     Scalar<double> s2;
     s2 = -s;
     TLDISP(s2);
+    Scalar<double> s3(s);
+    TLDISP(s3);
+    Scalar<double> s4 = s;
+    TLDISP(s4);
+    s4 = 4.5;
+    TLDISP(s4);
+    Scalar<double> s5 = 4.4;
+    TLDISP(s5);
+    Scalar<double> s6 = {4.4};
+    TLDISP(s6);
+    Scalar<double> s7{4.4};
+    TLDISP(s7);
+    Scalar<double> s8({4.4});
+    TLDISP(s8);
   }
+
 
   CR();
   CR();

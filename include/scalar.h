@@ -84,19 +84,33 @@ namespace mathq {
       *this = var;
     }
 
-    // --------------------- FIXED SIZE: set all elements to same value   ---------------------
+    // --------------------- set element value   ---------------------
 
-    template<typename T> requires ( std::is_convertible<T, Element>::value )
-    explicit MultiArray(const T& val) {
+    // for Scalars this should be implicit (NO `explicit`) so that `Scalar<double> s = 4.5;` works
+    // and this is okay because there are no size related constructors
+
+    MultiArray(const Element val) {
       *this = val;
     }
 
-    // --------------------- FIXED SIZE: set all bottom elements to same value   ---------------------
+    // --------------------- set all bottom elements to same value   ---------------------
+
+    // for Scalars this should be implicit (NO `explicit`) so that `Scalar<double> s = 4.5;` works
+    // and this is okay because there are no size related constructors
 
     template<size_t depth = depth_value> requires ( (depth > 1) && (!std::is_same<Element, NumberType>::value) )
-      explicit MultiArray(const NumberType val) {
+      MultiArray(const NumberType val) {
       *this = val;
     }
+
+    // do not use if depth greater than 1!
+    // CONSTRUCTOR: initializer_list 
+    template<size_t depth = depth_value> requires (depth == 1)
+    MultiArray(const std::initializer_list<Element>& mylist) {
+      *this = mylist;
+    }
+
+
 
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
     template <class Derived>
