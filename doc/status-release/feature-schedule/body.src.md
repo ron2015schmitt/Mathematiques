@@ -18,7 +18,11 @@
 ```bash
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 ```
-  * https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa
+  * put the aBOVE INTO docs on installation
+1. https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa
+  * array/valarray internal data access via data()
+  * https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+  * use &(a[0])
 
 
 
@@ -191,6 +195,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 *  `class` -> `typename` usage in templates?
 
 * formalize template notation for the following: types with ordering (ints and reals), division algebras, Multiarrays, Tensors
+* refactor `NumberTrait` replacement functionality into a separate class `ReplaceNumber`
 * use https://github.com/cheshirekow/kwargs for named arguments?
 * replace std::enable_if<std::is_arithmetic<D>::value, D>::type> with mathq version that accepts Imaginary and Quaternions
 * cast method for const std::initializer_list<E>?  is this possible
@@ -202,7 +207,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
     * resolve what would v1 + i*v2 be?  Vector<complex<D>> or complex<Vector<D>> similar to dot product issues
   * need to prevent nesting Complex, Imaginary, Quaternion, ie only 0 or one allowed in nest
     * static assert using a new type trait
-  * modify NumberTrait, InversionType class
+  * modify NumberTrait, SimpleNumber, InversionType class
   * need AddType etc for auto-promotion 
     * do we have promotion AddType for Scalar + Vector?  we should.
 * cast between various multi-arrays
@@ -227,9 +232,6 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
     * Can we cast expressiosn to these?
   * Look into fixing or removing the enums for all multi-arrays
 
-* DONE: valarray internal data access via data()
-  * https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-  * use &(a[0])
 
 * Create a `Number` class to generalize division alegras (real's imaginary and complex, quaternions)?
   * see https://en.cppreference.com/w/cpp/types/is_arithmetic
