@@ -12,7 +12,10 @@
   * Add a compiler version file
   * In variables.mk, have C++ version taken from file in version directory (`CPPC = g++ -pipe -std=c++17`)
   * add variable for the C++ version used, currently C++20.  append to version string. 
-  * using g++ 10.4
+  * using g++ 10.3.  10.4 ha sbeen released 
+  * (upgrading g++ in Ubuntu)[https://www.ovenproof-linux.com/2016/09/upgrade-gcc-and-g-in-ubuntu.html]
+  * (multiple versions of g++)[https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa]
+  * https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa
 
 
 
@@ -39,7 +42,8 @@
 1. This is includes files:
   * display.h
   * display.cpp
-1. classname() should be static? no: need inheritance
+1. utilize `static ClassName()` in addition to instance `classname()`. How does inheritance effect this?
+1. support wstrings. look at  [Consistent character literal encoding](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2316r2.pdf)
 1. include &, ConstLeft, ConstRight, &&, and volatile qualifiers
   * dispatch to different functions using a type teaits technique, is_const<int>::value etc (instead of calling getTypeName directly)
   * refer to sandbox/parmpacktwo.cpp
@@ -59,22 +63,22 @@
   1. don't use pointers
   1. DISPLAY: Allow to use different strigns for ```=``` and ```;``` when displaying results by adding ability to chaneg expression SyledString etc
     * have profiles for text ("->", ""), matlab ("=", ";"), mathematica ("=", ";")
-  1. take advantage of std::optional<T> for optional arguments
+  1. take advantage of std::optional<T> for optional arguments?
 1. [Refactor MOUT and dout](topics/refactormout.md)
 1. Group macros together, as much as possible. Clearly notate in a specific section in the documentation.
 1. [Refactor getTypeName](topics/gettypename.md)
+  * move the SPECIALIZE_getTypeName into .h file and python script. shorten to typename_str
 1. [Refactor FormatData](topics/formatdata.md)
 1. Fix Printing of ```complex<Vector<double>>>``` etc
 1. Make sure data type to output of inner products works
-  * DISP(v1 | v2) = Vector<double> {16, -6}; 
-  * DISP(M1 | v2) = ^Vector<double>^ {-10, -10};  # missing part between the ^'s
+  * TRDISP(v1 | v2) = Vector<double> {16, -6}; 
+  * TRDISP(M1 | v2) = ^Vector<double>^ {-10, -10};  # missing part between the ^'s
 1. [MultiArray class FormatData](topics/tensorformatdata.md)
    1. compact 
    1. by aligned rows and columns with and without braces
    1. Mathematica
    1. Matlab
    2. python
-1. move the SPECIALIZE_getTypeName into .h file and python script. shorten to typename_str
 * add default arg so that it can be called without arguments
 * need to fix up printing of nested MultiArrays: need to add an argument: indent_string = ""
 * each MultiArray should have a dynamic cast to a list
@@ -115,7 +119,7 @@
     }
 ```
 1. find a more succinct way to pass Dimensions to MultiArrays, currently its `MultiArray<double,3> A(Dimensions({2,3,4}))`
-
+1. look into [Multidimensional subscript operator](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2128r6.pdfs)
 ### I/O Refactoring
 1. [Save tensor to file](topics/filesave.md)
 1. [Implement >> operators](topics/inputstreams.md)
@@ -139,10 +143,8 @@
 
 
 ### Miscellaneous Small Features
-* add contraction product for rank>2 tensors whereby the contraction indices are specified 
-* same but contacrt over mor ethan one indices
-1. implement functionality of matlab `cat`, `horzcat`, `vertcat`, `permute`, `repmat`, `squeeze`, and `reshape` commands
 * add `static inline std::string ClassName()` to each class. see `Vector` for how to set up
+* change replaceable strings in include-templates files from ##NAME## to __NAME__ so as to make syntax highlighting work properly
 * create template versions of all C++ functions so that there is never overload ambiguity. Put inside namespace
   * use python to create
 ```C++
@@ -160,10 +162,12 @@
   }
   // this seems to works for ints. if problems, use a helper class to determine which exp to call: expf expl, exp
 ```
+* inv<D>(D x) for real, integers, imaginar, complex, quaternion
 * make all temp README.md files read-only
-* change replaceable strings in include-templates files from ##NAME## to __NAME__ so as to make syntax highlighting work properly
 * `operator=`.  have a constexpr that allows / disallows resizing durign equals. or resizable(x) =, where sizable gives an ExpressionRW
-
+* add contraction product for rank>2 tensors whereby the contraction indices are specified 
+* same but contacrt over mor ethan one indices
+* implement functionality of matlab `cat`, `horzcat`, `vertcat`, `permute`, `repmat`, `squeeze`, and `reshape` commands
 * conjugate OPERTOR~ for real ints wil give negative!!  make sure you dont take ~ of built-in types.  Use C++20 `requires` ?
 * what about equals for (double = 0) == Imaginary<double>(0)? How shoudl this be defined?
 * refactor the headers so that 
@@ -190,7 +194,6 @@
 * cast method for const std::initializer_list<E>?  is this possible
 * use https://doxygen.nl/manual/docblocks.html os similar to generate method and function docs?
 * all objects should have .invert() and conjugate(), not .inv and .conj
-* inv<D>(D x) for real, integers, imaginar, complex, quaternion
 * Complex,Imaginary, Quaternion types that inherit from MArrays
   * just need to redefine * and / and define extras
   * can then allows complex, imaginary and quaternion to hold vectors 

@@ -1,6 +1,13 @@
 #ifndef MATHQ__PREFACE
 #define MATHQ__PREFACE
 
+// see the following for C++20 features (C++20 has not yet been implemented in full)
+// https://en.cppreference.com/w/cpp/utility/feature_test
+// https://en.cppreference.com/w/cpp/feature_test
+// __cplusplus doesn't go from 2017 to 2020 until g++ v11
+// https://gcc.gnu.org/releases.html
+// https://gcc.gnu.org/projects/cxx-status.html
+
 
 #define CPP11 (__cplusplus >= 201100L)
 #define CPP14 (__cplusplus >= 201400L)
@@ -13,18 +20,6 @@
 
 #define DO_EXPAND(VAL) 99##VAL
 #define EXPAND(VAL) DO_EXPAND(VAL)
-
-
-#ifdef MEBUG
-#if (EXPAND(MEBUG) == 99)
-// defined but no value: set to 1
-#define MATHQ_DEBUG 1
-#else
-#define MATHQ_DEBUG EXPAND(MEBUG)
-#endif
-#endif
-
-
 #ifndef MATHQ_DEBUG
 // not defined: set to 0
 #define MATHQ_DEBUG 0
