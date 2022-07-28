@@ -125,7 +125,7 @@ namespace mathq {
     //**********************************************************************
     //                        Dimensions
     //**********************************************************************
-    DimensionsType dims(void) const {
+    DimensionsType& dims(void) const {
       return x_.dims();
     }
     RecursiveDimensions& recursive_dims(void) const {
@@ -310,7 +310,7 @@ namespace mathq {
     //**********************************************************************
     //                        Dimensions
     //**********************************************************************
-    DimensionsType dims(void) const {
+    DimensionsType& dims(void) const {
       return x_.dims();
     }
     RecursiveDimensions& recursive_dims(void) const {
@@ -482,11 +482,11 @@ namespace mathq {
     //**********************************************************************
     //                        Dimensions
     //**********************************************************************
-    DimensionsType dims(void) const {
+    DimensionsType& dims(void) const {
       DimensionsType d(x_.size()+y_.size());
       return d;
     }
-    DimensionsType element_dims(void) const {
+    DimensionsType& element_dims(void) const {
       return x_.element_dims();
     }
     RecursiveDimensions& recursive_dims(void) const {

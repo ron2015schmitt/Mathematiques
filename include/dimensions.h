@@ -30,29 +30,7 @@ namespace mathq {
       return reduce(dims1, dims2, dims1.rank() - 1, 0);
     }
 
-    static Type& reduce(const Type& dims1, const Type& dims2, const size_t& index1, const size_t& index2) {
-      const size_t M1 = dims1[index1];
-      const size_t M2 = dims2[index2];
-      if (M1 != M2) {
-        display::log("mathq", "Dimensions", "reduce", "Inner dimensions do not match");
-        return *(new Dimensions());
-      }
-      const size_t& M = M1;      
-      const size_t rank1 = dims1.rank();
-      const size_t rank2 = dims2.rank();
-      const size_t rank3 = rank1 + rank2 - 2;
-      Dimensions& dims3 = *(new Dimensions(rank3));
-      size_t k = 0;
-      for (size_t ii = 0; ii < rank1; ii++) {
-        if (ii == index1) continue;
-        dims3[k++] = dims1[ii];
-      }
-      for (size_t ii = 0; ii < rank2; ii++) {
-        if (ii == index2) continue;
-        dims3[k++] = dims2[ii];
-      }
-      return dims3;
-    }
+    inline static Type& reduce(const Type& dims1, const Type& dims2, const size_t& index1, const size_t& index2);
 
     Dimensions() {
       this->resize(0);
@@ -346,6 +324,33 @@ namespace mathq {
   };
 
 
+
+
+
+
+  inline Dimensions& Dimensions::reduce(const Type& dims1, const Type& dims2, const size_t& index1, const size_t& index2) {
+      const size_t M1 = dims1[index1];
+      const size_t M2 = dims2[index2];
+      if (M1 != M2) {
+        display::log("mathq", "Dimensions", "reduce", "Inner dimensions do not match");
+        return *(new NullDimensions());
+      }
+      const size_t& M = M1;      
+      const size_t rank1 = dims1.rank();
+      const size_t rank2 = dims2.rank();
+      const size_t rank3 = rank1 + rank2 - 2;
+      Dimensions& dims3 = *(new Dimensions(rank3));
+      size_t k = 0;
+      for (size_t ii = 0; ii < rank1; ii++) {
+        if (ii == index1) continue;
+        dims3[k++] = dims1[ii];
+      }
+      for (size_t ii = 0; ii < rank2; ii++) {
+        if (ii == index2) continue;
+        dims3[k++] = dims2[ii];
+      }
+      return dims3;
+  }
 
 
 

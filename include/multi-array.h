@@ -694,28 +694,20 @@ namespace mathq {
       return *this;
     }
 
-    template <size_t list_depth> requires ((list_depth > 1) && (list_depth <= rank_value))
+    template <size_t list_depth> requires ((list_depth >= 1) && (list_depth <= rank_value))
     Type& list_helper(const typename MakeInitializer<Element, list_depth>::Type& mylist, Indices& inds) {
       size_t k = 0;
       using ListType = typename MakeInitializer<Element, list_depth>::Type;
       using Iterator = typename MakeInitializer<Element, list_depth>::Type::iterator;
-      ListType temp;
       Iterator it = mylist.begin();
 
       for (it = mylist.begin(); it != mylist.end(); it++, k++) {
         inds[rank_value-list_depth] = k;
-        list_helper(*it, inds);
-      }
-      return *this;
-    }
-
-    Type& list_helper(const std::initializer_list<Element>& mylist, Indices& inds) {
-      size_t k = 0;
-      using Iterator = typename std::initializer_list<Element>::iterator;
-      Iterator it = mylist.begin();
-      for (it = mylist.begin(); it != mylist.end(); it++, k++) {
-        inds[rank_value-1] = k;
-        (*this)[inds] = *it;
+        if constexpr (list_depth == 1) {
+          (*this)[inds] = *it;
+        } else {
+          list_helper<list_depth-1>(*it, inds);
+        }
       }
       return *this;
     }
@@ -755,7 +747,14 @@ namespace mathq {
     //***************** in-place modification*******************************
     //**********************************************************************
 
+
+    // only allow when we don't need to resize. else use the transpose function
     Type& transpose() {
+      Dimensions mydims = dims();
+      if ( mydims != mydims.getReverse() ) {
+        printf("ERROR: in-place transpose only allowed for square tensors");
+        return *this;
+      }
       Indices& inds = *(new Indices(rank_value));
       inds.clear();
       transpose_helper(inds);
@@ -765,11 +764,13 @@ namespace mathq {
     Type& transpose_helper(Indices& inds, const size_t& index_number = 0) {
       for (size_t ii = 0; ii < dims()[index_number]; ii++) {
         inds[index_number] = ii;
-        if (index_number < rank_value - 1) {
+        if (index_number < rank_value/2) {
           transpose_helper(inds, index_number - 1);
         } else {
           // we've reached the bottom
+          Element temp = (*this)[inds];
           (*this)[inds] = (*this)[inds.getReverse()];
+          (*this)[inds.getReverse()] = temp;
         }
       }
       return *this;

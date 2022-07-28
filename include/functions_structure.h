@@ -14,7 +14,6 @@ namespace mathq {
 
   template <class X, class Element, typename Number, size_t depth, size_t rank>
   auto transpose(const ExpressionR<X, Element, Number, depth, rank>& x) {
-    TRDISP(x);
     return ExpressionR_Transpose<ExpressionR<X, Element, Number, depth, rank>, Element, Number, depth, rank, FUNCTOR_pos<Element, Element, Number, Number>>(x);
   }
 

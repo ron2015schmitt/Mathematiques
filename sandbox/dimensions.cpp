@@ -295,8 +295,18 @@ int main(int argc, char* argv[]) {
     TRDISP(temp);
   }
 
-  DISP(InitializerTrait< std::initializer_list<double> >::get_size_array({ 1 , 2, 3 }) );
-  DISP(InitializerTrait< std::initializer_list< std::initializer_list<double> > >::get_size_array({ {1, 2}, {3, 4}, {5, 6} }) );
+  TRDISP(InitializerTrait< std::initializer_list<double> >::get_size_array({ 1 , 2, 3 }) );
+  TRDISP(InitializerTrait< std::initializer_list< std::initializer_list<double> > >::get_size_array({ {1, 2}, {3, 4}, {5, 6} }) );
+
+  using List0 = typename MakeInitializer<double, 0>::Type;
+  TRDISP( display::getTypeName< List0 >());
+  using List1 = typename MakeInitializer<double, 1>::Type;
+  TRDISP( List0{4.4});
+  TRDISP( display::getTypeName< List1 >());
+  TRDISP( List1{1,2,3});
+  using List2 = typename MakeInitializer<double, 2>::Type;
+  TRDISP( display::getTypeName< List2 >());
+  TRDISP( List2{ {1, 2}, {3, 4}, {5, 6} });
 
 
   TRDISP(array_of_one_value<int, -1,7>());

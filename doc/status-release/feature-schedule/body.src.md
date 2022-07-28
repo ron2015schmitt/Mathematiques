@@ -83,6 +83,8 @@
 * need to fix up printing of nested MultiArrays: need to add an argument: indent_string = ""
 * each MultiArray should have a dynamic cast to a list
 * need function in display that converts (nested) lists to a string
+* display Dimensions as 2x5x2
+* display Indices as (1,3,2)
 
 
 ### Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary
@@ -99,6 +101,20 @@
   + use [C++20 Ranges](https://en.cppreference.com/w/cpp/ranges)
 1. add vararg constructor for Dimensions or parameter pack 
 1. consts: `o` and `all`
+  + test by grabbing rows and cols of a Matrix
+  + test by grabbing submatrix of a Matrix
+  + test submatrix of rank=3
+1. add the following operators to all expressions.  Will need to index method from Indices
+```C++
+    // ---------------- A[Indices]--------------
+    Element& operator[](const Indices& inds) {
+      return derived()[inds];
+    }
+    const Element operator[](const Indices& inds) const {
+      return derived()[inds];
+    }
+```
+1. find a more succinct way to pass Dimensions to MultiArrays, currently its `MultiArray<double,3> A(Dimensions({2,3,4}))`
 
 ### I/O Refactoring
 1. [Save tensor to file](topics/filesave.md)
@@ -123,6 +139,9 @@
 
 
 ### Miscellaneous Small Features
+* add contraction product for rank>2 tensors whereby the contraction indices are specified 
+* same but contacrt over mor ethan one indices
+1. implement functionality of matlab `cat`, `horzcat`, `vertcat`, `permute`, `repmat`, `squeeze`, and `reshape` commands
 * add `static inline std::string ClassName()` to each class. see `Vector` for how to set up
 * create template versions of all C++ functions so that there is never overload ambiguity. Put inside namespace
   * use python to create

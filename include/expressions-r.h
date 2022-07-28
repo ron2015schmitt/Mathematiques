@@ -868,7 +868,7 @@ namespace mathq {
     //**********************************************************************
     //                        Dimensions
     //**********************************************************************
-    DimensionsType dims(void) const {
+    DimensionsType& dims(void) const {
       if constexpr (D1 >= D2) {
         return a_.dims();
       }
@@ -1277,7 +1277,7 @@ namespace mathq {
     //                        Dimensions
     //**********************************************************************
 
-    DimensionsType dims(void) const {
+    DimensionsType& dims(void) const {
       if constexpr (D1 > 0) {
         return a_.dims();
       }
@@ -1734,10 +1734,10 @@ namespace mathq {
     //                        Dimensions
     //**********************************************************************
 
-    DimensionsType dims(void) const {
+    DimensionsType& dims(void) const {
       return x_.dims();
     }
-    DimensionsType element_dims(void) const {
+    DimensionsType& element_dims(void) const {
       return x_.element_dims();
     }
     RecursiveDimensions& recursive_dims(void) const {
@@ -1914,10 +1914,10 @@ namespace mathq {
     //                        Dimensions
     //**********************************************************************
 
-    DimensionsType dims(void) const {
+    DimensionsType& dims(void) const {
       return *reverse_dims;
     }
-    DimensionsType element_dims(void) const {
+    DimensionsType& element_dims(void) const {
       return x_.element_dims().reverse();
     }
     RecursiveDimensions& recursive_dims(void) const {
@@ -2081,11 +2081,11 @@ namespace mathq {
     //**********************************************************************
     //                        Dimensions
     //**********************************************************************
-    DimensionsType dims(void) const {
+    DimensionsType& dims(void) const {
       DimensionsType d(x_.size() + y_.size());
       return d;
     }
-    DimensionsType element_dims(void) const {
+    DimensionsType& element_dims(void) const {
       return x_.element_dims();
     }
     RecursiveDimensions& recursive_dims(void) const {

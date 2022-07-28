@@ -29,51 +29,90 @@ namespace mathq
   //                 Equal Depth
   // ----------------------------------------------------
 
-   // (0: S • S) Scalar<E1(NT1)> | Scalar<E2(NT2)>
-
-  template <class E1, class E2>
-  auto dot(const Scalar<E1>& a, const Scalar<E2>& b) {
-    return a() * b();
-  }
 
    // TODO: realtime check (in debug mode) that deep dimensions of E1 and E2 are compatible
 
+   // (1: T • T) MultiArray<E1(NT1)> | MultiArray<E2(NT2)>
 
-   // (1A: T • T) MultiArray<E1(NT1)> | MultiArray<E2(NT2)>
+   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank1, size_t rank2> class DotHelper;
 
-    // TODO:" finish this"
-   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank1, size_t rank2>
-   auto dot(const ExpressionR<A, E1, NT1, depth, rank1> &x1, const ExpressionR<B, E2, NT2, depth, 2> &x2)
-   {
-     typedef typename AddType<NT1, NT2>::Type NT3;
-     typedef typename NumberTrait<E1, NT3>::ReplacedNumberType E3; // see TODO note above
-      const size_t dims1 = x1.dims();
-      const size_t dims2 = x2.dims();
-      const size_t rank3 = rank1 + rank2 - 2;
-
-      DISP(dims1);
-      DISP(dims1);
-
-      // const size_t M1 = dims1[rank1-1];
-      // const size_t M2 = dims2[0];
-      // const size_t& M = M1;
-      // Dimensions dims3 = Dimensions::reduce(dims1, dims2);
-      // MultiArray<E3,rank3>& result = *(new MultiArray<E3,rank3>(dims3));
-
-      // result = 0;
-      // Indices inds1(rank);
-      // inds1.clear();
-      // Indices inds2(rank);
-      // inds2.clear();
-      // for (size_t ii = 0; ii < N1; ii++) {
-      //   inds1[rank-1] = ii;
-      //   inds2[0] = ii;
-      //   *result += v1[ii] * v2[ii];
-      // }
-      // return result;
-      return 0;
+   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank1, size_t rank2>  
+   auto dot(const ExpressionR<A, E1, NT1, depth, rank1> &x1, const ExpressionR<B, E2, NT2, depth, rank2> &x2) {
+      DotHelper x3 = DotHelper(x1, x2);
+      return x3.result();
    }
 
+   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank1, size_t rank2>  
+   class DotHelper {
+    public:
+    constexpr static size_t rank3 = rank1 + rank2 - 2;
+
+    using T1 = ExpressionR<A, E1, NT1, depth, rank1>;
+    using T2 = ExpressionR<B, E2, NT2, depth, rank2>;
+    using NT3 = typename AddType<NT1, NT2>::Type;
+    using E3 = typename NumberTrait<E1, NT3>::ReplacedNumberType; // see TODO note above
+    using T3 = MultiArray<E3,rank3>;
+
+    const Dimensions dims1;
+    const Dimensions dims2;
+    const Dimensions dims3;
+    const size_t Nsum;
+    
+    const T1& x1;
+    const T2& x2;
+    T3& x3;
+    Indices inds1 = Indices(rank1);
+    Indices inds2 = Indices(rank2);
+    Indices inds3 = Indices(rank3);
+    E3 temp;
+ 
+      DotHelper(const T1& x1, const T2& x2) :
+       dims1(x1.dims()),
+       dims2(x2.dims()),
+       dims3( Dimensions::reduce(dims1, dims2) ),
+       Nsum(dims2[0]),
+       x1(x1),
+       x2(x2),
+       x3( *(new T3(dims3)) ) {      
+      }
+
+      T3& result() {
+        calc(0);
+        return x3;
+      }
+      void calc(const size_t index_num) {
+        if (index_num < rank3) {
+          for (size_t k = 0; k < dims3[index_num]; k++) {
+            inds3[index_num] = k;
+            if (index_num < rank1 - 1) {
+              inds1[index_num] = k;
+            } else {
+              inds2[index_num + 2 - rank1] = k;
+            }
+            calc(index_num + 1);
+          }
+        } else {
+          temp = 0;
+          //   inds1[rank1 - 1] = 99;inds2[0] = 99; MDISP(inds3,inds1,inds2);   // <-- useful for testing
+          for (size_t n = 0; n < Nsum; n++) {
+            inds1[rank1 - 1] = n;
+            inds2[0] = n;
+            temp += x1[inds1.index(dims1)] * x2[inds2.index(dims2)];
+          }
+          x3[inds3] = temp;
+        }
+      }
+
+   };
+
+
+   // (1A: S • S) Scalar<E1(NT1)> | Scalar<E2(NT2)>
+
+   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
+   auto dot(const ExpressionR<A, E1, NT1, depth, 0> &a, const ExpressionR<B, E2, NT2, depth, 0> &b) 
+   {
+    return a[0] * b[0];
+   }
 
 
    // (1B: V • V) Vector<E1(NT1)> | Vector<E2(NT2)>
