@@ -256,19 +256,21 @@ namespace mathq {
       return ClassName();
     }
 
-    static inline std::string ClassName() {      return "Indices";
+    static inline std::string ClassName() {      
+      return "Indices";
     }
 
 
     inline friend std::ostream& operator<<(std::ostream& stream, const Indices& inds) {
       using namespace display;
 
-      stream << "{";
+      Style& style = FormatDataVector::style_for_punctuation;
+      stream << style.apply("(");
       for (size_t ii = 0; ii < inds.size(); ii++) {
-        if (ii>0)  stream << ", ";
+        if (ii>0)  stream << style.apply(", ");
         dispval_strm(stream, inds[ii]);
       }
-      stream << "}";
+      stream << style.apply(")");
 
       return stream;
     }

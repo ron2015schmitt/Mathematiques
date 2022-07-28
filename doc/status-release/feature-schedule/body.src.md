@@ -12,9 +12,12 @@
   * Add a compiler version file
   * In variables.mk, have C++ version taken from file in version directory (`CPPC = g++ -pipe -std=c++17`)
   * add variable for the C++ version used, currently C++20.  append to version string. 
-  * using g++ 10.3.  10.4 ha sbeen released 
+  * was using g++ 10.3.  10.4 has been released. now using 11.1
   * (upgrading g++ in Ubuntu)[https://www.ovenproof-linux.com/2016/09/upgrade-gcc-and-g-in-ubuntu.html]
   * (multiple versions of g++)[https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa]
+```bash
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+```
   * https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa
 
 
@@ -87,8 +90,7 @@
 * need to fix up printing of nested MultiArrays: need to add an argument: indent_string = ""
 * each MultiArray should have a dynamic cast to a list
 * need function in display that converts (nested) lists to a string
-* display Dimensions as 2x5x2
-* display Indices as (1,3,2)
+* use [std::source_location](https://en.cppreference.com/w/cpp/utility/source_location) in `log` functions
 
 
 ### Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary

@@ -787,20 +787,21 @@ namespace mathq {
 
     static inline std::string ClassName() {
       using namespace display;
+      Style& style = FormatDataVector::style_for_punctuation;
       std::string s = "MultiArray";
       s += StyledString::get(ANGLE1).get();
       Element d;
       s += getTypeName(d);
       s += StyledString::get(COMMA).get();
-      s += "rank=";
+      s += " rank=";
       s += std::to_string(rank_value);
       if constexpr (!is_dynamic_value) {
         for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
           if (ii == 0) {
-            s += StyledString::get(COMMA).get();
+            s += StyledString::get(COMMA).get() + " ";
           }
           else {
-            s += "⨯";
+            s += style.apply("⨯");
           }
           s += std::to_string(static_dims_array[ii]);
         }

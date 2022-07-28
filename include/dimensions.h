@@ -246,20 +246,13 @@ namespace mathq {
     friend std::ostream& operator<<(std::ostream& stream, const Dimensions& v) {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
-      stream << style.apply(FormatDataVector::string_opening);
-      const size_t N = FormatDataVector::max_elements_per_line;
       size_t k = 0;
       for (size_t ii = 0; ii < v.size(); ii++, k++) {
-        if (k >= N) {
-          stream << style.apply(FormatDataVector::string_endofline);
-          k = 0;
-        }
         dispval_strm(stream, v[ii]);
         if (ii < v.size()-1) {
-          stream << style.apply(FormatDataVector::string_delimeter);
+          stream << style.apply("⨯");
         }
       }
-      stream << style.apply(FormatDataVector::string_closing);
 
       return stream;
     }
