@@ -118,62 +118,12 @@ namespace mathq {
 
   };
 
-  // **************************************************************************
-  // *   ArrayTypeTrait
-  //
-  //
-  // ************************************************************************** 
-
-  template <typename Number, size_t NN>
-  class ArrayTypeTrait {
-  public:
-    using Type = std::array<Number, NN>;
-  };
-
-  template <typename Number>
-  class ArrayTypeTrait<Number, 0> {
-  public:
-    using Type = std::valarray<Number>;
-  };
-
-
-
-
-
-
-  template <typename Element, size_t rank, size_t... dim_ints > requires (validate_multi_array<rank, dim_ints...>())
-  class MultiArrayData {
-    public: 
-      constexpr static size_t compile_time_size = calc_size<rank, dim_ints...>();
-      using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
-      MyArrayType data_;
-  };
-
-  //
-  // specialization for dynamic arrays of rank 2 (ie a matrix) or higher
-  //
-  // These dynamic arrays need a dynamic_dims_array to keep track of the dimensions
-
-  template <typename Element, size_t rank> requires (rank >= 2)
-  class MultiArrayData<Element, rank> {
-    public: 
-      constexpr static size_t compile_time_size = calc_size<rank, 0>();
-      using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
-      MyArrayType data_;
-      std::array<size_t, rank> dynamic_dims_array;  
-      
-      // MultiArrayData() {
-      //   std::cout << "constructor MultiArrayData " << compile_time_size << "\n";
-      //   std::cout << data_ << "\n";
-      // }
-  };
-
-
   // ***************************************************************************
   // Materialize 
   //
   // This returns a concrete tensor of type specified by paramters.
-  // Useful when working with multiarray expressions
+  // Useful when working with multiarray expressions.
+  // NOTE: not needed since the Great Refactoring
   // ***************************************************************************
 
   template <typename Element, size_t rank, size_t... ints>
@@ -181,9 +131,6 @@ namespace mathq {
   public:
     using Type = MultiArray<Element, rank, ints...>;
   };
-
-
-
 
 
   // ***************************************************************************
@@ -1079,6 +1026,12 @@ namespace mathq {
     typedef RetType(Type)(NT1, NT2, NT3);
     // using type = RetType (&)(NT1, NT2, NT3);
   };
+
+
+
+
+
+
 
 
 

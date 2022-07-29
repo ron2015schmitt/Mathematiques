@@ -5,8 +5,8 @@
 1. Refactor `Dimensions` and `Indices` classes
 1. New `RecursiveDimensions`  and `DeepIndices` classes
 1. Refactor all multi-arrays
-  * Simplifly the templates to only have `Element` type and (top level) `Dimensions`
-  * Renamed `Tensor` -> `MultiArray` ->? `AlgebraTensor`
+  * Simplifly the template  `MultiArray<Element, rank, dim_ints...>` 
+  * Renamed `Tensor` -> `MultiArray` 
   * Refactor `Scalar`, `Vector` and `Matrix` to be type aliases for `MultiArray`
 1. C++ dialect 
   * Add a compiler version file
@@ -27,6 +27,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 
 
 ### v0.41 Vector Calculus
+1. see GOogle Doc notes
 1. refactor `Grid` classes: inherit from nested MultiArray. Two types ArrayofGrids. GridOfArrays
 1. refactor `RealSet` and `MultiSet` classes
   * should not have inflate nor a grid local variable.  createGrid method instead

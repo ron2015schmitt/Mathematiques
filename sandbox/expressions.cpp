@@ -217,52 +217,85 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(typename MakeInitializer<double,2>::Type init2{{1}, {1,2}, {1,2,3}});
   TRDISP(init2);
 
+  // MultiArray*Data* tests
 
   CR();
-  ECHO_CODE(MultiArrayData<double,2, 3,4> testdata1);
-  TRDISP(testdata1.data_);
+  OUTPUT("rank = 1, fixed size");
+  ECHO_CODE(MultiArrayData<double,1, 10> testdata1);
+  TRDISP(testdata1);
+  TRDISP(testdata1.classname());
   TRDISP(sizeof(testdata1)/sizeof(double));
   TRDISP(sizeof(testdata1.data_)/sizeof(double));
-  // TRDISP(testdata1.dynamic_dims_array);
 
   CR();
-  ECHO_CODE(MultiArrayData<double,1, 10> testdata2);
-  TRDISP(testdata2.data_);
+  OUTPUT("rank = 2, fixed size");
+  ECHO_CODE(MultiArrayData<double,2, 3,4> testdata2);
+  TRDISP(testdata2);
+  TRDISP(testdata2.classname());
   TRDISP(sizeof(testdata2)/sizeof(double));
   TRDISP(sizeof(testdata2.data_)/sizeof(double));
-  // TRDISP(testdata2.dynamic_dims_array);
 
   CR();
-  ECHO_CODE(MultiArrayData<double,2> testdata3);
-  TRDISP(testdata3.data_);
-  TRDISP(testdata3.dynamic_dims_array);
+  OUTPUT("rank = 3, fixed size");
+  ECHO_CODE(MultiArrayData<double,3, 3,4,2> testdata3);
+  TRDISP(testdata3);
+  TRDISP(testdata3.classname());
   TRDISP(sizeof(testdata3)/sizeof(double));
   TRDISP(sizeof(testdata3.data_)/sizeof(double));
-  TRDISP(sizeof(testdata3.dynamic_dims_array)/sizeof(size_t));
 
+  CR();
+  OUTPUT("rank = 1, dynamic size");
+  ECHO_CODE(MultiArrayData<double,1> testdata1d);
+  TRDISP(testdata1d);
+  TRDISP(testdata1d.classname());
+  TRDISP(sizeof(testdata1d)/sizeof(double));
+  TRDISP(sizeof(testdata1d.data_)/sizeof(double));
+
+  CR();
+  OUTPUT("rank = 2, dynamic size");
+  ECHO_CODE(MultiArrayData<double,2> testdata2d);
+  TRDISP(testdata2d);
+  TRDISP(testdata2d.classname());
+  TRDISP(sizeof(testdata2d)/sizeof(double));
+  TRDISP(sizeof(testdata2d.data_)/sizeof(double));
+  TRDISP(sizeof(testdata2d.dynamic_dims_array)/sizeof(size_t));
+
+  CR();
+  OUTPUT("rank = 3, dynamic size");
+  ECHO_CODE(MultiArrayData<double,3> testdata3d);
+  TRDISP(testdata3d);
+  TRDISP(testdata3d.classname());
+  TRDISP(sizeof(testdata3d)/sizeof(double));
+  TRDISP(sizeof(testdata3d.data_)/sizeof(double));
+  TRDISP(sizeof(testdata3d.dynamic_dims_array)/sizeof(size_t));
+
+
+  // back to MultiArrays 
 
   CR();
   ECHO_CODE(MultiArray<double,2, 3,4> A1(3.14));
-  TRDISP(A1.data_);
+  TRDISP(A1);
+  TRDISP(A1.dims());
   TRDISP(sizeof(A1)/sizeof(double));
   TRDISP(sizeof(A1.data_)/sizeof(double));
   // TRDISP(A1.dynamic_dims_array);
 
   CR();
   ECHO_CODE(MultiArray<double,1, 10> A2);
-  TRDISP(A2.data_);
+  TRDISP(A2.dims());
+  // TRDISP(A2.data_);
   TRDISP(sizeof(A2)/sizeof(double));
   TRDISP(sizeof(A2.data_)/sizeof(double));
   // TRDISP(A2.dynamic_dims_array);
 
   CR();
   ECHO_CODE(MultiArray<double,2> A3);
-  TRDISP(A3);
-  TRDISP(A3.data_);
-  TRDISP(A3.dynamic_dims_array);
+  TRDISP(A3.dims());
+  // TRDISP(A3.data_);
+  // TRDISP(A3.dynamic_dims_array);
   TRDISP(sizeof(A3)/sizeof(double));
   TRDISP(sizeof(A3.data_)/sizeof(double));
-  TRDISP(sizeof(A3.dynamic_dims_array)/sizeof(size_t));
+  // TRDISP(sizeof(A3.dynamic_dims_array)/sizeof(size_t));
   TRDISP(A3.is_dynamic_value);
   TRDISP(A3.resize(2,3));
   TRDISP(A3.resize(Dimensions({4,1})));

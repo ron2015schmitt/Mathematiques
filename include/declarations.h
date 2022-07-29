@@ -193,7 +193,6 @@ namespace mathq {
   template <typename Element>
   using Scalar = MultiArray<Element, 0>;
 
-
   template <typename Element, size_t... sizes>
   using Vector = MultiArray<Element, 1, sizes...>;
 
@@ -201,10 +200,10 @@ namespace mathq {
   using Matrix = MultiArray<Element, 2, sizes...>;
 
   template <typename Element, size_t... sizes>
-  using MultiArray3 = MultiArray<Element, 3, sizes...>;
+  using Array3D = MultiArray<Element, 3, sizes...>;
 
   template <typename Element, size_t... sizes>
-  using MultiArray4 = MultiArray<Element, 4, sizes...>;
+  using Array4D= MultiArray<Element, 4, sizes...>;
 
 
 

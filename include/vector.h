@@ -355,7 +355,11 @@ namespace mathq {
     }
 
     inline std::array<size_t, rank_value> dims_array(void) const {
+      if constexpr (is_dynamic_value) {
         return *(new std::array<size_t, rank_value>{ this->size() });
+      } else {
+        return static_dims_array;
+      }
     }
 
 
@@ -1608,7 +1612,6 @@ namespace mathq {
       }
       return y;
     }
-
 
   };
 

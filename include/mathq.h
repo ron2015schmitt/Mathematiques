@@ -47,6 +47,7 @@
 #include "math_imag.h"
 #include "math_quaternion.h"
 
+#include "multi-array-data.h"
 #include "dimensions.h"
 #include "indices.h"
 #include "slices.h"
@@ -58,8 +59,8 @@
 #include "scalar.h"
 #include "vector.h"
 // #include "matrix.h"
-// #include "multi-array3.h"
-// #include "multi-array4.h"
+// #include "array3d.h"
+// #include "array4d.h"
 
 // #include "vector-constant.h"
 // #include "vector-sparse.h"
