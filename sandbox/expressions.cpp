@@ -209,66 +209,6 @@ int main(int argc, char* argv[]) {
   TRDISP(x4.sort());
   TRDISP(x4);
 
-  CR();
-  ECHO_CODE(typename MakeInitializer<double,0>::Type init0{3});
-  TRDISP(init0);
-  ECHO_CODE(typename MakeInitializer<double,1>::Type init1{3,2,1});
-  TRDISP(init1);
-  ECHO_CODE(typename MakeInitializer<double,2>::Type init2{{1}, {1,2}, {1,2,3}});
-  TRDISP(init2);
-
-  // MultiArray*Data* tests
-
-  CR();
-  OUTPUT("rank = 1, fixed size");
-  ECHO_CODE(MultiArrayData<double,1, 10> testdata1);
-  TRDISP(testdata1);
-  TRDISP(testdata1.classname());
-  TRDISP(sizeof(testdata1)/sizeof(double));
-  TRDISP(sizeof(testdata1.data_)/sizeof(double));
-
-  CR();
-  OUTPUT("rank = 2, fixed size");
-  ECHO_CODE(MultiArrayData<double,2, 3,4> testdata2);
-  TRDISP(testdata2);
-  TRDISP(testdata2.classname());
-  TRDISP(sizeof(testdata2)/sizeof(double));
-  TRDISP(sizeof(testdata2.data_)/sizeof(double));
-
-  CR();
-  OUTPUT("rank = 3, fixed size");
-  ECHO_CODE(MultiArrayData<double,3, 3,4,2> testdata3);
-  TRDISP(testdata3);
-  TRDISP(testdata3.classname());
-  TRDISP(sizeof(testdata3)/sizeof(double));
-  TRDISP(sizeof(testdata3.data_)/sizeof(double));
-
-  CR();
-  OUTPUT("rank = 1, dynamic size");
-  ECHO_CODE(MultiArrayData<double,1> testdata1d);
-  TRDISP(testdata1d);
-  TRDISP(testdata1d.classname());
-  TRDISP(sizeof(testdata1d)/sizeof(double));
-  TRDISP(sizeof(testdata1d.data_)/sizeof(double));
-
-  CR();
-  OUTPUT("rank = 2, dynamic size");
-  ECHO_CODE(MultiArrayData<double,2> testdata2d);
-  TRDISP(testdata2d);
-  TRDISP(testdata2d.classname());
-  TRDISP(sizeof(testdata2d)/sizeof(double));
-  TRDISP(sizeof(testdata2d.data_)/sizeof(double));
-  TRDISP(sizeof(testdata2d.dynamic_dims_array)/sizeof(size_t));
-
-  CR();
-  OUTPUT("rank = 3, dynamic size");
-  ECHO_CODE(MultiArrayData<double,3> testdata3d);
-  TRDISP(testdata3d);
-  TRDISP(testdata3d.classname());
-  TRDISP(sizeof(testdata3d)/sizeof(double));
-  TRDISP(sizeof(testdata3d.data_)/sizeof(double));
-  TRDISP(sizeof(testdata3d.dynamic_dims_array)/sizeof(size_t));
-
 
   // back to MultiArrays 
 
