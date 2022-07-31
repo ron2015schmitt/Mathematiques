@@ -353,14 +353,12 @@ namespace mathq {
 
 
 
-
   // findtrue(a) - deep indexing
 
   // NOTE: declaration in declarations.h
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<std::is_same<Number, bool>::value, Vector<size_t>&>
-    findtrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
+  template <class X, class Element, typename Number, size_t depth, size_t rank> requires (std::is_same<Number, bool>::value)
+   Vector<size_t>& findtrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
     size_t N = numtrue(x);
     Vector<size_t>* y = new Vector<size_t>(N);
 

@@ -50,7 +50,7 @@ namespace mathq {
     // }
 
     static mathq::Indices& indices(const size_t k, const Dimensions& dims) {
-      const size_t rank = dims.size();
+      const size_t rank = dims.rank();
       mathq::Indices& myinds = *(new mathq::Indices(k, dims));
       return myinds;
     }
@@ -77,15 +77,15 @@ namespace mathq {
     explicit Indices(const size_t k, const Dimensions& dims) {
       const size_t rank = dims.size();
       this->resize(rank);
-      size_t prev = k;
-      // This loop must go in reverse order.  Do NOT change.
-      for (size_t n = rank-1; n > 0; n--) {
-        size_t N = dims[n];
-        size_t temp = prev/N;
-        (*this)[n] = prev - N*temp;
-        prev = temp;
-      }
       if (rank > 0) {
+        size_t prev = k;
+        // This loop must go in reverse order.  Do NOT change.
+        for (size_t n = rank-1; n > 0; n--) {
+          size_t N = dims[n];
+          size_t temp = prev/N;
+          (*this)[n] = prev - N*temp;
+          prev = temp;
+        }
         (*this)[0] = prev;
       }
     }
@@ -187,11 +187,13 @@ namespace mathq {
 
     Indices& reverse() {
       // reverse order
-      size_t k = size()-1;
-      for (size_t ii = 0; ii < this->size()/2; ii++, k--) {
-        size_t temp = (*this)[ii];
-        (*this)[ii] = (*this)[k];
-        (*this)[k] = temp;
+      if (rank() > 0) {
+        size_t k = size()-1;
+        for (size_t ii = 0; ii < this->size()/2; ii++, k--) {
+          size_t temp = (*this)[ii];
+          (*this)[ii] = (*this)[k];
+          (*this)[k] = temp;
+        }
       }
       return *this;
     }

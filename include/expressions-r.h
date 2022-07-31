@@ -1951,7 +1951,7 @@ namespace mathq {
       const Indices inds2 = inds1.getReverse();
       const size_t index2 = inds2.index(x_.dims());
       return FUNC::apply(x_[index2]);
-      return Element(0);
+      // return Element(0);
     }
 
 

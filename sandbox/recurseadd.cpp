@@ -137,130 +137,130 @@ int main(int argc, char *argv[]) {
     TLDISP(v3);
   }
 
-  // // two-level recurse std::vector
-  // {
-  //   using namespace std;
-  //   CR();
-  //   const int N1 = 2;
-  //   const int N2 = 3;
-  //   const int N3 = 2;
-  //   MOUT << "" << CREATESTYLE(BOLD).apply("vector<vector<vector<double>>> + vector<vector<vector<double>>>") << ", N1=" << N1 << ", N2=" << N2 << ", N3=" << N3 << std::endl;
+  // two-level recurse std::vector
+  {
+    using namespace std;
+    CR();
+    const int N1 = 2;
+    const int N2 = 3;
+    const int N3 = 2;
+    MOUT << "" << CREATESTYLE(BOLD).apply("vector<vector<vector<double>>> + vector<vector<vector<double>>>") << ", N1=" << N1 << ", N2=" << N2 << ", N3=" << N3 << std::endl;
 
-  //   CR();
-  //   MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("vector<vector<double>> x") << std::endl;
-  //   vector<vector<double>> x{{.1, .2}, {.3, .4}, {.5, .6}};
-  //   TLDISP(x);
-  //   TLDISP((void *)&x);
-  //   for (int i = 0; i < x.size(); i++) {
-  //     TLDISP((void *)&(x[i]));
-  //   }
-
-
-  //   CR();
-  //   MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("vector<vector<vector<double>>> v1") << std::endl;
-  //   vector<vector<vector<double>>> v1{{{.1, .2}, {.3, .4}, {.5, .6}}, {{.7, .8}, {.9, 1.0}, {1.1, 1.2}}};
-  //   TLDISP(v1);
-  // }
+    CR();
+    MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("vector<vector<double>> x") << std::endl;
+    vector<vector<double>> x{{.1, .2}, {.3, .4}, {.5, .6}};
+    TLDISP(x);
+    TLDISP((void *)&x);
+    for (int i = 0; i < x.size(); i++) {
+      TLDISP((void *)&(x[i]));
+    }
 
 
-  // // two-level recurse
-  // {
-  //   CR();
-  //   CR();
-  //   CR();
-  //   const int N1 = 2;
-  //   const int N2 = 3;
-  //   const int N3 = 2;
-  //   MOUT << "" << CREATESTYLE(BOLD).apply("Vector<Vector<Vector<double>>> + Vector<Vector<Vector<double>>>") << ", N1=" << N1 << ", N2=" << N2 << ", N3=" << N3 << std::endl;
-
-  //   CR();
-  //   MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("Vector<Vector<double>> x") << std::endl;
-  //   Vector<Vector<double>> x{{.1, .2}, {.3, .4}, {.5, .6}};
-  //   TLDISP(x);
-  //   TLDISP((void *)&x);
-  //   for (int i = 0; i < x.size(); i++) {
-  //     TLDISP((void *)&(x[i]));
-  //   }
+    CR();
+    MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("vector<vector<vector<double>>> v1") << std::endl;
+    vector<vector<vector<double>>> v1{{{.1, .2}, {.3, .4}, {.5, .6}}, {{.7, .8}, {.9, 1.0}, {1.1, 1.2}}};
+    TLDISP(v1);
+  }
 
 
-  //   CR();
-  //   MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("Vector<Vector<Vector<double>>> v1") << std::endl;
-  //   Vector<Vector<Vector<double>>> v1{{{.1, .2}, {.3, .4}, {.5, .6}}, {{.7, .8}, {.9, 1.0}, {1.1, 1.2}}};
-  //   TLDISP(v1);
+  // two-level recurse
+  {
+    CR();
+    CR();
+    CR();
+    const int N1 = 2;
+    const int N2 = 3;
+    const int N3 = 2;
+    MOUT << "" << CREATESTYLE(BOLD).apply("Vector<Vector<Vector<double>>> + Vector<Vector<Vector<double>>>") << ", N1=" << N1 << ", N2=" << N2 << ", N3=" << N3 << std::endl;
 
-  //   Vector<Vector<Vector<double>>> v2{{{100., 200.}, {300., 400.}, {500., 600.}}, {{700., 800.}, {900., 1000.}, {1100., 1200.}}};
-  //   Vector<Vector<Vector<double>>> v3(N1);
-  //   Vector<Vector<Vector<double>>> v4(N1);
-  //   for (int i = 0; i < N1; i++) {
-  //     v3[i].resize(N2);
-  //     v4[i].resize(N2);
-  //     for (int j = 0; j < N2; j++) {
-  //       v3[i][j].resize(N3);
-  //       v4[i][j].resize(N3);
-  //     }
-  //   }
-  //   TLDISP(v1);
-  //   TLDISP(v2);
-
-  //   MOUT << "Deep add (v1+v2)" << std::endl;
-  //   t.start_timer_silent();
-  //   v3 = v1 + v2;
-  //   t.stop_timer_curt();
-  //   TLDISP(v3);
-
-  //   CR();
-  //   decltype(v3)::ElementType e;
-  //   decltype(v3)::NumberType d;
-  //   TLDISP(e);
-  //   TLDISP(d);
-  //   TLDISP(decltype(v3)::rank_value);
-  //   TLDISP(decltype(v3)::depth_value);
-  // }
+    CR();
+    MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("Vector<Vector<double>> x") << std::endl;
+    Vector<Vector<double>> x{{.1, .2}, {.3, .4}, {.5, .6}};
+    TLDISP(x);
+    TLDISP((void *)&x);
+    for (int i = 0; i < x.size(); i++) {
+      TLDISP((void *)&(x[i]));
+    }
 
 
+    CR();
+    MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("Vector<Vector<Vector<double>>> v1") << std::endl;
+    Vector<Vector<Vector<double>>> v1{{{.1, .2}, {.3, .4}, {.5, .6}}, {{.7, .8}, {.9, 1.0}, {1.1, 1.2}}};
+    TLDISP(v1);
+
+    Vector<Vector<Vector<double>>> v2{{{100., 200.}, {300., 400.}, {500., 600.}}, {{700., 800.}, {900., 1000.}, {1100., 1200.}}};
+    Vector<Vector<Vector<double>>> v3(N1);
+    Vector<Vector<Vector<double>>> v4(N1);
+    for (int i = 0; i < N1; i++) {
+      v3[i].resize(N2);
+      v4[i].resize(N2);
+      for (int j = 0; j < N2; j++) {
+        v3[i][j].resize(N3);
+        v4[i][j].resize(N3);
+      }
+    }
+    TLDISP(v1);
+    TLDISP(v2);
+
+    MOUT << "Deep add (v1+v2)" << std::endl;
+    t.start_timer_silent();
+    v3 = v1 + v2;
+    t.stop_timer_curt();
+    TLDISP(v3);
+
+    CR();
+    decltype(v3)::ElementType e;
+    decltype(v3)::NumberType d;
+    TLDISP(e);
+    TLDISP(d);
+    TLDISP(decltype(v3)::rank_value);
+    TLDISP(decltype(v3)::depth_value);
+  }
 
 
-  // // add vector to each element
-  // {
-  //   CR();
-  //   CR();
-  //   CR();
-  //   const int N1 = 2;
-  //   const int N2 = 3;
-  //   MOUT << "" << CREATESTYLE(BOLD).apply("Vector<Vector<double>> + Vector<double>") << ", N1=" << N1 << ", N2=" << N2 << std::endl;
-
-  //   CR();
-  //   Vector<Vector<double>> pairs{{.1, .2}, {.3, .4}, {.5, .6}};
-  //   TLDISP(pairs);
-  //   Vector<double> origin{10., 20.};
-  //   TLDISP(origin);
-  //   Vector<Vector<double>> v3{{0, 0}, {0, 0}, {0, 0}};
-  //   TLDISP(v3);
 
 
-  //   t.start_timer_silent();
-  //   v3 = pairs + origin;
-  //   t.stop_timer_curt();
-  //   TLDISP(v3);
+  // add vector to each element
+  {
+    CR();
+    CR();
+    CR();
+    const int N1 = 2;
+    const int N2 = 3;
+    MOUT << "" << CREATESTYLE(BOLD).apply("Vector<Vector<double>> + Vector<double>") << ", N1=" << N1 << ", N2=" << N2 << std::endl;
+
+    CR();
+    Vector<Vector<double>> pairs{{.1, .2}, {.3, .4}, {.5, .6}};
+    TLDISP(pairs);
+    Vector<double> origin{10., 20.};
+    TLDISP(origin);
+    Vector<Vector<double>> v3{{0, 0}, {0, 0}, {0, 0}};
+    TLDISP(v3);
 
 
-  //   MOUT << "" << CREATESTYLE(BOLD).apply("Vector<double> + Vector<Vector<double>>") << ", N1=" << N1 << ", N2=" << N2 << std::endl;
-  //   v3 = {{0, 0}, {0, 0}, {0, 0}};
-  //   TLDISP(v3);
-  //   t.start_timer_silent();
-  //   v3 = origin + pairs;
-  //   t.stop_timer_curt();
-  //   TLDISP(v3);
-  // }
+    t.start_timer_silent();
+    v3 = pairs + origin;
+    t.stop_timer_curt();
+    TLDISP(v3);
 
 
-  // tfull.stop_timer_silent();
-  // CR();
-  // printf("TOTAL TIME ELAPSED (including text display) = %f sec\n", tfull.cputime());
-  // CR();
-  // MOUT << StyledString::get(HORLINE);
-  // CR();
-  // //------------------------------------------------------
+    MOUT << "" << CREATESTYLE(BOLD).apply("Vector<double> + Vector<Vector<double>>") << ", N1=" << N1 << ", N2=" << N2 << std::endl;
+    v3 = {{0, 0}, {0, 0}, {0, 0}};
+    TLDISP(v3);
+    t.start_timer_silent();
+    v3 = origin + pairs;
+    t.stop_timer_curt();
+    TLDISP(v3);
+  }
+
+
+  tfull.stop_timer_silent();
+  CR();
+  printf("TOTAL TIME ELAPSED (including text display) = %f sec\n", tfull.cputime());
+  CR();
+  MOUT << StyledString::get(HORLINE);
+  CR();
+  //------------------------------------------------------
 
   CR();
   MOUT << "done: " << bold.apply(myname) << std::endl;

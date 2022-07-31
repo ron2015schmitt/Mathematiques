@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 
     Scalar<int> s1 = 1;
     bool result;
-    testcode(result = (s1.size() == 1) && (s1.dims().datasize() == 1) && (s1.rank() == 0) && (s1.dims().size() == 0));
+    testcode(result = (s1.size() == 1) && (s1.dims().num_elements() == 1) && (s1.rank() == 0) && (s1.dims().size() == 0));
     bool expected = true;
     bool pass = result;
     printEnd(pass, result, expected);

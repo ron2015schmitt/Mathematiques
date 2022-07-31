@@ -157,11 +157,13 @@ namespace mathq {
 
     Dimensions& reverse() {
       // reverse order
-      size_t k = size()-1;
-      for (size_t ii = 0; ii < this->size()/2; ii++, k--) {
-        size_t temp = (*this)[ii];
-        (*this)[ii] = (*this)[k];
-        (*this)[k] = temp;
+      if (rank() > 0) {
+        size_t k = rank()-1;
+        for (size_t ii = 0; ii < this->size()/2; ii++, k--) {
+          size_t temp = (*this)[ii];
+          (*this)[ii] = (*this)[k];
+          (*this)[k] = temp;
+        }
       }
       return *this;
     }
@@ -246,6 +248,9 @@ namespace mathq {
     friend std::ostream& operator<<(std::ostream& stream, const Dimensions& v) {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
+      if (v.rank() == 0) {
+          stream << style.apply("{}");
+      }
       size_t k = 0;
       for (size_t ii = 0; ii < v.size(); ii++, k++) {
         dispval_strm(stream, v[ii]);

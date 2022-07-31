@@ -408,6 +408,7 @@ namespace mathq {
 
     template <class X>
     Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+      TRDISP(x[0]);
       if constexpr (depth_value <= 1) {
         data_ = x[0];
       }
