@@ -133,8 +133,6 @@ namespace mathq {
 
     // --------------------- FIXED SIZE: set all bottom Elements to same value   ---------------------
 
-    // template<typename NT = NumberType, EnableIf<(!is_dynamic_value)&&(depth_value>1)&&(!std::is_same<Element, NT>::value)> = 1>
-
     template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value > 1) && (!std::is_same<Element, NumberType>::value) )
     explicit MultiArray(const NumberType val) {
       *this = val;
@@ -221,6 +219,15 @@ namespace mathq {
       this->resize(dims);
       *this = val;
     }
+
+    // ----------------------- DYNAMIC SIZE: flat initializer_list ---------------------
+    // not explicit: allows use of nested init lists when depth_value > 1
+    template<bool enable = is_dynamic_value> requires (enable)
+    MultiArray(const size_t Nrows, const size_t Ncols, const std::initializer_list<Element>& var) {
+      resize(Nrows, Ncols);
+      *this = var;
+    }
+
 
     // // ----------------------- std::vector ---------------------
     // explicit MultiArray(const std::vector<Element>& var) {
