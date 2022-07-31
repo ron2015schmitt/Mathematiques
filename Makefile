@@ -99,7 +99,7 @@ README.md: $(CREATE_DOC_TOP) $(TAG_FILE_MATHQ) title.src.md body.temp.md
 
 some: README.md
 
-all: versioning includes src example benchmark sandbox #test README.md doc
+all: versioning includes src example benchmark sandbox test # README.md doc
 
 run_%: FORCE
 	cd $* && ./run
