@@ -6,16 +6,22 @@
 namespace mathq {
 
 
-  // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank, class DT1, class DT2>
-  // bool dimequiv(const ExpressionR<A, E1, NT1, depth, rank, DT1>& x1, const ExpressionR<B, E2, NT2, depth, rank, DT2>& x2) {
-  //   return equiv(x1.dims(), x2.dims());
-  // }
+  //---------------------------------------------------------------------------
+  // ExpressionR  Helper functions
+  //---------------------------------------------------------------------------
 
-  // template <class A, class B, class E1, class E2, class NT1, class NT2, int depth, int rank, class DT1, class DT2>
-  // bool common(const ExpressionR<A, E1, NT1, depth, rank, DT1>& x1, const ExpressionR<B, E2, NT2, depth, rank, DT2>& x2) {
-  //   // PRINTF3("in common");
-  //   return common(x1.getAddresses(), x2.getAddresses());
-  // }
+  template <class A, class B, typename E1, typename E2, typename NT1, typename NT2, size_t depth, size_t rank>
+  bool equiv_dims(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
+    return equiv(x1.dims(), x2.dims());
+  }
+
+  template <class A, class B, typename E1, typename E2, typename NT1, typename NT2, size_t depth, size_t rank>
+  bool common(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
+    // PRINTF3("in common");
+    return common(x1.getAddresses(), x2.getAddresses());
+  }
+
+
 
 
 

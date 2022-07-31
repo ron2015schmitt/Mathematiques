@@ -83,11 +83,11 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(Dimensions dims2);
   ECHO_CODE(dims2 = { 3,2,1 });
   TRDISP(dims2);
-  TRDISP(dims2.getReducedDims());
+  TRDISP(dims2.getReduced());
   ECHO_CODE(Dimensions dims2b);
   ECHO_CODE(dims2b = { 3,1,2,1 });
   TRDISP(dims2b);
-  TRDISP(dims2b.getReducedDims());
+  TRDISP(dims2b.getReduced());
   TRDISP(equiv(dims2,dims2b));
 
 
@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
   TRDISP(dims5);
   ECHO_CODE(dims5 = { 13, 42, 56, 99 });
   TRDISP(dims5);
-  TRDISP(dims5.getReducedDims());
+  TRDISP(dims5.getReduced());
   TRDISP(dims5.num_elements());
   TRDISP(dims5.num_elements() == 13*42*56*99);
 

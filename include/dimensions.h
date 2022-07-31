@@ -105,7 +105,7 @@ namespace mathq {
     }
 
 
-    Dimensions& getReducedDims() const {
+    Dimensions& getReduced() const {
       // remove all dimensiosn equal to 1
       Dimensions& v = *(new Dimensions{});
   
@@ -152,7 +152,7 @@ namespace mathq {
 
 
     bool equiv(const Dimensions& var) const {
-      return (this->getReducedDims() == var.getReducedDims());
+      return (this->getReduced() == var.getReduced());
     }
 
     Dimensions& reverse() {

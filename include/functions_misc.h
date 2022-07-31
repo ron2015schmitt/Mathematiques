@@ -152,7 +152,7 @@ namespace mathq {
   // -------------------------------------------------------------------
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
   bool equal(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
-    if (!dimequiv(x1, x2)) {
+    if (!equiv_dims(x1, x2)) {
       return false;
     }
     return alltrue(x1==x2);
@@ -291,7 +291,7 @@ namespace mathq {
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
   bool equal_approx(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const  typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type tol = Functions< typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
-    if (!dimequiv(x1, x2)) {
+    if (!equiv_dims(x1, x2)) {
       return false;
     }
     return alltrue(approx(x1, x2, tol));

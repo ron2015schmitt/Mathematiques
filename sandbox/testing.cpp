@@ -270,7 +270,7 @@ int main(int argc, char *argv[]) {
 
   MOUT << typeid(&f1).name() << endl;
   MOUT << typeid(f2).name() << endl;
-  MOUT << typeid(FunctionType1<double, double>::type).name() << endl;
+  MOUT << typeid(FunctionType1<double, double>::Type).name() << endl;
   MOUT << getTypeName(f1) << endl;
 
 
@@ -281,7 +281,7 @@ int main(int argc, char *argv[]) {
   DISP(vv);
   Vector<double> ww({0, 0, 0});
   DISP(ww);
-  DISP(dimequiv(vv, ww));
+  DISP(equiv_dims(vv, ww));
   DISP(common(vv, ww));
   DISP(common(vv, vv));
 
@@ -311,16 +311,16 @@ int main(int argc, char *argv[]) {
   TLDISP(A);
 
   {
-    Dimensions dims1(2, 1, 7);
+    Dimensions dims1({2, 1, 7});
     DISP(dims1);
-    DISP(dims1.reduce());
-    Dimensions dims2(2, 3);
+    DISP(dims1.getReduced());
+    Dimensions dims2({2, 3});
     DISP(dims2);
-    DISP(dims2.reduce());
+    DISP(dims2.getReduced());
     DISP(dims1 == dims2);
-    DISP(dims1.reduce() == dims2.reduce());
+    DISP(dims1.getReduced() == dims2.getReduced());
     DISP(equiv(dims1, dims2));
-    Dimensions dims3(2, 5);
+    Dimensions dims3({2, 5});
     DISP(dims3);
     DISP(equiv(dims1, dims3));
     DISP(equiv(dims2, dims3));
@@ -338,9 +338,9 @@ int main(int argc, char *argv[]) {
     DISP(common(addrs1, addrs2));
   }
   {
-    Dimensions dims3(2, 2, 2);
+    Dimensions dims3({2, 2, 2});
     DISP(dims3);
-    MultiArray<double> T(dims3);
+    MultiArray<double,3> T(dims3);
     DISP(T.dims());
     DISP(T.index(0, 0, 0));
     DISP(T.index(0, 0, 1));
@@ -367,16 +367,16 @@ int main(int argc, char *argv[]) {
     DISP(42);
     TLDISP(T);
 
-    Dimensions dims4(13, 17, 11, 14);
+    Dimensions dims4({13, 17, 11, 14});
     DISP(dims4);
     Dimensions dims6({22, 45, 11, 18, 12, 11});
     DISP(dims6);
   }
   {
-    Dimensions dims(3, 2, 1, 6);
+    Dimensions dims({3, 2, 1, 6});
     DISP(dims);
     double c = 0;
-    MultiArray<double> T(dims);
+    MultiArray<double,4> T(dims);
     for (int i = 0; i < T.dims()[0]; i++) {
       for (int j = 0; j < T.dims()[1]; j++) {
         for (int k = 0; k < T.dims()[2]; k++) {
@@ -389,10 +389,10 @@ int main(int argc, char *argv[]) {
     DISP(T);
   }
   {
-    Dimensions dims(3, 2, 3, 6);
+    Dimensions dims({3, 2, 3, 6});
     DISP(dims);
     double c = 0;
-    MultiArray<double> T(dims);
+    MultiArray<double,4> T(dims);
     for (int i = 0; i < T.dims()[0]; i++) {
       for (int j = 0; j < T.dims()[1]; j++) {
         for (int k = 0; k < T.dims()[2]; k++) {
@@ -405,10 +405,10 @@ int main(int argc, char *argv[]) {
     DISP(T);
   }
   {
-    Dimensions dims(3, 2);
+    Dimensions dims({3, 2});
     DISP(dims);
     double c = 0;
-    MultiArray<double> T(dims);
+    MultiArray<double,2> T(dims);
     for (int i = 0; i < T.dims()[0]; i++) {
       for (int j = 0; j < T.dims()[1]; j++) {
         T(i, j) = c++;
