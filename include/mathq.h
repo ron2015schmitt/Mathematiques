@@ -58,7 +58,7 @@
 #include "multi-array.h"
 #include "scalar.h"
 #include "vector.h"
-// #include "matrix.h"
+#include "matrix.h"
 // #include "array3d.h"
 // #include "array4d.h"
 

@@ -21,6 +21,13 @@ namespace mathq {
    ********************************************************************
    */
 
+
+  // be sure to edit the following in nulti-array-data.h:
+  //   template <typename Element, size_t rank> requires (rank > 2)
+  //   class MultiArrayData<Element, rank> {
+  //
+  //  testing can be found in sandbox/multiarray.cpp
+
   template <typename Element, size_t N1 = 0, size_t N2 = 0, size_t N3 = 0>
   class MArray3Helper {
   public:

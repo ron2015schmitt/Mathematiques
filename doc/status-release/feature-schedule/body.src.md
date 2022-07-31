@@ -23,7 +23,7 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
   * array/valarray internal data access via data()
   * https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
   * use &(a[0])
-
+1. ` const Element& val` constrcutors and methods should always use `&` because `Element` may be a MultiArray
 
 
 ### v0.41 Vector Calculus

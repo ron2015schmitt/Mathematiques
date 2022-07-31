@@ -77,10 +77,16 @@ namespace mathq {
     // --------------------- default CONSTRUCTOR ---------------------
 
     MultiArray() {
+      if constexpr (is_dynamic_value) {
+        resize(0,0);
+      }
     }
 
     // --------------------- copy constructor --------------------
     MultiArray(const Type& var) {
+      if constexpr (is_dynamic_value) {
+        resize(var.dims());
+      }
       *this = var;
     }
 
@@ -96,25 +102,13 @@ namespace mathq {
       *this = var;
     }
 
-    // ----------------------- std::vector ---------------------
-    explicit MultiArray(const std::vector<Element>& var) {
-      *this = var;
-    }
-
-    // ----------------------- std::valarray ---------------------
-    explicit MultiArray(const std::valarray<Element>& var) {
-      *this = var;
-    }
-
-    // ----------------------- std::array ---------------------
-    template<size_t NE2>
-    explicit MultiArray(const std::array<Element, NE2>& var) {
-      *this = var;
-    }
 
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
     template <class Derived>
     MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
+      if constexpr (is_dynamic_value) {
+        resize(0,0);
+      }
       *this = x;
     }
 
@@ -141,8 +135,8 @@ namespace mathq {
 
     // template<typename NT = NumberType, EnableIf<(!is_dynamic_value)&&(depth_value>1)&&(!std::is_same<Element, NT>::value)> = 1>
 
-    template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value>1) && (!std::is_same<Element, NumberType>::value) )
-      explicit MultiArray(const NumberType val) {
+    template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value > 1) && (!std::is_same<Element, NumberType>::value) )
+    explicit MultiArray(const NumberType val) {
       *this = val;
     }
 
@@ -153,23 +147,55 @@ namespace mathq {
       *this = var;
     }
 
+
+    // ----------------------- std::vector ---------------------
+    template<bool enable = !is_dynamic_value> requires (enable)
+    explicit MultiArray(const std::vector<Element>& var) {
+      *this = var;
+    }
+
+    // ----------------------- std::valarray ---------------------
+    template<bool enable = !is_dynamic_value> requires (enable)
+    explicit MultiArray(const std::valarray<Element>& var) {
+      *this = var;
+    }
+
+    // ----------------------- std::array ---------------------
+    template<size_t NE2> requires (!is_dynamic_value && ((NE2 == 0) || (NE2 == compile_time_size)))
+    explicit MultiArray(const std::array<Element, NE2>& var) {
+      if constexpr (is_dynamic_value) {
+        resize(0,0);
+      }
+      *this = var;
+    }
+
+
     //**********************************************************************
     //                    CONSTRUCTORS: DYNAMIC dimensions  
     //**********************************************************************
 
     // --------------------- dynamic MultiArray --------------------
 
-    template<size_t...mysizes> requires (is_dynamic_value)
-    explicit MultiArray(const MultiArray<Element, rank_value, mysizes...>& var) {
+    template<bool enable = is_dynamic_value> requires (enable)
+    explicit MultiArray(const MultiArray<Element, rank_value> var) {
+      this->resize(var.dims());
       *this = var;
     }
 
 
-    // --------------------- DYNAMIC SIZE: set size from int  ---------------------
+    // --------------------- DYNAMIC SIZE: set size from ints  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
     MultiArray(const size_t Nrows, const size_t Ncols) {
       resize(Nrows, Ncols);
+    }
+
+    // --------------------- DYNAMIC SIZE: set size from ints and values from constant  ---------------------
+
+    template<bool enable = is_dynamic_value> requires (enable)
+    MultiArray(const size_t Nrows, const size_t Ncols, const Element& val) {
+      resize(Nrows, Ncols);
+      *this = val;
     }
 
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
@@ -191,10 +217,32 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set dims and set all to same value  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray(const Dimensions& dims, const Element val) {
+    explicit MultiArray(const Dimensions& dims, const Element& val) {
       this->resize(dims);
       *this = val;
     }
+
+    // // ----------------------- std::vector ---------------------
+    // explicit MultiArray(const std::vector<Element>& var) {
+    //   *this = var;
+    // }
+
+    // // ----------------------- std::valarray ---------------------
+    // explicit MultiArray(const std::valarray<Element>& var) {
+    //   if constexpr (is_dynamic_value) {
+    //     resize(0,0);
+    //   }
+    //   *this = var;
+    // }
+
+    // // ----------------------- std::array ---------------------
+    // template<size_t NE2>
+    // explicit MultiArray(const std::array<Element, NE2>& var) {
+    //   if constexpr (is_dynamic_value) {
+    //     resize(0,0);
+    //   }
+    //   *this = var;
+    // }
 
     //**********************************************************************
     //                             DESTRUCTOR 

@@ -63,11 +63,23 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(typename MakeInitializer<double,2>::Type init2{{1}, {1,2}, {1,2,3}});
   TRDISP(init2);
 
+
+
+
   // MultiArray*Data* tests
+  CR();
+  OUTPUT("rank = 0, fixed size (no dynamic size)");
+  ECHO_CODE(MultiArrayData<double,0> testdata0);
+  testdata0.data_ = { 0 };
+  TRDISP(testdata0);
+  TRDISP(testdata0.classname());
+  TRDISP(sizeof(testdata0)/sizeof(double));
+  TRDISP(sizeof(testdata0.data_)/sizeof(double));
 
   CR();
   OUTPUT("rank = 1, fixed size");
   ECHO_CODE(MultiArrayData<double,1, 10> testdata1);
+  testdata1.data_ = array_of_one_value<double,0.,10>();
   TRDISP(testdata1);
   TRDISP(testdata1.classname());
   TRDISP(sizeof(testdata1)/sizeof(double));
@@ -76,6 +88,7 @@ int main(int argc, char* argv[]) {
   CR();
   OUTPUT("rank = 2, fixed size");
   ECHO_CODE(MultiArrayData<double,2, 3,4> testdata2);
+  testdata2.data_ = array_of_one_value<double,0.,12>();
   TRDISP(testdata2);
   TRDISP(testdata2.classname());
   TRDISP(sizeof(testdata2)/sizeof(double));
@@ -84,6 +97,7 @@ int main(int argc, char* argv[]) {
   CR();
   OUTPUT("rank = 3, fixed size");
   ECHO_CODE(MultiArrayData<double,3, 3,4,2> testdata3);
+  testdata3.data_ = array_of_one_value<double,0.,24>();
   TRDISP(testdata3);
   TRDISP(testdata3.classname());
   TRDISP(sizeof(testdata3)/sizeof(double));
@@ -92,6 +106,7 @@ int main(int argc, char* argv[]) {
   CR();
   OUTPUT("rank = 4, fixed size");
   ECHO_CODE(MultiArrayData<double,4, 2,3,4,2> testdata4);
+  testdata4.data_ = array_of_one_value<double,0.,48>();
   TRDISP(testdata4);
   TRDISP(testdata4.classname());
   TRDISP(sizeof(testdata4)/sizeof(double));
@@ -100,14 +115,11 @@ int main(int argc, char* argv[]) {
   CR();
   OUTPUT("rank = 5, fixed size");
   ECHO_CODE(MultiArrayData<double,5, 3,4,4,3,2> testdata5);
+  testdata5.data_ = array_of_one_value<double,0.,288>();
   TRDISP(testdata5);
   TRDISP(testdata5.classname());
   TRDISP(sizeof(testdata5)/sizeof(double));
   TRDISP(sizeof(testdata5.data_)/sizeof(double));
-
-
-
-
 
 
 
@@ -126,7 +138,7 @@ int main(int argc, char* argv[]) {
   TRDISP(testdata2d.classname());
   TRDISP(sizeof(testdata2d)/sizeof(double));
   TRDISP(sizeof(testdata2d.data_)/sizeof(double));
-  TRDISP(sizeof(testdata2d.dynamic_dims_array)/sizeof(size_t));
+  // TRDISP(sizeof(testdata2d.dynamic_dims_array)/sizeof(size_t));
 
   CR();
   OUTPUT("rank = 3, dynamic size");
