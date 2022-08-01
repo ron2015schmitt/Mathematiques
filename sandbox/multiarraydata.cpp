@@ -95,6 +95,14 @@ int main(int argc, char* argv[]) {
   TRDISP(sizeof(testdata2.data_)/sizeof(double));
 
   CR();
+  OUTPUT("MultiArray: rank = 2, fixed size => should Matrix");
+  ECHO_CODE(MultiArray<double,2, 3,4> x2);
+  x2 = 0.;
+  TRDISP(x2);
+  TRDISP(x2.asMultiArrayData());
+
+
+  CR();
   OUTPUT("rank = 3, fixed size");
   ECHO_CODE(MultiArrayData<double,3, 3,4,2> testdata3);
   testdata3.data_ = array_of_one_value<double,0.,24>();
@@ -138,7 +146,13 @@ int main(int argc, char* argv[]) {
   TRDISP(testdata2d.classname());
   TRDISP(sizeof(testdata2d)/sizeof(double));
   TRDISP(sizeof(testdata2d.data_)/sizeof(double));
-  // TRDISP(sizeof(testdata2d.dynamic_dims_array)/sizeof(size_t));
+
+  CR();
+  OUTPUT("MultiArray: rank = 2, dynamic size => should be Matrix");
+  ECHO_CODE(MultiArray<double,2> xd2);
+  xd2 = 0.;
+  TRDISP(xd2);
+  TRDISP(xd2.asMultiArrayData());
 
   CR();
   OUTPUT("rank = 3, dynamic size");

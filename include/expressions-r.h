@@ -126,7 +126,7 @@ namespace mathq {
     //**********************************************************************
 
 
-    const Dimensions& dims(void) const {
+    Dimensions& dims(void) const {
       return x_.dims();
     }
 
@@ -294,7 +294,7 @@ namespace mathq {
     //                        Dimensions
     //**********************************************************************
 
-    const Dimensions& dims(void) const {
+    Dimensions& dims(void) const {
       return x_.dims();
     }
 
@@ -1529,7 +1529,7 @@ namespace mathq {
     //**********************************************************************
 
 
-    const Dimensions& dims(void) const {
+    Dimensions& dims(void) const {
       return x_.dims();
     }
 

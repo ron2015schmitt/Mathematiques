@@ -219,6 +219,7 @@ int main(int argc, char* argv[]) {
   TRDISP(sizeof(A1)/sizeof(double));
   TRDISP(sizeof(A1.data_)/sizeof(double));
   // TRDISP(A1.dynamic_dims_array);
+  TRDISP(A1.asMultiArrayData());
 
   CR();
   ECHO_CODE(MultiArray<double,1, 10> A2);
@@ -248,7 +249,7 @@ int main(int argc, char* argv[]) {
   TRDISP(A4.dims());
   TRDISP(A4.recursive_dims());
 
-  // TRDISP(A4);
+
 
   return 0;
 }

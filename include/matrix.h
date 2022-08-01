@@ -59,14 +59,9 @@ namespace mathq {
     //**********************************************************************
     // OBJECT DATA 
     //
-    // do NOT declare any other storage.
-    // keep the instances lightweight
-    //
-    // size is taken from data_.size
+    // data is inherited from MultiArrayData<Element, 2>
     //**********************************************************************
 
-  // private:
-    MyArrayType data_;
 
   public:
 
@@ -337,10 +332,18 @@ namespace mathq {
 
 
     inline size_t Nrows(void) const {
-      return ParentDataType::N1;
+      if constexpr (is_dynamic_value) {
+        return ParentDataType::N1;
+      } else {
+        return N1;
+      }
     }
     inline size_t Ncols(void) const {
-      return ParentDataType::N2;
+      if constexpr (is_dynamic_value) {
+        return ParentDataType::N2;
+      } else {
+        return N2;
+      }
     }
 
 
@@ -455,6 +458,13 @@ namespace mathq {
     }
 
     //**********************************************************************
+    //   this casted as MultiArrayData
+    //**********************************************************************
+    ParentDataType& asMultiArrayData() {
+      return *((ParentDataType*)(this));
+    }
+
+    //**********************************************************************
     //********************* Direct access to ParentDataType::data_  ***********************************
     //**********************************************************************
 
@@ -470,6 +480,7 @@ namespace mathq {
       // MutltiArrays are always wrap avalarray<Element>
       return &(ParentDataType::data_[0]);
     }
+
 
     //**********************************************************************
     //*******indexing  *********************
@@ -811,34 +822,161 @@ namespace mathq {
     //***************** in-place modification*******************************
     //**********************************************************************
 
+    //----------------- .roundzero(tol) ---------------------------
+    // NOTE: in-place
 
-    // only allow when we don't need to resize. else use the transpose function
-    Type& transpose() {
-      Dimensions mydims = dims();
-      if ( mydims != mydims.getReverse() ) {
-        printf("ERROR: in-place transpose only allowed for square tensors");
+    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+      for (size_t i = 0; i < size(); i++) {
+        ParentDataType::data_[i] = mathq::roundzero(ParentDataType::data_[i], tolerance);
+      }
+      return *this;
+    }
+
+
+    //----------------- .conj() ---------------------------
+    // NOTE: in-place
+
+    template< typename T = NumberType >
+    typename std::enable_if<is_complex<T>::value, Type& >::type conj() {
+      for (size_t i = 0; i < size(); i++) {
+        ParentDataType::data_[i] = std::conj(ParentDataType::data_[i]);
+      }
+      return *this;
+    }
+
+    // -------------------------- transpose() --------------------------------
+    // In-place transpose. 
+    // 1) For square matrices this operation is quick and easy.
+    // 2) For non-square matrices, this changes the shape and operation is time-consuming
+    //    Note: Transpose function is much quicker. only use this for when memory is critical
+    Type& transpose(void) {
+      const size_t Nr = Nrows();
+      const size_t Nc = Ncols();
+      const size_t N = size();
+      const size_t Nminus1 = N-1;
+
+      // square matrix  
+      if (Nc == Nr) {
+        size_t r, c;
+        NumberType temp;
+        for (r = 0; r < Nr; ++r)
+          for (c = r + 1; c < Nr; ++c) {
+            temp = (*this)[r + c * Nr];
+            (*this)[r + c * Nr] = (*this)[c + r * Nr];
+            (*this)[c + r * Nr] = temp;
+          }
         return *this;
       }
-      Indices& inds = *(new Indices(rank_value));
-      inds.clear();
-      transpose_helper(inds);
-      return *this;
-    }
 
-    Type& transpose_helper(Indices& inds, const size_t& index_number = 0) {
-      for (size_t ii = 0; ii < dims()[index_number]; ii++) {
-        inds[index_number] = ii;
-        if (index_number < rank_value/2) {
-          transpose_helper(inds, index_number - 1);
-        } else {
-          // we've reached the bottom
-          Element temp = (*this)[inds];
-          (*this)[inds] = (*this)[inds.getReverse()];
-          (*this)[inds.getReverse()] = temp;
+      if constexpr (is_dynamic_value) {
+
+      resize(Nc, Nr);
+
+      // for "vectors" 
+      if (Nc == 1 || Nr==1) {
+        return *this;
+      }
+
+      // boolean array to make searching faster
+      // can set Nmove=1, but this will be very slow
+      // Nmove=(Nr+Nc)/2 is optimal
+      const bool Nmove = (Nr+Nc)/2;
+      size_t move[Nmove];
+      for (size_t i = 0; i < Nmove; ++i)
+        move[i] = false;
+
+
+      // there are always at least 2 fixed points (at j=0 and j=Nminus1)
+      size_t count = 2;
+      // find the rest of the fixed points
+      if (Nc >= 3 && Nr >= 3)
+        count += std::gcd(Nc - 1, Nr - 1) - 1;	/* # fixed points */
+
+      size_t jstart = 1;
+      size_t magicnum = Nc;
+
+      while (1) {
+        size_t jnext, jnextc;
+        size_t jstartC = Nminus1 - jstart;
+        size_t j = jstart;
+        size_t jC = jstartC;
+        NumberType dstart = (*this)[jstart];
+        NumberType dstartC = (*this)[jstartC];
+
+        // PROCESS THE CURRENT SEQUENcE AND ITS COMPLIMENTARY SEQUENcE
+        while (1) {
+          jnext = Nc * j - Nminus1 * (j / Nr);
+          jnextc = Nminus1 - jnext;
+          if (j < Nmove)
+            move[j] = true;
+          if (jC < Nmove)
+            move[jC] = true;
+          count += 2;
+          if (jnext == jstart) {
+            (*this)[j] = dstart;
+            (*this)[jC] = dstartC;
+            break;
+          }
+          if (jnext == jstartC) {
+            (*this)[j] = dstartC;
+            (*this)[jC] = dstart;
+            break;
+          }
+          (*this)[j] = (*this)[jnext];
+          (*this)[jC] = (*this)[jnextc];
+          j = jnext;
+          jC = jnextc;
         }
+        // DONE PROCESSING SEQUENcE
+
+
+        // CHECK TO SEE IF WE'RE FINISHED
+        if (count >= N)
+          break;
+
+        // FIND THE START OF THE NEXT SEQUENcE
+        while (1) {
+          // skip fixed points (jstart==magicnum)
+          do {
+            jstart++;
+            if ((magicnum += Nc)>Nminus1)
+              magicnum -= Nminus1;
+          } while (jstart==magicnum);
+
+          jnext = magicnum;
+          const  size_t max = Nminus1-jstart+1;
+          if (jstart < Nmove) {
+            if (!move[jstart])
+              break;
+          }
+          else {
+            // this while loop is needed to cull out previously 
+            // processed slcuences
+            while (jnext > jstart && jnext < max) {
+              j = jnext;
+              jnext = Nc * j - Nminus1 * (j / Nr);
+            }
+          }
+          if (jnext == jstart)
+            break;
+        }
+        // WE HAVE FOUND START OF THE NEXT SEQUENcE
+
+      }
       }
       return *this;
     }
+
+    // -------------------------- adjoint() --------------------------------
+
+    template< typename T = NumberType >
+    typename std::enable_if<is_complex<T>::value, Type& >::type adjoint() {
+      this->conj();
+      this->transpose();
+      return *this;
+    }
+
+
 
 
 

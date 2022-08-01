@@ -107,7 +107,7 @@ namespace mathq {
 
     constexpr static size_t rank_value = 2;
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = false;
+    constexpr static bool is_dynamic_value = true;
     constexpr static size_t compile_time_size = calc_size<rank_value, 0>();
 
     // note that the following will be all zeroes for dyanmic multi-arrays
@@ -123,8 +123,8 @@ namespace mathq {
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
 
     MyArrayType data_;
-      size_t N1;  
-      size_t N2;     
+    size_t N1 = 0;  
+    size_t N2 = 0;     
 
     inline std::string classname() const {
       return ClassName();
@@ -181,7 +181,7 @@ namespace mathq {
 
     constexpr static size_t rank_value = rank;
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = false;
+    constexpr static bool is_dynamic_value = true;
     constexpr static size_t compile_time_size = calc_size<rank_value, 0>();
 
     // note that the following will be all zeroes for dyanmic multi-arrays
