@@ -25,8 +25,8 @@ int main() {
     // tensor + tensor
 
     printStart(++testnum);
-    Dimensions dims(2, 3, 4);
-    MultiArray<int> t1(dims);
+    Dimensions dims({2, 3, 4});
+    MultiArray<int,3> t1(dims);
     int c = 0;
     for (size_t i = 0; i < t1.dims()[0]; i++) {
       for (size_t j = 0; j < t1.dims()[1]; j++) {
@@ -35,7 +35,7 @@ int main() {
         }
       }
     }
-    MultiArray<int> t2(dims);
+    MultiArray<int,3> t2(dims);
     c = 0;
     for (size_t i = 0; i < t2.dims()[0]; i++) {
       for (size_t j = 0; j < t2.dims()[1]; j++) {
@@ -45,10 +45,9 @@ int main() {
       }
     }
     TLDISP(t2);
-    int A[24] = { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230 };
-    MultiArray<int> expected(dims);
-    expected = A;
-    MultiArray<int> result(dims);
+    MultiArray<int,3> expected(dims);
+    expected = { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230 };
+    MultiArray<int,3> result(dims);
     testcode(result = t1 + t2);
     bool pass = equal(result, expected);
     printEnd(pass, result, expected);
@@ -62,23 +61,23 @@ int main() {
     // conj(z)
     using namespace std;
     printStart(++testnum);
-    Dimensions dims(2, 3);
+    Dimensions dims({2, 3});
 
-    MultiArray<complex<double>> z(dims);
+    MultiArray<complex<double>,2> z(dims);
     z[0] = complex<double>(1, 2);
     z[1] = complex<double>(-1.5, 26.7);
     z[2] = complex<double>(5, -8);
     z[3] = complex<double>(4, -5.6);
     z[4] = complex<double>(-1, 2.122);
     z[5] = complex<double>(-1.5, -88);
-    MultiArray<complex<double>> expected(dims);
+    MultiArray<complex<double>,2> expected(dims);
     expected[0] = complex<double>(1, -2);
     expected[1] = complex<double>(-1.5, -26.7);
     expected[2] = complex<double>(5, 8);
     expected[3] = complex<double>(4, 5.6);
     expected[4] = complex<double>(-1, -2.122);
     expected[5] = complex<double>(-1.5, 88);
-    MultiArray<complex<double>> result;
+    MultiArray<complex<double>,2> result;
     testcode(result = conj(z));
     bool pass = alltrue(result == expected);
     printEnd(pass, result, expected);
@@ -89,23 +88,23 @@ int main() {
     // z.conj()
     using namespace std;
     printStart(++testnum);
-    Dimensions dims(2, 3);
+    Dimensions dims({2, 3});
 
-    MultiArray<complex<double>> z(dims);
+    MultiArray<complex<double>,2> z(dims);
     z[0] = complex<double>(1, 2);
     z[1] = complex<double>(-1.5, 26.7);
     z[2] = complex<double>(5, -8);
     z[3] = complex<double>(4, -5.6);
     z[4] = complex<double>(-1, 2.122);
     z[5] = complex<double>(-1.5, -88);
-    MultiArray<complex<double>> expected(dims);
+    MultiArray<complex<double>,2> expected(dims);
     expected[0] = complex<double>(1, -2);
     expected[1] = complex<double>(-1.5, -26.7);
     expected[2] = complex<double>(5, 8);
     expected[3] = complex<double>(4, 5.6);
     expected[4] = complex<double>(-1, -2.122);
     expected[5] = complex<double>(-1.5, 88);
-    MultiArray<complex<double>> result;
+    MultiArray<complex<double>,2> result;
     testcode(result = z.conj());
     bool pass = alltrue(result == expected);
     printEnd(pass, result, expected);
@@ -121,8 +120,8 @@ int main() {
     // transpose(x)
     using namespace std;
     printStart(++testnum);
-    Dimensions dims(2, 2, 2);
-    MultiArray<double> x(dims);
+    Dimensions dims({2, 2, 2});
+    MultiArray<double,3> x(dims);
     x[0] = 0;
     x[1] = 1;
     x[2] = 2;
@@ -131,7 +130,7 @@ int main() {
     x[5] = 5;
     x[6] = 6;
     x[7] = 7;
-    MultiArray<double> expected(dims);
+    MultiArray<double,3> expected(dims);
     expected[0] = 0;
     expected[1] = 4;
     expected[2] = 2;
@@ -140,7 +139,7 @@ int main() {
     expected[5] = 5;
     expected[6] = 3;
     expected[7] = 7;
-    MultiArray<double> result;
+    MultiArray<double,3> result;
     testcode(result = transpose(x));
     bool pass = alltrue(result == expected);
     printEnd(pass, result, expected);
@@ -152,9 +151,9 @@ int main() {
     // transpose(z)
     using namespace std;
     printStart(++testnum);
-    Dimensions dims(2, 2, 2);
+    Dimensions dims({2, 2, 2});
 
-    MultiArray<complex<double>> z(dims);
+    MultiArray<complex<double>,3> z(dims);
     z[0] = complex<double>(1, 2);
     z[1] = complex<double>(-1.5, 26.7);
     z[2] = complex<double>(5, -8);
@@ -163,7 +162,7 @@ int main() {
     z[5] = complex<double>(-1.5, -88);
     z[6] = complex<double>(4.3, 1.1);
     z[7] = complex<double>(2.2, -7);
-    MultiArray<complex<double>> expected(dims);
+    MultiArray<complex<double>,3> expected(dims);
     expected[0] = complex<double>(1, 2);
     expected[1] = complex<double>(-1, 2.122);
     expected[2] = complex<double>(5, -8);
@@ -172,7 +171,7 @@ int main() {
     expected[5] = complex<double>(-1.5, -88);
     expected[6] = complex<double>(4, -5.6);
     expected[7] = complex<double>(2.2, -7);
-    MultiArray<complex<double>> result;
+    MultiArray<complex<double>,3> result;
     testcode(result = transpose(z));
     bool pass = alltrue(result == expected);
     printEnd(pass, result, expected);
@@ -184,9 +183,9 @@ int main() {
     // adjoint(z)
     using namespace std;
     printStart(++testnum);
-    Dimensions dims(2, 2, 2);
+    Dimensions dims({2, 2, 2});
 
-    MultiArray<complex<double>> z(dims);
+    MultiArray<complex<double>,3> z(dims);
     z[0] = complex<double>(1, 2);
     z[1] = complex<double>(-1.5, 26.7);
     z[2] = complex<double>(5, -8);
@@ -195,7 +194,7 @@ int main() {
     z[5] = complex<double>(-1.5, -88);
     z[6] = complex<double>(4.3, 1.1);
     z[7] = complex<double>(2.2, -7);
-    MultiArray<complex<double>> expected(dims);
+    MultiArray<complex<double>,3> expected(dims);
     expected[0] = complex<double>(1, -2);
     expected[1] = complex<double>(-1, -2.122);
     expected[2] = complex<double>(5, 8);
@@ -204,7 +203,7 @@ int main() {
     expected[5] = complex<double>(-1.5, 88);
     expected[6] = complex<double>(4, 5.6);
     expected[7] = complex<double>(2.2, 7);
-    MultiArray<complex<double>> result;
+    MultiArray<complex<double>,3> result;
     testcode(result = adjoint(z));
     bool pass = alltrue(result == expected);
     printEnd(pass, result, expected);
@@ -216,9 +215,9 @@ int main() {
     // ~z
     using namespace std;
     printStart(++testnum);
-    Dimensions dims(2, 2, 2);
+    Dimensions dims({2, 2, 2});
 
-    MultiArray<complex<double>> z(dims);
+    MultiArray<complex<double>,3> z(dims);
     z[0] = complex<double>(1, 2);
     z[1] = complex<double>(-1.5, 26.7);
     z[2] = complex<double>(5, -8);
@@ -227,7 +226,7 @@ int main() {
     z[5] = complex<double>(-1.5, -88);
     z[6] = complex<double>(4.3, 1.1);
     z[7] = complex<double>(2.2, -7);
-    MultiArray<complex<double>> expected(dims);
+    MultiArray<complex<double>,3> expected(dims);
     expected[0] = complex<double>(1, -2);
     expected[1] = complex<double>(-1, -2.122);
     expected[2] = complex<double>(5, 8);
@@ -236,7 +235,7 @@ int main() {
     expected[5] = complex<double>(-1.5, 88);
     expected[6] = complex<double>(4, 5.6);
     expected[7] = complex<double>(2.2, 7);
-    MultiArray<complex<double>> result;
+    MultiArray<complex<double>,3> result;
     testcode(result = ~z);
     bool pass = alltrue(result == expected);
     printEnd(pass, result, expected);
