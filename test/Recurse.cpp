@@ -82,15 +82,6 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // getEnum()
-    printStart(++testnum);
-    MultiArrays Eexpected = T_SCALAR;
-    MultiArrays Eresult;
-    testcode(Eresult = s.getEnum());
-    pass = (Eresult == Eexpected);
-    printEnd(pass, Eresult, Eexpected);
-    allpass = allpass && pass;
-    failnum += (!pass);
 
     // size()
     printStart(++testnum);
@@ -225,15 +216,6 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // getEnum()
-    printStart(++testnum);
-    MultiArrays Eexpected = T_SCALAR;
-    MultiArrays Eresult;
-    testcode(Eresult = s.getEnum());
-    pass = (Eresult == Eexpected);
-    printEnd(pass, Eresult, Eexpected);
-    allpass = allpass && pass;
-    failnum += (!pass);
 
     // size()
     printStart(++testnum);

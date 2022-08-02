@@ -12,7 +12,7 @@ MAKEFILE_REL := $(subst $(DIR_MATHQ)/,,$(MAKEFILE))
 
 
 NONEXEC = 
-EXEC += ScalarTest ScalarTestComplex misctest vtest mtest ttest # Recurse
+EXEC += ScalarTest ScalarTestComplex misctest vtest mtest ttest Recurse
 ALL += run gitignore
 
 # overide the default compiler options
