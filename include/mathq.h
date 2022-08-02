@@ -66,6 +66,7 @@
 // #include "vector-sparse.h"
 
 #include "matrix--constant.h"
+#include "matrix--repeat-vec.h"
 // #include "matrix_constdiag.h"
 // #include "matrix_diagonal.h"
 // #include "matrix_exchange.h"
@@ -93,7 +94,7 @@
 // #include "multi-array4-repeat-vec.h"
 
 #include "multi-array--constant.h"
-// #include "multi-array-repeat-vec.h"
+#include "multi-array--repeat-vec.h"
 
 
 #include "expressions-r.h"

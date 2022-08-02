@@ -10,11 +10,6 @@ namespace mathq {
    ********************************************************************
    */
 
-  template <size_t slot, class Element, int rank, size_t... ints>
-  class
-    RepeatedVectorMatrix : public MultiArray<Element, rank, ints>  {
-  public:
-  };
 
 };
 #endif

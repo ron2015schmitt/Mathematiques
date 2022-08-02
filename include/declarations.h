@@ -223,6 +223,16 @@ template <typename Element, size_t... sizes>
 using Matrix_Constant = MultiArray_Constant<Element, 2, sizes...>;
 
 
+// RepeatVector
+
+template <typename Element, size_t rank, size_t index, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
+class MultiArray_RepeatVector;
+
+template <typename Element, size_t index, size_t... sizes>
+using Matrix_RepeatVector = MultiArray_Constant<Element, 2, index, sizes...>;
+
+
+
   // template <typename Element, size_t NR = 0, size_t NC = 0>
   // class MatrixZero;
 
