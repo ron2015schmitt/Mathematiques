@@ -31,7 +31,7 @@ namespace mathq {
 
     constexpr static size_t rank_value = 1;
     constexpr static std::array<size_t, rank_value> static_dims_array = { sizes... };
-    constexpr static size_t N0 = get<0>(static_dims_array);
+    constexpr static size_t N0 = std::get<0>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = ( sizeof...(sizes) == 0 );
     constexpr static size_t compile_time_size = calc_size<rank_value, N0>();

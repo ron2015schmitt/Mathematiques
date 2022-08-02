@@ -66,7 +66,7 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     using DeepDimensionsType = RecursiveDimensions;
 
-    using MyArrayType = typename ArrayTypeTrait<Element, get<index>(static_dims_array)>::Type;
+    using MyArrayType = typename ArrayTypeTrait<Element, std::get<index>(static_dims_array)>::Type;
 
     using InitializerType = typename MakeInitializer<Element, 1 >::Type;  // <-- Vector
 
@@ -342,10 +342,10 @@ namespace mathq {
     template <typename... U> requires ( (is_dynamic_value) && (std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == rank_value) ) 
     Type& resize(const U... args) {
       std::array<size_t,rank_value> new_dims_array { size_t(args)... };
-      if (ParentDataType::dynamic_dims_array != new_dims_array) {
+
+      if (std::get<index>(ParentDataType::dynamic_dims_array) != new_dims_array) {
         ParentDataType::dynamic_dims_array = new_dims_array;      
-        size_t new_size = std::accumulate(new_dims_array.begin(), new_dims_array.end(), 1, std::multiplies<size_t>());  // product of elements
-        ParentDataType::data_.resize( new_size );
+        ParentDataType::vector.resize( new_size );
       }
       return *this;
     }
@@ -397,7 +397,7 @@ namespace mathq {
     //**********************************************************************
     //   this casted as SpecialData
     //**********************************************************************
-    ParentDataType& asMultiArrayData() {
+    ParentDataType& asSpecialData() {
       return *((ParentDataType*)(this));
     }
 
