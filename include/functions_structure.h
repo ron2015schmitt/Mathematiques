@@ -7,12 +7,17 @@ namespace mathq {
 
 // -------------------------------------------------------------------
   //
-  // insideout - turn a nested set of tensors inside-out
+  // evert / insideout - turn a nested set of tensors inside-out
   // -------------------------------------------------------------------
-
 
   template <class X, typename Element, typename Number, size_t depth, size_t rank>
   auto& insideout(const ExpressionRW<X, Element, Number, depth, rank>& t) {
+    return evert(t);
+  }
+
+
+  template <class X, typename Element, typename Number, size_t depth, size_t rank>
+  auto& evert(const ExpressionRW<X, Element, Number, depth, rank>& t) {
 
     typedef typename InversionType<X>::Type Type;
     Type& tout = *(new Type());
