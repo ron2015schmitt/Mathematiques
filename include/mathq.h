@@ -62,11 +62,14 @@
 // #include "array3d.h"
 // #include "array4d.h"
 
+#include "multi-array--constant.h"
+// #include "multi-array--repeat-vec.h"
+
 #include "vector--constant.h"
 // #include "vector-sparse.h"
 
 #include "matrix--constant.h"
-#include "matrix--repeat-vec.h"
+// #include "matrix--repeat-vec.h"
 // #include "matrix_constdiag.h"
 // #include "matrix_diagonal.h"
 // #include "matrix_exchange.h"
@@ -86,15 +89,12 @@
 // #include "matrix_vandermonde.h"
 // #include "matrix_zero.h"
 
+// #include "array3-constant.h"
+// #include "array3-repeat-vec.h"
 
-// #include "multi-array3-constant.h"
-// #include "multi-array3-repeat-vec.h"
+// #include "array4-constant.h"
+// #include "array4-repeat-vec.h"
 
-// #include "multi-array4-constant.h"
-// #include "multi-array4-repeat-vec.h"
-
-#include "multi-array--constant.h"
-#include "multi-array--repeat-vec.h"
 
 
 #include "expressions-r.h"
