@@ -24,6 +24,7 @@
 /printing
 /recurseadd
 /testing
+/testing2
 /depth
 /test4deep
 /insideout
@@ -31,3 +32,6 @@
 /testunary
 /testunary2
 /testunary3
+/testbinary
+/testternary
+/testjoin
