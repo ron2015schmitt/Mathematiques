@@ -250,6 +250,31 @@ int main(int argc, char* argv[]) {
   TRDISP(A4.recursive_dims());
 
 
+  {
+    CR();
+    ECHO_CODE(Scalar<double> x1);
+    TRDISP(x1);
+    x1 = 0;
+    TRDISP(x1);
+
+    CR();
+    ECHO_CODE(Vector<double,3> x2);
+    TRDISP(x2);
+    x2 = 0;
+    TRDISP(x2);
+
+    CR();
+    ECHO_CODE(Matrix<double,2,2> x3);
+    TRDISP(x3);
+    x3 = 0;
+    TRDISP(x3);
+
+    CR();
+    ECHO_CODE(MultiArray<double,3,2,1,2> x4);
+    TRDISP(x4);
+    x4 = 0;
+    TRDISP(x4);
+  }
 
   return 0;
 }

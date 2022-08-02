@@ -667,7 +667,8 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
-    Type& operator=(const Element& e) {
+    template<typename T> requires ( std::is_convertible<T, Element>::value )
+    Type& operator=(const T& e) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = e;
       }
