@@ -80,14 +80,14 @@ contents += """
 with open(fn_op_functor, 'r') as file_functor:
     contents0 = file_functor.read()
 
-contents0 = contents0.replace("##MYFILENAME##",fn_op_functor)
-contents0 = contents0.replace("##SCRIPTNAME##",myname)
+contents0 = contents0.replace("__MYFILENAME__",fn_op_functor)
+contents0 = contents0.replace("__SCRIPTNAME__",myname)
 
 count = 0
 for op in ops:
     fun = contents0
-    fun = fun.replace("##OP##",op[0])
-    fun = fun.replace("##NAME##",op[1])
+    fun = fun.replace("__OP__",op[0])
+    fun = fun.replace("__NAME__",op[1])
     contents += fun
     count += 1
 
@@ -95,14 +95,14 @@ for op in ops:
 with open(fn_functor, 'r') as file_functor:
     contents0 = file_functor.read()
 
-contents0 = contents0.replace("##MYFILENAME##",fn_functor)
-contents0 = contents0.replace("##SCRIPTNAME##",myname)
+contents0 = contents0.replace("__MYFILENAME__",fn_functor)
+contents0 = contents0.replace("__SCRIPTNAME__",myname)
     
 count = 0;
 for func in funcs:
     fun = contents0
-    fun = fun.replace("##FUNCTION##",func[0])
-    fun = fun.replace("##NAME##",func[1])
+    fun = fun.replace("__FUNCTION__",func[0])
+    fun = fun.replace("__NAME__",func[1])
     contents += fun
     count += 1
 
@@ -125,28 +125,28 @@ contents += """
 with open(fn_functions, 'r') as file_functions:
     contents0 = file_functions.read()
 
-contents0 = contents0.replace("##MYFILENAME##",fn_functions)
-contents0 = contents0.replace("##SCRIPTNAME##",myname)
+contents0 = contents0.replace("__MYFILENAME__",fn_functions)
+contents0 = contents0.replace("__SCRIPTNAME__",myname)
 
 count = 0;
 for op in ops:
     fun = contents0
-    fun = fun.replace("##OP##",op[0])
-    fun = fun.replace("##FUNCTION##","operator"+op[0])
-    fun = fun.replace("##NAME##",op[1])
-    fun = fun.replace("##COMMENTNAME##",op[2])
-    fun = fun.replace("##TYPECLASS##",op[3])
+    fun = fun.replace("__OP__",op[0])
+    fun = fun.replace("__FUNCTION__","operator"+op[0])
+    fun = fun.replace("__NAME__",op[1])
+    fun = fun.replace("__COMMENTNAME__",op[2])
+    fun = fun.replace("__TYPECLASS__",op[3])
     contents += fun
     count += 1
 
 count = 0;
 for func in funcs:
     fun = contents0
-    fun = fun.replace("##OP##",func[1])
-    fun = fun.replace("##FUNCTION##",func[1])
-    fun = fun.replace("##NAME##",func[1])
-    fun = fun.replace("##COMMENTNAME##",func[1])
-    fun = fun.replace("##TYPECLASS##",func[2])
+    fun = fun.replace("__OP__",func[1])
+    fun = fun.replace("__FUNCTION__",func[1])
+    fun = fun.replace("__NAME__",func[1])
+    fun = fun.replace("__COMMENTNAME__",func[1])
+    fun = fun.replace("__TYPECLASS__",func[2])
     contents += fun
     count += 1
 
