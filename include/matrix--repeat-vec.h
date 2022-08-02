@@ -32,10 +32,10 @@ namespace mathq {
     constexpr static size_t rank_value = 2;
     constexpr static std::array<size_t, rank_value> static_dims_array = { dim_ints... };
     constexpr static size_t N0 = get<0>(static_dims_array);
-    constexpr static size_t N2 = get<1>(static_dims_array);
+    constexpr static size_t N1 = get<1>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = ( sizeof...(dim_ints) == 0 );
-    constexpr static size_t compile_time_size = calc_size<rank_value, N0, N2>();
+    constexpr static size_t compile_time_size = calc_size<rank_value, N0, N1>();
 
     //**********************************************************************
     //                            TYPES 
@@ -353,9 +353,9 @@ namespace mathq {
     }
     inline size_t Ncols(void) const {
       if constexpr (is_dynamic_value) {
-        return ParentDataType::N2;
+        return ParentDataType::N1;
       } else {
-        return N2;
+        return N1;
       }
     }
 
@@ -363,7 +363,7 @@ namespace mathq {
     // defined later since Dimensions is dependent on MultiArray_RepeatVector
     Dimensions& dims(void) const {
       if constexpr (is_dynamic_value) {
-        return *(new Dimensions({ ParentDataType::N0, ParentDataType::N2 }));
+        return *(new Dimensions({ ParentDataType::N0, ParentDataType::N1 }));
       } else {
         return *(new Dimensions(static_dims_array));
       }
@@ -371,7 +371,7 @@ namespace mathq {
 
     inline std::array<size_t, rank_value> dims_array(void) const {
       if constexpr (is_dynamic_value) {
-        return *(new std::array<size_t, rank_value>{ ParentDataType::N0, ParentDataType::N2 });
+        return *(new std::array<size_t, rank_value>{ ParentDataType::N0, ParentDataType::N1 });
       } else {
         return static_dims_array;
       }
@@ -423,11 +423,11 @@ namespace mathq {
       if ((index == 0) && (ParentDataType::N0 != Nrows_new)) {
         vector.resize( Nrows_new );
       }
-      if ((index == 1) && (ParentDataType::N2 != Ncols_new)) {
+      if ((index == 1) && (ParentDataType::N1 != Ncols_new)) {
         vector.resize( Ncols_new );
       }
       ParentDataType::N0 = Nrows_new;
-      ParentDataType::N2 = Ncols_new;
+      ParentDataType::N1 = Ncols_new;
       return *this;
     }
 
