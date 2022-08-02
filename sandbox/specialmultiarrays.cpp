@@ -70,6 +70,30 @@ int main(int argc, char *argv[]) {
   }
 
 
+  CR();
+  MOUT << blue.apply("Vector_Constant: fixed-size") << std::endl;
+  CR();
+  {
+    Vector_Constant<double, 4> a(3.14);
+    TLDISP(a);
+    TLDISP(sizeof(a)/sizeof(double));
+    a = 42.42;
+    TLDISP(a(2));
+  }
+
+  CR();
+  MOUT << blue.apply("Vector_Constant: dynamic-size") << std::endl;
+  CR();
+  {
+    Vector_Constant<double> a(Dimensions({5}), 6.78);
+    TLDISP(a);
+    TLDISP(sizeof(a)/sizeof(double));
+    a = 42.42;
+    TLDISP(a(3));
+  }
+
+
+
 
   CR();
   MOUT << "done: " << bold.apply(myname) << std::endl;

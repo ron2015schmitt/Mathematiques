@@ -8,14 +8,7 @@
  * Vector<Element,N1> -- fixed size vector (array)
  *                 N1 = size = number of elements
  *
- * DO NOT SPECIFY: NumberType,depth
- *                 The defaults are defined in the declaration in
- *                 declarations.h
- *                 NumberType = number type
- *                   = underlying algebraic field
- *                     ex. int, double, std::complex<double>
- *                 depth = tensor depth. if Element=NumberType, then depth=1.
-********************************************************************
+ *******************************************************************
  */
 
 
@@ -209,6 +202,16 @@ namespace mathq {
       resize(N);
       *this = val;
     }
+
+    // --------------------- DYNAMIC SIZE: set size from Dimensions  and set value---------------------
+
+    template<bool enabled = is_dynamic_value> requires (enabled)
+    explicit MultiArray(const Dimensions& dims, const Element val) {
+      // TRDISP(dims);
+      this->resize(dims);
+      *this = val;
+    }
+
 
     // --------------------- array[]  CONSTRUCTOR ---------------------
 
@@ -893,7 +896,8 @@ namespace mathq {
     }
 
 
-    // .quniq()
+    // .quniq() -- finds consequeutive duplicates
+    //         removes all duplicates
     //         returns a new vector with the preserved indices
     template<typename T = size_t> EnableMethodIf<is_dynamic_value, Vector<T>& >
     quniq() {

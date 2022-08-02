@@ -211,12 +211,16 @@ namespace mathq {
   // * Special MultiArrays
   // ********************************************************************
 
+// Constant
+
 template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
 class MultiArray_Constant;
 
 template <typename Element, size_t... sizes>
-using Matrix_Constant = MultiArray_Constant<Element, 2, sizes...>;
+using Vector_Constant = MultiArray_Constant<Element, 1, sizes...>;
 
+template <typename Element, size_t... sizes>
+using Matrix_Constant = MultiArray_Constant<Element, 2, sizes...>;
 
 
   // template <typename Element, size_t NR = 0, size_t NC = 0>

@@ -312,6 +312,74 @@ namespace mathq {
   };
 
 
+//
+  // SpecialData: specialization for DYNAMIC Vectors
+  //
+  
+  template <typename Element> 
+  class SpecialData<Element, 1> {
+    public: 
+
+    constexpr static size_t rank_value = 1;
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
+    constexpr static bool is_dynamic_value = true;
+    constexpr static size_t compile_time_size = calc_size<rank_value, 0>();
+
+    // note that the following will be all zeroes for dyanmic multi-arrays
+    constexpr static std::array<size_t, rank_value> static_dims_array = {  };
+
+
+
+    using Type = SpecialData<Element, rank_value>;
+    using ConcreteType = Type; 
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<Element>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
+
+    // Object Data
+
+    size_t N1 = 0;  
+
+    // methods
+
+    inline std::string classname() const {
+      return ClassName();
+    }
+
+    // static ClassName() method 
+
+    static inline std::string ClassName() {
+      using namespace display;
+      Style& style = FormatDataVector::style_for_punctuation;
+      std::string s = "SpecialData";
+      s += StyledString::get(ANGLE1).get();
+      Element d;
+      s += getTypeName(d);
+      s += StyledString::get(COMMA).get();
+      s += " rank=";
+      s += std::to_string(rank_value);
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+    // stream << operator
+
+    friend std::ostream& operator<<(std::ostream& stream, const Type& x) {
+      using namespace display;
+      Style& style = FormatDataVector::style_for_punctuation;
+
+      stream << style.apply(FormatDataVector::string_opening);
+      stream << style.apply(FormatDataVector::string_delimeter);
+      stream << "\n  dims = { N1 = ";
+      dispval_strm(stream, x.N1);
+      stream << "}\n";
+      stream << style.apply(FormatDataVector::string_closing);
+
+      return stream;
+    }
+
+  };
+
 
   //
   // SpecialData: specialization for DYNAMIC Matrices
@@ -371,13 +439,11 @@ namespace mathq {
       Style& style = FormatDataVector::style_for_punctuation;
 
       stream << style.apply(FormatDataVector::string_opening);
-      stream << "\n  data = ";
-      dispval_strm(stream, x.data_);
       stream << style.apply(FormatDataVector::string_delimeter);
       stream << "\n  dims = { N1 = ";
       dispval_strm(stream, x.N1);
       stream << ", N2 = ";
-      dispval_strm(stream, x.N1);
+      dispval_strm(stream, x.N2);
       stream << "}\n";
       stream << style.apply(FormatDataVector::string_closing);
 
@@ -385,6 +451,7 @@ namespace mathq {
     }
 
   };
+
 
   //
   // SpecialData: specialization: DYNAMIC arrays of higher rank
@@ -443,8 +510,6 @@ namespace mathq {
       Style& style = FormatDataVector::style_for_punctuation;
 
       stream << style.apply(FormatDataVector::string_opening);
-      stream << "\n  data = ";
-      dispval_strm(stream, x.data_);
       stream << style.apply(FormatDataVector::string_delimeter);
       stream << "\n  dims = ";
       dispval_strm(stream, x.dynamic_dims_array);

@@ -62,7 +62,7 @@
 // #include "array3d.h"
 // #include "array4d.h"
 
-// #include "vector--constant.h"
+#include "vector--constant.h"
 // #include "vector-sparse.h"
 
 #include "matrix--constant.h"
