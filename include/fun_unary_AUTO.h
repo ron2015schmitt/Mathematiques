@@ -34,7 +34,6 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
-    
     EOUT* e2 = new EOUT();
     *e2 = +(e);
     return *e2;
@@ -72,7 +71,6 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
-    
     EOUT* e2 = new EOUT();
     *e2 = -(e);
     return *e2;
@@ -110,7 +108,6 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
-    
     EOUT* e2 = new EOUT();
     *e2 = !(e);
     return *e2;

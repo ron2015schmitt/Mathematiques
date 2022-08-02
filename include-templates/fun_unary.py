@@ -20,6 +20,7 @@ if n != 2:
 DIR_MATHQ = sys.argv[1]
 
 myname = os.path.basename(__file__)
+fn_functor_op = DIR_MATHQ+"/include-templates/fun_unary_op_functor.h"
 fn_functor = DIR_MATHQ+"/include-templates/fun_unary_functor.h"
 fn_functions = DIR_MATHQ+"/include-templates/fun_unary_functions.h"
 fn_realonly_functions = DIR_MATHQ+"/include-templates/fun_unary_real_functions.h"
@@ -152,8 +153,8 @@ contents += """
 
 
 """
-with open(fn_functor, 'r') as file_functor:
-    contents0 = file_functor.read()
+with open(fn_functor_op, 'r') as file_functor_op:
+    contents0 = file_functor_op.read()
 
 contents0 = contents0.replace("__MYFILENAME__",fn_functor)
 contents0 = contents0.replace("__SCRIPTNAME__",myname)
@@ -164,14 +165,15 @@ for op in ops:
     name = op[1]
     functorname = op[2]
     fun = contents0
-    fun = fun.replace("__NAMESPACE__::","")
-    fun = fun.replace("using namespace __NAMESPACE__;","")
     fun = fun.replace("__FUNCTION__",function)
     fun = fun.replace("__FUNCTORNAME__",functorname)
     contents += fun
     count += 1
 
 
+
+with open(fn_functor, 'r') as file_functor:
+    contents0 = file_functor.read()
 
 contents0 = contents0.replace("__MYFILENAME__",fn_functor)
 contents0 = contents0.replace("__SCRIPTNAME__",myname)
