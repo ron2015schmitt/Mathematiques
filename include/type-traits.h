@@ -751,10 +751,8 @@ namespace mathq {
   // ***************************************************************************
   // InversionType - turnt he type inside out
   //
-  // Use C == NullType to call externally
-  // TODO: make this the defualt
-  //
-  //    example:  Vector<Scalar<double>, NullType>   ->   Scalar<Vector<double>>
+ //
+  //    example:  InversionType< Vector<Scalar<double>> >::Type   ->   Scalar<Vector<double>>
   //
   //    NOTE: This only works for MultiArrays not expressions (at this time)
   //          It does not turn complex, Imaginary, or Quarternion numbers etc inside out

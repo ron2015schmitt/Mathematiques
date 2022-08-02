@@ -376,11 +376,11 @@ namespace mathq {
     Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
       size_t depth_index = di;
       size_t resize_depth = parent_rdims.size();
-      const size_t newSize = parent_rdims[depth_index++];
+      const Dimensions& new_dims = parent_rdims[depth_index++];
       if constexpr (is_dynamic_value) {
-        resize(newSize);
+        resize(new_dims);
       }
-      if constexpr (depth_value >= 1) {
+      if constexpr (depth_value > 1) {
         if (depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {
             ParentDataType::data_[ii].recurse_resize(parent_rdims, depth_index);
@@ -435,7 +435,7 @@ namespace mathq {
 
     template <typename... U>
     typename std::enable_if<(std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == rank_value), size_t>::type 
-    index(const U... args) {
+    index(const U... args) const {
       std::array<size_t,rank_value> arr { std::make_unsigned<int>::type(args)... };
       return index(*(new mathq::Indices(arr)));
     }
@@ -444,29 +444,34 @@ namespace mathq {
     //******* A(i,j,k,...) *********************
     //**********************************************************************
 
+
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_unsigned<U>...>::value, Element&>::type operator()(const U... args) {
-      // const int size = sizeof...(args);
+    Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_unsigned<U>...>::value && (sizeof...(args) == rank_value) )
+    {
       size_t k = this->index(args...);
       return (*this)[k];
     }
 
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_unsigned<U>...>::value, const Element>::type operator()(const U... args) const {
+    const Element& operator()(const U... args) const requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_unsigned<U>...>::value && (sizeof...(args) == rank_value) )
+    {
       size_t k = this->index(args...);
       return (*this)[k];
     }
+
+
 
     // negative indexing 
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value, Element&>::type operator()(const U... args) {
-      // const int size = sizeof...(args);
+    Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
+    {
       Indices inds({ signed_index_to_unsigned_index(args, size())... });
       return (*this)[inds];
     }
 
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value, const Element>::type operator()(const U... args) const {
+    const Element& operator()(const U... args) const requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
+    {
       Indices inds({ signed_index_to_unsigned_index(args, size())... });
       return (*this)[inds];
     }
@@ -561,7 +566,7 @@ namespace mathq {
       size_t k = this->index(inds);
       return (*this)[k];
     }
-    const Element operator[](const Indices& inds) const {
+    const Element& operator[](const Indices& inds) const {
       size_t k = this->index(inds);
       return (*this)[k];
     }
@@ -573,7 +578,7 @@ namespace mathq {
     // "read/write"
     NumberType& operator[](const DeepIndices& dinds) {
       const size_t mydepth = dinds.size();
-      size_t inds = dinds[mydepth - depth_value];
+      const Indices& inds = dinds[mydepth - depth_value];
 
       if constexpr (depth_value > 1) {
         return (*this)[inds][dinds];
@@ -586,7 +591,7 @@ namespace mathq {
     // "read"
     const NumberType& operator[](const DeepIndices& dinds) const {
       const size_t mydepth = dinds.size();
-      size_t inds = dinds[mydepth - depth_value];
+      const Indices& inds = dinds[mydepth - depth_value];
 
       if constexpr (depth_value > 1) {
         return (*this)[inds][dinds];

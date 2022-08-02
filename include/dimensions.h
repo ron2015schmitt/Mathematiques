@@ -397,7 +397,7 @@ namespace mathq {
       this->resize(0);
     }
 
-    RecursiveDimensions(const RecursiveDimensions& var) {
+    explicit RecursiveDimensions(const RecursiveDimensions& var) {
       *this = var;
     }
 
@@ -427,6 +427,9 @@ namespace mathq {
     }
 
 
+    size_t depth() const {
+      return size();
+    }
     size_t size() const {
       return data_.size();
     }

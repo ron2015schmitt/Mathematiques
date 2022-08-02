@@ -5,6 +5,34 @@
 namespace mathq {
 
 
+// -------------------------------------------------------------------
+  //
+  // insideout - turn a nested set of tensors inside-out
+  // -------------------------------------------------------------------
+
+
+  template <class X, typename Element, typename Number, size_t depth, size_t rank>
+  auto& insideout(const ExpressionRW<X, Element, Number, depth, rank>& t) {
+
+    typedef typename InversionType<X>::Type Type;
+    Type& tout = *(new Type());
+    const X& tin = t.derived();
+    RecursiveDimensions ddims( t.recursive_dims() );
+    RecursiveDimensions rdims( ddims.getEverse() );
+    tout.resize(rdims);
+
+    const size_t Ndeep = tout.total_size();
+    DeepIndices dinds(ddims);
+    for (size_t i = 0; i < Ndeep; i++) {
+      // set equal
+      // MDISP(i, dinds, tin.dat(i), tin.dat(dinds));  // LEAVE THIS HERE BUT COMMENTED OUT!!!
+      DeepIndices rinds = dinds.getEverse();
+      tout[rinds] = tin[dinds];
+      dinds.increment(ddims);
+    }
+    return tout;
+  }
+
 
   // ************************************************************************
   // *              Transpose, Conjugate, Adjoint, and ~

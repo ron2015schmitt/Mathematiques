@@ -443,11 +443,11 @@ namespace mathq {
     Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
       size_t depth_index = di;
       size_t resize_depth = parent_rdims.size();
-      const size_t newSize = parent_rdims[depth_index++];
+      const Dimensions new_dims = parent_rdims[depth_index++];
       if constexpr (is_dynamic_value) {
-        resize(newSize);
+        resize(new_dims);
       }
-      if constexpr (depth_value >= 1) {
+      if constexpr (depth_value > 1) {
         if (depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {
             ParentDataType::data_[ii].recurse_resize(parent_rdims, depth_index);
@@ -511,29 +511,29 @@ namespace mathq {
     //******* A(i,j,k,...) *********************
     //**********************************************************************
 
-    template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_unsigned<U>...>::value, const Element>::type operator()(const U... args) {
-      // const int size = sizeof...(args);
-      size_t k = this->index(args...);
+    Element& operator()(const size_t i1, const size_t i2) {
+      size_t k = this->index(i1, i2);
       return (*this)[k];
     }
 
-    template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_unsigned<U>...>::value, const Element>::type operator()(const U... args) const {
-      size_t k = this->index(args...);
+    const Element& operator()(const size_t i1, const size_t i2) const {
+      size_t k = this->index(i1, i2);
       return (*this)[k];
     }
 
     // negative indexing 
+
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value, Element&>::type operator()(const U... args) {
-      // const int size = sizeof...(args);
+    Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
+    {
       Indices inds({ signed_index_to_unsigned_index(args, size())... });
       return (*this)[inds];
     }
 
     template <typename... U>
-    typename std::enable_if<std::conjunction<std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value, const Element>::type operator()(const U... args) const {
+    const Element& operator()(const U... args) const 
+    requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
+    {
       Indices inds({ signed_index_to_unsigned_index(args, size())... });
       return (*this)[inds];
     }
@@ -628,7 +628,7 @@ namespace mathq {
       size_t k = this->index(inds);
       return (*this)[k];
     }
-    const Element operator[](const Indices& inds) const {
+    const Element& operator[](const Indices& inds) const {
       size_t k = this->index(inds);
       return (*this)[k];
     }
@@ -640,7 +640,7 @@ namespace mathq {
     // "read/write"
     NumberType& operator[](const DeepIndices& dinds) {
       const size_t mydepth = dinds.size();
-      size_t inds = dinds[mydepth - depth_value];
+      Indices inds = dinds[mydepth - depth_value];
 
       if constexpr (depth_value > 1) {
         return (*this)[inds][dinds];
@@ -653,7 +653,7 @@ namespace mathq {
     // "read"
     const NumberType& operator[](const DeepIndices& dinds) const {
       const size_t mydepth = dinds.size();
-      size_t inds = dinds[mydepth - depth_value];
+      Indices inds = dinds[mydepth - depth_value];
 
       if constexpr (depth_value > 1) {
         return (*this)[inds][dinds];
@@ -995,9 +995,6 @@ namespace mathq {
       s += StyledString::get(ANGLE1).get();
       Element d;
       s += getTypeName(d);
-      s += StyledString::get(COMMA).get();
-      s += " rank=";
-      s += std::to_string(rank_value);
       if constexpr (!is_dynamic_value) {
         for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
           if (ii == 0) {

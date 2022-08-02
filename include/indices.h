@@ -207,6 +207,13 @@ namespace mathq {
     //************************** ASSIGNMENT ********************************
     //**********************************************************************
 
+    Indices& operator=(const size_t var) {
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = var;
+      }
+      return *this;
+    }
+
     Indices& operator=(const Indices& var) {
       this->resize(var.size());
       for (size_t i = 0; i < this->size(); i++) {
@@ -317,6 +324,15 @@ namespace mathq {
       *this = var;
     }
 
+    explicit DeepIndices(const RecursiveDimensions& deepdims) {
+      this->resize(deepdims.depth());
+      for (size_t i = 0; i < depth(); i++) {
+        (*this)[i].resize(deepdims[i].rank());
+        (*this)[i] = 0;
+      }
+    }
+
+
     explicit DeepIndices(const std::vector<Indices>& var) {
       *this = var;
     }
@@ -334,7 +350,7 @@ namespace mathq {
       *this = var;
     }
 
-    explicit DeepIndices(const std::initializer_list<std::initializer_list<size_t>>& var) {
+    DeepIndices(const std::initializer_list<std::initializer_list<size_t>>& var) {
       *this = var;
     }
 
@@ -367,6 +383,9 @@ namespace mathq {
       return dd.evert();
     }
 
+    size_t depth() const {
+      return size();
+    }
     size_t size() const {
       return data_.size();
     }
@@ -459,7 +478,7 @@ namespace mathq {
       return true;
     }
 
-    DeepIndices& increment(RecursiveDimensions deepdims) {
+    DeepIndices& increment(const RecursiveDimensions& deepdims) {
       const size_t N = deepdims.size();
       size_t m = N;
       while (true) {
@@ -475,7 +494,7 @@ namespace mathq {
           }
           m--;
         }
-        Dimensions& dims = deepdims[m];
+        const Dimensions& dims = deepdims[m];
         Indices& inds = (*this)[m];
         size_t n = dims.size();
         size_t d = 0;
