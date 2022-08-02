@@ -402,9 +402,9 @@ namespace mathq {
     //********************* Direct access to ParentDataType::data_  ***********************************
     //**********************************************************************
 
-    // -------------------- dataobj() --------------------
+    // -------------------- data_obj() --------------------
     // "read/write" to the wrapped valarray/aray
-    auto& dataobj() {
+    auto& data_obj() {
       return ParentDataType::data_;
     }
 
