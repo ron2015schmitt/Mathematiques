@@ -1,5 +1,5 @@
-#ifndef MATHQ__FUN_UNARY_AUTO_H
-#define MATHQ__FUN_UNARY_AUTO_H 1
+#ifndef MATHQ__FUN_UNARY_AUTO
+#define MATHQ__FUN_UNARY_AUTO 1
 
 // THIS FILE WAS *AUTO-GENERATED* BY PYTHON SCRIPT 'fun_unary.py'
 
@@ -34,6 +34,7 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    
     EOUT* e2 = new EOUT();
     *e2 = +(e);
     return *e2;
@@ -71,6 +72,7 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    
     EOUT* e2 = new EOUT();
     *e2 = -(e);
     return *e2;
@@ -108,6 +110,7 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    
     EOUT* e2 = new EOUT();
     *e2 = !(e);
     return *e2;
@@ -127,7 +130,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// sin: template class for function 'std::sin'
+// sin: template class for function 'sin'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -145,14 +148,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::sin(e);
+    *e2 = sin(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::sin")+"("+ sa + ")";
+    sout = functor_style.apply("sin")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -164,7 +168,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// cos: template class for function 'std::cos'
+// cos: template class for function 'cos'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -182,14 +186,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::cos(e);
+    *e2 = cos(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::cos")+"("+ sa + ")";
+    sout = functor_style.apply("cos")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -201,7 +206,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// tan: template class for function 'std::tan'
+// tan: template class for function 'tan'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -219,14 +224,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::tan(e);
+    *e2 = tan(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::tan")+"("+ sa + ")";
+    sout = functor_style.apply("tan")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -238,7 +244,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// asin: template class for function 'std::asin'
+// asin: template class for function 'asin'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -256,14 +262,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::asin(e);
+    *e2 = asin(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::asin")+"("+ sa + ")";
+    sout = functor_style.apply("asin")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -275,7 +282,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// acos: template class for function 'std::acos'
+// acos: template class for function 'acos'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -293,14 +300,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::acos(e);
+    *e2 = acos(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::acos")+"("+ sa + ")";
+    sout = functor_style.apply("acos")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -312,7 +320,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// atan: template class for function 'std::atan'
+// atan: template class for function 'atan'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -330,14 +338,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::atan(e);
+    *e2 = atan(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::atan")+"("+ sa + ")";
+    sout = functor_style.apply("atan")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -349,7 +358,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// sinh: template class for function 'std::sinh'
+// sinh: template class for function 'sinh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -367,14 +376,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::sinh(e);
+    *e2 = sinh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::sinh")+"("+ sa + ")";
+    sout = functor_style.apply("sinh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -386,7 +396,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// cosh: template class for function 'std::cosh'
+// cosh: template class for function 'cosh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -404,14 +414,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::cosh(e);
+    *e2 = cosh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::cosh")+"("+ sa + ")";
+    sout = functor_style.apply("cosh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -423,7 +434,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// tanh: template class for function 'std::tanh'
+// tanh: template class for function 'tanh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -441,14 +452,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::tanh(e);
+    *e2 = tanh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::tanh")+"("+ sa + ")";
+    sout = functor_style.apply("tanh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -460,7 +472,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// asinh: template class for function 'std::asinh'
+// asinh: template class for function 'asinh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -478,14 +490,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::asinh(e);
+    *e2 = asinh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::asinh")+"("+ sa + ")";
+    sout = functor_style.apply("asinh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -497,7 +510,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// acosh: template class for function 'std::acosh'
+// acosh: template class for function 'acosh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -515,14 +528,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::acosh(e);
+    *e2 = acosh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::acosh")+"("+ sa + ")";
+    sout = functor_style.apply("acosh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -534,7 +548,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// atanh: template class for function 'std::atanh'
+// atanh: template class for function 'atanh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -552,14 +566,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::atanh(e);
+    *e2 = atanh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::atanh")+"("+ sa + ")";
+    sout = functor_style.apply("atanh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -571,7 +586,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// sqrt: template class for function 'std::sqrt'
+// sqrt: template class for function 'sqrt'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -589,14 +604,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::sqrt(e);
+    *e2 = sqrt(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::sqrt")+"("+ sa + ")";
+    sout = functor_style.apply("sqrt")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -608,7 +624,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// cbrt: template class for function 'std::cbrt'
+// cbrt: template class for function 'cbrt'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -626,14 +642,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::cbrt(e);
+    *e2 = cbrt(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::cbrt")+"("+ sa + ")";
+    sout = functor_style.apply("cbrt")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -645,7 +662,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// sqr: template class for function 'mathq::sqr'
+// sqr: template class for function 'sqr'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -663,14 +680,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::sqr(e);
+    *e2 = sqr(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::sqr")+"("+ sa + ")";
+    sout = functor_style.apply("sqr")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -682,7 +700,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// cube: template class for function 'mathq::cube'
+// cube: template class for function 'cube'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -700,14 +718,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::cube(e);
+    *e2 = cube(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::cube")+"("+ sa + ")";
+    sout = functor_style.apply("cube")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -719,7 +738,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// exp: template class for function 'std::exp'
+// exp: template class for function 'exp'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -737,14 +756,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::exp(e);
+    *e2 = exp(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::exp")+"("+ sa + ")";
+    sout = functor_style.apply("exp")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -756,7 +776,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// exp2: template class for function 'std::exp2'
+// exp2: template class for function 'exp2'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -774,14 +794,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::exp2(e);
+    *e2 = exp2(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::exp2")+"("+ sa + ")";
+    sout = functor_style.apply("exp2")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -793,7 +814,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// expm1: template class for function 'std::expm1'
+// expm1: template class for function 'expm1'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -811,14 +832,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::expm1(e);
+    *e2 = expm1(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::expm1")+"("+ sa + ")";
+    sout = functor_style.apply("expm1")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -830,7 +852,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// log: template class for function 'std::log'
+// log: template class for function 'log'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -848,14 +870,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::log(e);
+    *e2 = log(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::log")+"("+ sa + ")";
+    sout = functor_style.apply("log")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -867,7 +890,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// log10: template class for function 'std::log10'
+// log10: template class for function 'log10'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -885,14 +908,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::log10(e);
+    *e2 = log10(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::log10")+"("+ sa + ")";
+    sout = functor_style.apply("log10")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -904,7 +928,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// log2: template class for function 'std::log2'
+// log2: template class for function 'log2'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -922,14 +946,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::log2(e);
+    *e2 = log2(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::log2")+"("+ sa + ")";
+    sout = functor_style.apply("log2")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -941,7 +966,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// log1p: template class for function 'std::log1p'
+// log1p: template class for function 'log1p'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -959,14 +984,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::log1p(e);
+    *e2 = log1p(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::log1p")+"("+ sa + ")";
+    sout = functor_style.apply("log1p")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -978,7 +1004,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// logb: template class for function 'std::logb'
+// logb: template class for function 'logb'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -996,14 +1022,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::logb(e);
+    *e2 = logb(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::logb")+"("+ sa + ")";
+    sout = functor_style.apply("logb")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1015,7 +1042,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// sgn: template class for function 'mathq::sgn'
+// sgn: template class for function 'sgn'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1033,14 +1060,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::sgn(e);
+    *e2 = sgn(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::sgn")+"("+ sa + ")";
+    sout = functor_style.apply("sgn")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1052,7 +1080,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// ceil: template class for function 'std::ceil'
+// ceil: template class for function 'ceil'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1070,14 +1098,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::ceil(e);
+    *e2 = ceil(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::ceil")+"("+ sa + ")";
+    sout = functor_style.apply("ceil")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1089,7 +1118,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// floor: template class for function 'std::floor'
+// floor: template class for function 'floor'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1107,14 +1136,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::floor(e);
+    *e2 = floor(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::floor")+"("+ sa + ")";
+    sout = functor_style.apply("floor")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1126,7 +1156,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// round: template class for function 'std::round'
+// round: template class for function 'round'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1144,14 +1174,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::round(e);
+    *e2 = round(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::round")+"("+ sa + ")";
+    sout = functor_style.apply("round")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1163,7 +1194,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// trunc: template class for function 'std::trunc'
+// trunc: template class for function 'trunc'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1181,14 +1212,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::trunc(e);
+    *e2 = trunc(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::trunc")+"("+ sa + ")";
+    sout = functor_style.apply("trunc")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1200,7 +1232,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// erf: template class for function 'std::erf'
+// erf: template class for function 'erf'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1218,14 +1250,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::erf(e);
+    *e2 = erf(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::erf")+"("+ sa + ")";
+    sout = functor_style.apply("erf")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1237,7 +1270,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// erfc: template class for function 'std::erfc'
+// erfc: template class for function 'erfc'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1255,14 +1288,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::erfc(e);
+    *e2 = erfc(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::erfc")+"("+ sa + ")";
+    sout = functor_style.apply("erfc")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1274,7 +1308,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// tgamma: template class for function 'std::tgamma'
+// tgamma: template class for function 'tgamma'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1292,14 +1326,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::tgamma(e);
+    *e2 = tgamma(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::tgamma")+"("+ sa + ")";
+    sout = functor_style.apply("tgamma")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1311,7 +1346,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// lgamma: template class for function 'std::lgamma'
+// lgamma: template class for function 'lgamma'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1329,14 +1364,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::lgamma(e);
+    *e2 = lgamma(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::lgamma")+"("+ sa + ")";
+    sout = functor_style.apply("lgamma")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1348,7 +1384,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// expint: template class for function 'std::expint'
+// expint: template class for function 'expint'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1366,14 +1402,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::expint(e);
+    *e2 = expint(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::expint")+"("+ sa + ")";
+    sout = functor_style.apply("expint")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1385,7 +1422,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// riemann_zeta: template class for function 'std::riemann_zeta'
+// riemann_zeta: template class for function 'riemann_zeta'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1403,14 +1440,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::riemann_zeta(e);
+    *e2 = riemann_zeta(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::riemann_zeta")+"("+ sa + ")";
+    sout = functor_style.apply("riemann_zeta")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1422,7 +1460,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// comp_ellint_1: template class for function 'std::comp_ellint_1'
+// comp_ellint_1: template class for function 'comp_ellint_1'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1440,14 +1478,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::comp_ellint_1(e);
+    *e2 = comp_ellint_1(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::comp_ellint_1")+"("+ sa + ")";
+    sout = functor_style.apply("comp_ellint_1")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1459,7 +1498,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// comp_ellint_2: template class for function 'std::comp_ellint_2'
+// comp_ellint_2: template class for function 'comp_ellint_2'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1477,14 +1516,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::comp_ellint_2(e);
+    *e2 = comp_ellint_2(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::comp_ellint_2")+"("+ sa + ")";
+    sout = functor_style.apply("comp_ellint_2")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1496,7 +1536,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// zero: template class for function 'mathq::zero'
+// zero: template class for function 'zero'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1514,14 +1554,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::zero(e);
+    *e2 = zero(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::zero")+"("+ sa + ")";
+    sout = functor_style.apply("zero")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1533,7 +1574,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// ilogb: template class for function 'std::ilogb'
+// ilogb: template class for function 'ilogb'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1551,14 +1592,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::ilogb(e);
+    *e2 = ilogb(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::ilogb")+"("+ sa + ")";
+    sout = functor_style.apply("ilogb")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1570,7 +1612,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// imaginary: template class for function 'mathq::Imaginary'
+// imaginary: template class for function 'Imaginary'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1588,14 +1630,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::Imaginary(e);
+    *e2 = Imaginary(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::Imaginary")+"("+ sa + ")";
+    sout = functor_style.apply("Imaginary")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1607,7 +1650,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// conj_imag: template class for function 'mathq::conj'
+// conj_imag: template class for function 'conj'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1625,14 +1668,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::conj(e);
+    *e2 = conj(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::conj")+"("+ sa + ")";
+    sout = functor_style.apply("conj")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1644,7 +1688,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// real_imag: template class for function 'mathq::real'
+// real_imag: template class for function 'real'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1662,14 +1706,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::real(e);
+    *e2 = real(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::real")+"("+ sa + ")";
+    sout = functor_style.apply("real")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1681,7 +1726,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// imag_imag: template class for function 'mathq::imag'
+// imag_imag: template class for function 'imag'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1699,14 +1744,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::imag(e);
+    *e2 = imag(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::imag")+"("+ sa + ")";
+    sout = functor_style.apply("imag")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1718,7 +1764,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// abs_imag: template class for function 'mathq::abs'
+// abs_imag: template class for function 'abs'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1736,14 +1782,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::abs(e);
+    *e2 = abs(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::abs")+"("+ sa + ")";
+    sout = functor_style.apply("abs")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1755,7 +1802,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// arg_imag: template class for function 'mathq::arg'
+// arg_imag: template class for function 'arg'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1773,14 +1820,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::arg(e);
+    *e2 = arg(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::arg")+"("+ sa + ")";
+    sout = functor_style.apply("arg")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1792,7 +1840,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// proj_imag: template class for function 'mathq::proj'
+// proj_imag: template class for function 'proj'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1810,14 +1858,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::proj(e);
+    *e2 = proj(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::proj")+"("+ sa + ")";
+    sout = functor_style.apply("proj")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1829,7 +1878,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// exp_imag: template class for function 'mathq::exp'
+// exp_imag: template class for function 'exp'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1847,14 +1896,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::exp(e);
+    *e2 = exp(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::exp")+"("+ sa + ")";
+    sout = functor_style.apply("exp")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1866,7 +1916,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// log_imag: template class for function 'mathq::log'
+// log_imag: template class for function 'log'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1884,14 +1934,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::log(e);
+    *e2 = log(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::log")+"("+ sa + ")";
+    sout = functor_style.apply("log")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1903,7 +1954,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// log10_imag: template class for function 'mathq::log10'
+// log10_imag: template class for function 'log10'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1921,14 +1972,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::log10(e);
+    *e2 = log10(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::log10")+"("+ sa + ")";
+    sout = functor_style.apply("log10")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1940,7 +1992,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// sqrt_imag: template class for function 'mathq::sqrt'
+// sqrt_imag: template class for function 'sqrt'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1958,14 +2010,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::sqrt(e);
+    *e2 = sqrt(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::sqrt")+"("+ sa + ")";
+    sout = functor_style.apply("sqrt")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -1977,7 +2030,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// sin_imag: template class for function 'mathq::sin'
+// sin_imag: template class for function 'sin'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -1995,14 +2048,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::sin(e);
+    *e2 = sin(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::sin")+"("+ sa + ")";
+    sout = functor_style.apply("sin")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2014,7 +2068,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// cos_imag: template class for function 'mathq::cos'
+// cos_imag: template class for function 'cos'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2032,14 +2086,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::cos(e);
+    *e2 = cos(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::cos")+"("+ sa + ")";
+    sout = functor_style.apply("cos")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2051,7 +2106,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// tan_imag: template class for function 'mathq::tan'
+// tan_imag: template class for function 'tan'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2069,14 +2124,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::tan(e);
+    *e2 = tan(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::tan")+"("+ sa + ")";
+    sout = functor_style.apply("tan")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2088,7 +2144,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// asin_imag: template class for function 'mathq::asin'
+// asin_imag: template class for function 'asin'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2106,14 +2162,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::asin(e);
+    *e2 = asin(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::asin")+"("+ sa + ")";
+    sout = functor_style.apply("asin")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2125,7 +2182,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// acos_imag: template class for function 'mathq::acos'
+// acos_imag: template class for function 'acos'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2143,14 +2200,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::acos(e);
+    *e2 = acos(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::acos")+"("+ sa + ")";
+    sout = functor_style.apply("acos")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2162,7 +2220,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// atan_imag: template class for function 'mathq::atan'
+// atan_imag: template class for function 'atan'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2180,14 +2238,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::atan(e);
+    *e2 = atan(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::atan")+"("+ sa + ")";
+    sout = functor_style.apply("atan")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2199,7 +2258,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// sinh_imag: template class for function 'mathq::sinh'
+// sinh_imag: template class for function 'sinh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2217,14 +2276,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::sinh(e);
+    *e2 = sinh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::sinh")+"("+ sa + ")";
+    sout = functor_style.apply("sinh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2236,7 +2296,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// cosh_imag: template class for function 'mathq::cosh'
+// cosh_imag: template class for function 'cosh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2254,14 +2314,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::cosh(e);
+    *e2 = cosh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::cosh")+"("+ sa + ")";
+    sout = functor_style.apply("cosh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2273,7 +2334,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// tanh_imag: template class for function 'mathq::tanh'
+// tanh_imag: template class for function 'tanh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2291,14 +2352,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::tanh(e);
+    *e2 = tanh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::tanh")+"("+ sa + ")";
+    sout = functor_style.apply("tanh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2310,7 +2372,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// asinh_imag: template class for function 'mathq::asinh'
+// asinh_imag: template class for function 'asinh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2328,14 +2390,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::asinh(e);
+    *e2 = asinh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::asinh")+"("+ sa + ")";
+    sout = functor_style.apply("asinh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2347,7 +2410,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// acosh_imag: template class for function 'mathq::acosh'
+// acosh_imag: template class for function 'acosh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2365,14 +2428,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::acosh(e);
+    *e2 = acosh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::acosh")+"("+ sa + ")";
+    sout = functor_style.apply("acosh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2384,7 +2448,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// atanh_imag: template class for function 'mathq::atanh'
+// atanh_imag: template class for function 'atanh'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2402,14 +2466,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::atanh(e);
+    *e2 = atanh(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::atanh")+"("+ sa + ")";
+    sout = functor_style.apply("atanh")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2421,7 +2486,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// conj_complex: template class for function 'std::conj'
+// conj_complex: template class for function 'conj'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2439,14 +2504,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::conj(e);
+    *e2 = conj(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::conj")+"("+ sa + ")";
+    sout = functor_style.apply("conj")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2458,7 +2524,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// real_complex: template class for function 'std::real'
+// real_complex: template class for function 'real'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2476,14 +2542,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::real(e);
+    *e2 = real(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::real")+"("+ sa + ")";
+    sout = functor_style.apply("real")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2495,7 +2562,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// imag_complex: template class for function 'std::imag'
+// imag_complex: template class for function 'imag'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2513,14 +2580,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::imag(e);
+    *e2 = imag(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::imag")+"("+ sa + ")";
+    sout = functor_style.apply("imag")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2532,7 +2600,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// abs_complex: template class for function 'std::abs'
+// abs_complex: template class for function 'abs'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2550,14 +2618,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::abs(e);
+    *e2 = abs(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::abs")+"("+ sa + ")";
+    sout = functor_style.apply("abs")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2569,7 +2638,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// arg_complex: template class for function 'std::arg'
+// arg_complex: template class for function 'arg'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2587,14 +2656,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::arg(e);
+    *e2 = arg(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::arg")+"("+ sa + ")";
+    sout = functor_style.apply("arg")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2606,7 +2676,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// proj_complex: template class for function 'std::proj'
+// proj_complex: template class for function 'proj'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2624,14 +2694,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::proj(e);
+    *e2 = proj(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::proj")+"("+ sa + ")";
+    sout = functor_style.apply("proj")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2643,7 +2714,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// round_complex: template class for function 'mathq::round'
+// round_complex: template class for function 'round'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2661,14 +2732,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::round(e);
+    *e2 = round(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::round")+"("+ sa + ")";
+    sout = functor_style.apply("round")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2680,7 +2752,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// log2_complex: template class for function 'mathq::log2'
+// log2_complex: template class for function 'log2'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2698,14 +2770,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::log2(e);
+    *e2 = log2(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::log2")+"("+ sa + ")";
+    sout = functor_style.apply("log2")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2717,7 +2790,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// floor_complex: template class for function 'mathq::floor'
+// floor_complex: template class for function 'floor'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2735,14 +2808,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::floor(e);
+    *e2 = floor(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::floor")+"("+ sa + ")";
+    sout = functor_style.apply("floor")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2754,7 +2828,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// ceil_complex: template class for function 'mathq::ceil'
+// ceil_complex: template class for function 'ceil'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2772,14 +2846,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::ceil(e);
+    *e2 = ceil(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::ceil")+"("+ sa + ")";
+    sout = functor_style.apply("ceil")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2791,7 +2866,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// quaternion: template class for function 'mathq::Quaternion'
+// quaternion: template class for function 'Quaternion'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2809,14 +2884,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::Quaternion(e);
+    *e2 = Quaternion(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::Quaternion")+"("+ sa + ")";
+    sout = functor_style.apply("Quaternion")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2828,7 +2904,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// conj_quat: template class for function 'mathq::conj'
+// conj_quat: template class for function 'conj'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2846,14 +2922,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::conj(e);
+    *e2 = conj(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::conj")+"("+ sa + ")";
+    sout = functor_style.apply("conj")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2865,7 +2942,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// real_quat: template class for function 'mathq::real'
+// real_quat: template class for function 'real'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2883,14 +2960,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::real(e);
+    *e2 = real(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::real")+"("+ sa + ")";
+    sout = functor_style.apply("real")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2902,7 +2980,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// imag_quat: template class for function 'mathq::imag'
+// imag_quat: template class for function 'imag'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2920,14 +2998,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::imag(e);
+    *e2 = imag(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::imag")+"("+ sa + ")";
+    sout = functor_style.apply("imag")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2939,7 +3018,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// jmag_quat: template class for function 'mathq::jmag'
+// jmag_quat: template class for function 'jmag'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2957,14 +3036,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::jmag(e);
+    *e2 = jmag(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::jmag")+"("+ sa + ")";
+    sout = functor_style.apply("jmag")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -2976,7 +3056,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// kmag_quat: template class for function 'mathq::kmag'
+// kmag_quat: template class for function 'kmag'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -2994,14 +3074,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::kmag(e);
+    *e2 = kmag(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::kmag")+"("+ sa + ")";
+    sout = functor_style.apply("kmag")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3013,7 +3094,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// abs_quat: template class for function 'mathq::abs'
+// abs_quat: template class for function 'abs'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -3031,14 +3112,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::abs(e);
+    *e2 = abs(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::abs")+"("+ sa + ")";
+    sout = functor_style.apply("abs")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3050,7 +3132,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// exp_quat: template class for function 'mathq::exp'
+// exp_quat: template class for function 'exp'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -3068,14 +3150,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::exp(e);
+    *e2 = exp(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::exp")+"("+ sa + ")";
+    sout = functor_style.apply("exp")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3087,7 +3170,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// log_quat: template class for function 'mathq::log'
+// log_quat: template class for function 'log'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -3105,14 +3188,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::log(e);
+    *e2 = log(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::log")+"("+ sa + ")";
+    sout = functor_style.apply("log")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3124,7 +3208,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// conj_real: template class for function 'mathq::conj'
+// conj_real: template class for function 'conj'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -3142,14 +3226,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::conj(e);
+    *e2 = conj(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::conj")+"("+ sa + ")";
+    sout = functor_style.apply("conj")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3161,7 +3246,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// real_real: template class for function 'mathq::real'
+// real_real: template class for function 'real'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -3179,14 +3264,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::real(e);
+    *e2 = real(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::real")+"("+ sa + ")";
+    sout = functor_style.apply("real")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3198,7 +3284,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// imag_real: template class for function 'mathq::imag'
+// imag_real: template class for function 'imag'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -3216,14 +3302,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace mathq;
     EOUT* e2 = new EOUT();
-    *e2 = mathq::imag(e);
+    *e2 = imag(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("mathq::imag")+"("+ sa + ")";
+    sout = functor_style.apply("imag")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3235,7 +3322,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// abs_real: template class for function 'std::abs'
+// abs_real: template class for function 'abs'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -3253,14 +3340,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::abs(e);
+    *e2 = abs(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::abs")+"("+ sa + ")";
+    sout = functor_style.apply("abs")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3272,7 +3360,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// arg_real: template class for function 'std::arg'
+// arg_real: template class for function 'arg'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -3290,14 +3378,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::arg(e);
+    *e2 = arg(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::arg")+"("+ sa + ")";
+    sout = functor_style.apply("arg")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3309,7 +3398,7 @@ public:
 
 
 // ----------------------------------------------------------------
-// proj_real: template class for function 'std::proj'
+// proj_real: template class for function 'proj'
 //
 //    Note: generated from template file '/home/rs2015/Mathematiques/include-templates/fun_unary_functor.h'
 //          using Python script 'fun_unary.py'
@@ -3327,14 +3416,15 @@ public:
   template <class T = Element>
   static  typename std::enable_if<!std::is_same<T, DIN>::value, EOUT& >::type
     apply(const Element& e) {
+    using namespace std;
     EOUT* e2 = new EOUT();
-    *e2 = std::proj(e);
+    *e2 = proj(e);
     return *e2;
   }
   static std::string expression(const std::string& sa) {
     using namespace display;
     std::string sout = "";
-    sout = functor_style.apply("std::proj")+"("+ sa + ")";
+    sout = functor_style.apply("proj")+"("+ sa + ")";
     return sout;
   }
   inline const std::string expression_name() const {
@@ -3352,7 +3442,6 @@ public:
 //                           Functions
 //--------------------------------------------------------------------
 //********************************************************************
-
 
 
 
@@ -5065,4 +5154,4 @@ inline auto proj(const ExpressionR<X, Element, Number, depth, rank>& x) {
   return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, std::complex<Number>, depth, rank, FUNCTOR_proj_real<Element, EOUT, Number, std::complex<Number>>>(x);
 }
 }; // namespace mathq 
-#endif // MATHQ__FUN_UNARY_AUTO_H
+#endif // MATHQ__FUN_UNARY_AUTO

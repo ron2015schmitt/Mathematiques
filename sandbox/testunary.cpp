@@ -137,11 +137,11 @@ int main(int argc, char *argv[]) {
     std::initializer_list<std::initializer_list<double>> x2{{1, 2}, {3, 4}};
     TLDISP(x2);
 
-    NestedInitializerList<double, 1> y1{1, 2};
-    TLDISP(y1);
+    // NestedInitializerList<double, 1> y1{1, 2};
+    // TLDISP(y1);
 
-    NestedInitializerList<double, 2> y2{{1, 2}, {3, 4}};
-    TLDISP(y2);
+    // NestedInitializerList<double, 2> y2{{1, 2}, {3, 4}};
+    // TLDISP(y2);
   }
 
   CR();
@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
   MOUT << bold.apply("MultiArray") << endl;
   {
     CR();
-    MultiArray<double> t0;
+    MultiArray<double, 3> t0;
     TLDISP(t0.dims());
     TLDISP(t0.element_dims());
     TLDISP(t0);
@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t1.total_size());
     TLDISP(t1.depth());
     TLDISP(t1);
-    Dimensions dims(3, 2, 5);
+    Dimensions dims({3, 2, 5});
     MultiArray<double, 3> t2(dims);
     TLDISP(t2.dims());
     TLDISP(t2);
@@ -407,7 +407,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1.dims());
     TLDISP(m1.size());
     TLDISP(m1.recursive_dims());
-    Dimensions template_dims(2, 3, 2);
+    Dimensions template_dims({2, 3, 2});
 
     for (int i = 0; i < m1.dims()[0]; i++) {
       for (int j = 0; j < m1.dims()[1]; j++) {
@@ -482,7 +482,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t);
     TLDISP(t.dims());
     TLDISP(t.recursive_dims());
-    Dimensions template_dims(2, 2);
+    Dimensions template_dims({2, 2});
     t.resize(template_dims);
     t(0, 0) = 1;
     t(0, 1) = 2;
@@ -561,9 +561,9 @@ int main(int argc, char *argv[]) {
     TLDISP(m1.dims());
     TLDISP(m1.size());
     TLDISP(m1.recursive_dims());
-    Dimensions tdims1(2, 2);
+    Dimensions tdims1({2, 2});
     m1.resize(tdims1);
-    Dimensions tdims2(2, 3, 2);
+    Dimensions tdims2({2, 3, 2});
 
     for (int i = 0; i < m1.dims()[0]; i++) {
       for (int j = 0; j < m1.dims()[1]; j++) {

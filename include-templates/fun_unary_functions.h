@@ -1,19 +1,19 @@
 
 
 // ----------------------------------------------------------------
-// ##COMMENTNAME##
-// template functions for '##NAME##'
+// __COMMENTNAME__
+// template functions for '__NAME__'
 //
-//    Note: generated from template file '##MYFILENAME##'
-//          using Python script '##SCRIPTNAME##'
+//    Note: generated from template file '__MYFILENAME__'
+//          using Python script '__SCRIPTNAME__'
 // ----------------------------------------------------------------
 
 //----------------------------------------------
-// ##COMMENTNAME## 
+// __COMMENTNAME__ 
 //----------------------------------------------
 
 template <class X, class Element, typename Number, size_t depth, size_t rank>
-auto ##FUNCTION##(const ExpressionR<X, Element, ##DIN##, depth, rank>& x) {
-  typedef typename NumberTrait<Element, ##DOUT##>::ReplacedNumberType EOUT;
-  return  ExpressionR_Unary<ExpressionR<X, Element, ##DIN##, depth, rank>, EOUT, ##DOUT##, depth, rank, ##FUNCTOR##<Element, EOUT, ##DIN##, ##DOUT##>>(x);
+auto __FUNCTION__(const ExpressionR<X, Element, __DIN__, depth, rank>& x) {
+  typedef typename NumberTrait<Element, __DOUT__>::ReplacedNumberType EOUT;
+  return  ExpressionR_Unary<ExpressionR<X, Element, __DIN__, depth, rank>, EOUT, __DOUT__, depth, rank, __FUNCTOR__<Element, EOUT, __DIN__, __DOUT__>>(x);
 }
