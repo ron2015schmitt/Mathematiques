@@ -7,8 +7,7 @@ namespace mathq {
   /********************************************************************
    * MultiArray_Constant<Element,rank, dim_ints...> 
    * 
-   *            rank = number of rank (0=scalar,1=vector,2=matrix,etc)
-   *            dim_ints
+   * every element has the same value
    *
    * This is the template definition, ie not a specialization
    ********************************************************************
@@ -352,9 +351,9 @@ namespace mathq {
     }
 
     //**********************************************************************
-    //   this casted as MultiArrayData
+    //   this casted as SpecialData
     //**********************************************************************
-    ParentDataType& asMultiArrayData() {
+    ParentDataType& asSpecialData() {
       return *((ParentDataType*)(this));
     }
 
