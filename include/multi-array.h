@@ -166,13 +166,6 @@ namespace mathq {
     }
 
 
-    // --------------------- DYNAMIC SIZE: set size from int  ---------------------
-
-    template<bool enable = is_dynamic_value> requires (enable)
-    MultiArray(const size_t N) {
-      resize(N);
-    }
-
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)

@@ -7,31 +7,58 @@
 namespace mathq {
 
 
-  /********************************************************************
-   * MatrixConstDiag<Number        -- variable size matrix (valarray)
-   *                        Number  = type for elements
-   * MatrixConstDiag<Number,NR>    -- fixed number of rows (valarray)
-   *                        NR = number of rows
-   * MatrixConstDiag<Number,NR,NC> -- fixed number of rows and cols (array)
-   *                        NC = number of cols
-   ********************************************************************
-   */
-
-   //, typename = EnableIf<NumberTrait<Number>::value>
-  template <typename Number, int NR, int NC >
-  class MatrixConstDiag : public ExpressionRW<MatrixConstDiag<Number, NR, NC>, Number, Number, 1, 2> {
-
+  template <typename Element, size_t... dim_ints>
+  class MatrixConstDiag<Element, 2, dim_ints...> : 
+    public SpecialData<Element, 2, dim_ints...>, 
+    public ExpressionRW<
+      Matrix<Element, dim_ints...>,  // Derived
+      Element,  // Element
+      typename NumberTrait<Element>::Type, // Number
+      1 + NumberTrait<Element>::depth(),  // depth
+      2  // rank
+    > {  
   public:
-    constexpr static int rank = 2;
-    constexpr static int rank_value = 2;
-    constexpr static int depth_value = 1;
-    static constexpr bool resizable = (NR*NC==0) ? true : false;
-    static constexpr bool resizableRows = (NR==0) ? true : false;
-    static constexpr bool resizableCols = (NC==0) ? true : false;
-    typedef MatrixConstDiag<Number, NR, NC> ConcreteType;
-    typedef Number ElementType;
-    typedef Number NumberType;
-    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
+
+
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
+
+    constexpr static size_t rank_value = 2;
+    constexpr static std::array<size_t, rank_value> static_dims_array = { dim_ints... };
+    constexpr static size_t N1 = get<0>(static_dims_array);
+    constexpr static size_t N2 = get<1>(static_dims_array);
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
+    constexpr static bool is_dynamic_value = ( sizeof...(dim_ints) == 0 );
+    constexpr static size_t compile_time_size = calc_size<rank_value, N1, N2>();
+
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
+
+    using Type = MultiArray<Element, rank_value, dim_ints...>;
+    using ConcreteType = Matrix<Element, dim_ints...>;
+
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<Element>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using ParentDataType = MultiArrayData<Element, rank_value, dim_ints...>;
+    using ParentType = ExpressionRW<
+      ConcreteType,  // Derived
+      Element,  // Element
+      NumberType, // Number
+      depth_value,  // depth
+      rank_value  // rank
+    >;
+
+    using DimensionsType = Dimensions;
+    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
+    using DeepDimensionsType = RecursiveDimensions;
+
+    using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
+    using InitializerType = typename MakeInitializer<Element, rank_value >::Type;
+
 
 
 
@@ -40,11 +67,8 @@ namespace mathq {
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const Number zero_ = 0;
+    constexpr static Number zero_ = 0;
     Number value_ = 1;
-
-    size_t Nrows_;
-    size_t Ncols_;
 
     static_assert(NumberTrait<Number>::value,
       "class MatrixConstDiag can only have numbers as elements, ie not vectors, matrices etc.");
@@ -58,14 +82,14 @@ namespace mathq {
   public:
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    explicit MatrixConstDiag<Number, NR, NC>() {
+    explicit Type() {
       size_t NN = NR*NC;
       resize(NR, NC);
       value_ = 1;
     }
 
     // -------------------  Number value --------------------
-    explicit MatrixConstDiag<Number, NR, NC>(const Number& value) {
+    explicit Type(const Number& value) {
       size_t NN = NR*NC;
       resize(NR, NC);
       value_ = value;
@@ -74,7 +98,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixConstDiag<Number, NR, NC>(const size_t Nr, const size_t Nc) {
+    explicit Type(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
       value_ = 1;
     }
@@ -82,7 +106,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixConstDiag<Number, NR, NC>(const size_t Nr, const size_t Nc, const Number& value) {
+    explicit Type(const size_t Nr, const size_t Nc, const Number& value) {
       resize(Nr, Nc);
       value_ = value;
     }
@@ -94,7 +118,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixConstDiag<Number, NR, NC>() {
+    ~Type() {
       //remove from directory
     }
 
@@ -106,7 +130,6 @@ namespace mathq {
     size_t rank(void)  const {
       return rank_value;
     }
-
 
     inline size_t size(void) const {
       return Nrows()*Ncols();
@@ -180,7 +203,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixConstDiag<Number, NR, NC>& resize(const int Nr, const int Nc) {
+    Type& resize(const int Nr, const int Nc) {
       Nrows_ = NR;
       Ncols_ = NC;
       if constexpr (resizableRows) {
@@ -196,14 +219,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixConstDiag<Number, NR, NC>& resize(const Dimensions dims) {
+    Type& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixConstDiag<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
+    Type& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> recursive_dims(deepdims_new);
       Dimensions newdims = recursive_dims[0];
       resize(newdims);
@@ -216,7 +239,7 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    MatrixConstDiag<Number, NR, NC>& reshape(const size_t nr, const size_t nc) {
+    Type& reshape(const size_t nr, const size_t nc) {
       const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
@@ -232,14 +255,14 @@ namespace mathq {
     }
 
 
-    MatrixConstDiag<Number, NR, NC>& transpose(void) {
+    Type& transpose(void) {
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
     template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixConstDiag<Number, NR, NC>& >::type adjoint() {
+    typename std::enable_if<is_complex<T>::value, Type& >::type adjoint() {
       return *this;
     }
 
@@ -247,7 +270,7 @@ namespace mathq {
     Number getValue() const {
       return value_;
     }
-    MatrixConstDiag<Number, NR, NC>& setValue(const Number& value) {
+    Type& setValue(const Number& value) {
       value_ = value;
       return *this;
     }
@@ -352,7 +375,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixConstDiag<Number, NR, NC>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
       return *this;
     }
 
@@ -361,7 +384,7 @@ namespace mathq {
     // NOTE: in-place
 
     template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixConstDiag<Number, NR, NC>& >::type conj() {
+    typename std::enable_if<is_complex<T>::value, Type& >::type conj() {
       return *this;
     }
 
@@ -408,7 +431,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixConstDiag<Number, NR, NC>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const Type& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -444,7 +467,7 @@ namespace mathq {
 
 
     //template <typename Number>	
-    friend inline std::istream& operator>>(const std::string s, MatrixConstDiag<Number, NR, NC>& m2) {
+    friend inline std::istream& operator>>(const std::string s, Type& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -452,7 +475,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixConstDiag<Number, NR, NC>& m2) {
+    friend std::istream& operator>>(std::istream& stream, Type& m2) {
       return stream;
     }
 

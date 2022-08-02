@@ -77,27 +77,25 @@
 // #include "matrix_rep.h"
 // #include "matrix_skewhermitian.h"
 // #include "matrix_skewsymmetric.h"
+
 // #include "matrix_sparse.h"
+
 // #include "matrix_symmetric.h"
 // #include "matrix_toeplitz.h"
 // #include "matrix_uppertriangle.h"
 // #include "matrix_vandermonde.h"
 // #include "matrix_zero.h"
 // #include "matrix-constant.h"
-// #include "matrix-repeat-vec.h"
-// #include "matrix-outer-product.h"
+
 
 // #include "multi-array3-constant.h"
 // #include "multi-array3-repeat-vec.h"
-// #include "multi-array3-outer-product.h"
 
 // #include "multi-array4-constant.h"
 // #include "multi-array4-repeat-vec.h"
-// #include "multi-array5-outer-product.h"
 
-// #include "multi-array-constant.h"
+#include "multi-array-constant.h"
 // #include "multi-array-repeat-vec.h"
-// #include "multi-array-outer-product.h"
 
 
 #include "expressions-r.h"

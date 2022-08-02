@@ -180,15 +180,14 @@ namespace mathq {
 
 
 
-
+  // *********************************************************************
+  // * MultiArrays
+  // ********************************************************************
 
   template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
   class MultiArray;
 
-
-
   // typenames for specializations
-
 
   template <typename Element>
   using Scalar = MultiArray<Element, 0>;
@@ -209,59 +208,67 @@ namespace mathq {
 
 
   // *********************************************************************
-  // * Special Matrices
+  // * Special MultiArrays
   // ********************************************************************
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixZero;
+template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
+class MultiArray_Constant;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixIdentity;
+template <typename Element, size_t... sizes>
+using Matrix_Constant = MultiArray_Constant<Element, 2, sizes...>;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixExchange;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixConstDiag;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixDiagonal;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixZero;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixRevDiag;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixIdentity;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixRepCol;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixExchange;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixRepRow;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixConstDiag;
 
-  template <typename Element>
-  class MatrixRepRowAndCol;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixDiagonal;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixVandermonde;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixRevDiag;
 
-  template <typename Element, size_t NR = 0, size_t NC = 0>
-  class MatrixToeplitz;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixRepCol;
 
-  template <typename Element, size_t N = 0>
-  class MatrixUpperTriangle;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixRepRow;
 
-  template <typename Element, size_t N = 0>
-  class MatrixLowerTriangle;
+  // template <typename Element>
+  // class MatrixRepRowAndCol;
 
-  template <typename Element, size_t N = 0>
-  class MatrixSymmetric;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixVandermonde;
 
-  template <typename Element, size_t N = 0>
-  class MatrixSkewSymmetric;
+  // template <typename Element, size_t NR = 0, size_t NC = 0>
+  // class MatrixToeplitz;
 
-  template <typename Element, size_t N = 0>
-  class MatrixHermitian;
+  // template <typename Element, size_t N = 0>
+  // class MatrixUpperTriangle;
 
-  template <typename Element, size_t N = 0>
-  class MatrixSkewHermitian;
+  // template <typename Element, size_t N = 0>
+  // class MatrixLowerTriangle;
+
+  // template <typename Element, size_t N = 0>
+  // class MatrixSymmetric;
+
+  // template <typename Element, size_t N = 0>
+  // class MatrixSkewSymmetric;
+
+  // template <typename Element, size_t N = 0>
+  // class MatrixHermitian;
+
+  // template <typename Element, size_t N = 0>
+  // class MatrixSkewHermitian;
 
 
 
