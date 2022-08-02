@@ -124,7 +124,7 @@ namespace mathq {
     // Object Data
 
     MyArrayType data_;
-    size_t N1 = 0;  
+    size_t N0 = 0;  
     size_t N2 = 0;     
 
     // methods
@@ -155,10 +155,10 @@ namespace mathq {
       stream << "\n  data = ";
       dispval_strm(stream, x.data_);
       stream << style.apply(FormatDataVector::string_delimeter);
-      stream << "\n  dims = { N1 = ";
-      dispval_strm(stream, x.N1);
+      stream << "\n  dims = { N0 = ";
+      dispval_strm(stream, x.N0);
       stream << ", N2 = ";
-      dispval_strm(stream, x.N1);
+      dispval_strm(stream, x.N0);
       stream << "}\n";
       stream << style.apply(FormatDataVector::string_closing);
 
@@ -339,7 +339,7 @@ namespace mathq {
 
     // Object Data
 
-    size_t N1 = 0;  
+    size_t N0 = 0;  
 
     // methods
 
@@ -370,8 +370,8 @@ namespace mathq {
 
       stream << style.apply(FormatDataVector::string_opening);
       stream << style.apply(FormatDataVector::string_delimeter);
-      stream << "\n  dims = { N1 = ";
-      dispval_strm(stream, x.N1);
+      stream << "\n  dims = { N0 = ";
+      dispval_strm(stream, x.N0);
       stream << "}\n";
       stream << style.apply(FormatDataVector::string_closing);
 
@@ -408,7 +408,7 @@ namespace mathq {
 
     // Object Data
 
-    size_t N1 = 0;  
+    size_t N0 = 0;  
     size_t N2 = 0;     
 
     // methods
@@ -440,8 +440,8 @@ namespace mathq {
 
       stream << style.apply(FormatDataVector::string_opening);
       stream << style.apply(FormatDataVector::string_delimeter);
-      stream << "\n  dims = { N1 = ";
-      dispval_strm(stream, x.N1);
+      stream << "\n  dims = { N0 = ";
+      dispval_strm(stream, x.N0);
       stream << ", N2 = ";
       dispval_strm(stream, x.N2);
       stream << "}\n";

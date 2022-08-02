@@ -22,11 +22,11 @@ namespace mathq {
 
     constexpr static size_t rank_value = 2;
     constexpr static std::array<size_t, rank_value> static_dims_array = { dim_ints... };
-    constexpr static size_t N1 = get<0>(static_dims_array);
+    constexpr static size_t N0 = get<0>(static_dims_array);
     constexpr static size_t N2 = get<1>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = ( sizeof...(dim_ints) == 0 );
-    constexpr static size_t compile_time_size = calc_size<rank_value, N1, N2>();
+    constexpr static size_t compile_time_size = calc_size<rank_value, N0, N2>();
 
     //**********************************************************************
     //                            TYPES 
@@ -333,9 +333,9 @@ namespace mathq {
 
     inline size_t Nrows(void) const {
       if constexpr (is_dynamic_value) {
-        return ParentDataType::N1;
+        return ParentDataType::N0;
       } else {
-        return N1;
+        return N0;
       }
     }
     inline size_t Ncols(void) const {
@@ -350,7 +350,7 @@ namespace mathq {
     // defined later since Dimensions is dependent on MultiArray
     Dimensions& dims(void) const {
       if constexpr (is_dynamic_value) {
-        return *(new Dimensions({ ParentDataType::N1, ParentDataType::N2 }));
+        return *(new Dimensions({ ParentDataType::N0, ParentDataType::N2 }));
       } else {
         return *(new Dimensions(static_dims_array));
       }
@@ -358,7 +358,7 @@ namespace mathq {
 
     inline std::array<size_t, rank_value> dims_array(void) const {
       if constexpr (is_dynamic_value) {
-        return *(new std::array<size_t, rank_value>{ ParentDataType::N1, ParentDataType::N2 });
+        return *(new std::array<size_t, rank_value>{ ParentDataType::N0, ParentDataType::N2 });
       } else {
         return static_dims_array;
       }
@@ -407,8 +407,8 @@ namespace mathq {
 
     template <typename... U> requires ( (is_dynamic_value) ) 
     Type& resize(const size_t Nrows_new, const size_t Ncols_new) {
-      if ( (ParentDataType::N1 != Nrows_new) ||(ParentDataType::N2 != Ncols_new) ) {
-        ParentDataType::N1 = Nrows_new;
+      if ( (ParentDataType::N0 != Nrows_new) ||(ParentDataType::N2 != Ncols_new) ) {
+        ParentDataType::N0 = Nrows_new;
         ParentDataType::N2 = Ncols_new;
         const size_t new_size = Nrows_new * Ncols_new;
         if (new_size != ParentDataType::data_.size() ) {

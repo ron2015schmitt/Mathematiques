@@ -5,8 +5,8 @@
 /********************************************************************
  * Vector<Element>    -- variable size vector (valarray)
  *                 Element  = type for elements
- * Vector<Element,N1> -- fixed size vector (array)
- *                 N1 = size = number of elements
+ * Vector<Element,N0> -- fixed size vector (array)
+ *                 N0 = size = number of elements
  *
  *******************************************************************
  */
@@ -31,10 +31,10 @@ namespace mathq {
 
     constexpr static size_t rank_value = 1;
     constexpr static std::array<size_t, rank_value> static_dims_array = { sizes... };
-    constexpr static size_t N1 = get<0>(static_dims_array);
+    constexpr static size_t N0 = get<0>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
     constexpr static bool is_dynamic_value = ( sizeof...(sizes) == 0 );
-    constexpr static size_t compile_time_size = calc_size<rank_value, N1>();
+    constexpr static size_t compile_time_size = calc_size<rank_value, N0>();
 
     //**********************************************************************
     //                            TYPES 
@@ -57,7 +57,7 @@ namespace mathq {
 
     using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
-    using MyArrayType = typename ArrayTypeTrait<Element, N1>::Type;
+    using MyArrayType = typename ArrayTypeTrait<Element, N0>::Type;
 
 
     //**********************************************************************
@@ -680,7 +680,7 @@ namespace mathq {
 
     // set bottom elements to same value
     template <class T = Element>
-    typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N1>& >::type operator=(const NumberType& d) {
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N0>& >::type operator=(const NumberType& d) {
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
@@ -1335,8 +1335,8 @@ namespace mathq {
       s += getTypeName(d);
       if constexpr (!is_dynamic_value) {
         s += StyledString::get(COMMA).get();
-        s += "N1=";
-        s += std::to_string(N1);
+        s += "N0=";
+        s += std::to_string(N0);
       }
       s += StyledString::get(ANGLE2).get();
       return s;
