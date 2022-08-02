@@ -62,9 +62,10 @@
 // #include "array3d.h"
 // #include "array4d.h"
 
-// #include "vector-constant.h"
+// #include "vector--constant.h"
 // #include "vector-sparse.h"
 
+#include "matrix--constant.h"
 // #include "matrix_constdiag.h"
 // #include "matrix_diagonal.h"
 // #include "matrix_exchange.h"
@@ -77,15 +78,12 @@
 // #include "matrix_rep.h"
 // #include "matrix_skewhermitian.h"
 // #include "matrix_skewsymmetric.h"
-
 // #include "matrix_sparse.h"
-
 // #include "matrix_symmetric.h"
 // #include "matrix_toeplitz.h"
 // #include "matrix_uppertriangle.h"
 // #include "matrix_vandermonde.h"
 // #include "matrix_zero.h"
-// #include "matrix-constant.h"
 
 
 // #include "multi-array3-constant.h"
@@ -94,7 +92,7 @@
 // #include "multi-array4-constant.h"
 // #include "multi-array4-repeat-vec.h"
 
-#include "multi-array-constant.h"
+#include "multi-array--constant.h"
 // #include "multi-array-repeat-vec.h"
 
 
