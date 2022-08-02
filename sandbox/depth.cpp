@@ -1,5 +1,3 @@
-#include <vector>
-#include <string>
 
 #define MATHQ_DEBUG 0
 #include "mathq.h"
@@ -157,25 +155,25 @@ int main(int argc, char *argv[]) {
     NumberTrait<decltype(vd)>::Type d2 = 0.2;
     TLDISP(d2);
   }
-  {
-    using namespace std;
-    // this work sbut DISP() doesn't work because it doesn't recurse formats
-    CR();
-    MOUT << bold.apply("complex<Vector<double>> testing") << std::endl;
-    TLDISP(NumberTrait<complex<Vector<double>>>::depth());
-    complex<Vector<double>> vd = complex<Vector<double>>({1.1, 1.2, 1.3}, {2.1, 2.2, 2.3});
-    MOUT << vd << endl;
-    TLDISP(SimpleNumberTrait<decltype(vd)>::depth());
-    SimpleNumberTrait<decltype(vd)>::Type d = 43;
-    TLDISP(d);
-    TLDISP(NumberTrait<decltype(vd)>::depth());
-    NumberTrait<decltype(vd)>::Type v2 = vd;
-    MOUT << v2 << endl;
+  // {
+  //   using namespace std;
+  //   // this does not work because the general case is not defined
+  //   CR();
+  //   MOUT << bold.apply("complex<Vector<double>> testing") << std::endl;
+  //   TLDISP(NumberTrait< std::complex< Vector<double> > >::depth());
+  //   complex<Vector<double>> vd = complex<Vector<double>>({1.1, 1.2, 1.3}, {2.1, 2.2, 2.3});
+  //   MOUT << vd << endl;
+  //   TLDISP(SimpleNumberTrait<decltype(vd)>::depth());
+  //   SimpleNumberTrait<decltype(vd)>::Type d = 43;
+  //   TLDISP(d);
+  //   TLDISP(NumberTrait<decltype(vd)>::depth());
+  //   NumberTrait<decltype(vd)>::Type v2 = vd;
+  //   MOUT << v2 << endl;
 
-    //  TODO: need to define operator+=
-    //    NumberTrait<decltype(vd)>::Type v3 = vd+v2;
-    //    MOUT << v3 << endl;
-  }
+  //   //  TODO: need to define operator+=
+  //   //    NumberTrait<decltype(vd)>::Type v3 = vd+v2;
+  //   //    MOUT << v3 << endl;
+  // }
 
   // {
   //   CR();
