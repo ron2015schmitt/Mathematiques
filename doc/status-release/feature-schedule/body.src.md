@@ -27,15 +27,13 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 
 
 ### v0.41 Vector Calculus
-1. see GOogle Doc notes
-1. refactor `Grid` classes: inherit from nested MultiArray. Two types ArrayofGrids. GridOfArrays
-1. refactor `RealSet` and `MultiSet` classes
-  * should not have inflate nor a grid local variable.  createGrid method instead
-1. refactor and complete `CurvilinearCoords` 
+1. `Grid` and `CoordinateGrid` classes
+1. `RealSet` and `MultiSet` classes
+1. `CurvilinearCoords` 
   * 2D Cartesian
   * 2D Polar
   * Put grad, and div as static functions inside CurvilinearCoords 
-1. refactor `CurvilinearField` class: inherit from Grid
+1. `CurvilinearField` class: inherit from Grid
 1. [2D and 3D Curvilinear Coordinate Systems](topics/coordsystems.md)
 
 
