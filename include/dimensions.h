@@ -150,6 +150,10 @@ namespace mathq {
       return true;
     }
 
+    bool operator!=(const Dimensions& var) const {
+      return !operator==(var);
+    }
+
 
     bool equiv(const Dimensions& var) const {
       return (this->getReduced() == var.getReduced());

@@ -243,7 +243,7 @@ namespace mathq {
   // SpecialData
   // ---------------------------------------------------------------------
 
-  template <typename Element, size_t rank, size_t... dim_ints > requires (validate_multi_array<rank, dim_ints...>())
+  template <typename Element, size_t rank, size_t... dim_ints > //requires (validate_multi_array<rank, dim_ints...>())
   class SpecialData {
   public: 
     constexpr static size_t rank_value = rank;

@@ -32,6 +32,7 @@ namespace mathq {
     //**********************************************************************
 
     constexpr static size_t rank_value = 2;
+    constexpr static size_t index_value = index_;
     constexpr static std::array<size_t, rank_value> static_dims_array = { dim_ints... };
     constexpr static size_t N0 = std::get<0>(static_dims_array);
     constexpr static size_t N1 = std::get<1>(static_dims_array);
@@ -354,7 +355,6 @@ namespace mathq {
     }
 
 
-    // defined later since Dimensions is dependent on MultiArray_RepeatVector
     Dimensions& dims(void) const {
       if constexpr (is_dynamic_value) {
         return *(new Dimensions({ ParentDataType::N0, ParentDataType::N1 }));
@@ -716,25 +716,41 @@ namespace mathq {
     }
 
 
-    // ------------------------ Matrix_RepeatVector = ExpressionR ----------------
+    // ------------------------ verify -----------------------------
+
     template <class X>
     bool verify(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
-            
-      for (size_t i = 0; i < x.Nrows(); i++) {
-        for (size_t j = 0; j < x.Ncols(); j++) {
-          Element& temp;
-          temp = (index_ == 0) ? x(i,0) : x(0,j);
-          if (x(i,j) != temp) {
-           OUTPUT("ERROR: attept to set Matrix_RepeatVector from non-compatible expression.");
-            TRDISP(*this);
-            TRDISP(x);
-            return false;
-          }
-        }
+      // TODO: it owuld be better to check equivalent dimensions. need to support this somehow via a new Indices method for Indices with dimension(s) = 1
+      if ( dims() != x.dims() ) {
+        OUTPUT("ERROR: attempt to set Matrix_RepeatVector from expression with incompatible dimensions.");
+        TRDISP(dims());
+        TRDISP(x.dims());
+        return false;
       }
+      Indices inds(dims());
+      for (size_t i = 0; i < dims().num_elements(); i++) {
+        Indices inds_ref(dims());
+        inds_ref[index_value] = inds[index_value];
+        // MDISP(inds, inds_ref);
+        if (x[inds.index(dims())] != x[inds_ref.index(dims())]) {
+           OUTPUT("ERROR: attepmt to set Matrix_RepeatVector from non-compatible expression.");
+           OUTPUT("       expressions values ");
+           MDISP(x[inds], x[inds_ref]);
+           OUTPUT("       for indices");
+           MDISP(inds, inds_ref);
+           OUTPUT("       should be equal.  ");
+          //  TRDISP(*this);
+          //  TRDISP(x);
+           return false;
+        }
+        inds.increment(dims());
+      }
+
       return true;
     }
 
+
+    // ------------------------ Matrix_RepeatVector = ExpressionR ----------------
 
     template <class X>
     Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
@@ -748,11 +764,13 @@ namespace mathq {
 
         if constexpr (index_ == 0) {
           for (size_t i = 0; i < Nrows(); i++) {
-              vector[i] = x(i,0);
+              Indices inds{i,0};
+              vector[i] = x[inds];
           }
         } else {
           for (size_t i = 0; i < Ncols(); i++) {
-              vector[i] = x(0,i);
+              Indices inds{0,i};
+              vector[i] = x[inds];
           }
         }
       }

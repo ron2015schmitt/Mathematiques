@@ -127,6 +127,10 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 ```
 1. find a more succinct way to pass Dimensions to MultiArrays, currently its `MultiArray<double,3> A(Dimensions({2,3,4}))`
 1. look into [Multidimensional subscript operator](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2128r6.pdfs)
+1.  need to support indexing with the dimension=1 indices skipped via a new Indices method for Indices with dimension(s) = 1. 
+  * see `verify` method of `MultiArray_RepeatVector`
+
+
 ### I/O Refactoring
 1. [Save tensor to file](topics/filesave.md)
 1. [Implement >> operators](topics/inputstreams.md)

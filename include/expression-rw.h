@@ -129,17 +129,6 @@ namespace mathq {
     //   return this;
     // }
 
-    //**********************************************************************
-    //************************** A[Indices] ***********************************
-    //**********************************************************************
-
-    // // ---------------- A[Indices]--------------
-    // Element& operator[](const Indices& inds) {
-    //   return derived()[inds];
-    // }
-    // const Element operator[](const Indices& inds) const {
-    //   return derived()[inds];
-    // }
 
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
@@ -162,6 +151,14 @@ namespace mathq {
 
     Element& operator[](const size_t i) {
       return derived()[i];
+    }
+
+    const Element operator[](const Indices& inds) const {
+      return (*this)[inds.index(dims())];
+    }
+
+    Element operator[](const Indices& inds) {
+      return (*this)[inds.index(dims())];
     }
 
 

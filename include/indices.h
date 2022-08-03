@@ -73,6 +73,12 @@ namespace mathq {
       this->resize(N);
     }
 
+    explicit Indices(const Dimensions& dims) {
+      const size_t rank = dims.size();
+      resize(rank);
+      clear();
+    }
+
     // create the Indices instance for element `k` of MultiArray with `Dimensions` `dims`
     explicit Indices(const size_t k, const Dimensions& dims) {
       const size_t rank = dims.size();
@@ -164,6 +170,20 @@ namespace mathq {
         k = N*k + j;
       }
       return k;
+    }
+
+    Indices& increment(const Dimensions& dims) {
+      const size_t rank = size();
+      for (size_t n = 0; n < rank; n++) {
+        size_t k = rank - 1 - n;
+        if ( (*this)[k] < dims[k] - 1 ) {
+          (*this)[k] += 1;
+          return *this;
+        } else {
+          (*this)[k] = 0;
+        }
+      }
+      return *this;
     }
 
 

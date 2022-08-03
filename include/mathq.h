@@ -63,7 +63,7 @@
 // #include "array4d.h"
 
 #include "multi-array--constant.h"
-// #include "multi-array--repeat-vec.h"
+#include "multi-array--repeat-vec.h"
 
 #include "vector--constant.h"
 // #include "vector-sparse.h"

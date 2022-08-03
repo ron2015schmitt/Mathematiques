@@ -175,6 +175,10 @@ namespace mathq {
       return derived()[i];
     }
 
+    const Element operator[](const Indices& inds) const {
+      return (*this)[inds.index(dims())];
+    }
+
 
     //**********************************************************************
     //************************** Text and debugging ************************
