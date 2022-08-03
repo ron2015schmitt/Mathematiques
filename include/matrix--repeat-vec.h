@@ -12,11 +12,13 @@
 
 namespace mathq {
 
-  template <typename Element, size_t index, size_t... dim_ints>
-  class MultiArray_RepeatVector<Element, 2, index, dim_ints...> : 
+  template <typename Element, size_t index_, size_t... dim_ints>
+  class MultiArray_RepeatVector<Element, 2, index_, dim_ints...> : 
+
     public SpecialData<Element, 2, dim_ints...>, 
+  
     public ExpressionRW<
-      MultiArray_RepeatVector<Element, 2, index, dim_ints...>,  // Derived
+      MultiArray_RepeatVector<Element, 2, index_, dim_ints...>,  // Derived
       Element,  // Element
       typename NumberTrait<Element>::Type, // Number
       1 + NumberTrait<Element>::depth(),  // depth
@@ -41,7 +43,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = Matrix_RepeatVector<Element, index, dim_ints...>;
+    using Type = Matrix_RepeatVector<Element, index_, dim_ints...>;
     using ConcreteType = Type;
 
     using ElementType = Element;
@@ -61,7 +63,7 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     using DeepDimensionsType = RecursiveDimensions;
 
-    using MyArrayType = typename ArrayTypeTrait<Element, std::get<index>(static_dims_array)>::Type;
+    using MyArrayType = typename ArrayTypeTrait<Element, std::get<(unsigned int)index_>(static_dims_array)>::Type;
     using InitializerType = typename MakeInitializer<Element, 1 >::Type;  // <-- Vector
 
 
@@ -95,21 +97,12 @@ namespace mathq {
 
 
 
-    // ----------------------- indices initializer_list ---------------------
-    // not explicit: allows use of nested init lists when depth_value > 1
-    MultiArray_RepeatVector(const InitializerType& var) {
-      if constexpr (is_dynamic_value) {
-        auto mysizes = InitializerTrait< InitializerType >::get_size_array(var);
-        // change this
-        resize(Dimensions(mysizes));
-      }
-      *this = var;
-    }
 
 
-    //--------------------- EXPRESSION CONSTRUCTOR --------------------
+    // --------------------- EXPRESSION CONSTRUCTOR --------------------
     template <class Derived>
     MultiArray_RepeatVector(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
+      OUTPUT("constrcutor expression");
       if constexpr (is_dynamic_value) {
         resize(0,0);
       }
@@ -124,7 +117,7 @@ namespace mathq {
     // --------------------- FIXED SIZE: from dynamic MultiArray_RepeatVector --------------------
 
     template<bool enable = !is_dynamic_value> requires (enable)
-    explicit MultiArray_RepeatVector(const MultiArray_RepeatVector<Element, rank_value>& var) {
+    explicit MultiArray_RepeatVector(const MultiArray_RepeatVector<Element, rank_value, index_>& var) {
       *this = var;
     }
 
@@ -148,6 +141,7 @@ namespace mathq {
     MultiArray_RepeatVector(const std::initializer_list<Element>& var) {
       *this = var;
     }
+
 
 
     // ----------------------- std::vector ---------------------
@@ -178,8 +172,8 @@ namespace mathq {
 
     // --------------------- dynamic MultiArray_RepeatVector --------------------
 
-    template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray_RepeatVector(const MultiArray_RepeatVector<Element, rank_value> var) {
+    template<bool enable = is_dynamic_value, size_t... mysizes> requires (enable)
+    explicit MultiArray_RepeatVector(const MultiArray_RepeatVector<Element, rank_value, index_, mysizes...> var) {
       this->resize(var.dims());
       *this = var;
     }
@@ -233,27 +227,27 @@ namespace mathq {
     }
 
 
-    // // ----------------------- std::vector ---------------------
-    // explicit MultiArray_RepeatVector(const std::vector<Element>& var) {
-    //   *this = var;
-    // }
+    // ----------------------- std::vector ---------------------
+    explicit MultiArray_RepeatVector(const std::vector<Element>& var) {
+      *this = var;
+    }
 
-    // // ----------------------- std::valarray ---------------------
-    // explicit MultiArray_RepeatVector(const std::valarray<Element>& var) {
-    //   if constexpr (is_dynamic_value) {
-    //     resize(0,0);
-    //   }
-    //   *this = var;
-    // }
+    // ----------------------- std::valarray ---------------------
+    explicit MultiArray_RepeatVector(const std::valarray<Element>& var) {
+      if constexpr (is_dynamic_value) {
+        resize(0,0);
+      }
+      *this = var;
+    }
 
-    // // ----------------------- std::array ---------------------
-    // template<size_t NE2>
-    // explicit MultiArray_RepeatVector(const std::array<Element, NE2>& var) {
-    //   if constexpr (is_dynamic_value) {
-    //     resize(0,0);
-    //   }
-    //   *this = var;
-    // }
+    // ----------------------- std::array ---------------------
+    template<size_t NE2>
+    explicit MultiArray_RepeatVector(const std::array<Element, NE2>& var) {
+      if constexpr (is_dynamic_value) {
+        resize(0,0);
+      }
+      *this = var;
+    }
 
     //**********************************************************************
     //                             DESTRUCTOR 
@@ -292,8 +286,8 @@ namespace mathq {
       return Nrows()*Ncols();
     }
 
-    inline size_t size(void) const {
-      return Nrows()*Ncols();
+    inline size_t actual_size(void) const {
+      return vector.size();
     }
 
     // // the total number of numbers in this data structure
@@ -420,10 +414,10 @@ namespace mathq {
 
     template <typename... U> requires ( (is_dynamic_value) ) 
     Type& resize(const size_t Nrows_new, const size_t Ncols_new) {
-      if ((index == 0) && (ParentDataType::N0 != Nrows_new)) {
+      if ((index_ == 0) && (ParentDataType::N0 != Nrows_new)) {
         vector.resize( Nrows_new );
       }
-      if ((index == 1) && (ParentDataType::N1 != Ncols_new)) {
+      if ((index_ == 1) && (ParentDataType::N1 != Ncols_new)) {
         vector.resize( Ncols_new );
       }
       ParentDataType::N0 = Nrows_new;
@@ -463,7 +457,7 @@ namespace mathq {
       if constexpr (depth_value > 1) {
         if (depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {
-            ParentDataType::data_[ii].recurse_resize(parent_rdims, depth_index);
+            (*this)[ii].recurse_resize(parent_rdims, depth_index);
           }
         }
       }
@@ -478,20 +472,20 @@ namespace mathq {
     }
 
     //**********************************************************************
-    //********************* Direct access to ParentDataType::data_  ***********************************
+    //********************* Direct access to data
     //**********************************************************************
 
     // -------------------- data_obj() --------------------
     // "read/write" to the wrapped valarray/aray
     auto& data_obj() {
-      return ParentDataType::data_;
+      return vector;
     }
 
     // get C pointer to raw data
     // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
     Element* data() {
       // MutltiArrays are always wrap avalarray<Element>
-      return &(ParentDataType::data_[0]);
+      return &(vector);
     }
 
 
@@ -524,14 +518,20 @@ namespace mathq {
     //******* A(i,j,k,...) *********************
     //**********************************************************************
 
-    Element& operator()(const size_t i1, const size_t i2) {
-      size_t k = this->index(i1, i2);
-      return (*this)[k];
+    Element& operator()(const size_t i0, const size_t i1) {
+      if constexpr (index_ == 0) {
+        return vector[i0];
+      } else {
+        return vector[i1];
+      }
     }
 
-    const Element& operator()(const size_t i1, const size_t i2) const {
-      size_t k = this->index(i1, i2);
-      return (*this)[k];
+    const Element& operator()(const size_t i0, const size_t i1) const {
+      if constexpr (index_ == 0) {
+        return vector[i0];
+      } else {
+        return vector[i1];
+      }
     }
 
     // negative indexing 
@@ -566,13 +566,13 @@ namespace mathq {
         if (k < 0) {
           k += size();
         }
-        return ParentDataType::data_[k];
+        return (*this)[k];
       }
       else {
         const int Ndeep = this->el_total_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
-        return ParentDataType::data_[j].dat(k);
+        return (*this)[j].dat(k);
       }
     }
 
@@ -585,13 +585,13 @@ namespace mathq {
         if (k < 0) {
           k += size();
         }
-        return ParentDataType::data_[k];
+        return (*this)[k];
       }
       else {
         const int Ndeep = this->el_total_size();
         const int j = n / Ndeep;
         const int k = n % Ndeep;
-        return ParentDataType::data_[j].dat(k);
+        return (*this)[j].dat(k);
       }
     }
 
@@ -604,14 +604,16 @@ namespace mathq {
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
     Element& operator[](const T n) {
       // OUTPUT("[] 1");
-      return ParentDataType::data_[n];
+      Indices inds = indices(n);
+      return vector[inds[index_]];
     }
 
     // read
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
     const Element& operator[](const T n)  const {
       // OUTPUT("[] 2");
-      return ParentDataType::data_[n];
+      Indices inds = indices(n);
+      return vector[inds[index_]];
     }
 
     // "read/write"
@@ -620,7 +622,7 @@ namespace mathq {
       // OUTPUT("[] 3");
       T m = n;
       while (m < 0) m += size();
-      return ParentDataType::data_[m];
+      return (*this)[size_t(m)];
     }
 
     // read
@@ -629,7 +631,7 @@ namespace mathq {
       // OUTPUT("[] 4");
       T m = n;
       while (m < 0) m += size();
-      return ParentDataType::data_[m];
+      return (*this)[size_t(m)];
     }
 
     //**********************************************************************
@@ -638,12 +640,10 @@ namespace mathq {
 
     // ---------------- A[Indices]--------------
     Element& operator[](const Indices& inds) {
-      size_t k = this->index(inds);
-      return (*this)[k];
+      vector[inds[index_]];
     }
     const Element& operator[](const Indices& inds) const {
-      size_t k = this->index(inds);
-      return (*this)[k];
+      vector[inds[index_]];
     }
 
     // -------------------------------------------------------------
@@ -688,8 +688,8 @@ namespace mathq {
     // Assign all elements to the same constant value
     template<typename T> requires ( std::is_convertible<T, Element>::value )
     Type& operator=(const T& e) {
-      for (size_t i = 0; i < size(); i++) {
-        (*this)[i] = e;
+      for (size_t i = 0; i < actual_size(); i++) {
+        vector[i] = e;
       }
       return *this;
     }
@@ -698,6 +698,7 @@ namespace mathq {
     template <class T = Element>
     typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type 
     operator=(const NumberType& d) {
+      // TODO: optimize this
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
@@ -709,27 +710,50 @@ namespace mathq {
 
     // ------------------------ Matrix_RepeatVector = Matrix_RepeatVector<Element,NE2,NumberType,depth_value> ----------------
 
-    template <size_t... sizes> requires (multi_array_compatibility<rank_value,rank_value,dim_ints...,sizes...>())
-    Type& operator=(const Matrix_RepeatVector<Element, rank_value, sizes...>& v) {
-      for (size_t i = 0; i < size(); i++) {
-        (*this)[i] = v[i];
-      }
-      return *this;
+    template <size_t index2, size_t... sizes> requires (multi_array_compatibility<rank_value,rank_value,dim_ints...,sizes...>())
+    Type& operator=(const Matrix_RepeatVector<Element, rank_value, index2, sizes...>& v) {
+      return (*this = +v);
     }
 
 
     // ------------------------ Matrix_RepeatVector = ExpressionR ----------------
+    template <class X>
+    bool verify(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+            
+      for (size_t i = 0; i < x.Nrows(); i++) {
+        for (size_t j = 0; j < x.Ncols(); j++) {
+          Element& temp;
+          temp = (index_ == 0) ? x(i,0) : x(0,j);
+          if (x(i,j) != temp) {
+           OUTPUT("ERROR: attept to set Matrix_RepeatVector from non-compatible expression.");
+            TRDISP(*this);
+            TRDISP(x);
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
 
     template <class X>
     Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+
+      if (!verify(x)) return *this;
+
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
-          if (this->size() != x.size()) {
-            resize(x.dims());
-          }
+          resize(x.dims());
         }
-        for (size_t i = 0; i < size(); i++) {
-          (*this)[i] = x[i];
+
+        if constexpr (index_ == 0) {
+          for (size_t i = 0; i < Nrows(); i++) {
+              vector[i] = x(i,0);
+          }
+        } else {
+          for (size_t i = 0; i < Ncols(); i++) {
+              vector[i] = x(0,i);
+          }
         }
       }
       else {
@@ -746,19 +770,19 @@ namespace mathq {
     // ------------------------ Matrix_RepeatVector = array[] ----------------
 
     Type& operator=(const Element array[]) {
-      for (size_t i = 0; i < size(); i++) {
-        (*this)(i) = array[i];
+      for (size_t i = 0; i < actual_size(); i++) {
+        vector[i] = array[i];
       }
       return *this;
     }
 
 
-    // ------------------------ Matrix_RepeatVector = list ----------------
+    // // ------------------------ Matrix_RepeatVector = list ----------------
 
     Type& operator=(const std::list<Element>& mylist) {
       size_t i = 0;
       for (typename std::list<Element>::const_iterator it = mylist.begin(); it != mylist.end(); it++) {
-        (*this)(i++) = *it;
+        vector[i++] = *it;
       }
       return *this;
     }
@@ -770,43 +794,17 @@ namespace mathq {
       size_t k = 0;
       typename std::initializer_list<Element>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); it++, k++) {
-        ParentDataType::data_[k] = *it;
+        vector[k] = *it;
       }
       return *this;
     }
-
-    // // ------------------------ Matrix_RepeatVector = initializer_list ----------------
-
-    Type& operator=(const typename MakeInitializer<Element, rank_value>::Type& mylist) {
-      Indices& inds = *(new Indices(rank_value));
-      list_helper<rank_value>(mylist, inds);
-      return *this;
-    }
-
-    template <size_t list_depth> requires ((list_depth >= 1) && (list_depth <= rank_value))
-    Type& list_helper(const typename MakeInitializer<Element, list_depth>::Type& mylist, Indices& inds) {
-      size_t k = 0;
-      using ListType = typename MakeInitializer<Element, list_depth>::Type;
-      using Iterator = typename MakeInitializer<Element, list_depth>::Type::iterator;
-      Iterator it = mylist.begin();
-
-      for (it = mylist.begin(); it != mylist.end(); it++, k++) {
-        inds[rank_value-list_depth] = k;
-        if constexpr (list_depth == 1) {
-          (*this)[inds] = *it;
-        } else {
-          list_helper<list_depth-1>(*it, inds);
-        }
-      }
-      return *this;
-    }
-
 
     // ------------------------ Matrix_RepeatVector = std::vector ----------------
 
-    Type& operator=(const std::vector<Element>& vstd) {
-      for (size_t i = 0; i < size(); i++)
-        (*this)(i) = vstd[i];
+    Type& operator=(const std::vector<Element>& var) {
+      for (size_t i = 0; i < actual_size(); i++) {
+        vector[i] = var[i];
+      }
       return *this;
     }
 
@@ -814,20 +812,20 @@ namespace mathq {
     // ------------------------ Matrix_RepeatVector = std::array ----------------
 
     template <size_t N>
-    Type& operator=(const std::array<NumberType, N>& varray) {
-      for (size_t i = 0; i < size(); i++)
-        (*this)(i) = varray[i];
-
+    Type& operator=(const std::array<NumberType, N>& var) {
+      for (size_t i = 0; i < actual_size(); i++) {
+        vector[i] = var[i];
+      }
       return *this;
     }
 
 
     // ------------------------ Matrix_RepeatVector = std::valarray ----------------
 
-    Type& operator=(const std::valarray<Element>& varray) {
-      for (size_t i = 0; i < size(); i++)
-        (*this)(i) = varray[i];
-
+    Type& operator=(const std::valarray<Element>& var) {
+      for (size_t i = 0; i < actual_size(); i++) {
+        vector[i] = var[i];
+      }
       return *this;
     }
 
@@ -840,8 +838,8 @@ namespace mathq {
     // NOTE: in-place
 
     Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
-      for (size_t i = 0; i < size(); i++) {
-        ParentDataType::data_[i] = mathq::roundzero(ParentDataType::data_[i], tolerance);
+      for (size_t i = 0; i < actual_size(); i++) {
+        vector[i] = mathq::roundzero(vector[i], tolerance);
       }
       return *this;
     }
@@ -852,143 +850,15 @@ namespace mathq {
 
     template< typename T = NumberType >
     typename std::enable_if<is_complex<T>::value, Type& >::type conj() {
-      for (size_t i = 0; i < size(); i++) {
-        ParentDataType::data_[i] = std::conj(ParentDataType::data_[i]);
+      for (size_t i = 0; i < actual_size(); i++) {
+        vector[i] = std::conj(vector[i]);
       }
       return *this;
     }
 
     // -------------------------- transpose() --------------------------------
-    // In-place transpose. 
-    // 1) For square matrices this operation is quick and easy.
-    // 2) For non-square matrices, this changes the shape and operation is time-consuming
-    //    Note: Transpose function is much quicker. only use this for when memory is critical
-    Type& transpose(void) {
-      const size_t Nr = Nrows();
-      const size_t Nc = Ncols();
-      const size_t N = size();
-      const size_t Nminus1 = N-1;
+    // In-place transpose is not possible because index_ is compile time constant
 
-      // square matrix  
-      if (Nc == Nr) {
-        size_t r, c;
-        NumberType temp;
-        for (r = 0; r < Nr; ++r)
-          for (c = r + 1; c < Nr; ++c) {
-            temp = (*this)[r + c * Nr];
-            (*this)[r + c * Nr] = (*this)[c + r * Nr];
-            (*this)[c + r * Nr] = temp;
-          }
-        return *this;
-      }
-
-      if constexpr (is_dynamic_value) {
-
-      resize(Nc, Nr);
-
-      // for "vectors" 
-      if (Nc == 1 || Nr==1) {
-        return *this;
-      }
-
-      // boolean array to make searching faster
-      // can set Nmove=1, but this will be very slow
-      // Nmove=(Nr+Nc)/2 is optimal
-      const bool Nmove = (Nr+Nc)/2;
-      size_t move[Nmove];
-      for (size_t i = 0; i < Nmove; ++i)
-        move[i] = false;
-
-
-      // there are always at least 2 fixed points (at j=0 and j=Nminus1)
-      size_t count = 2;
-      // find the rest of the fixed points
-      if (Nc >= 3 && Nr >= 3)
-        count += std::gcd(Nc - 1, Nr - 1) - 1;	/* # fixed points */
-
-      size_t jstart = 1;
-      size_t magicnum = Nc;
-
-      while (1) {
-        size_t jnext, jnextc;
-        size_t jstartC = Nminus1 - jstart;
-        size_t j = jstart;
-        size_t jC = jstartC;
-        NumberType dstart = (*this)[jstart];
-        NumberType dstartC = (*this)[jstartC];
-
-        // PROCESS THE CURRENT SEQUENcE AND ITS COMPLIMENTARY SEQUENcE
-        while (1) {
-          jnext = Nc * j - Nminus1 * (j / Nr);
-          jnextc = Nminus1 - jnext;
-          if (j < Nmove)
-            move[j] = true;
-          if (jC < Nmove)
-            move[jC] = true;
-          count += 2;
-          if (jnext == jstart) {
-            (*this)[j] = dstart;
-            (*this)[jC] = dstartC;
-            break;
-          }
-          if (jnext == jstartC) {
-            (*this)[j] = dstartC;
-            (*this)[jC] = dstart;
-            break;
-          }
-          (*this)[j] = (*this)[jnext];
-          (*this)[jC] = (*this)[jnextc];
-          j = jnext;
-          jC = jnextc;
-        }
-        // DONE PROCESSING SEQUENcE
-
-
-        // CHECK TO SEE IF WE'RE FINISHED
-        if (count >= N)
-          break;
-
-        // FIND THE START OF THE NEXT SEQUENcE
-        while (1) {
-          // skip fixed points (jstart==magicnum)
-          do {
-            jstart++;
-            if ((magicnum += Nc)>Nminus1)
-              magicnum -= Nminus1;
-          } while (jstart==magicnum);
-
-          jnext = magicnum;
-          const  size_t max = Nminus1-jstart+1;
-          if (jstart < Nmove) {
-            if (!move[jstart])
-              break;
-          }
-          else {
-            // this while loop is needed to cull out previously 
-            // processed slcuences
-            while (jnext > jstart && jnext < max) {
-              j = jnext;
-              jnext = Nc * j - Nminus1 * (j / Nr);
-            }
-          }
-          if (jnext == jstart)
-            break;
-        }
-        // WE HAVE FOUND START OF THE NEXT SEQUENcE
-
-      }
-      }
-      return *this;
-    }
-
-    // -------------------------- adjoint() --------------------------------
-
-    template< typename T = NumberType >
-    typename std::enable_if<is_complex<T>::value, Type& >::type adjoint() {
-      this->conj();
-      this->transpose();
-      return *this;
-    }
 
 
 
@@ -1008,6 +878,8 @@ namespace mathq {
       s += StyledString::get(ANGLE1).get();
       Element d;
       s += getTypeName(d);
+      s += ", index=";
+      s += std::to_string(index_);
       if constexpr (!is_dynamic_value) {
         for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
           if (ii == 0) {

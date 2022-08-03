@@ -15,11 +15,13 @@
 namespace mathq {
 
 
-  template <typename Element, size_t rank_, size_t index, size_t... dim_ints> requires (validate_multi_array<rank_, dim_ints...>())
+  template <typename Element, size_t rank_, size_t index_, size_t... dim_ints> requires (validate_multi_array<rank_, dim_ints...>())
   class MultiArray_RepeatVector : 
-    public SpecialData<Element, rank_, index, dim_ints...>, 
+
+    public SpecialData<Element, rank_, index_, dim_ints...>, 
+  
     public ExpressionRW<
-    MultiArray_RepeatVector<Element, rank_, index, dim_ints...>,  // Derived
+    MultiArray_RepeatVector<Element, rank_, index_, dim_ints...>,  // Derived
     Element,  // Element
     typename NumberTrait<Element>::Type, // Number
     1 + NumberTrait<Element>::depth(),  // depth
@@ -45,7 +47,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using Type = MultiArray_RepeatVector<Element, rank_, index, dim_ints...>;
+    using Type = MultiArray_RepeatVector<Element, rank_, index_, dim_ints...>;
     using ConcreteType = Type;
 
     
@@ -66,7 +68,7 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     using DeepDimensionsType = RecursiveDimensions;
 
-    using MyArrayType = typename ArrayTypeTrait<Element, std::get<index>(static_dims_array)>::Type;
+    using MyArrayType = typename ArrayTypeTrait<Element, std::get<index_>(static_dims_array)>::Type;
 
     using InitializerType = typename MakeInitializer<Element, 1 >::Type;  // <-- Vector
 
@@ -238,6 +240,11 @@ namespace mathq {
       }
     }
 
+    inline size_t actual_size(void) const {
+      return vector.size();
+    }
+
+
     // // the total number of numbers in this data structure
     size_t total_size(void) const {
       if constexpr (depth_value <= 1) {
@@ -343,7 +350,7 @@ namespace mathq {
     Type& resize(const U... args) {
       std::array<size_t,rank_value> new_dims_array { size_t(args)... };
 
-      if (std::get<index>(ParentDataType::dynamic_dims_array) != new_dims_array) {
+      if (std::get<index_>(ParentDataType::dynamic_dims_array) != new_dims_array) {
         ParentDataType::dynamic_dims_array = new_dims_array;      
         ParentDataType::vector.resize( new_size );
       }
@@ -647,10 +654,27 @@ namespace mathq {
     }
 
 
+    template <class X>
+    bool verify(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+      Element temp = x[0];
+      // for (size_t i = 0; i < size(); i++) {
+      //   if (x[i] != temp) {
+      //     OUTPUT("ERROR: attept to set MultiArray_Constant from non-compatible expression.");
+      //     TRDISP(*this);
+      //     TRDISP(x);
+      //     return false;
+      //   }
+      // }
+      return true;
+    }
+
     // ------------------------ MultiArray_RepeatVector = ExpressionR ----------------
 
     template <class X>
     Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+
+      if (!verify(x)) return *this;
+
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
           if (this->size() != x.size()) {

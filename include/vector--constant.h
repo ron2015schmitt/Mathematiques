@@ -15,14 +15,17 @@ namespace mathq {
 
   template <typename Element, size_t... dim_ints>
   class MultiArray_Constant<Element, 1, dim_ints...> : 
+    
     public SpecialData<Element, 1, dim_ints...>, 
+    
     public ExpressionRW<
-    Vector<Element, dim_ints...>,  // Derived
-    Element,  // Element
-    typename NumberTrait<Element>::Type, // Number
-    1 + NumberTrait<Element>::depth(),  // depth
-    1  // rank
+      MultiArray_Constant<Element, 1, dim_ints...>,  // Derived
+      Element,  // Element
+      typename NumberTrait<Element>::Type, // Number
+      1 + NumberTrait<Element>::depth(),  // depth
+      1  // rank
   > {
+
   public:
 
 
@@ -42,7 +45,7 @@ namespace mathq {
     //**********************************************************************
 
     using Type = MultiArray_Constant<Element, rank_value, dim_ints...>;
-    using ConcreteType = Vector<Element, dim_ints...>;
+    using ConcreteType = Type;
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
@@ -214,6 +217,10 @@ namespace mathq {
       } else {
         return N0;
       }
+    }
+
+    inline size_t actual_size(void) const {
+      return 1;
     }
 
     // // the total number of numbers in this data structure
@@ -597,21 +604,28 @@ namespace mathq {
     // // ------------------------ Vector = ExpressionR ----------------
 
     template <class X>
-    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+    bool verify(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
       Element temp = x[0];
       for (size_t i = 0; i < size(); i++) {
         if (x[i] != temp) {
           OUTPUT("ERROR: attept to set MultiArray_Constant from non-compatible expression.");
           TRDISP(*this);
           TRDISP(x);
+          return false;
         }
       }
+      return true;
+    }
+
+
+    template <class X>
+    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+
+      if (!verify(x)) return *this;
 
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
-          if (this->size() != x.size()) {
-            resize(x.size());
-          }
+          resize(x.size());
         }
         value = x[0];
       }

@@ -169,8 +169,8 @@ namespace mathq {
 
     // --------------------- dynamic MultiArray --------------------
 
-    template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray(const MultiArray<Element, rank_value> var) {
+    template<bool enable = is_dynamic_value, size_t... mysizes> requires (enable)
+    explicit MultiArray(const MultiArray<Element, rank_value, mysizes...> var) {
       this->resize(var.dims());
       *this = var;
     }

@@ -14,14 +14,17 @@ namespace mathq {
 
   template <typename Element, size_t... dim_ints>
   class MultiArray_Constant<Element, 2, dim_ints...> : 
+
     public SpecialData<Element, 2, dim_ints...>, 
+  
     public ExpressionRW<
-      Matrix<Element, dim_ints...>,  // Derived
+      MultiArray_Constant<Element, 2, dim_ints...>,  // Derived
       Element,  // Element
       typename NumberTrait<Element>::Type, // Number
       1 + NumberTrait<Element>::depth(),  // depth
       2  // rank
     > {  
+  
   public:
 
 
@@ -42,7 +45,7 @@ namespace mathq {
     //**********************************************************************
 
     using Type = MultiArray_Constant<Element, rank_value, dim_ints...>;
-    using ConcreteType = Matrix<Element, dim_ints...>;
+    using ConcreteType = Type;
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
@@ -135,8 +138,8 @@ namespace mathq {
 
     // --------------------- dynamic MultiArray_Constant --------------------
 
-    template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray_Constant(const MultiArray_Constant<Element, rank_value> var) {
+    template<bool enable = is_dynamic_value, size_t... mysizes> requires (enable)
+    explicit MultiArray_Constant(const MultiArray_Constant<Element, rank_value, mysizes...> var) {
       this->resize(var.dims());
       *this = var;
     }
@@ -217,6 +220,11 @@ namespace mathq {
     inline size_t size(void) const {
       return Nrows()*Ncols();
     }
+
+    inline size_t actual_size(void) const {
+      return 1;
+    }
+
 
     // // the total number of numbers in this data structure
     size_t total_size(void) const {
@@ -595,6 +603,7 @@ namespace mathq {
     template <class T = Element>
     typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type 
     operator=(const NumberType& d) {
+      // TODO: optimize this
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
@@ -612,29 +621,37 @@ namespace mathq {
     }
 
 
-    // ------------------------ MultiArray_Constant = ExpressionR ----------------
-
     template <class X>
-    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+    bool verify(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
       Element temp = x[0];
       for (size_t i = 0; i < size(); i++) {
         if (x[i] != temp) {
           OUTPUT("ERROR: attept to set MultiArray_Constant from non-compatible expression.");
           TRDISP(*this);
           TRDISP(x);
+          return false;
         }
       }
+      return true;
+    }
+
+
+    // ------------------------ MultiArray_Constant = ExpressionR ----------------
+
+    template <class X>
+    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+
+      if (!verify(x)) return *this;
 
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
-          if (this->size() != x.size()) {
-            resize(x.dims());
-          }
+          resize(x.dims());
         }
         value = x[0];
       }
       else {
         resize(x.recursive_dims());
+      // TODO: optimize this
         for (size_t i = 0; i < total_size(); i++) {
           this->dat(i) = x.dat(i);
         }

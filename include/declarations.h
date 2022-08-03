@@ -229,7 +229,7 @@ template <typename Element, size_t rank, size_t index, size_t... sizes > require
 class MultiArray_RepeatVector;
 
 template <typename Element, size_t index, size_t... sizes>
-using Matrix_RepeatVector = MultiArray_Constant<Element, 2, index, sizes...>;
+using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>;
 
 
 

@@ -33,11 +33,15 @@ int main(int argc, char *argv[]) {
   MOUT << blue.apply("MultiArray_Constant: fixed-size") << std::endl;
   CR();
   {
-    ECHO_CODE( MultiArray_Constant<double,3, 2,3,4> a(3.14));
-    TLDISP(a);
-    TLDISP(sizeof(a)/sizeof(double));
+    ECHO_CODE( MultiArray_Constant<double,3, 3,2,1> a(3.14));
+    TRDISP(a);
+    TRDISP(sizeof(a)/sizeof(double));
     a = 42.42;
-    TLDISP(a(1,1,1));
+    TRDISP(a);
+    ECHO_CODE( MultiArray<double,3, 3,2,1> b = a );
+    TRDISP(b);
+    ECHO_CODE( a = 10 + b );
+    TRDISP(a);
   }
 
   CR();
@@ -45,10 +49,10 @@ int main(int argc, char *argv[]) {
   CR();
   {
     ECHO_CODE( MultiArray_Constant<double,3> a(Dimensions({3,2,1}), 6.78) );
-    TLDISP(a);
-    TLDISP(sizeof(a)/sizeof(double));
+    TRDISP(a);
+    TRDISP(sizeof(a)/sizeof(double));
     a = 42.42;
-    TLDISP(a(1,1,0));
+    TRDISP(a(1,1,0));
   }
 
   CR();
@@ -56,10 +60,15 @@ int main(int argc, char *argv[]) {
   CR();
   {
     ECHO_CODE( Matrix_Constant<double, 2,3> a(3.14) );
-    TLDISP(a);
-    TLDISP(sizeof(a)/sizeof(double));
+    TRDISP(a);
+    TRDISP(sizeof(a)/sizeof(double));
     a = 42.42;
-    TLDISP(a(1,2));
+    TRDISP(a(1,2));
+    ECHO_CODE( Matrix<double,2,3> b );
+    ECHO_CODE( b = a );
+    TRDISP(b);
+    ECHO_CODE( a = 10 + b );
+    TRDISP(a);
   }
 
   CR();
@@ -67,10 +76,10 @@ int main(int argc, char *argv[]) {
   CR();
   {
     ECHO_CODE( Matrix_Constant<double> a(Dimensions({2,3}), 6.78) );
-    TLDISP(a);
-    TLDISP(sizeof(a)/sizeof(double));
+    TRDISP(a);
+    TRDISP(sizeof(a)/sizeof(double));
     a = 42.42;
-    TLDISP(a(1,2));
+    TRDISP(a);
   }
 
 
@@ -79,10 +88,14 @@ int main(int argc, char *argv[]) {
   CR();
   {
     ECHO_CODE( Vector_Constant<double, 4> a(3.14) );
-    TLDISP(a);
-    TLDISP(sizeof(a)/sizeof(double));
+    TRDISP(a);
+    TRDISP(sizeof(a)/sizeof(double));
     a = 42.42;
-    TLDISP(a(2));
+    TRDISP(a);
+    ECHO_CODE( Vector<double,4> b = a );
+    TRDISP(b);
+    a = 10 + b;
+    TRDISP(a);
   }
 
   CR();
@@ -90,62 +103,69 @@ int main(int argc, char *argv[]) {
   CR();
   {
     ECHO_CODE( Vector_Constant<double> a(Dimensions({5}), 6.78) );
-    TLDISP(a);
-    TLDISP(sizeof(a)/sizeof(double));
+    TRDISP(a);
+    TRDISP(sizeof(a)/sizeof(double));
     a = 42.42;
-    TLDISP(a(3));
+    TRDISP(a(3));
   }
 
 
 
 
-  // CR();
-  // MOUT << blue.apply("MultiArray_RepeatVector") << std::endl;
-  // CR();
+  // // CR();
+  // // MOUT << blue.apply("MultiArray_RepeatVector") << std::endl;
+  // // CR();
 
-  // CR();
-  // MOUT << blue.apply("MultiArray_RepeatVector: fixed-size") << std::endl;
-  // CR();
-  // {
-  //   ECHO_CODE( MultiArray_RepeatVector<double,3, 1, 2,3,4> a(3.14) );
-  //   TLDISP(a);
-  //   TLDISP(sizeof(a)/sizeof(double));
-  //   a = { 1.1, 2.2, 3.3 };
-  //   TLDISP(a);
-  // }
+  // // CR();
+  // // MOUT << blue.apply("MultiArray_RepeatVector: fixed-size") << std::endl;
+  // // CR();
+  // // {
+  // //   ECHO_CODE( MultiArray_RepeatVector<double,3, 1, 2,3,4> a(3.14) );
+  // //   TRDISP(a);
+  // //   TRDISP(sizeof(a)/sizeof(double));
+  // //   a = { 1.1, 2.2, 3.3 };
+  // //   TRDISP(a);
+  // // }
 
-  // CR();
-  // MOUT << blue.apply("MultiArray_RepeatVector: dynamic-size") << std::endl;
-  // CR();
-  // {
-  //   ECHO_CODE( MultiArray_RepeatVector<double,3,1> a(Dimensions({2,3,4}), 6.78) );
-  //   TLDISP(a);
-  //   TLDISP(sizeof(a)/sizeof(double));
-  //   a = { 1.1, 2.2, 3.3 };
-  //   TLDISP(a);
-  // }
+  // // CR();
+  // // MOUT << blue.apply("MultiArray_RepeatVector: dynamic-size") << std::endl;
+  // // CR();
+  // // {
+  // //   ECHO_CODE( MultiArray_RepeatVector<double,3,1> a(Dimensions({2,3,4}), 6.78) );
+  // //   TRDISP(a);
+  // //   TRDISP(sizeof(a)/sizeof(double));
+  // //   a = { 1.1, 2.2, 3.3 };
+  // //   TRDISP(a);
+  // // }
 
-  // CR();
-  // MOUT << blue.apply("Matrix_RepeatVector: fixed-size") << std::endl;
-  // CR();
-  // {
-  //   ECHO_CODE( Matrix_RepeatVector<double, 0, 3,3> a(3.14) );
-  //   TLDISP(a);
-  //   TLDISP(sizeof(a)/sizeof(double));
-  //   a = { 1.1, 2.2, 3.3 };
-  //   TLDISP(a);
-  // }
+  CR();
+  MOUT << blue.apply("Matrix_RepeatVector: fixed-size") << std::endl;
+  CR();
+  {
+    ECHO_CODE( Matrix_RepeatVector<double, 0, 3,3> a );
+    a = 0;
+    TRDISP(a);
+    TRDISP(sizeof(a)/sizeof(double));
+    TRDISP(a.vector);
+    TRDISP(a.dims());
+    std::array<double,3> x{1.1,2.2,3.3};
+    TRDISP(x);
+    ECHO_CODE( a = x );
+    TRDISP(a);
+    ECHO_CODE( a = {-1.1,-2.2,-3.3} );
+    TRDISP(a);
+  }
 
-  // CR();
-  // MOUT << blue.apply("Matrix_RepeatVector: dynamic-size") << std::endl;
-  // CR();
-  // {
-  //   ECHO_CODE( Matrix_RepeatVector<double,1> a(Dimensions({3,3}), 6.78) );
-  //   TLDISP(a);
-  //   TLDISP(sizeof(a)/sizeof(double));
-  //   a = { 1.1, 2.2, 3.3 };
-  //   TLDISP(a);
-  // }
+  CR();
+  MOUT << blue.apply("Matrix_RepeatVector: dynamic-size") << std::endl;
+  CR();
+  {
+    ECHO_CODE( Matrix_RepeatVector<double,1> a(Dimensions({3,3}), 6.78) );
+    TRDISP(a);
+    TRDISP(sizeof(a)/sizeof(double));
+    a = { 1.1, 2.2, 3.3 };
+    TRDISP(a);
+  }
 
 
 
