@@ -157,7 +157,7 @@ namespace mathq {
       return (*this)[inds.index(dims())];
     }
 
-    Element operator[](const Indices& inds) {
+    Element& operator[](const Indices& inds) {
       return (*this)[inds.index(dims())];
     }
 

@@ -115,14 +115,37 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
   + test by grabbing rows and cols of a Matrix
   + test by grabbing submatrix of a Matrix
   + test submatrix of rank=3
-1. add the following operators to all expressions.  Will need to index method from Indices
+1. Is this correct for defining access to expressions? WHy is this different from MultiArray objects?
 ```C++
-    // ---------------- A[Indices]--------------
-    Element& operator[](const Indices& inds) {
-      return derived()[inds];
+    //**********************************************************************
+    //************************** DEEP ACCESS *******************************
+    //**********************************************************************
+    const Number dat(const size_t i) const {
+      return derived().dat(i);
     }
+
+    Number& dat(const size_t i) {
+      return derived().dat(i);
+    }
+
+    // **********************************************************************
+    // ***************** Element ACCESS *************************************
+    // **********************************************************************
+
+    const Element operator[](const size_t i) const {
+      return derived()[i];
+    }
+
+    Element& operator[](const size_t i) {
+      return derived()[i];
+    }
+
     const Element operator[](const Indices& inds) const {
-      return derived()[inds];
+      return (*this)[inds.index(dims())];
+    }
+
+    Element& operator[](const Indices& inds) {
+      return (*this)[inds.index(dims())];
     }
 ```
 1. find a more succinct way to pass Dimensions to MultiArrays, currently its `MultiArray<double,3> A(Dimensions({2,3,4}))`

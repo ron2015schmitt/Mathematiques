@@ -161,7 +161,7 @@ namespace mathq {
       }
       return x_[ind];
     }
-    NumberType& operator[](const size_t i) {
+    ElementType& operator[](const size_t i) {
       size_t ind = ii_[i];
       if (ind < 0) {
         ind = x_.size() + ind;
@@ -337,7 +337,7 @@ namespace mathq {
       size_t ind = ii_[i];
       return x_[ind];
     }
-    NumberType& operator[](const size_t i) {
+    ElementType& operator[](const size_t i) {
       size_t ind = ii_[i];
       return x_[ind];
     }
