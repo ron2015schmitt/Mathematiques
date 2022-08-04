@@ -95,7 +95,7 @@
 // #include "array4-constant.h"
 // #include "array4-repeat-vec.h"
 
-
+// #include "grids.h"
 
 #include "expressions-r.h"
 #include "expressions-rw.h"
@@ -107,7 +107,6 @@
 #include "functions_structure.h"
 #include "functions_products.h"
 #include "functions_user.h"
-// #include "grids.h"
 
 #include "coda.h"
 

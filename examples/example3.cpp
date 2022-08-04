@@ -7,7 +7,7 @@
 
 void printoptsfile() {
   std::ifstream myfile;
-  myfile.open("example.g++_copts");
+  myfile.open("example.compiler");
   std::string myline;
   if (myfile.is_open()) {
     while (myfile) {

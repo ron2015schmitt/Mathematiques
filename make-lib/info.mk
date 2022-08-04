@@ -64,7 +64,7 @@ endif
 	@$(call echovar,OPTIMIZE)
 	@echo
 	@$(call title,"C++ Compiler")
-	@$(call echovar,CPPC)
+	@$(call echovar,CPP_CMD)
 	@$(call echovar,COPT)
 	@$(call echovar,CFLAGS)
 	@echo
