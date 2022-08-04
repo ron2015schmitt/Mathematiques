@@ -69,6 +69,7 @@ FEATURE_VERSION_MATHQ_FILE := $(DIR_MATHQ)/versioning/feature.version.master.rec
 
 # dynamic variables
 FEATURE_VERSION_MATHQ = `. $(FEATURE_VERSION_MATHQ_FILE) && echo "$${FEATURE_VERSION_MATHQ}"`
+CPP_VERSION_MATHQ = `cat $(CPP_VERSION_FILE)`
 
 
 ####################################################################
@@ -116,7 +117,7 @@ OPTIMIZE ?= -O2
 
 CFLAGS = $(OPTIMIZE) $(COPT) $(INCLUDES)
 
-CPPC = g++ -pipe -std=c++20
+CPPC = g++ -pipe -std=$(CPP_VERSION_MATHQ)
 
 ifdef MATHQ_DEBUG
 CFLAGS += -D "MATHQ_DEBUG=$(MATHQ_DEBUG)"
