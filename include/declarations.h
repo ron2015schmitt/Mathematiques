@@ -327,11 +327,6 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
 
 
 
-  template <class Element>
-  inline auto& zeros();
-
-  template <class Element>
-  inline auto& ones();
 
 
   // ***************************************************************************
@@ -387,7 +382,6 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
   // This type has the same total number of elements as MultiArrayOfGrids.
   // The two types can be converted from one to another using the function 'insideout'.
   //
-  // TODO: use OuterProductMultiArray for 1st level to save on space
   // ***************************************************************************
 
   template <typename Number, size_t NDIMS, size_t rank = 1>
@@ -398,6 +392,15 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
 
   template <typename Number, size_t NDIMS, size_t rank, typename G>
   class GridTraits;
+
+
+
+
+  template <class Element>
+  inline auto& zeros();
+
+  template <class Element>
+  inline auto& ones();
 
   template <class X, class Element, typename Number, size_t depth, size_t rank> requires (std::is_same<Number, bool>::value)
      Vector<size_t>& findtrue(const ExpressionR<X, Element, Number, depth, rank>& x); 
