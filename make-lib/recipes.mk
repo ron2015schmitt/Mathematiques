@@ -34,9 +34,15 @@ FORCE: ;
 #
 #---------------------------------------------------------------------
 
+define generate_compiler_file
+	@\date > $1.compiler
+	@\echo -e `$(CPP) --version | head -1` >> $1.compiler
+	@\echo -e "$(CPP_CMD) $(CFLAGS)" >> $1.compiler
+endef
+
+
 %.o: %.cpp 
-	\echo -e `$(CPP) --version | head -1` > $*.compiler
-	\echo -e "$(CPP_CMD) $(CFLAGS)" >> $*.compiler
+	$(call generate_compiler_file,$*)
 	$(CPP_CMD) $(CFLAGS) -c $*.cpp -o $@
 
 

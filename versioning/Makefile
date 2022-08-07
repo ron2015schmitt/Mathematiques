@@ -11,7 +11,7 @@ include $(DIR_MATHQ)/make-lib/variables.mk
 MAKEFILE_REL := $(subst $(DIR_MATHQ)/,,$(MAKEFILE))
 
 
-NONEXEC = newrev
+NONEXEC = compiler_info newrev
 EXEC += 
 ALL += 
 
@@ -26,6 +26,10 @@ OPTIMIZE = -O3 -finline-limit=750
 include $(DIR_MATHQ)/make-lib/recipes.mk
 include $(DIR_MATHQ)/make-lib/info.mk
 include $(DIR_MATHQ)/make-lib/help.mk
+
+compiler_info: FORCE
+	$(call generate_compiler_file,"config") && mv config.compiler config.compiler.out.txt
+
 
 newrev: FORCE
 	\python3 $(DIR_MATHQ)/scripts/create_rev.py $(FEATURE_VERSION_MATHQ_FILE) $(CPP_VERSION_FILE) $(TAG_FILE_MATHQ) $(TAG_ANNOTATION_FILE)
