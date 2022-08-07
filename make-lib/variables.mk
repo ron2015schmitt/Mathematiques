@@ -66,6 +66,7 @@ TAG_ANNOTATION_FILE := $(DIR_MATHQ)/versioning/tag.annotation.mathq.out.txt
 CPP_VERSION_FILE := $(DIR_MATHQ)/versioning/c++.version.src.txt
 VERSION_HEADER_FILE_MATHQ := $(DIR_MATHQ)/include/version_mathq.h
 FEATURE_VERSION_MATHQ_FILE := $(DIR_MATHQ)/versioning/feature.version.master.record.bash
+COMPILER_VERSION_FILE := $(DIR_MATHQ)/versioning/config.compiler.out.txt
 
 # dynamic variables
 FEATURE_VERSION_MATHQ = `. $(FEATURE_VERSION_MATHQ_FILE) && echo "$${FEATURE_VERSION_MATHQ}"`

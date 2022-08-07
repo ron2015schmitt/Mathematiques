@@ -325,6 +325,15 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
   class ExpressionRW_Join;
 
 
+
+
+  template <class Element>
+  inline auto& zeros();
+
+  template <class Element>
+  inline auto& ones();
+
+
   // ***************************************************************************
   // * GridScale enum
   // ***************************************************************************

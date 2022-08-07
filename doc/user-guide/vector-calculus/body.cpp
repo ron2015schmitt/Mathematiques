@@ -118,81 +118,81 @@ int main() {
   // TRDISP(std::get<0>(setXY));
   // TRDISP(std::get<1>(setXY));
 
-  CR();
-  ECHO_CODE(RealMultiSet<double, 2> setXY({ rx, ry }));
-  TRDISP(setXY);
-  TRDISP(setXY.getGrid()[0]);
-  TRDISP(setXY.getGrid()[1]);
-  // TRDISP(insideout(setXY.getGrid()));
+  // CR();
+  // ECHO_CODE(RealMultiSet<double, 2> setXY({ rx, ry }));
+  // TRDISP(setXY);
+  // TRDISP(setXY.getGrid()[0]);
+  // TRDISP(setXY.getGrid()[1]);
+  // // TRDISP(insideout(setXY.getGrid()));
 
-  CR();
-  ECHO_CODE(RealMultiSet<double, 3> setXYZ({ rx, ry, rz }));
-  TRDISP(setXYZ);
-  auto XYZ = setXYZ.getGrid();
+  // CR();
+  // ECHO_CODE(RealMultiSet<double, 3> setXYZ({ rx, ry, rz }));
   // TRDISP(setXYZ);
-  auto X = XYZ[0];
-  TRDISP(X);
-  auto Y = XYZ[1];
-  TRDISP(Y);
-  auto Z = XYZ[2];
-  TRDISP(Z);
+  // auto XYZ = setXYZ.getGrid();
+  // // TRDISP(setXYZ);
+  // auto X = XYZ[0];
+  // TRDISP(X);
+  // auto Y = XYZ[1];
+  // TRDISP(Y);
+  // auto Z = XYZ[2];
+  // TRDISP(Z);
 
 
 
-  PolarCoordSystem<double>::Coords v1(10, pi/3);
-  TRDISP(v1);
-  PolarCoordSystem<double>::Coords v2(2, pi/4);
-  TRDISP(v2);
+  // PolarCoordSystem<double>::Coords v1(10, pi/3);
+  // TRDISP(v1);
+  // PolarCoordSystem<double>::Coords v2(2, pi/4);
+  // TRDISP(v2);
 
-  TRDISP(dot(v1, v2));
+  // TRDISP(dot(v1, v2));
 
-  TRDISP(v1.basis_vec(0));
-
-
-  PolarCoords<double> u1(10, pi/3);
-  TRDISP(u1);
-  PolarCoords<double> u2(2, pi/4);
-  TRDISP(u2);
-  TRDISP(dot(u1, u2));
-
-  TRDISP(u1.pos());
-  TRDISP(u2.pos());
-  TRDISP(u1.pos()|u2.pos());
+  // TRDISP(v1.basis_vec(0));
 
 
-  TRDISP(u1.J());
-  TRDISP(u1.g());
+  // PolarCoords<double> u1(10, pi/3);
+  // TRDISP(u1);
+  // PolarCoords<double> u2(2, pi/4);
+  // TRDISP(u2);
+  // TRDISP(dot(u1, u2));
 
-  ECHO_CODE(PolarCoords<double> w = PolarCoords<double>::fromCartesian(sqrt(2), sqrt(2)));
-  TRDISP(w);
+  // TRDISP(u1.pos());
+  // TRDISP(u2.pos());
+  // TRDISP(u1.pos()|u2.pos());
 
 
-  ECHO_CODE(CartCoords<double, 3> p1({ 1,2,3 }));
-  TRDISP(p1);
-  TRDISP(p1.basis_vec(0));
-  TRDISP(p1.basis_vec(1));
-  TRDISP(p1.basis_vec(2));
-  TRDISP(p1.g());
+  // TRDISP(u1.J());
+  // TRDISP(u1.g());
 
-  TRDISP(p1.ron());
-  TRDISP(decltype(p1)::ron());
-  TRDISP(CartCoords<double, 2>::ron());
+  // ECHO_CODE(PolarCoords<double> w = PolarCoords<double>::fromCartesian(sqrt(2), sqrt(2)));
+  // TRDISP(w);
 
-  TRDISP(zeros<Vector<double, 2>>());
-  TRDISP(ones<Vector<double, 2>>());
-  DISP(sizeof(PolarCoords<double>)/sizeof(double));
 
-  MultiArrayOfGrids<double, 2> vgA;
-  GridOfMultiArrays<double, 2> vgB;
-  TRDISP(vgA);
-  TRDISP(vgB);
-  CG<double,2,false>::Type cgA;
-  CG<double,2,true>::Type cgB;
-  TRDISP(cgA);
-  TRDISP(cgB);
+  // ECHO_CODE(CartCoords<double, 3> p1({ 1,2,3 }));
+  // TRDISP(p1);
+  // TRDISP(p1.basis_vec(0));
+  // TRDISP(p1.basis_vec(1));
+  // TRDISP(p1.basis_vec(2));
+  // TRDISP(p1.g());
 
-  CG0<double,2,false> cgA2;
-  TRDISP(cgA2);
+  // TRDISP(p1.ron());
+  // TRDISP(decltype(p1)::ron());
+  // TRDISP(CartCoords<double, 2>::ron());
+
+  // TRDISP(zeros<Vector<double, 2>>());
+  // TRDISP(ones<Vector<double, 2>>());
+  // DISP(sizeof(PolarCoords<double>)/sizeof(double));
+
+  // MultiArrayOfGrids<double, 2> vgA;
+  // GridOfMultiArrays<double, 2> vgB;
+  // TRDISP(vgA);
+  // TRDISP(vgB);
+  // CG<double,2,false>::Type cgA;
+  // CG<double,2,true>::Type cgB;
+  // TRDISP(cgA);
+  // TRDISP(cgB);
+
+  // CG0<double,2,false> cgA2;
+  // TRDISP(cgA2);
 
   // CR();
   // PolarCoordSystem<double> polar;

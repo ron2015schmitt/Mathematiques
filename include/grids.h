@@ -6,7 +6,10 @@ namespace mathq {
 
 
 
-
+  template <class Element, size_t NDIMS> 
+  class CartCoords;
+  template <class Element> 
+  class PolarCoords;
 
 
   // ***************************************************************************
@@ -374,7 +377,7 @@ namespace mathq {
       return 1;
     }
 
-    Dimensions gridRank(void) const {
+    size_t gridRank(void) const {
       return NDIMS;
     }
 
@@ -462,7 +465,7 @@ namespace mathq {
             // we set the grid value of each grid
             RealSet<Number>& rs = get(g);
             // MDISP(g, indices[g]);
-            grid[g](indices) = rs.getGrid()[indices[g]];
+            grid[g][indices] = rs.getGrid()[indices[g]];
           }
         }
       }
@@ -529,12 +532,12 @@ namespace mathq {
     Matrix<Element, NDIMS, NDIMS> g() const {
       return child().g();
     }
-    CartCoords<Element, NDIMS>& pos() const {
-      return child().pos();
-    }
-    CartCoords<Element, NDIMS>& toCartesian() const {
-      return child().toCartesian();
-    }
+    // CartCoords<Element, NDIMS>& pos() const {
+    //   return child().pos();
+    // }
+    // CartCoords<Element, NDIMS>& toCartesian() const {
+    //   return child().toCartesian();
+    // }
     Vector<Element, NDIMS>& basis_vec(size_t n) const {
       return child().basis_vec();
     }
@@ -927,7 +930,7 @@ namespace mathq {
   // physics field object: scalar field, vector field, tensor field 
   // uses curvilinear coordinates
   // ***************************************************************************
-  template <typename Number, size_t RANK> class PolarField : public TensorOfGrids<Number, 2, RANK> {
+  template <typename Number, size_t RANK> class PolarField : public MultiArrayOfGrids<Number, 2, RANK> {
   public:
     using Coords = PolarCoords<Number>;
     // need a grid
