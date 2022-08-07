@@ -296,12 +296,7 @@ namespace mathq {
   //  ReplacedNumberType:  Depends on InputType
   //                         numbers: NewNumber
   //                         MultiArray: The InputType with the number type (at the bottom) replaced by NewNumber
-  //                         MArrayR{,W}Exp: The type of the MultiArray at the bottom of the nested expressions
-  //                                         with the number type replaced by NewNumber
-  //  ReplacedElementType: Depends on InputType
-  //                         numbers: NewNumber
-  //                         MultiArray: The InputType with the number type (at the bottom) replaced by NewNumber
-  //                         MArrayR{,W}Exp: The expression with Element replaced? see TODO below
+  //                         MArrayR{,W}Exp: Derived type with the number type replaced in all contained expressions and MultiArrays 
   //  depth():             Depth to the number type at the bottom
   //  value                True if unput type is a number
   // ************************************************************************************************
@@ -312,7 +307,6 @@ namespace mathq {
     using InputType = NullType;
     using Type = NullType;
     using ReplacedNumberType = NewNumber;
-    using ReplacedElementType = NewNumber;
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
@@ -336,7 +330,6 @@ namespace mathq {
     using InputType = Number;
     using Type = Number;
     using ReplacedNumberType = NewNumber;
-    using ReplacedElementType = NewNumber; // this is correct, see comment above
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
@@ -359,7 +352,6 @@ namespace mathq {
     using InputType = std::complex<Number>;
     using Type = std::complex<Number>;
     using ReplacedNumberType = NewNumber;
-    using ReplacedElementType = NewNumber; // this is correct, see comment above
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
@@ -384,7 +376,6 @@ namespace mathq {
     using InputType = Imaginary<Number>;
     using Type = Imaginary<Number>;
     using ReplacedNumberType = NewNumber;
-    using ReplacedElementType = NewNumber; // this is correct, see comment above
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
@@ -408,7 +399,6 @@ namespace mathq {
     using InputType = Quaternion<Number>;
     using Type = Quaternion<Number>;
     using ReplacedNumberType = NewNumber;
-    using ReplacedElementType = NewNumber; // this is correct, see comment above
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
@@ -434,7 +424,6 @@ namespace mathq {
     using InputType = MultiArray<Element, rank, ints...>;
     using Type = typename NumberTrait<Element>::Type;
     using ReplacedNumberType = MultiArray<typename NumberTrait<Element, NewNumber>::ReplacedNumberType, rank, ints...>;
-    using ReplacedElementType = MultiArray<NewNumber, rank, ints...>; // this is correct, see comment above
 
     constexpr static bool value = false;
     constexpr static size_t depth() {
@@ -466,10 +455,8 @@ namespace mathq {
   public:
     using InputType = ExpressionR<Derived, Element, Number, depth_in, rank>;
     using Type = Number;
-    using ExpReplacedNumberType = ExpressionR<Derived, typename NumberTrait<Element, NewNumber>::ReplacedNumberType, NewNumber, depth_in, rank>;
     using DerivedReplacedNumberType = typename NumberTrait<Derived, NewNumber>::ReplacedNumberType;
     using ReplacedNumberType = DerivedReplacedNumberType;  // this is correct, see comment above
-    using ReplacedElementType = ExpressionR<Derived, NewNumber, Number, depth_in, rank>;  // TODO: should first slot be DerivedReplacedNumberType? should third slot be NewNumber?  
 
     constexpr static bool value = false;
     constexpr static size_t depth() {
@@ -501,10 +488,8 @@ namespace mathq {
   public:
     using InputType = ExpressionRW<Derived, Element, Number, depth_in, rank>;
     using Type = Number;
-    using ExpReplacedNumberType = ExpressionRW<Derived, typename NumberTrait<Element, NewNumber>::ReplacedNumberType, NewNumber, depth_in, rank>;
     using DerivedReplacedNumberType = typename NumberTrait<Derived, NewNumber>::ReplacedNumberType;
     using ReplacedNumberType = DerivedReplacedNumberType;  // this is correct, see comment above
-    using ReplacedElementType = ExpressionRW<Derived, NewNumber, Number, depth_in, rank>;  // TODO: should first slot be DerivedReplacedNumberType? should third slot be NewNumber?  
 
     constexpr static bool value = false;
     constexpr static size_t depth() {
