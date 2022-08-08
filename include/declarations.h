@@ -346,56 +346,42 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
 
 
 
-
-
-  // ***************************************************************************
-  // * Grid
-  //
-  //  multiarray of depth=1 and fixed rank=NDIMS but dynamic size
-  // ***************************************************************************
-
-  template <typename Number, size_t NDIMS>
-  using Grid = MultiArray<Number, NDIMS>;
-
-
-
+  
 
   // ***************************************************************************
-  // * MultiArrayOfGrids
+  // * MultiGrid_A - for coordinates 
   //
   // This is a nested structure with depth=2:
-  //   top level: A single MultiArray of fixed rank: MultiArray<Number,rank>
-  //              default rank = 1 => vector
+  //   top level: a Vector of size NDIMS
   //   second level: multiarrays of fixed rank=NDIMS but dynamic size
   //
-  // TODO: use OuterProductMultiArray for 2nd level to save on space
+  // A[i] -> gives the grid (a MultiArray of rank NDIMS) for the i-th coordinate
   // ***************************************************************************
 
-  template <typename Number, size_t NDIMS, size_t rank = 1>
-  using MultiArrayOfGrids = MultiArray< Grid<Number, NDIMS>, rank >;
+  template <typename Number, size_t NDIMS, size_t... ints>
+  using MultiGrid_A = std::tuple< MultiArray_RepeatVector<Number, NDIMS, ints>...>;
 
 
   // ***************************************************************************
-  // * GridOfMultiArrays
+  // * MultiGrid_B - for coordinates
   //
   // This is a nested structure with depth=2:
   //   top level: a single multiarray of fixed rank=NDIMS but dynamic size
-  //   second level: multiarrays of fixed rank: MultiArray<Number,rank>
-  //                 default rank = 1 => vector
+  //   second level: Vectors of size NDIMS
   //
-  // This type has the same total number of elements as MultiArrayOfGrids.
-  // The two types can be converted from one to another using the function 'insideout'.
+  // This type has the same total number of elements as MultiGrid_A.
+  // The two types can be converted from one to another using the function 'evert'.
   //
+  // B[j] -> gives the coordinate vector (technically an ordered set) for grid point j
   // ***************************************************************************
 
-  template <typename Number, size_t NDIMS, size_t rank = 1>
-  using GridOfMultiArrays = Grid< MultiArray<Number, rank>, NDIMS>;
+  // template <typename Number, size_t NDIMS>
+  // using MultiGrid_B = MultiArray_RepeatVector< Vector<Number, NDIMS>, NDIMS>;
 
 
 
-
-  template <typename Number, size_t NDIMS, size_t rank, typename G>
-  class GridTraits;
+  // template <typename Number, size_t NDIMS, size_t rank, typename G>
+  // class GridTraits;
 
 
 

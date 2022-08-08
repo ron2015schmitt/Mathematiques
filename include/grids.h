@@ -952,7 +952,7 @@ namespace mathq {
 //   // physics field object: scalar field, vector field, tensor field 
 //   // uses curvilinear coordinates
 //   // ***************************************************************************
-//   template <typename Number, size_t RANK> class PolarField : public MultiArrayOfGrids<Number, 2, RANK> {
+//   template <typename Number, size_t RANK> class PolarField : public MultiGrid_A<Number, 2, RANK> {
 //   public:
 //     using Coords = PolarCoords<Number>;
 //     // need a grid

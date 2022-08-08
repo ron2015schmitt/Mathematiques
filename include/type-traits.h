@@ -1102,17 +1102,17 @@ namespace mathq {
     constexpr static bool isGridOfMultiArrays = false;
   };
 
-  template <typename Number, size_t NDIMS, size_t rank>
-  class GridTraits<Number, NDIMS, rank, MultiArrayOfGrids<Number, NDIMS, rank>> {
-    constexpr static bool isMultiArrayOfGrids = true;
-    constexpr static bool isGridOfMultiArrays = false;
-  };
+  // template <typename Number, size_t NDIMS, size_t rank>
+  // class GridTraits<Number, NDIMS, rank, MultiGrid_A<Number, NDIMS, rank>> {
+  //   constexpr static bool isMultiArrayOfGrids = true;
+  //   constexpr static bool isGridOfMultiArrays = false;
+  // };
 
-  template <typename Number, size_t NDIMS, size_t rank>
-  class GridTraits<Number, NDIMS, rank, GridOfMultiArrays<Number, NDIMS, rank>> {
-    constexpr static bool isMultiArrayOfGrids = false;
-    constexpr static bool isGridOfMultiArrays = true;
-  };
+  // template <typename Number, size_t NDIMS, size_t rank>
+  // class GridTraits<Number, NDIMS, rank, MultiGrid_B<Number, NDIMS, rank>> {
+  //   constexpr static bool isMultiArrayOfGrids = false;
+  //   constexpr static bool isGridOfMultiArrays = true;
+  // };
 
 
 
@@ -1127,7 +1127,7 @@ namespace mathq {
   // ***************************************************************************
   // * RealMultiSet 
   // ***************************************************************************
-  template <typename Number, size_t NDIMS = 0, class MULTIGRID = MultiArrayOfGrids<Number, NDIMS>>
+  template <typename Number, size_t NDIMS = 0, class MULTIGRID = MultiGrid_A<Number, NDIMS>>
   class RealMultiSet;
 
 
