@@ -1,31 +1,5 @@
 ## Planned Releases
 
-
-### v0.40 Multi-Array Refactoring and Vector Calculus started
-1. Refactor `Dimensions` and `Indices` classes
-1. New `RecursiveDimensions`  and `DeepIndices` classes
-1. Refactor all multi-arrays
-  * Simplifly the template  `MultiArray<Element, rank, dim_ints...>` 
-  * Renamed `Tensor` -> `MultiArray` 
-  * Refactor `Scalar`, `Vector` and `Matrix` to be type aliases for `MultiArray`
-1. C++ dialect 
-  * Add a compiler version file
-  * In variables.mk, have C++ version taken from file in version directory (`CPPC = g++ -pipe -std=c++17`)
-  * add variable for the C++ version used, currently C++20.  append to version string. 
-  * was using g++ 10.3.  10.4 has been released. now using 11.1
-  * (upgrading g++ in Ubuntu)[https://www.ovenproof-linux.com/2016/09/upgrade-gcc-and-g-in-ubuntu.html]
-  * (multiple versions of g++)[https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa]
-```bash
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
-```
-  * put the aBOVE INTO docs on installation
-1. https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa
-  * array/valarray internal data access via data()
-  * https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-  * use &(a[0])
-1. ` const Element& val` constrcutors and methods should always use `&` because `Element` may be a MultiArray
-
-
 ### v0.41 Vector Calculus
 1. `Grid` and `CoordinateGrid` classes
 1. `RealSet` and `MultiSet` classes
@@ -35,6 +9,32 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
   * Put grad, and div as static functions inside CurvilinearCoords 
 1. `CurvilinearField` class: inherit from Grid
 1. [2D and 3D Curvilinear Coordinate Systems](topics/coordsystems.md)
+
+
+### Tensor Fields and Calculus in general coordinates 
+1. contravariant and covariant vectors
+   * define Rank0: 
+      * Vector<NE=1>
+   * define Rank1<N,bool>: 
+      * Matrix<N,1> for bool=true (contravariant/high indices)
+      * Matrix<1,N> for bool=false (covariant/low indices)
+   * define Rank2<N,bool,bool>: 
+      * MultiArray<R=4> with dimenions (N,1,N,1) for <true,true> 
+      * MultiArray<R=4> with dimenions (N,1,1,N) for <true,false> 
+      * MultiArray<R=4> with dimenions (1,N,N,1) for <false,true> 
+      * MultiArray<R=4> with dimenions (1,N,1,N) for <false,false>  
+1. Use compomnent-free notation  for inner products (Carroll; Misner, Wheeler, Thorne; Frankel)
+1. `g(o,v)` notation
+1. `contract(t1,t2,{i1,i2})`
+1. generalized coordinate systems
+   * basis vectors
+   * metric tensor
+   * index contraction / dot products
+   * raising and lowering operations using the metric tensor
+   * currying
+1. Define k-vector fields 
+  * wedge product
+  * Hodge dual
 
 
 ## Future work
@@ -344,30 +344,6 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 
 
 
-### Tensor Fields and Calculus in general coordinates 
-1. contravariant and covariant vectors
-   * define Rank0: 
-      * Vector<NE=1>
-   * define Rank1<N,bool>: 
-      * Matrix<N,1> for bool=true (contravariant/high indices)
-      * Matrix<1,N> for bool=false (covariant/low indices)
-   * define Rank2<N,bool,bool>: 
-      * MultiArray<R=4> with dimenions (N,1,N,1) for <true,true> 
-      * MultiArray<R=4> with dimenions (N,1,1,N) for <true,false> 
-      * MultiArray<R=4> with dimenions (1,N,N,1) for <false,true> 
-      * MultiArray<R=4> with dimenions (1,N,1,N) for <false,false>  
-1. Use compomnent-free notation  for inner products (Carroll; Misner, Wheeler, Thorne; Frankel)
-1. `g(o,v)` notation
-1. `contract(t1,t2,{i1,i2})`
-1. generalized coordinate systems
-   * basis vectors
-   * metric tensor
-   * index contraction / dot products
-   * raising and lowering operations using the metric tensor
-   * currying
-1. Define k-vector fields 
-  * wedge product
-  * Hodge dual
 
 ### FFT Support via FFTW
 

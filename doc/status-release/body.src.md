@@ -20,15 +20,6 @@ The first two refactoring projects have been completed.
   + _Usage Guide_, covering all the functionality
   + New _Developer Guide_
 
-+ Indexing
-  + Refactor of vector/matrix/tensor indexing, including
-  + complete index/iterator types such as slices similar to Fortan and Python
-
-+ Display 
-  + Refactor of Display
-
-+ alpha-3.8 Debugging Modes
-  + Refactor of Debugging Modes
 
 
 ## Release Notes
@@ -41,6 +32,8 @@ The first two refactoring projects have been completed.
   + C++ version is set via file `c++.version.src.txt`
   + `Scalar`, `Vector`, and `Matrix` are now simply type aliases for `MultiArray` type via `C++20` concepts / constraints
   + Removed "hidden" `MultiArray` template parameters for Depth and NumberType: only needed in expressions
+  + Refactored `Dimensions` and `Indices` classes as well as the uses of `Indices`
+  + New `RecursiveDimensions`  and `DeepIndices` classes
 
 ### **alpha-3.4** Documentation Refactoring
   + Full refactoring of the online documentation

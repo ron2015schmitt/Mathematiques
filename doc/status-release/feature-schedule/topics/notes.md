@@ -156,3 +156,25 @@ public:
 testunary.cpp:65:25: error: conversion from ‘double’ to non-scalar type ‘mathq::Scalar<double>’ {aka ‘mathq::MultiArray<double, 0>’} requested
    65 |     Scalar<double> s5 = 4.4;
 ```
+
+
+1. C++ dialect 
+  * Compiler version file in versioning
+  * In variables.mk, have C++ version taken from file in version directory (`CPPC = g++ -pipe -std=c++17`)
+  * add variable for the C++ version used, currently C++20.  append to version string. 
+  * was using g++ 10.3.  10.4 has been released. now using 11.1
+  * (upgrading g++ in Ubuntu)[https://www.ovenproof-linux.com/2016/09/upgrade-gcc-and-g-in-ubuntu.html]
+  * (multiple versions of g++)[https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa]
+```bash
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+```
+1. https://linuxconfig.org/how-to-switch-between-multiple-gcc-and-g-compiler-versions-on-ubuntu-20-04-lts-focal-fossa
+  * array/valarray internal data access via data()
+  * https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+  * use &(a[0])
+
+
+
+1. ` const Element& val` constrcutors and methods should always use `&` because `Element` may be a MultiArray. 
+  * use `Element &&` for expressions?
+
