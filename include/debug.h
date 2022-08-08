@@ -1,5 +1,5 @@
-#ifndef MATHQ__DEBUG_H
-#define MATHQ__DEBUG_H
+#ifndef MATHQ__DEBUG
+#define MATHQ__DEBUG
 
 
 namespace mathq {

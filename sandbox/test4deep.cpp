@@ -58,18 +58,24 @@ int main(int argc, char* argv[]) {
     TLDISP(x);
     TLDISP(x.dims());
     TLDISP(x.size());
-    TLDISP(x.deepdims());
-    Dimensions tdims(2, 1, 2);
+    TLDISP(x.recursive_dims());
+    Dimensions template_dims({2, 1, 2});
+    TLDISP(template_dims);
+
+    TRDISP( x()(size_t(1))(2, 1).resize(template_dims) );
+    x()(0)(0, 0).resize(template_dims);
 
     for (size_t h = 0; h < x().size(); h++) {
       const size_t NR = x()(h).Nrows();
       const size_t NC = x()(h).Ncols();
       for (size_t i = 0; i < NR; i++) {
         for (size_t j = 0; j < NC; j++) {
-          x()(h)(i, j).resize(tdims);
-          for (size_t k = 0; k < tdims[0]; k++) {
-            for (size_t l = 0; l < tdims[1]; l++) {
-              for (size_t m = 0; m < tdims[2]; m++) {
+
+          
+          x()(h)(i, j).resize(template_dims);
+          for (size_t k = 0; k < template_dims[0]; k++) {
+            for (size_t l = 0; l < template_dims[1]; l++) {
+              for (size_t m = 0; m < template_dims[2]; m++) {
                 x()(h)(i, j)(k, l, m) = double(100000 * h) + double(10000 * i) + double(1000 * j) + double(100 * k) + double(10 * l) + double(m);
               }
             }
@@ -80,7 +86,7 @@ int main(int argc, char* argv[]) {
     TLDISP(x);
     TLDISP(x.dims());
     TLDISP(x.size());
-    TLDISP(x.deepdims());
+    TLDISP(x.recursive_dims());
   }
 
   {
@@ -139,7 +145,7 @@ int main(int argc, char* argv[]) {
     TLDISP(x);
     TLDISP(x.dims());
     TLDISP(x.size());
-    TLDISP(x.deepdims());
+    TLDISP(x.recursive_dims());
 
 
     Vector<Matrix<MultiArray<double, 3>, 3, 2>, 4> v;
@@ -158,35 +164,50 @@ int main(int argc, char* argv[]) {
 
     TLDISP(x()(1)(2, 1)(1, 0, 0));
 
-    Indices inds({ 1, 2, 1, 1, 0, 0 });
+    DeepIndices inds({ {}, {1}, {2,1}, {1,0,0} });
     TLDISP(inds);
-    double y = x.dat(inds);
+    double y = x[inds];
     TLDISP(y);
+    TLDISP( x[{ {}, {1}, {2,1}, {1,0,0} }] );
+
+    if (x()(1)(2, 1)(1, 0, 0) != x[inds]) {
+      OUTPUT("FAILED!!!");
+      TRDISP( x()(1)(2, 1)(1, 0, 0) ); 
+      TLDISP( x[{ {}, {1}, {2,1}, {1,0,0} }] );
+      return (1);
+    }
+
 
 
     Vector<Scalar<double>, 4> g1;
     TLDISP(g1);
     Matrix<Vector<Scalar<double>, 4>, 3, 2> g2;
     TLDISP(g2);
-    TLDISP(x.deepdims());
+    TLDISP(x.recursive_dims());
 
 
     MultiArray<Matrix<Vector<Scalar<double>, 4>, 3, 2>, 3> g3;
     TLDISP(g3);
-    TLDISP(x.deepdims());
-    g3 = insideout(x);
-    TLDISP(g3.deepdims());
+    TLDISP(x.recursive_dims());
+
+    CR();
+    ECHO_CODE(g3 = insideout(x));
+    TLDISP(g3.recursive_dims());
     TLDISP(g3);
+
+
+    // check our answer! 
+    // x()(1)(2, 1)(1, 0, 0) = -99.9;  // error injection
 
     for (size_t h = 0; h < x().size(); h++) {
       const size_t NR = x()(h).Nrows();
       const size_t NC = x()(h).Ncols();
       for (size_t i = 0; i < NR; i++) {
         for (size_t j = 0; j < NC; j++) {
-          Dimensions tdims = x()(h)(i, j).dims();
-          for (size_t k = 0; k < tdims[0]; k++) {
-            for (size_t l = 0; l < tdims[1]; l++) {
-              for (size_t m = 0; m < tdims[2]; m++) {
+          Dimensions template_dims = x()(h)(i, j).dims();
+          for (size_t k = 0; k < template_dims[0]; k++) {
+            for (size_t l = 0; l < template_dims[1]; l++) {
+              for (size_t m = 0; m < template_dims[2]; m++) {
                 // MDISP(h, i, j, k, l, m, x()(h)(i, j)(k, l, m), g3(k, l, m)(i, j)(h)()); // this for checking by hand
                 if (x()(h)(i, j)(k, l, m) != g3(k, l, m)(i, j)(h)()) {
                   OUTPUT("FAILED!!!");

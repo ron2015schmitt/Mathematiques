@@ -50,6 +50,7 @@ ifdef FEATURE_VERSION_MATHQ_FILE
 	@$(call echovar,FEATURE_VERSION_MATHQ)
 endif
 	@$(call echovar,CPP_VERSION_FILE)
+	@$(call echovar,CPP_VERSION_MATHQ)
 	@$(call echovar,TAG_MATHQ)
 	@$(call hr)
 	@echo
@@ -63,7 +64,7 @@ endif
 	@$(call echovar,OPTIMIZE)
 	@echo
 	@$(call title,"C++ Compiler")
-	@$(call echovar,CPPC)
+	@$(call echovar,CPP_CMD)
 	@$(call echovar,COPT)
 	@$(call echovar,CFLAGS)
 	@echo

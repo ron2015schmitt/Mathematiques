@@ -1,7 +1,7 @@
 
 
-#ifndef MATHQIO_H
-#define MATHQIO_H
+#ifndef MATHQ__IO
+#define MATHQ__IO
 
 
 

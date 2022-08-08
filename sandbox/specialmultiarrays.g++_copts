@@ -1,0 +1,2 @@
+g++ (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0
+compiler command used:  g++ -pipe -std=c++20 -O1 -Wfatal-errors -I /home/rs2015/Mathematiques/include 

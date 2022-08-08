@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.75-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.262-c++20</h1>
 
 <details>
 
@@ -79,7 +79,7 @@ RealSet<double> rs2 = RealSet<double>::realLine();
 RealSet<double> rs3(10, 1e5, 10, GridScale::LOG);
 ☀ rs3 ➜ mathq::RealSet<double> {interval=[10, 100000], N=10, scale=LOG, gridState=deflated};
 ☀ rs3.getGrid() ➜ Vector<double> {10, 27.8256, 77.4264, 215.443, 599.484, 1668.1, 4641.59, 12915.5, 35938.1, 100000};
-☀ mathq::log10(rs3.getGrid()) ➜ TER_Unary Vector<double> {1, 1.44444, 1.88889, 2.33333, 2.77778, 3.22222, 3.66667, 4.11111, 4.55556, 5};
+☀ mathq::log10(rs3.getGrid()) ➜ Vector<double> {1, 1.44444, 1.88889, 2.33333, 2.77778, 3.22222, 3.66667, 4.11111, 4.55556, 5};
 ☀ rs3.hasInflatedGrid_() ➜ bool 1;
 
 auto rs4 = RealSet<double>::point(2.5);
@@ -96,131 +96,6 @@ RealSet<double> ry(-20, 20, 5, GridScale::LINEAR);
 RealSet<double> rz(30, 33, 4, GridScale::LINEAR);
 ☀ rz ➜ mathq::RealSet<double> {interval=[30, 33], N=4, scale=LINEAR, gridState=deflated};
 ☀ rz.getGrid() ➜ Vector<double> {30, 31, 32, 33};
-
-RealMultiSet<double, 2> setXY({ rx, ry });
-☀ setXY ➜ RealMultiSet<double,NDIMS=2> { gridState=inflated, {
-  {interval=[-10, 10], N=3, scale=LINEAR, gridState=deflated}, 
-  {interval=[-20, 20], N=5, scale=LINEAR, gridState=inflated}
-}};
-☀ hasInflatedGrids_() ➜ bool 0;
-inflategrids
-☀ gdims ➜ Dimensions {3, 5};
-☀ setXY.getGrid()[0] ➜ Matrix<double> { {-10, -10, -10, -10, -10}, {0, 0, 0, 0, 0}, {10, 10, 10, 10, 10} };
-☀ hasInflatedGrids_() ➜ bool 1;
-☀ setXY.getGrid()[1] ➜ Matrix<double> { {-20, -10, 0, 10, 20}, {-20, -10, 0, 10, 20}, {-20, -10, 0, 10, 20} };
-
-RealMultiSet<double, 3> setXYZ({ rx, ry, rz });
-☀ setXYZ ➜ RealMultiSet<double,NDIMS=3> { gridState=inflated, {
-  {interval=[-10, 10], N=3, scale=LINEAR, gridState=deflated}, 
-  {interval=[-20, 20], N=5, scale=LINEAR, gridState=inflated}, 
-  {interval=[30, 33], N=4, scale=LINEAR, gridState=inflated}
-}};
-☀ hasInflatedGrids_() ➜ bool 0;
-inflategrids
-☀ gdims ➜ Dimensions {3, 5, 4};
-☀ X ➜ MultiArray<double,rank=3> 
-{
-  {
-    {-10, -10, -10, -10},
-    {-10, -10, -10, -10},
-    {-10, -10, -10, -10},
-    {-10, -10, -10, -10},
-    {-10, -10, -10, -10}
-  },
-  {
-    {0, 0, 0, 0},
-    {0, 0, 0, 0},
-    {0, 0, 0, 0},
-    {0, 0, 0, 0},
-    {0, 0, 0, 0}
-  },
-  {
-    {10, 10, 10, 10},
-    {10, 10, 10, 10},
-    {10, 10, 10, 10},
-    {10, 10, 10, 10},
-    {10, 10, 10, 10}
-  }
-};
-☀ Y ➜ MultiArray<double,rank=3> 
-{
-  {
-    {-20, -20, -20, -20},
-    {-10, -10, -10, -10},
-    {0, 0, 0, 0},
-    {10, 10, 10, 10},
-    {20, 20, 20, 20}
-  },
-  {
-    {-20, -20, -20, -20},
-    {-10, -10, -10, -10},
-    {0, 0, 0, 0},
-    {10, 10, 10, 10},
-    {20, 20, 20, 20}
-  },
-  {
-    {-20, -20, -20, -20},
-    {-10, -10, -10, -10},
-    {0, 0, 0, 0},
-    {10, 10, 10, 10},
-    {20, 20, 20, 20}
-  }
-};
-☀ Z ➜ MultiArray<double,rank=3> 
-{
-  {
-    {30, 31, 32, 33},
-    {30, 31, 32, 33},
-    {30, 31, 32, 33},
-    {30, 31, 32, 33},
-    {30, 31, 32, 33}
-  },
-  {
-    {30, 31, 32, 33},
-    {30, 31, 32, 33},
-    {30, 31, 32, 33},
-    {30, 31, 32, 33},
-    {30, 31, 32, 33}
-  },
-  {
-    {30, 31, 32, 33},
-    {30, 31, 32, 33},
-    {30, 31, 32, 33},
-    {30, 31, 32, 33},
-    {30, 31, 32, 33}
-  }
-};
-☀ v1 ➜ PolarCoords<double> (r=10, φ=1.0472);
-☀ v2 ➜ PolarCoords<double> (r=2, φ=0.785398);
-☀ dot(v1, v2) ➜ double 19.3185;
-☀ v1.basis_vec(0) ➜ Vector<double,N1=2> {0.5, 0.866025};
-☀ u1 ➜ PolarCoords<double> (r=10, φ=1.0472);
-☀ u2 ➜ PolarCoords<double> (r=2, φ=0.785398);
-☀ dot(u1, u2) ➜ double 19.3185;
-☀ u1.pos() ➜ CartCoords<double,2> (x1=5, x2=8.66025);
-☀ u2.pos() ➜ CartCoords<double,2> (x1=1.41421, x2=1.41421);
-☀ u1.pos()|u2.pos() ➜ double 19.3185;
-☀ u1.J() ➜ double 10;
-☀ u1.g() ➜ Matrix<double,NR=2,NC=2> { {1, 0}, {0, 100} };
-PolarCoords<double> w = PolarCoords<double>::fromCartesian(sqrt(2), sqrt(2));
-☀ w ➜ PolarCoords<double> (r=2, φ=0.785398);
-CartCoords<double, 3> p1({ 1,2,3 });
-☀ p1 ➜ CartCoords<double,3> (x1=1, x2=2, x3=3);
-☀ p1.basis_vec(0) ➜ Vector<double,N1=3> {1, 0, 0};
-☀ p1.basis_vec(1) ➜ Vector<double,N1=3> {0, 1, 0};
-☀ p1.basis_vec(2) ➜ Vector<double,N1=3> {0, 0, 1};
-☀ p1.g() ➜ Matrix<double,NR=3,NC=3> { {1, 0, 0}, {0, 1, 0}, {0, 0, 1} };
-☀ p1.ron() ➜ int 3;
-☀ decltype(p1)::ron() ➜ int 3;
-☀ CartCoords<double, 2>::ron() ➜ int 2;
-☀ zeros<Vector<double, 2>>() ➜ Vector<double,N1=2> {0, 0};
-☀ ones<Vector<double, 2>>() ➜ Vector<double,N1=2> {1, 1};
-☀ sizeof(PolarCoords<double>)/sizeof(double) ➜ 2;
-☀ vgA ➜ Vector<Matrix<double>,N1=2> {{}, {}};
-☀ vgB ➜ Matrix<Vector<double,N1=2>> {};
-☀ cgA ➜ Matrix<Vector<double,N1=2>> {};
-☀ cgB ➜ Vector<Matrix<double>,N1=2> {{}, {}};
-☀ cgA2 ➜ Matrix<Vector<double,N1=2>> {};
 ```
 
 

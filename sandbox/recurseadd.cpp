@@ -128,6 +128,9 @@ int main(int argc, char *argv[]) {
     TLDISP(v2);
 
     MOUT << "Deep add (v1+v2)" << std::endl;
+    // TRDISP(v1.recursive_dims());
+    // TRDISP(v2.recursive_dims());
+    // TRDISP(v3.recursive_dims());
     t.start_timer_silent();
     v3 = v1 + v2;
     t.stop_timer_curt();

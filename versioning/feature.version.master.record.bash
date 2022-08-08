@@ -7,4 +7,4 @@
 # The Makefile will tack on a revision string (to yield the full version strign eg. 2.1.21) for commits between changes.
 # This files documents features and functionality, not patches nor bug fixes
 export FEATURE_VERSION_MATHQ=0.40
-# V0.40 created from v3.5.78-c++17
+# V0.40 created from v3.5.78-c++17: refactotring of MultiArrays such that Scalar, Vector and Matrix are simply type aliases

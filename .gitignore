@@ -7,7 +7,7 @@
 
 
 # temp files
-*.g++_copts
+*.compiler
 *.tmp
 *.temp
 ~*

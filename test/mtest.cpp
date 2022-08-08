@@ -24,6 +24,9 @@ int main() {
 
 
   {
+    Matrix<double> m0(2, 2);
+    Matrix<double> m0b;
+
     // matrix + matrix
     using namespace std; // need this recognize lists
     printStart(++testnum);
@@ -72,6 +75,7 @@ int main() {
 
   // conj(x) - not defined for non-complex
   // NO TEST NEEDED
+
 
   //-------------------Transpose----------------------------
   {

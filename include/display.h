@@ -701,7 +701,6 @@ namespace display {
     INDENT,
     ERROR,
     WARNING,
-    MATHQ,
     MATHEMATIQUES,
     VERSION,
     DLEVEL0,
@@ -919,6 +918,7 @@ namespace display {
 
 //    getTypeName(const T& var, std::string prefix = "", std::string postfix = "") {
 
+
   template <class T>
   typename std::enable_if<!std::is_pointer<T>::value && !std::is_const<T>::value, std::string>::type
     getTypeName(const T& var) {
@@ -1004,7 +1004,7 @@ namespace display {
   template <class D>
   inline std::string getTypeName(const std::complex<D>& var) {
     std::string s = getTypeStyle(var).apply("std::complex");
-    s += getBracketedTypeName(var.real());
+    s += bracketAndStyleTypename(var.real());
     return s;
   }
 
@@ -1016,6 +1016,18 @@ namespace display {
     stream << tname << StyledString::get(BRACKET1).get() << N << StyledString::get(BRACKET2).get();
     return stream.str();
   }
+
+
+
+#define SPECIALIZE_getTypeName_CLASS(TYPE)         \
+  inline std::string getTypeName(const TYPE &var) { \
+    std::string s = getTypeStyle(var).apply(TYPE::Classname());    \
+    return s;                                          \
+  }
+
+  SPECIALIZE_getTypeName_CLASS(mathq::NullType);
+
+
 
   // This does not overridfe the default
   //  template <class D>
@@ -1040,7 +1052,7 @@ namespace display {
   inline std::string getTypeName(const TYPE<D> &var) { \
     std::string s = getTypeStyle(var).apply(#TYPE);    \
     D d;                                               \
-    s = s + getBracketedTypeName(d);                   \
+    s = s + bracketAndStyleTypename(d);                   \
     return s;                                          \
   }
 
@@ -1118,7 +1130,7 @@ namespace display {
 
 
   // template< class T >
-  // inline constexpr std::size_t tuple_size_v = std::tuple_size<T>::value;
+  // inline constexpr size_t tuple_size_v = std::tuple_size<T>::value;
 
   template <size_t I = 0, typename... Ts>
   constexpr std::string getTypeName(const std::tuple<Ts...>& var, std::string s = std::string("")) {
@@ -1158,13 +1170,19 @@ namespace display {
   // s += getTypeName(d2);
   // s += StyledString::get(ANGLE2).get();
 
+  template <typename T>
+  std::string getTypeName() {
+    return getTypeName(T());
+  }
+
+
 
 //---------------------------------------------------------------------------------
-//       getBracketedTypeName
+//       bracketAndStyleTypename
 //-------------------------------------------------------------------------------
 
   template <typename T>
-  inline std::string getBracketedTypeName(const T& var) {
+  inline std::string bracketAndStyleTypename(const T& var) {
     std::string name = getTypeName(var);
     return StyledString::get(ANGLE1).get() + getTypeStyle(var).apply(name) + StyledString::get(ANGLE2).get();
   }
@@ -1320,7 +1338,7 @@ namespace display {
       MOUT << " illegal format string";
       MOUT << CREATESTYLE(BOLD).apply(string(" \"") + formatstr + "\"");
       MOUT << " passed to Format";
-      MOUT << display::getBracketedTypeName(x);
+      MOUT << display::bracketAndStyleTypename(x);
       MOUT << endl;
       MOUT << StyledString::get(HORLINE);
       return false;

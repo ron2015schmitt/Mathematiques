@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.75-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.262-c++20</h1>
 
 <details>
 
@@ -204,9 +204,9 @@ Below are examples of container math with imaginary numbers.  Mixed math is allo
 ```C++
 auto v = Vector<double>() = { 0, 1, 2, 3, 4 };
 ☀ v ➜ Vector<double> {0, 1, 2, 3, 4};
-☀ pi*v/4 ➜ TER_Binary Vector<double> {0, 0.785398, 1.5708, 2.35619, 3.14159};
-☀ 10*sin(pi*v/4) ➜ TER_Binary Vector<double> {0, 7.07107, 10, 7.07107, 1.22465e-15};
-☀ 10*sin(pi*v/4) + 100*v + 1 + v*v ➜ TER_Binary Vector<double> {1, 109.071, 215, 317.071, 417};
+☀ pi*v/4 ➜ Vector<double> {0, 0.785398, 1.5708, 2.35619, 3.14159};
+☀ 10*sin(pi*v/4) ➜ Vector<double> {0, 7.07107, 10, 7.07107, 1.22465e-15};
+☀ 10*sin(pi*v/4) + 100*v + 1 + v*v ➜ Vector<double> {1, 109.071, 215, 317.071, 417};
 ```
 
 

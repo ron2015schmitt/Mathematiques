@@ -1,5 +1,5 @@
-#ifndef MATHQ__EXCHANGEMATRIX_H
-#define MATHQ__EXCHANGEMATRIX_H 1
+#ifndef MATHQ__EXCHANGEMATRIX
+#define MATHQ__EXCHANGEMATRIX 1
 
 
 
@@ -19,7 +19,7 @@ namespace mathq {
 
    //, typename = EnableIf<NumberTrait<Number>::value>
   template <typename Number, int NR, int NC >
-  class MatrixExchange : public MArrayExpRW<MatrixExchange<Number, NR, NC>, Number, Number, 1, 2> {
+  class MatrixExchange : public ExpressionRW<MatrixExchange<Number, NR, NC>, Number, Number, 1, 2> {
 
   public:
     constexpr static int rank = 2;
@@ -31,7 +31,7 @@ namespace mathq {
     typedef MatrixExchange<Number, NR, NC> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
 
 
 
@@ -86,7 +86,7 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    size_t ndims(void)  const {
+    size_t rank(void)  const {
       return rank_value;
     }
 
@@ -118,39 +118,39 @@ namespace mathq {
       return myaddr;
     }
 
-    Dimensions tdims(void) const {
+    Dimensions template_dims(void) const {
       Dimensions dimensions(NR, NC);
       return dimensions;
     }
 
 
-    constexpr size_t getDepth(void) const {
+    constexpr size_t depth(void) const {
       return depth_value;
     }
-    Dimensions eldims(void) const {
+    Dimensions element_dims(void) const {
       Dimensions dimensions();
       return *(new Dimensions());
     }
 
     // the size of each element
-    inline size_t elsize(void) const {
+    inline size_t element_size(void) const {
       return 1;
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t eldeepsize(void) const {
+    inline size_t el_total_size(void) const {
       return 1;
     }
 
     // the total number of numbers in this data structure
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       return this->size();
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    std::vector<Dimensions>& recursive_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return deepdims(ddims);
+      return recursive_dims(ddims);
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
       return parentdims;
     }
@@ -187,8 +187,8 @@ namespace mathq {
 
 
     MatrixExchange<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
-      std::vector<Dimensions> deepdims(deepdims_new);
-      Dimensions newdims = deepdims[0];
+      std::vector<Dimensions> recursive_dims(deepdims_new);
+      Dimensions newdims = recursive_dims[0];
       resize(newdims);
       return *this;
     }
@@ -222,14 +222,14 @@ namespace mathq {
     // -------------------------- adjoint() --------------------------------
 
     template< typename T = Number >
-    typename std::enable_if<is_complex<T>{}, MatrixExchange<Number, NR, NC>& >::type adjoint() {
+    typename std::enable_if<is_complex<T>::value, MatrixExchange<Number, NR, NC>& >::type adjoint() {
       return *this;
     }
 
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    // NOTE: indexes over [0] to [deepsize()] and note return type
+    // NOTE: indexes over [0] to [total_size()] and note return type
 
     // read
     const Number dat(const size_t n)  const {
@@ -334,7 +334,7 @@ namespace mathq {
     // NOTE: in-place
 
     template< typename T = Number >
-    typename std::enable_if<is_complex<T>{}, MatrixExchange<Number, NR, NC>& >::type conj() {
+    typename std::enable_if<is_complex<T>::value, MatrixExchange<Number, NR, NC>& >::type conj() {
       return *this;
     }
 

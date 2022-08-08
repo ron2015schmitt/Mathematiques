@@ -10,13 +10,13 @@ namespace matricks {
   
 
   //---------------------------------------------------------------------------
-  // TER_Unary    unary expressions
+  // ExpressionR_Unary    unary expressions
   //---------------------------------------------------------------------------
     
     template <class Element, class A, typename Number, int depth, FUNC> 
-      class TER_Unary  : public  MArrayExpR<Number,TER_Unary<Number,A,FUNC,depth>> {
+      class ExpressionR_Unary  : public  ExpressionR<Number,ExpressionR_Unary<Number,A,FUNC,depth>> {
     public:
-      typedef MArrayExpR<Element,A,Number,depth> TIN;
+      typedef ExpressionR<Element,A,Number,depth> TIN;
   
   private:
     const TIN& a_;
@@ -26,13 +26,13 @@ namespace matricks {
 
 
 
-  TER_Unary(const TIN& a) : a_(a) {
+  ExpressionR_Unary(const TIN& a) : a_(a) {
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
       DISP3(a);
     }
     
-  ~TER_Unary() {
+  ~ExpressionR_Unary() {
       delete vptrs;
     }
 
@@ -51,49 +51,49 @@ namespace matricks {
   size_t size(void) const {
       return a_.size();
     }
-  size_t ndims(void) const {
-      return a_.ndims();
+  size_t rank(void) const {
+      return a_.rank();
     }
   Dimensions dims(void) const {
       return a_.dims();
     }
-  Dimensions tdims(void) const {
+  Dimensions template_dims(void) const {
       return this->dims();
     }
   bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-  size_t deepsize(void) const {
+  size_t total_size(void) const {
     if constexpr(depth<2) {
       return this->size();
     } else {
-      return (this->size())*(this->eldeepsize());
+      return (this->size())*(this->el_total_size());
     }
   }
 
   std::string classname() const {
-      return "TER_Unary";
+      return "ExpressionR_Unary";
   }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       std::string sa = a_.expression();
       return FUNC::expression(sa);
@@ -105,12 +105,12 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TER_Binary    binary operator expressions
+  // ExpressionR_Binary    binary operator expressions
   //               note that there is no easy way to define the first template
-  //               of MArrayExpR<> below so use NT1
+  //               of ExpressionR<> below so use NT1
   //---------------------------------------------------------------------------
   template<class A, class B, class NT1, class NT2, class OP, int D1, int D2>
-    class TER_Binary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Binary<A,B,NT1,NT2,OP,D1,D2> > {
+    class ExpressionR_Binary : public  ExpressionR<typename ResultType<NT1,NT2,typename OP::Type>::Type,ExpressionR_Binary<A,B,NT1,NT2,OP,D1,D2> > {
   public:
     typedef typename std::conditional<D1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<D2==0,const B,const B&>::type TypeB;
@@ -127,12 +127,12 @@ namespace matricks {
     typedef typename ResultType<NT1,NT2,typename OP::Type>::Type MultiArrayTypeOut;
     
 
-  TER_Binary(TypeA a, TypeB b)
+  ExpressionR_Binary(TypeA a, TypeB b)
     : a_(a), b_(b) {
       vptrs = new VectorofPtrs();
     }
 
-    ~TER_Binary() {
+    ~ExpressionR_Binary() {
       delete vptrs;
     }
 
@@ -151,10 +151,10 @@ namespace matricks {
 	if constexpr(D1==D2) {
 	  return OP::apply(a_.dat(i), b_.dat(i));
 	} else if constexpr(D1==D2+1) {
-	  size_t j = i % b_.deepsize();
+	  size_t j = i % b_.total_size();
 	  return OP::apply(a_.dat(i), b_.dat(j));
 	} else if constexpr(D2==D1+1) {
-	  size_t j = i % a_.deepsize();
+	  size_t j = i % a_.total_size();
 	  return OP::apply(a_.dat(j), b_.dat(i));
 	}
       }
@@ -191,7 +191,7 @@ namespace matricks {
         return b_.size();
       }
     }
-    size_t ndims(void) const {
+    size_t rank(void) const {
       return dims().size();
     }
     Dimensions dims(void) const {
@@ -204,41 +204,41 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-    size_t getDepth(void) const {
+    size_t depth(void) const {
       if constexpr(D1>=D2) {
         return D1;
       } else {
         return D2;
       }
     }
-    size_t elsize(void) const {
+    size_t element_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.elsize();
+        return a_.element_size();
       } else {
-        return b_.elsize();
+        return b_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_total_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.eldeepsize();
+        return a_.el_total_size();
       } else {
-        return b_.eldeepsize();
+        return b_.el_total_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.deepsize();
+        return a_.total_size();
       } else {
-        return b_.deepsize();
+        return b_.total_size();
       }
     }
 
     std::string classname() const {
-      return "TER_Binary";
+      return "ExpressionR_Binary";
     }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       /* std::string sa = a_.expression(); */
       /* if (a_.vetype() != VE_Vector)  */
@@ -258,12 +258,12 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TER_Ternary    ternary operator expressions
+  // ExpressionR_Ternary    ternary operator expressions
   //               note that there is no easy way to define the first template
-  //               of MArrayExpR<> below so use NT1
+  //               of ExpressionR<> below so use NT1
   //---------------------------------------------------------------------------
   template<class A, class B, class C, class NT1, class NT2, class NT3, class OP, int D1, int D2, int D3>
-    class TER_Ternary : public  MArrayExpR<typename ResultType<NT1,NT2,typename OP::Type>::Type,TER_Ternary<A,B,C,NT1,NT2,NT3,OP,D1,D2,D3> > {
+    class ExpressionR_Ternary : public  ExpressionR<typename ResultType<NT1,NT2,typename OP::Type>::Type,ExpressionR_Ternary<A,B,C,NT1,NT2,NT3,OP,D1,D2,D3> > {
   public:
     typedef typename std::conditional<D1==0,const A,const A&>::type TypeA;
     typedef typename std::conditional<D2==0,const B,const B&>::type TypeB;
@@ -283,12 +283,12 @@ namespace matricks {
     typedef typename OP::Type NumTypeOut;
     
 
-  TER_Ternary(TypeA a, TypeB b, TypeC c)
+  ExpressionR_Ternary(TypeA a, TypeB b, TypeC c)
     : a_(a), b_(b), c_(c) {
       vptrs = new VectorofPtrs();
     }
 
-    ~TER_Ternary() {
+    ~ExpressionR_Ternary() {
       delete vptrs;
     }
 
@@ -310,10 +310,10 @@ namespace matricks {
 	if constexpr(D1==D2) {
 	    return OP::apply(a_.dat(i), b_.dat(i), c_);
 	} else if constexpr(D1==D2+1) {
-	  size_t j = i % b_.deepsize();
+	  size_t j = i % b_.total_size();
 	  return OP::apply(a_.dat(i), b_.dat(j), c_);
 	} else if constexpr(D2==D1+1) {
-	  size_t j = i % a_.deepsize();
+	  size_t j = i % a_.total_size();
 	  return OP::apply(a_.dat(j), b_.dat(i), c_);
 	}
       }
@@ -353,11 +353,11 @@ namespace matricks {
         return b_.size();
       }
     }
-    size_t ndims(void) const {
+    size_t rank(void) const {
       if constexpr(D1>=D2) {
-        return a_.ndims();
+        return a_.rank();
       } else {
-        return b_.ndims();
+        return b_.rank();
       }
     }
     Dimensions dims(void) const {
@@ -370,41 +370,41 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-    size_t getDepth(void) const {
+    size_t depth(void) const {
       if constexpr(D1>=D2) {
         return D1;
       } else {
         return D2;
       }
     }
-    size_t elsize(void) const {
+    size_t element_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.elsize();
+        return a_.element_size();
       } else {
-        return b_.elsize();
+        return b_.element_size();
       }
     }
-    size_t eldeepsize(void) const {
+    size_t el_total_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.eldeepsize();
+        return a_.el_total_size();
       } else {
-        return b_.eldeepsize();
+        return b_.el_total_size();
       }
     }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(D1>=D2) {
-        return a_.deepsize();
+        return a_.total_size();
       } else {
-        return b_.deepsize();
+        return b_.total_size();
       }
     }
 
     std::string classname() const {
-      return "TER_Ternary";
+      return "ExpressionR_Ternary";
     }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       /* std::string sa = a_.expression(); */
       /* if (a_.vetype() != VE_Vector)  */
@@ -428,10 +428,10 @@ namespace matricks {
   
 
   //---------------------------------------------------------------------------
-  // TERW_Subset   Subset Expression
+  // ExpressionRW_Subset   Subset Expression
   //---------------------------------------------------------------------------
   template<typename Number, int depth>
-    class TERW_Subset :  public  MArrayExpRW<Number,TERW_Subset<Number,depth> > {
+    class ExpressionRW_Subset :  public  ExpressionRW<Number,ExpressionRW_Subset<Number,depth> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<Number>& a_;
@@ -441,20 +441,20 @@ namespace matricks {
   public:
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
-  TERW_Subset(Vector<Number>& a, const Vector<size_t>& ii)
+  ExpressionRW_Subset(Vector<Number>& a, const Vector<size_t>& ii)
     : a_(a), ii_(ii), delete_ii_(false) {
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
       vptrs->add(&ii_);
   }
-  TERW_Subset(Vector<Number>& a, const std::initializer_list<size_t>& list)
+  ExpressionRW_Subset(Vector<Number>& a, const std::initializer_list<size_t>& list)
     : a_(a), ii_(*(new Vector<size_t>(list))), delete_ii_(true) {
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
       vptrs->add(&ii_);
   }
     
-    ~TERW_Subset() {
+    ~ExpressionRW_Subset() {
       if (delete_ii_) delete &ii_;
       delete vptrs;
     }
@@ -463,14 +463,14 @@ namespace matricks {
     const MyNumberType dat(const size_t i) const {
       size_t ind = ii_[i];
       if (ind < 0) {
-	ind = a_.deepsize() + ind;
+	ind = a_.total_size() + ind;
       }
       return a_.dat(ind);
     }
     MyNumberType& dat(const size_t i)  {
       size_t ind = ii_[i];
       if (ind < 0) {
-	ind = a_.deepsize() + ind;
+	ind = a_.total_size() + ind;
       }
       return a_.dat(ind);
     }
@@ -497,8 +497,8 @@ namespace matricks {
     size_t size(void) const {
       return ii_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -506,49 +506,49 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
-      return "TERW_Subset";
+      return "ExpressionRW_Subset";
     }
 
 
     template <class NT2, class B>
-      TERW_Subset<Number>& operator=(const MArrayExpR<NT2,B>& rhs) { 
+      ExpressionRW_Subset<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_Subset<Number>& operator=(const MyNumberType d) { 
+    ExpressionRW_Subset<Number>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
    
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
-      //return expression_TERW_Subset(a_.expression(),ii_.expression());
+      //return expression_ExpressionRW_Subset(a_.expression(),ii_.expression());
     }
 #endif
 
@@ -567,10 +567,10 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TERW_Submask   subset of a tensor from a mask
+  // ExpressionRW_Submask   subset of a tensor from a mask
   //---------------------------------------------------------------------------
   template<typename Number, int depth>
-    class TERW_Submask :  public  MArrayExpRW<Number,TERW_Submask<Number,depth> > {
+    class ExpressionRW_Submask :  public  ExpressionRW<Number,ExpressionRW_Submask<Number,depth> > {
   private:
     // can't be constant since we alow to be on left hand side
     Vector<Number>& a_;
@@ -581,7 +581,7 @@ namespace matricks {
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TERW_Submask(Vector<Number>& a, const Vector<bool>& mask)
+  ExpressionRW_Submask(Vector<Number>& a, const Vector<bool>& mask)
     : a_(a), ii_(new Vector<size_t>(findtrue(mask))) { 
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
@@ -589,7 +589,7 @@ namespace matricks {
     }
 
 
-    ~TERW_Submask(){ 
+    ~ExpressionRW_Submask(){ 
       delete  ii_;
       delete vptrs;
     }
@@ -618,8 +618,8 @@ namespace matricks {
     size_t size(void) const {
       return ii_->size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -627,51 +627,51 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
-      return "TERW_Submask";
+      return "ExpressionRW_Submask";
     }
 
 
 
     template <class NT2, class B>
-      TERW_Submask<Number>& operator=(const MArrayExpR<NT2,B>& rhs) { 
+      ExpressionRW_Submask<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_Submask<Number>& operator=(const MyNumberType d) { 
+    ExpressionRW_Submask<Number>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
 
     
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
-      //      return expression_TERW_Submask(a_.expression(),ii_->expression());
+      //      return expression_ExpressionRW_Submask(a_.expression(),ii_->expression());
     }
 #endif 
 
@@ -687,10 +687,10 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TERW_RealFromComplex  used for accessing real/imag part of complex vector
+  // ExpressionRW_RealFromComplex  used for accessing real/imag part of complex vector
   //---------------------------------------------------------------------------
   template <typename Number, class OP, int depth>
-    class TERW_RealFromComplex : public  MArrayExpRW<Number,TERW_RealFromComplex<Number,OP,depth> > {
+    class ExpressionRW_RealFromComplex : public  ExpressionRW<Number,ExpressionRW_RealFromComplex<Number,OP,depth> > {
   private:
     Vector<std::complex<Number> >& a_;
     VectorofPtrs *vptrs;
@@ -699,13 +699,13 @@ namespace matricks {
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TERW_RealFromComplex(Vector<std::complex<Number> >& a)
+  ExpressionRW_RealFromComplex(Vector<std::complex<Number> >& a)
     :   a_(a) { 
       vptrs = new VectorofPtrs();
       vptrs->add(&a_);
     }
 
-    ~TERW_RealFromComplex() {
+    ~ExpressionRW_RealFromComplex() {
       delete vptrs;
     }
 
@@ -730,8 +730,8 @@ namespace matricks {
     size_t size(void) const {
       return a_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -739,46 +739,46 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
-      return "TERW_RealFromComplex";
+      return "ExpressionRW_RealFromComplex";
     }
 
 
     template <class NT2, class B>
-      TERW_RealFromComplex<Number,OP,depth>& operator=(const MArrayExpR<NT2,B>& rhs) { 
+      ExpressionRW_RealFromComplex<Number,OP,depth>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_RealFromComplex<Number,OP,depth>& operator=(const MyNumberType d) { 
+    ExpressionRW_RealFromComplex<Number,OP,depth>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return a_.expression();
       //      return expression_VSliceObj(a_.expression(),start_,end_,step_);
@@ -791,11 +791,11 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TER_Series    used for Taylor and Maclaurin series
+  // ExpressionR_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
   template<typename Number, class A, class X, int depth>
-    class TER_Series : public  MArrayExpR<Number,TER_Series<Number,A,X,depth> > {
+    class ExpressionR_Series : public  ExpressionR<Number,ExpressionR_Series<Number,A,X,depth> > {
 
   private:
     const A& a_;
@@ -808,20 +808,20 @@ namespace matricks {
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TER_Series(const A& a, const X& x, const int N, const Number x0)
+  ExpressionR_Series(const A& a, const X& x, const int N, const Number x0)
     : a_(a), x_(x), N_(N), x0_(x0) { 
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
       vptrs->add(x_.getAddresses());
     }
-  TER_Series(const A& a, const X& x, const int N)
+  ExpressionR_Series(const A& a, const X& x, const int N)
     : a_(a), x_(x), N_(N), x0_(0) { 
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
       vptrs->add(x_.getAddresses());
     }
 
-    ~TER_Series() {
+    ~ExpressionR_Series() {
       delete vptrs;
     }
 
@@ -851,8 +851,8 @@ namespace matricks {
       // TODO: check a_.size >= N
     }
 
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -860,36 +860,36 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
-      return "TER_Series";
+      return "ExpressionR_Series";
     }
   
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       // TODO: get this working
       /* std::string sa = a_.expression(); */
@@ -910,11 +910,11 @@ namespace matricks {
 
 
   //---------------------------------------------------------------------------
-  // TER_Series2    used for fourier series
+  // ExpressionR_Series2    used for fourier series
   //---------------------------------------------------------------------------
   
   template<typename Number, class A, class B, class X, class OP1, class OP2, int depth>
-    class TER_Series2 : public  MArrayExpR<Number,TER_Series2< Number, A, B, X, OP1, OP2> > {
+    class ExpressionR_Series2 : public  ExpressionR<Number,ExpressionR_Series2< Number, A, B, X, OP1, OP2> > {
 
   private:
     const A& a_;
@@ -930,7 +930,7 @@ namespace matricks {
     typedef typename NumberTrait<Number>::Type MyNumberType;
 
 
-  TER_Series2(const A& a, const A& b, const X& x, const int N, const Number k1)
+  ExpressionR_Series2(const A& a, const A& b, const X& x, const int N, const Number k1)
     : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<Number>(N))) {
       
       vptrs = new VectorofPtrs();
@@ -943,7 +943,7 @@ namespace matricks {
 	k_[n] = n*k1_;
       }
     }
-    ~TER_Series2(){
+    ~ExpressionR_Series2(){
       delete &k_;
       delete vptrs;
     }
@@ -972,8 +972,8 @@ namespace matricks {
     size_t size(void) const {
       return x_.size();
     }
-    size_t ndims(void) const {
-      return x_.ndims();
+    size_t rank(void) const {
+      return x_.rank();
     }
     Dimensions dims(void) const {
       return x_.dims();
@@ -981,36 +981,36 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
-      return "TER_Series2";
+      return "ExpressionR_Series2";
     }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       // TODO: get this working
       /* std::string sa = a_.expression(); */
@@ -1044,11 +1044,11 @@ namespace matricks {
 
 
   //-----------------------------------------------------------------------------
-  // TERW_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
+  // ExpressionRW_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
   template<typename Number, class A, class FUNC, int depth>
-    class TERW_Transpose  : public  MArrayExpRW<Number,TERW_Transpose<Number,A,FUNC,depth> > {
+    class ExpressionRW_Transpose  : public  ExpressionRW<Number,ExpressionRW_Transpose<Number,A,FUNC,depth> > {
   
   private:
     A& a_;
@@ -1059,13 +1059,13 @@ namespace matricks {
 
 
 
-  TERW_Transpose(A& a) : a_(a) {
+  ExpressionRW_Transpose(A& a) : a_(a) {
       rdims = &(a_.dims().getReverse());
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
     }
     
-    ~TERW_Transpose() {
+    ~ExpressionRW_Transpose() {
       delete rdims;
       delete vptrs;
     }
@@ -1091,8 +1091,8 @@ namespace matricks {
     size_t size(void) const {
       return rdims->datasize();
     }
-    size_t ndims(void) const {
-      return rdims->ndims();
+    size_t rank(void) const {
+      return rdims->rank();
     }
     Dimensions dims(void) const {
       return *rdims;
@@ -1100,46 +1100,46 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
-      return "TERW_Transpose";
+      return "ExpressionRW_Transpose";
     }
 
     template <class NT2, class B>
-      TERW_Submask<Number>& operator=(const MArrayExpR<NT2,B>& rhs) { 
+      ExpressionRW_Submask<Number>& operator=(const ExpressionR<NT2,B>& rhs) { 
       return this->equals(rhs);
     }
     
-    TERW_Submask<Number>& operator=(const MyNumberType d) { 
+    ExpressionRW_Submask<Number>& operator=(const MyNumberType d) { 
       return this->equals(d);
     }
     
     
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       std::string sa = a_.expression();
       return FUNC::expression(sa);
@@ -1154,11 +1154,11 @@ namespace matricks {
 
 
   //-----------------------------------------------------------------------------
-  // TER_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
+  // ExpressionR_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
   template<typename Number, class A, class FUNC, int depth>
-    class TER_Transpose  : public  MArrayExpR<Number,TER_Transpose<Number,A,FUNC,depth> > {
+    class ExpressionR_Transpose  : public  ExpressionR<Number,ExpressionR_Transpose<Number,A,FUNC,depth> > {
   
   private:
     const A& a_;
@@ -1170,13 +1170,13 @@ namespace matricks {
 
 
 
-  TER_Transpose(const A& a) : a_(a) {
+  ExpressionR_Transpose(const A& a) : a_(a) {
       rdims = &(a_.dims().getReverse());
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
     }
     
-    ~TER_Transpose() {
+    ~ExpressionR_Transpose() {
       delete rdims;
       delete vptrs;
     }
@@ -1194,8 +1194,8 @@ namespace matricks {
     size_t size(void) const {
       return rdims->datasize();
     }
-    size_t ndims(void) const {
-      return rdims->ndims();
+    size_t rank(void) const {
+      return rdims->rank();
     }
     Dimensions dims(void) const {
       return *rdims;
@@ -1203,36 +1203,36 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
-      return "TER_Transpose";
+      return "ExpressionR_Transpose";
     }
 
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       std::string sa = a_.expression();
       return FUNC::expression(sa);
@@ -1249,7 +1249,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
   template<typename Number, class A, class B, int depth>
-    class VER_Join : public  MArrayExpR<Number,VER_Join<Number,A,B,depth> > {
+    class VER_Join : public  ExpressionR<Number,VER_Join<Number,A,B,depth> > {
 
   private:
     const A& a_;
@@ -1287,8 +1287,8 @@ namespace matricks {
     size_t size(void) const {
       return a_.size() +b_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -1296,35 +1296,35 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
       return "VER_Join";
     }
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //      return expression_VER_Join(a_.expression(),ii_.expression());
@@ -1341,7 +1341,7 @@ namespace matricks {
 
 
   template<typename Number, class A, class B, int depth>
-    class VERW_Join : public  MArrayExpRW<Number,VERW_Join<Number,A,B,depth> > {
+    class VERW_Join : public  ExpressionRW<Number,VERW_Join<Number,A,B,depth> > {
 
   private:
     A& a_;
@@ -1385,8 +1385,8 @@ namespace matricks {
     size_t size(void) const {
       return a_.size() +b_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -1394,47 +1394,47 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
       return "VERW_Join";
     }
 
-    VERW_Join<Number,A,B>& operator=(TERW_Resize<Number>& b) { 
+    VERW_Join<Number,A,B>& operator=(ExpressionRW_Resize<Number>& b) { 
       return this->equals(b);
     }
 
     template <class C>
-      VERW_Join<Number,A,B>& operator=(const MArrayExpR<Number,C>& rhs) { 
-      PRINTF2("VERW_Join<Number,A,B>& operator=(const MArrayExpR<Number,C>& rhs)\n");
+      VERW_Join<Number,A,B>& operator=(const ExpressionR<Number,C>& rhs) { 
+      PRINTF2("VERW_Join<Number,A,B>& operator=(const ExpressionR<Number,C>& rhs)\n");
       return this->equals(rhs);
     }
 
 
     template <class NT2, class C>
-      VERW_Join<Number,A,B>& operator=(const MArrayExpR<NT2,C>& rhs) { 
+      VERW_Join<Number,A,B>& operator=(const ExpressionR<NT2,C>& rhs) { 
       return this->equals(rhs);
     }
     
@@ -1444,7 +1444,7 @@ namespace matricks {
     
 
     
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //      return expression_VER_Join(a_.expression(),ii_.expression());
@@ -1463,7 +1463,7 @@ namespace matricks {
   //---------------------------------------------------------------------------
 
   template<typename Number, class A, int depth>
-    class VER_Rep : public  MArrayExpR<Number,VER_Rep<Number,A,depth> > {
+    class VER_Rep : public  ExpressionR<Number,VER_Rep<Number,A,depth> > {
 
   private:
     const A& a_;
@@ -1500,8 +1500,8 @@ namespace matricks {
     size_t size(void) const {
       return m_*a_.size();
     }
-    size_t ndims(void) const {
-      return a_.ndims();
+    size_t rank(void) const {
+      return a_.rank();
     }
     Dimensions dims(void) const {
       return a_.dims();
@@ -1509,35 +1509,35 @@ namespace matricks {
     bool isExpression(void) const {
       return true;
     }
-  size_t getDepth(void) const {
+  size_t depth(void) const {
       return depth;
     }
-  size_t elsize(void) const {
+  size_t element_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.elsize();
+      return a_.element_size();
     }
   }
-  size_t eldeepsize(void) const {
+  size_t el_total_size(void) const {
     if constexpr(depth<2) {
       return 1;
     } else {
-      return a_.eldeepsize();
+      return a_.el_total_size();
     }
   }
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       if constexpr(depth<2) {
 	  return this->size();
 	} else {
-	return (this->size())*(this->eldeepsize());
+	return (this->size())*(this->el_total_size());
       }
     }
     std::string classname() const {
       return "VER_Rep";
     }
 
-#if MATRICKS_DEBUG>=1
+#if MATHQ_DEBUG>=1
     std::string expression(void) const {
       return "";
       //      return expression_VER_Join(a_.expression(),ii_.expression());

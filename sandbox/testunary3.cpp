@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     TLDISP(mathq::real(x));
     TLDISP(mathq::imag(x));
     TLDISP(mathq::conj(x));
-    TLDISP(mathq::zero(x));
+    TLDISP(mathq::zero<decltype(x)>());
     TLDISP(std::abs(x));
     TLDISP(std::arg(x));
     TLDISP(std::proj(x));

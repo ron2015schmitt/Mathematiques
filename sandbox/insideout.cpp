@@ -46,15 +46,15 @@ int main(int argc, char *argv[]) {
   MOUT << bold.apply("Scalar") << endl;
   {
     CR();
-    InversionType<Scalar<double>, Null>::Type s{4};
+    InversionType<Scalar<double>, NullType>::Type s{4};
     TLDISP(s);
-    InversionType<Vector<double>, Null>::Type v{1, 2, 3, 4};
+    InversionType<Vector<double>, NullType>::Type v{1, 2, 3, 4};
     TLDISP(v);
-    InversionType<Scalar<Vector<double>>, Null>::Type vs{{1}, {2}, {3}, {4}};
+    InversionType<Scalar<Vector<double>>, NullType>::Type vs{{1}, {2}, {3}, {4}};
     TLDISP(vs);
     Scalar<Vector<double>> sv{{1, 2, 3, 4}};
     TLDISP(sv);
-    InversionType<decltype(sv), Null>::Type vs2;
+    InversionType<decltype(sv), NullType>::Type vs2;
     TLDISP(vs2);
   }
 

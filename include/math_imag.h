@@ -1,5 +1,5 @@
-#ifndef MATHQ__MATH_IMAG_H
-#define MATHQ__MATH_IMAG_H
+#ifndef MATHQ__MATH_IMAG
+#define MATHQ__MATH_IMAG
 
 
 namespace mathq {
@@ -63,7 +63,7 @@ namespace mathq {
 
     inline static std::string classname() {
       Number d;
-      return "Imaginary" + display::getBracketedTypeName(d);
+      return "Imaginary" + display::bracketAndStyleTypename(d);
     }
 
 
@@ -146,7 +146,7 @@ namespace mathq {
   template <typename I2, typename F1>
   EnableMethodIf<IsImaginary<I2>::value, I2>
     numbercast(const Imaginary<F1>& y) {
-    typedef typename IsImaginary<I2>::RealType F2;
+    typedef typename IsImaginary<I2>::OrderedNumberType F2;
     F2 val = numbercast<F2>(y.value());
     return Imaginary<F2>(val);
   }
@@ -442,6 +442,30 @@ namespace mathq {
   //*******************************************************
   //          unary funcs
   //*******************************************************
+
+
+
+
+
+  // zero
+
+  template <typename Number, typename T >
+  typename std::enable_if< std::is_same<T, Imaginary<Number>>::value, Imaginary<Number> >
+    zero() {
+    return Imaginary<Number>(0);
+  }
+
+  // one
+
+  template <typename Number, typename T >
+  typename std::enable_if<
+    std::is_same<T, Imaginary<Number>>::value,
+    Imaginary<Number>
+  >
+    one() {
+    return Imaginary<Number>(1);
+  }
+
 
   // real(z)
 

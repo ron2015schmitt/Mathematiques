@@ -6,7 +6,7 @@
 
 void printoptsfile() {
   std::ifstream myfile;
-  myfile.open("example.g++_copts");
+  myfile.open("example.compiler");
   std::string myline;
   if (myfile.is_open()) {
     while (myfile) {
@@ -38,15 +38,6 @@ int main(int argc, char* argv[]) {
   MOUT << "MATHQ_DEBUG=" << MATHQ_DEBUG << std::endl;
   print_mathq_info();
   printoptsfile();
-
-  Vector<double> v1({ 2, -1 });
-  Vector<double> v2;
-  v2 = 10 * sin(pi / 2 * v1) + 5;
-
-  DISP(v1);
-  DISP(v2);
-  DISP(v1 + v2);
-
   // FormatDataVector::max_elements_per_line = 10;
   // FormatDataVector::string_opening = "[\n  ";
   // FormatDataVector::string_delimeter = "\n  ";
@@ -62,45 +53,39 @@ int main(int argc, char* argv[]) {
   FormatDataMatrix::string_endofline = "\n";
   FormatDataMatrix::string_closing = "\n]";
 
-  Matrix<double> m1(2, 2);
-  m1 = { 10, 20, 30, 40 };
-  Matrix<double> m2(2, 2);
-  m2 = { -1, -2, -3, -4 };
-
-  Matrix<double> m3({ {1, 2}, {3, 4}, {5, 6} });
-  // m3 = {{1, 2}, {3, 4}, {5, 6}};
-  // dot product
-  DISP(v1 | v2);
-
-  DISP(v1);
-  DISP(m3);
-  DISP((m3 | v1));
-
-  DISP(m1);
-  DISP(m2);
-  DISP(m1 + m2);
-
-  DISP(m1 | v1);
-  DISP(v1 | m1);
-
-  DISP(m1 | m2);
-
-  DISP(m3 | m1);
-  DISP(m2 | m3.transpose());
-
-  Vector<double> v({ 2, -1 });
-  Vector<double> u({ 1, -2, 4 });
-  Matrix<double> A({ {1, 2}, {3, 4}, {5, 6} });
-
-  DISP(v);
-  DISP(A);
-  DISP(A | v);
-
+  CR();
+  Vector<double> u = { 2, -1 };
   DISP(u);
+  Vector<double> v = { 5, -5 };
   DISP(v);
+  Matrix<double> A = { {1, 2}, {3, 4}, {5, 6} };
   DISP(A);
-  DISP(u | A | v);
+  Vector<double> w = { 2, 1, -2 };
+  DISP(w);
+  Matrix<double, 2, 2> B = { {10, 20}, {30, 40} };
+  DISP(B);
+  // when the size is specified, you can also initialize using a flat list
+  Matrix<double, 2, 2> C = { -1, -2, -3, -4 };
+  DISP(C);
+
+  CR();
+  DISP(u + v);
+  DISP(u | v);
+
+
+  CR();
+  DISP((A | u));
+  DISP((w | A));
+
+  CR();
+  DISP(B + C);
+  DISP(B | C);
+  DISP(A | B);
+  DISP(C | A.transpose());
+
+  DISP(u | (B+C) | v);
   DISP(u | (2 * A - 1) | (10 * sin(pi / 2 * v) + 5));
+
 
   CR();
   MOUT << "done: " << CREATESTYLE(BOLD).apply(myname) << std::endl;

@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) {
     // printStart(++testnum);
     // Scalar<ComplexInt> s1 = ComplexInt(1,1);
     // testtext( "dynamic casting" );
-    // MArrayExpRW<ComplexInt, Scalar<ComplexInt> > &s2 = s1;
+    // ExpressionRW<ComplexInt, Scalar<ComplexInt> > &s2 = s1;
     // Scalar<ComplexInt> *sp1 = dynamic_cast< Scalar<ComplexInt>* >(&s2);
     // void* result = (void*)&s1;
     // void* expected = (void*)sp1;
@@ -121,7 +121,7 @@ int main(int argc, char* argv[]) {
 
     Scalar<ComplexInt> s1 = ComplexInt(1, 1);
     bool result;
-    testcode(result = (s1.size() == 1) && (s1.dims().datasize() == 1) && (s1.ndims() == 0) && (s1.dims().size() == 0));
+    testcode(result = (s1.size() == 1) && (s1.dims().num_elements() == 1) && (s1.rank() == 0) && (s1.dims().size() == 0));
     bool expected = true;
     bool pass = result;
     printEnd(pass, result, expected);

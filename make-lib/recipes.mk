@@ -33,18 +33,26 @@ FORCE: ;
 #      numbers, the last such option is the one that is effective."
 #
 #---------------------------------------------------------------------
+
+define generate_compiler_file
+	@\date > $1.compiler
+	@\echo -e `$(CPP) --version | head -1` >> $1.compiler
+	@\echo -e "$(CPP_CMD) $(CFLAGS)" >> $1.compiler
+endef
+
+
 %.o: %.cpp 
-	\echo -e "g++ compile command used:  $(CPPC) $(CFLAGS)" > $*.g++_copts
-	$(CPPC) $(CFLAGS) -c $*.cpp -o $@
+	$(call generate_compiler_file,$*)
+	$(CPP_CMD) $(CFLAGS) -c $*.cpp -o $@
 
 
 %.s: %.cpp 
-	\echo -e "g++ compile command used:  $(CPPC) $(CFLAGS)" > $*.g++_copts
-	$(CPPC) $(CFLAGS) -S $*.cpp 
+	\echo -e "compiler command used:  $(CPP_CMD) $(CFLAGS)" > $*.compiler
+	$(CPP_CMD) $(CFLAGS) -S $*.cpp 
 
 %.ii: %.cpp 
-	\echo -e "g++ compile command used:  $(CPPC) $(CFLAGS)" > $*.g++_copts
-	$(CPPC) $(CFLAGS) -E $*.cpp -o $@
+	\echo -e "compiler command used:  $(CPP_CMD) $(CFLAGS)" > $*.compiler
+	$(CPP_CMD) $(CFLAGS) -E $*.cpp -o $@
 
 
 #---------------------------------------------------------------------
@@ -59,7 +67,7 @@ FORCE: ;
 # LOPT provided at the command line will append to options
 #---------------------------------------------------------------------
 %: %.o 
-	$(CPPC) $(LFLAGS) $*.o -o $@ $(LIBS) 
+	$(CPP_CMD) $(LFLAGS) $*.o -o $@ $(LIBS) 
 
 
 #---------------------------------------------------------------------
@@ -111,7 +119,7 @@ gitignore:
 # Each Makefile that has an include statement for this file should:
 #  - define a "clean" target with "cleanstd" as a prerequisite
 clean:: FORCE 
-	@command rm -f *.o *.a *.s *.g++_copts core.* node.json *.temp.md
+	@command rm -f *.o *.a *.s *.compiler core.* node.json *.temp.md
 	@command rm -f $(EXEC) $(NONEXEC) 
 
 
@@ -122,7 +130,7 @@ nomakeclean_%: FORCE
 	@echo "nomakeclean_$(*)"
 # ONSHELL is on
 	@cd $(*)  
-	@command rm -f *.o *.a *.s *.g++_copts core.* *.temp *.tmp *~ ~* *.gz *.tar *.old node.json *.temp.md
+	@command rm -f *.o *.a *.s *.compiler core.* *.temp *.tmp *~ ~* *.gz *.tar *.old node.json *.temp.md
 #  DONT NEED ANYMORE: if body.cpp exists then body.md is an output file not a source
 #	@if [[ -f body.cpp ]] ; then command rm -f body.md; fi
 

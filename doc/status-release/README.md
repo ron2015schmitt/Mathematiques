@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.75-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.262-c++20</h1>
 
 <details>
 
@@ -29,48 +29,54 @@ Currently, in 2022, Mathématiques is undergoing the final changes to make it sp
 
 ## News 
 
-The first step of refactoring has been completed.
+The first two refactoring projects have been completed.
 
-+ v3.4 Documenation
-  + Full refactoring of the online documentation
-    + expanable table of contents header
-    + navigation footer
 
 ## Coming soon
 
-+ v3.5 Documenation
++ Vector Calculus
+  + curvilinear coordinate systems
+
++ Tensor Calculus in generalized coordinates / Differential Geometry
+  + covariant and contravariant tensors
+
++ Documenation
   + Rewritten User Manual
-  + Complete _Usage Guide_, covering all the functionality
+  + _Usage Guide_, covering all the functionality
   + New _Developer Guide_
 
-+ v3.6 Indexing
++ Indexing
   + Refactor of vector/matrix/tensor indexing, including
-    + new index/iterator types such as slices similar to Fortan and Python
+  + complete index/iterator types such as slices similar to Fortan and Python
 
-+ v3.7 Display 
++ Display 
   + Refactor of Display
 
-+ v3.8 Debugging Modes
++ alpha-3.8 Debugging Modes
   + Refactor of Debugging Modes
 
-+ v4.0+ 
-  + More matrix types
-  + covariant and contravariant tensors
-  + tensor operations
-  + curvilinear coordinate systems
 
 ## Release Notes
 
-### **v3.4** Documentation Refactoring
+### **0.40** MultiArray Refactoring
+  + changed numbering system to start with 0. V3.5 is now 0.40.
+  + Now using `C++20` (`g++ 11.1.0`) to take advantage of concepts / constraints
+  + Added constant and repeated-vector `MultiArray` types
+  + Added compiler information for build
+  + C++ version is set via file `c++.version.src.txt`
+  + `Scalar`, `Vector`, and `Matrix` are now simply type aliases for `MultiArray` type via `C++20` concepts / constraints
+  + Removed "hidden" `MultiArray` template parameters for Depth and NumberType: only needed in expressions
+
+### **alpha-3.4** Documentation Refactoring
   + Full refactoring of the online documentation
-  + expanable table of contents header
+  + Expandable table of contents header
   + navigation footer
 
-### **v3.3** Build Process Refactoring
+### **alpha-3.3** Build Process Refactoring
   + The build process has been fully refactored, simplified, and streamlined
   + The documentation refactoring has begun
   
-### **v3.2** First Official Release
+### **alpha-3.2** First Official Release
 
 **Design**
   + Simple Matlab-like syntax with no run-time cost

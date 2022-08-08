@@ -15,7 +15,7 @@ namespace mathq {
    */
 
   template <typename Number> class Vector :
-    public MArrayExpRW<Number,Vector<Number> > {
+    public ExpressionRW<Number,Vector<Number> > {
   private:
 
     // *********************** OBJECT DATA ***********************************
@@ -29,7 +29,7 @@ namespace mathq {
 
   public:     
     typedef Number DataType;
-    typedef typename OrderedNumberTrait<Number>::Type PrimDataType;
+    typedef typename SimpleNumberTrait<Number>::Type PrimDataType;
 
 
 
@@ -98,7 +98,7 @@ namespace mathq {
     // --------------------- EXPRESSION CONSTRUCTOR --------------------
 
     template <class A>
-    Vector<Number>(const MArrayExpR<Number,A>& x) 
+    Vector<Number>(const ExpressionR<Number,A>& x) 
     {
       const size_t N = x.size();
       data_ = new std::valarray<Number>(N);
@@ -134,11 +134,11 @@ namespace mathq {
     inline size_t size(void) const {
       return data_->size();
     }
-    size_t getDepth(void) const {
+    size_t depth(void) const {
       return 1;
     }
 
-    size_t ndims(void) const {
+    size_t rank(void) const {
       return 1;
     }
     Dimensions dims(void) const {
@@ -168,14 +168,14 @@ namespace mathq {
 
 
     // *** this is used for resize-by-assignment ***
-    TERW_Resize<Number>  resize(void) { 
-      return  TERW_Resize<Number>(*this);
+    ExpressionRW_Resize<Number>  resize(void) { 
+      return  ExpressionRW_Resize<Number>(*this);
     }
 
     // this is used to empty the vector of its datastore
-    TERW_Resize<Number>  resize(void) const {
+    ExpressionRW_Resize<Number>  resize(void) const {
       this->resize(0);
-      return  TERW_Resize<Number>(*this);
+      return  ExpressionRW_Resize<Number>(*this);
     }
 
     // --------------------- .resize(N) ---------------------
@@ -244,10 +244,10 @@ namespace mathq {
 
     // Accessing a slice of values
     
-    TERW_Subset<Number> operator[](const slc& slice)  { 
+    ExpressionRW_Subset<Number> operator[](const slc& slice)  { 
       return (*this)[slice.toIndexVector(size())];
     }
-    const TERW_Subset<Number>  operator[](const slc& slice) const  {
+    const ExpressionRW_Subset<Number>  operator[](const slc& slice) const  {
       //      display::log3("Vector","operator[]","(const slc& slice)\n");
       return (*this)[slice.toIndexVector(size())];
     }
@@ -256,11 +256,11 @@ namespace mathq {
 
     // Accessing a SET of values using a vector of ints
 
-    TERW_Subset<Number> operator[](const Vector<size_t>& ii) {
-      return TERW_Subset<Number>(*this, ii);
+    ExpressionRW_Subset<Number> operator[](const Vector<size_t>& ii) {
+      return ExpressionRW_Subset<Number>(*this, ii);
     }
-    const TERW_Subset<Number> operator[](const Vector<size_t>& ii) const {
-      return TERW_Subset<Number>(*this, ii);
+    const ExpressionRW_Subset<Number> operator[](const Vector<size_t>& ii) const {
+      return ExpressionRW_Subset<Number>(*this, ii);
     }
 
 
@@ -268,22 +268,22 @@ namespace mathq {
     
     // Accessing a SET of values using a MASK
     
-    TERW_Submask<Number> operator[](const Vector<bool>& mask)  {
-      return  TERW_Submask<Number>(*this,mask);
+    ExpressionRW_Submask<Number> operator[](const Vector<bool>& mask)  {
+      return  ExpressionRW_Submask<Number>(*this,mask);
     }
-    const TERW_Submask<Number> operator[](const Vector<bool>& mask)  const {
-      return  TERW_Submask<Number>(*this,mask);
+    const ExpressionRW_Submask<Number> operator[](const Vector<bool>& mask)  const {
+      return  ExpressionRW_Submask<Number>(*this,mask);
     }
 
 
 
     //Accessing a SET of values using a list
 
-    TERW_Subset<Number> operator[](const std::initializer_list<size_t>& list) {
-      return  TERW_Subset<Number>(*this, list);
+    ExpressionRW_Subset<Number> operator[](const std::initializer_list<size_t>& list) {
+      return  ExpressionRW_Subset<Number>(*this, list);
     }
-    const TERW_Subset<Number> operator[](const std::initializer_list<size_t>& list) const {
-      return  TERW_Subset<Number>(*this, list);
+    const ExpressionRW_Subset<Number> operator[](const std::initializer_list<size_t>& list) const {
+      return  ExpressionRW_Subset<Number>(*this, list);
     }
 
 
@@ -322,10 +322,10 @@ namespace mathq {
 
     // Accessing a slice of values
     
-    TERW_Subset<Number> operator()(const slc& slice)  { 
+    ExpressionRW_Subset<Number> operator()(const slc& slice)  { 
       return (*this)[slice.toIndexVector(size())];
     }
-    const TERW_Subset<Number>  operator()(const slc& slice) const  {
+    const ExpressionRW_Subset<Number>  operator()(const slc& slice) const  {
       //      display::log3("Vector","operator[]","(const slc& slice)\n");
       return (*this)[slice.toIndexVector(size())];
     }
@@ -334,11 +334,11 @@ namespace mathq {
 
     // Accessing a SET of values using a vector of ints
 
-    TERW_Subset<Number> operator()(const Vector<size_t>& ii) {
-      return TERW_Subset<Number>(*this, ii);
+    ExpressionRW_Subset<Number> operator()(const Vector<size_t>& ii) {
+      return ExpressionRW_Subset<Number>(*this, ii);
     }
-    const TERW_Subset<Number> operator()(const Vector<size_t>& ii) const {
-      return TERW_Subset<Number>(*this, ii);
+    const ExpressionRW_Subset<Number> operator()(const Vector<size_t>& ii) const {
+      return ExpressionRW_Subset<Number>(*this, ii);
     }
 
 
@@ -346,22 +346,22 @@ namespace mathq {
     
     // Accessing a SET of values using a MASK
     
-    TERW_Submask<Number> operator()(const Vector<bool>& mask)  {
-      return  TERW_Submask<Number>(*this,mask);
+    ExpressionRW_Submask<Number> operator()(const Vector<bool>& mask)  {
+      return  ExpressionRW_Submask<Number>(*this,mask);
     }
-    const TERW_Submask<Number> operator()(const Vector<bool>& mask)  const {
-      return  TERW_Submask<Number>(*this,mask);
+    const ExpressionRW_Submask<Number> operator()(const Vector<bool>& mask)  const {
+      return  ExpressionRW_Submask<Number>(*this,mask);
     }
 
 
 
     //Accessing a SET of values using a list
 
-    TERW_Subset<Number> operator()(const std::initializer_list<size_t>& list) {
-      return  TERW_Subset<Number>(*this, list);
+    ExpressionRW_Subset<Number> operator()(const std::initializer_list<size_t>& list) {
+      return  ExpressionRW_Subset<Number>(*this, list);
     }
-    const TERW_Subset<Number> operator()(const std::initializer_list<size_t>& list) const {
-      return  TERW_Subset<Number>(*this, list);
+    const ExpressionRW_Subset<Number> operator()(const std::initializer_list<size_t>& list) const {
+      return  ExpressionRW_Subset<Number>(*this, list);
     }
 
 
@@ -370,9 +370,9 @@ namespace mathq {
     //********************* Direct access to data_  ***********************************
     //**********************************************************************
 
-    // -------------------- getInternalStdArray() --------------------
+    // -------------------- dataobj() --------------------
     // "read/write" to the wrapped valarray
-    std::valarray<Number>& getInternalStdArray()  {
+    std::valarray<Number>& dataobj()  {
       return *data_; 
     }
 
@@ -389,7 +389,7 @@ namespace mathq {
     //************************** ASSIGNMENT **************************************
     //**********************************************************************
 
-    // Any new assignment operators should also be addedc to MArrayExpRW for consistency.
+    // Any new assignment operators should also be addedc to ExpressionRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
@@ -405,7 +405,7 @@ namespace mathq {
 
 
     // Assignment to a vector expression
-    template <class A>  Vector<Number>& equals(const MArrayExpR<Number,A>& x) {  
+    template <class A>  Vector<Number>& equals(const ExpressionR<Number,A>& x) {  
 
       // resize to avoid segmentation faults
       resize(x.size());
@@ -427,30 +427,30 @@ namespace mathq {
       return *this; 
     }
     
-    template <class A>  Vector<Number>& operator=(const MArrayExpR<Number,A>& x) {  
+    template <class A>  Vector<Number>& operator=(const ExpressionR<Number,A>& x) {  
       return equals(x);
     }
     
 
 
     // doesn't work
-    //    template <class A, class B>  Vector<Number>& equals(const MArrayExpR<MArrayExpR<Number,A>,B>& x) {  
-    //    template <class A, class B>  Vector<Number>& operator=(MArrayExpR<MArrayExpR<typename OrderedNumberTrait<Number>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(MArrayExpR<MArrayExpR<Number,A>,B>) {
+    //    template <class A, class B>  Vector<Number>& equals(const ExpressionR<ExpressionR<Number,A>,B>& x) {  
+    //    template <class A, class B>  Vector<Number>& operator=(ExpressionR<ExpressionR<typename SimpleNumberTrait<Number>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(ExpressionR<ExpressionR<Number,A>,B>) {
     //    template <class A>  Vector<Number>& operator=(A& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<Number>::Type,A>,B>& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<MArrayExpR<typename OrderedNumberTrait<Number>::Type,A>,B> x) {
-    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const MArrayExpR<A<Number,B>,C>& x) {
-    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const MArrayExpR<A<PrimDataType,B>,C>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const ExpressionR<ExpressionR<typename SimpleNumberTrait<Number>::Type,A>,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const ExpressionR<ExpressionR<typename SimpleNumberTrait<Number>::Type,A>,B> x) {
+    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const ExpressionR<A<Number,B>,C>& x) {
+    //    template <template<class,class> class A, class B, class C>  Vector<Number>& operator=(const ExpressionR<A<PrimDataType,B>,C>& x) {
    // WORKS
     //    template <class A>  Vector<Number>& operator=(A x) {
     //    template <class A>  Vector<Number>& operator=(const A x) {
     //    template <class A>  Vector<Number>& operator=(const A& x) {
-    //    template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<A,B> x) {
-    //  template <class A, class B>  Vector<Number>& operator=(const MArrayExpR<A,B>& x) {
+    //    template <class A, class B>  Vector<Number>& operator=(const ExpressionR<A,B> x) {
+    //  template <class A, class B>  Vector<Number>& operator=(const ExpressionR<A,B>& x) {
  
 
-    template <class X, class Y>  Vector<Number>& operator=(const MArrayExpR<X,Y>& x) {
+    template <class X, class Y>  Vector<Number>& operator=(const ExpressionR<X,Y>& x) {
       MOUT << __FUNCTION__ <<" ";
       //      return *this;
       const Y& y = x.derived();
@@ -474,7 +474,7 @@ namespace mathq {
 
 
     std::string bottom(){
-      typename OrderedNumberTrait<Number>::Type d;
+      typename SimpleNumberTrait<Number>::Type d;
       return display::getTypeName(d);
     }
 
@@ -514,7 +514,7 @@ namespace mathq {
       return equals(v2);
     }
     template <class B>
-    Vector<Number>& operator=(const TERW_Resize<Number>& b) { 
+    Vector<Number>& operator=(const ExpressionRW_Resize<Number>& b) { 
       return *this;
     }
 
@@ -574,7 +574,7 @@ namespace mathq {
 
 
     // assignment to a std::array
-    template <std::size_t N>
+    template <size_t N>
     Vector<Number>& equals(const std::array<Number,N>& varray) {
       
 
@@ -588,7 +588,7 @@ namespace mathq {
     }
 
 
-    template <std::size_t N>
+    template <size_t N>
     Vector<Number>& operator=(const std::array<Number,N>& varray) {
       return equals(varray);
     }
@@ -1097,7 +1097,7 @@ namespace mathq {
 
     inline std::string classname() const {
       Number d;
-      return "Vector"+display::getBracketedTypeName(d);
+      return "Vector"+display::bracketAndStyleTypename(d);
     }
 
 

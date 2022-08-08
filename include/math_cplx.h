@@ -1,5 +1,5 @@
-#ifndef MATHQ__MATH_CPLX_H
-#define MATHQ__MATH_CPLX_H
+#ifndef MATHQ__MATH_CPLX
+#define MATHQ__MATH_CPLX
 
 
 namespace mathq {
@@ -55,27 +55,27 @@ namespace mathq {
   // template <typename T> class
   //   Complexify {
   // public:
-  //   typedef typename OrderedNumberTrait<T>::Type OrderedNumberType;
+  //   typedef typename SimpleNumberTrait<T>::Type OrderedNumberType;
   //   typedef std::complex<OrderedNumberType> CType;
-  //   typedef typename NumberTrait<T,CType>::ReplaceTypeE Type;
+  //   typedef typename NumberTrait<T,CType>::ReplacedElementType Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
-  //   Complexify<MArrayExpR<Element,A,Number,depth,rank> > {
+  //   Complexify<ExpressionR<Element,A,Number,depth,rank> > {
   // public:
-  //   typedef MArrayExpR<typename Complexify<Element>::Type,A,typename Complexify<Number>::Type, depth,rank> Type;
+  //   typedef ExpressionR<typename Complexify<Element>::Type,A,typename Complexify<Number>::Type, depth,rank> Type;
   // };
 
 
   // template <typename T> class
   //   Realify {
   // public:
-  //   typedef typename OrderedNumberTrait<T>::Type OrderedNumberType;
-  //   typedef typename NumberTrait<T,OrderedNumberType>::ReplaceTypeE Type;
+  //   typedef typename SimpleNumberTrait<T>::Type OrderedNumberType;
+  //   typedef typename NumberTrait<T,OrderedNumberType>::ReplacedElementType Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
-  //   Realify<MArrayExpR<Element,A,Number,depth,rank> > {
+  //   Realify<ExpressionR<Element,A,Number,depth,rank> > {
   // public:
-  //   typedef MArrayExpR<typename Realify<Element>::Type,A,typename Realify<Number>::Type,depth,rank> Type;
+  //   typedef ExpressionR<typename Realify<Element>::Type,A,typename Realify<Number>::Type,depth,rank> Type;
   // };
 
 
@@ -83,14 +83,14 @@ namespace mathq {
   // template <typename T> class
   //   Imaginarify {
   // public:
-  //   typedef typename OrderedNumberTrait<T>::Type OrderedNumberType;
+  //   typedef typename SimpleNumberTrait<T>::Type OrderedNumberType;
   //   typedef Imaginary<OrderedNumberType> IType;
-  //   typedef typename NumberTrait<T,IType>::ReplaceTypeE Type;
+  //   typedef typename NumberTrait<T,IType>::ReplacedElementType Type;
   // };
   // template <typename Element, typename A, typename Number, int depth, int rank> class
-  //   Imaginarify<MArrayExpR<Element,A,Number,depth,rank> > {
+  //   Imaginarify<ExpressionR<Element,A,Number,depth,rank> > {
   // public:
-  //   typedef MArrayExpR<typename Imaginarify<Element>::Type,A,typename Imaginarify<Number>::Type, depth,rank> Type;
+  //   typedef ExpressionR<typename Imaginarify<Element>::Type,A,typename Imaginarify<Number>::Type, depth,rank> Type;
   // };
 
 
@@ -101,7 +101,7 @@ namespace mathq {
 
   template <typename C2, typename F1> EnableMethodIf<IsComplex<C2>::value, C2>
   numbercast(const std::complex<F1>& x) {
-    typedef typename IsComplex<C2>::RealType F2;
+    typedef typename IsComplex<C2>::OrderedNumberType F2;
     F2 re = numbercast<F2>(real(x));
     F2 im = numbercast<F2>(imag(x));
     return std::complex<F2>(re, im);
@@ -193,8 +193,8 @@ namespace mathq {
 
   // Complex(NT1,NT2)
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value&& std::is_arithmetic<NT2>::value>> auto
-    Complex(const NT1& xr, const NT2& xi) {
+  template <typename NT1, typename NT2> auto
+    Complex(const NT1& xr, const NT2& xi) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     return std::complex<NT3>((NT3)xr, (NT3)xi);
   }
@@ -202,8 +202,8 @@ namespace mathq {
 
   // polar(NT1,NT2)
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value&& std::is_arithmetic<NT2>::value>> auto
-    polar(const NT1& r, const NT2& theta) {
+  template <typename NT1, typename NT2> auto
+    polar(const NT1& r, const NT2& theta) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     return std::polar<NT3>((NT3)r, (NT3)theta);
   }
@@ -214,9 +214,9 @@ namespace mathq {
 
   // complex<NT1> + complex<NT2>
 
-  template <typename NT1, typename NT2> inline
+  template <typename NT1, typename NT2> inline 
     std::complex<typename AddType<NT1, NT2>::Type>
-    operator+(const std::complex<NT1>& x1, const std::complex<NT2>& x2) {
+    operator+(const std::complex<NT1>& x1, const std::complex<NT2>& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 yR = real(x1)+real(x2);
@@ -229,7 +229,8 @@ namespace mathq {
 
   template <typename NT1, typename NT2> inline
     std::complex<typename SubType<NT1, NT2>::Type>
-    operator-(const std::complex<NT1>& x1, const std::complex<NT2>& x2) {
+    operator-(const std::complex<NT1>& x1, const std::complex<NT2>& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value)
+    {
     typedef typename SubType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 yR = real(x1)-real(x2);
@@ -242,7 +243,8 @@ namespace mathq {
 
   template <typename NT1, typename NT2> inline
     std::complex<typename MultType<NT1, NT2>::Type>
-    operator*(const std::complex<NT1>& x1, const std::complex<NT2>& x2) {
+    operator*(const std::complex<NT1>& x1, const std::complex<NT2>& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value)
+    {
     typedef typename MultType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 yR = real(x1)*real(x2)-imag(x1)*imag(x2);
@@ -256,7 +258,7 @@ namespace mathq {
 
   template <typename NT1, typename NT2> inline
     std::complex<typename DivType<NT1, NT2>::Type>
-    operator/(const std::complex<NT1>& x1, const std::complex<NT2>& x2) {
+    operator/(const std::complex<NT1>& x1, const std::complex<NT2>& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename DivType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 topR = real(x1)*real(x2)+imag(x1)*imag(x2);
@@ -273,9 +275,9 @@ namespace mathq {
 
   // complex<NT1> + NT2
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >inline
+  template <typename NT1, typename NT2> inline
     std::complex<typename AddType<NT1, NT2>::Type>
-    operator+(const std::complex<NT1>& x1, const NT2& x2) {
+    operator+(const std::complex<NT1>& x1, const NT2& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 yR = real(x1)+x2;
@@ -285,9 +287,9 @@ namespace mathq {
 
   // NT1 + complex<NT2>
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value> >inline
+  template <typename NT1, typename NT2> inline
     std::complex<typename AddType<NT1, NT2>::Type>
-    operator+(const NT1& x1, const std::complex<NT2>& x2) {
+    operator+(const NT1& x1, const std::complex<NT2>& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 yR = x1+real(x2);
@@ -298,9 +300,9 @@ namespace mathq {
 
   // complex<NT1> - NT2
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >inline
+  template <typename NT1, typename NT2> inline
     std::complex<typename SubType<NT1, NT2>::Type>
-    operator-(const std::complex<NT1>& x1, const NT2& x2) {
+    operator-(const std::complex<NT1>& x1, const NT2& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename SubType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 yR = real(x1)-x2;
@@ -310,11 +312,11 @@ namespace mathq {
 
   // NT1 - complex<NT2>
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value> >inline
+  template <typename NT1, typename NT2> inline
     std::complex<typename SubType<NT1, NT2>::Type>
-    operator-(const NT1& x1, const std::complex<NT2>& x2) {
+    operator-(const NT1& x1, const std::complex<NT2>& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename SubType<NT1, NT2>::Type NT3;
-    typedef typename std::complex<NT3> T3;
+    typedef typename std::complex<NT3> T3; 
     NT3 yR = x1-real(x2);
     NT3 yI = -imag(x2);
     return T3(yR, yI);
@@ -323,9 +325,9 @@ namespace mathq {
 
   // complex<NT1> * NT2
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >inline
+  template <typename NT1, typename NT2 > inline
     std::complex<typename MultType<NT1, NT2>::Type>
-    operator*(const std::complex<NT1>& x1, const NT2& x2) {
+    operator*(const std::complex<NT1>& x1, const NT2& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename MultType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 yR = real(x1)*x2;
@@ -335,9 +337,9 @@ namespace mathq {
 
   // NT1 * complex<NT2>
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value> >inline
+  template <typename NT1, typename NT2> inline
     std::complex<typename MultType<NT1, NT2>::Type>
-    operator*(const NT1& x1, const std::complex<NT2>& x2) {
+    operator*(const NT1& x1, const std::complex<NT2>& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename MultType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 yR = x1*real(x2);
@@ -348,9 +350,9 @@ namespace mathq {
 
   // complex<NT1> / NT2
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >inline
+  template <typename NT1, typename NT2> inline
     std::complex<typename DivType<NT1, NT2>::Type>
-    operator/(const std::complex<NT1>& x1, const NT2& x2) {
+    operator/(const std::complex<NT1>& x1, const NT2& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value) {
     typedef typename DivType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 yR = real(x1)/x2;
@@ -360,9 +362,9 @@ namespace mathq {
 
   // NT1 / complex<NT2>
 
-  template <typename NT1, typename NT2, typename = std::enable_if_t<std::is_arithmetic<NT1>::value> >inline
+  template <typename NT1, typename NT2> inline
     std::complex<typename DivType<NT1, NT2>::Type>
-    operator/(const NT1& x1, const std::complex<NT2>& x2) {
+    operator/(const NT1& x1, const std::complex<NT2>& x2) requires (std::is_arithmetic<NT1>::value && std::is_arithmetic<NT2>::value){
     typedef typename DivType<NT1, NT2>::Type NT3;
     typedef typename std::complex<NT3> T3;
     NT3 topR = x1*real(x2);

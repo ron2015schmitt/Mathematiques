@@ -1,5 +1,5 @@
-#ifndef MATHQ__MATRIX_HERMITIAN_H
-#define MATHQ__MATRIX_HERMITIAN_H 1
+#ifndef MATHQ__MATRIXERMITIAN
+#define MATHQ__MATRIXERMITIAN 1
 
 
 
@@ -17,7 +17,7 @@ namespace mathq {
    */
 
   template <typename Number, int N>
-  class MatrixHermitian : public MArrayExpRW<MatrixHermitian<Number, N>, Number, Number, 1, 2> {
+  class MatrixHermitian : public ExpressionRW<MatrixHermitian<Number, N>, Number, Number, 1, 2> {
 
   public:
     constexpr static int rank = 2;
@@ -29,7 +29,7 @@ namespace mathq {
     typedef MatrixHermitian<Number, N> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename OrderedNumberTrait<Number>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
 
 
     // if N is 0, then we use valarray
@@ -84,7 +84,7 @@ namespace mathq {
     // --------------------- Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<(NN>0)> = 0>
 
-    explicit MatrixHermitian<Number, N>(const MArrayExpR<X, Number, Number, 1, 2> A) {
+    explicit MatrixHermitian<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
       // TODO: chekc that A is N x N
       resize(N);
       *this = A;
@@ -124,7 +124,7 @@ namespace mathq {
     // --------------------- variable-size Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixHermitian<Number, N>(const MArrayExpR<X, Number, Number, 1, 2> A) {
+    explicit MatrixHermitian<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
       const size_t depth = A.Nrows();
       // TODO: chekc that A is square
       resize(depth);
@@ -146,7 +146,7 @@ namespace mathq {
     //************************** Size related  ******************************
     //**********************************************************************
 
-    size_t ndims(void)  const {
+    size_t rank(void)  const {
       return rank_value;
     }
 
@@ -178,39 +178,39 @@ namespace mathq {
       return myaddr;
     }
 
-    Dimensions tdims(void) const {
+    Dimensions template_dims(void) const {
       Dimensions dimensions(N, N);
       return dimensions;
     }
 
 
-    constexpr size_t getDepth(void) const {
+    constexpr size_t depth(void) const {
       return depth_value;
     }
-    Dimensions eldims(void) const {
+    Dimensions element_dims(void) const {
       Dimensions dimensions();
       return *(new Dimensions());
     }
 
     // the size of each element
-    inline size_t elsize(void) const {
+    inline size_t element_size(void) const {
       return 1;
     }
 
     // the deep size of an element: the total number of numbers in an element
-    inline size_t eldeepsize(void) const {
+    inline size_t el_total_size(void) const {
       return 1;
     }
 
     // the total number of numbers in this data structure
-    size_t deepsize(void) const {
+    size_t total_size(void) const {
       return this->size();
     }
-    std::vector<Dimensions>& deepdims(void) const {
+    std::vector<Dimensions>& recursive_dims(void) const {
       std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return deepdims(ddims);
+      return recursive_dims(ddims);
     }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
+    std::vector<Dimensions>& recursive_dims(std::vector<Dimensions>& parentdims) const {
       parentdims.push_back(dims());
       return parentdims;
     }
@@ -245,8 +245,8 @@ namespace mathq {
 
 
     MatrixHermitian<Number, N>& resize(const std::vector<Dimensions>& deepdims_new) {
-      std::vector<Dimensions> deepdims(deepdims_new);
-      Dimensions newdims = deepdims[0];
+      std::vector<Dimensions> recursive_dims(deepdims_new);
+      Dimensions newdims = recursive_dims[0];
       resize(newdims);
       return *this;
     }
@@ -262,7 +262,7 @@ namespace mathq {
     // -------------------------- adjoint() --------------------------------
 
     template< typename T = Number >
-    typename std::enable_if<is_complex<T>{}, MatrixHermitian<Number, N>& >::type adjoint() {
+    typename std::enable_if<is_complex<T>::value, MatrixHermitian<Number, N>& >::type adjoint() {
       return *this;
     }
 
@@ -271,7 +271,7 @@ namespace mathq {
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    // NOTE: indexes over [0] to [deepsize()] and note return type
+    // NOTE: indexes over [0] to [total_size()] and note return type
 
     // read
     const Number dat(const size_t n)  const {
@@ -398,7 +398,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixHermitian<Number, N>& operator=(const MArrayExpR<X, Number, Number, 1, 1>& v) {
+    MatrixHermitian<Number, N>& operator=(const ExpressionR<X, Number, Number, 1, 1>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -406,7 +406,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixHermitian<Number, N>& operator=(const MArrayExpR<X, Number, Number, 1, 2>& A) {
+    MatrixHermitian<Number, N>& operator=(const ExpressionR<X, Number, Number, 1, 2>& A) {
       const size_t depth = A.Nrows();
       // TODO: check that A is square
       resize(depth);
@@ -458,7 +458,7 @@ namespace mathq {
     // NOTE: in-place
 
     template< typename T = Number >
-    typename std::enable_if<is_complex<T>{}, MatrixHermitian<Number, N>& >::type conj() {
+    typename std::enable_if<is_complex<T>::value, MatrixHermitian<Number, N>& >::type conj() {
       return *this;
     }
 

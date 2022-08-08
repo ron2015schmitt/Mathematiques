@@ -99,7 +99,7 @@ README.md: $(CREATE_DOC_TOP) $(TAG_FILE_MATHQ) title.src.md body.temp.md
 
 some: README.md
 
-all: versioning includes src example benchmark test sandbox README.md doc
+all: versioning includes src example benchmark sandbox test README.md doc
 
 run_%: FORCE
 	cd $* && ./run
@@ -172,6 +172,7 @@ git: versioning
 	@fi
 	@git add $(TAG_FILE_MATHQ) $(TAG_ANNOTATION_FILE)
 	@git add $(VERSION_HEADER_FILE_MATHQ)
+	@git add $(COMPILER_VERSION_FILE)
 	@echo
 	@git status 
 	@echo 

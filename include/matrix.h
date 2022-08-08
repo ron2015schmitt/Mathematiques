@@ -1,383 +1,848 @@
-#ifndef MATHQ__MATRIX_H
-#define MATHQ__MATRIX_H 1
+#ifndef MATHQ__MATRIX
+#define MATHQ__MATRIX 1
 
 namespace mathq {
 
-  /********************************************************************
-   * Matrix<Element>    -- variable size matrix (valarray)
-   *                 Element  = type for elements
-   * Matrix<Element,NR> -- fixed number of rows (valarray)
-   *                 NR = number of rows
-   * Matrix<Element,NR,NC> -- fixed number of rows and cols (array)
-   *                 NC = number of cols
-   *
-   *                 NumberType = number type
-   *                   = underlying algebraic field
-   *                     ex. int, double, std::complex<double>
-   *                 depth_value = tensor depth. if Element=NumberType, then depth_value=1.
-   *
-   * ROW MAJOR CONVENTION
-   ********************************************************************
-   */
-
-
-  template <class Element, int NR, int NC>
-  class Matrix : public MArrayExpRW<Matrix<Element, NR, NC>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 2> {
-
+  template <typename Element, size_t... dim_ints>
+  class MultiArray<Element, 2, dim_ints...> : 
+    public MultiArrayData<Element, 2, dim_ints...>, 
+    public ExpressionRW<
+      Matrix<Element, dim_ints...>,  // Derived
+      Element,  // Element
+      typename NumberTrait<Element>::Type, // Number
+      1 + NumberTrait<Element>::depth(),  // depth
+      2  // rank
+    > {  
   public:
-    typedef Matrix<Element, NR, NC> ConcreteType;
-
-    typedef Element ElementType;
-    typedef typename NumberTrait<Element>::Type NumberType;
-    typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumberType;
-
-    typedef typename ArrayTypeTrait<Element, NR* NC>::Type MyArrayType;
-
-    constexpr static int rank = 2;
-    constexpr static int rank_value = rank;
-    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
-    constexpr static int depth_value = depth;
-
-    static constexpr bool resizable = (NR*NC==0) ? true : false;
-    static constexpr bool resizableRows = (NR==0) ? true : false;
-    static constexpr bool resizableCols = (NC==0) ? true : false;
 
 
-    // if either NR or NC is 0, then we use valarray
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
 
-    // *********************** OBJECT DATA ***********************************
+    constexpr static size_t rank_value = 2;
+    constexpr static std::array<size_t, rank_value> static_dims_array = { dim_ints... };
+    constexpr static size_t N0 = std::get<0>(static_dims_array);
+    constexpr static size_t N1 = std::get<1>(static_dims_array);
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
+    constexpr static bool is_dynamic_value = ( sizeof...(dim_ints) == 0 );
+    constexpr static size_t compile_time_size = calc_size<rank_value, N0, N1>();
+
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
+
+    using Type = MultiArray<Element, rank_value, dim_ints...>;
+    using ConcreteType = Matrix<Element, dim_ints...>;
+
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<Element>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using ParentDataType = MultiArrayData<Element, rank_value, dim_ints...>;
+    using ParentType = ExpressionRW<
+      ConcreteType,  // Derived
+      Element,  // Element
+      NumberType, // Number
+      depth_value,  // depth
+      rank_value  // rank
+    >;
+
+    using DimensionsType = Dimensions;
+    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
+    using DeepDimensionsType = RecursiveDimensions;
+
+    using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
+    using InitializerType = typename MakeInitializer<Element, rank_value >::Type;
+
+
+    //**********************************************************************
+    // OBJECT DATA 
     //
-    // do NOT declare any other storage.
-    // keep the instances lightweight
-  private:
-    MyArrayType data_;
-
-    size_t Nrows_;  // TODO: make type trait so that this is static const for FixedDims
-    size_t Ncols_;  // TODO: make type trait so that this is static const for FixedDims
-
-
-
-
-
+    // data is inherited from MultiArrayData<Element, 2>
     //**********************************************************************
-    //************************** CONSTRUCTORS ******************************
-    //**********************************************************************
+
 
   public:
 
-    // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    Matrix<Element, NR, NC>() {
-      resize(NR, NC);
+    //**********************************************************************
+    //                            CONSTRUCTORS 
+    //**********************************************************************
+
+    // --------------------- default CONSTRUCTOR ---------------------
+
+    MultiArray() {
+      if constexpr (is_dynamic_value) {
+        resize(0,0);
+      }
     }
 
-
-    // --------------------- constant=0 CONSTRUCTOR ---------------------
-    template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
-
-    explicit Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc) {
-      resize(Nr, Nc);
-    }
-
-
-    // --------------------- constant CONSTRUCTOR ---------------------
-    template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
-
-    explicit Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const NumberType& val) {
-      resize(Nr, Nc);
-      *this = val;
-    }
-
-    // --------------------- 2D array  CONSTRUCTOR ---------------------
-    template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
-
-    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const NumberType** vals) {
-      resize(Nr, Nc);
-      *this = vals;
-    }
-
-    // --------------------- Matrix(NumberType value)  ---------------------
-
-    template<size_t NN = NR*NC, EnableIf<(NN > 0)> = 0>
-
-    explicit Matrix<Element, NR, NC>(const Element val) {
-      *this = val;
-    }
-
-    // --------------------- Matrix(NumberType value)  ---------------------
-
-    template<size_t NN = NR*NC, EnableIf<(NN > 0)&&(depth_value>1)> = 0>
-
-    explicit Matrix<Element, NR, NC>(const NumberType val) {
-      *this = val;
-    }
-
-
-    // ************* C++11 initializer_list 2D CONSTRUCTOR---------------------
-    Matrix<Element, NR, NC>(const std::initializer_list<std::initializer_list<Element> >& list1) {
-      const int Nr = list1.size();
-      const int Nc = (*(list1.begin())).size();
-      resize(Nr, Nc);
-      *this = list1;
+    // --------------------- copy constructor --------------------
+    MultiArray(const Type& var) {
+      if constexpr (is_dynamic_value) {
+        resize(var.dims());
+      }
+      *this = var;
     }
 
 
 
-    Matrix<Element, NR, NC>(const std::list<std::list<Element> >& list1) {
-      const int Nr = list1.size();
-      const int Nc = (*(list1.begin())).size();
-      resize(Nr, Nc);
-      *this = list1;
+    // ----------------------- indices initializer_list ---------------------
+    // not explicit: allows use of nested init lists when depth_value > 1
+    MultiArray(const InitializerType& var) {
+      if constexpr (is_dynamic_value) {
+        auto mysizes = InitializerTrait< InitializerType >::get_size_array(var);
+        resize(Dimensions(mysizes));
+      }
+      *this = var;
     }
 
 
-
-
-    // --------------------- COPY CONSTRUCTOR --------------------
-
-    template <int NR2, int NC2>
-    Matrix<Element, NR, NC>(const Matrix<Element, NR2, NC2>& m2) {
-      resize(m2.Nrows(), m2.Ncols());
-      *this = m2;
-    }
-
-
-    // --------------------- EXPRESSION CONSTRUCTOR --------------------
-
-
-    template <class X>
-    Matrix<Element, NR, NC>(const MArrayExpR<X, Element, NumberType, depth_value, rank>& x) {
-      resize(x.dims()[0], x.dims()[1]);
+    //--------------------- EXPRESSION CONSTRUCTOR --------------------
+    template <class Derived>
+    MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
+      if constexpr (is_dynamic_value) {
+        resize(0,0);
+      }
       *this = x;
     }
 
 
-    // --------------------- 1D valarray CONSTRUCTOR ---------------------
-    template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
+    //**********************************************************************
+    //                    CONSTRUCTORS: FIXED dimensions  
+    //**********************************************************************
 
-    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const std::valarray<Element>& valar) {
-      resize(Nr, Nc);
-      *this = valar;
+    // --------------------- FIXED SIZE: from dynamic MultiArray --------------------
+
+    template<bool enable = !is_dynamic_value> requires (enable)
+    explicit MultiArray(const MultiArray<Element, rank_value>& var) {
+      *this = var;
+    }
+
+    // --------------------- FIXED SIZE: set all to same value   ---------------------
+
+    template<bool enable = !is_dynamic_value> requires (enable)
+    explicit MultiArray(const Element val) {
+      *this = val;
+    }
+
+    // --------------------- FIXED SIZE: set all bottom Elements to same value   ---------------------
+
+    template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value > 1) && (!std::is_same<Element, NumberType>::value) )
+    explicit MultiArray(const NumberType val) {
+      *this = val;
+    }
+
+    // ----------------------- FIXED SIZE: flat initializer_list ---------------------
+    // not explicit: allows use of nested init lists when depth_value > 1
+    template<bool enable = !is_dynamic_value> requires (enable)
+    MultiArray(const std::initializer_list<Element>& var) {
+      *this = var;
     }
 
 
-    // --------------------- 1D array[]  CONSTRUCTOR ---------------------
-    template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
-
-    Matrix<Element, NR, NC>(const size_t Nr, const size_t Nc, const NumberType(vals)[]) {
-      resize(Nr, Nc);
-      *this = vals;
+    // ----------------------- std::vector ---------------------
+    template<bool enable = !is_dynamic_value> requires (enable)
+    explicit MultiArray(const std::vector<Element>& var) {
+      *this = var;
     }
 
+    // ----------------------- std::valarray ---------------------
+    template<bool enable = !is_dynamic_value> requires (enable)
+    explicit MultiArray(const std::valarray<Element>& var) {
+      *this = var;
+    }
 
-
-
-
-
-
-
+    // ----------------------- std::array ---------------------
+    template<size_t NE2> requires (!is_dynamic_value && ((NE2 == 0) || (NE2 == compile_time_size)))
+    explicit MultiArray(const std::array<Element, NE2>& var) {
+      if constexpr (is_dynamic_value) {
+        resize(0,0);
+      }
+      *this = var;
+    }
 
 
     //**********************************************************************
-    //************************** DESTRUCTOR ******************************
+    //                    CONSTRUCTORS: DYNAMIC dimensions  
     //**********************************************************************
 
-    ~Matrix<Element, NR, NC>() {
-      //remove from directory
+    // --------------------- dynamic MultiArray --------------------
+
+    template<bool enable = is_dynamic_value, size_t... mysizes> requires (enable)
+    explicit MultiArray(const MultiArray<Element, rank_value, mysizes...> var) {
+      this->resize(var.dims());
+      *this = var;
+    }
+
+
+    // --------------------- DYNAMIC SIZE: set size from ints  ---------------------
+
+    template<bool enable = is_dynamic_value> requires (enable)
+    MultiArray(const size_t Nrows, const size_t Ncols) {
+      resize(Nrows, Ncols);
+    }
+
+    // --------------------- DYNAMIC SIZE: set size from ints and values from constant  ---------------------
+
+    template<bool enable = is_dynamic_value> requires (enable)
+    MultiArray(const size_t Nrows, const size_t Ncols, const Element& val) {
+      resize(Nrows, Ncols);
+      *this = val;
+    }
+
+    // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
+
+    template<bool enable = is_dynamic_value> requires (enable)
+    explicit MultiArray(const Dimensions& dims) {
+      // TRDISP(dims);
+      this->resize(dims);
+    }
+
+    // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
+    template<bool enable = is_dynamic_value> requires (enable)
+    explicit MultiArray(const RecursiveDimensions& recursive_dims) {
+      // TRDISP(recursive_dims);
+      this->resize(recursive_dims);
+    }
+
+
+    // --------------------- DYNAMIC SIZE: set dims and set all to same value  ---------------------
+
+    template<bool enable = is_dynamic_value> requires (enable)
+    explicit MultiArray(const Dimensions& dims, const Element& val) {
+      this->resize(dims);
+      *this = val;
+    }
+
+    // ----------------------- DYNAMIC SIZE: flat initializer_list ---------------------
+    // not explicit: allows use of nested init lists when depth_value > 1
+    template<bool enable = is_dynamic_value> requires (enable)
+    MultiArray(const size_t Nrows, const size_t Ncols, const std::initializer_list<Element>& var) {
+      resize(Nrows, Ncols);
+      *this = var;
+    }
+
+
+    // // ----------------------- std::vector ---------------------
+    // explicit MultiArray(const std::vector<Element>& var) {
+    //   *this = var;
+    // }
+
+    // // ----------------------- std::valarray ---------------------
+    // explicit MultiArray(const std::valarray<Element>& var) {
+    //   if constexpr (is_dynamic_value) {
+    //     resize(0,0);
+    //   }
+    //   *this = var;
+    // }
+
+    // // ----------------------- std::array ---------------------
+    // template<size_t NE2>
+    // explicit MultiArray(const std::array<Element, NE2>& var) {
+    //   if constexpr (is_dynamic_value) {
+    //     resize(0,0);
+    //   }
+    //   *this = var;
+    // }
+
+    //**********************************************************************
+    //                             DESTRUCTOR 
+    //**********************************************************************
+
+    ~MultiArray() {
+      // remove from directory
     }
 
 
     //**********************************************************************
-    //************************** Size related  ******************************
+    //                         Basic characteristics
     //**********************************************************************
-
-    size_t ndims(void)  const {
-      return rank;
-    }
-
-
-    inline size_t size(void) const {
-      return data_.size();
-    }
-    inline size_t Nrows(void) const {
-      return Nrows_;
-    }
-    inline size_t Ncols(void) const {
-      return Ncols_;
-    }
-    Dimensions dims(void) const {
-      Dimensions dimensions(Nrows_, Ncols_);
-      return dimensions;
-    }
-
 
     bool isExpression(void) const {
       return false;
     }
-    MultiArrays getEnum() const {
-      return T_MATRIX;
-    }
-
     VectorofPtrs getAddresses(void) const {
       VectorofPtrs myaddr((void*)this);
       return myaddr;
     }
 
-    Dimensions tdims(void) const {
-      Dimensions dimensions(NR, NC);
-      return dimensions;
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
+
+    size_t rank(void) const {
+      return rank_value;
     }
 
-
-    constexpr size_t getDepth(void) const {
+    inline size_t depth(void) const {
       return depth_value;
     }
-    Dimensions eldims(void) const {
-      Dimensions dimensions();
-      if constexpr (depth_value>1) {
-        if (size()>0) {
-          return data_[0].dims();
-        }
-      }
-      return *(new Dimensions());
+
+    inline size_t size(void) const {
+      return ParentDataType::data_.size();
     }
 
-    // the size of each element
-    inline size_t elsize(void) const {
-      if constexpr (depth_value<=1) {
-        return 1;
-      }
-      else {
-        const size_t Nelements = this->size();
-        if (Nelements==0) {
-          return 0;
-        }
-        else {
-          return data_[0].size();
-        }
-      }
-    }
-
-    // the deep size of an element: the total number of numbers in an element
-    inline size_t eldeepsize(void) const {
-      if constexpr (depth_value<2) {
-        return 1;
-      }
-      else {
-        const size_t Nelements = this->size();
-        if (Nelements==0) {
-          return 0;
-        }
-        else {
-          return data_[0].deepsize();
-        }
-      }
-    }
-
-    // the total number of numbers in this data structure
-    size_t deepsize(void) const {
-      if constexpr (depth_value<2) {
+    // // the total number of numbers in this data structure
+    size_t total_size(void) const {
+      if constexpr (depth_value <= 1) {
         return this->size();
       }
       else {
-        return (this->size())*(this->eldeepsize());
+        return (this->size())*(this->el_total_size());
       }
     }
-    std::vector<Dimensions>& deepdims(void) const {
-      std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return deepdims(ddims);
-    }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      parentdims.push_back(dims());
-      if constexpr (depth_value>1) {
-        if (size()>0) {
-          data_[0].deepdims(parentdims);
-        }
+
+    // the size of each element
+    inline size_t element_size(void) const {
+      if constexpr (depth_value <= 1) {
+        return 1;
       }
-      return parentdims;
-    }
-
-
-
-
-    //**********************************************************************
-    //************************** RESIZE, RESHAPE, TRANSPOSE*****************
-    //**********************************************************************
-    // --------------------- resize() --------------------
-
-    Matrix<Element, NR, NC>& resize(const int Nr, const int Nc) {
-      Nrows_ = NR;
-      Ncols_ = NC;
-      if constexpr (resizableRows) {
-        Nrows_ = Nr;
-      }
-      if constexpr (resizableCols) {
-        Ncols_ = Nc;
-      }
-      if constexpr (resizable) {
-        data_.resize(Nrows_*Ncols_);
-      }
-      return *this;
-    }
-
-
-
-    // -------------------------- resize(Dimensions) --------------------------------
-
-    Matrix<Element, NR, NC>& resize(const Dimensions dims) {
-      resize(dims[0], dims[1]);
-      return *this;
-    }
-
-
-    // TODO: should just pass an index and make deepdims const
-
-    Matrix<Element, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
-      std::vector<Dimensions> deepdims(deepdims_new);
-      Dimensions newdims = deepdims[0];
-      resize(newdims);
-      if constexpr (depth_value>1) {
-        deepdims.erase(deepdims.begin());
-        for (size_t i = 0; i < size(); i++) {
-          std::vector<Dimensions> ddims(deepdims);
-          data_[i].resize(ddims);
-        }
-      }
-
-
-      return *this;
-    }
-
-
-
-    // -------------------------- reshape(nr,nc) --------------------------------
-
-    // the new matrix has teh same # of entries but has different number of rows/columns
-    // data is left unchanged
-    Matrix<Element, NR, NC>& reshape(const size_t nr, const size_t nc) {
-      const size_t nn = nr*nc;
-      if (nn==size()) {
-        if (nn == 0) {
-          Nrows_ = 0;
-          Ncols_ = 0;
+      else {
+        if (size() > 0) {
+          return ParentDataType::data_[0].size();
         }
         else {
-          Nrows_ = nr;
-          Ncols_ = nc;
+          Element& x = *(new Element);
+          return x.size();
+        }
+      }
+    }
+
+    // the total number of numbers in an element
+    inline size_t el_total_size(void) const {
+      if constexpr (depth_value <= 1) {
+        return 1;
+      }
+      else {
+        if (size() > 0) {
+          return ParentDataType::data_[0].total_size();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.total_size();
+        }
+      }
+    }
+
+
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+
+
+    inline size_t Nrows(void) const {
+      if constexpr (is_dynamic_value) {
+        return ParentDataType::N0;
+      } else {
+        return N0;
+      }
+    }
+    inline size_t Ncols(void) const {
+      if constexpr (is_dynamic_value) {
+        return ParentDataType::N1;
+      } else {
+        return N1;
+      }
+    }
+
+
+    // defined later since Dimensions is dependent on MultiArray
+    Dimensions& dims(void) const {
+      if constexpr (is_dynamic_value) {
+        return *(new Dimensions({ ParentDataType::N0, ParentDataType::N1 }));
+      } else {
+        return *(new Dimensions(static_dims_array));
+      }
+    }
+
+    inline std::array<size_t, rank_value> dims_array(void) const {
+      if constexpr (is_dynamic_value) {
+        return *(new std::array<size_t, rank_value>{ ParentDataType::N0, ParentDataType::N1 });
+      } else {
+        return static_dims_array;
+      }
+    }
+
+    ElementDimensionsType& element_dims(void) const {
+      if constexpr (depth_value > 1) {
+        if (this->size() > 0) {
+          return ParentDataType::data_[0].dims();
+        }
+        else {
+          Element& x = *(new Element);
+          return x.dims();
+        }
+      }
+      return *(new ElementDimensionsType{});
+    }
+
+
+    RecursiveDimensions& recursive_dims(void) const {
+      RecursiveDimensions& rdims = *(new RecursiveDimensions(depth_value));
+      this->recurse_dims(rdims, 0);
+      return rdims;
+    }
+
+    const Type& recurse_dims(RecursiveDimensions& parent_rdims, const size_t di = 0) const {
+      size_t depth_index = di;
+      parent_rdims[depth_index++] = dims();
+      if constexpr (depth_value>1) {
+        if (size() > 0) {
+          ParentDataType::data_[0].recurse_dims(parent_rdims, depth_index);
+        }
+        else {
+          Element& x = *(new Element);
+          x.recurse_dims(parent_rdims, depth_index);
         }
       }
       return *this;
     }
 
-    // -------------------------- .reshape(N) --------------------------------
-    // morph into a vector, pillaging this object of its data store.
+    //**********************************************************************
+    //                          Resize
     //
-    Vector<Element>& reshape(const size_t N) {
-      // TODO: check that N==size()
-      // rob the data_
-      Vector<Element> m = new Vector<Element>(N, this->data_);
-      this->data_ = new std::valarray<Element>(0);
-      // return the new Matrix, while we live on at zero size...
-      return *m;
+    // resize / reshape is not allowed unless fixed-dimensions 
+    //**********************************************************************
+
+    template <typename... U> requires ( (is_dynamic_value) ) 
+    Type& resize(const size_t Nrows_new, const size_t Ncols_new) {
+      if ( (ParentDataType::N0 != Nrows_new) ||(ParentDataType::N1 != Ncols_new) ) {
+        ParentDataType::N0 = Nrows_new;
+        ParentDataType::N1 = Ncols_new;
+        const size_t new_size = Nrows_new * Ncols_new;
+        if (new_size != ParentDataType::data_.size() ) {
+          ParentDataType::data_.resize( new_size );
+        }
+      }
+      return *this;
+    }
+
+    
+
+    template <bool enabled = is_dynamic_value> requires (enabled)
+    Type& resize(const Dimensions& new_dims) {
+      return resize(new_dims[0], new_dims[1]);
+    }
+
+
+    Type& resize(const InitializerType& var) {
+      auto mysizes = InitializerTrait< InitializerType >::get_size_array(var);
+      resize(Dimensions(mysizes));
+      return *this;
+    }
+
+
+
+    // new_rdims.size() <= depth_value
+    Type& resize(const RecursiveDimensions& new_rdims) {
+      return recurse_resize(new_rdims);
+    }
+
+    // helper functions
+    Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
+      size_t depth_index = di;
+      size_t resize_depth = parent_rdims.size();
+      const Dimensions new_dims = parent_rdims[depth_index++];
+      if constexpr (is_dynamic_value) {
+        resize(new_dims);
+      }
+      if constexpr (depth_value > 1) {
+        if (depth_index < resize_depth) {
+          for (size_t ii = 0; ii < size(); ii++) {
+            ParentDataType::data_[ii].recurse_resize(parent_rdims, depth_index);
+          }
+        }
+      }
+      return *this;
+    }
+
+    //**********************************************************************
+    //   this casted as MultiArrayData
+    //**********************************************************************
+    ParentDataType& asMultiArrayData() {
+      return *((ParentDataType*)(this));
+    }
+
+    //**********************************************************************
+    //********************* Direct access to ParentDataType::data_  ***********************************
+    //**********************************************************************
+
+    // -------------------- data_obj() --------------------
+    // "read/write" to the wrapped valarray/aray
+    auto& data_obj() {
+      return ParentDataType::data_;
+    }
+
+    // get C pointer to raw data
+    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+    Element* data() {
+      // MutltiArrays are always wrap avalarray<Element>
+      return &(ParentDataType::data_[0]);
+    }
+
+
+    //**********************************************************************
+    //*******indexing  *********************
+    //**********************************************************************
+
+    mathq::Indices& indices(const size_t k) const {
+      mathq::Indices& myinds = *(new mathq::Indices(k, dims()));
+      return myinds;
+    }
+
+    size_t index(const mathq::Indices& inds) const {
+      return inds.index(dims());
+    }
+
+    // compiler actually will convert an init list and find the above method
+    size_t index(const std::initializer_list<size_t>& mylist) const {
+      return index(*(new mathq::Indices(mylist)));
+    }
+
+    template <typename... U>
+    typename std::enable_if<(std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == rank_value), size_t>::type 
+    index(const U... args) {
+      std::array<size_t,rank_value> arr { std::make_unsigned<int>::type(args)... };
+      return index(*(new mathq::Indices(arr)));
+    }
+
+    //**********************************************************************
+    //******* A(i,j,k,...) *********************
+    //**********************************************************************
+
+    Element& operator()(const size_t i1, const size_t i2) {
+      size_t k = this->index(i1, i2);
+      return (*this)[k];
+    }
+
+    const Element& operator()(const size_t i1, const size_t i2) const {
+      size_t k = this->index(i1, i2);
+      return (*this)[k];
+    }
+
+    // negative indexing 
+
+    template <typename... U>
+    Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
+    {
+      Indices inds({ signed_index_to_unsigned_index(args, size())... });
+      return (*this)[inds];
+    }
+
+    template <typename... U>
+    const Element& operator()(const U... args) const 
+    requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
+    {
+      Indices inds({ signed_index_to_unsigned_index(args, size())... });
+      return (*this)[inds];
+    }
+
+
+    //**********************************************************************
+    //******************** BOTTOM ELEMENT ACCESS: x.dat(n) *****************
+    //**********************************************************************
+    // NOTE: indexes over [0] to [total_size()] and note return type
+
+    // "read/write"
+    NumberType& dat(const size_t n) {
+      using namespace ::display;
+      //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
+      if constexpr (depth_value <= 1) {
+        int k = n;
+        if (k < 0) {
+          k += size();
+        }
+        return ParentDataType::data_[k];
+      }
+      else {
+        const int Ndeep = this->el_total_size();
+        const int j = n / Ndeep;
+        const int k = n % Ndeep;
+        return ParentDataType::data_[j].dat(k);
+      }
+    }
+
+    // read
+    const NumberType& dat(const size_t n) const {
+      using namespace ::display;
+      //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
+      if constexpr (depth_value <= 1) {
+        int k = n;
+        if (k < 0) {
+          k += size();
+        }
+        return ParentDataType::data_[k];
+      }
+      else {
+        const int Ndeep = this->el_total_size();
+        const int j = n / Ndeep;
+        const int k = n % Ndeep;
+        return ParentDataType::data_[j].dat(k);
+      }
+    }
+
+
+    // **********************************************************************
+    // ************* Array-style Element Access: x[n] ***********************
+    // **********************************************************************
+
+    // "read/write"
+    template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
+    Element& operator[](const T n) {
+      // OUTPUT("[] 1");
+      return ParentDataType::data_[n];
+    }
+
+    // read
+    template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
+    const Element& operator[](const T n)  const {
+      // OUTPUT("[] 2");
+      return ParentDataType::data_[n];
+    }
+
+    // "read/write"
+    template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
+    Element& operator[](const T n) {
+      // OUTPUT("[] 3");
+      T m = n;
+      while (m < 0) m += size();
+      return ParentDataType::data_[m];
+    }
+
+    // read
+    template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
+    const Element& operator[](const T n)  const {
+      // OUTPUT("[] 4");
+      T m = n;
+      while (m < 0) m += size();
+      return ParentDataType::data_[m];
+    }
+
+    //**********************************************************************
+    //************************** A[Indices] ***********************************
+    //**********************************************************************
+
+    // ---------------- A[Indices]--------------
+    Element& operator[](const Indices& inds) {
+      size_t k = this->index(inds);
+      return (*this)[k];
+    }
+    const Element& operator[](const Indices& inds) const {
+      size_t k = this->index(inds);
+      return (*this)[k];
+    }
+
+    // -------------------------------------------------------------
+    //                        A[DeepIndices] 
+    // -------------------------------------------------------------
+
+    // "read/write"
+    NumberType& operator[](const DeepIndices& dinds) {
+      const size_t mydepth = dinds.size();
+      Indices inds = dinds[mydepth - depth_value];
+
+      if constexpr (depth_value > 1) {
+        return (*this)[inds][dinds];
+      }
+      else {
+        return (*this)[inds];
+      }
+    }
+
+    // "read"
+    const NumberType& operator[](const DeepIndices& dinds) const {
+      const size_t mydepth = dinds.size();
+      Indices inds = dinds[mydepth - depth_value];
+
+      if constexpr (depth_value > 1) {
+        return (*this)[inds][dinds];
+      }
+      else {
+        return (*this)[inds];
+      }
+    }
+
+
+    //**********************************************************************
+    //************************** ASSIGNMENT ********************************
+    //**********************************************************************
+
+    // Any new assignment operators should also be addedc to ExpressionRW for consistency.
+    // For this reason, in most cases, its preferred to overload the function vcast()
+    // equals functions are included so that derived classes can call these functions
+
+    // Assign all elements to the same constant value
+    template<typename T> requires ( std::is_convertible<T, Element>::value )
+    Type& operator=(const T& e) {
+      for (size_t i = 0; i < size(); i++) {
+        (*this)[i] = e;
+      }
+      return *this;
+    }
+
+    // set bottom elements to same value
+    template <class T = Element>
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type 
+    operator=(const NumberType& d) {
+      for (size_t i = 0; i < total_size(); i++) {
+        (*this).dat(i) = d;
+      }
+      return *this;
+    }
+
+
+
+
+    // ------------------------ MultiArray = MultiArray<Element,NE2,NumberType,depth_value> ----------------
+
+    template <size_t... sizes> requires (multi_array_compatibility<rank_value,rank_value,dim_ints...,sizes...>())
+    Type& operator=(const MultiArray<Element, rank_value, sizes...>& v) {
+      for (size_t i = 0; i < size(); i++) {
+        (*this)[i] = v[i];
+      }
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = ExpressionR ----------------
+
+    template <class X>
+    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+      if constexpr (depth_value <= 1) {
+        if constexpr (is_dynamic_value) {
+          if (this->size() != x.size()) {
+            resize(x.dims());
+          }
+        }
+        for (size_t i = 0; i < size(); i++) {
+          (*this)[i] = x[i];
+        }
+      }
+      else {
+        resize(x.recursive_dims());
+        for (size_t i = 0; i < total_size(); i++) {
+          this->dat(i) = x.dat(i);
+        }
+      }
+      return *this;
+    }
+
+
+
+    // ------------------------ MultiArray = array[] ----------------
+
+    Type& operator=(const Element array[]) {
+      for (size_t i = 0; i < size(); i++) {
+        (*this)(i) = array[i];
+      }
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = list ----------------
+
+    Type& operator=(const std::list<Element>& mylist) {
+      size_t i = 0;
+      for (typename std::list<Element>::const_iterator it = mylist.begin(); it != mylist.end(); it++) {
+        (*this)(i++) = *it;
+      }
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = initializer_list ----------------
+
+    Type& operator=(const std::initializer_list<Element>& mylist) {
+      size_t k = 0;
+      typename std::initializer_list<Element>::iterator it;
+      for (it = mylist.begin(); it != mylist.end(); it++, k++) {
+        ParentDataType::data_[k] = *it;
+      }
+      return *this;
+    }
+
+    // // ------------------------ MultiArray = initializer_list ----------------
+
+    Type& operator=(const typename MakeInitializer<Element, rank_value>::Type& mylist) {
+      Indices& inds = *(new Indices(rank_value));
+      list_helper<rank_value>(mylist, inds);
+      return *this;
+    }
+
+    template <size_t list_depth> requires ((list_depth >= 1) && (list_depth <= rank_value))
+    Type& list_helper(const typename MakeInitializer<Element, list_depth>::Type& mylist, Indices& inds) {
+      size_t k = 0;
+      using ListType = typename MakeInitializer<Element, list_depth>::Type;
+      using Iterator = typename MakeInitializer<Element, list_depth>::Type::iterator;
+      Iterator it = mylist.begin();
+
+      for (it = mylist.begin(); it != mylist.end(); it++, k++) {
+        inds[rank_value-list_depth] = k;
+        if constexpr (list_depth == 1) {
+          (*this)[inds] = *it;
+        } else {
+          list_helper<list_depth-1>(*it, inds);
+        }
+      }
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = std::vector ----------------
+
+    Type& operator=(const std::vector<Element>& vstd) {
+      for (size_t i = 0; i < size(); i++)
+        (*this)(i) = vstd[i];
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = std::array ----------------
+
+    template <size_t N>
+    Type& operator=(const std::array<NumberType, N>& varray) {
+      for (size_t i = 0; i < size(); i++)
+        (*this)(i) = varray[i];
+
+      return *this;
+    }
+
+
+    // ------------------------ MultiArray = std::valarray ----------------
+
+    Type& operator=(const std::valarray<Element>& varray) {
+      for (size_t i = 0; i < size(); i++)
+        (*this)(i) = varray[i];
+
+      return *this;
+    }
+
+
+    //**********************************************************************
+    //***************** in-place modification*******************************
+    //**********************************************************************
+
+    //----------------- .roundzero(tol) ---------------------------
+    // NOTE: in-place
+
+    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+      for (size_t i = 0; i < size(); i++) {
+        ParentDataType::data_[i] = mathq::roundzero(ParentDataType::data_[i], tolerance);
+      }
+      return *this;
+    }
+
+
+    //----------------- .conj() ---------------------------
+    // NOTE: in-place
+
+    template< typename T = NumberType >
+    typename std::enable_if<is_complex<T>::value, Type& >::type conj() {
+      for (size_t i = 0; i < size(); i++) {
+        ParentDataType::data_[i] = std::conj(ParentDataType::data_[i]);
+      }
+      return *this;
     }
 
     // -------------------------- transpose() --------------------------------
@@ -385,9 +850,9 @@ namespace mathq {
     // 1) For square matrices this operation is quick and easy.
     // 2) For non-square matrices, this changes the shape and operation is time-consuming
     //    Note: Transpose function is much quicker. only use this for when memory is critical
-    Matrix<Element, NR, NC>& transpose(void) {
-      const size_t Nr = Nrows_;
-      const size_t Nc = Ncols_;
+    Type& transpose(void) {
+      const size_t Nr = Nrows();
+      const size_t Nc = Ncols();
       const size_t N = size();
       const size_t Nminus1 = N-1;
 
@@ -404,7 +869,9 @@ namespace mathq {
         return *this;
       }
 
-      reshape(Nc, Nr);
+      if constexpr (is_dynamic_value) {
+
+      resize(Nc, Nr);
 
       // for "vectors" 
       if (Nc == 1 || Nr==1) {
@@ -424,7 +891,7 @@ namespace mathq {
       size_t count = 2;
       // find the rest of the fixed points
       if (Nc >= 3 && Nr >= 3)
-        count += gcd(Nc - 1, Nr - 1) - 1;	/* # fixed points */
+        count += std::gcd(Nc - 1, Nr - 1) - 1;	/* # fixed points */
 
       size_t jstart = 1;
       size_t magicnum = Nc;
@@ -497,549 +964,127 @@ namespace mathq {
         // WE HAVE FOUND START OF THE NEXT SEQUENcE
 
       }
+      }
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
     template< typename T = NumberType >
-    typename std::enable_if<is_complex<T>{}, Matrix<T>& >::type adjoint() {
+    typename std::enable_if<is_complex<T>::value, Type& >::type adjoint() {
       this->conj();
       this->transpose();
       return *this;
     }
 
-    //**********************************************************************
-    //******************** DEEP ACCESS: x.dat(n) ***************************
-    //**********************************************************************
-    // NOTE: indexes over [0] to [deepsize()] and note return type
 
-    // "read/write"
-    NumberType& dat(const size_t n) {
-      using namespace::display;
-      //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
-      if constexpr (depth_value<=1) {
-        int k = n;
-        if (k < 0) {
-          k += size();
-        }
-        return data_[k];
-      }
-      else {
-        const int Ndeep = this->eldeepsize();
-        const int j = n / Ndeep;
-        const int k = n % Ndeep;
-        return data_[j].dat(k);
-      }
-    }
-
-    // read
-    const NumberType& dat(const size_t n)  const {
-      using namespace::display;
-      //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #2")<<std::endl;
-      if constexpr (depth_value<=1) {
-        int k = n;
-        if (k < 0) {
-          k += size();
-        }
-        return data_[k];
-      }
-      else {
-        const int Ndeep = this->eldeepsize();
-        const int j = n / Ndeep;
-        const int k = n % Ndeep;
-        return data_[j].dat(k);
-      }
-    }
-
-    // -------------------- auto x.dat(Indices) --------------------
-    // -------------------------------------------------------------
-
-
-    // "read/write": x.dat(Indices)
-    NumberType& dat(const Indices& inds) {
-      Indices inds_next(inds);
-      //MOUT << "Matrix: "<<std::endl;
-      // error if (inds.size() != sum deepdims[i].rank)
-      size_t n = inds_next[0];
-      inds_next.erase(inds_next.begin());
-      size_t m = inds_next[0];
-      inds_next.erase(inds_next.begin());
-      //MOUT << "  ";
-      //MDISP(n,m); 
-      //MOUT << "  ";
-      //TLDISP(inds_next);
-
-      if constexpr (depth_value>1) {
-        return (*this)(n, m).dat(inds_next);
-      }
-      else {
-        return (*this)(n, m);
-      }
-    }
-
-    // "read": x.dat(Indices)
-    const NumberType dat(const Indices& inds)  const {
-      Indices inds_next(inds);
-      // error if (inds.size() != sum deepdims[i].rank)
-      size_t n = inds_next[0];
-      inds_next.erase(inds_next.begin());
-      size_t m = inds_next[0];
-      inds_next.erase(inds_next.begin());
-      if constexpr (depth_value>1) {
-        return (*this)(n, m).dat(inds_next);
-      }
-      else {
-        return (*this)(n, m);
-      }
-    }
-
-
-    // -------------------- auto x.dat(DeepIndices) --------------------
-    // -------------------------------------------------------------
-
-    // "read/write": x.dat(DeepIndices)
-    NumberType& dat(const DeepIndices& dinds) {
-      const size_t mydepth = dinds.size();
-      const Indices& inds = dinds[mydepth -depth_value];
-      size_t n = inds[0];
-      size_t m = inds[1];
-
-      if constexpr (depth_value>1) {
-        return (*this)(n, m).dat(dinds);
-      }
-      else {
-        return (*this)(n, m);
-      }
-    }
-
-    // "read": x.dat(DeepIndices)
-    const NumberType dat(const DeepIndices& dinds)  const {
-      const size_t mydepth = dinds.size();
-      const Indices& inds = dinds[mydepth -depth_value];
-      size_t n = inds[0];
-      size_t m = inds[1];
-
-      if constexpr (depth_value>1) {
-        return (*this)(n, m).dat(dinds);
-      }
-      else {
-        return (*this)(n, m);
-      }
-    }
-
-
-    //**********************************************************************
-    //************* Array-style Element Access: x[n] ***********************
-    //**********************************************************************
-
-    // "read/write"
-    Element& operator[](const size_t n) {
-      int k = n;
-      if (k < 0) {
-        k += size();
-      }
-      return data_[k];
-    }
-
-    // read
-    const Element& operator[](const size_t n)  const {
-      int k = n;
-      if (k < 0) {
-        k += size();
-      }
-      return data_[k];
-    }
-
-
-
-    // matrix[slice]
-
-    TERW_Subset<Element> operator[](const slc& slice) {
-      return (*this)[slice.toIndexVector(size())];
-    }
-    const TERW_Subset<Element>  operator[](const slc& slice) const {
-      return (*this)[slice.toIndexVector(size())];
-    }
-
-
-
-    // matrix[Vector<size_t>]
-
-    TERW_Subset<Element> operator[](const Vector<size_t>& ii) {
-      return TERW_Subset<Element>(*this, ii);
-    }
-    const TERW_Subset<Element> operator[](const Vector<size_t>& ii) const {
-      return TERW_Subset<Element>(*this, ii);
-    }
-
-
-
-
-    // matrix[mask]
-
-    TERW_Submask<Element> operator[](const Matrix<bool>& mask) {
-      return  TERW_Submask<Element>(*this, mask);
-    }
-    const TERW_Submask<Element> operator[](const Matrix<bool>& mask)  const {
-      return  TERW_Submask<Element>(*this, mask);
-    }
-
-
-
-    // matrix[initializer_list]
-
-    TERW_Subset<Element> operator[](const std::initializer_list<size_t>& list) {
-      return  TERW_Subset<Element>(*this, list);
-    }
-    const TERW_Subset<Element> operator[](const std::initializer_list<size_t>& list) const {
-      return  TERW_Subset<Element>(*this, list);
-    }
-
-
-    //**********************************************************************
-    //***************MultiArray-style Element Access: A(r,c) *********************
-    //**********************************************************************
-
-    // --------------------------- index(r,c) -----------------------------
-
-    size_t index(const size_t r, const size_t c) const {
-      //TODO: bounds check
-      return c + Ncols_*r; // row major
-    }
-
-    // --------------------------- indices(k) -----------------------------
-
-    // This is the inverse of the above function
-    Indices& indices(const size_t k) const {
-      // NOTE: a divide is between 6 to 40 times more costly than a multiply
-      //       https://stackoverflow.com/questions/4125033/floating-point-division-vs-floating-point-multiplication
-      //       So avoid using this whenever possible
-      //       simplest way to calc is (k/Ncols_, k%Ncols_)
-      //       but the following guarantees that the compution is done efficently
-      //TODO: bounds check
-      Indices& myinds = *(new Indices(2));
-      myinds[0] = k/Ncols_;      // row
-      myinds[1] = k - Ncols_*myinds[0];  // column
-      return myinds;
-    }
-
-    //**********************************************************************
-    //************************** access (r,c) ***********************************
-    //**********************************************************************
-
-
-    // ----------------- matrix(r,c) ----------------
-    Element& operator()(const size_t r, const size_t c) {
-      return data_[index(r, c)];
-    }
-    const Element operator()(const size_t r, const size_t c) const {
-      return data_[index(r, c)];
-    }
-
-    // TODO: slices etc.
-
-
-
-    //**********************************************************************
-    //************************** ASSIGNMENT **************************************
-    //**********************************************************************
-
-    // Any new assignment operators should also be addedc to MArrayExpRW for consistency.
-    // For this reason, in most cases, its preferred to overload the function vcast()
-    // equals functions are included so that derived classes can call these functions
-
-    // ----------------- matrix = e ----------------
-    Matrix<Element, NR, NC>&
-      operator=(const Element& e) {
-      for (size_t i = 0; i < size(); i++) {
-        data_[i] = e;
-      }
-      return *this;
-    }
-
-    // ----------------- matrix = d ----------------
-    template <class T = Element>
-    typename std::enable_if<!std::is_same<T, NumberType>::value, Matrix<Element, NR, NC>& >::type operator=(const NumberType& d) {
-
-      for (size_t i = 0; i < deepsize(); i++) {
-        data_.dat(i) = d;
-      }
-      return *this;
-    }
-
-    // ----------------------Matrix = Matrix<Element,NR2,NC2,NumberType,depth_value> ----------------
-
-    template<int NR2, int NC2>
-    Matrix<Element, NR, NC>& operator=(const Matrix<Element, NR2, NC2>& m) {
-      if constexpr (depth_value<=1) {
-        TLDISP(m.dims());
-        resize(m.dims());
-        for (size_t i = 0; i < size(); i++) {
-          (*this)[i] = m[i];
-        }
-      }
-      else {
-        resize(m.deepdims());
-        for (size_t i = 0; i < deepsize(); i++) {
-          this->dat(i) = m.dat(i);
-        }
-      }
-      return *this;
-    }
-
-
-    // ----------------- matrix = MArrayExpR<X,Element,NumberType,depth_value,rank> ----------------
-    template <class X> Matrix<Element, NR, NC>&
-      operator=(const MArrayExpR<X, Element, NumberType, depth_value, rank>& x) {
-
-      if constexpr (depth_value<=1) {
-        resize(x.dims());
-        // TODO: use (r,c) instead
-        for (size_t i = 0; i < size(); i++) {
-          (*this)[i] = x[i];
-        }
-      }
-      else {
-        resize(x.deepdims());
-        for (size_t i = 0; i < deepsize(); i++) {
-          this->dat(i) = x.dat(i);
-        }
-      }
-      return *this;
-    }
-
-
-
-
-    // ----------------- matrix = NumberType[][] ----------------
-    Matrix<Element, NR, NC>&
-      operator=(const Element** array) {
-      size_t k = 0;
-      for (size_t r = 0; r < Nrows_; r++) {
-        for (size_t c = 0; c < Ncols_; c++) {
-          (*this)[k++] = array[r][c];
-        }
-      }
-      return *this;
-    }
-
-
-
-
-    // ----------------- matrix = initializer_list<initializer_list>  ----------------
-    Matrix<Element, NR, NC>&
-      operator=(const std::initializer_list<std::initializer_list<Element> >& mylist) {
-      const int Nr = mylist.size();
-      const int Nc = (*(mylist.begin())).size();
-      resize(Nr, Nc);
-      // TODO: size check
-      size_t i = 0;
-      typename std::initializer_list<std::initializer_list<Element> >::iterator itR;
-      for (itR = mylist.begin(); itR != mylist.end(); ++itR) {
-        const std::initializer_list<Element>& row = *itR;
-        // TODO: check that each row has same # cols
-        typename std::initializer_list<Element>::iterator itC;
-        for (itC = row.begin(); itC != row.end(); ++itC) {
-          (*this)[i++] = *itC;
-        }
-      }
-
-      return *this;
-    }
-
-    //*********************************************************
-    //                   1D assignment
-    //********************************************************
-
-    // ------------------------ matrix = valarray[] ----------------
-
-    Matrix<Element, NR, NC>& operator=(const std::valarray<Element>& valar) {
-      for (size_t i = 0; i < size(); i++) {
-        (*this)[i] = valar[i];
-      }
-      return *this;
-    }
-
-    // ------------------------ matrix = array[] ----------------
-    Matrix<Element, NR, NC>&
-      operator=(const Element array1[]) {
-      for (size_t i = 0; i < size(); i++) {
-        (*this)[i] = array1[i];
-      }
-      return *this;
-    }
-
-
-    // --------------- matrix = initializer_list ------------------
-    Matrix<Element, NR, NC>&
-      operator=(const std::initializer_list<Element>& mylist) {
-
-      // TODO: bound scheck 
-      size_t i = 0;
-      typename std::initializer_list<Element>::iterator it;
-      for (it = mylist.begin(); it != mylist.end(); ++it) {
-        (*this)[i++] = *it;
-      }
-
-      return *this;
-    }
-
-
-
-
-    //**********************************************************************
-    //********************* Direct access to data_  ***********************************
-    //**********************************************************************
-
-    // -------------------- getInternalStdArray() --------------------
-    // "read/write" to the wrapped valarray/aray
-    auto& getInternalStdArray() {
-      return data_;
-    }
-
-    // get C pointer to raw data
-    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
-    Element* data() {
-      if constexpr ((NR == 0) && (NC == 0)) {
-        // valarray<Element>
-        return &(data_[0]);
-      }
-      else {
-        // array<Element>
-        return data_.data();
-      }
-    }
-
-
-    //**********************************************************************
-    //************************** MATH **************************************
-    //**********************************************************************
-
-    //----------------- .roundzero(tol) ---------------------------
-    // NOTE: in-place
-
-    Matrix<Element, NR, NC>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
-      for (size_t i = size(); i--;) {
-        data_[i] = mathq::roundzero(data_[i], tolerance);
-      }
-      return *this;
-    }
-
-
-    //----------------- .conj() ---------------------------
-    // NOTE: in-place
-
-    template< typename T = NumberType >
-    typename std::enable_if<is_complex<T>{}, Matrix<T>& >::type conj() {
-      for (size_t i = size(); i--;) {
-        data_[i] = std::conj(data_[i]);
-      }
-      return *this;
-    }
 
 
 
     //**********************************************************************
     //************************** Text and debugging ************************
     //**********************************************************************
-
     inline std::string classname() const {
+      return ClassName();
+    }
+
+    static inline std::string ClassName() {
       using namespace display;
+      Style& style = FormatDataVector::style_for_punctuation;
       std::string s = "Matrix";
       s += StyledString::get(ANGLE1).get();
-      Element e;
-      s += getTypeName(e);
-      if (NR!=0) {
-        s += StyledString::get(COMMA).get();
-        s += "NR=";
-        s += num2string(NR);
+      Element d;
+      s += getTypeName(d);
+      if constexpr (!is_dynamic_value) {
+        for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
+          if (ii == 0) {
+            s += StyledString::get(COMMA).get() + " ";
+          }
+          else {
+            s += style.apply("⨯");
+          }
+          s += std::to_string(static_dims_array[ii]);
+        }
       }
-      if (NC!=0) {
-        s += StyledString::get(COMMA).get();
-        s += "NC=";
-        s += num2string(NC);
-      }
-      //    if (depth_value>1) {
-      //      s += StyledString::get(COMMA).get();
-      //      s += "depth_value=";
-      //      s += num2string(depth_value);
-      //    }
       s += StyledString::get(ANGLE2).get();
       return s;
     }
 
-
-#if MATHQ_DEBUG>=1
+#if MATHQ_DEBUG >= 1
     std::string expression(void) const {
       return "";
     }
 #endif
 
+    // this is recursive 
+    // TODO: implement format
 
-
-
-    // stream << operator
-
-
-    friend std::ostream& operator<<(std::ostream& stream, const Matrix<Element, NR, NC>& m) {
+    std::ostream& send(std::ostream& stream, size_t& n, const Dimensions& dim) const {
       using namespace display;
+      Style& style = FormatDataVector::style_for_punctuation;
+      // MDISP(n,dim);
+      const int delta = this->rank() - dim.rank();
+      if (delta == 0) {
+        stream << std::endl;
+      }
+      std::string indent = "";
+      for (size_t j = 0; j < delta; j++) {
+        indent += "  ";
+      }
+      stream << indent << style.apply("{");
 
-      Style& style = FormatDataMatrix::style_for_punctuation;
-      stream << style.apply(FormatDataMatrix::string_opening);
-      const size_t N = FormatDataMatrix::max_elements_per_line;
-
-      for (size_t r = 0; r < m.Nrows(); r++) {
-        stream << style.apply(FormatDataMatrix::string_row_opening);
-        size_t k = 0;
-        for (size_t c = 0; c < m.Ncols(); c++, k++) {
-          if (k >= N) {
-            stream << style.apply(FormatDataMatrix::string_endofline);
-            k = 0;
-          }
-          dispval_strm(stream, m(r, c));
-          if (c < m.Ncols()-1) {
-            stream << style.apply(FormatDataMatrix::string_delimeter);
+      if (dim.rank() > 1) {
+        stream << std::endl;
+      }
+      if (dim.rank() > 0) {
+        Dimensions newdim(dim);
+        newdim.erase(newdim.begin());
+        for (size_t j = 0; j < dim[0]; j++) {
+          if (dim.rank() > 1) {
+            Dimensions newdim(dim);
+            newdim.erase(newdim.begin());
+            this->send(stream, n, newdim);
+            if (j < dim[0] - 1) {
+              stream << style.apply(",") << std::endl;
+            }
           }
           else {
-            if (r < m.Nrows()-1) {
-              stream << style.apply(FormatDataMatrix::string_row_closing);
-            }
-            else {
-              stream << style.apply(FormatDataMatrix::string_lastrow_closing);
+            dispval_strm(stream, (*this)[n++]);
+            if (j < dim[0] - 1) {
+              stream << style.apply(", ");
             }
           }
         }
       }
-      stream << style.apply(FormatDataMatrix::string_closing);
-
+      if (dim.rank() == 1) {
+        stream << style.apply("}");
+      }
+      else if (dim.rank() == this->rank()) {
+        stream << std::endl
+          << indent << style.apply("}");
+      }
+      else {
+        stream << std::endl
+          << indent << style.apply("}");
+      }
       return stream;
     }
 
+    friend std::ostream& operator<<(std::ostream& stream, const Type& t) {
+      using namespace display;
+      size_t n = 0;
+      t.send(stream, n, t.dims());
+      return stream;
+    }
 
-    //template <typename NumberType>	
-    friend inline std::istream& operator>>(const std::string s, Matrix<Element, NR, NC>& m2) {
+    // template <typename NumberType>
+    friend inline std::istream& operator>>(const std::string s, Type& x) {
       std::istringstream st(s);
-      return (st >> m2);
+      return (st >> x);
     }
-
-
-    // stream >> operator
-
-    friend std::istream& operator>>(std::istream& stream, Matrix<Element, NR, NC>& m2) {
-      return stream;
-    }
-
-
-
 
   };
 
+}; // namespace mathq
 
-
-
-};
-
-
-#endif 
-
+#endif

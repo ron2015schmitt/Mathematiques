@@ -16,12 +16,12 @@ int main(int argc, char *argv[])
   
   Vector<double> v1 = {1,2,3,4};
   TRDISP(v1);
-  TRDISP(v1.getInternalStdArray());
+  TRDISP(v1.data_obj());
   TRDISP(v1.data());
 
   Vector<double,4> v2 = {1,2,3,4};
   TRDISP(v2);
-  TRDISP(v2.getInternalStdArray());
+  TRDISP(v2.data_obj());
   TRDISP(v2.data());
 
 

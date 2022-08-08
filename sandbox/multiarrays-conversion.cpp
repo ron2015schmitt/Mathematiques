@@ -1,4 +1,3 @@
-#include <iostream>
 #include "mathq.h"
 
 
@@ -19,17 +18,15 @@ int main(int argc, char *argv[])
   TRDISP(v1);
 
 
+  // now that Vectors are type aliases these are the same type
+
   cout << "construct MultiArray from Vector" << endl;
-  auto ma = MultiArray<double,1>(v1);
+  auto ma = MultiArray<double,1,4>(v1);
   TRDISP(ma);
-  auto ma2 = MultiArray<double>(v1);
-  TRDISP(ma2);
 
   cout << "cast Vector to MultiArray" << endl;
   auto ma3 = static_cast<MultiArray<double,1>>(v1);
   TRDISP(ma3);
-  auto ma4 = static_cast<MultiArray<double>>(v1);
-  TRDISP(ma4);
 
 
   //------------------------------------------------------

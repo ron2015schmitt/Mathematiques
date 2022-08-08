@@ -1,5 +1,5 @@
-#ifndef MATHQ__MATH_REAL_H
-#define MATHQ__MATH_REAL_H
+#ifndef MATHQ__MATH_REAL
+#define MATHQ__MATH_REAL
 
 
 namespace mathq {
@@ -10,11 +10,7 @@ namespace mathq {
   // ***************************************************************************
 
 
-
-    // maximum subcript size for vectors and matrices (since we allow negative indexing)
-  const size_t maxsize = std::numeric_limits<size_t>::max();
-  const size_t badsize = std::numeric_limits<size_t>::max();
-
+  using quad = long double;
 
   /****************************************************************************
     * tolerances
@@ -81,21 +77,9 @@ namespace mathq {
   };
 
 
-
-
-  // TODO: C++17 has its own gcd gcf
-
-  // GCD
-  inline int gcd(int a, int b) {
-    int r;
-    do {
-      r = a % b;
-      a = b;
-      b = r;
-    } while (r != 0);
-
-    return a;
-  }
+  //****************************************************************************
+  // functions for ints and floats
+  //****************************************************************************
 
 
   // roundzero
@@ -108,22 +92,21 @@ namespace mathq {
 
   // zero
 
+
   template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number zero(const Number& x) {
+  Number zero() {
     return Number(0);
   }
 
   // one
 
   template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number one(const Number& x) {
+  Number one() {
     return Number(1);
   }
 
-  // conj
-  // complex conjugate: real numbers
-  //                    note this is different from std::conj,
-  //                    which returns a complex number
+
+  // complex functions defined for real values
 
   template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > Number
     conj(const Number& x) {
@@ -131,14 +114,14 @@ namespace mathq {
   }
 
   // complex conjugate OPERTOR ~
+  // ~ is defined for ints nad can;t be defined for reals
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > Number
-    operator~(Number& x) {
-    return x;
-  }
+  // template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> >
+  // Number operator~(Number& x) {
+  //   return x;
+  // }
 
-
-  // imag
+  // real
 
   template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > Number
     real(const Number& x) {
@@ -176,7 +159,7 @@ namespace mathq {
   }
 
 
- // logN(x, N)
+  // logN(x, N)
 
   template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
   Number logN(const Number& x, unsigned int N) {
@@ -206,8 +189,7 @@ namespace mathq {
 
 
   //***********************************************************************
-  //       sgn(x) function
-  // TODO: get rid of macros!!
+  //       sgn(x) function created via macros
   //***********************************************************************
 
 #define SGN_MACRO(number)  inline number sgn(const number x) {if (x>0) return static_cast<number>(1); else if (x<0) return static_cast<number>(-1); else return static_cast<number>(0);}

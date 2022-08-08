@@ -1,315 +1,271 @@
-#ifndef MATHQ__SCALAR_H
-#define MATHQ__SCALAR_H 1
+#ifndef MATHQ__SCALAR
+#define MATHQ__SCALAR 1
+
+  /******************************************************************************
+   * Scalar<Element> == MultiArray<Element,0>
+   *
+   *                 Element  = type for elements
+********************************************************************
+ */
+
 
 namespace mathq {
 
-    /********************************************************************
-     * Scalar<Element>    -- variable size vector (valarray)
-     *                 Element  = type for elements
-     *
-     *                 NumberType = number type
-     *                   = underlying algebraic field
-     *                     ex. int, double, std::complex<double>
-     *                 depth = tensor depth. if Element=NumberType, then depth=1.
-    ********************************************************************
-     */
-
-  template <class Element> class Scalar :
-    public MArrayExpRW<Scalar<Element>, Element, typename NumberTrait<Element>::Type, 1 + NumberTrait<Element>::getDepth(), 0> {
-
+  template <typename Element>
+  class MultiArray<Element, 0> : public ExpressionRW<
+    Scalar<Element>,  // Derived
+    Element,  // Element
+    typename NumberTrait<Element>::Type, // Number
+    1 + NumberTrait<Element>::depth(),  // depth
+    0  // rank
+  > {
   public:
-    typedef Scalar<Element> ConcreteType;
 
-    typedef Element ElementType;
-    typedef typename NumberTrait<Element>::Type NumberType;
-    typedef typename OrderedNumberTrait<NumberType>::Type OrderedNumberType;
 
-    typedef Element MyArrayType;
+    //**********************************************************************
+    //                  Compile Time Constant
+    //**********************************************************************
 
-    constexpr static int rank = 0;
-    constexpr static int rank_value = rank;
-    constexpr static int depth = 1 + NumberTrait<Element>::getDepth();
-    constexpr static int depth_value = depth;
+    constexpr static size_t rank_value = 0;
+    constexpr static std::array<size_t, rank_value> static_dims_array = { };
+    constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
+    constexpr static bool is_dynamic_value = false;
+    constexpr static size_t compile_time_size = 1;
 
-  private:
+    //**********************************************************************
+    //                            TYPES 
+    //**********************************************************************
 
-    // *********************** OBJECT DATA ***********************************
+    using Type = MultiArray<Element, rank_value>;
+    using ConcreteType = Scalar<Element>;
+
+    using ElementType = Element;
+    using NumberType = typename NumberTrait<Element>::Type;
+    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+
+    using ParentType = ExpressionRW<
+      ConcreteType,  // Derived
+      Element,  // Element
+      NumberType, // Number
+      depth_value,  // depth
+      rank_value  // rank
+    >;
+
+    using DimensionsType = Dimensions;
+    using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
+    using MyArrayType = Element;
+
+
+    //**********************************************************************
+    // OBJECT DATA 
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
+    //
+    // size is taken from data_.size
+    //**********************************************************************
 
+  // private:
     Element data_;
-
-
-
 
   public:
 
     //**********************************************************************
-    //************************** CONSTRUCTORS ******************************
+    //                            CONSTRUCTORS 
     //**********************************************************************
 
 
-    // -------------------  DEFAULT  CONSTRUCTOR: zero --------------------
-    Scalar<Element>() {
-      if constexpr (depth==1) {
-        *this = 0;
-      }
-      else {
-        data_ = *(new Element());
-      }
-      constructorHelper();
+    // -------------------  default  --------------------
+    MultiArray() {
     }
 
-    // --------------------- constant Element CONSTRUCTOR ---------------------
-
-    Scalar<Element>(const Element e) {
-
-      *this = e;
-      constructorHelper();
+    // --------------------- copy constructor --------------------
+    MultiArray(const Type& var) {
+      *this = var;
     }
 
-    // --------------------- constant NumberType CONSTRUCTOR ---------------------
+    // --------------------- set element value   ---------------------
 
-    template<int D1 = depth, EnableIf<(D1>1)> = 0>
+    // for Scalars this should be implicit (NO `explicit`) so that `Scalar<double> s = 4.5;` works
+    // and this is okay because there are no size related constructors
 
-    Scalar<Element>(const NumberType d) {
-
-      *this = d;
-      constructorHelper();
+    MultiArray(const Element val) {
+      *this = val;
     }
 
-    // --------------------- EXPRESSION CONSTRUCTOR --------------------
+    // --------------------- set all bottom elements to same value   ---------------------
 
+    // for Scalars this should be implicit (NO `explicit`) so that `Scalar<double> s = 4.5;` works
+    // and this is okay because there are no size related constructors
 
-    template <class X>
-    Scalar<Element>(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
-
-      *this = x;
-      constructorHelper();
+    template<size_t depth = depth_value> requires ( (depth > 1) && (!std::is_same<Element, NumberType>::value) )
+      MultiArray(const NumberType val) {
+      *this = val;
     }
 
-
-    // ************* C++11 initializer_list CONSTRUCTOR---------------------
-    Scalar<Element>(const std::initializer_list<Element>& mylist) {
+    // do not use if depth greater than 1!
+    // CONSTRUCTOR: initializer_list 
+    template<size_t depth = depth_value> requires (depth == 1)
+    MultiArray(const std::initializer_list<Element>& mylist) {
       *this = mylist;
-      constructorHelper();
-    }
-
-
-    // --------------------- constructorHelper() --------------------
-
-    void constructorHelper() {
-      //add to MultiArrayPool
     }
 
 
 
-
-
-    //**********************************************************************
-    //************************** DESTRUCTOR ******************************
-    //**********************************************************************
-
-    ~Scalar<Element>() {
-      //remove from MultiArrayPool
+    //--------------------- EXPRESSION CONSTRUCTOR --------------------
+    template <class Derived>
+    MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
+      *this = x;
     }
 
 
     //**********************************************************************
-    //************************** Size related  ******************************
+    //                             DESTRUCTOR 
     //**********************************************************************
 
-
-    inline size_t size(void) const {
-      return 1;
-    }
-    inline size_t getDepth(void) const {
-      return depth;
-    }
-
-    Dimensions eldims(void) const {
-      Dimensions dimensions();
-      if constexpr (depth>1) {
-        return data_.dims();
-      }
-      else {
-        return *(new Dimensions());
-      }
-    }
-    inline size_t elsize(void) const {
-      if constexpr (depth<2) {
-        return 1;
-      }
-      else {
-        return data_.size();
-      }
-    }
-    inline size_t eldeepsize(void) const {
-      if constexpr (depth<2) {
-        return 1;
-      }
-      else {
-        return data_.deepsize();
-      }
-    }
-    size_t deepsize(void) const {
-      if constexpr (depth<2) {
-        return this->size();
-      }
-      else {
-        return (this->size())*(this->eldeepsize());
-      }
-    }
-    std::vector<Dimensions>& deepdims(void) const {
-      std::vector<Dimensions>& ddims = *(new std::vector<Dimensions>);
-      return deepdims(ddims);
-    }
-    std::vector<Dimensions>& deepdims(std::vector<Dimensions>& parentdims) const {
-      parentdims.push_back(dims());
-      if constexpr (depth>1) {
-        data_.deepdims(parentdims);
-      }
-      return parentdims;
+    ~MultiArray() {
     }
 
 
-    size_t ndims(void) const {
-      return 0;
-    }
-    Dimensions dims(void) const {
-      Dimensions dimensions;
-      return dimensions;
-    }
-    Dimensions tdims(void) const {
-      Dimensions dimensions;
-      return dimensions;
-    }
+    //**********************************************************************
+    //                         Basic characteristics
+    //**********************************************************************
+
     bool isExpression(void) const {
       return false;
-    }
-    MultiArrays getEnum(void) const {
-      return T_SCALAR;
     }
     VectorofPtrs getAddresses(void) const {
       VectorofPtrs myaddr((void*)this);
       return myaddr;
     }
 
+    //**********************************************************************
+    //                         Rank,Depth,Sizes
+    //**********************************************************************
 
-    // TODO: should just pass an index and make deepdims const
+    size_t rank(void) const {
+      return rank_value;
+    }
+
+    inline size_t depth(void) const {
+      return depth_value;
+    }
+
+    inline size_t size(void) const {
+      return 1;
+    }
+
+    // // the total number of numbers in this data structure
+    size_t total_size(void) const {
+      if constexpr (depth_value<2) {
+        return 1;
+      }
+      else {
+        return this->el_total_size();
+      }
+    }
+
+    // the size of each element
+    inline size_t element_size(void) const {
+      if constexpr (depth_value<2) {
+        return 1;
+      }
+      else {
+        return data_.size();
+      }
+    }
+
+    // the total number of numbers in an element
+    inline size_t el_total_size(void) const {
+      if constexpr (depth_value<2) {
+        return 1;
+      }
+      else {
+        return data_.total_size();
+      }
+    }
 
 
-    Scalar<Element>& resize(std::vector<Dimensions>& deepdims) {
-      if constexpr (depth>1) {
-        deepdims.erase(deepdims.begin());
-        data_.resize(deepdims);
+    //**********************************************************************
+    //                        Dimensions
+    //**********************************************************************
+
+    Dimensions& dims(void) const {
+      return *(new Dimensions());
+    }
+
+    inline std::array<size_t, rank_value> dims_array(void) const {
+        return *(new std::array<size_t, rank_value>{} );
+    }
+
+
+    ElementDimensionsType& element_dims(void) const {
+      if constexpr (depth_value > 1) {
+        return data_.dims();
+      }
+      return *(new ElementDimensionsType{});
+    }
+
+
+    RecursiveDimensions& recursive_dims(void) const {
+      RecursiveDimensions& rdims = *(new RecursiveDimensions(depth_value));
+      this->recurse_dims(rdims, 0);
+      return rdims;
+    }
+
+    const Type& recurse_dims(RecursiveDimensions& parent_rdims, const size_t di = 0) const {
+      size_t depth_index = di;
+      parent_rdims[depth_index++] = dims();
+      if constexpr (depth_value>1) {
+        data_.recurse_dims(parent_rdims, depth_index);
       }
       return *this;
     }
 
+
     //**********************************************************************
-    //************************** DEEP ACCESS *******************************
+    //                          Resize
     //**********************************************************************
 
-    // -------------------- NumberType dat(n) --------------------
-    // NOTE: indexes over [0] to [deepsize()]
-    // -------------------------------------------------------------
 
-    // "read/write": unsigned
-    NumberType& dat(const size_t n) {
-      if constexpr (depth <= 1) {
-        return data_;
-      }
-      else {
-        return (data_).dat(n);
-      }
+    // TODO: new_rdims.size() <= depth_value
+    Type& resize(const RecursiveDimensions& new_rdims) {
+      return recurse_resize(new_rdims);
     }
 
-    // "read/write": signed
-    const NumberType& dat(const size_t n)  const {
-      if constexpr (depth <= 1) {
-        return data_;
+    // helper functions
+    Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
+      size_t depth_index = di;
+      size_t resize_depth = parent_rdims.size();
+      if constexpr (depth_value > 1) {
+        if (depth_index < resize_depth) {
+          data_.recurse_resize(parent_rdims, depth_index);
+        }
       }
-      else {
-        return (data_).dat(n);
-      }
+      return *this;
     }
-
-    // -------------------- auto x.dat(DeepIndices) --------------------
-    // -------------------------------------------------------------
-
-    // "read/write": DeepIndices
-    NumberType& dat(const DeepIndices& dinds) {
-      // error if (inds.size() != sum deepdims[i].rank
-      if constexpr (depth>1) {
-        return (*this)().dat(dinds);
-      }
-      else {
-        return (*this)();
-      }
-    }
-
-    // "read": DeepIndices
-    const NumberType dat(const DeepIndices& dinds)  const {
-      // error if (inds.size() != sum deepdims[i].rank
-      if constexpr (depth>1) {
-        return (*this)().dat(dinds);
-      }
-      else {
-        return (*this)();
-      }
-    }
-
-
-    // -------------------- auto x.dat(Indices) --------------------
-    // -------------------------------------------------------------
-
-    // "read/write": Indices
-    NumberType& dat(const Indices& inds) {
-      // error if (inds.size() != sum deepdims[i].rank
-      if constexpr (depth>1) {
-        return (*this)().dat(inds);
-      }
-      else {
-        return (*this)();
-      }
-    }
-
-    // "read": Indices
-    const NumberType dat(const Indices& inds)  const {
-      // error if (inds.size() != sum deepdims[i].rank
-      if constexpr (depth>1) {
-        return (*this)().dat(inds);
-      }
-      else {
-        return (*this)();
-      }
-    }
-
 
 
 
     //**********************************************************************
-    //***************** Element ACCESS as an array *************************
+    //********************* Direct access to data_  ***********************************
     //**********************************************************************
 
-    // "read/write": unsigned
-    Element& operator[](const size_t n) {
+    // -------------------- data_obj() --------------------
+    // "read/write" to the wrapped valarray/aray
+    auto& data_obj() {
       return data_;
     }
 
-    // "read/write": signed
-    const Element& operator[](const size_t n)  const {
-      return data_;
+    // get C pointer to raw data
+    // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
+    Element* data() {
+      return &(data_);
     }
 
-
     //**********************************************************************
-    //***************** Element ACCESS as a tensor *************************
+    //                              v(n) - tensor access
     //**********************************************************************
-
-
 
     // "read/write"
     Element& operator()() {
@@ -317,61 +273,144 @@ namespace mathq {
     }
 
     // "read only"
-    const Element& operator()()  const {
+    const Element& operator()() const {
       return data_;
     }
 
 
+    //**********************************************************************
+    //******************** DEEP ACCESS: x.dat(n) ***************************
+    //**********************************************************************
+    // NOTE: indexes over [0] to [total_size()] and note return type
+
+    // "read/write"
+    NumberType& dat(const size_t n) {
+      using namespace::display;
+      if constexpr (depth_value < 2) {
+        return data_;
+      }
+      else {
+        return data_.dat(n);
+      }
+    }
+
+    // read
+    const NumberType& dat(const size_t n)  const {
+      using namespace::display;
+      if constexpr (depth_value < 2) {
+        return data_;
+      }
+      else {
+        return data_.dat(n);
+      }
+    }
+
+
+    //**********************************************************************
+    //************* Array-style Element Access: v[n] ***********************
+    //**********************************************************************
+
+
+    // "read/write"
+    template <typename T> requires (std::is_integral<T>::value)
+    Element& operator[](const T n) {
+      return data_;
+    }
+
+    // read
+    template <typename T> requires (std::is_integral<T>::value)
+    const Element& operator[](const T n)  const {
+      return data_;
+    }
+
+
+    //**********************************************************************
+    //************************** v[Indices] ***********************************
+    //**********************************************************************
+
+
+    // "read/write"
+    Element& operator[](const Indices& inds) {
+      return data_;
+    }
+
+    // "read only"
+    const Element& operator[](const Indices& inds)  const {
+      return data_;
+    }
+
+    // -------------------------------------------------------------
+    //                        [DeepIndices] 
+    // -------------------------------------------------------------
+
+    // "read/write"
+    NumberType& operator[](const DeepIndices& dinds) {
+      const size_t mydepth = dinds.size();
+
+      if constexpr (depth_value > 1) {
+        return data_[dinds];
+      }
+      else {
+        return data_;
+      }
+    }
+
+    // "read"
+    const NumberType& operator[](const DeepIndices& dinds) const {
+      const size_t mydepth = dinds.size();
+      if constexpr (depth_value > 1) {
+        return data_[dinds];
+      }
+      else {
+        return data_;
+      }
+    }
+
 
 
 
     //**********************************************************************
-    //************************** ASSIGNMENT **************************************
+    //************************** ASSIGNMENT ********************************
     //**********************************************************************
 
-    Scalar<Element>& operator=(const Element e) {
+    // Any new assignment operators should also be addedc to ExpressionRW for consistency.
+    // For this reason, in most cases, its preferred to overload the function vcast()
+    // equals functions are included so that derived classes can call these functions
+
+    // Assign all elements to the same constant value
+    template<typename T> requires ( std::is_convertible<T, Element>::value )
+    Type& operator=(const T& e) {
       data_ = e;
       return *this;
     }
 
-    template <int D1 = depth>
-    typename std::enable_if<(D1>1), Scalar<Element>& >::type operator=(const NumberType& d) {
-      for (size_t i = 0; i < deepsize(); i++) {
+    // set bottom elements to same value
+    template <class T = Element>
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type operator=(const NumberType& d) {
+      for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
       return *this;
     }
 
+    // ------------------------  Scalar----------------
 
-    Scalar<Element>& operator=(const Scalar<Element>& s2) {
-      if constexpr (depth<=1) {
-        data_ = s2();
-      }
-      else {
-        resize(s2.deepdims());
-        for (size_t i = 0; i < deepsize(); i++) {
-          (*this).dat(i) = s2.dat(i);
-        }
-      }
+    Type& operator=(const Type& x) {
+      data_ = x();
       return *this;
     }
 
 
-    Scalar<Element>& operator=(const std::initializer_list<Element>& mylist) {
-      typename std::initializer_list<Element>::iterator it = mylist.begin();
-      data_ = *it;
-      return *this;
-    }
-
+    // // ------------------------ ExpressionR ----------------
 
     template <class X>
-    Scalar<Element>& operator=(const MArrayExpR<X, Element, NumberType, depth, rank_value>& x) {
-      if constexpr (depth<=1) {
+    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+      TRDISP(x[0]);
+      if constexpr (depth_value <= 1) {
         data_ = x[0];
       }
       else {
-        resize(x.deepdims());
-        for (size_t i = 0; i < deepsize(); i++) {
+        for (size_t i = 0; i < total_size(); i++) {
           this->dat(i) = x.dat(i);
         }
       }
@@ -380,52 +419,120 @@ namespace mathq {
 
 
 
-    //**********************************************************************
-    //************************** MATH **************************************
-    //**********************************************************************
 
-    //----------------- .roundzero(tol) ---------------------------
-    // NOTE: in-place
+    // ------------------------ Vector = initializer_list ----------------
 
-
-    Scalar<Element>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
-      data_ = mathq::roundzero(data_, tolerance);
+    Type& operator=(const std::initializer_list<Element>& mylist) {
+      data_ = *(mylist.begin());
       return *this;
     }
 
+
+    // ------------------------ Vector = std::vector ----------------
+
+    Type& operator=(const std::vector<Element>& vstd) {
+      data_ = vstd[0];
+      return *this;
+    }
+
+
+    // ------------------------ Vector = std::array ----------------
+
+    template <size_t N>
+    Type& operator=(const std::array<NumberType, N>& varray) {
+      data_ = varray[0];
+      return *this;
+    }
+
+
+    // ------------------------ Vector = std::valarray ----------------
+
+    Type& operator=(const std::valarray<Element>& varray) {
+      data_ = varray[0];
+      return *this;
+    }
+
+
+    //**********************************************************************
+    //***************** in-place modification********************************
+    //**********************************************************************
+
+    //----------------- .roundzero(tol) ---------------------------
+
+    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+      data_ = mathq::roundzero(data_, tolerance);
+    }
+
+
     //----------------- .conj() ---------------------------
-    // NOTE: in-place. Don't allow if not complex.
-    //----------------------------------------------------
-    template< typename T = NumberType >
-    typename std::enable_if<is_complex<T>{}, Scalar<T>& >::type conj() {
+
+    template<typename T = NumberType> requires(is_complex<T>::value)
+    Type& conj() {
       using std::conj;
       data_ = conj(data_);
       return *this;
     }
 
+    // .sort()
+    //         sorts in place and returns the permuted indices
+
+    Scalar<size_t>& sort() {
+      return *(new Scalar<size_t>(0));
+    }
 
 
+    // .quniq()
+    //         removes adjacent duplicates
+    Scalar<size_t>& quniq() {
+      return *(new Scalar<size_t>(0));
+    }
 
+
+    // .uniq()
+    //         removes all duplicates
+    Scalar<size_t>& uniq() {
+      return *(new Scalar<size_t>(0));
+    }
+
+
+    Type& reverse() {
+      return *this;
+    }
+
+
+    // .cumsum() -- cumulative sum
+
+    Type& cumsum() {
+      return *this;
+    }
+
+    // .cumprod()  --  cumulative product
+
+    Type& cumprod() {
+      return *this;
+    }
 
     //**********************************************************************
     //************************** Text and debugging ************************
     //**********************************************************************
 
+    // instance classname() method 
+
     inline std::string classname() const {
+      return ClassName();
+    }
+
+    // static ClassName() method 
+
+    static inline std::string ClassName() {
       using namespace display;
       std::string s = "Scalar";
       s += StyledString::get(ANGLE1).get();
-      Element e;
-      s += getTypeName(e);
-      //if (depth>1) {
-      //  s += StyledString::get(COMMA).get();
-      //  s += "depth=";
-      //  s += num2string(depth);
-      //}
+      Element d;
+      s += getTypeName(d);
       s += StyledString::get(ANGLE2).get();
       return s;
     }
-
 
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
@@ -436,33 +543,28 @@ namespace mathq {
 
     // stream << operator
 
-    friend std::ostream& operator<<(std::ostream& stream, const Scalar<Element>& s) {
+    friend std::ostream& operator<<(std::ostream& stream, const Type& x) {
       using namespace display;
-      Style& style = FormatDataVector::style_for_punctuation;
-      stream << style.apply(FormatDataVector::string_opening);
-      dispval_strm(stream, s());
-      stream << style.apply(FormatDataVector::string_closing);
-
+      dispval_strm(stream, x());
       return stream;
     }
 
 
-    //template <typename NumberType>	
-    friend inline std::istream& operator>>(const std::string s, Scalar<Element>& x) {
+    friend inline std::istream& operator>>(const std::string s, Type& x) {
       std::istringstream st(s);
       return (st >> x);
     }
 
 
-    // stream >> operator
+    //**********************************************************************
+    //                      CONVERSION OPERATORS 
+    // use to dynamic_cast a Vector to another type of container
+    //**********************************************************************
 
-    // TODO: implement this
-    friend std::istream& operator>>(std::istream& stream, Scalar<Element>& x) {
-      return stream;
+    operator Element* () const {
+      Element* ptr = new Element{data_};
+      return ptr;
     }
-
-    // --------------------- FRIENDS ---------------------
-
 
 
   };

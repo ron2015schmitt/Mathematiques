@@ -66,9 +66,11 @@ TAG_ANNOTATION_FILE := $(DIR_MATHQ)/versioning/tag.annotation.mathq.out.txt
 CPP_VERSION_FILE := $(DIR_MATHQ)/versioning/c++.version.src.txt
 VERSION_HEADER_FILE_MATHQ := $(DIR_MATHQ)/include/version_mathq.h
 FEATURE_VERSION_MATHQ_FILE := $(DIR_MATHQ)/versioning/feature.version.master.record.bash
+COMPILER_VERSION_FILE := $(DIR_MATHQ)/versioning/config.compiler.out.txt
 
 # dynamic variables
 FEATURE_VERSION_MATHQ = `. $(FEATURE_VERSION_MATHQ_FILE) && echo "$${FEATURE_VERSION_MATHQ}"`
+CPP_VERSION_MATHQ = `cat $(CPP_VERSION_FILE)`
 
 
 ####################################################################
@@ -116,7 +118,8 @@ OPTIMIZE ?= -O2
 
 CFLAGS = $(OPTIMIZE) $(COPT) $(INCLUDES)
 
-CPPC = g++ -pipe -std=c++17
+CPP = g++
+CPP_CMD = $(CPP) -pipe -std=$(CPP_VERSION_MATHQ)
 
 ifdef MATHQ_DEBUG
 CFLAGS += -D "MATHQ_DEBUG=$(MATHQ_DEBUG)"

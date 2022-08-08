@@ -1,8 +1,8 @@
 
 
 
-#ifndef MATHQ_LAPACK_H
-#define MATHQ_LAPACK_H
+#ifndef MATHQ_LAPACK
+#define MATHQ_LAPACK
 
 
 #include "mathq.h"

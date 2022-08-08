@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     // printStart(++testnum);
     // Scalar<int> s1 = 1;
     // testtext( "dynamic casting" );
-    // MArrayExpRW<int,Scalar<int> > &s2 = s1;
+    // ExpressionRW<int,Scalar<int> > &s2 = s1;
     // Scalar<int> *sp1 = dynamic_cast<Scalar<int>*>(&s2);
     // void* result = (void*)&s1;
     // void* expected = (void*)sp1;
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 
     Scalar<int> s1 = 1;
     bool result;
-    testcode(result = (s1.size() == 1) && (s1.dims().datasize() == 1) && (s1.ndims() == 0) && (s1.dims().size() == 0));
+    testcode(result = (s1.size() == 1) && (s1.dims().num_elements() == 1) && (s1.rank() == 0) && (s1.dims().size() == 0));
     bool expected = true;
     bool pass = result;
     printEnd(pass, result, expected);
