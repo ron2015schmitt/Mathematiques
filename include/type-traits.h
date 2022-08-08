@@ -291,24 +291,19 @@ namespace mathq {
   //  InputType:           Type that was passed in as first arg
   //  Type:                Depends on InputType
   //                         numbers: InputType
-  //                         MultiArray: The number type at the bottom of the nested MultiArrays
+  //                         MultiArray: The number type of the Element (or contained in the element)
   //                         MArrayR{,W}Exp: The number type of the Expression
-  //  ReplacedNumberType:  Depends on InputType
-  //                         numbers: NewNumber
-  //                         MultiArray: The InputType with the number type (at the bottom) replaced by NewNumber
-  //                         MArrayR{,W}Exp: Derived type with the number type replaced in all contained expressions and MultiArrays 
   //  depth():             Depth to the number type at the bottom
   //  value                True if unput type is a number
   // ************************************************************************************************
 
-  template <typename NewNumber>
-  class NumberTrait<NullType, NewNumber> {
+  template <typename T>
+  class NumberTrait {
   public:
-    using InputType = NullType;
+    using InputType = T;
     using Type = NullType;
-    using ReplacedNumberType = NewNumber;
-
-    constexpr static bool value = true;
+  
+    constexpr static bool value = false;
     constexpr static size_t depth() {
       return 0;
     }
@@ -323,13 +318,12 @@ namespace mathq {
 
 
   // built in ordered number types: bool, int, double etc
-  template <typename Number, typename NewNumber>
+  template <typename Number> requires (std::is_arithmetic<Number>::value)
   class
-    NumberTrait<Number, NewNumber, typename std::enable_if<std::is_arithmetic<Number>::value>::type> {
+    NumberTrait<Number> {
   public:
     using InputType = Number;
     using Type = Number;
-    using ReplacedNumberType = NewNumber;
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
@@ -345,13 +339,12 @@ namespace mathq {
   };
 
   // complex number enclosing an ordered number
-  template <typename Number, typename NewNumber>
+  template <typename Number> requires (std::is_arithmetic<Number>::value)
   class
-    NumberTrait<std::complex<Number>, NewNumber, typename std::enable_if<std::is_arithmetic<Number>::value>::type> {
+    NumberTrait<std::complex<Number>> {
   public:
     using InputType = std::complex<Number>;
     using Type = std::complex<Number>;
-    using ReplacedNumberType = NewNumber;
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
@@ -369,13 +362,12 @@ namespace mathq {
 
 
   // imaginary number enclosing an ordered number
-  template <typename Number, typename NewNumber>
+  template <typename Number> requires (std::is_arithmetic<Number>::value)
   class
-    NumberTrait<Imaginary<Number>, NewNumber, typename std::enable_if<std::is_arithmetic<Number>::value>::type> {
+    NumberTrait<Imaginary<Number>> {
   public:
     using InputType = Imaginary<Number>;
     using Type = Imaginary<Number>;
-    using ReplacedNumberType = NewNumber;
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
@@ -392,13 +384,12 @@ namespace mathq {
   };
 
   // quaternion number enclosing an ordered number
-  template <typename Number, typename NewNumber>
+  template <typename Number>
   class
-    NumberTrait<Quaternion<Number>, NewNumber, typename std::enable_if<std::is_arithmetic<Number>::value>::type> {
+    NumberTrait<Quaternion<Number>> {
   public:
     using InputType = Quaternion<Number>;
     using Type = Quaternion<Number>;
-    using ReplacedNumberType = NewNumber;
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
@@ -417,21 +408,20 @@ namespace mathq {
 
   //  MultiArray<Element>
 
-  template <typename Element, size_t rank, size_t... ints, typename NewNumber>
+  template <typename Element, size_t rank, size_t... ints>
   class
-    NumberTrait<MultiArray<Element, rank, ints...>, NewNumber> {
+    NumberTrait<MultiArray<Element, rank, ints...>> {
   public:
     using InputType = MultiArray<Element, rank, ints...>;
     using Type = typename NumberTrait<Element>::Type;
-    using ReplacedNumberType = MultiArray<typename NumberTrait<Element, NewNumber>::ReplacedNumberType, rank, ints...>;
 
     constexpr static bool value = false;
     constexpr static size_t depth() {
-      return 1 + NumberTrait<Element, NewNumber>::depth();
+      return 1 + NumberTrait<Element>::depth();
     }
 
     constexpr static const size_t sum_of_ranks() {
-      return rank + NumberTrait<Element, NewNumber>::sum_of_ranks();
+      return rank + NumberTrait<Element>::sum_of_ranks();
     }
 
     template <size_t Nin = 0>
@@ -449,14 +439,12 @@ namespace mathq {
 
   //  ExpressionR
 
-  template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank>
+  template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
   class
-    NumberTrait<ExpressionR<Derived, Element, Number, depth_in, rank>, NewNumber> {
+    NumberTrait<ExpressionR<Derived, Element, Number, depth_in, rank>> {
   public:
     using InputType = ExpressionR<Derived, Element, Number, depth_in, rank>;
     using Type = Number;
-    using DerivedReplacedNumberType = typename NumberTrait<Derived, NewNumber>::ReplacedNumberType;
-    using ReplacedNumberType = DerivedReplacedNumberType;  // this is correct, see comment above
 
     constexpr static bool value = false;
     constexpr static size_t depth() {
@@ -482,14 +470,12 @@ namespace mathq {
 
   //  ExpressionRW
 
-  template <class Derived, typename Element, typename Number, typename NewNumber, size_t depth_in, size_t rank>
+  template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
   class
-    NumberTrait<ExpressionRW<Derived, Element, Number, depth_in, rank>, NewNumber> {
+    NumberTrait<ExpressionRW<Derived, Element, Number, depth_in, rank>> {
   public:
     using InputType = ExpressionRW<Derived, Element, Number, depth_in, rank>;
     using Type = Number;
-    using DerivedReplacedNumberType = typename NumberTrait<Derived, NewNumber>::ReplacedNumberType;
-    using ReplacedNumberType = DerivedReplacedNumberType;  // this is correct, see comment above
 
     constexpr static bool value = false;
     constexpr static size_t depth() {
@@ -515,6 +501,98 @@ namespace mathq {
 
 
 
+  // ************************************************************************************************
+  // ReplacedNumberTrait<InputType, NewNumber>
+  //
+  // This operates recursively to find the base number type
+  //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
+  
+  //  Type:  Depends on InputType
+  //                         numbers: NewNumber
+  //                         MultiArray: The InputType with the number type replaced by NewNumber
+  //                         ExpressionR{,W}: Derived type with the number type replaced in all contained expressions and MultiArrays 
+  // ************************************************************************************************
+
+  template <typename NewNumber>
+  class ReplacedNumberTrait<NullType, NewNumber> {
+  public:
+    using Type = NewNumber;
+  };
+
+
+  // built in ordered number types: bool, int, double etc
+  template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
+  class
+    ReplacedNumberTrait<Number, NewNumber> {
+  public:
+    using Type = NewNumber;
+  };
+
+  // complex number enclosing an ordered number
+  template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
+  class
+    ReplacedNumberTrait<std::complex<Number>, NewNumber> {
+  public:
+    using Type = NewNumber;
+  };
+
+
+  // imaginary number enclosing an ordered number
+  template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
+  class
+    ReplacedNumberTrait<Imaginary<Number>, NewNumber> {
+  public:
+    using Type = NewNumber;
+  };
+
+  // quaternion number enclosing an ordered number
+  template <typename Number, typename NewNumber> requires (std::is_arithmetic<Number>::value)
+  class
+    ReplacedNumberTrait<Quaternion<Number>, NewNumber> {
+  public:
+    using Type = NewNumber;
+  };
+
+
+
+  //  MultiArray<Element>
+
+  template <typename NewNumber, typename Element, size_t rank, size_t... ints>
+  class
+    ReplacedNumberTrait<MultiArray<Element, rank, ints...>, NewNumber> {
+  public:
+    using ElementType = typename ReplacedNumberTrait<Element, NewNumber>::Type;
+    using Type = MultiArray<ElementType, rank, ints...>;
+  };
+
+  //  ExpressionR
+
+  template <typename NewNumber, class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
+  class
+    ReplacedNumberTrait<ExpressionR<Derived, Element, Number, depth_in, rank>, NewNumber> {
+  public:
+    using ElementType = typename ReplacedNumberTrait<Element, NewNumber>::Type;
+    using Type = typename ReplacedNumberTrait<Derived, NewNumber>::Type;
+    using DerivedType = Type;
+    using ExpressionType = ExpressionR<DerivedType, ElementType, NewNumber, depth_in, rank>;
+  };
+
+
+  //  ExpressionRW
+
+  template <typename NewNumber, class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
+  class
+    ReplacedNumberTrait<ExpressionRW<Derived, Element, Number, depth_in, rank>, NewNumber> {
+  public:
+    using ElementType = typename ReplacedNumberTrait<Element, NewNumber>::Type;
+    using Type = typename ReplacedNumberTrait<Derived, NewNumber>::Type;
+    using DerivedType = Type;
+    using ExpressionType = ExpressionRW<DerivedType, ElementType, NewNumber, depth_in, rank>;
+  };
+
+
+
+
 
 
   // *****************************************************************************************
@@ -524,7 +602,7 @@ namespace mathq {
   // We define simple number: as integers, rationals, reals, or subsets thereof.
   // ****************************************************************************************
 
-  template <typename T, typename dummy = void>
+  template <typename T>
   class SimpleNumberTrait {
   public:
     using Type = void;
@@ -534,9 +612,9 @@ namespace mathq {
   };
 
   // for built-in number types (not classes)
-  template <typename T>
+  template <typename T>  requires (std::is_arithmetic<T>::value)
   class
-    SimpleNumberTrait<T, typename std::enable_if<std::is_arithmetic<T>::value>::type> {
+    SimpleNumberTrait<T> {
   public:
     using Type = T;
     constexpr static size_t depth() {
@@ -924,7 +1002,7 @@ namespace mathq {
   class ResultType {
   public:
     using MyDeeperType = typename DeeperType<A, B>::Type;
-    using MultiArrayType = typename NumberTrait<MyDeeperType, NewNumber>::ReplacedNumberType;
+    using MultiArrayType = typename ReplacedNumberTrait<MyDeeperType, NewNumber>::Type;
 
     constexpr static bool isprim = (NumberTrait<A>::depth() == 0) && (NumberTrait<B>::depth() == 0);
     using Type = typename std::conditional<isprim, NewNumber, MultiArrayType>::type;

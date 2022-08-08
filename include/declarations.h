@@ -87,11 +87,15 @@ namespace mathq {
   //          Trait classes
   //*******************************************************
 
-  template <typename T, typename NewNumber = T, typename dummy = void>
+  template <typename T>
   class NumberTrait;
 
-  template <typename T, typename B = void> T zero();
-  template <typename T, typename B = void> T one();
+  template <typename T, typename NewNumber>
+  class ReplacedNumberTrait;
+
+  template <typename T>
+  class SimpleNumberTrait;
+
 
 
   //*******************************************************
@@ -394,6 +398,9 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
   class GridTraits;
 
 
+
+  template <typename T, typename B = void> T zero();
+  template <typename T, typename B = void> T one();
 
 
   template <class Element>

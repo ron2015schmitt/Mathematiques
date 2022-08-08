@@ -524,7 +524,7 @@ public:
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank>
 auto sph_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -539,7 +539,7 @@ auto sph_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expressi
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto sph_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -552,7 +552,7 @@ auto sph_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expressi
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto sph_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -565,7 +565,7 @@ auto sph_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2,
 template <class A, class E1, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto sph_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -578,7 +578,7 @@ auto sph_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2,
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto sph_legendre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -592,7 +592,7 @@ auto sph_legendre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2,
 template <class B, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto sph_legendre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -605,7 +605,7 @@ auto sph_legendre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2,
 template <class C, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto sph_legendre(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E3, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E3, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -637,7 +637,7 @@ auto sph_legendre(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, de
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank>
 auto assoc_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -652,7 +652,7 @@ auto assoc_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expres
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto assoc_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -665,7 +665,7 @@ auto assoc_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expres
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto assoc_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -678,7 +678,7 @@ auto assoc_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x
 template <class A, class E1, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto assoc_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -691,7 +691,7 @@ auto assoc_legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto assoc_legendre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -705,7 +705,7 @@ auto assoc_legendre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x
 template <class B, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto assoc_legendre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -718,7 +718,7 @@ auto assoc_legendre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x
 template <class C, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto assoc_legendre(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E3, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E3, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -750,7 +750,7 @@ auto assoc_legendre(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, 
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank>
 auto assoc_laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -765,7 +765,7 @@ auto assoc_laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expres
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto assoc_laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -778,7 +778,7 @@ auto assoc_laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expres
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto assoc_laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -791,7 +791,7 @@ auto assoc_laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x
 template <class A, class E1, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto assoc_laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -804,7 +804,7 @@ auto assoc_laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto assoc_laguerre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -818,7 +818,7 @@ auto assoc_laguerre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x
 template <class B, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto assoc_laguerre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -831,7 +831,7 @@ auto assoc_laguerre(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x
 template <class C, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto assoc_laguerre(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E3, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E3, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -863,7 +863,7 @@ auto assoc_laguerre(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, 
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank>
 auto ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -878,7 +878,7 @@ auto ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -891,7 +891,7 @@ auto ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -904,7 +904,7 @@ auto ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, con
 template <class A, class E1, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -917,7 +917,7 @@ auto ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, con
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto ellint_3(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -931,7 +931,7 @@ auto ellint_3(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, con
 template <class B, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto ellint_3(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -944,7 +944,7 @@ auto ellint_3(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, con
 template <class C, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto ellint_3(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E3, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E3, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -976,7 +976,7 @@ auto ellint_3(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth,
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank>
 auto comp_ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -991,7 +991,7 @@ auto comp_ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Express
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto comp_ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -1004,7 +1004,7 @@ auto comp_ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Express
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto comp_ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -1017,7 +1017,7 @@ auto comp_ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2
 template <class A, class E1, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto comp_ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E1, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -1030,7 +1030,7 @@ auto comp_ellint_3(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto comp_ellint_3(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -1044,7 +1044,7 @@ auto comp_ellint_3(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2
 template <class B, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto comp_ellint_3(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E2, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -1057,7 +1057,7 @@ auto comp_ellint_3(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2
 template <class C, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto comp_ellint_3(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename MultType<typename MultType<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename NumberTrait<E3, NT4>::ReplacedNumberType E4;   // see TODO note above
+  typedef typename ReplacedNumberTrait<E3, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
