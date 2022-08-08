@@ -1081,15 +1081,6 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER2(std::map);
 
 
-
-  template <typename T>
-  inline std::string getTypeName(const mathq::Nabla<T>& var) {
-    std::string s = getTypeStyle(var).apply("mathq::Nabla");
-    return s;
-  }
-
-
-
   template <typename D, unsigned long int N>
   inline std::string getTypeName(const std::array<D, N>& var) {
     std::string s = getTypeStyle(var).apply("std::array");
@@ -1098,31 +1089,6 @@ namespace display {
     s += getTypeName(d);
     s += StyledString::get(COMMA).get();
     s += num2string(N);
-    s += StyledString::get(ANGLE2).get();
-    return s;
-  }
-
-
-  template <typename D>
-  inline std::string getTypeName(const mathq::RealSet<D>& var) {
-    std::string s = getTypeStyle(var).apply("mathq::RealSet");
-    D d;
-    s += StyledString::get(ANGLE1).get();
-    s += getTypeName(d);
-    s += StyledString::get(ANGLE2).get();
-    return s;
-  }
-
-
-
-  template <typename D, size_t NDIMS, typename CHILD>
-  inline std::string getTypeName(const mathq::CurvilinearCoordinateSystem<D, NDIMS, CHILD>& var) {
-    std::string s = getTypeStyle(var).apply("mathq::RealSet");
-    D d;
-    s += StyledString::get(ANGLE1).get();
-    s += getTypeName(d);
-    s += StyledString::get(COMMA).get();
-    s += num2string(NDIMS);
     s += StyledString::get(ANGLE2).get();
     return s;
   }
@@ -1447,7 +1413,7 @@ namespace display {
   }
 
 
-  // GridScale 
+  // GridScale - enumns can't have members, but could use a class instead of a namespace to enclose them
   template <>
   inline void dispval_strm<mathq::GridScaleEnum>(std::ostream& stream, const mathq::GridScaleEnum& e) {
     using namespace std;
@@ -1465,47 +1431,6 @@ namespace display {
       break;
     }
     stream << style.apply(s);
-  }
-
-  // mathq::RealSet
-  template <typename D>
-  inline void dispval_strm(std::ostream& stream, const mathq::RealSet<D>& var) {
-    if (var.a == var.b) {
-      // point
-      stream << "{point=";
-      dispval_strm(stream, var.a);
-      stream << ", gridState=";
-      dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-      stream << "}";
-    }
-    else {
-      stream << "{";
-      stream << "interval=";
-      if (var.include_a) {
-        stream << "[";
-      }
-      else {
-        stream << "(";
-      }
-      dispval_strm(stream, var.a);
-      stream << ", ";
-      dispval_strm(stream, var.b);
-      if (var.include_a) {
-        stream << "]";
-      }
-      else {
-        stream << ")";
-      }
-      stream << ", N=";
-      dispval_strm(stream, var.N);
-
-      stream << ", scale=";
-      dispval_strm(stream, var.scale);
-
-      stream << ", gridState=";
-      dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-      stream << "}";
-    }
   }
 
 
@@ -1537,20 +1462,6 @@ namespace display {
       dispval_strm(stream, var[ii]);
     }
     stream << "}";
-  }
-
-
-  // RealMultiSet
-  template <typename D>
-  inline void dispval_strm(std::ostream& stream, const mathq::RealMultiSet<D>& var) {
-    stream << var;
-  }
-
-
-  // CurvilinearCoordinateSystem
-  template <typename D, size_t NDIMS, typename CHILD>
-  inline void dispval_strm(std::ostream& stream, const mathq::CurvilinearCoordinateSystem<D, NDIMS, CHILD>& var) {
-    stream << var;
   }
 
 
@@ -1672,19 +1583,6 @@ namespace display {
 
 
 
-
-
-
-
-
-
-  // mathq::Nabla
-  template <typename D>
-  inline void dispval_strm(std::ostream& stream, const mathq::Nabla<D>& var) {
-    stream << "(Nwindow=";
-    dispval_strm(stream, var.Nwindow);
-    stream << ")";
-  }
 
 
   // std::cout << "index " << I << " has type: ";

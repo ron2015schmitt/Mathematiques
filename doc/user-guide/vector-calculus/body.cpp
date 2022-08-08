@@ -71,13 +71,11 @@ int main() {
   ECHO_CODE(RealSet<double>  rs(-2, +2, 5));
   TRDISP(rs);
   TRDISP(rs.getGrid());
-  TRDISP(rs.hasInflatedGrid_());
 
   CR();
   ECHO_CODE(RealSet<double>  rs1(-2, +3, 5, GridScale::LINEAR, true, false));
   TRDISP(rs1);
   TRDISP(rs1.getGrid());
-  TRDISP(rs1.hasInflatedGrid_());
 
 
   CR();
@@ -89,20 +87,18 @@ int main() {
   TRDISP(rs3);
   TRDISP(rs3.getGrid());
   TRDISP(mathq::log10(rs3.getGrid()));
-  TRDISP(rs3.hasInflatedGrid_());
 
 
   CR();
   ECHO_CODE(auto rs4 = RealSet<double>::point(2.5));
   TRDISP(rs4);
   TRDISP(rs4.getGrid());
-  TRDISP(rs4.hasInflatedGrid_());
 
 
   CR();
   ECHO_CODE(RealSet<double> rx(-10, +10, 3));
   TRDISP(rx);
-  // TRDISP(rx.getGrid());
+  TRDISP(rx.getGrid());
 
   CR();
   ECHO_CODE(RealSet<double> ry(-20, 20, 5, GridScale::LINEAR));
