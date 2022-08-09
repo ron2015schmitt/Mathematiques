@@ -311,6 +311,27 @@ namespace mathq {
   };
 
 
+  // template <typename Number, size_t NDIMS, size_t... ints>
+  // using MultiGrid_A = std::tuple< MultiArray_RepeatVector<Number, NDIMS, ints>...>;
+
+  template <typename Number, size_t NDIMS>
+  class CurvilinearCoords : public Vector< MultiArray_RepeatVector<Number, NDIMS>, NDIMS> {
+
+  };
+
+  // ***************************************************************************
+  // * RealMultiSet 
+  // ***************************************************************************
+  // template <typename Number, size_t NDIMS = 0, class MULTIGRID = MultiGrid_A<Number, NDIMS>>
+  // class RealMultiSet;
+
+
+  // ***************************************************************************
+  // * CurvilinearCoordinateSystem 
+  // ***************************************************************************
+  // template <typename Number, size_t NDIMS, typename CHILD>
+  // class CurvilinearCoordinateSystem;
+
 
   //
   // RealMultiSet<Number>

@@ -48,7 +48,7 @@
 1. This is includes files:
   * display.h
   * display.cpp
-1. utilize `static ClassName()` in addition to instance `classname()`. How does inheritance effect this?
+1. utilize `static ClassName()` in addition to instance `classname()`. How does inheritance effect this?  DO the same for styling of class name
 1. support wstrings. look at  [Consistent character literal encoding](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2316r2.pdf)
 1. include &, ConstLeft, ConstRight, &&, and volatile qualifiers
   * dispatch to different functions using a type teaits technique, is_const<int>::value etc (instead of calling getTypeName directly)

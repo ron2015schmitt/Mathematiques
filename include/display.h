@@ -1061,7 +1061,6 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER(std::list);
   SPECIALIZE_getTypeName_CONTAINER(std::queue);
   SPECIALIZE_getTypeName_CONTAINER(std::initializer_list);
-  SPECIALIZE_getTypeName_CONTAINER(mathq::RealMultiSet);
 
 
 #define SPECIALIZE_getTypeName_CONTAINER2(TYPE)             \

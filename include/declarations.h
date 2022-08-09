@@ -356,8 +356,8 @@ class MultiArray_RepeatVector;
   // A[i] -> gives the grid (a MultiArray of rank NDIMS) for the i-th coordinate
   // ***************************************************************************
 
-  template <typename Number, size_t NDIMS, size_t... ints>
-  using MultiGrid_A = std::tuple< MultiArray_RepeatVector<Number, NDIMS, ints>...>;
+  // template <typename Number, size_t NDIMS, size_t... ints>
+  // using MultiGrid_A = std::tuple< MultiArray_RepeatVector<Number, NDIMS, ints>...>;
 
 
   // ***************************************************************************
