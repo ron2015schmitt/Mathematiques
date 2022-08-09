@@ -178,3 +178,10 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
 1. ` const Element& val` constrcutors and methods should always use `&` because `Element` may be a MultiArray. 
   * use `Element &&` for expressions?
 
+
+1. Expanding a paramter pack as parameters
+
+```C++
+  template <typename Number, size_t NDIMS, size_t... ints>
+  using MultiGrid_A = std::tuple< MultiArray_RepeatVector<Number, NDIMS, ints>...>;
+```

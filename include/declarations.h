@@ -229,11 +229,9 @@ using Matrix_Constant = MultiArray_Constant<Element, 2, sizes...>;
 
 // RepeatVector
 
-template <typename Element, size_t rank, size_t index, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
+template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
 class MultiArray_RepeatVector;
 
-template <typename Element, size_t index, size_t... sizes>
-using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>;
 
 
 

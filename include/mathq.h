@@ -69,7 +69,7 @@
 // #include "vector-sparse.h"
 
 #include "matrix--constant.h"
-#include "matrix--repeat-vec.h"
+// #include "matrix--repeat-vec.h"
 // #include "matrix_constdiag.h"
 // #include "matrix_diagonal.h"
 // #include "matrix_exchange.h"

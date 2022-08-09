@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
   MOUT << blue.apply("MultiArray_RepeatVector: fixed-size") << std::endl;
   CR();
   {
-    ECHO_CODE( MultiArray_RepeatVector<double,3, 1, 2,3,4> a(3.14) );
+    ECHO_CODE( MultiArray_RepeatVector<double,3, 2,3,4> a(1, 3.14) );
     TRDISP(a);
     TRDISP(sizeof(a)/sizeof(double));
     a = { 1.1, 2.2, 3.3 };
@@ -139,7 +139,7 @@ int main(int argc, char *argv[]) {
   MOUT << blue.apply("MultiArray_RepeatVector: dynamic-size") << std::endl;
   CR();
   {
-    ECHO_CODE( MultiArray_RepeatVector<double,3,1> a(Dimensions({2,3,4}), 6.78) );
+    ECHO_CODE( MultiArray_RepeatVector<double,3> a(1, Dimensions({2,3,4}), 6.78) );
     TRDISP(a);
     TRDISP(sizeof(a)/sizeof(double));
     a = { 1.1, 2.2, 3.3 };
@@ -148,40 +148,40 @@ int main(int argc, char *argv[]) {
 
 
 
-  CR();
-  MOUT << blue.apply("Matrix_RepeatVector: fixed-size") << std::endl;
-  CR();
-  {
-    ECHO_CODE( Matrix_RepeatVector<double, 0, 3,3> a );
-    a = 0;
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
-    TRDISP(a.vector);
-    TRDISP(a.dims());
-    std::array<double,3> x{1.1,2.2,3.3};
-    TRDISP(x);
-    ECHO_CODE( a = x );
-    TRDISP(a);
-    ECHO_CODE( a = {-1.1,-2.2,-3.3} );
-    TRDISP(a);
-    ECHO_CODE( Matrix<double> b = -a );
-    // b(1,2) = -999; // error injection
-    TRDISP(b);
-    ECHO_CODE( a = 10 + b );
-    TRDISP(a);
+  // CR();
+  // MOUT << blue.apply("Matrix_RepeatVector: fixed-size") << std::endl;
+  // CR();
+  // {
+  //   ECHO_CODE( Matrix_RepeatVector<double, 0, 3,3> a );
+  //   a = 0;
+  //   TRDISP(a);
+  //   TRDISP(sizeof(a)/sizeof(double));
+  //   TRDISP(a.vector);
+  //   TRDISP(a.dims());
+  //   std::array<double,3> x{1.1,2.2,3.3};
+  //   TRDISP(x);
+  //   ECHO_CODE( a = x );
+  //   TRDISP(a);
+  //   ECHO_CODE( a = {-1.1,-2.2,-3.3} );
+  //   TRDISP(a);
+  //   ECHO_CODE( Matrix<double> b = -a );
+  //   // b(1,2) = -999; // error injection
+  //   TRDISP(b);
+  //   ECHO_CODE( a = 10 + b );
+  //   TRDISP(a);
 
-  }
+  // }
 
-  CR();
-  MOUT << blue.apply("Matrix_RepeatVector: dynamic-size") << std::endl;
-  CR();
-  {
-    ECHO_CODE( Matrix_RepeatVector<double,1> a(Dimensions({3,3}), 6.78) );
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
-    a = { 1.1, 2.2, 3.3 };
-    TRDISP(a);
-  }
+  // CR();
+  // MOUT << blue.apply("Matrix_RepeatVector: dynamic-size") << std::endl;
+  // CR();
+  // {
+  //   ECHO_CODE( Matrix_RepeatVector<double,1> a(Dimensions({3,3}), 6.78) );
+  //   TRDISP(a);
+  //   TRDISP(sizeof(a)/sizeof(double));
+  //   a = { 1.1, 2.2, 3.3 };
+  //   TRDISP(a);
+  // }
 
 
 
