@@ -48,7 +48,7 @@ namespace mathq {
     //**********************************************************************
 
     using Type = MultiArray_RepeatVector<Element, rank_, dim_ints...>;
-    using ConcreteType = Type;
+    using ConcreteType = MultiArray<Element, rank_, dim_ints...>;
 
     
     using ElementType = Element;
