@@ -85,6 +85,14 @@ namespace mathq {
 
     // --------------------- default CONSTRUCTOR ---------------------
 
+    MultiArray_RepeatVector() : index_value(0) {
+      if constexpr (!is_dynamic_value) {
+        initial_size();
+      }
+    }
+
+    // --------------------- basic CONSTRUCTOR ---------------------
+
     MultiArray_RepeatVector(const size_t index_value) : index_value(index_value) {
       if constexpr (!is_dynamic_value) {
         initial_size();

@@ -320,6 +320,8 @@ namespace mathq {
   template <class Derived, typename Number, size_t Ndims, size_t ...dim_ints>
   class
     CurvilinearCoords : public Vector< MultiArray_RepeatVector<Number, Ndims, dim_ints...>, Ndims > {
+    // CurvilinearCoords : public Vector< double, Ndims > {
+    // CurvilinearCoords : public MultiArray_RepeatVector<Number, Ndims, dim_ints...> {
   public:
     using Type = CurvilinearCoords<Derived, Number, Ndims, dim_ints...>;
     
@@ -345,10 +347,13 @@ namespace mathq {
 
     // std::array<RealSet<Number>, Ndims> rsets;
 
-
-    CurvilinearCoords(const std::initializer_list<RealSet<Number>>& mylist) {
-      // *this = mylist;
+    // CurvilinearCoords() : MultiArray_RepeatVector<Number, Ndims, dim_ints...>(0) {
+    CurvilinearCoords() {
     }
+
+    // CurvilinearCoords(const std::initializer_list<RealSet<Number>>& mylist) {
+    //   // *this = mylist;
+    // }
 
     Derived& derived() {
       return static_cast<Derived&>(*this);
