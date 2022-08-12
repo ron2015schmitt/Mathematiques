@@ -213,18 +213,19 @@ namespace mathq {
 
 
   template <typename T>
-  class IsNumber {
+  class IsNumberTrait {
   public:
     constexpr static bool value = false;
   };
 
   template <typename T> requires (Number<T>)
-    class IsNumber<T> {
+    class IsNumberTrait<T> {
     public:
       constexpr static bool value = true;
   };
 
-
+  template <typename T>
+  constexpr bool IsNumber = IsNumberTrait<T>::value;
 
   // ***************************************************************************
   //  ReadableExpression<X>
