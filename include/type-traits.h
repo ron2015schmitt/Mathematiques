@@ -131,48 +131,6 @@ namespace mathq {
 
   };
 
-  // MultiArrayHelperTrait 
-  //
-  // Used by MultiArrayHelper
-
-
-  template <
-    typename Element,
-    auto arr,
-    typename IS = decltype(std::make_index_sequence<arr.size()>())
-  >
-  struct MultiArrayHelperTrait;
-
-
-  template <
-    typename Element,
-    auto arr,
-    std::size_t... I
-  >
-  struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
-    using Type = typename std::conditional< is_all_zeros(arr),
-      MultiArray<Element, sizeof...(I)>,
-      MultiArray<Element, sizeof...(I), arr[I]...>
-    >::type;
-  };
-
-
-  // MultiArrayHelper
-  //
-  // This allows creation of a MultiArray rank and sizes from a constexpr std::array
-
-  template <typename Element, auto arr>
-  using MultiArrayHelper = MultiArrayHelperTrait<Element, arr>::Type;
-
-
-  // ***************************************************************************
-  // MultiArrayType 
-  //
-  // This returns a concrete and general tensor of for the given MultiArray or Expression
-  // ***************************************************************************
-
-  template <typename T>
-  using MultiArrayType = MultiArrayHelper<typename T::ElementType, T::static_dims_array>;
 
 
   // ***************************************************************************
@@ -242,10 +200,29 @@ namespace mathq {
   // ***************************************************************************
 
 
+  template <typename T>
+  concept Number = std::is_integral_v<T> || std::is_floating_point_v<T> || IsComplex<T>::value || IsImaginary<T>::value || IsQuaternion<T>::value;
+
+
+  // ***************************************************************************
+  //  Number<X>
+  //
+  // bool, integers, floating point
+  // complex, Imaginary, Quaternion
+  // ***************************************************************************
+
 
   template <typename T>
-  concept Number = std::is_integral_v<T> || std::is_floating_point_v<T> || IsImaginary<T>::value || IsQuaternion<T>::value;
+  class IsNumber {
+  public:
+    constexpr static bool value = false;
+  };
 
+  template <typename T> requires (Number<T>)
+    class IsNumber<T> {
+    public:
+      constexpr static bool value = true;
+  };
 
 
 
@@ -374,6 +351,67 @@ namespace mathq {
   public:
     constexpr static bool value = true;
   };
+
+
+
+  // ***************************************************************************
+  //  MultiArrayHelper<Element, std:array>
+  //
+  // ***************************************************************************
+
+
+  // MultiArrayHelperTrait 
+  //
+  // Used by MultiArrayHelper
+
+
+  template <
+    typename Element,
+    auto arr,
+    typename IS = decltype(std::make_index_sequence<arr.size()>())
+  >
+  struct MultiArrayHelperTrait;
+
+
+  template <
+    Number Element,
+    auto arr,
+    std::size_t... I
+  >
+  struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
+    using Type = Element;
+  };
+
+
+  template <
+    typename Element,
+    auto arr,
+    std::size_t... I
+  >
+  struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
+    using Type = typename std::conditional< is_all_zeros(arr),
+      MultiArray<Element, sizeof...(I)>,
+      MultiArray<Element, sizeof...(I), arr[I]...>
+    >::type;
+  };
+
+
+  // MultiArrayHelper
+  //
+  // This allows creation of a MultiArray rank and sizes from a constexpr std::array
+
+  template <typename Element, auto arr>
+  using MultiArrayHelper = MultiArrayHelperTrait<Element, arr>::Type;
+
+
+  // ***************************************************************************
+  // MultiArrayType 
+  //
+  // This returns a concrete and general tensor of for the given MultiArray or Expression
+  // ***************************************************************************
+
+  template <typename T>
+  using MultiArrayType = MultiArrayHelper<typename T::ElementType, T::static_dims_array>;
 
 
   // ************************************************************************************************

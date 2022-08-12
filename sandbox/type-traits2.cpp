@@ -221,6 +221,14 @@ int main(int argc, char* argv[]) {
 
   // ECHO_CODE( IntsOwner< std::make_index_sequence<3>()... >{} );
 
+  TRDISP(IsNumber<std::string>::value);
+  TRDISP(IsNumber<double>::value);
+  TRDISP(IsNumber<int>::value);
+  TRDISP(IsNumber<bool>::value);
+  TRDISP(IsNumber<std::complex<double>>::value);
+  TRDISP(IsNumber<Imaginary<double>>::value);
+  TRDISP(IsNumber<Quaternion<double>>::value);
+
 
   return 0;
 }
