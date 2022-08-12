@@ -374,26 +374,34 @@ namespace mathq {
   struct MultiArrayHelperTrait;
 
 
-  template <
-    Number Element,
-    auto arr,
-    std::size_t... I
-  >
-  struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
-    using Type = Element;
-  };
+  // template <
+  //   typename Element,
+  //   auto arr,
+  //   std::size_t... I
+  // > requires (Number<Element>)
+  //   struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
+  //   using Type = Element;
+  // };
 
 
   template <
     typename Element,
     auto arr,
     std::size_t... I
-  >
-  struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
-    using Type = typename std::conditional< is_all_zeros(arr),
-      MultiArray<Element, sizeof...(I)>,
-      MultiArray<Element, sizeof...(I), arr[I]...>
-    >::type;
+  > requires (is_all_zeros(arr))
+    struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
+    constexpr static bool value = is_all_zeros(arr);
+    using Type = MultiArray<Element, sizeof...(I)>;
+  };
+
+  template <
+    typename Element,
+    auto arr,
+    std::size_t... I
+  > requires (!is_all_zeros(arr))
+    struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
+    constexpr static bool value = is_all_zeros(arr);
+    using Type = MultiArray<Element, sizeof...(I), arr[I]...>;
   };
 
 
@@ -405,6 +413,19 @@ namespace mathq {
   using MultiArrayHelper = MultiArrayHelperTrait<Element, arr>::Type;
 
 
+
+  // ***************************************************************************
+  //  HasStaticSizes<X>
+  //
+  // ***************************************************************************
+
+
+  template <class X>
+  concept HasStaticSizes = requires(X x) {
+    X::static_dims_array;
+  };
+
+
   // ***************************************************************************
   // MultiArrayType 
   //
@@ -412,8 +433,10 @@ namespace mathq {
   // ***************************************************************************
 
   template <typename T>
-  using MultiArrayType = MultiArrayHelper<typename T::ElementType, T::static_dims_array>;
-
+  using MultiArrayType = typename std::conditional< HasStaticSizes<T>,
+    MultiArrayHelper<typename T::ElementType, T::static_dims_array>,
+    MultiArray<typename T::ElementType, T::rank_value>
+  >::type;
 
   // ************************************************************************************************
   // NumberTrait<InputType, NewNumber>

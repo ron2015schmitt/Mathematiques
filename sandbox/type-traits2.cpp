@@ -197,6 +197,24 @@ int main(int argc, char* argv[]) {
   // std::integer_sequence<unsigned, 9, 2, 5, 1, 9, 1, 6>{}
 
 
+  // don't need isNumber once we have a concept!
+
+  TRDISP(IsNumber<std::string>);
+  TRDISP(IsNumber<double>);
+  TRDISP(IsNumber<int>);
+  TRDISP(IsNumber<bool>);
+  TRDISP(IsNumber<std::complex<double>>);
+  TRDISP(IsNumber<Imaginary<double>>);
+  TRDISP(IsNumber<Quaternion<double>>);
+
+
+  TRDISP(Number<string>);
+  TRDISP(Number<double>);
+  TRDISP(Number<MultiArray<double, 2, 3, 4>>);
+
+  TRDISP(HasStaticSizes<double>);
+  TRDISP(HasStaticSizes<Vector<double>>);
+
   ECHO_CODE(IntsOwner<1, 4, 2>{});
 
   constexpr std::array<size_t, 3> myarray = { 1,4,2 };
@@ -215,19 +233,23 @@ int main(int argc, char* argv[]) {
   MultiArrayHelper<float, sizes2> B;
   TRDISP(B);
 
-  // MultiArray<double, 4> A2;
-  // ECHO_CODE(MultiArrayType<decltype(A2)> mystery);
-  // TRDISP(mystery);
+  ECHO_CODE(MultiArrayType<MultiArray<double, 2, 3, 4>> mystery);
+  TRDISP(mystery);
 
-  // ECHO_CODE( IntsOwner< std::make_index_sequence<3>()... >{} );
 
-  TRDISP(IsNumber<std::string>);
-  TRDISP(IsNumber<double>);
-  TRDISP(IsNumber<int>);
-  TRDISP(IsNumber<bool>);
-  TRDISP(IsNumber<std::complex<double>>);
-  TRDISP(IsNumber<Imaginary<double>>);
-  TRDISP(IsNumber<Quaternion<double>>);
+  TRDISP(MultiArrayHelperTrait<double, myarray>::value);
+  TRDISP(is_all_zeros(myarray));
+
+  constexpr std::array<size_t, 3> zeroarray = { 0,0,0 };
+  TRDISP(is_all_zeros(zeroarray));
+  TRDISP(MultiArrayHelperTrait<double, zeroarray>::value);
+
+  ECHO_CODE(MultiArrayType<MultiArray<double, 2>> mystery2);
+  TRDISP(mystery2);
+
+  ECHO_CODE(MultiArrayType<MultiArray<double, 3>> mystery3);
+  TRDISP(mystery3);
+
 
 
   return 0;
