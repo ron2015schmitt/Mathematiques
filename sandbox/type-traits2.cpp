@@ -199,13 +199,13 @@ int main(int argc, char* argv[]) {
 
   // don't need isNumber once we have a concept!
 
-  TRDISP(IsNumber<std::string>);
-  TRDISP(IsNumber<double>);
-  TRDISP(IsNumber<int>);
-  TRDISP(IsNumber<bool>);
-  TRDISP(IsNumber<std::complex<double>>);
-  TRDISP(IsNumber<Imaginary<double>>);
-  TRDISP(IsNumber<Quaternion<double>>);
+  TRDISP(Number<std::string>);
+  TRDISP(Number<double>);
+  TRDISP(Number<int>);
+  TRDISP(Number<bool>);
+  TRDISP(Number<std::complex<double>>);
+  TRDISP(Number<Imaginary<double>>);
+  TRDISP(Number<Quaternion<double>>);
 
 
   TRDISP(Number<string>);

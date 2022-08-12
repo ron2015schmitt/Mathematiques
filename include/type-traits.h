@@ -192,6 +192,29 @@ namespace mathq {
 
 
 
+
+
+  // ***************************************************************************
+  //  SimpleNumber<X>
+  //
+  // bool, integers, floating point
+  // ***************************************************************************
+
+  template <typename T>
+  concept SimpleNumber = std::is_integral_v<T> || std::is_floating_point_v<T>;
+
+
+  // ***************************************************************************
+  //  AdvancedNumber<X>
+  //
+  // complex, Imaginary, Quaternion
+  // ***************************************************************************
+
+  template <typename T>
+  concept AdvancedNumber = IsComplex<T>::value || IsImaginary<T>::value || IsQuaternion<T>::value;
+
+
+
   // ***************************************************************************
   //  Number<X>
   //
@@ -199,33 +222,10 @@ namespace mathq {
   // complex, Imaginary, Quaternion
   // ***************************************************************************
 
-
   template <typename T>
-  concept Number = std::is_integral_v<T> || std::is_floating_point_v<T> || IsComplex<T>::value || IsImaginary<T>::value || IsQuaternion<T>::value;
+  concept Number = SimpleNumber<T> || AdvancedNumber<T>;
 
 
-  // ***************************************************************************
-  //  Number<X>
-  //
-  // bool, integers, floating point
-  // complex, Imaginary, Quaternion
-  // ***************************************************************************
-
-
-  template <typename T>
-  class IsNumberTrait {
-  public:
-    constexpr static bool value = false;
-  };
-
-  template <typename T> requires (Number<T>)
-    class IsNumberTrait<T> {
-    public:
-      constexpr static bool value = true;
-  };
-
-  template <typename T>
-  constexpr bool IsNumber = IsNumberTrait<T>::value;
 
   // ***************************************************************************
   //  ReadableExpression<X>
