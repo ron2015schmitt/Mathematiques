@@ -324,8 +324,9 @@ namespace mathq {
     // CurvilinearCoords : public MultiArray_RepeatVector<Number, Ndims, dim_ints...> {
   public:
     using Type = CurvilinearCoords<Derived, Number, Ndims, dim_ints...>;
-    
-    using ElementType = Number;
+
+    using ElementType = MultiArray_RepeatVector<Number, Ndims, dim_ints...>;
+    using GridElementType = Number;
     using NumberType = typename NumberTrait<Number>::Type;
     using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
 

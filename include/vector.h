@@ -59,6 +59,9 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     using MyArrayType = typename ArrayTypeTrait<Element, N0>::Type;
 
+    // template <typename T>
+    // using AppendSizes = MultiArray<Element, rank_value, sizes...>;
+
 
     //**********************************************************************
     // OBJECT DATA 

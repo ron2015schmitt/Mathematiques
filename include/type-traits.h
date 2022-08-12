@@ -13,15 +13,6 @@ namespace mathq {
   // ***************************************************************************
 
 
-  template<typename T, T val, size_t N>
-  constexpr auto array_of_one_value() {
-    std::array<T, N> A;
-    for (size_t i = 0; i < N; ++i) {
-      A[i] = val;
-    }
-    return A;
-  }
-
 
   constexpr bool is_all_zeros(std::initializer_list<size_t> list) {
     for (auto elem : list) {
@@ -37,19 +28,37 @@ namespace mathq {
     return true;
   }
 
+
+  template<typename T, T val, size_t N>
+  constexpr auto array_of_one_value() {
+    std::array<T, N> A;
+    for (size_t i = 0; i < N; ++i) {
+      A[i] = val;
+    }
+    return A;
+  }
+
+
+
   template<typename T, size_t N>
   constexpr T compile_time_summation(const std::array<T, N>& A) {
-    T sum{T(0)};
+    T sum{ T(0) };
     for (size_t i = 0; i < N; ++i) {
       sum += A[i];
     }
     return sum;
   }
 
+  template<typename T, size_t N>
+  constexpr bool is_all_zeros(const std::array<T, N>& A) {
+    return (compile_time_summation(A) == 0);
+  }
+
+
   // note this returns 1 for arrays of size == 0
   template<typename T, size_t N>
   constexpr T compile_time_product(const std::array<T, N>& A) {
-    T product{T(1)};
+    T product{ T(1) };
     for (size_t i = 0; i < N; ++i) {
       product *= A[i];
     }
@@ -78,19 +87,19 @@ namespace mathq {
       return 0;
     }
     constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
-    return compile_time_product<size_t,N>(A);
+    return compile_time_product<size_t, N>(A);
   }
 
 
 
   template<typename U> requires (std::is_integral<U>::value)
     size_t signed_index_to_unsigned_index(const U& index, const size_t& N) {
-      U temp = index;
-      while (temp < U(0)) {
-        temp += U(N);
-      }
-      return size_t(temp);
+    U temp = index;
+    while (temp < U(0)) {
+      temp += U(N);
     }
+    return size_t(temp);
+  }
 
   //*******************************************************
   //          extended
@@ -122,19 +131,48 @@ namespace mathq {
 
   };
 
-  // ***************************************************************************
-  // Materialize 
+  // MultiArrayHelperTrait 
   //
-  // This returns a concrete tensor of type specified by paramters.
-  // Useful when working with multiarray expressions.
-  // NOTE: not needed since the Great Refactoring
+  // Used by MultiArrayHelper
+
+
+  template <
+    typename Element,
+    auto arr,
+    typename IS = decltype(std::make_index_sequence<arr.size()>())
+  >
+  struct MultiArrayHelperTrait;
+
+
+  template <
+    typename Element,
+    auto arr,
+    std::size_t... I
+  >
+  struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
+    using Type = typename std::conditional< is_all_zeros(arr),
+      MultiArray<Element, sizeof...(I)>,
+      MultiArray<Element, sizeof...(I), arr[I]...>
+    >::type;
+  };
+
+
+  // MultiArrayHelper
+  //
+  // This allows creation of a MultiArray rank and sizes from a constexpr std::array
+
+  template <typename Element, auto arr>
+  using MultiArrayHelper = MultiArrayHelperTrait<Element, arr>::Type;
+
+
+  // ***************************************************************************
+  // MultiArrayType 
+  //
+  // This returns a concrete and general tensor of for the given MultiArray or Expression
   // ***************************************************************************
 
-  template <typename Element, size_t rank, size_t... ints>
-  class Materialize {
-  public:
-    using Type = MultiArray<Element, rank, ints...>;
-  };
+  template <typename T>
+  using MultiArrayType = MultiArrayHelper<typename T::ElementType, T::static_dims_array>;
 
 
   // ***************************************************************************
@@ -196,6 +234,19 @@ namespace mathq {
 
 
 
+  // ***************************************************************************
+  //  Number<X>
+  //
+  // bool, integers, floating point
+  // complex, Imaginary, Quaternion
+  // ***************************************************************************
+
+
+
+  template <typename T>
+  concept Number = std::is_integral_v<T> || std::is_floating_point_v<T> || IsImaginary<T>::value || IsQuaternion<T>::value;
+
+
 
 
   // ***************************************************************************
@@ -205,16 +256,15 @@ namespace mathq {
   // ***************************************************************************
 
 
-template <class X, class Element, typename Number, size_t depth, size_t rank>
-bool readable_expression_test(const ExpressionR<X, Element, Number, depth, rank>& x) {
-  return true;
-}
+  template <class X, class Element, typename Number, size_t depth, size_t rank>
+  bool readable_expression_test(const ExpressionR<X, Element, Number, depth, rank>& x) {
+    return true;
+  }
 
-template <class X>
-concept ReadableExpression = requires(X x) 
-{ 
-  readable_expression_test(x);
-};
+  template <class X>
+  concept ReadableExpression = requires(X x) {
+    readable_expression_test(x);
+  };
 
 
   // ***************************************************************************
@@ -223,17 +273,16 @@ concept ReadableExpression = requires(X x)
   // MultiArrays and their Expressions
   // ***************************************************************************
 
-template <class X, class Element, typename Number, size_t depth, size_t rank>
-bool writable_expression_test(const ExpressionRW<X, Element, Number, depth, rank>& x) {
-  return true;
-}
+  template <class X, class Element, typename Number, size_t depth, size_t rank>
+  bool writable_expression_test(const ExpressionRW<X, Element, Number, depth, rank>& x) {
+    return true;
+  }
 
 
-template <class X>
-concept WritableExpression = requires(X x) 
-{ 
-  writable_expression_test(x);
-};
+  template <class X>
+  concept WritableExpression = requires(X x) {
+    writable_expression_test(x);
+  };
 
 
   // ***************************************************************************
@@ -332,7 +381,7 @@ concept WritableExpression = requires(X x)
   //
   // This operates recursively to find the base number type
   //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
-  
+
   //  InputType:           Type that was passed in as first arg
   //  Type:                Depends on InputType
   //                         numbers: InputType
@@ -347,7 +396,7 @@ concept WritableExpression = requires(X x)
   public:
     using InputType = T;
     using Type = NullType;
-  
+
     constexpr static bool value = false;
     constexpr static size_t depth() {
       return 0;
@@ -356,7 +405,7 @@ concept WritableExpression = requires(X x)
       return 0;
     }
     template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
+    constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
       return rank_array;
     }
   };
@@ -364,67 +413,67 @@ concept WritableExpression = requires(X x)
 
   // built in ordered number types: bool, int, double etc
   template <typename Number> requires (std::is_arithmetic<Number>::value)
-  class
+    class
     NumberTrait<Number> {
-  public:
-    using InputType = Number;
-    using Type = Number;
+    public:
+      using InputType = Number;
+      using Type = Number;
 
-    constexpr static bool value = true;
-    constexpr static size_t depth() {
-      return 0;
-    }
-    constexpr static const size_t sum_of_ranks() {
-      return 0;
-    }
-    template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      return rank_array;
-    }
+      constexpr static bool value = true;
+      constexpr static size_t depth() {
+        return 0;
+      }
+      constexpr static const size_t sum_of_ranks() {
+        return 0;
+      }
+      template <size_t Nin = 0>
+      constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
+        return rank_array;
+      }
   };
 
   // complex number enclosing an ordered number
   template <typename Number> requires (std::is_arithmetic<Number>::value)
-  class
+    class
     NumberTrait<std::complex<Number>> {
-  public:
-    using InputType = std::complex<Number>;
-    using Type = std::complex<Number>;
+    public:
+      using InputType = std::complex<Number>;
+      using Type = std::complex<Number>;
 
-    constexpr static bool value = true;
-    constexpr static size_t depth() {
-      return 0;
-    }
-    constexpr static const size_t sum_of_ranks() {
-      return 0;
-    }
-    template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      return rank_array;
-    }
+      constexpr static bool value = true;
+      constexpr static size_t depth() {
+        return 0;
+      }
+      constexpr static const size_t sum_of_ranks() {
+        return 0;
+      }
+      template <size_t Nin = 0>
+      constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
+        return rank_array;
+      }
 
   };
 
 
   // imaginary number enclosing an ordered number
   template <typename Number> requires (std::is_arithmetic<Number>::value)
-  class
+    class
     NumberTrait<Imaginary<Number>> {
-  public:
-    using InputType = Imaginary<Number>;
-    using Type = Imaginary<Number>;
+    public:
+      using InputType = Imaginary<Number>;
+      using Type = Imaginary<Number>;
 
-    constexpr static bool value = true;
-    constexpr static size_t depth() {
-      return 0;
-    }
-    constexpr static const size_t sum_of_ranks() {
-      return 0;
-    }
-    template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      return rank_array;
-    }
+      constexpr static bool value = true;
+      constexpr static size_t depth() {
+        return 0;
+      }
+      constexpr static const size_t sum_of_ranks() {
+        return 0;
+      }
+      template <size_t Nin = 0>
+      constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
+        return rank_array;
+      }
 
   };
 
@@ -444,7 +493,7 @@ concept WritableExpression = requires(X x)
       return 0;
     }
     template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
+    constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
       return rank_array;
     }
   };
@@ -452,7 +501,7 @@ concept WritableExpression = requires(X x)
 
   //  ReadableExpression
 
-  template <ReadableExpression T> 
+  template <ReadableExpression T>
   class
     NumberTrait<T> {
   public:
@@ -473,8 +522,8 @@ concept WritableExpression = requires(X x)
     }
 
     template <size_t Nin = 0>
-    constexpr static const std::array<size_t, Nin+depth()> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      std::array<size_t,Nin+1> new_array{};
+    constexpr static const std::array<size_t, Nin+depth()> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
+      std::array<size_t, Nin+1> new_array{};
       for (size_t ii = 0; ii < rank_array.size(); ii++) {
         new_array[ii] = rank_array[ii];
       }
@@ -492,98 +541,6 @@ concept WritableExpression = requires(X x)
   };
 
 
-  // //  MultiArray<Element>
-
-  // template <typename Element, size_t rank, size_t... ints>
-  // class
-  //   NumberTrait<MultiArray<Element, rank, ints...>> {
-  // public:
-  //   using InputType = MultiArray<Element, rank, ints...>;
-  //   using Type = typename NumberTrait<Element>::Type;
-
-  //   constexpr static bool value = false;
-  //   constexpr static size_t depth() {
-  //     return 1 + NumberTrait<Element>::depth();
-  //   }
-
-  //   constexpr static const size_t sum_of_ranks() {
-  //     return rank + NumberTrait<Element>::sum_of_ranks();
-  //   }
-
-  //   template <size_t Nin = 0>
-  //   constexpr static const std::array<size_t, Nin+depth()> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-  //     std::array<size_t,Nin+1> new_array{};
-  //     for (size_t ii = 0; ii < rank_array.size(); ii++) {
-  //       new_array[ii] = rank_array[ii];
-  //     }
-  //     new_array[Nin] = rank;
-  //     auto x = NumberTrait<Element>::get_rank_array(new_array);
-  //     return x;
-  //   }
-
-  // };
-
-
-  // //  ExpressionR
-
-  // template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
-  // class
-  //   NumberTrait<ExpressionR<Derived, Element, Number, depth_in, rank>> {
-  // public:
-  //   using InputType = ExpressionR<Derived, Element, Number, depth_in, rank>;
-  //   using Type = Number;
-
-  //   constexpr static bool value = false;
-  //   constexpr static size_t depth() {
-  //     return depth_in;
-  //   }
-  //   constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
-  //     std::valarray<size_t> new_array(rank_array.size() + 1);
-  //     for (size_t ii = 0; ii < rank_array.size(); ii++) {
-  //       new_array[ii] = rank_array[ii];
-  //     }
-  //     new_array[new_array.size()-1] = rank;
-  //     auto x =  NumberTrait<Element>::get_rank_array(new_array);
-  //     return x;
-  //   }
-  //   inline static size_t size(const InputType& x) {
-  //     return x.size();
-  //   }
-  //   inline static size_t total_size(const InputType& x) {
-  //     return x.total_size();
-  //   }
-  // };
-
-
-  // //  ExpressionRW
-
-  // template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
-  // class
-  //   NumberTrait<ExpressionRW<Derived, Element, Number, depth_in, rank>> {
-  // public:
-  //   using InputType = ExpressionRW<Derived, Element, Number, depth_in, rank>;
-  //   using Type = Number;
-
-  //   constexpr static bool value = false;
-  //   constexpr static size_t depth() {
-  //     return depth_in;
-  //   }
-  //   constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
-  //     std::valarray<size_t> new_array(rank_array.size() + 1);
-  //     for (size_t ii = 0; ii < rank_array.size(); ii++) {
-  //       new_array[ii] = rank_array[ii];
-  //     }
-  //     new_array[new_array.size()-1] = rank;
-  //     auto x =  NumberTrait<Element>::get_rank_array(new_array);
-  //     return x;
-  //   }
-  //   inline static size_t size(const InputType& x) {
-  //     return x.size();
-  //   }
-  //   inline static size_t total_size(const InputType& x) {
-  //     return x.total_size();
-  //   }
-  // };
 
 
 
@@ -593,7 +550,7 @@ concept WritableExpression = requires(X x)
   //
   // This operates recursively to find the base number type
   //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
-  
+
   //  Type:  Depends on InputType
   //                         numbers: NewNumber
   //                         MultiArray: The InputType with the number type replaced by NewNumber
@@ -609,35 +566,35 @@ concept WritableExpression = requires(X x)
 
   // built in ordered number types: bool, int, double etc
   template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
-  class
+    class
     ReplacedNumberTrait<Number, NewNumber> {
-  public:
-    using Type = NewNumber;
+    public:
+      using Type = NewNumber;
   };
 
   // complex number enclosing an ordered number
   template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
-  class
+    class
     ReplacedNumberTrait<std::complex<Number>, NewNumber> {
-  public:
-    using Type = NewNumber;
+    public:
+      using Type = NewNumber;
   };
 
 
   // imaginary number enclosing an ordered number
   template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
-  class
+    class
     ReplacedNumberTrait<Imaginary<Number>, NewNumber> {
-  public:
-    using Type = NewNumber;
+    public:
+      using Type = NewNumber;
   };
 
   // quaternion number enclosing an ordered number
   template <typename Number, typename NewNumber> requires (std::is_arithmetic<Number>::value)
-  class
+    class
     ReplacedNumberTrait<Quaternion<Number>, NewNumber> {
-  public:
-    using Type = NewNumber;
+    public:
+      using Type = NewNumber;
   };
 
 
@@ -700,13 +657,13 @@ concept WritableExpression = requires(X x)
 
   // for built-in number types (not classes)
   template <typename T>  requires (std::is_arithmetic<T>::value)
-  class
+    class
     SimpleNumberTrait<T> {
-  public:
-    using Type = T;
-    constexpr static size_t depth() {
-      return 0;
-    }
+    public:
+      using Type = T;
+      constexpr static size_t depth() {
+        return 0;
+      }
   };
 
 
@@ -747,27 +704,27 @@ concept WritableExpression = requires(X x)
   };
 
 
-// I tried making a general specialization for all subclasses of ExpressionRW but haven't succeeded:
+  // I tried making a general specialization for all subclasses of ExpressionRW but haven't succeeded:
 
-  // template < template <typename, auto...> class T, typename Element, auto... Rest>  
-  // requires ( std::is_base_of_v< 
-  //   ExpressionRW<
-  //     T<Element, Rest...>, 
-  //     Element, 
-  //     typename T<Element, Rest...>::NumberType, 
-  //     T<Element, Rest...>::depth_value, 
-  //     T<Element, Rest...>::rank_value>, 
-  //   T<Element, Rest...> 
-  // >)
-  
-  // class SimpleNumberTrait<T<Element, Rest...>> 
-  // {
-  // public:
-  //   using Type = typename SimpleNumberTrait<Element>::Type;
-  //   constexpr static size_t depth() {
-  //     return 1 + SimpleNumberTrait<Element>::depth();
-  //   }
-  // };
+    // template < template <typename, auto...> class T, typename Element, auto... Rest>  
+    // requires ( std::is_base_of_v< 
+    //   ExpressionRW<
+    //     T<Element, Rest...>, 
+    //     Element, 
+    //     typename T<Element, Rest...>::NumberType, 
+    //     T<Element, Rest...>::depth_value, 
+    //     T<Element, Rest...>::rank_value>, 
+    //   T<Element, Rest...> 
+    // >)
+
+    // class SimpleNumberTrait<T<Element, Rest...>> 
+    // {
+    // public:
+    //   using Type = typename SimpleNumberTrait<Element>::Type;
+    //   constexpr static size_t depth() {
+    //     return 1 + SimpleNumberTrait<Element>::depth();
+    //   }
+    // };
   template <class Derived, typename Element, typename Number, size_t depth_, size_t rank>
   class SimpleNumberTrait<ExpressionR<Derived, Element, Number, depth_, rank>> {
   public:
@@ -850,13 +807,13 @@ concept WritableExpression = requires(X x)
   // 
   // ************************************************************************************************
 
-  template <typename T, size_t depth> 
+  template <typename T, size_t depth>
   class MakeInitializer {
   public:
-    using Type = std::initializer_list< typename MakeInitializer<T,(depth-1)>::Type >;
+    using Type = std::initializer_list< typename MakeInitializer<T, (depth-1)>::Type >;
   };
-  template <typename T> 
-  class MakeInitializer<T,0> {
+  template <typename T>
+  class MakeInitializer<T, 0> {
   public:
     using Type = T;
   };
@@ -866,7 +823,7 @@ concept WritableExpression = requires(X x)
   //  InitializerTrait
   // ************************************************************************************************
 
-  template <typename T> 
+  template <typename T>
   class InitializerTrait {
   public:
     using Type = T;
@@ -882,7 +839,7 @@ concept WritableExpression = requires(X x)
     }
 
     template <size_t Nin = 0>
-    constexpr static const std::array<size_t,Nin> get_size_array( const Type& mylist, const std::array<size_t,Nin>& size_array = std::array<size_t,Nin>{} ) {
+    constexpr static const std::array<size_t, Nin> get_size_array(const Type& mylist, const std::array<size_t, Nin>& size_array = std::array<size_t, Nin>{}) {
       return size_array;
     }
 
@@ -904,8 +861,8 @@ concept WritableExpression = requires(X x)
     }
 
     template <size_t Nin = 0>
-    constexpr static const std::array<size_t, Nin+depth()> get_size_array( const Type& mylist, const std::array<size_t,Nin>& size_array = std::array<size_t,Nin>{} ) {
-      std::array<size_t,Nin+1> new_array{};
+    constexpr static const std::array<size_t, Nin+depth()> get_size_array(const Type& mylist, const std::array<size_t, Nin>& size_array = std::array<size_t, Nin>{}) {
+      std::array<size_t, Nin+1> new_array{};
       for (size_t ii = 0; ii < size_array.size(); ii++) {
         new_array[ii] = size_array[ii];
       }
