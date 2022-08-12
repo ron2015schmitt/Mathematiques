@@ -374,23 +374,12 @@ namespace mathq {
   struct MultiArrayHelperTrait;
 
 
-  // template <
-  //   typename Element,
-  //   auto arr,
-  //   std::size_t... I
-  // > requires (Number<Element>)
-  //   struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
-  //   using Type = Element;
-  // };
-
-
   template <
     typename Element,
     auto arr,
     std::size_t... I
   > requires (is_all_zeros(arr))
     struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
-    constexpr static bool value = is_all_zeros(arr);
     using Type = MultiArray<Element, sizeof...(I)>;
   };
 
@@ -400,7 +389,6 @@ namespace mathq {
     std::size_t... I
   > requires (!is_all_zeros(arr))
     struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
-    constexpr static bool value = is_all_zeros(arr);
     using Type = MultiArray<Element, sizeof...(I), arr[I]...>;
   };
 
@@ -426,17 +414,41 @@ namespace mathq {
   };
 
 
-  // ***************************************************************************
+  // ************************************************************************************
   // MultiArrayType 
   //
-  // This returns a concrete and general tensor of for the given MultiArray or Expression
-  // ***************************************************************************
+  // This returns a concrete[1] and general[1] MultiArray of for the given MultiArray or Expression
+  // The operation is performed on all nested MultiArrays contained in the Element
+  //
+  // 1. By concrete, we meean a MultiArray and not an Expression
+  // 2. By general we mean a MultiArray and not a specialization like MultiArray_Constant
+  // ************************************************************************************
 
-  template <typename T>
-  using MultiArrayType = typename std::conditional< HasStaticSizes<T>,
-    MultiArrayHelper<typename T::ElementType, T::static_dims_array>,
-    MultiArray<typename T::ElementType, T::rank_value>
-  >::type;
+  template <ReadableExpression X>
+  class MultiArrayTypeTrait {
+  public:
+    using Type = MultiArray<typename X::ElementType, X::rank_value>;
+  };
+
+  template <ReadableExpression X> requires (HasStaticSizes<X>)
+    class MultiArrayTypeTrait<X> {
+    public:
+      using Type = MultiArrayHelper<typename X::ElementType, X::static_dims_array>;
+  };
+
+  template <ReadableExpression X> requires (ReadableExpression<typename X::ElementType>)
+    class MultiArrayTypeTrait<X> {
+    public:
+      using Type = MultiArray< typename MultiArrayTypeTrait<typename X::ElementType>::Type, X::rank_value >;
+  };
+  template <ReadableExpression X> requires (HasStaticSizes<X>&& ReadableExpression<typename X::ElementType>)
+    class MultiArrayTypeTrait<X> {
+    public:
+      using Type = MultiArrayHelper< typename MultiArrayTypeTrait<typename X::ElementType>::Type, X::static_dims_array >;
+  };
+
+  template <ReadableExpression X>
+  using MultiArrayType = MultiArrayTypeTrait<X>::Type;
 
   // ************************************************************************************************
   // NumberTrait<InputType, NewNumber>

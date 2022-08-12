@@ -237,18 +237,27 @@ int main(int argc, char* argv[]) {
   TRDISP(mystery);
 
 
-  TRDISP(MultiArrayHelperTrait<double, myarray>::value);
   TRDISP(is_all_zeros(myarray));
 
   constexpr std::array<size_t, 3> zeroarray = { 0,0,0 };
   TRDISP(is_all_zeros(zeroarray));
-  TRDISP(MultiArrayHelperTrait<double, zeroarray>::value);
 
   ECHO_CODE(MultiArrayType<MultiArray<double, 2>> mystery2);
   TRDISP(mystery2);
 
   ECHO_CODE(MultiArrayType<MultiArray<double, 3>> mystery3);
   TRDISP(mystery3);
+
+
+  // test expressions
+
+  // note that we lose the static dims in expressions
+  ECHO_CODE(MultiArrayType<decltype(+mystery)> mysteryb);
+  TRDISP(mysteryb);
+
+
+  ECHO_CODE(MultiArrayType<decltype(-mystery2)> mystery2b);
+  TRDISP(mystery2b);
 
 
 
