@@ -93,10 +93,14 @@ namespace mathq {
     }
 
   //*******************************************************
-  //          Typedefs
+  //          extended
   //*******************************************************
 
   using extended = long double;
+
+  //*******************************************************
+  //          NullType
+  //*******************************************************
 
   class NullType {
   public:
@@ -189,6 +193,47 @@ namespace mathq {
     constexpr static bool value = true;
     using OrderedNumberType = SimpleNumber;
   };
+
+
+
+
+
+  // ***************************************************************************
+  //  ReadableExpression<X>
+  //
+  // MultiArrays and their Expressions
+  // ***************************************************************************
+
+
+template <class X, class Element, typename Number, size_t depth, size_t rank>
+bool readable_expression_test(const ExpressionR<X, Element, Number, depth, rank>& x) {
+  return true;
+}
+
+template <class X>
+concept ReadableExpression = requires(X x) 
+{ 
+  readable_expression_test(x);
+};
+
+
+  // ***************************************************************************
+  //  WritableExpression<X>
+  //
+  // MultiArrays and their Expressions
+  // ***************************************************************************
+
+template <class X, class Element, typename Number, size_t depth, size_t rank>
+bool writable_expression_test(const ExpressionRW<X, Element, Number, depth, rank>& x) {
+  return true;
+}
+
+
+template <class X>
+concept WritableExpression = requires(X x) 
+{ 
+  writable_expression_test(x);
+};
 
 
   // ***************************************************************************
@@ -405,23 +450,26 @@ namespace mathq {
   };
 
 
+  //  ReadableExpression
 
-  //  MultiArray<Element>
-
-  template <typename Element, size_t rank, size_t... ints>
+  template <ReadableExpression T> 
   class
-    NumberTrait<MultiArray<Element, rank, ints...>> {
+    NumberTrait<T> {
   public:
-    using InputType = MultiArray<Element, rank, ints...>;
-    using Type = typename NumberTrait<Element>::Type;
+    using InputType = T;
+    using ElementType = typename T::ElementType;
+    using Type = typename NumberTrait<ElementType>::Type;
 
     constexpr static bool value = false;
+
     constexpr static size_t depth() {
-      return 1 + NumberTrait<Element>::depth();
+      return 1 + NumberTrait<ElementType>::depth();
     }
 
+    constexpr static size_t rank = T::rank_value;
+
     constexpr static const size_t sum_of_ranks() {
-      return rank + NumberTrait<Element>::sum_of_ranks();
+      return rank + NumberTrait<ElementType>::sum_of_ranks();
     }
 
     template <size_t Nin = 0>
@@ -431,34 +479,10 @@ namespace mathq {
         new_array[ii] = rank_array[ii];
       }
       new_array[Nin] = rank;
-      auto x = NumberTrait<Element>::get_rank_array(new_array);
+      auto x = NumberTrait<ElementType>::get_rank_array(new_array);
       return x;
     }
 
-  };
-
-  //  ExpressionR
-
-  template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
-  class
-    NumberTrait<ExpressionR<Derived, Element, Number, depth_in, rank>> {
-  public:
-    using InputType = ExpressionR<Derived, Element, Number, depth_in, rank>;
-    using Type = Number;
-
-    constexpr static bool value = false;
-    constexpr static size_t depth() {
-      return depth_in;
-    }
-    constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
-      std::valarray<size_t> new_array(rank_array.size() + 1);
-      for (size_t ii = 0; ii < rank_array.size(); ii++) {
-        new_array[ii] = rank_array[ii];
-      }
-      new_array[new_array.size()-1] = rank;
-      auto x =  NumberTrait<Element>::get_rank_array(new_array);
-      return x;
-    }
     inline static size_t size(const InputType& x) {
       return x.size();
     }
@@ -468,35 +492,98 @@ namespace mathq {
   };
 
 
-  //  ExpressionRW
+  // //  MultiArray<Element>
 
-  template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
-  class
-    NumberTrait<ExpressionRW<Derived, Element, Number, depth_in, rank>> {
-  public:
-    using InputType = ExpressionRW<Derived, Element, Number, depth_in, rank>;
-    using Type = Number;
+  // template <typename Element, size_t rank, size_t... ints>
+  // class
+  //   NumberTrait<MultiArray<Element, rank, ints...>> {
+  // public:
+  //   using InputType = MultiArray<Element, rank, ints...>;
+  //   using Type = typename NumberTrait<Element>::Type;
 
-    constexpr static bool value = false;
-    constexpr static size_t depth() {
-      return depth_in;
-    }
-    constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
-      std::valarray<size_t> new_array(rank_array.size() + 1);
-      for (size_t ii = 0; ii < rank_array.size(); ii++) {
-        new_array[ii] = rank_array[ii];
-      }
-      new_array[new_array.size()-1] = rank;
-      auto x =  NumberTrait<Element>::get_rank_array(new_array);
-      return x;
-    }
-    inline static size_t size(const InputType& x) {
-      return x.size();
-    }
-    inline static size_t total_size(const InputType& x) {
-      return x.total_size();
-    }
-  };
+  //   constexpr static bool value = false;
+  //   constexpr static size_t depth() {
+  //     return 1 + NumberTrait<Element>::depth();
+  //   }
+
+  //   constexpr static const size_t sum_of_ranks() {
+  //     return rank + NumberTrait<Element>::sum_of_ranks();
+  //   }
+
+  //   template <size_t Nin = 0>
+  //   constexpr static const std::array<size_t, Nin+depth()> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
+  //     std::array<size_t,Nin+1> new_array{};
+  //     for (size_t ii = 0; ii < rank_array.size(); ii++) {
+  //       new_array[ii] = rank_array[ii];
+  //     }
+  //     new_array[Nin] = rank;
+  //     auto x = NumberTrait<Element>::get_rank_array(new_array);
+  //     return x;
+  //   }
+
+  // };
+
+
+  // //  ExpressionR
+
+  // template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
+  // class
+  //   NumberTrait<ExpressionR<Derived, Element, Number, depth_in, rank>> {
+  // public:
+  //   using InputType = ExpressionR<Derived, Element, Number, depth_in, rank>;
+  //   using Type = Number;
+
+  //   constexpr static bool value = false;
+  //   constexpr static size_t depth() {
+  //     return depth_in;
+  //   }
+  //   constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+  //     std::valarray<size_t> new_array(rank_array.size() + 1);
+  //     for (size_t ii = 0; ii < rank_array.size(); ii++) {
+  //       new_array[ii] = rank_array[ii];
+  //     }
+  //     new_array[new_array.size()-1] = rank;
+  //     auto x =  NumberTrait<Element>::get_rank_array(new_array);
+  //     return x;
+  //   }
+  //   inline static size_t size(const InputType& x) {
+  //     return x.size();
+  //   }
+  //   inline static size_t total_size(const InputType& x) {
+  //     return x.total_size();
+  //   }
+  // };
+
+
+  // //  ExpressionRW
+
+  // template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
+  // class
+  //   NumberTrait<ExpressionRW<Derived, Element, Number, depth_in, rank>> {
+  // public:
+  //   using InputType = ExpressionRW<Derived, Element, Number, depth_in, rank>;
+  //   using Type = Number;
+
+  //   constexpr static bool value = false;
+  //   constexpr static size_t depth() {
+  //     return depth_in;
+  //   }
+  //   constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
+  //     std::valarray<size_t> new_array(rank_array.size() + 1);
+  //     for (size_t ii = 0; ii < rank_array.size(); ii++) {
+  //       new_array[ii] = rank_array[ii];
+  //     }
+  //     new_array[new_array.size()-1] = rank;
+  //     auto x =  NumberTrait<Element>::get_rank_array(new_array);
+  //     return x;
+  //   }
+  //   inline static size_t size(const InputType& x) {
+  //     return x.size();
+  //   }
+  //   inline static size_t total_size(const InputType& x) {
+  //     return x.total_size();
+  //   }
+  // };
 
 
 

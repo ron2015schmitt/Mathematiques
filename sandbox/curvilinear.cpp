@@ -28,29 +28,6 @@ concept Container = requires(T& a)
 
 
 
-template <class X, class Element, typename Number, size_t depth, size_t rank>
-bool readable_expression_test(const ExpressionR<X, Element, Number, depth, rank>& x) {
-  return true;
-}
-
-template <class X, class Element, typename Number, size_t depth, size_t rank>
-bool writable_expression_test(const ExpressionRW<X, Element, Number, depth, rank>& x) {
-  return true;
-}
-
-
-template <class X>
-concept ReadableExpression = requires(X x) 
-{ 
-  readable_expression_test(x);
-};
-
-
-template <class X>
-concept WritableExpression = requires(X x) 
-{ 
-  writable_expression_test(x);
-};
 
 
   template <Container T> 
