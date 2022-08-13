@@ -53,7 +53,7 @@ namespace mathq {
 
       using ElementType = Element;
       using NumberType = typename NumberTrait<Element>::Type;
-      using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+      using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
       using ParentDataType = SpecialData<Element, rank_, dim_ints...>;
       using ParentType = ExpressionRW<
@@ -829,7 +829,7 @@ namespace mathq {
       //----------------- .roundzero(tol) ---------------------------
       // NOTE: in-place
 
-      Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+      Type& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
         for (size_t i = 0; i < actual_size(); i++) {
           vector[i] = mathq::roundzero(vector[i], tolerance);
         }

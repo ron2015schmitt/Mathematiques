@@ -8,15 +8,15 @@ namespace mathq {
 
 
   template <typename Element, size_t... dim_ints>
-  class MatrixConstDiag<Element, 2, dim_ints...> : 
-    public SpecialData<Element, 2, dim_ints...>, 
+  class MatrixConstDiag<Element, 2, dim_ints...> :
+    public SpecialData<Element, 2, dim_ints...>,
     public ExpressionRW<
-      Matrix<Element, dim_ints...>,  // Derived
-      Element,  // Element
-      typename NumberTrait<Element>::Type, // Number
-      1 + NumberTrait<Element>::depth(),  // depth
-      2  // rank
-    > {  
+    Matrix<Element, dim_ints...>,  // Derived
+    Element,  // Element
+    typename NumberTrait<Element>::Type, // Number
+    1 + NumberTrait<Element>::depth(),  // depth
+    2  // rank
+    > {
   public:
 
 
@@ -29,7 +29,7 @@ namespace mathq {
     constexpr static size_t N0 = std::get<0>(static_dims_array);
     constexpr static size_t N1 = std::get<1>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = ( sizeof...(dim_ints) == 0 );
+    constexpr static bool is_dynamic_value = (sizeof...(dim_ints) == 0);
     constexpr static size_t compile_time_size = calc_size<rank_value, N0, N1>();
 
     //**********************************************************************
@@ -41,7 +41,7 @@ namespace mathq {
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using ParentDataType = MultiArrayData<Element, rank_value, dim_ints...>;
     using ParentType = ExpressionRW<
@@ -375,7 +375,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Type& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 

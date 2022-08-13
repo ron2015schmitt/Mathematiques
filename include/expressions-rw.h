@@ -28,7 +28,7 @@ namespace mathq {
 
     using ElementType = Number;
     using NumberType = typename NumberTrait<ElementType>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using Type = ExpressionRW_Subset<NumberType>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
@@ -223,7 +223,7 @@ namespace mathq {
 
     using ElementType = Number;
     using NumberType = typename NumberTrait<ElementType>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using Type = ExpressionRW_Submask<NumberType>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
@@ -396,7 +396,7 @@ namespace mathq {
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<ElementType>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using Type = ExpressionRW_Join<X, Y, Element, Number, depth_>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;

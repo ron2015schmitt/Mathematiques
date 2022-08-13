@@ -31,7 +31,7 @@ namespace mathq {
     typedef MatrixToeplitz<Number, NR, NC> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<Number>::Type SimpleNumberType;
 
 
     // if either NR or NC is 0, then we use valarray
@@ -77,7 +77,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = NR*NC, EnableIf<(NN > 0)> = 0>
 
-    explicit MatrixToeplitz<Number, NR, NC>(const Vector<Number>& v) {
+      explicit MatrixToeplitz<Number, NR, NC>(const Vector<Number>& v) {
       const size_t size = v.size();
       // TODO: chekc that size = NR + NC -1
       resize(NR, NC);
@@ -431,7 +431,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixToeplitz<Number, NR, NC>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    MatrixToeplitz<Number, NR, NC>& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 

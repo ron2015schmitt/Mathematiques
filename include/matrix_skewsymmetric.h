@@ -29,7 +29,7 @@ namespace mathq {
     typedef MatrixSkewSymmetric<Number, N> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<Number>::Type SimpleNumberType;
 
 
     // if N is 0, then we use valarray
@@ -74,7 +74,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = N, EnableIf<(NN > 0)> = 0>
 
-    explicit MatrixSkewSymmetric<Number, N>(const Vector<Number>& v) {
+      explicit MatrixSkewSymmetric<Number, N>(const Vector<Number>& v) {
       const size_t size = v.size();
       // TODO: chekc that size = N(N+1)/2
       resize(N);
@@ -84,7 +84,7 @@ namespace mathq {
     // --------------------- Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<(NN>0)> = 0>
 
-    explicit MatrixSkewSymmetric<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
+      explicit MatrixSkewSymmetric<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
       // TODO: chekc that A is N x N
       resize(N);
       *this = A;
@@ -455,7 +455,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixSkewSymmetric<Number, N>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    MatrixSkewSymmetric<Number, N>& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 

@@ -31,7 +31,7 @@ namespace mathq {
     typedef MatrixRepCol<Number, NR, NC> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<Number>::Type SimpleNumberType;
 
 
     // if either NR or NC is 0, then we use valarray
@@ -77,7 +77,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = NR*NC, EnableIf<(NN > 0)> = 0>
 
-    explicit MatrixRepCol<Number, NR, NC>(const Vector<Number>& v) {
+      explicit MatrixRepCol<Number, NR, NC>(const Vector<Number>& v) {
       resize(NR, NC);
       *this = v;
     }
@@ -424,7 +424,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixRepCol<Number, NR, NC>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    MatrixRepCol<Number, NR, NC>& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 

@@ -146,7 +146,7 @@ namespace mathq {
   template <typename I2, typename F1>
   EnableMethodIf<IsImaginary<I2>::value, I2>
     numbercast(const Imaginary<F1>& y) {
-    typedef typename IsImaginary<I2>::OrderedNumberType F2;
+    typedef typename IsImaginary<I2>::SimpleNumberType F2;
     F2 val = numbercast<F2>(y.value());
     return Imaginary<F2>(val);
   }

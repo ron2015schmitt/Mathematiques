@@ -1,10 +1,10 @@
 #ifndef MATHQ__SCALAR
 #define MATHQ__SCALAR 1
 
-  /******************************************************************************
-   * Scalar<Element> == MultiArray<Element,0>
-   *
-   *                 Element  = type for elements
+/******************************************************************************
+ * Scalar<Element> == MultiArray<Element,0>
+ *
+ *                 Element  = type for elements
 ********************************************************************
  */
 
@@ -41,7 +41,7 @@ namespace mathq {
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using ParentType = ExpressionRW<
       ConcreteType,  // Derived
@@ -98,7 +98,7 @@ namespace mathq {
     // for Scalars this should be implicit (NO `explicit`) so that `Scalar<double> s = 4.5;` works
     // and this is okay because there are no size related constructors
 
-    template<size_t depth = depth_value> requires ( (depth > 1) && (!std::is_same<Element, NumberType>::value) )
+    template<size_t depth = depth_value> requires ((depth > 1) && (!std::is_same<Element, NumberType>::value))
       MultiArray(const NumberType val) {
       *this = val;
     }
@@ -106,7 +106,7 @@ namespace mathq {
     // do not use if depth greater than 1!
     // CONSTRUCTOR: initializer_list 
     template<size_t depth = depth_value> requires (depth == 1)
-    MultiArray(const std::initializer_list<Element>& mylist) {
+      MultiArray(const std::initializer_list<Element>& mylist) {
       *this = mylist;
     }
 
@@ -195,7 +195,7 @@ namespace mathq {
     }
 
     inline std::array<size_t, rank_value> dims_array(void) const {
-        return *(new std::array<size_t, rank_value>{} );
+      return *(new std::array<size_t, rank_value>{});
     }
 
 
@@ -313,13 +313,13 @@ namespace mathq {
 
     // "read/write"
     template <typename T> requires (std::is_integral<T>::value)
-    Element& operator[](const T n) {
+      Element& operator[](const T n) {
       return data_;
     }
 
     // read
     template <typename T> requires (std::is_integral<T>::value)
-    const Element& operator[](const T n)  const {
+      const Element& operator[](const T n)  const {
       return data_;
     }
 
@@ -378,8 +378,8 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
-    template<typename T> requires ( std::is_convertible<T, Element>::value )
-    Type& operator=(const T& e) {
+    template<typename T> requires (std::is_convertible<T, Element>::value)
+      Type& operator=(const T& e) {
       data_ = e;
       return *this;
     }
@@ -459,7 +459,7 @@ namespace mathq {
 
     //----------------- .roundzero(tol) ---------------------------
 
-    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Type& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       data_ = mathq::roundzero(data_, tolerance);
     }
 
@@ -467,7 +467,7 @@ namespace mathq {
     //----------------- .conj() ---------------------------
 
     template<typename T = NumberType> requires(is_complex<T>::value)
-    Type& conj() {
+      Type& conj() {
       using std::conj;
       data_ = conj(data_);
       return *this;
@@ -562,7 +562,7 @@ namespace mathq {
     //**********************************************************************
 
     operator Element* () const {
-      Element* ptr = new Element{data_};
+      Element* ptr = new Element{ data_ };
       return ptr;
     }
 

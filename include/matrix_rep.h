@@ -26,7 +26,7 @@ namespace mathq {
     typedef MatrixRepRowAndCol<Number> ConcreteType;
     typedef Number ElementType;
     typedef Number NumberType;
-    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
+    typedef typename SimpleNumberTrait<Number>::Type SimpleNumberType;
 
 
     typedef typename std::valarray<Number> MyArrayType;
@@ -362,7 +362,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixRepRowAndCol<Number>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    MatrixRepRowAndCol<Number>& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 

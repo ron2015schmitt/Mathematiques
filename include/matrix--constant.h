@@ -1,30 +1,30 @@
 #ifndef MATHQ__MATRIX_CONSTANT
 #define MATHQ__MATRIX_CONSTANT 1
 
-  /********************************************************************
-   * Matrix_Constant<Element, dim_ints...> 
-   * 
-   * every element has the same value
-   *
-   * This is the specialization of MultiArray_Constant for rank=2.
-   ********************************************************************
-   */
+/********************************************************************
+ * Matrix_Constant<Element, dim_ints...>
+ *
+ * every element has the same value
+ *
+ * This is the specialization of MultiArray_Constant for rank=2.
+ ********************************************************************
+ */
 
 namespace mathq {
 
   template <typename Element, size_t... dim_ints>
-  class MultiArray_Constant<Element, 2, dim_ints...> : 
+  class MultiArray_Constant<Element, 2, dim_ints...> :
 
-    public SpecialData<Element, 2, dim_ints...>, 
-  
+    public SpecialData<Element, 2, dim_ints...>,
+
     public ExpressionRW<
-      MultiArray_Constant<Element, 2, dim_ints...>,  // Derived
-      Element,  // Element
-      typename NumberTrait<Element>::Type, // Number
-      1 + NumberTrait<Element>::depth(),  // depth
-      2  // rank
-    > {  
-  
+    MultiArray_Constant<Element, 2, dim_ints...>,  // Derived
+    Element,  // Element
+    typename NumberTrait<Element>::Type, // Number
+    1 + NumberTrait<Element>::depth(),  // depth
+    2  // rank
+    > {
+
   public:
 
 
@@ -37,7 +37,7 @@ namespace mathq {
     constexpr static size_t N0 = std::get<0>(static_dims_array);
     constexpr static size_t N1 = std::get<1>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = ( sizeof...(dim_ints) == 0 );
+    constexpr static bool is_dynamic_value = (sizeof...(dim_ints) == 0);
     constexpr static size_t compile_time_size = calc_size<rank_value, N0, N1>();
 
     //**********************************************************************
@@ -49,7 +49,7 @@ namespace mathq {
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using ParentDataType = SpecialData<Element, rank_value, dim_ints...>;
     using ParentType = ExpressionRW<
@@ -84,7 +84,7 @@ namespace mathq {
 
     MultiArray_Constant() {
       if constexpr (is_dynamic_value) {
-        resize(0,0);
+        resize(0, 0);
       }
     }
 
@@ -101,7 +101,7 @@ namespace mathq {
     template <class Derived>
     MultiArray_Constant(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
       if constexpr (is_dynamic_value) {
-        resize(0,0);
+        resize(0, 0);
       }
       *this = x;
     }
@@ -114,21 +114,21 @@ namespace mathq {
     // --------------------- FIXED SIZE: from dynamic MultiArray_Constant --------------------
 
     template<bool enable = !is_dynamic_value> requires (enable)
-    explicit MultiArray_Constant(const MultiArray_Constant<Element, rank_value>& var) {
+      explicit MultiArray_Constant(const MultiArray_Constant<Element, rank_value>& var) {
       *this = var;
     }
 
     // --------------------- FIXED SIZE: set all to same value   ---------------------
 
     template<bool enable = !is_dynamic_value> requires (enable)
-    explicit MultiArray_Constant(const Element val) {
+      explicit MultiArray_Constant(const Element val) {
       *this = val;
     }
 
     // --------------------- FIXED SIZE: set all bottom Elements to same value   ---------------------
 
-    template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value > 1) && (!std::is_same<Element, NumberType>::value) )
-    explicit MultiArray_Constant(const NumberType val) {
+    template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value > 1) && (!std::is_same<Element, NumberType>::value))
+      explicit MultiArray_Constant(const NumberType val) {
       *this = val;
     }
 
@@ -139,7 +139,7 @@ namespace mathq {
     // --------------------- dynamic MultiArray_Constant --------------------
 
     template<bool enable = is_dynamic_value, size_t... mysizes> requires (enable)
-    explicit MultiArray_Constant(const MultiArray_Constant<Element, rank_value, mysizes...> var) {
+      explicit MultiArray_Constant(const MultiArray_Constant<Element, rank_value, mysizes...> var) {
       this->resize(var.dims());
       *this = var;
     }
@@ -147,14 +147,14 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from ints  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    MultiArray_Constant(const size_t Nrows, const size_t Ncols) {
+      MultiArray_Constant(const size_t Nrows, const size_t Ncols) {
       resize(Nrows, Ncols);
     }
 
     // --------------------- DYNAMIC SIZE: set size from ints and values from constant  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    MultiArray_Constant(const size_t Nrows, const size_t Ncols, const Element& val) {
+      MultiArray_Constant(const size_t Nrows, const size_t Ncols, const Element& val) {
       resize(Nrows, Ncols);
       *this = val;
     }
@@ -162,14 +162,14 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray_Constant(const Dimensions& dims) {
+      explicit MultiArray_Constant(const Dimensions& dims) {
       // TRDISP(dims);
       this->resize(dims);
     }
 
     // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
     template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray_Constant(const RecursiveDimensions& recursive_dims) {
+      explicit MultiArray_Constant(const RecursiveDimensions& recursive_dims) {
       // TRDISP(recursive_dims);
       this->resize(recursive_dims);
     }
@@ -178,7 +178,7 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set dims and set all to same value  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray_Constant(const Dimensions& dims, const Element& val) {
+      explicit MultiArray_Constant(const Dimensions& dims, const Element& val) {
       this->resize(dims);
       *this = val;
     }
@@ -277,14 +277,16 @@ namespace mathq {
     inline size_t Nrows(void) const {
       if constexpr (is_dynamic_value) {
         return ParentDataType::N0;
-      } else {
+      }
+      else {
         return N0;
       }
     }
     inline size_t Ncols(void) const {
       if constexpr (is_dynamic_value) {
         return ParentDataType::N1;
-      } else {
+      }
+      else {
         return N1;
       }
     }
@@ -294,7 +296,8 @@ namespace mathq {
     Dimensions& dims(void) const {
       if constexpr (is_dynamic_value) {
         return *(new Dimensions({ ParentDataType::N0, ParentDataType::N1 }));
-      } else {
+      }
+      else {
         return *(new Dimensions(static_dims_array));
       }
     }
@@ -302,7 +305,8 @@ namespace mathq {
     inline std::array<size_t, rank_value> dims_array(void) const {
       if constexpr (is_dynamic_value) {
         return *(new std::array<size_t, rank_value>{ ParentDataType::N0, ParentDataType::N1 });
-      } else {
+      }
+      else {
         return static_dims_array;
       }
     }
@@ -348,19 +352,19 @@ namespace mathq {
     // resize / reshape is not allowed unless fixed-dimensions 
     //**********************************************************************
 
-    template <typename... U> requires ( (is_dynamic_value) ) 
-    Type& resize(const size_t Nrows_new, const size_t Ncols_new) {
-      if ( (ParentDataType::N0 != Nrows_new) ||(ParentDataType::N1 != Ncols_new) ) {
+    template <typename... U> requires ((is_dynamic_value))
+      Type& resize(const size_t Nrows_new, const size_t Ncols_new) {
+      if ((ParentDataType::N0 != Nrows_new) ||(ParentDataType::N1 != Ncols_new)) {
         ParentDataType::N0 = Nrows_new;
         ParentDataType::N1 = Ncols_new;
       }
       return *this;
     }
 
-    
+
 
     template <bool enabled = is_dynamic_value> requires (enabled)
-    Type& resize(const Dimensions& new_dims) {
+      Type& resize(const Dimensions& new_dims) {
       return resize(new_dims[0], new_dims[1]);
     }
 
@@ -440,9 +444,9 @@ namespace mathq {
     }
 
     template <typename... U>
-    typename std::enable_if<(std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == rank_value), size_t>::type 
-    index(const U... args) {
-      std::array<size_t,rank_value> arr { std::make_unsigned<int>::type(args)... };
+    typename std::enable_if<(std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == rank_value), size_t>::type
+      index(const U... args) {
+      std::array<size_t, rank_value> arr{ std::make_unsigned<int>::type(args)... };
       return index(*(new mathq::Indices(arr)));
     }
 
@@ -461,15 +465,13 @@ namespace mathq {
     // negative indexing 
 
     template <typename... U>
-    Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
-    {
+    Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
       return value;
     }
 
     template <typename... U>
-    const Element& operator()(const U... args) const 
-    requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
-    {
+    const Element& operator()(const U... args) const
+      requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
       return value;
     }
 
@@ -484,7 +486,7 @@ namespace mathq {
       using namespace ::display;
       //    MOUT << CREATESTYLE(BOLD).apply("operator["+num2string(n)+"] #1")<<std::endl;
       if constexpr (depth_value <= 1) {
-      return value;
+        return value;
       }
       else {
         const int Ndeep = this->el_total_size();
@@ -516,27 +518,27 @@ namespace mathq {
 
     // "read/write"
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
-    Element& operator[](const T n) {
+      Element& operator[](const T n) {
       return value;
     }
 
     // read
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
-    const Element& operator[](const T n)  const {
+      const Element& operator[](const T n)  const {
       // OUTPUT("[] 2");
       return value;
     }
 
     // "read/write"
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    Element& operator[](const T n) {
+      Element& operator[](const T n) {
       // OUTPUT("[] 3");
       return value;
     }
 
     // read
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    const Element& operator[](const T n)  const {
+      const Element& operator[](const T n)  const {
       // OUTPUT("[] 4");
       return value;
     }
@@ -593,16 +595,16 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
-    template<typename T> requires ( std::is_convertible<T, Element>::value )
-    Type& operator=(const T& e) {
+    template<typename T> requires (std::is_convertible<T, Element>::value)
+      Type& operator=(const T& e) {
       value = e;
       return *this;
     }
 
     // set bottom elements to same value
     template <class T = Element>
-    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type 
-    operator=(const NumberType& d) {
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type
+      operator=(const NumberType& d) {
       // TODO: optimize this
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
@@ -615,8 +617,8 @@ namespace mathq {
 
     // ------------------------ MultiArray_Constant = MultiArray_Constant<Element,NE2,NumberType,depth_value> ----------------
 
-    template <size_t... sizes> requires (multi_array_compatibility<rank_value,rank_value,dim_ints...,sizes...>())
-    Type& operator=(const MultiArray_Constant<Element, rank_value, sizes...>& v) {
+    template <size_t... sizes> requires (multi_array_compatibility<rank_value, rank_value, dim_ints..., sizes...>())
+      Type& operator=(const MultiArray_Constant<Element, rank_value, sizes...>& v) {
       return (*this = +v);  // should call expression assigment
     }
 
@@ -651,7 +653,7 @@ namespace mathq {
       }
       else {
         resize(x.recursive_dims());
-      // TODO: optimize this
+        // TODO: optimize this
         for (size_t i = 0; i < total_size(); i++) {
           this->dat(i) = x.dat(i);
         }
@@ -670,7 +672,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Type& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       value = mathq::roundzero(value, tolerance);
       return *this;
     }

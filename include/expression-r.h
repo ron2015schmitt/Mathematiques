@@ -57,7 +57,7 @@ namespace mathq {
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;

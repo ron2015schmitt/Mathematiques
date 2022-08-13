@@ -33,7 +33,7 @@ namespace mathq {
     constexpr static std::array<size_t, rank_value> static_dims_array = { sizes... };
     constexpr static size_t N0 = std::get<0>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = ( sizeof...(sizes) == 0 );
+    constexpr static bool is_dynamic_value = (sizeof...(sizes) == 0);
     constexpr static size_t compile_time_size = calc_size<rank_value, N0>();
 
     //**********************************************************************
@@ -45,7 +45,7 @@ namespace mathq {
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using ParentType = ExpressionRW<
       ConcreteType,  // Derived
@@ -100,7 +100,7 @@ namespace mathq {
       *this = var;
     }
 
-   
+
 
     // ----------------------- std::vector ---------------------
     explicit MultiArray(const std::vector<Element>& var) {
@@ -143,20 +143,20 @@ namespace mathq {
 
     // --------------------- FIXED SIZE: from dynamic size --------------------
     template<bool enabled = !is_dynamic_value> requires (enabled)
-    explicit MultiArray(const Vector<Element>& var) {
+      explicit MultiArray(const Vector<Element>& var) {
       *this = var;
     }
 
     // --------------------- FIXED SIZE: set all elements to same value   ---------------------
 
     template<bool enabled = !is_dynamic_value> requires (enabled)
-    explicit MultiArray(const Element val) {
+      explicit MultiArray(const Element val) {
       *this = val;
     }
 
     // --------------------- FIXED SIZE: set all bottom elements to same value   ---------------------
 
-    template<bool enabled = !is_dynamic_value> requires (enabled && (depth_value > 1) && (!std::is_same<Element, NumberType>::value) )
+    template<bool enabled = !is_dynamic_value> requires (enabled && (depth_value > 1) && (!std::is_same<Element, NumberType>::value))
       explicit MultiArray(const NumberType val) {
       *this = val;
     }
@@ -167,7 +167,7 @@ namespace mathq {
 
     // --------------------- copy constructor --------------------
     template<size_t NE2, bool enabled = is_dynamic_value> requires (enabled)
-    MultiArray(const Vector<Element, NE2>& var) {
+      MultiArray(const Vector<Element, NE2>& var) {
       resize(var.size());
       *this = var;
     }
@@ -176,22 +176,22 @@ namespace mathq {
     // need condition otherwise floats can be converted
     // can't have is_unsigned because 0 and positive ints are of type `int` by default.
     template<typename T> requires (is_dynamic_value && (std::is_integral<T>::value))
-    explicit MultiArray(const T N) {
+      explicit MultiArray(const T N) {
       resize(N);
     }
 
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
     template<bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const Dimensions& dims) {
+      explicit MultiArray(const Dimensions& dims) {
       // TRDISP(dims);
       this->resize(dims);
     }
 
     // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
 
-    template<size_t dim_depth> requires ( is_dynamic_value && (dim_depth <= depth_value) )
-    explicit MultiArray(const RecursiveDimensions& recursive_dims) {
+    template<size_t dim_depth> requires (is_dynamic_value && (dim_depth <= depth_value))
+      explicit MultiArray(const RecursiveDimensions& recursive_dims) {
       // TRDISP(recursive_dims);
       this->resize(recursive_dims);
     }
@@ -201,7 +201,7 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size = N and set all to same value  ---------------------
 
     template<bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const size_t N, const Element val) {
+      explicit MultiArray(const size_t N, const Element val) {
       resize(N);
       *this = val;
     }
@@ -209,7 +209,7 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from Dimensions  and set value---------------------
 
     template<bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const Dimensions& dims, const Element val) {
+      explicit MultiArray(const Dimensions& dims, const Element val) {
       // TRDISP(dims);
       this->resize(dims);
       *this = val;
@@ -219,7 +219,7 @@ namespace mathq {
     // --------------------- array[]  CONSTRUCTOR ---------------------
 
     template<bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const size_t N, const Element(vals)[]) {
+      explicit MultiArray(const size_t N, const Element(vals)[]) {
       resize(N);
       *this = vals;
     }
@@ -230,7 +230,7 @@ namespace mathq {
     // The Vector will have size of the slice referenced to N
 
     template<typename T, bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const size_t N, const slc<T>& s) {
+      explicit MultiArray(const size_t N, const slc<T>& s) {
       T mystart = s.start();
       if (mystart < 0) {
         mystart += N;
@@ -363,7 +363,8 @@ namespace mathq {
     inline std::array<size_t, rank_value> dims_array(void) const {
       if constexpr (is_dynamic_value) {
         return *(new std::array<size_t, rank_value>{ this->size() });
-      } else {
+      }
+      else {
         return static_dims_array;
       }
     }
@@ -533,28 +534,28 @@ namespace mathq {
 
     // "read/write"
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
-    Element& operator[](const T n) {
+      Element& operator[](const T n) {
       return data_[n];
     }
 
     // read
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
-    const Element& operator[](const T n)  const {
+      const Element& operator[](const T n)  const {
       return data_[n];
     }
 
     // NOTE: if you feed literals, the following will be called, unless you use the `u` suffix, eg `10000u`
     // "read/write"
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    Element& operator[](const T n) {
+      Element& operator[](const T n) {
       T m = signed_index_to_unsigned_index(n, size());
       return data_[m];
     }
 
     // read
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    const Element& operator[](const T n)  const {
-      
+      const Element& operator[](const T n)  const {
+
       T m = signed_index_to_unsigned_index(n, size());
       return data_[m];
     }
@@ -673,8 +674,8 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
-    template<typename T> requires ( std::is_convertible<T, Element>::value )
-    Type& operator=(const T& e) {
+    template<typename T> requires (std::is_convertible<T, Element>::value)
+      Type& operator=(const T& e) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = e;
       }
@@ -848,7 +849,7 @@ namespace mathq {
 
     //----------------- .roundzero(tol) ---------------------------
 
-    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Type& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       for (size_t i = 0; i < size(); i++) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }

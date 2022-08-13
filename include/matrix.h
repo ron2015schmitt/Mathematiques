@@ -4,15 +4,15 @@
 namespace mathq {
 
   template <typename Element, size_t... dim_ints>
-  class MultiArray<Element, 2, dim_ints...> : 
-    public MultiArrayData<Element, 2, dim_ints...>, 
+  class MultiArray<Element, 2, dim_ints...> :
+    public MultiArrayData<Element, 2, dim_ints...>,
     public ExpressionRW<
-      Matrix<Element, dim_ints...>,  // Derived
-      Element,  // Element
-      typename NumberTrait<Element>::Type, // Number
-      1 + NumberTrait<Element>::depth(),  // depth
-      2  // rank
-    > {  
+    Matrix<Element, dim_ints...>,  // Derived
+    Element,  // Element
+    typename NumberTrait<Element>::Type, // Number
+    1 + NumberTrait<Element>::depth(),  // depth
+    2  // rank
+    > {
   public:
 
 
@@ -25,7 +25,7 @@ namespace mathq {
     constexpr static size_t N0 = std::get<0>(static_dims_array);
     constexpr static size_t N1 = std::get<1>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = ( sizeof...(dim_ints) == 0 );
+    constexpr static bool is_dynamic_value = (sizeof...(dim_ints) == 0);
     constexpr static size_t compile_time_size = calc_size<rank_value, N0, N1>();
 
     //**********************************************************************
@@ -37,7 +37,7 @@ namespace mathq {
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using ParentDataType = MultiArrayData<Element, rank_value, dim_ints...>;
     using ParentType = ExpressionRW<
@@ -73,7 +73,7 @@ namespace mathq {
 
     MultiArray() {
       if constexpr (is_dynamic_value) {
-        resize(0,0);
+        resize(0, 0);
       }
     }
 
@@ -102,7 +102,7 @@ namespace mathq {
     template <class Derived>
     MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
       if constexpr (is_dynamic_value) {
-        resize(0,0);
+        resize(0, 0);
       }
       *this = x;
     }
@@ -115,49 +115,49 @@ namespace mathq {
     // --------------------- FIXED SIZE: from dynamic MultiArray --------------------
 
     template<bool enable = !is_dynamic_value> requires (enable)
-    explicit MultiArray(const MultiArray<Element, rank_value>& var) {
+      explicit MultiArray(const MultiArray<Element, rank_value>& var) {
       *this = var;
     }
 
     // --------------------- FIXED SIZE: set all to same value   ---------------------
 
     template<bool enable = !is_dynamic_value> requires (enable)
-    explicit MultiArray(const Element val) {
+      explicit MultiArray(const Element val) {
       *this = val;
     }
 
     // --------------------- FIXED SIZE: set all bottom Elements to same value   ---------------------
 
-    template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value > 1) && (!std::is_same<Element, NumberType>::value) )
-    explicit MultiArray(const NumberType val) {
+    template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value > 1) && (!std::is_same<Element, NumberType>::value))
+      explicit MultiArray(const NumberType val) {
       *this = val;
     }
 
     // ----------------------- FIXED SIZE: flat initializer_list ---------------------
     // not explicit: allows use of nested init lists when depth_value > 1
     template<bool enable = !is_dynamic_value> requires (enable)
-    MultiArray(const std::initializer_list<Element>& var) {
+      MultiArray(const std::initializer_list<Element>& var) {
       *this = var;
     }
 
 
     // ----------------------- std::vector ---------------------
     template<bool enable = !is_dynamic_value> requires (enable)
-    explicit MultiArray(const std::vector<Element>& var) {
+      explicit MultiArray(const std::vector<Element>& var) {
       *this = var;
     }
 
     // ----------------------- std::valarray ---------------------
     template<bool enable = !is_dynamic_value> requires (enable)
-    explicit MultiArray(const std::valarray<Element>& var) {
+      explicit MultiArray(const std::valarray<Element>& var) {
       *this = var;
     }
 
     // ----------------------- std::array ---------------------
     template<size_t NE2> requires (!is_dynamic_value && ((NE2 == 0) || (NE2 == compile_time_size)))
-    explicit MultiArray(const std::array<Element, NE2>& var) {
+      explicit MultiArray(const std::array<Element, NE2>& var) {
       if constexpr (is_dynamic_value) {
-        resize(0,0);
+        resize(0, 0);
       }
       *this = var;
     }
@@ -170,7 +170,7 @@ namespace mathq {
     // --------------------- dynamic MultiArray --------------------
 
     template<bool enable = is_dynamic_value, size_t... mysizes> requires (enable)
-    explicit MultiArray(const MultiArray<Element, rank_value, mysizes...> var) {
+      explicit MultiArray(const MultiArray<Element, rank_value, mysizes...> var) {
       this->resize(var.dims());
       *this = var;
     }
@@ -179,14 +179,14 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from ints  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    MultiArray(const size_t Nrows, const size_t Ncols) {
+      MultiArray(const size_t Nrows, const size_t Ncols) {
       resize(Nrows, Ncols);
     }
 
     // --------------------- DYNAMIC SIZE: set size from ints and values from constant  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    MultiArray(const size_t Nrows, const size_t Ncols, const Element& val) {
+      MultiArray(const size_t Nrows, const size_t Ncols, const Element& val) {
       resize(Nrows, Ncols);
       *this = val;
     }
@@ -194,14 +194,14 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray(const Dimensions& dims) {
+      explicit MultiArray(const Dimensions& dims) {
       // TRDISP(dims);
       this->resize(dims);
     }
 
     // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
     template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray(const RecursiveDimensions& recursive_dims) {
+      explicit MultiArray(const RecursiveDimensions& recursive_dims) {
       // TRDISP(recursive_dims);
       this->resize(recursive_dims);
     }
@@ -210,7 +210,7 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set dims and set all to same value  ---------------------
 
     template<bool enable = is_dynamic_value> requires (enable)
-    explicit MultiArray(const Dimensions& dims, const Element& val) {
+      explicit MultiArray(const Dimensions& dims, const Element& val) {
       this->resize(dims);
       *this = val;
     }
@@ -218,7 +218,7 @@ namespace mathq {
     // ----------------------- DYNAMIC SIZE: flat initializer_list ---------------------
     // not explicit: allows use of nested init lists when depth_value > 1
     template<bool enable = is_dynamic_value> requires (enable)
-    MultiArray(const size_t Nrows, const size_t Ncols, const std::initializer_list<Element>& var) {
+      MultiArray(const size_t Nrows, const size_t Ncols, const std::initializer_list<Element>& var) {
       resize(Nrows, Ncols);
       *this = var;
     }
@@ -334,14 +334,16 @@ namespace mathq {
     inline size_t Nrows(void) const {
       if constexpr (is_dynamic_value) {
         return ParentDataType::N0;
-      } else {
+      }
+      else {
         return N0;
       }
     }
     inline size_t Ncols(void) const {
       if constexpr (is_dynamic_value) {
         return ParentDataType::N1;
-      } else {
+      }
+      else {
         return N1;
       }
     }
@@ -351,7 +353,8 @@ namespace mathq {
     Dimensions& dims(void) const {
       if constexpr (is_dynamic_value) {
         return *(new Dimensions({ ParentDataType::N0, ParentDataType::N1 }));
-      } else {
+      }
+      else {
         return *(new Dimensions(static_dims_array));
       }
     }
@@ -359,7 +362,8 @@ namespace mathq {
     inline std::array<size_t, rank_value> dims_array(void) const {
       if constexpr (is_dynamic_value) {
         return *(new std::array<size_t, rank_value>{ ParentDataType::N0, ParentDataType::N1 });
-      } else {
+      }
+      else {
         return static_dims_array;
       }
     }
@@ -405,23 +409,23 @@ namespace mathq {
     // resize / reshape is not allowed unless fixed-dimensions 
     //**********************************************************************
 
-    template <typename... U> requires ( (is_dynamic_value) ) 
-    Type& resize(const size_t Nrows_new, const size_t Ncols_new) {
-      if ( (ParentDataType::N0 != Nrows_new) ||(ParentDataType::N1 != Ncols_new) ) {
+    template <typename... U> requires ((is_dynamic_value))
+      Type& resize(const size_t Nrows_new, const size_t Ncols_new) {
+      if ((ParentDataType::N0 != Nrows_new) ||(ParentDataType::N1 != Ncols_new)) {
         ParentDataType::N0 = Nrows_new;
         ParentDataType::N1 = Ncols_new;
         const size_t new_size = Nrows_new * Ncols_new;
-        if (new_size != ParentDataType::data_.size() ) {
-          ParentDataType::data_.resize( new_size );
+        if (new_size != ParentDataType::data_.size()) {
+          ParentDataType::data_.resize(new_size);
         }
       }
       return *this;
     }
 
-    
+
 
     template <bool enabled = is_dynamic_value> requires (enabled)
-    Type& resize(const Dimensions& new_dims) {
+      Type& resize(const Dimensions& new_dims) {
       return resize(new_dims[0], new_dims[1]);
     }
 
@@ -501,9 +505,9 @@ namespace mathq {
     }
 
     template <typename... U>
-    typename std::enable_if<(std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == rank_value), size_t>::type 
-    index(const U... args) {
-      std::array<size_t,rank_value> arr { std::make_unsigned<int>::type(args)... };
+    typename std::enable_if<(std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == rank_value), size_t>::type
+      index(const U... args) {
+      std::array<size_t, rank_value> arr{ std::make_unsigned<int>::type(args)... };
       return index(*(new mathq::Indices(arr)));
     }
 
@@ -524,16 +528,14 @@ namespace mathq {
     // negative indexing 
 
     template <typename... U>
-    Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
-    {
+    Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
       Indices inds({ signed_index_to_unsigned_index(args, size())... });
       return (*this)[inds];
     }
 
     template <typename... U>
-    const Element& operator()(const U... args) const 
-    requires (std::conjunction< std::is_integral<U>...>::value && std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value) )
-    {
+    const Element& operator()(const U... args) const
+      requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
       Indices inds({ signed_index_to_unsigned_index(args, size())... });
       return (*this)[inds];
     }
@@ -589,21 +591,21 @@ namespace mathq {
 
     // "read/write"
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
-    Element& operator[](const T n) {
+      Element& operator[](const T n) {
       // OUTPUT("[] 1");
       return ParentDataType::data_[n];
     }
 
     // read
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
-    const Element& operator[](const T n)  const {
+      const Element& operator[](const T n)  const {
       // OUTPUT("[] 2");
       return ParentDataType::data_[n];
     }
 
     // "read/write"
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    Element& operator[](const T n) {
+      Element& operator[](const T n) {
       // OUTPUT("[] 3");
       T m = n;
       while (m < 0) m += size();
@@ -612,7 +614,7 @@ namespace mathq {
 
     // read
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    const Element& operator[](const T n)  const {
+      const Element& operator[](const T n)  const {
       // OUTPUT("[] 4");
       T m = n;
       while (m < 0) m += size();
@@ -673,8 +675,8 @@ namespace mathq {
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
-    template<typename T> requires ( std::is_convertible<T, Element>::value )
-    Type& operator=(const T& e) {
+    template<typename T> requires (std::is_convertible<T, Element>::value)
+      Type& operator=(const T& e) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = e;
       }
@@ -683,8 +685,8 @@ namespace mathq {
 
     // set bottom elements to same value
     template <class T = Element>
-    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type 
-    operator=(const NumberType& d) {
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type
+      operator=(const NumberType& d) {
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
@@ -696,8 +698,8 @@ namespace mathq {
 
     // ------------------------ MultiArray = MultiArray<Element,NE2,NumberType,depth_value> ----------------
 
-    template <size_t... sizes> requires (multi_array_compatibility<rank_value,rank_value,dim_ints...,sizes...>())
-    Type& operator=(const MultiArray<Element, rank_value, sizes...>& v) {
+    template <size_t... sizes> requires (multi_array_compatibility<rank_value, rank_value, dim_ints..., sizes...>())
+      Type& operator=(const MultiArray<Element, rank_value, sizes...>& v) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = v[i];
       }
@@ -771,7 +773,7 @@ namespace mathq {
     }
 
     template <size_t list_depth> requires ((list_depth >= 1) && (list_depth <= rank_value))
-    Type& list_helper(const typename MakeInitializer<Element, list_depth>::Type& mylist, Indices& inds) {
+      Type& list_helper(const typename MakeInitializer<Element, list_depth>::Type& mylist, Indices& inds) {
       size_t k = 0;
       using ListType = typename MakeInitializer<Element, list_depth>::Type;
       using Iterator = typename MakeInitializer<Element, list_depth>::Type::iterator;
@@ -781,7 +783,8 @@ namespace mathq {
         inds[rank_value-list_depth] = k;
         if constexpr (list_depth == 1) {
           (*this)[inds] = *it;
-        } else {
+        }
+        else {
           list_helper<list_depth-1>(*it, inds);
         }
       }
@@ -826,7 +829,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Type& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       for (size_t i = 0; i < size(); i++) {
         ParentDataType::data_[i] = mathq::roundzero(ParentDataType::data_[i], tolerance);
       }
@@ -871,99 +874,99 @@ namespace mathq {
 
       if constexpr (is_dynamic_value) {
 
-      resize(Nc, Nr);
+        resize(Nc, Nr);
 
-      // for "vectors" 
-      if (Nc == 1 || Nr==1) {
-        return *this;
-      }
-
-      // boolean array to make searching faster
-      // can set Nmove=1, but this will be very slow
-      // Nmove=(Nr+Nc)/2 is optimal
-      const bool Nmove = (Nr+Nc)/2;
-      size_t move[Nmove];
-      for (size_t i = 0; i < Nmove; ++i)
-        move[i] = false;
-
-
-      // there are always at least 2 fixed points (at j=0 and j=Nminus1)
-      size_t count = 2;
-      // find the rest of the fixed points
-      if (Nc >= 3 && Nr >= 3)
-        count += std::gcd(Nc - 1, Nr - 1) - 1;	/* # fixed points */
-
-      size_t jstart = 1;
-      size_t magicnum = Nc;
-
-      while (1) {
-        size_t jnext, jnextc;
-        size_t jstartC = Nminus1 - jstart;
-        size_t j = jstart;
-        size_t jC = jstartC;
-        NumberType dstart = (*this)[jstart];
-        NumberType dstartC = (*this)[jstartC];
-
-        // PROCESS THE CURRENT SEQUENcE AND ITS COMPLIMENTARY SEQUENcE
-        while (1) {
-          jnext = Nc * j - Nminus1 * (j / Nr);
-          jnextc = Nminus1 - jnext;
-          if (j < Nmove)
-            move[j] = true;
-          if (jC < Nmove)
-            move[jC] = true;
-          count += 2;
-          if (jnext == jstart) {
-            (*this)[j] = dstart;
-            (*this)[jC] = dstartC;
-            break;
-          }
-          if (jnext == jstartC) {
-            (*this)[j] = dstartC;
-            (*this)[jC] = dstart;
-            break;
-          }
-          (*this)[j] = (*this)[jnext];
-          (*this)[jC] = (*this)[jnextc];
-          j = jnext;
-          jC = jnextc;
+        // for "vectors" 
+        if (Nc == 1 || Nr==1) {
+          return *this;
         }
-        // DONE PROCESSING SEQUENcE
+
+        // boolean array to make searching faster
+        // can set Nmove=1, but this will be very slow
+        // Nmove=(Nr+Nc)/2 is optimal
+        const bool Nmove = (Nr+Nc)/2;
+        size_t move[Nmove];
+        for (size_t i = 0; i < Nmove; ++i)
+          move[i] = false;
 
 
-        // CHECK TO SEE IF WE'RE FINISHED
-        if (count >= N)
-          break;
+        // there are always at least 2 fixed points (at j=0 and j=Nminus1)
+        size_t count = 2;
+        // find the rest of the fixed points
+        if (Nc >= 3 && Nr >= 3)
+          count += std::gcd(Nc - 1, Nr - 1) - 1;	/* # fixed points */
 
-        // FIND THE START OF THE NEXT SEQUENcE
+        size_t jstart = 1;
+        size_t magicnum = Nc;
+
         while (1) {
-          // skip fixed points (jstart==magicnum)
-          do {
-            jstart++;
-            if ((magicnum += Nc)>Nminus1)
-              magicnum -= Nminus1;
-          } while (jstart==magicnum);
+          size_t jnext, jnextc;
+          size_t jstartC = Nminus1 - jstart;
+          size_t j = jstart;
+          size_t jC = jstartC;
+          NumberType dstart = (*this)[jstart];
+          NumberType dstartC = (*this)[jstartC];
 
-          jnext = magicnum;
-          const  size_t max = Nminus1-jstart+1;
-          if (jstart < Nmove) {
-            if (!move[jstart])
+          // PROCESS THE CURRENT SEQUENcE AND ITS COMPLIMENTARY SEQUENcE
+          while (1) {
+            jnext = Nc * j - Nminus1 * (j / Nr);
+            jnextc = Nminus1 - jnext;
+            if (j < Nmove)
+              move[j] = true;
+            if (jC < Nmove)
+              move[jC] = true;
+            count += 2;
+            if (jnext == jstart) {
+              (*this)[j] = dstart;
+              (*this)[jC] = dstartC;
+              break;
+            }
+            if (jnext == jstartC) {
+              (*this)[j] = dstartC;
+              (*this)[jC] = dstart;
+              break;
+            }
+            (*this)[j] = (*this)[jnext];
+            (*this)[jC] = (*this)[jnextc];
+            j = jnext;
+            jC = jnextc;
+          }
+          // DONE PROCESSING SEQUENcE
+
+
+          // CHECK TO SEE IF WE'RE FINISHED
+          if (count >= N)
+            break;
+
+          // FIND THE START OF THE NEXT SEQUENcE
+          while (1) {
+            // skip fixed points (jstart==magicnum)
+            do {
+              jstart++;
+              if ((magicnum += Nc)>Nminus1)
+                magicnum -= Nminus1;
+            } while (jstart==magicnum);
+
+            jnext = magicnum;
+            const  size_t max = Nminus1-jstart+1;
+            if (jstart < Nmove) {
+              if (!move[jstart])
+                break;
+            }
+            else {
+              // this while loop is needed to cull out previously 
+              // processed slcuences
+              while (jnext > jstart && jnext < max) {
+                j = jnext;
+                jnext = Nc * j - Nminus1 * (j / Nr);
+              }
+            }
+            if (jnext == jstart)
               break;
           }
-          else {
-            // this while loop is needed to cull out previously 
-            // processed slcuences
-            while (jnext > jstart && jnext < max) {
-              j = jnext;
-              jnext = Nc * j - Nminus1 * (j / Nr);
-            }
-          }
-          if (jnext == jstart)
-            break;
-        }
-        // WE HAVE FOUND START OF THE NEXT SEQUENcE
+          // WE HAVE FOUND START OF THE NEXT SEQUENcE
 
-      }
+        }
       }
       return *this;
     }

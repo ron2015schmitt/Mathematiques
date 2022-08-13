@@ -354,7 +354,7 @@ namespace mathq {
   template <typename I2, typename F1>
   EnableMethodIf<IsQuaternion<I2>::value, I2>
     numbercast(const Quaternion<F1>& y) {
-    typedef typename IsQuaternion<I2>::OrderedNumberType F2;
+    typedef typename IsQuaternion<I2>::SimpleNumberType F2;
     F2 _r = numbercast<F2>(y.real());
     F2 _i = numbercast<F2>(y.imag());
     F2 _j = numbercast<F2>(y.jmag());

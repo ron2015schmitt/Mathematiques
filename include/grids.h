@@ -328,7 +328,7 @@ namespace mathq {
     using ElementType = MultiArray_RepeatVector<Number, Ndims, dim_ints...>;
     using GridElementType = Number;
     using NumberType = typename NumberTrait<Number>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using ParentType = Vector< MultiArray_RepeatVector<Number, Ndims, dim_ints...>, Ndims >;
     using ConcreteType = Vector< MultiArray<Number, Ndims, dim_ints...>, Ndims >;
