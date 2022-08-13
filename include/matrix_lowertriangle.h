@@ -8,16 +8,16 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixLowerTriangle<Number>    -- variable size matrix (valarray)
-   *                              Number  = type for elements
-   * MatrixLowerTriangle<Number,N>  -- fixed number of rows (valarray)
+   * MatrixLowerTriangle<Num>    -- variable size matrix (valarray)
+   *                              Num  = type for elements
+   * MatrixLowerTriangle<Num,N>  -- fixed number of rows (valarray)
    *                              N = number of rows
    *                                = number of cols
    ********************************************************************
    */
 
-  template <typename Number, int N>
-  class MatrixLowerTriangle : public ExpressionRW<MatrixLowerTriangle<Number, N>, Number, Number, 1, 2> {
+  template <typename Num, int N>
+  class MatrixLowerTriangle : public ExpressionRW<MatrixLowerTriangle<Num, N>, Num, Num, 1, 2> {
 
   public:
     constexpr static int rank = 2;
@@ -26,27 +26,27 @@ namespace mathq {
     constexpr static int NR = N;
     constexpr static int NC = N;
     static constexpr bool resizable = (N==0) ? true : false;
-    typedef MatrixLowerTriangle<Number, N> ConcreteType;
-    typedef Number ElementType;
-    typedef Number NumberType;
-    typedef typename SimpleNumberTrait<Number>::Type SimpleNumberType;
+    typedef MatrixLowerTriangle<Num, N> ConcreteType;
+    typedef Num ElementType;
+    typedef Num NumberType;
+    typedef typename SimpleNumberTrait<Num>::Type SimpleNumberType;
 
 
     // if N is 0, then we use valarray
-    typedef typename ArrayTypeTrait<Number, ((N* N+N)/2)>::Type MyArrayType;
+    typedef typename ArrayTypeTrait<Num, ((N* N+N)/2)>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const Number zero_ = 0;
-    Number dummy_ = 0;
+    const Num zero_ = 0;
+    Num dummy_ = 0;
     MyArrayType data_;
 
     size_t N_;
 
-    static_assert(NumberTrait<Number>::value,
+    static_assert(NumberTrait<Num>::value,
       "class MatrixLowerTriangle can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -60,13 +60,13 @@ namespace mathq {
     // ********************* FIXED SIZE CONSTRUCTORS ***********************
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    explicit MatrixLowerTriangle<Number, N>() {
+    explicit MatrixLowerTriangle<Num, N>() {
       resize(N);
       *this = 0;
     }
 
-    // -------------------  Number value --------------------
-    explicit MatrixLowerTriangle<Number, N>(const Number& value) {
+    // -------------------  Num value --------------------
+    explicit MatrixLowerTriangle<Num, N>(const Num& value) {
       resize(N);
       *this = value;
     }
@@ -74,7 +74,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = N, EnableIf<(NN > 0)> = 0>
 
-      explicit MatrixLowerTriangle<Number, N>(const Vector<Number>& v) {
+      explicit MatrixLowerTriangle<Num, N>(const Vector<Num>& v) {
       const size_t size = v.size();
       // TODO: chekc that size = N(N+1)/2
       resize(N);
@@ -84,7 +84,7 @@ namespace mathq {
     // --------------------- Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<(NN>0)> = 0>
 
-      explicit MatrixLowerTriangle<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
+      explicit MatrixLowerTriangle<Num, N>(const ExpressionR<X, Num, Num, 1, 2> A) {
       // TODO: chekc that A is N x N
       resize(N);
       *this = A;
@@ -97,7 +97,7 @@ namespace mathq {
     // ------------------- variable size (Column) Vector --------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixLowerTriangle<Number, N>(const Vector<Number>& v) {
+    explicit MatrixLowerTriangle<Num, N>(const Vector<Num>& v) {
       const size_t len = v.size();
       const size_t depth = (std::sqrt(1+8*len) - 1)/2;
       resize(depth);
@@ -107,7 +107,7 @@ namespace mathq {
     // --------------------- variable-size zero-CONSTRUCTOR---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixLowerTriangle<Number, N>(const size_t depth) {
+    explicit MatrixLowerTriangle<Num, N>(const size_t depth) {
       resize(depth);
       *this = 0;
     }
@@ -115,7 +115,7 @@ namespace mathq {
     // --------------------- variable-size value CONSTRUCTOR ---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixLowerTriangle<Number, N>(const size_t depth, const Number& value) {
+    explicit MatrixLowerTriangle<Num, N>(const size_t depth, const Num& value) {
       resize(depth);
       *this = value;
     }
@@ -124,7 +124,7 @@ namespace mathq {
     // --------------------- variable-size Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixLowerTriangle<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
+    explicit MatrixLowerTriangle<Num, N>(const ExpressionR<X, Num, Num, 1, 2> A) {
       const size_t depth = A.Nrows();
       // TODO: chekc that A is square
       resize(depth);
@@ -137,7 +137,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixLowerTriangle<Number, N>() {
+    ~MatrixLowerTriangle<Num, N>() {
       //remove from directory
     }
 
@@ -223,7 +223,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixLowerTriangle<Number, N>& resize(const int depth) {
+    MatrixLowerTriangle<Num, N>& resize(const int depth) {
       N_ = N;
       if constexpr (resizable) {
         N_ = depth;
@@ -237,14 +237,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixLowerTriangle<Number, N>& resize(const Dimensions dims) {
+    MatrixLowerTriangle<Num, N>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixLowerTriangle<Number, N>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixLowerTriangle<Num, N>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> recursive_dims(deepdims_new);
       Dimensions newdims = recursive_dims[0];
       resize(newdims);
@@ -254,15 +254,15 @@ namespace mathq {
 
 
 
-    MatrixLowerTriangle<Number, N>& transpose(void) {
+    MatrixLowerTriangle<Num, N>& transpose(void) {
       // TODO: implement
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixLowerTriangle<Number, N>& >::type adjoint() {
+    template< typename T = Num >
+    typename std::enable_if<is_complex<T>::value, MatrixLowerTriangle<Num, N>& >::type adjoint() {
       return *this;
     }
 
@@ -274,7 +274,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [total_size()] and note return type
 
     // read
-    const Number dat(const size_t n)  const {
+    const Num dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -283,7 +283,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const Number dat(const Indices& inds)  const {
+    const Num dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -295,7 +295,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const Number dat(const DeepIndices& dinds)  const {
+    const Num dat(const DeepIndices& dinds)  const {
       const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth -depth_value];
       size_t r = inds[0];
@@ -309,7 +309,7 @@ namespace mathq {
     //**********************************************************************
 
     // read / write
-    Number& operator[](const size_t n) {
+    Num& operator[](const size_t n) {
       const Indices& inds = indices(n);
       size_t r = inds[0];
       size_t c = inds[1];
@@ -317,7 +317,7 @@ namespace mathq {
     }
 
     // read
-    const Number operator[](const size_t n)  const {
+    const Num operator[](const size_t n)  const {
       const Indices& inds = indices(n);
       size_t r = inds[0];
       size_t c = inds[1];
@@ -349,7 +349,7 @@ namespace mathq {
     //***************MultiArray-style Element Access: A(r,c) *********************
     //**********************************************************************
 
-    Number& operator()(const size_t r, const size_t c) {
+    Num& operator()(const size_t r, const size_t c) {
       if (c <= r) {
         size_t q = r*(r+1)/2 + c;
         return data_[q];
@@ -359,7 +359,7 @@ namespace mathq {
       }
     }
 
-    const Number operator()(const size_t r, const size_t c) const {
+    const Num operator()(const size_t r, const size_t c) const {
       if (c <= r) {
         size_t q = r*(r+1)/2 + c;
         return data_[q];
@@ -382,21 +382,13 @@ namespace mathq {
     //**********************************************************************
 
 
-    MatrixLowerTriangle<Number, N>& set(const Vector<Number>& v) {
+    MatrixLowerTriangle<Num, N>& set(const Vector<Num>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return *this;
     }
-    MatrixLowerTriangle<Number, N>& operator=(const Vector<Number>& v) {
-      for (size_t k = 0; k < data_.size(); k++) {
-        data_[k] = v[k];
-      }
-      return *this;
-    }
-
-    template <class X>
-    MatrixLowerTriangle<Number, N>& operator=(const ExpressionR<X, Number, Number, 1, 1>& v) {
+    MatrixLowerTriangle<Num, N>& operator=(const Vector<Num>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -404,7 +396,15 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixLowerTriangle<Number, N>& operator=(const ExpressionR<X, Number, Number, 1, 2>& A) {
+    MatrixLowerTriangle<Num, N>& operator=(const ExpressionR<X, Num, Num, 1, 1>& v) {
+      for (size_t k = 0; k < data_.size(); k++) {
+        data_[k] = v[k];
+      }
+      return *this;
+    }
+
+    template <class X>
+    MatrixLowerTriangle<Num, N>& operator=(const ExpressionR<X, Num, Num, 1, 2>& A) {
       const size_t NN = A.dims()[0];
       // TODO: check that A is square
       resize(NN);
@@ -417,22 +417,22 @@ namespace mathq {
     }
 
 
-    Vector<Number>& get() const {
-      Vector<Number>& v = *(new Vector<Number>(data_.size()));
+    Vector<Num>& get() const {
+      Vector<Num>& v = *(new Vector<Num>(data_.size()));
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return v;
     }
 
-    MatrixLowerTriangle<Number, N>& operator=(const Number& value) {
+    MatrixLowerTriangle<Num, N>& operator=(const Num& value) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = value;
       }
       return *this;
     }
 
-    MatrixLowerTriangle<Number, N>& operator=(const MatrixLowerTriangle<Number, N>& b) {
+    MatrixLowerTriangle<Num, N>& operator=(const MatrixLowerTriangle<Num, N>& b) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = b[k];
       }
@@ -447,7 +447,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixLowerTriangle<Number, N>& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
+    MatrixLowerTriangle<Num, N>& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 
@@ -455,8 +455,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixLowerTriangle<Number, N>& >::type conj() {
+    template< typename T = Num >
+    typename std::enable_if<is_complex<T>::value, MatrixLowerTriangle<Num, N>& >::type conj() {
       return *this;
     }
 
@@ -470,7 +470,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixLowerTriangle";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(Number());
+      s += getTypeName(Num());
       if (N!=0) {
         s += StyledString::get(COMMA).get();
         s += "N=";
@@ -498,7 +498,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixLowerTriangle<Number, N>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixLowerTriangle<Num, N>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -533,8 +533,8 @@ namespace mathq {
     }
 
 
-    //template <typename Number>	
-    friend inline std::istream& operator>>(const std::string s, MatrixLowerTriangle<Number, N>& m2) {
+    //template <typename Num>	
+    friend inline std::istream& operator>>(const std::string s, MatrixLowerTriangle<Num, N>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -542,7 +542,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixLowerTriangle<Number, N>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixLowerTriangle<Num, N>& m2) {
       return stream;
     }
 

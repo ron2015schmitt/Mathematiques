@@ -10,8 +10,8 @@ namespace mathq {
   //---------------------------------------------------------------------------
   // ExpressionRW_Subset   Subset Expression
   //---------------------------------------------------------------------------
-  template<typename Number>
-  class ExpressionRW_Subset : public  ExpressionRW<ExpressionRW_Subset<Number>, Number, Number, 1, 1> {
+  template<typename Num>
+  class ExpressionRW_Subset : public  ExpressionRW<ExpressionRW_Subset<Num>, Num, Num, 1, 1> {
   public:
     //**********************************************************************
     //                  Compile Time Constant
@@ -26,7 +26,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using ElementType = Number;
+    using ElementType = Num;
     using NumberType = typename NumberTrait<ElementType>::Type;
     using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
@@ -43,7 +43,7 @@ namespace mathq {
     // OBJECT DATA 
     //**********************************************************************
     // can't be constant since we alow to be on left hand side
-    Vector<Number>& x_;
+    Vector<Num>& x_;
     const Vector<size_t>& ii_;
     const bool delete_ii_;
     VectorofPtrs* vptrs;
@@ -52,15 +52,15 @@ namespace mathq {
     //**********************************************************************
     //                      Constructors
     //**********************************************************************
-    typedef typename NumberTrait<Number>::Type MyNumberType;
+    typedef typename NumberTrait<Num>::Type MyNumberType;
 
-    ExpressionRW_Subset(Vector<Number>& x, const Vector<size_t>& ii)
+    ExpressionRW_Subset(Vector<Num>& x, const Vector<size_t>& ii)
       : x_(x), ii_(ii), delete_ii_(false) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
       vptrs->add(&ii_);
     }
-    ExpressionRW_Subset(Vector<Number>& x, const std::initializer_list<size_t>& list)
+    ExpressionRW_Subset(Vector<Num>& x, const std::initializer_list<size_t>& list)
       : x_(x), ii_(*(new Vector<size_t>(list))), delete_ii_(true) {
       vptrs = new VectorofPtrs();
       vptrs->add(&x_);
@@ -205,8 +205,8 @@ namespace mathq {
   //--------------------------------------------------------------------------
   // ExpressionRW_Submask   Submask Expression
   //--------------------------------------------------------------------------
-  template<typename Number>
-  class ExpressionRW_Submask : public  ExpressionRW<ExpressionRW_Submask<Number>, Number, Number, 1, 1> {
+  template<typename Num>
+  class ExpressionRW_Submask : public  ExpressionRW<ExpressionRW_Submask<Num>, Num, Num, 1, 1> {
   public:
     //**********************************************************************
     //                  Compile Time Constant
@@ -221,7 +221,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using ElementType = Number;
+    using ElementType = Num;
     using NumberType = typename NumberTrait<ElementType>::Type;
     using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
@@ -347,11 +347,11 @@ namespace mathq {
     //**********************************************************************
 
     template <class Y, class NT2>
-    ExpressionRW_Submask<Number>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
+    ExpressionRW_Submask<Num>& operator=(const ExpressionR<Y, NT2, NT2, depth_value, rank_value>& rhs) {
       return this->equals(rhs);
     }
 
-    ExpressionRW_Submask<Number>& operator=(const Number d) {
+    ExpressionRW_Submask<Num>& operator=(const Num d) {
       return this->equals(d);
     }
 
@@ -377,8 +377,8 @@ namespace mathq {
   // VERW_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class Element, typename Number, size_t depth_>
-  class ExpressionRW_Join : public  ExpressionRW<ExpressionRW_Join<X, Y, Element, Number, depth_>, Element, Number, depth_, 1> {
+  template <class X, class Y, class Element, typename Num, size_t depth_>
+  class ExpressionRW_Join : public  ExpressionRW<ExpressionRW_Join<X, Y, Element, Num, depth_>, Element, Num, depth_, 1> {
   public:
 
     //**********************************************************************
@@ -398,7 +398,7 @@ namespace mathq {
     using NumberType = typename NumberTrait<ElementType>::Type;
     using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-    using Type = ExpressionRW_Join<X, Y, Element, Number, depth_>;
+    using Type = ExpressionRW_Join<X, Y, Element, Num, depth_>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value>;
 
@@ -498,7 +498,7 @@ namespace mathq {
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
-    const Number dat(const size_t i) const {
+    const Num dat(const size_t i) const {
       if (i < x_.total_size()) {
         return x_.dat(i);
       }
@@ -506,7 +506,7 @@ namespace mathq {
         return y_.dat(i-x_.total_size());
       }
     }
-    Number& dat(const size_t i) {
+    Num& dat(const size_t i) {
       if (i < x_.total_size()) {
         return x_.dat(i);
       }
@@ -540,14 +540,14 @@ namespace mathq {
     //**********************************************************************
 
     template <class Z>
-    ExpressionRW_Join<X, Y, Element, Number, depth_value>& operator=(const ExpressionR<Z, Element, Number, depth_value, 1>& rhs) {
+    ExpressionRW_Join<X, Y, Element, Num, depth_value>& operator=(const ExpressionR<Z, Element, Num, depth_value, 1>& rhs) {
       return this->equals(rhs);
     }
 
-    ExpressionRW_Join<X, Y, Element, Number, depth_value>& operator=(const Number d) {
+    ExpressionRW_Join<X, Y, Element, Num, depth_value>& operator=(const Num d) {
       return this->equals(d);
     }
-    ExpressionRW_Join<X, Y, Element, Number, depth_value>& operator=(const Element& e) {
+    ExpressionRW_Join<X, Y, Element, Num, depth_value>& operator=(const Element& e) {
       return this->equals(e);
     }
 

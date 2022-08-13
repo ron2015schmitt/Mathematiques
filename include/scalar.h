@@ -15,7 +15,7 @@ namespace mathq {
   class MultiArray<Element, 0> : public ExpressionRW<
     Scalar<Element>,  // Derived
     Element,  // Element
-    typename NumberTrait<Element>::Type, // Number
+    typename NumberTrait<Element>::Type, // Num
     1 + NumberTrait<Element>::depth(),  // depth
     0  // rank
   > {
@@ -46,7 +46,7 @@ namespace mathq {
     using ParentType = ExpressionRW<
       ConcreteType,  // Derived
       Element,  // Element
-      NumberType, // Number
+      NumberType, // Num
       depth_value,  // depth
       rank_value  // rank
     >;

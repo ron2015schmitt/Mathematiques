@@ -17,9 +17,9 @@ namespace mathq {
     ****************************************************************************
     */
 
-  template <typename Number> struct Functions {
+  template <typename Num> struct Functions {
   public:
-    static Number tolerance = Number(0);
+    static Num tolerance = Num(0);
   };
   template <> struct Functions<long double> {
   public:
@@ -84,8 +84,8 @@ namespace mathq {
 
   // roundzero
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number roundzero(const Number& x, const Number tolerance = Functions<Number>::tolerance) {
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value>>
+  Num roundzero(const Num& x, const Num tolerance = Functions<Num>::tolerance) {
     return (std::abs(x) < std::abs(tolerance) ? 0 : x);
   }
 
@@ -93,76 +93,76 @@ namespace mathq {
   // zero
 
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number zero() {
-    return Number(0);
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value>>
+  Num zero() {
+    return Num(0);
   }
 
   // one
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number one() {
-    return Number(1);
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value>>
+  Num one() {
+    return Num(1);
   }
 
 
   // complex functions defined for real values
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > Number
-    conj(const Number& x) {
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value> > Num
+    conj(const Num& x) {
     return x;
   }
 
   // complex conjugate OPERTOR ~
   // ~ is defined for ints nad can;t be defined for reals
 
-  // template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> >
-  // Number operator~(Number& x) {
+  // template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value> >
+  // Num operator~(Num& x) {
   //   return x;
   // }
 
   // real
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value> > Number
-    real(const Number& x) {
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value> > Num
+    real(const Num& x) {
     return x;
   }
 
   // imag
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number imag(const Number& x) {
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value>>
+  Num imag(const Num& x) {
     return 0;
   }
 
 
   // sqr(x)
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number sqr(const Number& x) {
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value>>
+  Num sqr(const Num& x) {
     return x*x;
   }
 
   // normsqr(x)
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number normsqr(const Number& x) {
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value>>
+  Num normsqr(const Num& x) {
     return x*x;
   }
 
 
   // cube(x)
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number cube(const Number& x) {
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value>>
+  Num cube(const Num& x) {
     return x*x*x;
   }
 
 
   // logN(x, N)
 
-  template <typename Number, typename = std::enable_if_t<std::is_arithmetic<Number>::value>>
-  Number logN(const Number& x, unsigned int N) {
+  template <typename Num, typename = std::enable_if_t<std::is_arithmetic<Num>::value>>
+  Num logN(const Num& x, unsigned int N) {
     return std::log(x)/std::log(N);
   }
 
@@ -182,7 +182,7 @@ namespace mathq {
   template <typename NT2, typename NT1,
     typename = std::enable_if_t<std::is_arithmetic<NT1>::value>,
     typename = std::enable_if_t<std::is_arithmetic<NT2>::value> >
-    NT2 numbercast(const NT1 x) {
+  NT2 numbercast(const NT1 x) {
     return static_cast<NT2>(x);
   }
 

@@ -1854,7 +1854,7 @@ auto operator+(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename AddType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -1874,7 +1874,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename AddType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -1898,7 +1898,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator+(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator+(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -1925,7 +1925,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator+(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator+(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -1933,7 +1933,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename AddType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -2008,7 +2008,7 @@ auto operator-(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename SubType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -2028,7 +2028,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename SubType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -2052,7 +2052,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator-(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator-(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -2079,7 +2079,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator-(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator-(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -2087,7 +2087,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename SubType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -2162,7 +2162,7 @@ auto operator*(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -2182,7 +2182,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -2206,7 +2206,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator*(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator*(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -2233,7 +2233,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator*(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator*(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -2241,7 +2241,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -2316,7 +2316,7 @@ auto operator/(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename DivType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -2336,7 +2336,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename DivType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -2360,7 +2360,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator/(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator/(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -2387,7 +2387,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator/(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator/(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -2395,7 +2395,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename DivType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -2470,7 +2470,7 @@ auto operator==(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -2490,7 +2490,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -2514,7 +2514,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator==(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator==(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -2541,7 +2541,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator==(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator==(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -2549,7 +2549,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -2624,7 +2624,7 @@ auto operator!=(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -2644,7 +2644,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -2668,7 +2668,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator!=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator!=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -2695,7 +2695,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator!=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator!=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -2703,7 +2703,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -2778,7 +2778,7 @@ auto operator>(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -2798,7 +2798,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -2822,7 +2822,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator>(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator>(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -2849,7 +2849,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator>(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator>(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -2857,7 +2857,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -2932,7 +2932,7 @@ auto operator>=(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -2952,7 +2952,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -2976,7 +2976,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator>=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator>=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -3003,7 +3003,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator>=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator>=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -3011,7 +3011,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -3086,7 +3086,7 @@ auto operator<(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -3106,7 +3106,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -3130,7 +3130,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator<(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator<(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -3157,7 +3157,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator<(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator<(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -3165,7 +3165,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -3240,7 +3240,7 @@ auto operator<=(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -3260,7 +3260,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -3284,7 +3284,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator<=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator<=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -3311,7 +3311,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator<=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator<=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -3319,7 +3319,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -3394,7 +3394,7 @@ auto operator&&(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename AndType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -3414,7 +3414,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename AndType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -3438,7 +3438,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator&&(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator&&(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -3465,7 +3465,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator&&(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator&&(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -3473,7 +3473,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename AndType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -3548,7 +3548,7 @@ auto operator||(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename OrType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -3568,7 +3568,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename OrType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -3592,7 +3592,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto operator||(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto operator||(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -3619,7 +3619,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto operator||(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto operator||(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -3627,7 +3627,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename OrType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -3702,7 +3702,7 @@ auto atan2(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -3722,7 +3722,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -3746,7 +3746,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto atan2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto atan2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -3773,7 +3773,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto atan2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto atan2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -3781,7 +3781,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -3856,7 +3856,7 @@ auto pow(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -3876,7 +3876,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -3900,7 +3900,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto pow(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto pow(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -3927,7 +3927,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto pow(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto pow(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -3935,7 +3935,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -4010,7 +4010,7 @@ auto beta(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -4030,7 +4030,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -4054,7 +4054,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto beta(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto beta(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -4081,7 +4081,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto beta(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto beta(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -4089,7 +4089,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -4164,7 +4164,7 @@ auto legendre(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -4184,7 +4184,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -4208,7 +4208,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto legendre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto legendre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -4235,7 +4235,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto legendre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto legendre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -4243,7 +4243,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -4318,7 +4318,7 @@ auto laguerre(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -4338,7 +4338,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -4362,7 +4362,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto laguerre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto laguerre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -4389,7 +4389,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto laguerre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto laguerre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -4397,7 +4397,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -4472,7 +4472,7 @@ auto hermite(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -4492,7 +4492,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -4516,7 +4516,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto hermite(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto hermite(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -4543,7 +4543,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto hermite(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto hermite(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -4551,7 +4551,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -4626,7 +4626,7 @@ auto sph_bessel(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -4646,7 +4646,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -4670,7 +4670,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto sph_bessel(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto sph_bessel(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -4697,7 +4697,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto sph_bessel(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto sph_bessel(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -4705,7 +4705,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -4780,7 +4780,7 @@ auto sph_neumann(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>&
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -4800,7 +4800,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -4824,7 +4824,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto sph_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto sph_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -4851,7 +4851,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto sph_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto sph_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -4859,7 +4859,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -4934,7 +4934,7 @@ auto cyl_bessel_i(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -4954,7 +4954,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -4978,7 +4978,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -5005,7 +5005,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto cyl_bessel_i(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto cyl_bessel_i(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -5013,7 +5013,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -5088,7 +5088,7 @@ auto cyl_bessel_j(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -5108,7 +5108,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -5132,7 +5132,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -5159,7 +5159,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto cyl_bessel_j(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto cyl_bessel_j(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -5167,7 +5167,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -5242,7 +5242,7 @@ auto cyl_bessel_k(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -5262,7 +5262,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -5286,7 +5286,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -5313,7 +5313,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto cyl_bessel_k(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto cyl_bessel_k(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -5321,7 +5321,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -5396,7 +5396,7 @@ auto cyl_neumann(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>&
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -5416,7 +5416,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -5440,7 +5440,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -5467,7 +5467,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto cyl_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto cyl_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -5475,7 +5475,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -5550,7 +5550,7 @@ auto ellint_1(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -5570,7 +5570,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -5594,7 +5594,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto ellint_1(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto ellint_1(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -5621,7 +5621,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto ellint_1(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto ellint_1(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -5629,7 +5629,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -5704,7 +5704,7 @@ auto ellint_2(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -5724,7 +5724,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -5748,7 +5748,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto ellint_2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto ellint_2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -5775,7 +5775,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto ellint_2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto ellint_2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -5783,7 +5783,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -5858,7 +5858,7 @@ auto Complex(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -5878,7 +5878,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -5902,7 +5902,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto Complex(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto Complex(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -5929,7 +5929,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto Complex(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto Complex(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -5937,7 +5937,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
@@ -6012,7 +6012,7 @@ auto polar(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1==D2+1)&&(IsMultiArrayOrExpression<E1>::value)&&(E1::rank_value==R2)> = 0 >
-  auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
@@ -6032,7 +6032,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
   EnableIf<(D1+1==D2)&&(IsMultiArrayOrExpression<E2>::value)&&(E2::rank_value==R1)> = 0 >
-  auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
+auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
@@ -6056,7 +6056,7 @@ template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1,
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1>=2)&&(D2==1)&&(IsMultiArrayOrExpression<E1>::value)> = 0  >
-  auto polar(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
+auto polar(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename B::ConcreteType E2;  
@@ -6083,7 +6083,7 @@ template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
   EnableIf<(D1==1)&&(D2>=2)&&(IsMultiArrayOrExpression<E2>::value)> = 0  >
-  auto polar(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
+auto polar(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
   //    typedef A E1;  
@@ -6091,7 +6091,7 @@ template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
-  //    MOUT << "Number" <<std::endl;
+  //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
     ExpressionR<B, E2, NT2, D2, rank>,
     NT1, E2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,

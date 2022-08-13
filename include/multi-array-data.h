@@ -9,16 +9,16 @@ namespace mathq {
   //
   // ************************************************************************** 
 
-  template <typename Number, size_t NN>
+  template <typename Num, size_t NN>
   class ArrayTypeTrait {
   public:
-    using Type = std::array<Number, NN>;
+    using Type = std::array<Num, NN>;
   };
 
-  template <typename Number>
-  class ArrayTypeTrait<Number, 0> {
+  template <typename Num>
+  class ArrayTypeTrait<Num, 0> {
   public:
-    using Type = std::valarray<Number>;
+    using Type = std::valarray<Num>;
   };
 
 

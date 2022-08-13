@@ -115,9 +115,9 @@ namespace mathq {
   // * MultiArray Expressions
   // ********************************************************************
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
+  template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
   class ExpressionR;
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
+  template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
   class ExpressionRW;
 
 
@@ -172,10 +172,12 @@ namespace mathq {
         if (A[i] != A[i+rank]) return false;
       }
       return true;
-    } else if constexpr ((N == rank)) {
+    }
+    else if constexpr ((N == rank)) {
       // one array is fixed-dimensions. the other array is dynamic
       return true;
-    } else if constexpr (N == 0)  {
+    }
+    else if constexpr (N == 0) {
       // both arrays are dynamic-dimensions
       return true;
     }
@@ -189,7 +191,7 @@ namespace mathq {
   // ********************************************************************
 
   template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
-  class MultiArray;
+    class MultiArray;
 
   // typenames for specializations
 
@@ -206,7 +208,7 @@ namespace mathq {
   using Array3D = MultiArray<Element, 3, sizes...>;
 
   template <typename Element, size_t... sizes>
-  using Array4D= MultiArray<Element, 4, sizes...>;
+  using Array4D = MultiArray<Element, 4, sizes...>;
 
 
 
@@ -227,20 +229,20 @@ namespace mathq {
 
 // Constant
 
-template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
-class MultiArray_Constant;
+  template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
+    class MultiArray_Constant;
 
-template <typename Element, size_t... sizes>
-using Vector_Constant = MultiArray_Constant<Element, 1, sizes...>;
+  template <typename Element, size_t... sizes>
+  using Vector_Constant = MultiArray_Constant<Element, 1, sizes...>;
 
-template <typename Element, size_t... sizes>
-using Matrix_Constant = MultiArray_Constant<Element, 2, sizes...>;
+  template <typename Element, size_t... sizes>
+  using Matrix_Constant = MultiArray_Constant<Element, 2, sizes...>;
 
 
-// RepeatVector
+  // RepeatVector
 
-template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
-class MultiArray_RepeatVector;
+  template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
+    class MultiArray_RepeatVector;
 
 
 
@@ -303,7 +305,7 @@ class MultiArray_RepeatVector;
   // ********************************************************************
 
 
-  template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
+  template <class A, typename Element, typename Num, size_t depth, size_t rank, class FUNC>
   class ExpressionR_Unary;
 
   template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t D1, size_t D2, size_t D3, size_t R1, size_t R2, size_t R3, class OP>
@@ -312,28 +314,28 @@ class MultiArray_RepeatVector;
   template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4, size_t D1, size_t D2, size_t D3, size_t M4, size_t R1, size_t R2, size_t R3, size_t R4, class OP>
   class ExpressionR_Ternary;
 
-  template <class A, class X, typename Element, typename Number, size_t depth, size_t rank>
+  template <class A, class X, typename Element, typename Num, size_t depth, size_t rank>
   class ExpressionR_Series;
 
-  template <class A, class B, class X, typename Number, class OP1, class OP2>
+  template <class A, class B, class X, typename Num, class OP1, class OP2>
   class ExpressionR_Series2;
 
-  template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
+  template <class A, typename Element, typename Num, size_t depth, size_t rank, class FUNC>
   class ExpressionR_Transpose;
 
-  template <class A, typename Number>
+  template <class A, typename Num>
   class ExpressionR_Rep;
 
-  template <class X, class Y, typename Element, typename Number, size_t depth>
+  template <class X, class Y, typename Element, typename Num, size_t depth>
   class ExpressionR_Join;
 
-  template <typename Number>
+  template <typename Num>
   class ExpressionRW_Subset;
 
-  template <typename Number>
+  template <typename Num>
   class ExpressionRW_Submask;
 
-  template <class X, class Y, typename Element, typename Number, size_t depth>
+  template <class X, class Y, typename Element, typename Num, size_t depth>
   class ExpressionRW_Join;
 
 
@@ -354,7 +356,7 @@ class MultiArray_RepeatVector;
 
 
 
-  
+
 
   // ***************************************************************************
   // * MultiGrid_A - for coordinates 
@@ -366,8 +368,8 @@ class MultiArray_RepeatVector;
   // A[i] -> gives the grid (a MultiArray of rank NDIMS) for the i-th coordinate
   // ***************************************************************************
 
-  // template <typename Number, size_t NDIMS, size_t... ints>
-  // using MultiGrid_A = std::tuple< MultiArray_RepeatVector<Number, NDIMS, ints>...>;
+  // template <typename Num, size_t NDIMS, size_t... ints>
+  // using MultiGrid_A = std::tuple< MultiArray_RepeatVector<Num, NDIMS, ints>...>;
 
 
   // ***************************************************************************
@@ -383,12 +385,12 @@ class MultiArray_RepeatVector;
   // B[j] -> gives the coordinate vector (technically an ordered set) for grid point j
   // ***************************************************************************
 
-  // template <typename Number, size_t NDIMS>
-  // using MultiGrid_B = MultiArray_RepeatVector< Vector<Number, NDIMS>, NDIMS>;
+  // template <typename Num, size_t NDIMS>
+  // using MultiGrid_B = MultiArray_RepeatVector< Vector<Num, NDIMS>, NDIMS>;
 
 
 
-  // template <typename Number, size_t NDIMS, size_t rank, typename G>
+  // template <typename Num, size_t NDIMS, size_t rank, typename G>
   // class GridTraits;
 
 
@@ -403,10 +405,10 @@ class MultiArray_RepeatVector;
   template <class Element>
   inline auto& ones();
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank> requires (std::is_same<Number, bool>::value)
-     Vector<size_t>& findtrue(const ExpressionR<X, Element, Number, depth, rank>& x); 
+  template <class X, class Element, typename Num, size_t depth, size_t rank> requires (std::is_same<Num, bool>::value)
+    Vector<size_t>& findtrue(const ExpressionR<X, Element, Num, depth, rank>& x);
 
-  
+
 }; // namespace mathq
 
 

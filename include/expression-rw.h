@@ -15,8 +15,8 @@ namespace mathq {
   // Abstract class that represents either a MultiArray or a MultiArray expression that is "read only"
   // --------------------------------------------------------------------------------------------------
 
-  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank_>
-  class ExpressionRW : public ExpressionR<ExpressionRW<Derived, Element, Number, depth_, rank_>, Element, Number, depth_, rank_> {
+  template <class Derived, typename Element, typename Num, size_t depth_, size_t rank_>
+  class ExpressionRW : public ExpressionR<ExpressionRW<Derived, Element, Num, depth_, rank_>, Element, Num, depth_, rank_> {
   public:
 
     //**********************************************************************
@@ -34,7 +34,7 @@ namespace mathq {
     //**********************************************************************
 
     using ParentType = NullType;
-    using Type = ExpressionRW<Derived, Element, Number, depth_value, rank_value>;
+    using Type = ExpressionRW<Derived, Element, Num, depth_value, rank_value>;
     using ConcreteType = MultiArray<Element, rank_value>;
 
     using ElementType = Element;
@@ -133,11 +133,11 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const Number dat(const size_t i) const {
+    const Num dat(const size_t i) const {
       return derived().dat(i);
     }
 
-    Number& dat(const size_t i) {
+    Num& dat(const size_t i) {
       return derived().dat(i);
     }
 
@@ -176,13 +176,13 @@ namespace mathq {
 
     // assign to vector or expression
     template <class Y, size_t... ints2>
-    Derived& equals(const ExpressionR<Y, Element, Number, depth_, rank_>& rhs) {
+    Derived& equals(const ExpressionR<Y, Element, Num, depth_, rank_>& rhs) {
       const size_t N = size();
 
       if (common(*this, rhs)) {
         // if a vector appears on both the right hand and left hand side,
         // we need to make a copy of the rhs first
-        Vector<Number> y(N);
+        Vector<Num> y(N);
         for (size_t i = 0; i<N; i++) {
           y[i] = rhs[i];
         }
@@ -214,7 +214,7 @@ namespace mathq {
     }
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const ExpressionRW<Derived, Element, Number, depth_value, rank_value>& expression) {
+    friend std::ostream& operator<<(std::ostream& stream, const ExpressionRW<Derived, Element, Num, depth_value, rank_value>& expression) {
       ConcreteType temp;
       temp = expression;
       stream << temp;

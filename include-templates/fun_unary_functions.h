@@ -12,7 +12,7 @@
 // __COMMENTNAME__ 
 //----------------------------------------------
 
-template <class X, class Element, typename Number, size_t depth, size_t rank>
+template <class X, class Element, typename Num, size_t depth, size_t rank>
 auto __FUNCTION__(const ExpressionR<X, Element, __DIN__, depth, rank>& x) {
   typedef typename ReplacedNumberTrait<Element, __DOUT__>::Type EOUT;
   return  ExpressionR_Unary<ExpressionR<X, Element, __DIN__, depth, rank>, EOUT, __DOUT__, depth, rank, __FUNCTOR__<Element, EOUT, __DIN__, __DOUT__>>(x);

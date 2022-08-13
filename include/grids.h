@@ -54,49 +54,49 @@ namespace mathq {
 
 
   //
-  // Domain<Number>
+  // Domain<Num>
   //
 
-  template <typename Number>
+  template <typename Num>
   class
     Domain {
   public:
     size_t N;
-    Number a;
-    Number b;
+    Num a;
+    Num b;
     bool include_a;
     bool include_b;
     GridScaleEnum scale;
 
     // dependent variables
     // move to private
-    Number log_a;
-    Number log_b;
+    Num log_a;
+    Num log_b;
     size_t Neff;
-    Number start;
-    Number step;
-    mathq::Vector<Number> grid;
+    Num start;
+    Num step;
+    mathq::Vector<Num> grid;
 
     Domain() noexcept {
       include_a = true;
-      a = -std::numeric_limits<Number>::infinity();
+      a = -std::numeric_limits<Num>::infinity();
       include_b = true;
-      b = std::numeric_limits<Number>::infinity();
+      b = std::numeric_limits<Num>::infinity();
       N = 0;
       this->init_();
     }
-    Domain(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
+    Domain(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
       a(a), b(b), N(N), scale(scale), include_a(include_a), include_b(include_b) {
       refreshGrid();
     }
     ~Domain() {
     }
 
-    mathq::Vector<Number>& getGrid() {
+    mathq::Vector<Num>& getGrid() {
       refreshGrid();
       return grid;
     }
-    mathq::Vector<Number>& refreshGrid() {
+    mathq::Vector<Num>& refreshGrid() {
       grid.resize(N);
       init();
       if (scale == GridScale::LOG) {
@@ -113,7 +113,7 @@ namespace mathq {
       if (scale == GridScale::LOG) {
         log_a = std::log10(a);
         log_b = std::log10(b);
-        step = (log_b - log_a)/static_cast<Number>(Neff-1);
+        step = (log_b - log_a)/static_cast<Num>(Neff-1);
         if (include_a) {
           start = log_a;
         }
@@ -122,7 +122,7 @@ namespace mathq {
         }
       }
       else {
-        step = (b - a)/static_cast<Number>(Neff-1);
+        step = (b - a)/static_cast<Num>(Neff-1);
         if (include_a) {
           start = a;
         }
@@ -133,11 +133,11 @@ namespace mathq {
       return *this;
     }
 
-    mathq::Vector<Number>& makeGrid_Linear() {
+    mathq::Vector<Num>& makeGrid_Linear() {
       if (N == 0) return grid;
 
       for (size_t c = 0; c<(N-1); c++) {
-        grid[c] = start + static_cast<Number>(c)*step;
+        grid[c] = start + static_cast<Num>(c)*step;
       }
       if (include_b) {
         grid[N-1] = b;
@@ -148,11 +148,11 @@ namespace mathq {
       return grid;
     }
 
-    mathq::Vector<Number>& makeGrid_Log() {
+    mathq::Vector<Num>& makeGrid_Log() {
       if (N == 0) return grid;
 
       for (size_t c = 0; c<(N-1); c++) {
-        grid[c] = std::pow(10, start + static_cast<Number>(c)*step);
+        grid[c] = std::pow(10, start + static_cast<Num>(c)*step);
       }
       if (include_b) {
         grid[N-1] = b;
@@ -165,88 +165,88 @@ namespace mathq {
 
   public:
 
-    static Domain<Number> emptySet() {
-      return Domain<Number>(0, 0, 0, GridScale::LINEAR, false, false);
+    static Domain<Num> emptySet() {
+      return Domain<Num>(0, 0, 0, GridScale::LINEAR, false, false);
     }
 
-    static Domain<Number> point(const Number& p) {
-      return Domain<Number>(p, p, 1, GridScale::LINEAR, true, true);
+    static Domain<Num> point(const Num& p) {
+      return Domain<Num>(p, p, 1, GridScale::LINEAR, true, true);
     }
 
     // [a,b]
-    static Domain<Number> interval_CC(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return Domain<Number>(a, b, N, scale, true, true);
+    static Domain<Num> interval_CC(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return Domain<Num>(a, b, N, scale, true, true);
     }
 
     // (a,b]
-    static Domain<Number> interval_OC(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return Domain<Number>(a, b, N, scale, false, true);
+    static Domain<Num> interval_OC(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return Domain<Num>(a, b, N, scale, false, true);
     }
 
     // [a,b)
-    static Domain<Number> interval_CO(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return Domain<Number>(a, b, N, scale, true, false);
+    static Domain<Num> interval_CO(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return Domain<Num>(a, b, N, scale, true, false);
     }
 
     // (a,b)
-    static Domain<Number> interval_OO(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return Domain<Number>(a, b, N, scale, false, false);
+    static Domain<Num> interval_OO(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return Domain<Num>(a, b, N, scale, false, false);
     }
 
 
 
-    static Domain<Number> realLine(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
-      Number a;
+    static Domain<Num> realLine(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+      Num a;
       if (include_a) {
-        a = -std::numeric_limits<Number>::infinity();
+        a = -std::numeric_limits<Num>::infinity();
       }
       else {
-        a = std::numeric_limits<Number>::lowest();
+        a = std::numeric_limits<Num>::lowest();
       }
-      Number b;
+      Num b;
       if (include_b) {
-        b = std::numeric_limits<Number>::infinity();
+        b = std::numeric_limits<Num>::infinity();
       }
       else {
-        b = std::numeric_limits<Number>::max();
+        b = std::numeric_limits<Num>::max();
       }
-      return Domain<Number>(a, b, 0, scale, include_a, include_b);
+      return Domain<Num>(a, b, 0, scale, include_a, include_b);
     }
 
-    static Domain<Number> realLineNeg(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
-      Number a;
+    static Domain<Num> realLineNeg(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+      Num a;
       if (include_a) {
-        a = -std::numeric_limits<Number>::infinity();
+        a = -std::numeric_limits<Num>::infinity();
       }
       else {
-        a = std::numeric_limits<Number>::lowest();
+        a = std::numeric_limits<Num>::lowest();
       }
-      Number b;
+      Num b;
       if (include_b) {
         b = 0;
       }
       else {
-        b = -std::numeric_limits<Number>::min();
+        b = -std::numeric_limits<Num>::min();
       }
-      return Domain<Number>(a, b, 0, scale, include_a, include_b);
+      return Domain<Num>(a, b, 0, scale, include_a, include_b);
     }
 
-    static Domain<Number> realLinePos(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
-      Number a;
+    static Domain<Num> realLinePos(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+      Num a;
       if (include_a) {
         a = 0;
       }
       else {
-        a = std::numeric_limits<Number>::min();
+        a = std::numeric_limits<Num>::min();
       }
-      Number b;
+      Num b;
       if (include_b) {
-        b = std::numeric_limits<Number>::infinity();
+        b = std::numeric_limits<Num>::infinity();
       }
       else {
-        b = std::numeric_limits<Number>::max();
+        b = std::numeric_limits<Num>::max();
       }
-      return Domain<Number>(a, b, 0, include_a, include_b);
+      return Domain<Num>(a, b, 0, include_a, include_b);
     }
 
 
@@ -259,7 +259,7 @@ namespace mathq {
       using namespace display;
       std::string s = "Domain";
       s += StyledString::get(ANGLE1).get();
-      Number d;
+      Num d;
       s += getTypeName(d);
       s += StyledString::get(ANGLE2).get();
       return s;
@@ -317,21 +317,21 @@ namespace mathq {
   // * CurvilinearCoords 
   // ***************************************************************************
 
-  template <class Derived, typename Number, size_t Ndims, size_t ...dim_ints>
+  template <class Derived, typename Num, size_t Ndims, size_t ...dim_ints>
   class
-    CurvilinearCoords : public Vector< MultiArray_RepeatVector<Number, Ndims, dim_ints...>, Ndims > {
+    CurvilinearCoords : public Vector< MultiArray_RepeatVector<Num, Ndims, dim_ints...>, Ndims > {
     // CurvilinearCoords : public Vector< double, Ndims > {
-    // CurvilinearCoords : public MultiArray_RepeatVector<Number, Ndims, dim_ints...> {
+    // CurvilinearCoords : public MultiArray_RepeatVector<Num, Ndims, dim_ints...> {
   public:
-    using Type = CurvilinearCoords<Derived, Number, Ndims, dim_ints...>;
+    using Type = CurvilinearCoords<Derived, Num, Ndims, dim_ints...>;
 
-    using ElementType = MultiArray_RepeatVector<Number, Ndims, dim_ints...>;
-    using GridElementType = Number;
-    using NumberType = typename NumberTrait<Number>::Type;
+    using ElementType = MultiArray_RepeatVector<Num, Ndims, dim_ints...>;
+    using GridElementType = Num;
+    using NumberType = typename NumberTrait<Num>::Type;
     using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-    using ParentType = Vector< MultiArray_RepeatVector<Number, Ndims, dim_ints...>, Ndims >;
-    using ConcreteType = Vector< MultiArray<Number, Ndims, dim_ints...>, Ndims >;
+    using ParentType = Vector< MultiArray_RepeatVector<Num, Ndims, dim_ints...>, Ndims >;
+    using ConcreteType = Vector< MultiArray<Num, Ndims, dim_ints...>, Ndims >;
     using DerivedType = Derived;
 
     using DimensionsType = Dimensions;
@@ -346,13 +346,13 @@ namespace mathq {
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
 
-    // std::array<Domain<Number>, Ndims> rsets;
+    // std::array<Domain<Num>, Ndims> rsets;
 
-    // CurvilinearCoords() : MultiArray_RepeatVector<Number, Ndims, dim_ints...>(0) {
+    // CurvilinearCoords() : MultiArray_RepeatVector<Num, Ndims, dim_ints...>(0) {
     CurvilinearCoords() {
     }
 
-    // CurvilinearCoords(const std::initializer_list<Domain<Number>>& mylist) {
+    // CurvilinearCoords(const std::initializer_list<Domain<Num>>& mylist) {
     //   // *this = mylist;
     // }
 
@@ -384,7 +384,7 @@ namespace mathq {
     //   OUTPUT("inflategrids");
     //   TRDISP(gdims);
     //   for (size_t g = 0; g < Ndims; g++) {
-    //     Domain<Number>& set = get(g);
+    //     Domain<Num>& set = get(g);
     //     set.inflateGrid_();
     //     grid[g].resize(gdims);
     //   }
@@ -414,15 +414,15 @@ namespace mathq {
     // Dimensions gridDims(void) {
     //   Dimensions dims;
     //   for (size_t g = 0; g < Ndims; g++) {
-    //     Domain<Number>& rs = get(g);
+    //     Domain<Num>& rs = get(g);
     //     dims.push_back(rs.N);
     //   }
     //   return dims;
     // }
 
-    // CurvilinearCoords& operator=(const std::initializer_list<Domain<Number>>& mylist) {
+    // CurvilinearCoords& operator=(const std::initializer_list<Domain<Num>>& mylist) {
     //   size_t i = 0;
-    //   typename std::initializer_list<Domain<Number>>::iterator it;
+    //   typename std::initializer_list<Domain<Num>>::iterator it;
     //   for (it = mylist.begin(); it != mylist.end(); ++it) {
     //     (*this)[i++] = *it;
     //   }
@@ -430,7 +430,7 @@ namespace mathq {
     // }
 
 
-    // Domain<Number>& get(size_t g) {
+    // Domain<Num>& get(size_t g) {
     //   return (*this)[g];
     // }
 
@@ -451,10 +451,10 @@ namespace mathq {
     //     grid = get(0).forceRegenGrid();
     //   }
     //   else if constexpr (Ndims == 2) {
-    //     Grid<Number, 1>& xgrid = get(0).forceRegenGrid();
-    //     Grid<Number, 1>& ygrid = get(1).forceRegenGrid();
-    //     Grid<Number, Ndims>& X = grid[0];
-    //     Grid<Number, Ndims>& Y = grid[1];
+    //     Grid<Num, 1>& xgrid = get(0).forceRegenGrid();
+    //     Grid<Num, 1>& ygrid = get(1).forceRegenGrid();
+    //     Grid<Num, Ndims>& X = grid[0];
+    //     Grid<Num, Ndims>& Y = grid[1];
     //     const size_t Nx = gridDims()[0];
     //     const size_t Ny = gridDims()[1];
     //     X.resize(Nx, Ny);
@@ -493,7 +493,7 @@ namespace mathq {
     //       for (int g = 0; g < Ndims; g++) {
     //         // this loop is for the Ndims different grids (vectors of size N)
     //         // we set the grid value of each grid
-    //         Domain<Number>& rs = get(g);
+    //         Domain<Num>& rs = get(g);
     //         // MDISP(g, indices[g]);
     //         grid[g][indices] = rs.getGrid()[indices[g]];
     //       }
@@ -513,7 +513,7 @@ namespace mathq {
       using namespace display;
       std::string s = "CurvilinearCoords";
       s += StyledString::get(ANGLE1).get();
-      Number d;
+      Num d;
       s += getTypeName(d);
       s += StyledString::get(COMMA).get();
       s += "Ndims=";
@@ -543,7 +543,7 @@ namespace mathq {
 
 
   //   // ***************************************************************************
-  //   // * CurvilinearCoords<Number, Ndims>
+  //   // * CurvilinearCoords<Num, Ndims>
   //   // ***************************************************************************
 
   //   template <class Element, size_t Ndims, class CHILD>
@@ -603,7 +603,7 @@ namespace mathq {
 
 
   //   // ***************************************************************************
-  //   // * CartCoords<Number, Ndims>
+  //   // * CartCoords<Num, Ndims>
   //   // ***************************************************************************
 
   //   template <class Element, size_t Ndims>
@@ -789,7 +789,7 @@ namespace mathq {
 
 
   //   // ***************************************************************************
-  //   // * PolarCoords<Number>(r, phi)
+  //   // * PolarCoords<Num>(r, phi)
   //   // ***************************************************************************
 
   //   template <class Element>
@@ -962,14 +962,14 @@ namespace mathq {
 
 
   //   // ***************************************************************************
-  //   // * PolarField<Number,RANK>
+  //   // * PolarField<Num,RANK>
   //   //
   //   // physics field object: scalar field, vector field, tensor field 
   //   // uses curvilinear coordinates
   //   // ***************************************************************************
-  //   template <typename Number, size_t RANK> class PolarField : public MultiGrid_A<Number, 2, RANK> {
+  //   template <typename Num, size_t RANK> class PolarField : public MultiGrid_A<Num, 2, RANK> {
   //   public:
-  //     using Coords = PolarCoords<Number>;
+  //     using Coords = PolarCoords<Num>;
   //     // need a grid
   //     // dot, grad, div
   // // Map a function to cartesian coordinates (pull-back)
@@ -985,7 +985,7 @@ namespace mathq {
   //       using namespace display;
   //       std::string s = "PolarField";
   //       s += StyledString::get(ANGLE1).get();
-  //       Number d;
+  //       Num d;
   //       s += getTypeName(d);
   //       s += StyledString::get(COMMA).get();
   //       s += "RANK=";
@@ -995,7 +995,7 @@ namespace mathq {
   //     }
 
 
-  //     inline friend std::ostream& operator<<(std::ostream& stream, const PolarField<Number, RANK>& var) {
+  //     inline friend std::ostream& operator<<(std::ostream& stream, const PolarField<Num, RANK>& var) {
   //       stream << "{ ";
   //       stream << "\n  coords=(";
   //       for (size_t n = 0; n < 2; n++) {
@@ -1016,11 +1016,11 @@ namespace mathq {
 
 
   //   //
-  //   // CurvilinearCoordinateSystem<Number>
+  //   // CurvilinearCoordinateSystem<Num>
   //   //
 
   //   //   template <typename... U>
-  //     // typename std::enable_if<(std::is_same<U, Number>::value && ...), const Number>::type operator()(const U... args) 
+  //     // typename std::enable_if<(std::is_same<U, Num>::value && ...), const Num>::type operator()(const U... args) 
   //     // https://en.cppreference.com/w/cpp/language/parameter_pack
   //     // https://en.cppreference.com/w/cpp/concepts
 
@@ -1034,7 +1034,7 @@ namespace mathq {
   //     // https://stackoverflow.com/questions/69302003/how-to-use-c20-concepts-to-compile-time-enforce-match-of-number-of-args-for-gi
   //     // 
 
-  //   template <typename Number, size_t Ndims, typename CHILD>
+  //   template <typename Num, size_t Ndims, typename CHILD>
   //   class
   //     CurvilinearCoordinateSystem {
   //   public:
@@ -1056,7 +1056,7 @@ namespace mathq {
   //       using namespace display;
   //       std::string s = "CurvilinearCoordinateSystem";
   //       s += StyledString::get(ANGLE1).get();
-  //       Number d;
+  //       Num d;
   //       s += getTypeName(d);
   //       s += StyledString::get(COMMA).get();
   //       s += "Ndims=";
@@ -1075,13 +1075,13 @@ namespace mathq {
   //   };
 
 
-  //   template <typename Number>
+  //   template <typename Num>
   //   class
-  //     PolarCoordSystem : public CurvilinearCoordinateSystem<Number, 2, PolarCoordSystem<Number>> {
+  //     PolarCoordSystem : public CurvilinearCoordinateSystem<Num, 2, PolarCoordSystem<Num>> {
   //   public:
-  //     using Func = std::function<Number(Number, Number)>;
-  //     using VecFunc = std::function<Vector<Number, 2>(Number, Number)>;
-  //     using Coords = PolarCoords<Number>;
+  //     using Func = std::function<Num(Num, Num)>;
+  //     using VecFunc = std::function<Vector<Num, 2>(Num, Num)>;
+  //     using Coords = PolarCoords<Num>;
 
 
   //     PolarCoordSystem() {
@@ -1092,7 +1092,7 @@ namespace mathq {
   //       using namespace display;
   //       std::string s = "PolarCoordSystem";
   //       s += StyledString::get(ANGLE1).get();
-  //       Number d;
+  //       Num d;
   //       s += getTypeName(d);
   //       s += StyledString::get(ANGLE2).get();
   //       return s;
@@ -1119,22 +1119,22 @@ namespace mathq {
   //   };
 
 
-    // template <typename Number>
-    // using PolarCoords = typename PolarCoordSystem<Number>::Coords;
+    // template <typename Num>
+    // using PolarCoords = typename PolarCoordSystem<Num>::Coords;
 
-    // template <typename Number = double>
-    // auto dot(const typename PolarCoordSystem<Number>::Coords& v1, const typename PolarCoordSystem<Number>::Coords& v2) {
+    // template <typename Num = double>
+    // auto dot(const typename PolarCoordSystem<Num>::Coords& v1, const typename PolarCoordSystem<Num>::Coords& v2) {
     //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
     // }
 
 
-    // template <typename Number, template <typename> class T>
-    // auto dot(const typename T<Number>::Coords& v1, const typename T<Number>::Coords& v2) {
+    // template <typename Num, template <typename> class T>
+    // auto dot(const typename T<Num>::Coords& v1, const typename T<Num>::Coords& v2) {
     //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
     // }
 
-    // template <typename Number>
-    // auto dot(const typename PolarCoordSystem<Number>::Coords& v1, const typename PolarCoordSystem<Number>::Coords& v2) {
+    // template <typename Num>
+    // auto dot(const typename PolarCoordSystem<Num>::Coords& v1, const typename PolarCoordSystem<Num>::Coords& v2) {
     //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
     // }
 
@@ -1156,17 +1156,17 @@ namespace mathq {
     // // 1D
     // //
 
-    // template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-    // auto grad(const Vector<Number>& gridfunc, const Interval<Number>& range, const int Dpts = 7, const bool periodic = false) {
+    // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
+    // auto grad(const Vector<Num>& gridfunc, const Interval<Num>& range, const int Dpts = 7, const bool periodic = false) {
     //   const size_t N = gridfunc.size();
-    //   Vector<Number>* df = new Vector<Number>(N);
+    //   Vector<Num>* df = new Vector<Num>(N);
     //   *df = gridfunc;
     //   df->deriv(range.a, range.b, 1, Dpts, periodic);
     //   return *df;
     // }
 
-    // template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-    // auto operator&(const Nabla_old<void> i, std::pair<Vector<Number>, Interval<Number>> funcANDrange) {
+    // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
+    // auto operator&(const Nabla_old<void> i, std::pair<Vector<Num>, Interval<Num>> funcANDrange) {
     //   return grad(funcANDrange.first, funcANDrange.second);
     // }
 
@@ -1174,31 +1174,31 @@ namespace mathq {
     // // 2D
     // //
 
-    // // template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-    // // auto fgrid(std::function<Number(Number, Number)> func, const Vector<Matrix<Number>, 2>& grid) {
-    // //   const Matrix<Number>& X = grid(0);
-    // //   const Matrix<Number>& Y = grid(1);
-    // //   auto* y = new Matrix<Number>(X.Nrows(), X.Ncols());
+    // // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
+    // // auto fgrid(std::function<Num(Num, Num)> func, const Vector<Matrix<Num>, 2>& grid) {
+    // //   const Matrix<Num>& X = grid(0);
+    // //   const Matrix<Num>& Y = grid(1);
+    // //   auto* y = new Matrix<Num>(X.Nrows(), X.Ncols());
     // //   for (int k = 0; k < X.size(); k++) {
     // //     (*y)[k] = func(X[k], Y[k]);
     // //   }
     // //   return *y;
     // // }
 
-    // template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-    // auto grad(const Matrix<Number>& gridfunc, const Interval<Number>& domX, const Interval<Number>& domY, const int Dpts = 7, const bool periodic = false) {
+    // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
+    // auto grad(const Matrix<Num>& gridfunc, const Interval<Num>& domX, const Interval<Num>& domY, const int Dpts = 7, const bool periodic = false) {
 
     //   // TODO: rewrite with slices
 
     //   const size_t NR = gridfunc.Nrows();
     //   const size_t NC = gridfunc.Ncols();
-    //   Vector<Matrix<Number>, 2>* df = new Vector<Matrix<Number>, 2>();
+    //   Vector<Matrix<Num>, 2>* df = new Vector<Matrix<Num>, 2>();
     //   // starts off with empty matrices
     //   // TRDISP(*df);
 
     //   // take d/dx
-    //   Vector<Number> vtemp = Vector<Number>(NC);
-    //   Matrix<Number> mtemp = Matrix<Number>(NR, NC);
+    //   Vector<Num> vtemp = Vector<Num>(NC);
+    //   Matrix<Num> mtemp = Matrix<Num>(NR, NC);
     //   for (int r = 0; r < NR; r++) {
     //     for (int c = 0; c < NC; c++) {
     //       vtemp(c) = gridfunc(r, c);
@@ -1227,8 +1227,8 @@ namespace mathq {
     //   return *df;
     // }
 
-    // template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-    // auto operator&(const Nabla_old<void> i, std::tuple<Matrix<Number>, Interval<Number>, Interval<Number>> funcANDrange) {
+    // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
+    // auto operator&(const Nabla_old<void> i, std::tuple<Matrix<Num>, Interval<Num>, Interval<Num>> funcANDrange) {
     //   return grad(std::get<0>(funcANDrange), std::get<1>(funcANDrange), std::get<2>(funcANDrange));
     // }
 

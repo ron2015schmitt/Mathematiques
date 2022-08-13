@@ -21,9 +21,9 @@ namespace mathq {
   // ----------------------------------------------------------------
 
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  auto op1(const typename FunctionType1<Number, Number>::type& f, const ExpressionR<X, Element, Number, depth, rank>& x) {
-    return  ExpressionR_Unary_User<ExpressionR<X, Element, Number, depth, rank>, Element, Number, depth, rank>(f, x);
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  auto op1(const typename FunctionType1<Num, Num>::type& f, const ExpressionR<X, Element, Num, depth, rank>& x) {
+    return  ExpressionR_Unary_User<ExpressionR<X, Element, Num, depth, rank>, Element, Num, depth, rank>(f, x);
   }
 
   // ----------------------------------------------------------------

@@ -12,11 +12,11 @@ namespace mathq {
   // ExpressionR_Unary    unary expressions
   //---------------------------------------------------------------------------
 
-  // NOTE: Number and Element are the output types!
+  // NOTE: Num and Element are the output types!
   //       only the function/functor needs the input types
 
-  template <class Derived, class Element, typename Number, size_t depth_, size_t rank_, class FUNC>
-  class ExpressionR_Unary : public ExpressionR<ExpressionR_Unary<Derived, Element, Number, depth_, rank_, FUNC>, Element, Number, depth_, rank_> {
+  template <class Derived, class Element, typename Num, size_t depth_, size_t rank_, class FUNC>
+  class ExpressionR_Unary : public ExpressionR<ExpressionR_Unary<Derived, Element, Num, depth_, rank_, FUNC>, Element, Num, depth_, rank_> {
   public:
 
     //**********************************************************************
@@ -180,10 +180,10 @@ namespace mathq {
   // ExpressionR_Unary_User    unary expressions
   //---------------------------------------------------------------------------
 
-  // NOTE: Number and Element are the output types!
+  // NOTE: Num and Element are the output types!
   //       only the function/functor needs the input types
-  template <class Derived, class Element, typename Number, size_t depth_, size_t rank_>
-  class ExpressionR_Unary_User : public ExpressionR<ExpressionR_Unary_User<Derived, Element, Number, depth_, rank_>, Element, Number, depth_, rank_> {
+  template <class Derived, class Element, typename Num, size_t depth_, size_t rank_>
+  class ExpressionR_Unary_User : public ExpressionR<ExpressionR_Unary_User<Derived, Element, Num, depth_, rank_>, Element, Num, depth_, rank_> {
   public:
 
     //**********************************************************************
@@ -198,7 +198,7 @@ namespace mathq {
     //**********************************************************************
     //                            TYPES 
     //**********************************************************************
-    using FUNC = typename FunctionType1<Number, Number>::type;
+    using FUNC = typename FunctionType1<Num, Num>::type;
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<ElementType>::Type;
@@ -1407,8 +1407,8 @@ namespace mathq {
   // ExpressionR_Series    used for Taylor and Maclaurin series
   //---------------------------------------------------------------------------
 
-  template <class A, class Derived, class Element, typename Number, size_t depth_, size_t rank_>
-  class ExpressionR_Series : public ExpressionR<ExpressionR_Series<A, Derived, Element, Number, depth_, rank_>, Element, Number, depth_, rank_> {
+  template <class A, class Derived, class Element, typename Num, size_t depth_, size_t rank_>
+  class ExpressionR_Series : public ExpressionR<ExpressionR_Series<A, Derived, Element, Num, depth_, rank_>, Element, Num, depth_, rank_> {
   public:
 
     //**********************************************************************
@@ -1549,12 +1549,12 @@ namespace mathq {
     const NumberType dat(const size_t i) const {
 
       const NumberType x = x_.dat(i) - x0_;
-      Number sum = 0;
+      Num sum = 0;
       // TODO: check a_.size >= N
-      Number xpow = 1;
+      Num xpow = 1;
       for (size_t n = 0; n <= N_; n++) {
-        Number an = a_[n];
-        if (an != Number(0)) {
+        Num an = a_[n];
+        if (an != Num(0)) {
           sum += an * xpow;
         }
         //	if (i==2) {
@@ -1575,8 +1575,8 @@ namespace mathq {
       // TODO: check a_.size >= N
       Element xpow = 1;
       for (size_t n = 0; n <= N_; n++) {
-        Number an = a_[n];
-        if (an != Number(0)) {
+        Num an = a_[n];
+        if (an != Num(0)) {
           sum += an * xpow;
         }
         //	if (i==2) {
@@ -1612,8 +1612,8 @@ namespace mathq {
   // ExpressionR_Series2    used for fourier series
   //---------------------------------------------------------------------------
 
-  template <class A, class B, class Derived, typename Number, class OP1, class OP2>
-  class ExpressionR_Series2 : public ExpressionR<ExpressionR_Series2<A, B, Derived, Number, OP1, OP2>, Number, Number, 1, 1> {
+  template <class A, class B, class Derived, typename Num, class OP1, class OP2>
+  class ExpressionR_Series2 : public ExpressionR<ExpressionR_Series2<A, B, Derived, Num, OP1, OP2>, Num, Num, 1, 1> {
   public:
     //**********************************************************************
     //                  Compile Time Constant
@@ -1628,8 +1628,8 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using ElementType = Number;
-    using NumberType = Number;
+    using ElementType = Num;
+    using NumberType = Num;
     using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using Type = ExpressionR_Series2<A, B, Derived, NumberType, OP1, OP2>;
@@ -1650,7 +1650,7 @@ namespace mathq {
     const Derived& x_;
     const size_t N_;
     const NumberType k1_;
-    Vector<Number>& k_;
+    Vector<Num>& k_;
     bool initialized;
     VectorofPtrs* vptrs;
 
@@ -1660,7 +1660,7 @@ namespace mathq {
     //**********************************************************************
 
     ExpressionR_Series2(const A& a, const A& b, const Derived& x, const size_t N, const NumberType k1)
-      : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<Number>(N))) {
+      : a_(a), b_(b), x_(x), N_(N), k1_(k1), k_(*(new Vector<Num>(N))) {
 
       vptrs = new VectorofPtrs();
       vptrs->add(a_.getAddresses());
@@ -1761,16 +1761,16 @@ namespace mathq {
     //***************** Element ACCESS *************************************
     //**********************************************************************
     const ElementType operator[](const size_t i) const {
-      Number sum = 0;
+      Num sum = 0;
       // TODO: check a_.size >= N
       for (size_t n = 0; n < N_; n++) {
-        Number kx = k_[n] * x_[i];
-        Number an = a_[n];
-        if (an != Number(0)) {
+        Num kx = k_[n] * x_[i];
+        Num an = a_[n];
+        if (an != Num(0)) {
           sum += an * OP1::apply(kx);
         }
-        Number bn = b_[n];
-        if (bn != Number(0)) {
+        Num bn = b_[n];
+        if (bn != Num(0)) {
           sum += bn * OP2::apply(kx);
         }
       }
@@ -1803,8 +1803,8 @@ namespace mathq {
   // ExpressionR_Transpose   tensor transpose, ie reverse the order of indices (RHS only)
   //-----------------------------------------------------------------------------
 
-  template <class Derived, class Element, typename Number, size_t depth_, size_t rank_, class FUNC>
-  class ExpressionR_Transpose : public ExpressionR<ExpressionR_Transpose<Derived, Element, Number, depth_, rank_, FUNC>, Element, Number, depth_, rank_> {
+  template <class Derived, class Element, typename Num, size_t depth_, size_t rank_, class FUNC>
+  class ExpressionR_Transpose : public ExpressionR<ExpressionR_Transpose<Derived, Element, Num, depth_, rank_, FUNC>, Element, Num, depth_, rank_> {
   public:
     //**********************************************************************
     //                  Compile Time Constant
@@ -1979,8 +1979,8 @@ namespace mathq {
   // VER_Join   joining two Vectors (RHS only)
   //---------------------------------------------------------------------------
 
-  template <class X, class Y, class Element, typename Number, size_t depth_>
-  class ExpressionR_Join : public ExpressionR<ExpressionR_Join<X, Y, Element, Number, depth_>, Element, Number, depth_, 1> {
+  template <class X, class Y, class Element, typename Num, size_t depth_>
+  class ExpressionR_Join : public ExpressionR<ExpressionR_Join<X, Y, Element, Num, depth_>, Element, Num, depth_, 1> {
   public:
     //**********************************************************************
     //                  Compile Time Constant
@@ -1999,7 +1999,7 @@ namespace mathq {
     using NumberType = typename NumberTrait<ElementType>::Type;
     using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
-    using Type = ExpressionR_Join<X, Y, Element, Number, depth_>;
+    using Type = ExpressionR_Join<X, Y, Element, Num, depth_>;
     using ParentType = ExpressionR<Type, ElementType, NumberType, depth_value, rank_value>;
     using ConcreteType = MultiArray<ElementType, rank_value>;
 
@@ -2147,8 +2147,8 @@ namespace mathq {
   // ExpressionR_Rep  repeat a vector
   //---------------------------------------------------------------------------
 
-  template <class A, typename Number>
-  class ExpressionR_Rep : public ExpressionR<ExpressionR_Rep<A, Number>, Number, Number, 1, 1> {
+  template <class A, typename Num>
+  class ExpressionR_Rep : public ExpressionR<ExpressionR_Rep<A, Num>, Num, Num, 1, 1> {
   public:
     //**********************************************************************
     //                  Compile Time Constant
@@ -2163,7 +2163,7 @@ namespace mathq {
     //                            TYPES 
     //**********************************************************************
 
-    using ElementType = Number;
+    using ElementType = Num;
     using NumberType = typename NumberTrait<ElementType>::Type;
     using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
