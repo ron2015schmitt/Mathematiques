@@ -539,12 +539,6 @@ namespace mathq {
       return x;
     }
 
-    inline static size_t size(const InputType& x) {
-      return x.size();
-    }
-    inline static size_t total_size(const InputType& x) {
-      return x.total_size();
-    }
   };
 
 
