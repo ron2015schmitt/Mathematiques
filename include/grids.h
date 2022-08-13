@@ -54,12 +54,12 @@ namespace mathq {
 
 
   //
-  // RealSet<Number>
+  // Domain<Number>
   //
 
   template <typename Number>
   class
-    RealSet {
+    Domain {
   public:
     size_t N;
     Number a;
@@ -77,7 +77,7 @@ namespace mathq {
     Number step;
     mathq::Vector<Number> grid;
 
-    RealSet() noexcept {
+    Domain() noexcept {
       include_a = true;
       a = -std::numeric_limits<Number>::infinity();
       include_b = true;
@@ -85,11 +85,11 @@ namespace mathq {
       N = 0;
       this->init_();
     }
-    RealSet(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
+    Domain(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
       a(a), b(b), N(N), scale(scale), include_a(include_a), include_b(include_b) {
       refreshGrid();
     }
-    ~RealSet() {
+    ~Domain() {
     }
 
     mathq::Vector<Number>& getGrid() {
@@ -108,7 +108,7 @@ namespace mathq {
     }
 
   private:
-    RealSet& init() {
+    Domain& init() {
       Neff = N +  size_t(!include_a) + size_t(!include_b);
       if (scale == GridScale::LOG) {
         log_a = std::log10(a);
@@ -165,37 +165,37 @@ namespace mathq {
 
   public:
 
-    static RealSet<Number> emptySet() {
-      return RealSet<Number>(0, 0, 0, GridScale::LINEAR, false, false);
+    static Domain<Number> emptySet() {
+      return Domain<Number>(0, 0, 0, GridScale::LINEAR, false, false);
     }
 
-    static RealSet<Number> point(const Number& p) {
-      return RealSet<Number>(p, p, 1, GridScale::LINEAR, true, true);
+    static Domain<Number> point(const Number& p) {
+      return Domain<Number>(p, p, 1, GridScale::LINEAR, true, true);
     }
 
     // [a,b]
-    static RealSet<Number> interval_CC(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return RealSet<Number>(a, b, N, scale, true, true);
+    static Domain<Number> interval_CC(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return Domain<Number>(a, b, N, scale, true, true);
     }
 
     // (a,b]
-    static RealSet<Number> interval_OC(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return RealSet<Number>(a, b, N, scale, false, true);
+    static Domain<Number> interval_OC(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return Domain<Number>(a, b, N, scale, false, true);
     }
 
     // [a,b)
-    static RealSet<Number> interval_CO(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return RealSet<Number>(a, b, N, scale, true, false);
+    static Domain<Number> interval_CO(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return Domain<Number>(a, b, N, scale, true, false);
     }
 
     // (a,b)
-    static RealSet<Number> interval_OO(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return RealSet<Number>(a, b, N, scale, false, false);
+    static Domain<Number> interval_OO(const Number& a, const Number& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      return Domain<Number>(a, b, N, scale, false, false);
     }
 
 
 
-    static RealSet<Number> realLine(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+    static Domain<Number> realLine(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
       Number a;
       if (include_a) {
         a = -std::numeric_limits<Number>::infinity();
@@ -210,10 +210,10 @@ namespace mathq {
       else {
         b = std::numeric_limits<Number>::max();
       }
-      return RealSet<Number>(a, b, 0, scale, include_a, include_b);
+      return Domain<Number>(a, b, 0, scale, include_a, include_b);
     }
 
-    static RealSet<Number> realLineNeg(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+    static Domain<Number> realLineNeg(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
       Number a;
       if (include_a) {
         a = -std::numeric_limits<Number>::infinity();
@@ -228,10 +228,10 @@ namespace mathq {
       else {
         b = -std::numeric_limits<Number>::min();
       }
-      return RealSet<Number>(a, b, 0, scale, include_a, include_b);
+      return Domain<Number>(a, b, 0, scale, include_a, include_b);
     }
 
-    static RealSet<Number> realLinePos(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+    static Domain<Number> realLinePos(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
       Number a;
       if (include_a) {
         a = 0;
@@ -246,7 +246,7 @@ namespace mathq {
       else {
         b = std::numeric_limits<Number>::max();
       }
-      return RealSet<Number>(a, b, 0, include_a, include_b);
+      return Domain<Number>(a, b, 0, include_a, include_b);
     }
 
 
@@ -257,7 +257,7 @@ namespace mathq {
 
     static inline std::string ClassName() {
       using namespace display;
-      std::string s = "RealSet";
+      std::string s = "Domain";
       s += StyledString::get(ANGLE1).get();
       Number d;
       s += getTypeName(d);
@@ -266,7 +266,7 @@ namespace mathq {
     }
 
 
-    inline friend std::ostream& operator<<(std::ostream& stream, const RealSet& var) {
+    inline friend std::ostream& operator<<(std::ostream& stream, const Domain& var) {
       using namespace display;
       if (var.a == var.b) {
         // point
@@ -346,13 +346,13 @@ namespace mathq {
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
 
-    // std::array<RealSet<Number>, Ndims> rsets;
+    // std::array<Domain<Number>, Ndims> rsets;
 
     // CurvilinearCoords() : MultiArray_RepeatVector<Number, Ndims, dim_ints...>(0) {
     CurvilinearCoords() {
     }
 
-    // CurvilinearCoords(const std::initializer_list<RealSet<Number>>& mylist) {
+    // CurvilinearCoords(const std::initializer_list<Domain<Number>>& mylist) {
     //   // *this = mylist;
     // }
 
@@ -384,7 +384,7 @@ namespace mathq {
     //   OUTPUT("inflategrids");
     //   TRDISP(gdims);
     //   for (size_t g = 0; g < Ndims; g++) {
-    //     RealSet<Number>& set = get(g);
+    //     Domain<Number>& set = get(g);
     //     set.inflateGrid_();
     //     grid[g].resize(gdims);
     //   }
@@ -414,15 +414,15 @@ namespace mathq {
     // Dimensions gridDims(void) {
     //   Dimensions dims;
     //   for (size_t g = 0; g < Ndims; g++) {
-    //     RealSet<Number>& rs = get(g);
+    //     Domain<Number>& rs = get(g);
     //     dims.push_back(rs.N);
     //   }
     //   return dims;
     // }
 
-    // CurvilinearCoords& operator=(const std::initializer_list<RealSet<Number>>& mylist) {
+    // CurvilinearCoords& operator=(const std::initializer_list<Domain<Number>>& mylist) {
     //   size_t i = 0;
-    //   typename std::initializer_list<RealSet<Number>>::iterator it;
+    //   typename std::initializer_list<Domain<Number>>::iterator it;
     //   for (it = mylist.begin(); it != mylist.end(); ++it) {
     //     (*this)[i++] = *it;
     //   }
@@ -430,7 +430,7 @@ namespace mathq {
     // }
 
 
-    // RealSet<Number>& get(size_t g) {
+    // Domain<Number>& get(size_t g) {
     //   return (*this)[g];
     // }
 
@@ -493,7 +493,7 @@ namespace mathq {
     //       for (int g = 0; g < Ndims; g++) {
     //         // this loop is for the Ndims different grids (vectors of size N)
     //         // we set the grid value of each grid
-    //         RealSet<Number>& rs = get(g);
+    //         Domain<Number>& rs = get(g);
     //         // MDISP(g, indices[g]);
     //         grid[g][indices] = rs.getGrid()[indices[g]];
     //       }

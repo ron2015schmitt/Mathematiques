@@ -851,7 +851,7 @@ namespace display {
 
 
   template <class D>
-  Style getTypeStyle(const mathq::RealSet<D>& var) {
+  Style getTypeStyle(const mathq::Domain<D>& var) {
     Style style = CREATESTYLE(CYAN);
     return style;
   }
@@ -942,7 +942,7 @@ namespace display {
   }
 
   template <class T>
-  typename std::enable_if<!std::is_pointer<T>::value && std::is_const<T>::value, std::string>::type
+  typename std::enable_if<!std::is_pointer<T>::value&& std::is_const<T>::value, std::string>::type
     getTypeName(const T var) {
     std::string s = "const ";
     if constexpr (Has_classname<T>::value) {
@@ -964,7 +964,7 @@ namespace display {
     return getTypeStyle(var).apply(std::string("")+#TYPE+std::string("*"));          \
   }                                                 \
 
-  
+
   SPECIALIZE_getTypeName(float);
   SPECIALIZE_getTypeName(double);
   SPECIALIZE_getTypeName(long double);
@@ -1142,9 +1142,9 @@ namespace display {
 
 
 
-//---------------------------------------------------------------------------------
-//       bracketAndStyleTypename
-//-------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------
+  //       bracketAndStyleTypename
+  //-------------------------------------------------------------------------------
 
   template <typename T>
   inline std::string bracketAndStyleTypename(const T& var) {

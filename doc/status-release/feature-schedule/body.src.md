@@ -2,7 +2,7 @@
 
 ### v0.41 Vector Calculus
 1. `Grid` and `CoordinateGrid` classes
-1. `RealSet` and `MultiSet` classes
+1. `Domain` and `MultiSet` classes
 1. `CurvilinearCoords` 
   * 2D Cartesian
   * 2D Polar

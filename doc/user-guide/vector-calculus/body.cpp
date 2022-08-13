@@ -68,44 +68,44 @@ int main() {
   // TRDISP(x_interval);
 
   CR();
-  ECHO_CODE(RealSet<double>  rs(-2, +2, 5));
+  ECHO_CODE(Domain<double>  rs(-2, +2, 5));
   TRDISP(rs);
   TRDISP(rs.getGrid());
 
   CR();
-  ECHO_CODE(RealSet<double>  rs1(-2, +3, 5, GridScale::LINEAR, true, false));
+  ECHO_CODE(Domain<double>  rs1(-2, +3, 5, GridScale::LINEAR, true, false));
   TRDISP(rs1);
   TRDISP(rs1.getGrid());
 
 
   CR();
-  ECHO_CODE(RealSet<double>  rs2 = RealSet<double>::realLine());
+  ECHO_CODE(Domain<double>  rs2 = Domain<double>::realLine());
   TRDISP(rs2);
 
   CR();
-  ECHO_CODE(RealSet<double>  rs3(10, 1e5, 10, GridScale::LOG));
+  ECHO_CODE(Domain<double>  rs3(10, 1e5, 10, GridScale::LOG));
   TRDISP(rs3);
   TRDISP(rs3.getGrid());
   TRDISP(mathq::log10(rs3.getGrid()));
 
 
   CR();
-  ECHO_CODE(auto rs4 = RealSet<double>::point(2.5));
+  ECHO_CODE(auto rs4 = Domain<double>::point(2.5));
   TRDISP(rs4);
   TRDISP(rs4.getGrid());
 
 
   CR();
-  ECHO_CODE(RealSet<double> rx(-10, +10, 3));
+  ECHO_CODE(Domain<double> rx(-10, +10, 3));
   TRDISP(rx);
   TRDISP(rx.getGrid());
 
   CR();
-  ECHO_CODE(RealSet<double> ry(-20, 20, 5, GridScale::LINEAR));
+  ECHO_CODE(Domain<double> ry(-20, 20, 5, GridScale::LINEAR));
   TRDISP(ry);
   TRDISP(ry.getGrid());
 
-  ECHO_CODE(RealSet<double> rz(30, 33, 4, GridScale::LINEAR));
+  ECHO_CODE(Domain<double> rz(30, 33, 4, GridScale::LINEAR));
   TRDISP(rz);
   TRDISP(rz.getGrid());
 

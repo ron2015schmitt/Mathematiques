@@ -1136,11 +1136,11 @@ namespace mathq {
   template <class T = void>
   class Nabla;
 
-  // * RealSet 
+  // * Domain 
   // ***************************************************************************
 
   template <typename Number>
-  class RealSet;
+  class Domain;
 
 
 
