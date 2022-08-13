@@ -145,11 +145,11 @@ namespace mathq {
     using SimpleNumberType = void;
   };
 
-  template <typename SimpleNumber>
-  class IsComplex<std::complex<SimpleNumber>> {
+  template <typename SimpleNum>
+  class IsComplex<std::complex<SimpleNum>> {
   public:
     constexpr static bool value = true;
-    using SimpleNumberType = SimpleNumber;
+    using SimpleNumberType = SimpleNum;
   };
 
 
@@ -164,11 +164,11 @@ namespace mathq {
     using SimpleNumberType = void;
   };
 
-  template <typename SimpleNumber>
-  class IsImaginary<mathq::Imaginary<SimpleNumber>> {
+  template <typename SimpleNum>
+  class IsImaginary<mathq::Imaginary<SimpleNum>> {
   public:
     constexpr static bool value = true;
-    using SimpleNumberType = SimpleNumber;
+    using SimpleNumberType = SimpleNum;
   };
 
   // ***************************************************************************
@@ -183,11 +183,11 @@ namespace mathq {
     using SimpleNumberType = void;
   };
 
-  template <typename SimpleNumber>
-  class IsQuaternion<mathq::Quaternion<SimpleNumber>> {
+  template <typename SimpleNum>
+  class IsQuaternion<mathq::Quaternion<SimpleNum>> {
   public:
     constexpr static bool value = true;
-    using SimpleNumberType = SimpleNumber;
+    using SimpleNumberType = SimpleNum;
   };
 
 

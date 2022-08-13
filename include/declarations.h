@@ -102,10 +102,10 @@ namespace mathq {
   //          number types
   //*******************************************************
 
-  template <typename SimpleNumber>
+  template <typename SimpleNum>
   class Imaginary;
 
-  template <typename SimpleNumber>
+  template <typename SimpleNum>
   class Quaternion;
 
 
