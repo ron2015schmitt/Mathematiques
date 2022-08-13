@@ -485,79 +485,12 @@ namespace mathq {
   };
 
 
-  // built in ordered number types: bool, int, double etc
-  template <typename Number> requires (std::is_arithmetic<Number>::value)
-    class
-    NumberTrait<Number> {
-    public:
-      using InputType = Number;
-      using Type = Number;
-
-      constexpr static bool value = true;
-      constexpr static size_t depth() {
-        return 0;
-      }
-      constexpr static const size_t sum_of_ranks() {
-        return 0;
-      }
-      template <size_t Nin = 0>
-      constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
-        return rank_array;
-      }
-  };
-
-  // complex number enclosing an ordered number
-  template <typename Number> requires (std::is_arithmetic<Number>::value)
-    class
-    NumberTrait<std::complex<Number>> {
-    public:
-      using InputType = std::complex<Number>;
-      using Type = std::complex<Number>;
-
-      constexpr static bool value = true;
-      constexpr static size_t depth() {
-        return 0;
-      }
-      constexpr static const size_t sum_of_ranks() {
-        return 0;
-      }
-      template <size_t Nin = 0>
-      constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
-        return rank_array;
-      }
-
-  };
-
-
-  // imaginary number enclosing an ordered number
-  template <typename Number> requires (std::is_arithmetic<Number>::value)
-    class
-    NumberTrait<Imaginary<Number>> {
-    public:
-      using InputType = Imaginary<Number>;
-      using Type = Imaginary<Number>;
-
-      constexpr static bool value = true;
-      constexpr static size_t depth() {
-        return 0;
-      }
-      constexpr static const size_t sum_of_ranks() {
-        return 0;
-      }
-      template <size_t Nin = 0>
-      constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
-        return rank_array;
-      }
-
-  };
-
-  // quaternion number enclosing an ordered number
-  template <typename Number>
+  template <Number T>
   class
-    NumberTrait<Quaternion<Number>> {
+    NumberTrait<T> {
   public:
-    using InputType = Quaternion<Number>;
-    using Type = Quaternion<Number>;
+    using InputType = T;
+    using Type = T;
 
     constexpr static bool value = true;
     constexpr static size_t depth() {
