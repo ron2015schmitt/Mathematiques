@@ -644,15 +644,6 @@ namespace mathq {
   };
 
 
-  template <typename Element, template <typename> class T>
-  class SimpleNumberTrait<T<Element>> {
-  public:
-    using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
-  };
-
   template <typename Element>
   class SimpleNumberTrait<std::complex<Element>> {
   public:
@@ -681,27 +672,6 @@ namespace mathq {
   };
 
 
-  // I tried making a general specialization for all subclasses of ExpressionRW but haven't succeeded:
-
-    // template < template <typename, auto...> class T, typename Element, auto... Rest>  
-    // requires ( std::is_base_of_v< 
-    //   ExpressionRW<
-    //     T<Element, Rest...>, 
-    //     Element, 
-    //     typename T<Element, Rest...>::NumberType, 
-    //     T<Element, Rest...>::depth_value, 
-    //     T<Element, Rest...>::rank_value>, 
-    //   T<Element, Rest...> 
-    // >)
-
-    // class SimpleNumberTrait<T<Element, Rest...>> 
-    // {
-    // public:
-    //   using Type = typename SimpleNumberTrait<Element>::Type;
-    //   constexpr static size_t depth() {
-    //     return 1 + SimpleNumberTrait<Element>::depth();
-    //   }
-    // };
   template <class Derived, typename Element, typename Number, size_t depth_, size_t rank>
   class SimpleNumberTrait<ExpressionR<Derived, Element, Number, depth_, rank>> {
   public:
