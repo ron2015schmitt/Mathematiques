@@ -558,6 +558,7 @@ namespace mathq {
   //                         ExpressionR{,W}: Derived type with the number type replaced in all contained expressions and MultiArrays 
   // ************************************************************************************************
 
+
   template <typename NewNumber>
   class ReplacedNumberTrait<NullType, NewNumber> {
   public:
@@ -566,36 +567,11 @@ namespace mathq {
 
 
   // built in ordered number types: bool, int, double etc
-  template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
-    class
-    ReplacedNumberTrait<Number, NewNumber> {
-    public:
-      using Type = NewNumber;
-  };
-
-  // complex number enclosing an ordered number
-  template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
-    class
-    ReplacedNumberTrait<std::complex<Number>, NewNumber> {
-    public:
-      using Type = NewNumber;
-  };
-
-
-  // imaginary number enclosing an ordered number
-  template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
-    class
-    ReplacedNumberTrait<Imaginary<Number>, NewNumber> {
-    public:
-      using Type = NewNumber;
-  };
-
-  // quaternion number enclosing an ordered number
-  template <typename Number, typename NewNumber> requires (std::is_arithmetic<Number>::value)
-    class
-    ReplacedNumberTrait<Quaternion<Number>, NewNumber> {
-    public:
-      using Type = NewNumber;
+  template <Number Num, Number NewNum>
+  class
+    ReplacedNumberTrait<Num, NewNum> {
+  public:
+    using Type = NewNum;
   };
 
 
