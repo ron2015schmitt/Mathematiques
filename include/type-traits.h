@@ -195,35 +195,35 @@ namespace mathq {
 
 
   // ***************************************************************************
-  //  SimpleNumber<X>
+  //  concept IsSimpleNumber<X>
   //
   // bool, integers, floating point
   // ***************************************************************************
 
   template <typename T>
-  concept SimpleNumber = std::is_integral_v<T> || std::is_floating_point_v<T>;
+  concept IsSimpleNumber = std::is_integral_v<T> || std::is_floating_point_v<T>;
 
 
   // ***************************************************************************
-  //  AdvancedNumber<X>
+  //  concept IsAdvancedNumber<X>
   //
   // complex, Imaginary, Quaternion
   // ***************************************************************************
 
   template <typename T>
-  concept AdvancedNumber = IsComplex<T>::value || IsImaginary<T>::value || IsQuaternion<T>::value;
+  concept IsAdvancedNumber = IsComplex<T>::value || IsImaginary<T>::value || IsQuaternion<T>::value;
 
 
 
   // ***************************************************************************
-  //  Number<X>
+  // concept IsNumber<X>
   //
   // bool, integers, floating point
   // complex, Imaginary, Quaternion
   // ***************************************************************************
 
   template <typename T>
-  concept Number = SimpleNumber<T> || AdvancedNumber<T>;
+  concept IsNumber = IsSimpleNumber<T> || IsAdvancedNumber<T>;
 
 
 
@@ -485,7 +485,7 @@ namespace mathq {
   };
 
 
-  template <Number T>
+  template <IsNumber T>
   class
     NumberTrait<T> {
   public:
@@ -567,7 +567,7 @@ namespace mathq {
 
 
   // built in ordered number types: bool, int, double etc
-  template <Number Num, Number NewNum>
+  template <IsNumber Num, IsNumber NewNum>
   class
     ReplacedNumberTrait<Num, NewNum> {
   public:
