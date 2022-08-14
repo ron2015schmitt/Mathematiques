@@ -2,154 +2,49 @@
 
 
 namespace mathq {
-  // template<typename T>
-  // concept Hashable = requires(T a)
-  // {
-  //     { std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
-  // };
+
 
   template <typename T>
-  concept Test2 = requires(T v, int i) {
-    { v.f(i) } -> std::same_as<int>;
-  };
-
-  template<typename T>
-  concept Container = requires(T& a) {
-    a.size();
-    a[0];
-    // a[(typename T::ElementType)(0)];
-    // { a[0] } -> std::same_as<typename T::ElementType>;
-    //  { 2.5 } -> std::same_as<double>;  // works
-    //  { 2.5 } -> std::same_as<typename T::ElementType>;  // works
-    { a[0u] } -> std::same_as<typename T::ElementType&>; // works, need reference
-  };
-
-
-
-  /// Structure which wants to consume the array via a parameter pack.
-  template <typename StructuralType, StructuralType... s>
-  struct ConsumerStruct {
-    constexpr auto operator()() const { return std::array{ s... }; }
-  };
-
-  template <
-    auto arr,
-    template <typename X, X...> typename Consumer,
-    typename IS = decltype(std::make_index_sequence<arr.size()>())
-  >
-  struct Generator;
-
-  template <
-    auto arr,
-    template <typename X, X...> typename Consumer,
-    std::size_t... I
-  >
-  struct Generator<arr, Consumer, std::index_sequence<I...>> {
-    using type = Consumer<typename decltype(arr)::value_type, arr[I]...>;
-  };
-
-  /// Helper typename
-  template <
-    auto arr,
-    template <typename T, T...> typename Consumer
-  >
-  using Generator_t = typename Generator<arr, Consumer>::type;
-
-
-
-
-
-
-  template <
-    auto arr,
-    template <size_t...> typename Consumer,
-    typename IS = decltype(std::make_index_sequence<arr.size()>())
-  >
-  struct Generator2;
-
-  template <
-    auto arr,
-    template <size_t...> typename Consumer,
-    std::size_t... I
-  >
-  struct Generator2<arr, Consumer, std::index_sequence<I...>> {
-    using type = Consumer<arr[I]...>;
-  };
-
-  /// Helper typename
-  template <
-    auto arr,
-    template <size_t...> typename Consumer
-  >
-  using Generator_t2 = typename Generator2<arr, Consumer>::type;
-
-
-
-
-  template <
-    auto arr,
-    typename IS = decltype(std::make_index_sequence<arr.size()>())
-  >
-  struct Material;
-
-  template <
-    auto arr,
-    std::size_t... I
-  >
-  struct Material<arr, std::index_sequence<I...>> {
-    using Type = ConsumerStruct<size_t, arr[I]...>;
-  };
-
-
-
-  template <
-    auto arr,
-    typename IS = decltype(std::make_index_sequence<arr.size()>())
-  >
-  struct Material2;
-
-  template <
-    auto arr,
-    std::size_t... I
-  >
-  struct Material2<arr, std::index_sequence<I...>> {
-    using Type = MultiArray<double, 3, arr[I]...>;
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  template <Container T>
-  class SimpleNumberTrait<T> {
+  class MyTrait {
   public:
-    using ElementType = typename T::ElementType;
-    using Type = typename SimpleNumberTrait<ElementType>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<ElementType>::depth();
-    }
+    constexpr static int value = 0;
   };
 
-
-
-  template <size_t... ints>
-  class IntsOwner {
+  template <IsAdvancedNumber T>
+  class MyTrait<T> {
   public:
+    constexpr static int value = 1;
   };
 
-  template <typename T, T... I>
-  auto get_owner(std::integer_sequence<T, I...>) {
-    return IntsOwner< T(I)... >();
-  }
+  template <typename Num>
+  class MyTrait<std::complex<Num>> {
+  public:
+    constexpr static int value = 20;
+  };
+  template <typename Num>
+  class MyTrait<Imaginary<Num>> {
+  public:
+    constexpr static int value = 21;
+  };
+
+
+
+  // template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
+  // class MyTrait< ExpressionR<Derived, Element, Num, depth, rank> > {
+  // public:
+  //   constexpr static int value = 100;
+  // };
+
+
+
+
+
+  //  MultiArray<Element>
+  // template <typename Element, size_t rank, size_t... ints>
+  // class MyTrait<MultiArray<Element, rank, ints...>> {
+  // public:
+  //   constexpr static int value = 200;
+  // };
 
 
 };
@@ -175,12 +70,6 @@ int main(int argc, char* argv[]) {
   TRDISP(SimpleNumberTrait< MultiArray<std::complex<double>, 3, 2, 3, 4> >::depth());
 
   TRDISP(SimpleNumberTrait< MultiArray_RepeatVector<double, 3, 2, 3, 4> >::depth());
-
-  TRDISP(Container<Vector<double> >);
-  TRDISP(Container<Vector<int> >);
-  TRDISP(Container<MultiArray_RepeatVector<double, 3, 2, 3, 4> >);
-  TRDISP(Container<std::vector<double> >);
-  TRDISP(Container< CurvilinearCoords<NullType, double, 2> >);
 
 
   TRDISP(ReadableExpression<Vector<double> >);
@@ -215,19 +104,8 @@ int main(int argc, char* argv[]) {
   TRDISP(HasStaticSizes<double>);
   TRDISP(HasStaticSizes<Vector<double>>);
 
-  ECHO_CODE(IntsOwner<1, 4, 2>{});
-
   constexpr std::array<size_t, 3> myarray = { 1,4,2 };
-  constexpr Generator_t<myarray, ConsumerStruct> tt;
-  TRDISP(tt());
 
-  Generator_t2<myarray, IntsOwner> tt2;
-
-  Material<myarray>::Type tt3;
-  TRDISP(tt3());
-
-  Material2<myarray>::Type A;
-  TRDISP(A);
 
   constexpr std::array<size_t, 2> sizes2 = { 4,2 };
   MultiArrayHelper<float, sizes2> B;
@@ -259,6 +137,11 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(MultiArrayType<decltype(-mystery2)> mystery2b);
   TRDISP(mystery2b);
 
+  TRDISP(MyTrait< double >::value);
+  TRDISP(MyTrait< std::complex<double> >::value);
+  TRDISP(MyTrait< Imaginary<double> >::value);
+  TRDISP(MyTrait< Quaternion<double> >::value);
+  TRDISP(MyTrait< Vector<double> >::value);
 
 
   return 0;

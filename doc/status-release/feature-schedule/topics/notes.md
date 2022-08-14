@@ -185,3 +185,26 @@ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
   template <typename Number, size_t NDIMS, size_t... ints>
   using MultiGrid_A = std::tuple< MultiArray_RepeatVector<Number, NDIMS, ints>...>;
 ```
+
+1. *Do nothing SINFAE* A note on SINFAE and requires.   The following code will compile but will never match any types `T`
+```C++
+  template <typename T> requires (std::is_base_of_v< ExpressionR, T >)
+    class MyTrait< T > {
+    public:
+      constexpr static int value = 100;
+  };
+```
+This is because the expression `std::is_base_of_v< ExpressionR, T >` does not compile on its own. ExpressionR is not a type but a symbol for a templated type.  You must include all the parameters for it to be a type.   Try it out:
+```C++
+  bool q = std::is_base_of_v< ExpressionR, double >;
+  bool p = std::is_base_of_v< ExpressionR, Vector<double> >;
+```
+
+The following attempt at a work-around also doesn't work because the parameters are not part of the input type.  The compile ris not able to figure out.
+```C++
+  template <typename T, class Derived, typename Element, typename Num, size_t depth, size_t rank> requires (std::is_base_of_v< ExpressionR<Derived, Element, Num, depth, rank>, T >)
+    class MyTrait< T > {
+    public:
+      constexpr static int value = 100;
+  };
+```

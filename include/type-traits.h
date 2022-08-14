@@ -233,11 +233,16 @@ namespace mathq {
   // MultiArrays and their Expressions
   // ***************************************************************************
 
-
   template <class X, class Element, typename Num, size_t depth, size_t rank>
   bool readable_expression_test(const ExpressionR<X, Element, Num, depth, rank>& x) {
     return true;
   }
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  Element readable_expression_element(const ExpressionR<X, Element, Num, depth, rank>& x) {
+    return Element();
+  }
+
+
 
   template <class X>
   concept ReadableExpression = requires(X x) {
@@ -876,6 +881,15 @@ namespace mathq {
     using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type  >::type;
   };
 
+
+  // template <typename Element, size_t rank, size_t... ints, typename C>
+  // class InversionType2<MultiArray<Element, rank, ints...>, C> {
+  // public:
+  //   using NumberType = typename NumberTrait<Element>::Type;
+  //   using MultiArrayD = MultiArray<NumberType, rank, ints...>; // top level array becomes bottom level array
+  //   using MultiArrayC = MultiArray<C, rank, ints...>;  // this is for the intermediate arrays
+  //   using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type  >::type;
+  // };
 
 
 
