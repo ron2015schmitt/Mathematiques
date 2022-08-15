@@ -563,12 +563,17 @@ namespace mathq {
   //                         ExpressionR{,W}: Derived type with the number type replaced in all contained expressions and MultiArrays 
   // ************************************************************************************************
 
-
-  template <typename NewNumber>
-  class ReplacedNumberTrait<NullType, NewNumber> {
+  template <typename T, typename NewNumber>
+  class ReplacedNumberTrait {
   public:
-    using Type = NewNumber;
+    using Type = T;
   };
+
+  // template <typename NewNumber>
+  // class ReplacedNumberTrait<NullType, NewNumber> {
+  // public:
+  //   using Type = NewNumber;
+  // };
 
 
   // built in ordered number types: bool, int, double etc
@@ -872,6 +877,18 @@ namespace mathq {
 
 
   //  MultiArray<Element>
+  // template <ReadableExpression T, typename C>
+  // class InversionType<T, C> {
+  // public:
+  //   using ElementType = typename T::ElementType;
+  //   using NumberType = typename NumberTrait<ElementType>::Type;
+  //   using T_as_MultiArray = MultiArrayType<T>;
+  //   using MultiArray_NumberType = typename ReplacedNumberTrait< T_as_MultiArray, NumberType >::Type; // top level array becomes bottom level array
+  //   using MultiArray_C = typename ReplacedNumberTrait< T_as_MultiArray, C >::Type;  // this is for the intermediate arrays
+  //   using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<ElementType, MultiArray_NumberType>::Type, typename InversionType<ElementType, MultiArray_C>::Type  >::type;
+  // };
+
+
   template <typename Element, size_t rank, size_t... ints, typename C>
   class InversionType<MultiArray<Element, rank, ints...>, C> {
   public:
@@ -880,16 +897,6 @@ namespace mathq {
     using MultiArrayC = MultiArray<C, rank, ints...>;  // this is for the intermediate arrays
     using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type  >::type;
   };
-
-
-  // template <typename Element, size_t rank, size_t... ints, typename C>
-  // class InversionType2<MultiArray<Element, rank, ints...>, C> {
-  // public:
-  //   using NumberType = typename NumberTrait<Element>::Type;
-  //   using MultiArrayD = MultiArray<NumberType, rank, ints...>; // top level array becomes bottom level array
-  //   using MultiArrayC = MultiArray<C, rank, ints...>;  // this is for the intermediate arrays
-  //   using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type  >::type;
-  // };
 
 
 
