@@ -276,6 +276,18 @@ namespace mathq {
       requires (T::isNotExpression == true);
   };
 
+  // ***************************************************************************
+  //  HasStaticSizes<X>
+  //
+  // Not used. alternate way to determine if a class is a MultiArray
+  // ***************************************************************************
+
+
+  template <class X>
+  concept HasStaticSizes = requires(X x) {
+    X::static_dims_array;
+  };
+
 
 
   // ***************************************************************************
@@ -298,6 +310,7 @@ namespace mathq {
   // ***************************************************************************
   //  MultiArrayHelper<Element, std:array>
   //
+  //  This can be used to create a MultiArray using a std::array for template sizes
   // ***************************************************************************
 
 
@@ -342,17 +355,6 @@ namespace mathq {
 
 
 
-  // ***************************************************************************
-  //  HasStaticSizes<X>
-  //
-  // ***************************************************************************
-
-
-  template <class X>
-  concept HasStaticSizes = requires(X x) {
-    X::static_dims_array;
-  };
-
 
   // ************************************************************************************
   // MultiArrayType 
@@ -371,7 +373,7 @@ namespace mathq {
     using Type = T;
   };
 
-  // default case for Expressions
+  // Expressions
 
   template <typename T> requires (IsReadableExpression<T>)
     class MultiArrayTypeTrait<T> {
