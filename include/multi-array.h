@@ -70,8 +70,8 @@ namespace mathq {
 
       using InitializerType = typename MakeInitializer<Element, rank_value >::Type;
 
-      template <typename NewNumber>
-      using Type_ReplaceNumber = MultiArray<typename ReplaceNumberTrait<ElementType, NewNumber>::Type, rank_value, dim_ints...>;
+      template <typename NewElement>
+      using Type_ReplaceElement = MultiArray<NewElement, rank_value, dim_ints...>;
 
 
     public:

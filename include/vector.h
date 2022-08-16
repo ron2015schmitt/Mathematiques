@@ -59,8 +59,8 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     using MyArrayType = typename ArrayTypeTrait<Element, N0>::Type;
 
-    template <typename NewNumber>
-    using Type_ReplaceNumber = Vector<typename ReplaceNumberTrait<ElementType, NewNumber>::Type, sizes...>;
+    template <typename NewElement>
+    using Type_ReplaceElement = Vector<NewElement, sizes...>;
 
 
     //**********************************************************************

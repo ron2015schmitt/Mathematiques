@@ -535,7 +535,7 @@ namespace mathq {
   public:
     using OldElementType = typename T::ElementType;
     using ElementType = typename ReplaceNumberTrait<OldElementType, NewNumber>::Type;
-    using Type = typename T::Type_ReplaceNumber<NewNumber>;
+    using Type = typename T::Type_ReplaceElement<ElementType>;
   };
 
 
