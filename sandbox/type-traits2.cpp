@@ -149,5 +149,6 @@ int main(int argc, char* argv[]) {
   TRDISP(MyTrait< Vector<double> >::value);
 
 
+
   return 0;
 }

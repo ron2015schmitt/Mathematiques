@@ -71,7 +71,6 @@ int main(int argc, char* argv[]) {
   TRDISP(NumberTrait<std::complex<double>>::Type());
   // TRDISP(NumberTrait<std::complex<Vector<bool>>>::Type());
   typename NumberTrait<Vector<double>>::Type x;
-  TRDISP(ReplaceNumberTrait<Vector<double, 1>, double>::Type());
   TRDISP(NumberTrait<Vector<std::complex<double>>>::Type());
   TRDISP(NumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
   TRDISP(NumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
@@ -101,6 +100,25 @@ int main(int argc, char* argv[]) {
   TRDISP(SimpleNumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
   TRDISP(SimpleNumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
   cout << std::endl;
+
+
+  cout << "ReplaceElementTrait" << std::endl;
+  TRDISP(ReplaceElementTrait<Vector<double, 1>, int>::Type());
+  TRDISP(ReplaceElementTrait<Vector<std::complex<double>, 1>, float>::Type());
+  TRDISP(ReplaceElementTrait<Matrix<Vector<std::complex<double>, 1>, 3, 4>, Quaternion<float> >::Type());
+  TRDISP(ReplaceElementTrait< Matrix<Vector<std::complex<double>, 1>, 3, 4>, MultiArray<Quaternion<float>, 3, 1, 2, 3> >::Type());
+
+  cout << "ReplaceNumberTrait" << std::endl;
+  TRDISP(ReplaceNumberTrait<Vector<double, 1>, int>::Type());
+  TRDISP(ReplaceNumberTrait<Vector<std::complex<double>, 1>, float>::Type());
+  TRDISP(ReplaceNumberTrait<Matrix<Vector<std::complex<double>, 1>, 3, 4>, Quaternion<float> >::Type());
+
+
+  cout << "ReplaceSimpleNumberTrait" << std::endl;
+  TRDISP(ReplaceSimpleNumberTrait<Vector<double, 1>, int>::Type());
+  TRDISP(ReplaceSimpleNumberTrait<Vector<std::complex<double>, 1>, float>::Type());
+  TRDISP(ReplaceSimpleNumberTrait<Matrix<Vector<std::complex<double>, 1>, 3, 4>, float >::Type());
+
 
 
   return 0;

@@ -486,54 +486,6 @@ namespace mathq {
 
 
 
-
-
-  // ************************************************************************************************
-  // ReplaceNumberTrait<InputType, NewNumber>
-  //
-  // This operates recursively to find the base number type
-  //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
-
-  //  Type:  Depends on InputType
-  //                         numbers: NewNumber
-  //                         MultiArray: The InputType with the number type replaced by NewNumber
-  //                         ExpressionR{,W}: Derived type with the number type replaced in all contained expressions and MultiArrays 
-  // ************************************************************************************************
-
-  template <typename T, typename NewNumber>
-  class ReplaceNumberTrait {
-  public:
-    using Type = void;
-  };
-
-  // built in ordered number types: bool, int, double etc
-  template <IsNumber T, typename NewNum>
-  class
-    ReplaceNumberTrait<T, NewNum> {
-  public:
-    using Type = NewNum;
-  };
-
-
-
-
-  //  MultiArray<Element>
-
-  template <IsMultiArray T, typename NewNumber>
-  class
-    ReplaceNumberTrait<T, NewNumber> {
-  public:
-    using OldElementType = typename T::ElementType;
-    using ElementType = typename ReplaceNumberTrait<OldElementType, NewNumber>::Type;
-    using Type = typename T::Type_ReplaceElement<ElementType>;
-  };
-
-
-
-
-
-
-
   // *****************************************************************************************
   // SimpleNumberTrait<T>
   //
@@ -580,6 +532,127 @@ namespace mathq {
     public:
       using Type = typename SimpleNumberTrait<typename T::ElementType>::Type;
   };
+
+
+
+  // ************************************************************************************************
+  // ReplaceElementTrait<InputType, NewElement>
+  //
+  // ************************************************************************************************
+
+  template <typename T, typename NewElement>
+  class ReplaceElementTrait {
+  public:
+    using Type = void;
+  };
+
+  //  MultiArray<Element>
+
+  template <IsMultiArray T, typename NewElement>
+  class
+    ReplaceElementTrait<T, NewElement> {
+  public:
+    using Type = typename T::Type_ReplaceElement<NewElement>;
+  };
+
+
+
+  // ************************************************************************************************
+  // ReplaceNumberTrait<InputType, NewNumber>
+  //
+  // This operates recursively to find the base number type
+  //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
+
+  //  Type:  Depends on InputType
+  //                         numbers: NewNumber
+  //                         MultiArray: The InputType with the number type replaced by NewNumber
+  //                         ExpressionR{,W}: Derived type with the number type replaced in all contained expressions and MultiArrays 
+  // ************************************************************************************************
+
+  template <typename T, typename NewNumber>
+  class ReplaceNumberTrait {
+  public:
+    using Type = void;
+  };
+
+  // built in ordered number types: bool, int, double etc
+  template <IsNumber T, typename NewNumber>
+  class
+    ReplaceNumberTrait<T, NewNumber> {
+  public:
+    using Type = NewNumber;
+  };
+
+  //  MultiArray<Element>
+
+  template <IsMultiArray T, typename NewNumber>
+  class
+    ReplaceNumberTrait<T, NewNumber> {
+  public:
+    using OldElementType = typename T::ElementType;
+    using ElementType = typename ReplaceNumberTrait<OldElementType, NewNumber>::Type;
+    using Type = typename T::Type_ReplaceElement<ElementType>;
+  };
+
+
+
+
+  // ************************************************************************************************
+  // ReplaceSimpleNumberTrait<InputType, NewNumber>
+  //
+  // This operates recursively to find the base number type
+  //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
+
+  //  Type:  Depends on InputType
+  //                         numbers: NewNumber
+  //                         MultiArray: The InputType with the number type replaced by NewNumber
+  //                         ExpressionR{,W}: Derived type with the number type replaced in all contained expressions and MultiArrays 
+  // ************************************************************************************************
+
+  template <typename T, typename NewNumber>
+  class ReplaceSimpleNumberTrait {
+  public:
+    using Type = void;
+  };
+
+  // built in ordered number types: bool, int, double etc
+  template <typename T, typename NewNumber> requires (IsSimpleNumber<T>)
+    class
+    ReplaceSimpleNumberTrait<T, NewNumber> {
+    public:
+      using Type = NewNumber;
+  };
+
+  template <typename Element, typename NewNumber>
+  class ReplaceSimpleNumberTrait<std::complex<Element>, NewNumber> {
+  public:
+    using Type = std::complex<NewNumber>;
+  };
+
+  template <typename Element, typename NewNumber>
+  class ReplaceSimpleNumberTrait<Imaginary<Element>, NewNumber> {
+  public:
+    using Type = Imaginary<NewNumber>;
+  };
+
+  template <typename Element, typename NewNumber>
+  class ReplaceSimpleNumberTrait<Quaternion<Element>, NewNumber> {
+  public:
+    using Type = Quaternion<NewNumber>;
+  };
+
+  //  MultiArray<Element>
+
+  template <IsMultiArray T, typename NewNumber>
+  class
+    ReplaceSimpleNumberTrait<T, NewNumber> {
+  public:
+    using OldElementType = typename T::ElementType;
+    using ElementType = typename ReplaceSimpleNumberTrait<OldElementType, NewNumber>::Type;
+    using Type = typename T::Type_ReplaceElement<ElementType>;
+  };
+
+
 
 
 
