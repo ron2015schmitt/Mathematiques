@@ -529,12 +529,13 @@ namespace mathq {
 
   //  MultiArray<Element>
 
-  template <typename NewNumber, typename Element, size_t rank, size_t... ints>
+  template <IsMultiArray T, typename NewNumber>
   class
-    ReplaceNumberTrait<MultiArray<Element, rank, ints...>, NewNumber> {
+    ReplaceNumberTrait<T, NewNumber> {
   public:
-    using ElementType = typename ReplaceNumberTrait<Element, NewNumber>::Type;
-    using Type = MultiArray<ElementType, rank, ints...>;
+    using OldElementType = typename T::ElementType;
+    using ElementType = typename ReplaceNumberTrait<OldElementType, NewNumber>::Type;
+    using Type = typename T::Type_ReplaceNumber<NewNumber>;
   };
 
 

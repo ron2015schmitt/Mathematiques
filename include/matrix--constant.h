@@ -68,6 +68,9 @@ namespace mathq {
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
     using InitializerType = typename MakeInitializer<Element, rank_value >::Type;
 
+    template <typename NewNumber>
+    using Type_ReplaceNumber = Matrix<typename ReplaceNumberTrait<ElementType, NewNumber>::Type, dim_ints...>;
+
 
     //**********************************************************************
     //                      Object Data

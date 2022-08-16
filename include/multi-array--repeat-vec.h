@@ -71,6 +71,10 @@ namespace mathq {
 
       using InitializerType = typename MakeInitializer<Element, 1 >::Type;  // <-- Vector
 
+      template <typename NewNumber>
+      using Type_ReplaceNumber = MultiArray<typename ReplaceNumberTrait<ElementType, NewNumber>::Type, rank_value, dim_ints...>;
+
+
       //**********************************************************************
       // OBJECT DATA 
       //

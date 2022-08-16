@@ -70,6 +70,10 @@ namespace mathq {
 
       using InitializerType = typename MakeInitializer<Element, rank_value >::Type;
 
+      template <typename NewNumber>
+      using Type_ReplaceNumber = MultiArray<typename ReplaceNumberTrait<ElementType, NewNumber>::Type, rank_value, dim_ints...>;
+
+
     public:
 
       //**********************************************************************
@@ -817,7 +821,7 @@ namespace mathq {
 #if MATHQ_DEBUG >= 1
       std::string expression(void) const {
         return "";
-  }
+      }
 #endif
 
       // this is recursive 
@@ -887,7 +891,7 @@ namespace mathq {
         return (st >> x);
       }
 
-};
+  };
 
 }; // namespace mathq
 
