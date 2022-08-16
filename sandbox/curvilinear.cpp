@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
 
 
   CurvilinearCoords<NullType, double, 2> tcoords;
-  TRDISP(NumberTrait< CurvilinearCoords<NullType, double, 2> >::depth());
-  TRDISP(SimpleNumberTrait< CurvilinearCoords<NullType, double, 2> >::depth());
+  TRDISP(NumberTrait< CurvilinearCoords<NullType, double, 2> >::Type());
+  TRDISP(SimpleNumberTrait< CurvilinearCoords<NullType, double, 2> >::Type());
 
   ECHO_CODE(MultiArrayType<CurvilinearCoords<NullType, double, 2>> mystery);
   TRDISP(mystery);

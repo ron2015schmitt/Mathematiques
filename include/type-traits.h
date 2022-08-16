@@ -585,9 +585,6 @@ namespace mathq {
   class SimpleNumberTrait {
   public:
     using Type = NullType;
-    constexpr static size_t depth() {
-      return 0;
-    }
   };
 
   // for built-in number types (not classes)
@@ -596,9 +593,6 @@ namespace mathq {
     SimpleNumberTrait<T> {
     public:
       using Type = T;
-      constexpr static size_t depth() {
-        return 0;
-      }
   };
 
 
@@ -606,58 +600,26 @@ namespace mathq {
   class SimpleNumberTrait<std::complex<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
   };
 
   template <typename Element>
   class SimpleNumberTrait<Imaginary<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
   };
 
   template <typename Element>
   class SimpleNumberTrait<Quaternion<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
   };
 
 
-  template <class Derived, typename Element, typename Num, size_t depth_, size_t rank>
-  class SimpleNumberTrait<ExpressionR<Derived, Element, Num, depth_, rank>> {
-  public:
-    using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
+  template <typename T> requires (IsReadableExpressionOrArray<T>)
+    class SimpleNumberTrait<T> {
+    public:
+      using Type = typename SimpleNumberTrait<typename T::ElementType>::Type;
   };
-
-  template <class Derived, typename Element, typename Num, size_t depth_, size_t rank>
-  class SimpleNumberTrait<ExpressionRW<Derived, Element, Num, depth_, rank>> {
-  public:
-    using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
-  };
-
-
-  template <typename Element, size_t rank, size_t... ints>
-  class SimpleNumberTrait<MultiArray<Element, rank, ints...>> {
-  public:
-    using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
-  };
-
 
 
 

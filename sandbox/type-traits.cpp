@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
 
 
   cout << "SimpleNumberTrait" << std::endl;
-  // TRDISP(SimpleNumberTrait<NullType>::Type());    // causes compile error
+  TRDISP(SimpleNumberTrait<NullType>::Type());    // causes compile error
   TRDISP(SimpleNumberTrait<int>::Type());
   TRDISP(SimpleNumberTrait<double>::Type());
   TRDISP(SimpleNumberTrait<std::complex<double>>::Type());
@@ -101,22 +101,6 @@ int main(int argc, char* argv[]) {
   TRDISP(SimpleNumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
   TRDISP(SimpleNumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
   cout << std::endl;
-
-  cout << "SimpleNumberTrait" << std::endl;
-  // TRDISP(SimpleNumberTrait<NullType>::depth());    // causes compile error
-  DISP(SimpleNumberTrait<int>::depth());
-  DISP(SimpleNumberTrait<double>::depth());
-  DISP(SimpleNumberTrait<std::complex<double>>::depth());
-  DISP(SimpleNumberTrait<std::complex<Vector<bool>>>::depth());
-  DISP(SimpleNumberTrait<Vector<double>>::depth());
-  DISP(SimpleNumberTrait<Vector<std::complex<double>>>::depth());
-  DISP(SimpleNumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::depth());
-  DISP(SimpleNumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::depth());
-  cout << std::endl;
-
-  std::array<size_t, 7> ron{ 1, 5 };
-
-  TRDISP(ron);
 
 
   return 0;

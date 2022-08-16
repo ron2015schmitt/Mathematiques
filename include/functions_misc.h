@@ -169,7 +169,7 @@ namespace mathq {
 
   template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_approx {
   public:
-    typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
+    using DTOL = typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type;
 
     static NT3 apply(const NT1 d1, const NT2 d2, const DTOL tol) {
       return mathq::approx(d1, d2, tol);
@@ -252,8 +252,8 @@ namespace mathq {
 
   // (10) MultiArray<E1(NT1)> , NT2 
 
-  template <class A, class E1, class NT1, class NT2, size_t depth, size_t rank>
-  auto approx(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  template <class A, class E1, class NT1, class NT2, size_t depth, size_t rank> requires(IsSimpleNumber<NT2>)
+    auto approx(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
@@ -269,8 +269,8 @@ namespace mathq {
 
   // (01) NT1, MultiArray<E2(NT2)> 
 
-  template <class B, class E2, class NT1, class NT2, size_t depth, size_t rank>
-  auto approx(NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  template <class B, class E2, class NT1, class NT2, size_t depth, size_t rank>  requires(IsSimpleNumber<NT1>)
+    auto approx(NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;

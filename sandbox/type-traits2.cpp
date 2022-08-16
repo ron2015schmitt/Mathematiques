@@ -59,13 +59,13 @@ int main(int argc, char* argv[]) {
 
   CurvilinearCoords<NullType, double, 2> tcoords;
 
-  TRDISP(SimpleNumberTrait< CurvilinearCoords<NullType, double, 2> >::depth());
+  TRDISP(SimpleNumberTrait< CurvilinearCoords<NullType, double, 2> >::Type());
 
-  TRDISP(SimpleNumberTrait< Vector<double> >::depth());
-  TRDISP(SimpleNumberTrait< MultiArray<double, 3, 2, 3, 4> >::depth());
-  TRDISP(SimpleNumberTrait< MultiArray<std::complex<double>, 3, 2, 3, 4> >::depth());
+  TRDISP(SimpleNumberTrait< Vector<double> >::Type());
+  TRDISP(SimpleNumberTrait< MultiArray<double, 3, 2, 3, 4> >::Type());
+  TRDISP(SimpleNumberTrait< MultiArray<std::complex<double>, 3, 2, 3, 4> >::Type());
 
-  TRDISP(SimpleNumberTrait< MultiArray_RepeatVector<double, 3, 2, 3, 4> >::depth());
+  TRDISP(SimpleNumberTrait< MultiArray_RepeatVector<double, 3, 2, 3, 4> >::Type());
 
 
   TRDISP(IsReadableExpressionOrArray<Vector<double> >);
