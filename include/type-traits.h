@@ -237,12 +237,6 @@ namespace mathq {
   bool readable_expression_test(const ExpressionR<X, Element, Num, depth, rank>& x) {
     return true;
   }
-  template <class X, class Element, typename Num, size_t depth, size_t rank>
-  Element readable_expression_element(const ExpressionR<X, Element, Num, depth, rank>& x) {
-    return Element();
-  }
-
-
 
   template <class X>
   concept IsReadableExpressionOrArray = requires(X x) {
@@ -370,30 +364,28 @@ namespace mathq {
   // 2. By general we mean a MultiArray and not a specialization like MultiArray_Constant
   // ************************************************************************************
 
-  // default case for Expressions
-  template <IsReadableExpressionOrArray X>
+  // default case 
+  template <typename T>
   class MultiArrayTypeTrait {
   public:
-    using Type = MultiArray<typename X::ElementType, X::rank_value>;
+    using Type = T;
+  };
+
+  // default case for Expressions
+
+  template <typename T> requires (IsReadableExpression<T>)
+    class MultiArrayTypeTrait<T> {
+    public:
+      using Type = MultiArray< typename MultiArrayTypeTrait<typename T::ElementType>::Type, T::rank_value >;
   };
 
   // MultiArrays
-  template <IsReadableExpressionOrArray X> requires (HasStaticSizes<X>)
-    class MultiArrayTypeTrait<X> {
+  template <typename T> requires (IsMultiArray<T>)
+    class MultiArrayTypeTrait<T> {
     public:
-      using Type = MultiArrayHelper<typename X::ElementType, X::static_dims_array>;
+      using Type = MultiArrayHelper< typename MultiArrayTypeTrait<typename T::ElementType>::Type, T::static_dims_array >;
   };
 
-  template <IsReadableExpressionOrArray X> requires (IsReadableExpressionOrArray<typename X::ElementType>)
-    class MultiArrayTypeTrait<X> {
-    public:
-      using Type = MultiArray< typename MultiArrayTypeTrait<typename X::ElementType>::Type, X::rank_value >;
-  };
-  template <IsReadableExpressionOrArray X> requires (HasStaticSizes<X>&& IsReadableExpressionOrArray<typename X::ElementType>)
-    class MultiArrayTypeTrait<X> {
-    public:
-      using Type = MultiArrayHelper< typename MultiArrayTypeTrait<typename X::ElementType>::Type, X::static_dims_array >;
-  };
 
   template <IsReadableExpressionOrArray X>
   using MultiArrayType = MultiArrayTypeTrait<X>::Type;

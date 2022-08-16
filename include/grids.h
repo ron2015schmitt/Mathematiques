@@ -323,6 +323,8 @@ namespace mathq {
     // CurvilinearCoords : public Vector< double, Ndims > {
     // CurvilinearCoords : public MultiArray_RepeatVector<Num, Ndims, dim_ints...> {
   public:
+    static constexpr size_t Ndims_value = Ndims;
+
     using Type = CurvilinearCoords<Derived, Num, Ndims, dim_ints...>;
 
     using ElementType = MultiArray_RepeatVector<Num, Ndims, dim_ints...>;
@@ -340,7 +342,6 @@ namespace mathq {
 
     // using InitializerType = typename MakeInitializer<ElementType, 1 >::Type;  
 
-    static constexpr size_t Ndims_value = Ndims;
 
     // Rank of our multiarray grid is equal to number of dimensions
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency

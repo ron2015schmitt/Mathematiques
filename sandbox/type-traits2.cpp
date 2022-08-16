@@ -35,10 +35,6 @@ namespace mathq {
   //   constexpr static int value = 100;
   // };
 
-
-
-
-
   //  MultiArray<Element>
   // template <typename Element, size_t rank, size_t... ints>
   // class MyTrait<MultiArray<Element, rank, ints...>> {
@@ -126,6 +122,15 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(MultiArrayType<MultiArray<double, 3>> mystery3);
   TRDISP(mystery3);
 
+  ECHO_CODE(MultiArrayType<Vector_Constant<double, 3>> mystery4);
+  TRDISP(mystery4);
+
+  ECHO_CODE(MultiArrayType<MultiArray_RepeatVector<double, 3, 4, 6, 7>> mystery5);
+  TRDISP(mystery5);
+
+
+  ECHO_CODE(MultiArrayType<CurvilinearCoords<mathq::NullType, double, 2>> mystery6);
+  TRDISP(mystery6);
 
   // test expressions
 

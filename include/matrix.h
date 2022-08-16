@@ -56,6 +56,7 @@ namespace mathq {
     using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
     using InitializerType = typename MakeInitializer<Element, rank_value >::Type;
 
+    // template 
 
     //**********************************************************************
     // OBJECT DATA 
