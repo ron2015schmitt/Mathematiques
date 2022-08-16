@@ -285,40 +285,40 @@ namespace mathq {
 
 
   // ***************************************************************************
-  //  IsMultiArrayExp<T>
+  //  IsReadableExpression<T>
   // ***************************************************************************
 
   template <typename T>
-  class IsMultiArrayExp {
+  class IsReadableExpression {
   public:
     constexpr static bool value = false;
   };
 
   template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
-  class IsMultiArrayExp<ExpressionR<Derived, Element, Num, depth, rank>> {
+  class IsReadableExpression<ExpressionR<Derived, Element, Num, depth, rank>> {
   public:
     constexpr static bool value = true;
   };
 
   template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
-  class IsMultiArrayExp<ExpressionRW<Derived, Element, Num, depth, rank>> {
+  class IsReadableExpression<ExpressionRW<Derived, Element, Num, depth, rank>> {
   public:
     constexpr static bool value = true;
   };
 
 
   // ***************************************************************************
-  //  IsMultiArrayExpRW<T>
+  //  IsWritableExpression<T>
   // ***************************************************************************
 
   template <typename T>
-  class IsMultiArrayExpRW {
+  class IsWritableExpression {
   public:
     constexpr static bool value = false;
   };
 
   template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
-  class IsMultiArrayExpRW<ExpressionRW<Derived, Element, Num, depth, rank>> {
+  class IsWritableExpression<ExpressionRW<Derived, Element, Num, depth, rank>> {
   public:
     constexpr static bool value = true;
   };

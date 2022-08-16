@@ -47,20 +47,20 @@ int main(int argc, char* argv[]) {
   cout << "ExpressionR: " << IsMultiArray<ExpressionR<Vector<double>, double, double, 1, 1>> << "\n";
   cout << std::endl;
 
-  cout << "IsMultiArrayExp" << std::endl;
-  cout << "double: " << IsMultiArrayExp<double>::value << "\n";
-  cout << "Vector: " << IsMultiArrayExp<Vector<double>>::value << "\n";
-  // cout << "Vector_Constant: " << IsMultiArrayExp<Vector_Constant<double>> << "\n";
-  cout << "ExpressionR: " << IsMultiArrayExp<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
-  cout << "ExpressionRW: " << IsMultiArrayExp<ExpressionRW<Vector<double>, double, double, 1, 1>>::value << "\n";
+  cout << "IsReadableExpression" << std::endl;
+  cout << "double: " << IsReadableExpression<double>::value << "\n";
+  cout << "Vector: " << IsReadableExpression<Vector<double>>::value << "\n";
+  // cout << "Vector_Constant: " << IsReadableExpression<Vector_Constant<double>> << "\n";
+  cout << "ExpressionR: " << IsReadableExpression<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
+  cout << "ExpressionRW: " << IsReadableExpression<ExpressionRW<Vector<double>, double, double, 1, 1>>::value << "\n";
   cout << std::endl;
 
-  cout << "IsMultiArrayExpRW" << std::endl;
-  cout << "double: " << IsMultiArrayExpRW<double>::value << "\n";
-  cout << "Vector: " << IsMultiArrayExpRW<Vector<double>>::value << "\n";
-  // cout << "Vector_Constant: " << IsMultiArrayExpRW<Vector_Constant<double>> << "\n";
-  cout << "ExpressionR: " << IsMultiArrayExpRW<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
-  cout << "ExpressionRW: " << IsMultiArrayExpRW<ExpressionRW<Vector<double>, double, double, 1, 1>>::value << "\n";
+  cout << "IsWritableExpression" << std::endl;
+  cout << "double: " << IsWritableExpression<double>::value << "\n";
+  cout << "Vector: " << IsWritableExpression<Vector<double>>::value << "\n";
+  // cout << "Vector_Constant: " << IsWritableExpression<Vector_Constant<double>> << "\n";
+  cout << "ExpressionR: " << IsWritableExpression<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
+  cout << "ExpressionRW: " << IsWritableExpression<ExpressionRW<Vector<double>, double, double, 1, 1>>::value << "\n";
   cout << std::endl;
 
 
