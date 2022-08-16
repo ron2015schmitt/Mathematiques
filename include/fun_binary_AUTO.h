@@ -1853,7 +1853,7 @@ auto operator+(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename AddType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -1873,7 +1873,7 @@ auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename AddType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -1897,7 +1897,7 @@ auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator+(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -1924,7 +1924,7 @@ auto operator+(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator+(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -2007,7 +2007,7 @@ auto operator-(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename SubType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -2027,7 +2027,7 @@ auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename SubType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -2051,7 +2051,7 @@ auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator-(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -2078,7 +2078,7 @@ auto operator-(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator-(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -2161,7 +2161,7 @@ auto operator*(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -2181,7 +2181,7 @@ auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -2205,7 +2205,7 @@ auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator*(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -2232,7 +2232,7 @@ auto operator*(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator*(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -2315,7 +2315,7 @@ auto operator/(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename DivType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -2335,7 +2335,7 @@ auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename DivType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -2359,7 +2359,7 @@ auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator/(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -2386,7 +2386,7 @@ auto operator/(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator/(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -2469,7 +2469,7 @@ auto operator==(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -2489,7 +2489,7 @@ auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -2513,7 +2513,7 @@ auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator==(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -2540,7 +2540,7 @@ auto operator==(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator==(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -2623,7 +2623,7 @@ auto operator!=(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -2643,7 +2643,7 @@ auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -2667,7 +2667,7 @@ auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator!=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -2694,7 +2694,7 @@ auto operator!=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator!=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -2777,7 +2777,7 @@ auto operator>(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -2797,7 +2797,7 @@ auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -2821,7 +2821,7 @@ auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator>(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -2848,7 +2848,7 @@ auto operator>(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator>(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -2931,7 +2931,7 @@ auto operator>=(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -2951,7 +2951,7 @@ auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -2975,7 +2975,7 @@ auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator>=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -3002,7 +3002,7 @@ auto operator>=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator>=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -3085,7 +3085,7 @@ auto operator<(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -3105,7 +3105,7 @@ auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -3129,7 +3129,7 @@ auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator<(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -3156,7 +3156,7 @@ auto operator<(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator<(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -3239,7 +3239,7 @@ auto operator<=(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -3259,7 +3259,7 @@ auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -3283,7 +3283,7 @@ auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator<=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -3310,7 +3310,7 @@ auto operator<=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator<=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -3393,7 +3393,7 @@ auto operator&&(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename AndType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -3413,7 +3413,7 @@ auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename AndType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -3437,7 +3437,7 @@ auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator&&(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -3464,7 +3464,7 @@ auto operator&&(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator&&(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -3547,7 +3547,7 @@ auto operator||(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename OrType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -3567,7 +3567,7 @@ auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename OrType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -3591,7 +3591,7 @@ auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto operator||(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -3618,7 +3618,7 @@ auto operator||(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto operator||(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -3701,7 +3701,7 @@ auto atan2(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -3721,7 +3721,7 @@ auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, N
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -3745,7 +3745,7 @@ auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, N
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto atan2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -3772,7 +3772,7 @@ auto atan2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto atan2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -3855,7 +3855,7 @@ auto pow(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -3875,7 +3875,7 @@ auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -3899,7 +3899,7 @@ auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto pow(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -3926,7 +3926,7 @@ auto pow(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, 
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto pow(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -4009,7 +4009,7 @@ auto beta(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -4029,7 +4029,7 @@ auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -4053,7 +4053,7 @@ auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto beta(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -4080,7 +4080,7 @@ auto beta(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2,
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto beta(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -4163,7 +4163,7 @@ auto legendre(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -4183,7 +4183,7 @@ auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -4207,7 +4207,7 @@ auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto legendre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -4234,7 +4234,7 @@ auto legendre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto legendre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -4317,7 +4317,7 @@ auto laguerre(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -4337,7 +4337,7 @@ auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -4361,7 +4361,7 @@ auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto laguerre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -4388,7 +4388,7 @@ auto laguerre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto laguerre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -4471,7 +4471,7 @@ auto hermite(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2)
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -4491,7 +4491,7 @@ auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2,
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -4515,7 +4515,7 @@ auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2,
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto hermite(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -4542,7 +4542,7 @@ auto hermite(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, N
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto hermite(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -4625,7 +4625,7 @@ auto sph_bessel(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& 
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -4645,7 +4645,7 @@ auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -4669,7 +4669,7 @@ auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto sph_bessel(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -4696,7 +4696,7 @@ auto sph_bessel(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto sph_bessel(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -4779,7 +4779,7 @@ auto sph_neumann(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>&
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -4799,7 +4799,7 @@ auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B,
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -4823,7 +4823,7 @@ auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B,
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto sph_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -4850,7 +4850,7 @@ auto sph_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto sph_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -4933,7 +4933,7 @@ auto cyl_bessel_i(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -4953,7 +4953,7 @@ auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -4977,7 +4977,7 @@ auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -5004,7 +5004,7 @@ auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto cyl_bessel_i(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -5087,7 +5087,7 @@ auto cyl_bessel_j(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -5107,7 +5107,7 @@ auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -5131,7 +5131,7 @@ auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -5158,7 +5158,7 @@ auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto cyl_bessel_j(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -5241,7 +5241,7 @@ auto cyl_bessel_k(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -5261,7 +5261,7 @@ auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -5285,7 +5285,7 @@ auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -5312,7 +5312,7 @@ auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto cyl_bessel_k(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -5395,7 +5395,7 @@ auto cyl_neumann(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>&
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -5415,7 +5415,7 @@ auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B,
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -5439,7 +5439,7 @@ auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B,
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -5466,7 +5466,7 @@ auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto cyl_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -5549,7 +5549,7 @@ auto ellint_1(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -5569,7 +5569,7 @@ auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -5593,7 +5593,7 @@ auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto ellint_1(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -5620,7 +5620,7 @@ auto ellint_1(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto ellint_1(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -5703,7 +5703,7 @@ auto ellint_2(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -5723,7 +5723,7 @@ auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -5747,7 +5747,7 @@ auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto ellint_2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -5774,7 +5774,7 @@ auto ellint_2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, 
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto ellint_2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -5857,7 +5857,7 @@ auto Complex(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2)
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -5877,7 +5877,7 @@ auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2,
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -5901,7 +5901,7 @@ auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2,
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto Complex(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -5928,7 +5928,7 @@ auto Complex(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, N
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto Complex(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
@@ -6011,7 +6011,7 @@ auto polar(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -6031,7 +6031,7 @@ auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, N
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -6055,7 +6055,7 @@ auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, N
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto polar(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -6082,7 +6082,7 @@ auto polar(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto polar(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  

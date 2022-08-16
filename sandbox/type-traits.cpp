@@ -18,14 +18,24 @@ int main(int argc, char* argv[]) {
   cout << "running: " <<myname << std::endl;
   cout << std::endl;
 
-  cout << "IsReadableExpression" << std::endl;
-  cout << "double: " << IsReadableExpression<double> << "\n";
-  cout << "Vector: " << IsReadableExpression<Vector<double>> << "\n";
-  cout << "Matrix: " << IsReadableExpression<Matrix<double, 4, 2>> << "\n";
-  cout << "MultiArray: " << IsReadableExpression<MultiArray<double, 3, 2, 3, 4>> << "\n";
-  cout << "Vector_Constant: " << IsReadableExpression<Vector_Constant<double>> << "\n";
-  cout << "ExpressionR: " << IsReadableExpression<ExpressionR<Vector<double>, double, double, 1, 1>> << "\n";
-  cout << "ExpressionRW: " << IsReadableExpression<ExpressionRW<Vector<double>, double, double, 1, 1>> << "\n";
+  cout << "IsReadableExpressionOrArray" << std::endl;
+  cout << "double: " << IsReadableExpressionOrArray<double> << "\n";
+  cout << "Vector: " << IsReadableExpressionOrArray<Vector<double>> << "\n";
+  cout << "Matrix: " << IsReadableExpressionOrArray<Matrix<double, 4, 2>> << "\n";
+  cout << "MultiArray: " << IsReadableExpressionOrArray<MultiArray<double, 3, 2, 3, 4>> << "\n";
+  cout << "Vector_Constant: " << IsReadableExpressionOrArray<Vector_Constant<double>> << "\n";
+  cout << "ExpressionR: " << IsReadableExpressionOrArray<ExpressionR<Vector<double>, double, double, 1, 1>> << "\n";
+  cout << "ExpressionRW: " << IsReadableExpressionOrArray<ExpressionRW<Vector<double>, double, double, 1, 1>> << "\n";
+  cout << std::endl;
+
+  cout << "IsWritableExpressionOrArray" << std::endl;
+  cout << "double: " << IsWritableExpressionOrArray<double> << "\n";
+  cout << "Vector: " << IsWritableExpressionOrArray<Vector<double>> << "\n";
+  cout << "Matrix: " << IsWritableExpressionOrArray<Matrix<double, 4, 2>> << "\n";
+  cout << "MultiArray: " << IsWritableExpressionOrArray<MultiArray<double, 3, 2, 3, 4>> << "\n";
+  cout << "Vector_Constant: " << IsWritableExpressionOrArray<Vector_Constant<double>> << "\n";
+  cout << "ExpressionR: " << IsWritableExpressionOrArray<ExpressionR<Vector<double>, double, double, 1, 1>> << "\n";
+  cout << "ExpressionRW: " << IsWritableExpressionOrArray<ExpressionRW<Vector<double>, double, double, 1, 1>> << "\n";
   cout << std::endl;
 
   cout << "IsMultiArray" << std::endl;

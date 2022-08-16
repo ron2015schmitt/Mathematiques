@@ -72,16 +72,16 @@ int main(int argc, char* argv[]) {
   TRDISP(SimpleNumberTrait< MultiArray_RepeatVector<double, 3, 2, 3, 4> >::depth());
 
 
-  TRDISP(IsReadableExpression<Vector<double> >);
-  TRDISP(IsReadableExpression<Vector<int> >);
-  TRDISP(IsReadableExpression<MultiArray_RepeatVector<double, 3, 2, 3, 4> >);
-  TRDISP(IsReadableExpression<std::vector<double> >);
-  TRDISP(IsReadableExpression< CurvilinearCoords<NullType, double, 2> >);
+  TRDISP(IsReadableExpressionOrArray<Vector<double> >);
+  TRDISP(IsReadableExpressionOrArray<Vector<int> >);
+  TRDISP(IsReadableExpressionOrArray<MultiArray_RepeatVector<double, 3, 2, 3, 4> >);
+  TRDISP(IsReadableExpressionOrArray<std::vector<double> >);
+  TRDISP(IsReadableExpressionOrArray< CurvilinearCoords<NullType, double, 2> >);
   ECHO_CODE(Vector<double> v);
-  TRDISP(IsReadableExpression<decltype(v)>);
-  TRDISP(IsWritableExpression<decltype(v)>);
-  TRDISP(IsReadableExpression<decltype(+v)>);
-  TRDISP(IsWritableExpression<decltype(+v)>);
+  TRDISP(IsReadableExpressionOrArray<decltype(v)>);
+  TRDISP(IsWritableExpressionOrArray<decltype(v)>);
+  TRDISP(IsReadableExpressionOrArray<decltype(+v)>);
+  TRDISP(IsWritableExpressionOrArray<decltype(+v)>);
 
   // std::integer_sequence<unsigned, 9, 2, 5, 1, 9, 1, 6>{}
 

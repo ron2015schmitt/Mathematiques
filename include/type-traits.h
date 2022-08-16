@@ -228,7 +228,7 @@ namespace mathq {
 
 
   // ***************************************************************************
-  //  IsReadableExpression<X>
+  //  IsReadableExpressionOrArray<X>
   //
   // MultiArrays and their Expressions
   // ***************************************************************************
@@ -245,13 +245,13 @@ namespace mathq {
 
 
   template <class X>
-  concept IsReadableExpression = requires(X x) {
+  concept IsReadableExpressionOrArray = requires(X x) {
     readable_expression_test(x);
   };
 
 
   // ***************************************************************************
-  //  IsWritableExpression<X>
+  //  IsWritableExpressionOrArray<X>
   //
   // MultiArrays and their Expressions
   // ***************************************************************************
@@ -263,7 +263,7 @@ namespace mathq {
 
 
   template <class X>
-  concept IsWritableExpression = requires(X x) {
+  concept IsWritableExpressionOrArray = requires(X x) {
     writable_expression_test(x);
   };
 
@@ -394,30 +394,30 @@ namespace mathq {
   // 2. By general we mean a MultiArray and not a specialization like MultiArray_Constant
   // ************************************************************************************
 
-  template <IsReadableExpression X>
+  template <IsReadableExpressionOrArray X>
   class MultiArrayTypeTrait {
   public:
     using Type = MultiArray<typename X::ElementType, X::rank_value>;
   };
 
-  template <IsReadableExpression X> requires (HasStaticSizes<X>)
+  template <IsReadableExpressionOrArray X> requires (HasStaticSizes<X>)
     class MultiArrayTypeTrait<X> {
     public:
       using Type = MultiArrayHelper<typename X::ElementType, X::static_dims_array>;
   };
 
-  template <IsReadableExpression X> requires (IsReadableExpression<typename X::ElementType>)
+  template <IsReadableExpressionOrArray X> requires (IsReadableExpressionOrArray<typename X::ElementType>)
     class MultiArrayTypeTrait<X> {
     public:
       using Type = MultiArray< typename MultiArrayTypeTrait<typename X::ElementType>::Type, X::rank_value >;
   };
-  template <IsReadableExpression X> requires (HasStaticSizes<X>&& IsReadableExpression<typename X::ElementType>)
+  template <IsReadableExpressionOrArray X> requires (HasStaticSizes<X>&& IsReadableExpressionOrArray<typename X::ElementType>)
     class MultiArrayTypeTrait<X> {
     public:
       using Type = MultiArrayHelper< typename MultiArrayTypeTrait<typename X::ElementType>::Type, X::static_dims_array >;
   };
 
-  template <IsReadableExpression X>
+  template <IsReadableExpressionOrArray X>
   using MultiArrayType = MultiArrayTypeTrait<X>::Type;
 
   // ************************************************************************************************
@@ -476,9 +476,9 @@ namespace mathq {
   };
 
 
-  //  IsReadableExpression
+  //  IsReadableExpressionOrArray
 
-  template <IsReadableExpression T>
+  template <IsReadableExpressionOrArray T>
   class
     NumberTrait<T> {
   public:
@@ -551,9 +551,9 @@ namespace mathq {
 
 
 
-  //  IsReadableExpression
+  //  IsReadableExpressionOrArray
 
-  template <IsReadableExpression T, typename NewNumber>
+  template <IsReadableExpressionOrArray T, typename NewNumber>
   class
     ReplacedNumberTrait<T, NewNumber> {
   public:
@@ -853,7 +853,7 @@ namespace mathq {
 
 
   //  MultiArray<Element>
-  // template <IsReadableExpression T, typename C>
+  // template <IsReadableExpressionOrArray T, typename C>
   // class InversionType<T, C> {
   // public:
   //   using ElementType = typename T::ElementType;

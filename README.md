@@ -1,6 +1,6 @@
 
 
-# Mathématiques v0.41.27-c++20
+# Mathématiques v0.41.28-c++20
 
 
 ## Documentation

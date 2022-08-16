@@ -63,7 +63,7 @@ auto __FUNCTION__(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>
 
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1==D2+1)&&(IsReadableExpression<E1>)&&(E1::rank_value==R2)> = 0 >
+  EnableIf<(D1==D2+1)&&(IsReadableExpressionOrArray<E1>)&&(E1::rank_value==R2)> = 0 >
 auto __FUNCTION__(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename __TYPECLASS__<NT1, NT2>::Type NT3;
   typedef E1 Element;   // see TODO note above
@@ -83,7 +83,7 @@ auto __FUNCTION__(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
 // TODO: run-time check (deep dimensions of x1 == deepdimensions of E2)
 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t R1, size_t R2,
-  EnableIf<(D1+1==D2)&&(IsReadableExpression<E2>)&&(E2::rank_value==R1)> = 0 >
+  EnableIf<(D1+1==D2)&&(IsReadableExpressionOrArray<E2>)&&(E2::rank_value==R1)> = 0 >
 auto __FUNCTION__(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2, D2, R2>& x2) {
   typedef typename __TYPECLASS__<NT1, NT2>::Type NT3;
   typedef E2 Element;   // see TODO note above
@@ -107,7 +107,7 @@ auto __FUNCTION__(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
 // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
 template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpression<E1>)> = 0  >
+  EnableIf<(D1>=2)&&(D2==1)&&(IsReadableExpressionOrArray<E1>)> = 0  >
 auto __FUNCTION__(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, NT2, D2, rank>& x2) {
 
   // NOT SURE WHICH OF THE THREE IS BEST
@@ -134,7 +134,7 @@ auto __FUNCTION__(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR
 // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
 template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpression<E2>)> = 0  >
+  EnableIf<(D1==1)&&(D2>=2)&&(IsReadableExpressionOrArray<E2>)> = 0  >
 auto __FUNCTION__(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, NT2, D2, rank>& x2) {
   // NOT SURE WHICH OF THE THREE IS BEST
   //    typedef typename A::ConcreteType E1;  
