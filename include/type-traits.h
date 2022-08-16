@@ -516,16 +516,6 @@ namespace mathq {
 
 
 
-  //  IsReadableExpression
-
-  template <IsReadableExpression T, typename NewNumber>
-  class
-    ReplaceNumberTrait<T, NewNumber> {
-  public:
-    using OldElementType = typename T::ElementType;
-    using ElementType = typename ReplaceNumberTrait<OldElementType, NewNumber>::Type;
-    using Type = MultiArray<ElementType, T::rank_value>;
-  };
 
   //  MultiArray<Element>
 
