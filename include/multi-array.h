@@ -32,6 +32,7 @@ namespace mathq {
       //                  Compile Time Constant
       //**********************************************************************
 
+      constexpr static bool isNotExpression = true;
       constexpr static size_t rank_value = rank_;
       constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
       constexpr static bool is_dynamic_value = (sizeof...(dim_ints) == 0);
@@ -203,9 +204,6 @@ namespace mathq {
       //                         Basic characteristics
       //**********************************************************************
 
-      bool isExpression(void) const {
-        return false;
-      }
       VectorofPtrs getAddresses(void) const {
         VectorofPtrs myaddr((void*)this);
         return myaddr;
@@ -819,7 +817,7 @@ namespace mathq {
 #if MATHQ_DEBUG >= 1
       std::string expression(void) const {
         return "";
-      }
+  }
 #endif
 
       // this is recursive 
@@ -889,7 +887,7 @@ namespace mathq {
         return (st >> x);
       }
 
-  };
+};
 
 }; // namespace mathq
 

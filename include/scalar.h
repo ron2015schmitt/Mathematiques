@@ -25,7 +25,7 @@ namespace mathq {
     //**********************************************************************
     //                  Compile Time Constant
     //**********************************************************************
-
+    constexpr static bool isNotExpression = true;
     constexpr static size_t rank_value = 0;
     constexpr static std::array<size_t, rank_value> static_dims_array = { };
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
@@ -131,9 +131,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return false;
-    }
     VectorofPtrs getAddresses(void) const {
       VectorofPtrs myaddr((void*)this);
       return myaddr;

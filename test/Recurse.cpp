@@ -61,16 +61,6 @@ int main(int argc, char* argv[]) {
     allpass = allpass && pass;
     failnum += (!pass);
 
-    // isExpression()
-    printStart(++testnum);
-    bool bexpected = false;
-    bool bresult;
-    testcode(bresult = s.isExpression());
-    pass = (bresult == bexpected);
-    printEnd(pass, bresult, bexpected);
-    allpass = allpass && pass;
-    failnum += (!pass);
-
     // getAddresses()
     printStart(++testnum);
     VectorofPtrs pexpected;
@@ -192,16 +182,6 @@ int main(int argc, char* argv[]) {
     testcode(Dresult = s.dims());
     pass = (Dresult == Dexpected);
     printEnd(pass, Dresult, Dexpected);
-    allpass = allpass && pass;
-    failnum += (!pass);
-
-    // isExpression()
-    printStart(++testnum);
-    bool bexpected = false;
-    bool bresult;
-    testcode(bresult = s.isExpression());
-    pass = (bresult == bexpected);
-    printEnd(pass, bresult, bexpected);
     allpass = allpass && pass;
     failnum += (!pass);
 
@@ -337,16 +317,6 @@ int main(int argc, char* argv[]) {
   //   testcode( Dresult = s.dims() );
   //   pass = (Dresult==Dexpected);
   //   printEnd(pass,Dresult,Dexpected);
-  //   allpass = allpass && pass;
-  //   failnum += (!pass);
-
-  //   // isExpression()
-  //   printStart(++testnum);
-  //   bool bexpected = false;
-  //   bool bresult;
-  //   testcode( bresult = s.isExpression() );
-  //   pass = (bresult==bexpected);
-  //   printEnd(pass,bresult,bexpected);
   //   allpass = allpass && pass;
   //   failnum += (!pass);
 

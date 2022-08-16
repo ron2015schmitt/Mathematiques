@@ -32,6 +32,7 @@ namespace mathq {
     //                  Compile Time Constant
     //**********************************************************************
 
+    constexpr static bool isNotExpression = true;
     constexpr static size_t rank_value = 2;
     constexpr static std::array<size_t, rank_value> static_dims_array = { dim_ints... };
     constexpr static size_t N0 = std::get<0>(static_dims_array);
@@ -197,9 +198,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return false;
-    }
     VectorofPtrs getAddresses(void) const {
       VectorofPtrs myaddr((void*)this);
       return myaddr;

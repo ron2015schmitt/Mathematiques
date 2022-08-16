@@ -70,10 +70,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return true;
-    }
-
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
     }
@@ -239,9 +235,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return true;
-    }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
@@ -415,9 +408,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return true;
-    }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
@@ -810,9 +800,6 @@ namespace mathq {
     //**********************************************************************
     //                         Basic characteristics
     //**********************************************************************
-    bool isExpression(void) const {
-      return true;
-    }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
@@ -1199,9 +1186,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return true;
-    }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
@@ -1472,9 +1456,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return true;
-    }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
@@ -1681,9 +1662,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return true;
-    }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
@@ -1860,9 +1838,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return true;
-    }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
@@ -2033,9 +2008,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return true;
-    }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;
@@ -2202,9 +2174,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return true;
-    }
 
     VectorofPtrs getAddresses(void) const {
       return *vptrs;

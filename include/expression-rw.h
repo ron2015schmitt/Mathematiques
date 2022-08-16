@@ -61,10 +61,6 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return derived().isExpression();
-    }
-
     // #if MATHQ_DEBUG>=1
     //     std::string expression(void) const {
     //       return derived().expression();

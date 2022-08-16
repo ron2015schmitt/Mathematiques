@@ -586,6 +586,17 @@ namespace mathq {
 
 
 
+  //  ReadableExpression
+
+  template <ReadableExpression T, typename NewNumber>
+  class
+    ReplacedNumberTrait<T, NewNumber> {
+  public:
+    using OldElementType = typename T::ElementType;
+    using ElementType = typename ReplacedNumberTrait<OldElementType, NewNumber>::Type;
+    using Type = MultiArray<ElementType, T::rank_value>;
+  };
+
   //  MultiArray<Element>
 
   template <typename NewNumber, typename Element, size_t rank, size_t... ints>
