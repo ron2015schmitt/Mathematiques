@@ -1809,7 +1809,7 @@ public:
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator+(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename AddType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -1824,7 +1824,7 @@ auto operator+(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator+(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename AddType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -1838,7 +1838,7 @@ auto operator+(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator+(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename AddType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -1859,7 +1859,7 @@ auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -1879,7 +1879,7 @@ auto operator+(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -1906,7 +1906,7 @@ auto operator+(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename AddType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -1931,7 +1931,7 @@ auto operator+(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename AddType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -1963,7 +1963,7 @@ auto operator+(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator-(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename SubType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -1978,7 +1978,7 @@ auto operator-(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator-(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename SubType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -1992,7 +1992,7 @@ auto operator-(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator-(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename SubType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -2013,7 +2013,7 @@ auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2033,7 +2033,7 @@ auto operator-(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2060,7 +2060,7 @@ auto operator-(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename SubType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -2085,7 +2085,7 @@ auto operator-(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename SubType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -2117,7 +2117,7 @@ auto operator-(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator*(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -2132,7 +2132,7 @@ auto operator*(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator*(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -2146,7 +2146,7 @@ auto operator*(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator*(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -2167,7 +2167,7 @@ auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2187,7 +2187,7 @@ auto operator*(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2214,7 +2214,7 @@ auto operator*(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -2239,7 +2239,7 @@ auto operator*(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -2271,7 +2271,7 @@ auto operator*(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator/(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename DivType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -2286,7 +2286,7 @@ auto operator/(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator/(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename DivType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -2300,7 +2300,7 @@ auto operator/(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator/(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename DivType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -2321,7 +2321,7 @@ auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2341,7 +2341,7 @@ auto operator/(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2368,7 +2368,7 @@ auto operator/(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename DivType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -2393,7 +2393,7 @@ auto operator/(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename DivType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -2425,7 +2425,7 @@ auto operator/(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator==(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -2440,7 +2440,7 @@ auto operator==(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expression
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator==(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -2454,7 +2454,7 @@ auto operator==(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& 
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator==(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -2475,7 +2475,7 @@ auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2495,7 +2495,7 @@ auto operator==(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2522,7 +2522,7 @@ auto operator==(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -2547,7 +2547,7 @@ auto operator==(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -2579,7 +2579,7 @@ auto operator==(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator!=(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -2594,7 +2594,7 @@ auto operator!=(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expression
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator!=(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -2608,7 +2608,7 @@ auto operator!=(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& 
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator!=(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -2629,7 +2629,7 @@ auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2649,7 +2649,7 @@ auto operator!=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2676,7 +2676,7 @@ auto operator!=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -2701,7 +2701,7 @@ auto operator!=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -2733,7 +2733,7 @@ auto operator!=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator>(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -2748,7 +2748,7 @@ auto operator>(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator>(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -2762,7 +2762,7 @@ auto operator>(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator>(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -2783,7 +2783,7 @@ auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2803,7 +2803,7 @@ auto operator>(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2830,7 +2830,7 @@ auto operator>(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -2855,7 +2855,7 @@ auto operator>(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -2887,7 +2887,7 @@ auto operator>(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator>=(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -2902,7 +2902,7 @@ auto operator>=(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expression
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator>=(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -2916,7 +2916,7 @@ auto operator>=(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& 
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator>=(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -2937,7 +2937,7 @@ auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2957,7 +2957,7 @@ auto operator>=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -2984,7 +2984,7 @@ auto operator>=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -3009,7 +3009,7 @@ auto operator>=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -3041,7 +3041,7 @@ auto operator>=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator<(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -3056,7 +3056,7 @@ auto operator<(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator<(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -3070,7 +3070,7 @@ auto operator<(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator<(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -3091,7 +3091,7 @@ auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3111,7 +3111,7 @@ auto operator<(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3138,7 +3138,7 @@ auto operator<(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B,
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -3163,7 +3163,7 @@ auto operator<(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -3195,7 +3195,7 @@ auto operator<(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator<=(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -3210,7 +3210,7 @@ auto operator<=(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expression
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator<=(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -3224,7 +3224,7 @@ auto operator<=(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& 
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator<=(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -3245,7 +3245,7 @@ auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3265,7 +3265,7 @@ auto operator<=(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3292,7 +3292,7 @@ auto operator<=(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -3317,7 +3317,7 @@ auto operator<=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename RelType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -3349,7 +3349,7 @@ auto operator<=(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator&&(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename AndType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -3364,7 +3364,7 @@ auto operator&&(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expression
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator&&(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename AndType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -3378,7 +3378,7 @@ auto operator&&(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& 
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator&&(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename AndType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -3399,7 +3399,7 @@ auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3419,7 +3419,7 @@ auto operator&&(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3446,7 +3446,7 @@ auto operator&&(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename AndType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -3471,7 +3471,7 @@ auto operator&&(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename AndType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -3503,7 +3503,7 @@ auto operator&&(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto operator||(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename OrType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -3518,7 +3518,7 @@ auto operator||(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expression
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto operator||(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename OrType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -3532,7 +3532,7 @@ auto operator||(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& 
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto operator||(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename OrType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -3553,7 +3553,7 @@ auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3573,7 +3573,7 @@ auto operator||(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3600,7 +3600,7 @@ auto operator||(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename OrType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -3625,7 +3625,7 @@ auto operator||(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename OrType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -3657,7 +3657,7 @@ auto operator||(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto atan2(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -3672,7 +3672,7 @@ auto atan2(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, 
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto atan2(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -3686,7 +3686,7 @@ auto atan2(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto atan2(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -3707,7 +3707,7 @@ auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, N
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3727,7 +3727,7 @@ auto atan2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, N
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3754,7 +3754,7 @@ auto atan2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -3779,7 +3779,7 @@ auto atan2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -3811,7 +3811,7 @@ auto atan2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto pow(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -3826,7 +3826,7 @@ auto pow(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto pow(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -3840,7 +3840,7 @@ auto pow(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto pow(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -3861,7 +3861,7 @@ auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3881,7 +3881,7 @@ auto pow(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT2
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -3908,7 +3908,7 @@ auto pow(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2, 
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -3933,7 +3933,7 @@ auto pow(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, 
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -3965,7 +3965,7 @@ auto pow(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2, 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto beta(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -3980,7 +3980,7 @@ auto beta(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto beta(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -3994,7 +3994,7 @@ auto beta(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto beta(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -4015,7 +4015,7 @@ auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4035,7 +4035,7 @@ auto beta(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, NT
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4062,7 +4062,7 @@ auto beta(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2,
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -4087,7 +4087,7 @@ auto beta(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2,
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -4119,7 +4119,7 @@ auto beta(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2,
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -4134,7 +4134,7 @@ auto legendre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto legendre(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -4148,7 +4148,7 @@ auto legendre(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto legendre(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -4169,7 +4169,7 @@ auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4189,7 +4189,7 @@ auto legendre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4216,7 +4216,7 @@ auto legendre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, 
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -4241,7 +4241,7 @@ auto legendre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B,
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -4273,7 +4273,7 @@ auto legendre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B,
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -4288,7 +4288,7 @@ auto laguerre(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto laguerre(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -4302,7 +4302,7 @@ auto laguerre(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto laguerre(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -4323,7 +4323,7 @@ auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4343,7 +4343,7 @@ auto laguerre(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4370,7 +4370,7 @@ auto laguerre(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, 
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -4395,7 +4395,7 @@ auto laguerre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B,
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -4427,7 +4427,7 @@ auto laguerre(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B,
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto hermite(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -4442,7 +4442,7 @@ auto hermite(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto hermite(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -4456,7 +4456,7 @@ auto hermite(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2)
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto hermite(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -4477,7 +4477,7 @@ auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2,
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4497,7 +4497,7 @@ auto hermite(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2,
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4524,7 +4524,7 @@ auto hermite(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, N
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -4549,7 +4549,7 @@ auto hermite(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, 
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -4581,7 +4581,7 @@ auto hermite(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto sph_bessel(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -4596,7 +4596,7 @@ auto sph_bessel(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expression
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto sph_bessel(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -4610,7 +4610,7 @@ auto sph_bessel(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& 
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto sph_bessel(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -4631,7 +4631,7 @@ auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4651,7 +4651,7 @@ auto sph_bessel(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, 
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4678,7 +4678,7 @@ auto sph_bessel(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -4703,7 +4703,7 @@ auto sph_bessel(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -4735,7 +4735,7 @@ auto sph_bessel(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto sph_neumann(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -4750,7 +4750,7 @@ auto sph_neumann(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expressio
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto sph_neumann(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -4764,7 +4764,7 @@ auto sph_neumann(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2&
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto sph_neumann(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -4785,7 +4785,7 @@ auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B,
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4805,7 +4805,7 @@ auto sph_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B,
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4832,7 +4832,7 @@ auto sph_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -4857,7 +4857,7 @@ auto sph_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -4889,7 +4889,7 @@ auto sph_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto cyl_bessel_i(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -4904,7 +4904,7 @@ auto cyl_bessel_i(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expressi
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto cyl_bessel_i(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -4918,7 +4918,7 @@ auto cyl_bessel_i(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto cyl_bessel_i(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -4939,7 +4939,7 @@ auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4959,7 +4959,7 @@ auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -4986,7 +4986,7 @@ auto cyl_bessel_i(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -5011,7 +5011,7 @@ auto cyl_bessel_i(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const Expression
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -5043,7 +5043,7 @@ auto cyl_bessel_i(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const Expression
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto cyl_bessel_j(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -5058,7 +5058,7 @@ auto cyl_bessel_j(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expressi
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto cyl_bessel_j(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -5072,7 +5072,7 @@ auto cyl_bessel_j(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto cyl_bessel_j(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -5093,7 +5093,7 @@ auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5113,7 +5113,7 @@ auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5140,7 +5140,7 @@ auto cyl_bessel_j(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -5165,7 +5165,7 @@ auto cyl_bessel_j(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const Expression
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -5197,7 +5197,7 @@ auto cyl_bessel_j(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const Expression
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto cyl_bessel_k(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -5212,7 +5212,7 @@ auto cyl_bessel_k(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expressi
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto cyl_bessel_k(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -5226,7 +5226,7 @@ auto cyl_bessel_k(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto cyl_bessel_k(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -5247,7 +5247,7 @@ auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5267,7 +5267,7 @@ auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5294,7 +5294,7 @@ auto cyl_bessel_k(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -5319,7 +5319,7 @@ auto cyl_bessel_k(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const Expression
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -5351,7 +5351,7 @@ auto cyl_bessel_k(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const Expression
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto cyl_neumann(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -5366,7 +5366,7 @@ auto cyl_neumann(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expressio
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto cyl_neumann(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -5380,7 +5380,7 @@ auto cyl_neumann(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2&
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto cyl_neumann(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -5401,7 +5401,7 @@ auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B,
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5421,7 +5421,7 @@ auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B,
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5448,7 +5448,7 @@ auto cyl_neumann(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -5473,7 +5473,7 @@ auto cyl_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -5505,7 +5505,7 @@ auto cyl_neumann(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto ellint_1(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -5520,7 +5520,7 @@ auto ellint_1(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto ellint_1(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -5534,7 +5534,7 @@ auto ellint_1(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto ellint_1(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -5555,7 +5555,7 @@ auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5575,7 +5575,7 @@ auto ellint_1(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5602,7 +5602,7 @@ auto ellint_1(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, 
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -5627,7 +5627,7 @@ auto ellint_1(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B,
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -5659,7 +5659,7 @@ auto ellint_1(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B,
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto ellint_2(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -5674,7 +5674,7 @@ auto ellint_2(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto ellint_2(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -5688,7 +5688,7 @@ auto ellint_2(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto ellint_2(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -5709,7 +5709,7 @@ auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5729,7 +5729,7 @@ auto ellint_2(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5756,7 +5756,7 @@ auto ellint_2(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, 
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -5781,7 +5781,7 @@ auto ellint_2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B,
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename MultType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -5813,7 +5813,7 @@ auto ellint_2(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B,
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto Complex(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -5828,7 +5828,7 @@ auto Complex(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto Complex(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -5842,7 +5842,7 @@ auto Complex(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2)
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto Complex(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -5863,7 +5863,7 @@ auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2,
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5883,7 +5883,7 @@ auto Complex(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2,
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -5910,7 +5910,7 @@ auto Complex(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, N
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -5935,7 +5935,7 @@ auto Complex(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, 
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,
@@ -5967,7 +5967,7 @@ auto Complex(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, 
 template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
 auto polar(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     E1, E2, E3, NT1, NT2, NT3, depth, depth, depth, rank, rank, rank,
@@ -5982,7 +5982,7 @@ auto polar(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, 
 template <class A, class NT2, class Element, class NT1, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto polar(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<ExpressionR<A, Element, NT1, depth, rank>,
     NT2,
     Element, NT2, E3, NT1, NT2, NT3, depth, 0, depth, rank, rank, rank,
@@ -5996,7 +5996,7 @@ auto polar(const ExpressionR<A, Element, NT1, depth, rank>& x1, const NT2& x2) {
 template <class NT1, class B, class Element, class NT2, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto polar(const NT1& x1, const ExpressionR<B, Element, NT2, depth, rank>& x2) {
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   return  ExpressionR_Binary<NT1,
     ExpressionR<B, Element, NT2, depth, rank>,
     NT1, Element, E3, NT1, NT2, NT3, 0, depth, depth, rank, rank, rank,
@@ -6017,7 +6017,7 @@ auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, N
   typedef E1 Element;   // see TODO note above
   constexpr size_t R3 = R1;
   constexpr size_t D3 = D1;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "A" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -6037,7 +6037,7 @@ auto polar(const ExpressionR<A, E1, NT1, D1, R1>& x1, const ExpressionR<B, E2, N
   typedef E2 Element;   // see TODO note above
   constexpr size_t R3 = R2;
   constexpr size_t D3 = D2;
-  typedef typename ReplacedNumberTrait<Element, NT3>::Type E3;
+  typedef typename ReplaceNumberTrait<Element, NT3>::Type E3;
   //    MOUT << "B" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, R1>,
     ExpressionR<B, E2, NT2, D2, R2>,
@@ -6064,7 +6064,7 @@ auto polar(const ExpressionR<A, E1, NT1, D1, rank>& x1, const ExpressionR<B, NT2
   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
 
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D1;
   //    MOUT << "C" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
@@ -6089,7 +6089,7 @@ auto polar(const ExpressionR<A, NT1, NT1, D1, rank>& x1, const ExpressionR<B, E2
   //    typedef A E1;  
   typedef ExpressionR<A, NT1, NT1, D1, rank> E1;
   typedef typename ComplexType<NT1, NT2>::Type NT3;
-  typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;   // see TODO note above
   constexpr size_t D3 = D2;
   //    MOUT << "Num" <<std::endl;
   return  ExpressionR_Binary<ExpressionR<A, NT1, NT1, D1, rank>,

@@ -55,6 +55,13 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     using MyArrayType = Element;
 
+    template <typename NewElement>
+    using Type_ReplaceElement = Scalar<NewElement>;
+    template <typename NewNumber>
+    using Type_ReplaceNumber = Scalar<typename ReplaceNumberTrait<ElementType, NewNumber>::Type>;
+    // template <typename NewSimpleNumber>
+    // using Type_ReplaceSimpleNumber = Scalar<typename ReplacedSimpleNumberTrait<ElementType, NewSimpleNumber>::Type>;
+
 
     //**********************************************************************
     // OBJECT DATA 

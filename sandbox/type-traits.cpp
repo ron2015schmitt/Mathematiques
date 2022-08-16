@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
   TRDISP(NumberTrait<std::complex<double>>::Type());
   // TRDISP(NumberTrait<std::complex<Vector<bool>>>::Type());
   typename NumberTrait<Vector<double>>::Type x;
-  TRDISP(ReplacedNumberTrait<Vector<double, 1>, double>::Type());
+  TRDISP(ReplaceNumberTrait<Vector<double, 1>, double>::Type());
   TRDISP(NumberTrait<Vector<std::complex<double>>>::Type());
   TRDISP(NumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
   TRDISP(NumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());

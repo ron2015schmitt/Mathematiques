@@ -320,7 +320,7 @@ int main(int argc, char* argv[]) {
     TLDISP(y);
     typename DeeperType<double, decltype(t1)>::Type z;
     TLDISP(z);
-    typename ReplacedNumberTrait<decltype(t1), float>::Type w;
+    typename ReplaceNumberTrait<decltype(t1), float>::Type w;
     TLDISP(w);
   }
 

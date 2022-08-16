@@ -50,7 +50,7 @@ namespace mathq
     using T1 = ExpressionR<A, E1, NT1, depth, rank1>;
     using T2 = ExpressionR<B, E2, NT2, depth, rank2>;
     using NT3 = typename AddType<NT1, NT2>::Type;
-    using E3 = typename ReplacedNumberTrait<E1, NT3>::Type; // see TODO note above
+    using E3 = typename ReplaceNumberTrait<E1, NT3>::Type; // see TODO note above
     using T3 = MultiArray<E3, rank3>;
 
     const Dimensions dims1;
@@ -121,7 +121,7 @@ namespace mathq
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
   auto dot(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
-    typedef typename ReplacedNumberTrait<E1, NT3>::Type E3; // see TODO note above
+    typedef typename ReplaceNumberTrait<E1, NT3>::Type E3; // see TODO note above
     E3* result = new E3;
     *result = 0;
     for (size_t i = 0; i < v1.size(); i++) {
@@ -137,7 +137,7 @@ namespace mathq
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
   auto dot(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 1>& v2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
-    typedef typename ReplacedNumberTrait<E1, NT3>::Type E3; // see TODO note above
+    typedef typename ReplaceNumberTrait<E1, NT3>::Type E3; // see TODO note above
 
     // DISP(m1);
     size_t Nrows = m1.dims()[0];
@@ -162,7 +162,7 @@ namespace mathq
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
   auto dot(const ExpressionR<A, E1, NT1, depth, 1>& v1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
-    typedef typename ReplacedNumberTrait<E1, NT3>::Type E3; // see TODO note above
+    typedef typename ReplaceNumberTrait<E1, NT3>::Type E3; // see TODO note above
 
     size_t Nrows = m2.dims()[0];
     size_t Ncols = m2.dims()[1];
@@ -188,7 +188,7 @@ namespace mathq
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth>
   auto dot(const ExpressionR<A, E1, NT1, depth, 2>& m1, const ExpressionR<B, E2, NT2, depth, 2>& m2) {
     typedef typename AddType<NT1, NT2>::Type NT3;
-    typedef typename ReplacedNumberTrait<E1, NT3>::Type E3; // see TODO note above
+    typedef typename ReplaceNumberTrait<E1, NT3>::Type E3; // see TODO note above
 
     size_t Nrows = m1.dims()[0];
     size_t Nsum = m1.dims()[1];

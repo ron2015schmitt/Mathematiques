@@ -489,7 +489,7 @@ namespace mathq {
 
 
   // ************************************************************************************************
-  // ReplacedNumberTrait<InputType, NewNumber>
+  // ReplaceNumberTrait<InputType, NewNumber>
   //
   // This operates recursively to find the base number type
   //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
@@ -501,13 +501,13 @@ namespace mathq {
   // ************************************************************************************************
 
   template <typename T, typename NewNumber>
-  class ReplacedNumberTrait {
+  class ReplaceNumberTrait {
   public:
     using Type = T;
   };
 
   // template <typename NewNumber>
-  // class ReplacedNumberTrait<NullType, NewNumber> {
+  // class ReplaceNumberTrait<NullType, NewNumber> {
   // public:
   //   using Type = NewNumber;
   // };
@@ -516,7 +516,7 @@ namespace mathq {
   // built in ordered number types: bool, int, double etc
   template <IsNumber Num, IsNumber NewNum>
   class
-    ReplacedNumberTrait<Num, NewNum> {
+    ReplaceNumberTrait<Num, NewNum> {
   public:
     using Type = NewNum;
   };
@@ -527,10 +527,10 @@ namespace mathq {
 
   template <IsReadableExpressionOrArray T, typename NewNumber>
   class
-    ReplacedNumberTrait<T, NewNumber> {
+    ReplaceNumberTrait<T, NewNumber> {
   public:
     using OldElementType = typename T::ElementType;
-    using ElementType = typename ReplacedNumberTrait<OldElementType, NewNumber>::Type;
+    using ElementType = typename ReplaceNumberTrait<OldElementType, NewNumber>::Type;
     using Type = MultiArray<ElementType, T::rank_value>;
   };
 
@@ -538,9 +538,9 @@ namespace mathq {
 
   template <typename NewNumber, typename Element, size_t rank, size_t... ints>
   class
-    ReplacedNumberTrait<MultiArray<Element, rank, ints...>, NewNumber> {
+    ReplaceNumberTrait<MultiArray<Element, rank, ints...>, NewNumber> {
   public:
-    using ElementType = typename ReplacedNumberTrait<Element, NewNumber>::Type;
+    using ElementType = typename ReplaceNumberTrait<Element, NewNumber>::Type;
     using Type = MultiArray<ElementType, rank, ints...>;
   };
 
@@ -548,10 +548,10 @@ namespace mathq {
 
   template <typename NewNumber, class Derived, typename Element, typename Num, size_t depth_in, size_t rank>
   class
-    ReplacedNumberTrait<ExpressionR<Derived, Element, Num, depth_in, rank>, NewNumber> {
+    ReplaceNumberTrait<ExpressionR<Derived, Element, Num, depth_in, rank>, NewNumber> {
   public:
-    using ElementType = typename ReplacedNumberTrait<Element, NewNumber>::Type;
-    using Type = typename ReplacedNumberTrait<Derived, NewNumber>::Type;
+    using ElementType = typename ReplaceNumberTrait<Element, NewNumber>::Type;
+    using Type = typename ReplaceNumberTrait<Derived, NewNumber>::Type;
     using DerivedType = Type;
     using ExpressionType = ExpressionR<DerivedType, ElementType, NewNumber, depth_in, rank>;
   };
@@ -561,10 +561,10 @@ namespace mathq {
 
   template <typename NewNumber, class Derived, typename Element, typename Num, size_t depth_in, size_t rank>
   class
-    ReplacedNumberTrait<ExpressionRW<Derived, Element, Num, depth_in, rank>, NewNumber> {
+    ReplaceNumberTrait<ExpressionRW<Derived, Element, Num, depth_in, rank>, NewNumber> {
   public:
-    using ElementType = typename ReplacedNumberTrait<Element, NewNumber>::Type;
-    using Type = typename ReplacedNumberTrait<Derived, NewNumber>::Type;
+    using ElementType = typename ReplaceNumberTrait<Element, NewNumber>::Type;
+    using Type = typename ReplaceNumberTrait<Derived, NewNumber>::Type;
     using DerivedType = Type;
     using ExpressionType = ExpressionRW<DerivedType, ElementType, NewNumber, depth_in, rank>;
   };
@@ -793,8 +793,8 @@ namespace mathq {
   //   using ElementType = typename T::ElementType;
   //   using NumberType = typename NumberTrait<ElementType>::Type;
   //   using T_as_MultiArray = MultiArrayType<T>;
-  //   using MultiArray_NumberType = typename ReplacedNumberTrait< T_as_MultiArray, NumberType >::Type; // top level array becomes bottom level array
-  //   using MultiArray_C = typename ReplacedNumberTrait< T_as_MultiArray, C >::Type;  // this is for the intermediate arrays
+  //   using MultiArray_NumberType = typename ReplaceNumberTrait< T_as_MultiArray, NumberType >::Type; // top level array becomes bottom level array
+  //   using MultiArray_C = typename ReplaceNumberTrait< T_as_MultiArray, C >::Type;  // this is for the intermediate arrays
   //   using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<ElementType, MultiArray_NumberType>::Type, typename InversionType<ElementType, MultiArray_C>::Type  >::type;
   // };
 
@@ -946,7 +946,7 @@ namespace mathq {
   class ResultType {
   public:
     using MyDeeperType = typename DeeperType<A, B>::Type;
-    using MultiArrayType = typename ReplacedNumberTrait<MyDeeperType, NewNumber>::Type;
+    using MultiArrayType = typename ReplaceNumberTrait<MyDeeperType, NewNumber>::Type;
 
     constexpr static bool isprim = (NumberTrait<A>::depth() == 0) && (NumberTrait<B>::depth() == 0);
     using Type = typename std::conditional<isprim, NewNumber, MultiArrayType>::type;

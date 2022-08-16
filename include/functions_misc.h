@@ -80,7 +80,7 @@ namespace mathq {
 
   template <class NT2, class X, class Element, typename Num, size_t depth, size_t rank>
   auto numbercast(const ExpressionR<X, Element, Num, depth, rank>& x) {
-    typedef typename ReplacedNumberTrait<Element, NT2>::Type EOUT;
+    typedef typename ReplaceNumberTrait<Element, NT2>::Type EOUT;
     return  ExpressionR_Unary<ExpressionR<X, Element, Num, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Num, NT2>>(x);
   }
 
@@ -242,7 +242,7 @@ namespace mathq {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
-    typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;
+    typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;
     return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
       ExpressionR<B, E2, NT2, depth, rank>,
       DTOL,
@@ -257,7 +257,7 @@ namespace mathq {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
-    typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;
+    typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;
     return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
       NT2,
       DTOL,
@@ -274,7 +274,7 @@ namespace mathq {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
-    typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;
+    typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;
     return  ExpressionR_Ternary<NT1,
       ExpressionR<B, E2, NT2, depth, rank>,
       DTOL,

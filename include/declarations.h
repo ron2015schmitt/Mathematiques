@@ -91,7 +91,7 @@ namespace mathq {
   class NumberTrait;
 
   template <typename T, typename NewNumber>
-  class ReplacedNumberTrait;
+  class ReplaceNumberTrait;
 
   template <typename T>
   class SimpleNumberTrait;
