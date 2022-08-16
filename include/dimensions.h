@@ -14,7 +14,7 @@ namespace mathq {
   // ***************************************************************************
 
   class Dimensions {
-  
+
   private:
     std::vector<size_t> data_;
 
@@ -42,7 +42,9 @@ namespace mathq {
 
     explicit Dimensions(const size_t N) {
       this->resize(N);
+      *this = 0;
     }
+
 
     explicit Dimensions(const std::vector<size_t>& var) {
       *this = var;
@@ -108,29 +110,29 @@ namespace mathq {
     Dimensions& getReduced() const {
       // remove all dimensiosn equal to 1
       Dimensions& v = *(new Dimensions{});
-  
+
       size_t N = 0;
       for (size_t i = 0; i < this->size(); i++) {
-        if((*this)[i] > 1) {
+        if ((*this)[i] > 1) {
           N++;
         }
       }
       v.resize(N);
-  
+
       size_t n = 0;
       for (size_t i = 0; i < this->size(); i++) {
-        if((*this)[i] > 1) {
+        if ((*this)[i] > 1) {
           v[n++] = (*this)[i];
         }
       }
       return v;
     }
 
-   //**********************************************************************
-    //************* Array-style Element Access: v[n] ***********************
     //**********************************************************************
+     //************* Array-style Element Access: v[n] ***********************
+     //**********************************************************************
 
-    // "read/write"
+     // "read/write"
     size_t& operator[](const size_t n) {
       return data_[n];
     }
@@ -187,6 +189,12 @@ namespace mathq {
     //************************** ASSIGNMENT ********************************
     //**********************************************************************
 
+    Dimensions& operator=(const size_t& val) {
+      for (size_t i = 0; i < this->size(); i++) {
+        (*this)[i] = val;
+      }
+      return *this;
+    }
 
     Dimensions& operator=(const Dimensions& var) {
       this->resize(var.size());
@@ -253,7 +261,7 @@ namespace mathq {
       using namespace display;
       Style& style = FormatDataVector::style_for_punctuation;
       if (v.rank() == 0) {
-          stream << style.apply("{}");
+        stream << style.apply("{}");
       }
       size_t k = 0;
       for (size_t ii = 0; ii < v.size(); ii++, k++) {
@@ -318,7 +326,8 @@ namespace mathq {
       return ClassName();
     }
 
-    static inline std::string ClassName() {      using namespace display;
+    static inline std::string ClassName() {
+      using namespace display;
       std::string s = "NullDimensions";
       return s;
     }
@@ -335,27 +344,27 @@ namespace mathq {
 
 
   inline Dimensions& Dimensions::reduce(const Type& dims1, const Type& dims2, const size_t& index1, const size_t& index2) {
-      const size_t M1 = dims1[index1];
-      const size_t M2 = dims2[index2];
-      if (M1 != M2) {
-        display::log("mathq", "Dimensions", "reduce", "Inner dimensions do not match");
-        return *(new NullDimensions());
-      }
-      const size_t& M = M1;      
-      const size_t rank1 = dims1.rank();
-      const size_t rank2 = dims2.rank();
-      const size_t rank3 = rank1 + rank2 - 2;
-      Dimensions& dims3 = *(new Dimensions(rank3));
-      size_t k = 0;
-      for (size_t ii = 0; ii < rank1; ii++) {
-        if (ii == index1) continue;
-        dims3[k++] = dims1[ii];
-      }
-      for (size_t ii = 0; ii < rank2; ii++) {
-        if (ii == index2) continue;
-        dims3[k++] = dims2[ii];
-      }
-      return dims3;
+    const size_t M1 = dims1[index1];
+    const size_t M2 = dims2[index2];
+    if (M1 != M2) {
+      display::log("mathq", "Dimensions", "reduce", "Inner dimensions do not match");
+      return *(new NullDimensions());
+    }
+    const size_t& M = M1;
+    const size_t rank1 = dims1.rank();
+    const size_t rank2 = dims2.rank();
+    const size_t rank3 = rank1 + rank2 - 2;
+    Dimensions& dims3 = *(new Dimensions(rank3));
+    size_t k = 0;
+    for (size_t ii = 0; ii < rank1; ii++) {
+      if (ii == index1) continue;
+      dims3[k++] = dims1[ii];
+    }
+    for (size_t ii = 0; ii < rank2; ii++) {
+      if (ii == index2) continue;
+      dims3[k++] = dims2[ii];
+    }
+    return dims3;
   }
 
 
@@ -470,11 +479,11 @@ namespace mathq {
       return dd.evert();
     }
 
-       //**********************************************************************
-    //************* Array-style Element Access: v[n] ***********************
     //**********************************************************************
+ //************* Array-style Element Access: v[n] ***********************
+ //**********************************************************************
 
-    // "read/write"
+ // "read/write"
     Dimensions& operator[](const size_t n) {
       return data_[n];
     }
@@ -568,7 +577,8 @@ namespace mathq {
       return ClassName();
     }
 
-    static inline std::string ClassName() {      using namespace display;
+    static inline std::string ClassName() {
+      using namespace display;
       std::string s = "RecursiveDimensions";
       return s;
     }

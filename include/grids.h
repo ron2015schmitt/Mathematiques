@@ -6,9 +6,9 @@ namespace mathq {
 
 
 
-  template <class Element, size_t Ndims>
-  class CartCoords;
-  template <class Element>
+  template <class GridElementType, size_t Ndims>
+  class CartesianCoords;
+  template <class GridElementType>
   class PolarCoords;
 
 
@@ -54,258 +54,269 @@ namespace mathq {
 
 
   //
-  // Domain<Num>
+  // Domain<GridElementType>
   //
 
-  template <typename Num>
+  template <typename GridElementType>
   class
     Domain {
-  public:
-    size_t N;
-    Num a;
-    Num b;
-    bool include_a;
-    bool include_b;
-    GridScaleEnum scale;
+  };
 
-    // dependent variables
-    // move to private
-    Num log_a;
-    Num log_b;
-    size_t Neff;
-    Num start;
-    Num step;
-    mathq::Vector<Num> grid;
+  //
+  // Domain<Reals>
+  //
+  template <typename GridElementType> requires(IsSimpleNumber<GridElementType>)
+    class
+    Domain<GridElementType> {
+    public:
+      size_t N;
+      GridElementType a;
+      GridElementType b;
+      bool include_a;
+      bool include_b;
+      GridScaleEnum scale;
 
-    Domain() noexcept {
-      include_a = true;
-      a = -std::numeric_limits<Num>::infinity();
-      include_b = true;
-      b = std::numeric_limits<Num>::infinity();
-      N = 0;
-      this->init_();
-    }
-    Domain(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
-      a(a), b(b), N(N), scale(scale), include_a(include_a), include_b(include_b) {
-      refreshGrid();
-    }
-    ~Domain() {
-    }
+      // dependent variables
+      // move to private
+      GridElementType log_a;
+      GridElementType log_b;
+      size_t Neff;
+      GridElementType start;
+      GridElementType step;
+      mathq::Vector<GridElementType> grid;
 
-    mathq::Vector<Num>& getGrid() {
-      refreshGrid();
-      return grid;
-    }
-    mathq::Vector<Num>& refreshGrid() {
-      grid.resize(N);
-      init();
-      if (scale == GridScale::LOG) {
-        return makeGrid_Log();
+      Domain() noexcept {
+        include_a = true;
+        a = -std::numeric_limits<GridElementType>::infinity();
+        include_b = true;
+        b = std::numeric_limits<GridElementType>::infinity();
+        N = 0;
+        this->init();
       }
-      else {
-        return makeGrid_Linear();
+      Domain(const GridElementType& a, const GridElementType& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
+        a(a), b(b), N(N), scale(scale), include_a(include_a), include_b(include_b) {
+        refreshGrid();
       }
-    }
+      ~Domain() {
+      }
 
-  private:
-    Domain& init() {
-      Neff = N +  size_t(!include_a) + size_t(!include_b);
-      if (scale == GridScale::LOG) {
-        log_a = std::log10(a);
-        log_b = std::log10(b);
-        step = (log_b - log_a)/static_cast<Num>(Neff-1);
+      mathq::Vector<GridElementType>& getGrid() {
+        refreshGrid();
+        return grid;
+      }
+      mathq::Vector<GridElementType>& refreshGrid() {
+        grid.resize(N);
+        init();
+        if (scale == GridScale::LOG) {
+          return makeGrid_Log();
+        }
+        else {
+          return makeGrid_Linear();
+        }
+      }
+
+    private:
+      Domain& init() {
+        Neff = N +  size_t(!include_a) + size_t(!include_b);
+        if (scale == GridScale::LOG) {
+          log_a = std::log10(a);
+          log_b = std::log10(b);
+          step = (log_b - log_a)/static_cast<GridElementType>(Neff-1);
+          if (include_a) {
+            start = log_a;
+          }
+          else {
+            start = log_a + step;
+          }
+        }
+        else {
+          step = (b - a)/static_cast<GridElementType>(Neff-1);
+          if (include_a) {
+            start = a;
+          }
+          else {
+            start = a + step;
+          }
+        }
+        return *this;
+      }
+
+      mathq::Vector<GridElementType>& makeGrid_Linear() {
+        if (N == 0) return grid;
+
+        for (size_t c = 0; c<(N-1); c++) {
+          grid[c] = start + static_cast<GridElementType>(c)*step;
+        }
+        if (include_b) {
+          grid[N-1] = b;
+        }
+        else {
+          grid[N-1] = b - step;
+        }
+        return grid;
+      }
+
+      mathq::Vector<GridElementType>& makeGrid_Log() {
+        if (N == 0) return grid;
+
+        for (size_t c = 0; c<(N-1); c++) {
+          grid[c] = std::pow(10, start + static_cast<GridElementType>(c)*step);
+        }
+        if (include_b) {
+          grid[N-1] = b;
+        }
+        else {
+          grid[N-1] = std::pow(10, log_b - step);
+        }
+        return grid;
+      }
+    public:
+
+
+      //
+      // static "factor" methods"
+      //
+      static Domain<GridElementType> emptySet() {
+        return Domain<GridElementType>(0, 0, 0, GridScale::LINEAR, false, false);
+      }
+
+      static Domain<GridElementType> point(const GridElementType& p) {
+        return Domain<GridElementType>(p, p, 1, GridScale::LINEAR, true, true);
+      }
+
+      // [a,b]
+      static Domain<GridElementType> interval_CC(const GridElementType& a, const GridElementType& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+        return Domain<GridElementType>(a, b, N, scale, true, true);
+      }
+
+      // (a,b]
+      static Domain<GridElementType> interval_OC(const GridElementType& a, const GridElementType& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+        return Domain<GridElementType>(a, b, N, scale, false, true);
+      }
+
+      // [a,b)
+      static Domain<GridElementType> interval_CO(const GridElementType& a, const GridElementType& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+        return Domain<GridElementType>(a, b, N, scale, true, false);
+      }
+
+      // (a,b)
+      static Domain<GridElementType> interval_OO(const GridElementType& a, const GridElementType& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+        return Domain<GridElementType>(a, b, N, scale, false, false);
+      }
+
+
+
+      static Domain<GridElementType> realLine(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+        GridElementType a;
         if (include_a) {
-          start = log_a;
+          a = -std::numeric_limits<GridElementType>::infinity();
         }
         else {
-          start = log_a + step;
+          a = std::numeric_limits<GridElementType>::lowest();
         }
+        GridElementType b;
+        if (include_b) {
+          b = std::numeric_limits<GridElementType>::infinity();
+        }
+        else {
+          b = std::numeric_limits<GridElementType>::max();
+        }
+        return Domain<GridElementType>(a, b, 0, scale, include_a, include_b);
       }
-      else {
-        step = (b - a)/static_cast<Num>(Neff-1);
+
+      static Domain<GridElementType> realLineNeg(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+        GridElementType a;
         if (include_a) {
-          start = a;
+          a = -std::numeric_limits<GridElementType>::infinity();
         }
         else {
-          start = a + step;
+          a = std::numeric_limits<GridElementType>::lowest();
         }
-      }
-      return *this;
-    }
-
-    mathq::Vector<Num>& makeGrid_Linear() {
-      if (N == 0) return grid;
-
-      for (size_t c = 0; c<(N-1); c++) {
-        grid[c] = start + static_cast<Num>(c)*step;
-      }
-      if (include_b) {
-        grid[N-1] = b;
-      }
-      else {
-        grid[N-1] = b - step;
-      }
-      return grid;
-    }
-
-    mathq::Vector<Num>& makeGrid_Log() {
-      if (N == 0) return grid;
-
-      for (size_t c = 0; c<(N-1); c++) {
-        grid[c] = std::pow(10, start + static_cast<Num>(c)*step);
-      }
-      if (include_b) {
-        grid[N-1] = b;
-      }
-      else {
-        grid[N-1] = std::pow(10, log_b - step);
-      }
-      return grid;
-    }
-
-  public:
-
-    static Domain<Num> emptySet() {
-      return Domain<Num>(0, 0, 0, GridScale::LINEAR, false, false);
-    }
-
-    static Domain<Num> point(const Num& p) {
-      return Domain<Num>(p, p, 1, GridScale::LINEAR, true, true);
-    }
-
-    // [a,b]
-    static Domain<Num> interval_CC(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return Domain<Num>(a, b, N, scale, true, true);
-    }
-
-    // (a,b]
-    static Domain<Num> interval_OC(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return Domain<Num>(a, b, N, scale, false, true);
-    }
-
-    // [a,b)
-    static Domain<Num> interval_CO(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return Domain<Num>(a, b, N, scale, true, false);
-    }
-
-    // (a,b)
-    static Domain<Num> interval_OO(const Num& a, const Num& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-      return Domain<Num>(a, b, N, scale, false, false);
-    }
-
-
-
-    static Domain<Num> realLine(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
-      Num a;
-      if (include_a) {
-        a = -std::numeric_limits<Num>::infinity();
-      }
-      else {
-        a = std::numeric_limits<Num>::lowest();
-      }
-      Num b;
-      if (include_b) {
-        b = std::numeric_limits<Num>::infinity();
-      }
-      else {
-        b = std::numeric_limits<Num>::max();
-      }
-      return Domain<Num>(a, b, 0, scale, include_a, include_b);
-    }
-
-    static Domain<Num> realLineNeg(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
-      Num a;
-      if (include_a) {
-        a = -std::numeric_limits<Num>::infinity();
-      }
-      else {
-        a = std::numeric_limits<Num>::lowest();
-      }
-      Num b;
-      if (include_b) {
-        b = 0;
-      }
-      else {
-        b = -std::numeric_limits<Num>::min();
-      }
-      return Domain<Num>(a, b, 0, scale, include_a, include_b);
-    }
-
-    static Domain<Num> realLinePos(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
-      Num a;
-      if (include_a) {
-        a = 0;
-      }
-      else {
-        a = std::numeric_limits<Num>::min();
-      }
-      Num b;
-      if (include_b) {
-        b = std::numeric_limits<Num>::infinity();
-      }
-      else {
-        b = std::numeric_limits<Num>::max();
-      }
-      return Domain<Num>(a, b, 0, include_a, include_b);
-    }
-
-
-
-    inline std::string classname() const {
-      return ClassName();
-    }
-
-    static inline std::string ClassName() {
-      using namespace display;
-      std::string s = "Domain";
-      s += StyledString::get(ANGLE1).get();
-      Num d;
-      s += getTypeName(d);
-      s += StyledString::get(ANGLE2).get();
-      return s;
-    }
-
-
-    inline friend std::ostream& operator<<(std::ostream& stream, const Domain& var) {
-      using namespace display;
-      if (var.a == var.b) {
-        // point
-        stream << "{point=";
-        dispval_strm(stream, var.a);
-        // stream << ", gridState=";
-        // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-        stream << "}";
-      }
-      else {
-        stream << "{";
-        stream << "interval=";
-        if (var.include_a) {
-          stream << "[";
+        GridElementType b;
+        if (include_b) {
+          b = 0;
         }
         else {
-          stream << "(";
+          b = -std::numeric_limits<GridElementType>::min();
         }
-        dispval_strm(stream, var.a);
-        stream << ", ";
-        dispval_strm(stream, var.b);
-        if (var.include_a) {
-          stream << "]";
+        return Domain<GridElementType>(a, b, 0, scale, include_a, include_b);
+      }
+
+      static Domain<GridElementType> realLinePos(const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) {
+        GridElementType a;
+        if (include_a) {
+          a = 0;
         }
         else {
-          stream << ")";
+          a = std::numeric_limits<GridElementType>::min();
         }
-        stream << ", N=";
-        dispval_strm(stream, var.N);
-
-        stream << ", scale=";
-        dispval_strm(stream, var.scale);
-
-        // stream << ", gridState=";
-        // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-        stream << "}";
+        GridElementType b;
+        if (include_b) {
+          b = std::numeric_limits<GridElementType>::infinity();
+        }
+        else {
+          b = std::numeric_limits<GridElementType>::max();
+        }
+        return Domain<GridElementType>(a, b, 0, include_a, include_b);
       }
-      return stream;
-    }
+
+
+
+      inline std::string classname() const {
+        return ClassName();
+      }
+
+      static inline std::string ClassName() {
+        using namespace display;
+        std::string s = "Domain";
+        s += StyledString::get(ANGLE1).get();
+        GridElementType d;
+        s += getTypeName(d);
+        s += StyledString::get(ANGLE2).get();
+        return s;
+      }
+
+
+      inline friend std::ostream& operator<<(std::ostream& stream, const Domain& var) {
+        using namespace display;
+        if (var.a == var.b) {
+          // point
+          stream << "{point=";
+          dispval_strm(stream, var.a);
+          // stream << ", gridState=";
+          // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
+          stream << "}";
+        }
+        else {
+          stream << "{";
+          stream << "interval=";
+          if (var.include_a) {
+            stream << "[";
+          }
+          else {
+            stream << "(";
+          }
+          dispval_strm(stream, var.a);
+          stream << ", ";
+          dispval_strm(stream, var.b);
+          if (var.include_a) {
+            stream << "]";
+          }
+          else {
+            stream << ")";
+          }
+          stream << ", N=";
+          dispval_strm(stream, var.N);
+
+          stream << ", scale=";
+          dispval_strm(stream, var.scale);
+
+          // stream << ", gridState=";
+          // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
+          stream << "}";
+        }
+        return stream;
+      }
 
 
 
@@ -317,23 +328,21 @@ namespace mathq {
   // * CurvilinearCoords 
   // ***************************************************************************
 
-  template <class Derived, typename Num, size_t Ndims, size_t ...dim_ints>
+  template <typename GridElementType, size_t Ndims, class Derived, size_t ...dim_ints>
   class
-    CurvilinearCoords : public Vector< MultiArray_RepeatVector<Num, Ndims, dim_ints...>, Ndims > {
+    CurvilinearCoords : public Vector< MultiArray_RepeatVector<GridElementType, Ndims, dim_ints...>, Ndims > {
     // CurvilinearCoords : public Vector< double, Ndims > {
-    // CurvilinearCoords : public MultiArray_RepeatVector<Num, Ndims, dim_ints...> {
+    // CurvilinearCoords : public MultiArray_RepeatVector<GridElementType, Ndims, dim_ints...> {
   public:
     static constexpr size_t Ndims_value = Ndims;
 
-    using Type = CurvilinearCoords<Derived, Num, Ndims, dim_ints...>;
+    using Type = CurvilinearCoords<GridElementType, Ndims, Derived, dim_ints...>;
+    using ElementType = MultiArray_RepeatVector<GridElementType, Ndims, dim_ints...>;
+    using NumberType = GridElementType;
+    using SimpleNumberType = typename SimpleNumberTrait<GridElementType>::Type;
 
-    using ElementType = MultiArray_RepeatVector<Num, Ndims, dim_ints...>;
-    using GridElementType = Num;
-    using NumberType = typename NumberTrait<Num>::Type;
-    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
-
-    using ParentType = Vector< MultiArray_RepeatVector<Num, Ndims, dim_ints...>, Ndims >;
-    using ConcreteType = Vector< MultiArray<Num, Ndims, dim_ints...>, Ndims >;
+    using ParentType = Vector< ElementType, Ndims >;
+    using ConcreteType = Vector< MultiArray<GridElementType, Ndims, dim_ints...>, Ndims >;
     using DerivedType = Derived;
 
     using DimensionsType = Dimensions;
@@ -347,15 +356,17 @@ namespace mathq {
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
 
-    // std::array<Domain<Num>, Ndims> rsets;
+    std::array<Domain<GridElementType>, Ndims> domains;
 
-    // CurvilinearCoords() : MultiArray_RepeatVector<Num, Ndims, dim_ints...>(0) {
-    CurvilinearCoords() {
+
+    CurvilinearCoords() : ParentType() {
+      setup_grids();
     }
 
-    // CurvilinearCoords(const std::initializer_list<Domain<Num>>& mylist) {
-    //   // *this = mylist;
-    // }
+    CurvilinearCoords(const std::initializer_list<Domain<GridElementType>>& mylist) {
+      // setup_grids();
+      // *this = mylist;
+    }
 
     Derived& derived() {
       return static_cast<Derived&>(*this);
@@ -368,7 +379,16 @@ namespace mathq {
       return Ndims;
     }
 
-    // CurvilinearCoords& init_() {
+
+    Type& setup_grids(void) {
+      for (size_t c = 0; c < Ndims; c++) {
+        (*this)[c].index_value = c;
+      }
+      return *this;
+    }
+
+
+    // CurvilinearCoords& init() {
     //   inflateGrids_();
     //   return *this;
     // }
@@ -385,7 +405,7 @@ namespace mathq {
     //   OUTPUT("inflategrids");
     //   TRDISP(gdims);
     //   for (size_t g = 0; g < Ndims; g++) {
-    //     Domain<Num>& set = get(g);
+    //     Domain<GridElementType>& set = get(g);
     //     set.inflateGrid_();
     //     grid[g].resize(gdims);
     //   }
@@ -415,23 +435,23 @@ namespace mathq {
     // Dimensions gridDims(void) {
     //   Dimensions dims;
     //   for (size_t g = 0; g < Ndims; g++) {
-    //     Domain<Num>& rs = get(g);
+    //     Domain<GridElementType>& rs = get(g);
     //     dims.push_back(rs.N);
     //   }
     //   return dims;
     // }
 
-    // CurvilinearCoords& operator=(const std::initializer_list<Domain<Num>>& mylist) {
-    //   size_t i = 0;
-    //   typename std::initializer_list<Domain<Num>>::iterator it;
-    //   for (it = mylist.begin(); it != mylist.end(); ++it) {
-    //     (*this)[i++] = *it;
-    //   }
-    //   return *this;
-    // }
+    CurvilinearCoords& operator=(const std::initializer_list<Domain<GridElementType>>& mylist) {
+      size_t i = 0;
+      typename std::initializer_list<Domain<GridElementType>>::iterator it;
+      for (it = mylist.begin(); it != mylist.end(); ++it) {
+        domains[i++] = *it;
+      }
+      return *this;
+    }
 
 
-    // Domain<Num>& get(size_t g) {
+    // Domain<GridElementType>& get(size_t g) {
     //   return (*this)[g];
     // }
 
@@ -443,7 +463,7 @@ namespace mathq {
 
 
     // MULTIGRID& forceRegenGrid() {
-    //   init_();
+    //   init();
 
     //   if constexpr (Ndims == 0) {
     //     // do something?
@@ -452,10 +472,10 @@ namespace mathq {
     //     grid = get(0).forceRegenGrid();
     //   }
     //   else if constexpr (Ndims == 2) {
-    //     Grid<Num, 1>& xgrid = get(0).forceRegenGrid();
-    //     Grid<Num, 1>& ygrid = get(1).forceRegenGrid();
-    //     Grid<Num, Ndims>& X = grid[0];
-    //     Grid<Num, Ndims>& Y = grid[1];
+    //     Grid<GridElementType, 1>& xgrid = get(0).forceRegenGrid();
+    //     Grid<GridElementType, 1>& ygrid = get(1).forceRegenGrid();
+    //     Grid<GridElementType, Ndims>& X = grid[0];
+    //     Grid<GridElementType, Ndims>& Y = grid[1];
     //     const size_t Nx = gridDims()[0];
     //     const size_t Ny = gridDims()[1];
     //     X.resize(Nx, Ny);
@@ -494,7 +514,7 @@ namespace mathq {
     //       for (int g = 0; g < Ndims; g++) {
     //         // this loop is for the Ndims different grids (vectors of size N)
     //         // we set the grid value of each grid
-    //         Domain<Num>& rs = get(g);
+    //         Domain<GridElementType>& rs = get(g);
     //         // MDISP(g, indices[g]);
     //         grid[g][indices] = rs.getGrid()[indices[g]];
     //       }
@@ -514,7 +534,7 @@ namespace mathq {
       using namespace display;
       std::string s = "CurvilinearCoords";
       s += StyledString::get(ANGLE1).get();
-      Num d;
+      GridElementType d;
       s += getTypeName(d);
       s += StyledString::get(COMMA).get();
       s += "Ndims=";
@@ -525,10 +545,7 @@ namespace mathq {
 
 
     inline friend std::ostream& operator<<(std::ostream& stream, const CurvilinearCoords& var) {
-      stream << "{ ";
-      stream << "gridState=";
-      display::dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-      stream << ", {\n";
+      stream << "{\n";
       for (size_t g = 0; g < var.size(); g++) {
         if (g > 0)
           stream << ", \n";
@@ -544,14 +561,14 @@ namespace mathq {
 
 
   //   // ***************************************************************************
-  //   // * CurvilinearCoords<Num, Ndims>
+  //   // * CurvilinearCoords<GridElementType, Ndims>
   //   // ***************************************************************************
 
-  //   template <class Element, size_t Ndims, class CHILD>
-  //   class CurvilinearCoords : public Vector<Element, Ndims> {
+  //   template <class GridElementType, size_t Ndims, class CHILD>
+  //   class CurvilinearCoords : public Vector<GridElementType, Ndims> {
   //   public:
-  //     typedef CurvilinearCoords<Element, Ndims, CHILD> CLASS;
-  //     typedef Vector<Element, Ndims> PARENT;
+  //     typedef CurvilinearCoords<GridElementType, Ndims, CHILD> CLASS;
+  //     typedef Vector<GridElementType, Ndims> PARENT;
 
   //     CHILD& child() {
   //       return static_cast<CHILD&>(*this);
@@ -562,21 +579,21 @@ namespace mathq {
 
 
   //     // Jacobian 
-  //     Element J() const {
+  //     GridElementType J() const {
   //       return child().J();
   //     }
 
   //     // metric tensor g^{ij} 
-  //     Matrix<Element, Ndims, Ndims> g() const {
+  //     Matrix<GridElementType, Ndims, Ndims> g() const {
   //       return child().g();
   //     }
-  //     // CartCoords<Element, Ndims>& pos() const {
+  //     // CartesianCoords<GridElementType, Ndims>& pos() const {
   //     //   return child().pos();
   //     // }
-  //     // CartCoords<Element, Ndims>& toCartesian() const {
+  //     // CartesianCoords<GridElementType, Ndims>& toCartesian() const {
   //     //   return child().toCartesian();
   //     // }
-  //     Vector<Element, Ndims>& basis_vec(size_t n) const {
+  //     Vector<GridElementType, Ndims>& basis_vec(size_t n) const {
   //       return child().basis_vec();
   //     }
 
@@ -603,222 +620,219 @@ namespace mathq {
   //   };
 
 
+    // ***************************************************************************
+    // * CartesianCoords<GridElementType, Ndims>
+    // ***************************************************************************
+
+  template <class GridElementType, size_t Ndims>
+  class CartesianCoords : public CurvilinearCoords<GridElementType, Ndims, CartesianCoords<GridElementType, Ndims>> {
+  public:
+
+    using ParentType = CurvilinearCoords<GridElementType, Ndims, CartesianCoords<GridElementType, Ndims>>;
+
+    // template<size_t TEMP = Ndims>
+    // static EnableMethodIf<TEMP==2, CartesianCoords<GridElementType, Ndims>> fromPolar(const GridElementType& r, const GridElementType& phi) {
+    //   GridElementType x = r * std::cos(phi);
+    //   GridElementType y = r * std::sin(phi);
+    //   return CartesianCoords<GridElementType, Ndims>(x, y);
+    // }
+    // template<size_t TEMP = Ndims>
+    // EnableMethodIf<TEMP==2, PolarCoords<GridElementType>> toPolar() {
+    //   return PolarCoords<GridElementType>(*this);
+    // }
+
+
+    explicit CartesianCoords() : ParentType() {
+    }
+
+    explicit CartesianCoords(const std::initializer_list<Domain<GridElementType>>& mylist) : ParentType(mylist) {
+    }
+
+    explicit CartesianCoords(const CartesianCoords<GridElementType, Ndims>& v2) {
+      // BASE& me = *this;
+      // me = v2;
+    }
+
+    // std::array<std::string, Ndims>& names() const {
+    //   std::array<std::string, Ndims> names;
+    //   for (size_t c = 0; c < Ndims; c++) {
+    //     names[c] = name(c);
+    //   }
+    //   return names;
+    // }
+
+    const std::string& name(size_t n) const {
+      std::string* s = new std::string("x");
+      *s += std::to_string(n+1);
+      return *s;
+    }
+
+
+    // // Jacobian 
+    // GridElementType& J() const {
+    //   GridElementType* jacob = new GridElementType();
+    //   *jacob = 1;
+    //   return *jacob;
+    // }
+
+    // // metric tensor g^{ij} 
+    // Matrix<GridElementType, Ndims, Ndims> g() const {
+    //   Matrix<GridElementType, Ndims, Ndims> metric;
+    //   for (size_t r = 0; r < Ndims; r++) {
+    //     for (size_t c = 0; c < Ndims; c++) {
+    //       metric(r, c) = (r==c) ? 1 : 0;
+    //     }
+    //   }
+    //   return metric;
+    // }
+
+    // CartesianCoords<GridElementType, Ndims>& pos() const {
+    //   return toCartesian();
+    // }
+    // CartesianCoords<GridElementType, Ndims>& toCartesian() const {
+    //   return *(new CartesianCoords<GridElementType, Ndims>(*this));
+    // }
+
+    // Vector<GridElementType, Ndims>& basis_vec(size_t n) const {
+    //   Vector<GridElementType, Ndims>* vec = new Vector<GridElementType, Ndims>(0);
+    //   (*vec)[n] = 1;
+    //   return *vec;
+    // }
+
+
+    inline std::string classname() const {
+      using namespace display;
+      std::string s = "CartesianCoords";
+      s += StyledString::get(ANGLE1).get();
+      GridElementType d;
+      s += getTypeName(d);
+      s += StyledString::get(COMMA).get();
+      s += std::to_string(Ndims);
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const CartesianCoords<GridElementType, Ndims>& var) {
+      stream << "(";
+      for (size_t c = 0; c < Ndims; c++) {
+        if (c>0) stream << ", ";
+        stream << var.name(c);
+        stream << "=";
+        stream << var.domains[c];
+      }
+      stream << ")";
+      return stream;
+    }
+
+
+
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
+    // GridElementType& x1() const {
+    //   return (*this)[0];
+    // }
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
+    // CartesianCoords<GridElementType, Ndims>& x1(const GridElementType& x1) const {
+    //   (*this)[0] = x1;
+    //   return *this;
+    // }
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
+    // GridElementType& x() const {
+    //   return (*this)[0];
+    // }
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
+    // CartesianCoords<GridElementType, Ndims>& x(const GridElementType& x) const {
+    //   (*this)[0] = x;
+    //   return *this;
+    // }
+
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
+    // GridElementType& x2() const {
+    //   return (*this)[1];
+    // }
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
+    // CartesianCoords<GridElementType, Ndims>& x2(const GridElementType& x2) const {
+    //   (*this)[1] = x2;
+    //   return *this;
+    // }
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
+    // GridElementType& y() const {
+    //   return (*this)[1];
+    // }
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
+    // CartesianCoords<GridElementType, Ndims>& y(const GridElementType& y) const {
+    //   (*this)[1] = y;
+    //   return *this;
+    // }
+
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
+    // GridElementType& x3() const {
+    //   return (*this)[2];
+    // }
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
+    // CartesianCoords<GridElementType, Ndims>& x3(const GridElementType& x3) const {
+    //   (*this)[2] = x3;
+    //   return *this;
+    // }
+
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
+    // GridElementType& z() const {
+    //   return (*this)[2];
+    // }
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
+    // CartesianCoords<GridElementType, Ndims>& z(const GridElementType& z) const {
+    //   (*this)[2] = z;
+    //   return *this;
+    // }
+
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP==2)> = 0>
+    // explicit CartesianCoords<GridElementType, Ndims>(const PolarCoords<GridElementType>& v2) {
+    //   (*this)[0] = v2.r() * std::cos(v2.phi());
+    //   (*this)[1] = v2.r() * std::sin(v2.phi());
+    // }
+
+  };
+
+
+
+  template <class GridElementType, size_t Ndims>
+  auto dot(const CartesianCoords<GridElementType, Ndims>& v1, const CartesianCoords<GridElementType, Ndims>& v2) {
+    return v1 | v2;
+  }
+
+
+
+
   //   // ***************************************************************************
-  //   // * CartCoords<Num, Ndims>
+  //   // * PolarCoords<GridElementType>(r, phi)
   //   // ***************************************************************************
 
-  //   template <class Element, size_t Ndims>
-  //   class CartCoords : public CurvilinearCoords<Element, Ndims, CartCoords<Element, Ndims>> {
+  //   template <class GridElementType>
+  //   class PolarCoords : public CurvilinearCoords<GridElementType, 2, PolarCoords<GridElementType>> {
   //   public:
-  //     typedef CartCoords<Element, Ndims> CLASS;
-  //     typedef CurvilinearCoords<Element, Ndims, CLASS> PARENT;
-  //     typedef typename PARENT::PARENT BASE;
-  //     static int ron() {
-  //       return Ndims;
-  //     }
-
-  //     template<size_t TEMP = Ndims>
-  //     static EnableMethodIf<TEMP==2, CartCoords<Element, Ndims>> fromPolar(const Element& r, const Element& phi) {
-  //       Element x = r * std::cos(phi);
-  //       Element y = r * std::sin(phi);
-  //       return CartCoords<Element, Ndims>(x, y);
-  //     }
-  //     template<size_t TEMP = Ndims>
-  //     EnableMethodIf<TEMP==2, PolarCoords<Element>> toPolar() {
-  //       return PolarCoords<Element>(*this);
-  //     }
-
-
-  //     explicit CartCoords(const std::initializer_list<Element>& mylist) {
-  //       BASE& me = *this;
-  //       me = mylist;
-  //     }
-
-  //     explicit CartCoords(const CartCoords<Element, Ndims>& v2) {
-  //       BASE& me = *this;
-  //       me = v2;
-  //     }
-
-  //     std::array<std::string, Ndims>& names() const {
-  //       std::array<std::string, Ndims> names;
-  //       for (size_t c = 0; c < Ndims; c++) {
-  //         names[c] = name(c);
-  //       }
-  //       return names;
-  //     }
-
-  //     const std::string& name(size_t n) const {
-  //       std::string* s = new std::string("x");
-  //       *s += std::to_string(n+1);
-  //       return *s;
-  //     }
-
-
-  //     // Jacobian 
-  //     Element& J() const {
-  //       Element* jacob = new Element();
-  //       *jacob = 1;
-  //       return *jacob;
-  //     }
-
-  //     // metric tensor g^{ij} 
-  //     Matrix<Element, Ndims, Ndims> g() const {
-  //       Matrix<Element, Ndims, Ndims> metric;
-  //       for (size_t r = 0; r < Ndims; r++) {
-  //         for (size_t c = 0; c < Ndims; c++) {
-  //           metric(r, c) = (r==c) ? 1 : 0;
-  //         }
-  //       }
-  //       return metric;
-  //     }
-
-  //     CartCoords<Element, Ndims>& pos() const {
-  //       return toCartesian();
-  //     }
-  //     CartCoords<Element, Ndims>& toCartesian() const {
-  //       return *(new CartCoords<Element, Ndims>(*this));
-  //     }
-
-  //     Vector<Element, Ndims>& basis_vec(size_t n) const {
-  //       Vector<Element, Ndims>* vec = new Vector<Element, Ndims>(0);
-  //       (*vec)[n] = 1;
-  //       return *vec;
-  //     }
-
-
-  //     inline std::string classname() const {
-  //       using namespace display;
-  //       std::string s = "CartCoords";
-  //       s += StyledString::get(ANGLE1).get();
-  //       Element d;
-  //       s += getTypeName(d);
-  //       s += StyledString::get(COMMA).get();
-  //       s += std::to_string(Ndims);
-  //       s += StyledString::get(ANGLE2).get();
-  //       return s;
-  //     }
-
-
-  //     inline friend std::ostream& operator<<(std::ostream& stream, const CartCoords<Element, Ndims>& var) {
-  //       stream << "(";
-  //       for (size_t c = 0; c < Ndims; c++) {
-  //         if (c>0) stream << ", ";
-  //         stream << var.name(c);
-  //         stream << "=";
-  //         stream << var[c];
-  //       }
-  //       stream << ")";
-  //       return stream;
-  //     }
-
-
-
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
-  //     Element& x1() const {
-  //       return (*this)[0];
-  //     }
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
-  //     CartCoords<Element, Ndims>& x1(const Element& x1) const {
-  //       (*this)[0] = x1;
-  //       return *this;
-  //     }
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
-  //     Element& x() const {
-  //       return (*this)[0];
-  //     }
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
-  //     CartCoords<Element, Ndims>& x(const Element& x) const {
-  //       (*this)[0] = x;
-  //       return *this;
-  //     }
-
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
-  //     Element& x2() const {
-  //       return (*this)[1];
-  //     }
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
-  //     CartCoords<Element, Ndims>& x2(const Element& x2) const {
-  //       (*this)[1] = x2;
-  //       return *this;
-  //     }
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
-  //     Element& y() const {
-  //       return (*this)[1];
-  //     }
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
-  //     CartCoords<Element, Ndims>& y(const Element& y) const {
-  //       (*this)[1] = y;
-  //       return *this;
-  //     }
-
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
-  //     Element& x3() const {
-  //       return (*this)[2];
-  //     }
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
-  //     CartCoords<Element, Ndims>& x3(const Element& x3) const {
-  //       (*this)[2] = x3;
-  //       return *this;
-  //     }
-
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
-  //     Element& z() const {
-  //       return (*this)[2];
-  //     }
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
-  //     CartCoords<Element, Ndims>& z(const Element& z) const {
-  //       (*this)[2] = z;
-  //       return *this;
-  //     }
-
-  //     template<size_t TEMP = Ndims, EnableIf<(TEMP==2)> = 0>
-  //     explicit CartCoords<Element, Ndims>(const PolarCoords<Element>& v2) {
-  //       (*this)[0] = v2.r() * std::cos(v2.phi());
-  //       (*this)[1] = v2.r() * std::sin(v2.phi());
-  //     }
-
-  //   };
-
-
-
-  //   template <class Element, size_t Ndims>
-  //   auto dot(const CartCoords<Element, Ndims>& v1, const CartCoords<Element, Ndims>& v2) {
-  //     return v1 | v2;
-  //   }
-
-
-
-
-  //   // ***************************************************************************
-  //   // * PolarCoords<Num>(r, phi)
-  //   // ***************************************************************************
-
-  //   template <class Element>
-  //   class PolarCoords : public CurvilinearCoords<Element, 2, PolarCoords<Element>> {
-  //   public:
-  //     typedef PolarCoords<Element> CLASS;
-  //     typedef CurvilinearCoords<Element, 2, CLASS> PARENT;
+  //     typedef PolarCoords<GridElementType> CLASS;
+  //     typedef CurvilinearCoords<GridElementType, 2, CLASS> PARENT;
   //     typedef typename PARENT::PARENT BASE;
 
-  //     static PolarCoords<Element> fromCartesian(Element x, Element y) {
-  //       return PolarCoords<Element>(std::sqrt(x*x + y*y), std::atan2(y, x));
+  //     static PolarCoords<GridElementType> fromCartesian(GridElementType x, GridElementType y) {
+  //       return PolarCoords<GridElementType>(std::sqrt(x*x + y*y), std::atan2(y, x));
   //     }
 
-  //     PolarCoords(const Element r, const Element phi) {
+  //     PolarCoords(const GridElementType r, const GridElementType phi) {
   //       (*this)[0] = r;
   //       (*this)[1] = phi;
   //     }
-  //     PolarCoords(const std::initializer_list<Element>& mylist) {
+  //     PolarCoords(const std::initializer_list<GridElementType>& mylist) {
   //       BASE& me = *this;
   //       me = mylist;
   //     }
 
-  //     PolarCoords(const PolarCoords<Element>& v2) {
+  //     PolarCoords(const PolarCoords<GridElementType>& v2) {
   //       BASE& me = *this;
   //       me = v2;
   //     }
 
-  //     PolarCoords(const CartCoords<Element, 2>& v2) {
+  //     PolarCoords(const CartesianCoords<GridElementType, 2>& v2) {
   //       (*this)[0] = std::sqrt(x*x + y*y);
   //       (*this)[1] = std::atan2(y, x);
   //     }
@@ -840,63 +854,63 @@ namespace mathq {
   //     }
 
 
-  //     Element& r() const {
+  //     GridElementType& r() const {
   //       return (*this)[0];
   //     }
-  //     Element& phi() const {
+  //     GridElementType& phi() const {
   //       return (*this)[1];
   //     }
 
-  //     PolarCoords<Element>& r(const Element& r) const {
+  //     PolarCoords<GridElementType>& r(const GridElementType& r) const {
   //       (*this)[0] = r;
   //       return *this;
   //     }
-  //     PolarCoords<Element>& phi(const Element& phi) const {
+  //     PolarCoords<GridElementType>& phi(const GridElementType& phi) const {
   //       (*this)[1] = phi;
   //       return *this;
   //     }
 
 
-  //     Element x() const {
-  //       const Element& r = (*this)[0];
-  //       const Element& phi = (*this)[1];
+  //     GridElementType x() const {
+  //       const GridElementType& r = (*this)[0];
+  //       const GridElementType& phi = (*this)[1];
   //       return r * std::cos(phi);
   //     }
-  //     Element x1() const {
+  //     GridElementType x1() const {
   //       return x();
   //     }
 
-  //     Element y() const {
-  //       const Element& r = (*this)[0];
-  //       const Element& phi = (*this)[1];
+  //     GridElementType y() const {
+  //       const GridElementType& r = (*this)[0];
+  //       const GridElementType& phi = (*this)[1];
   //       return r * std::sin(phi);
   //     }
-  //     Element x2() const {
+  //     GridElementType x2() const {
   //       return y();
   //     }
 
 
-  //     CartCoords<Element, 2>& pos() const {
+  //     CartesianCoords<GridElementType, 2>& pos() const {
   //       return toCartesian();
   //     }
-  //     CartCoords<Element, 2>& toCartesian() const {
-  //       return *(new CartCoords<Element, 2>({ x(), y() }));
+  //     CartesianCoords<GridElementType, 2>& toCartesian() const {
+  //       return *(new CartesianCoords<GridElementType, 2>({ x(), y() }));
   //     }
 
 
   //     // unit vectors
-  //     Vector<Element, 2>& basis_r() const {
-  //       const Element& r = (*this)[0];
-  //       const Element& phi = (*this)[1];
-  //       return *(new Vector<Element, 2>{ std::cos(phi), std::sin(phi) });
+  //     Vector<GridElementType, 2>& basis_r() const {
+  //       const GridElementType& r = (*this)[0];
+  //       const GridElementType& phi = (*this)[1];
+  //       return *(new Vector<GridElementType, 2>{ std::cos(phi), std::sin(phi) });
   //     }
-  //     Vector<Element, 2>& basis_phi() const {
-  //       const Element& r = (*this)[0];
-  //       const Element& phi = (*this)[1];
-  //       return *(new Vector<Element, 2>{ -std::sin(phi), std::cos(phi) });
+  //     Vector<GridElementType, 2>& basis_phi() const {
+  //       const GridElementType& r = (*this)[0];
+  //       const GridElementType& phi = (*this)[1];
+  //       return *(new Vector<GridElementType, 2>{ -std::sin(phi), std::cos(phi) });
   //     }
 
-  //     Vector<Element, 2>& basis_vec(size_t n) const {
+  //     Vector<GridElementType, 2>& basis_vec(size_t n) const {
   //       if (n == 0) {
   //         return basis_r();
   //       }
@@ -907,18 +921,18 @@ namespace mathq {
 
 
   //     // Jacobian 
-  //     Element J() const {
-  //       const Element& r = (*this)[0];
-  //       const Element& phi = (*this)[1];
+  //     GridElementType J() const {
+  //       const GridElementType& r = (*this)[0];
+  //       const GridElementType& phi = (*this)[1];
   //       return r;
   //     }
 
   //     // metric tensor g^{ij} 
-  //     Matrix<Element, 2, 2> g() const {
-  //       const Element& r = (*this)[0];
-  //       const Element& phi = (*this)[1];
-  //       Matrix<Element, 2, 2> metric;
-  //       metric = { ones<Element>(), zeros<Element>(), zeros<Element>(), r*r };
+  //     Matrix<GridElementType, 2, 2> g() const {
+  //       const GridElementType& r = (*this)[0];
+  //       const GridElementType& phi = (*this)[1];
+  //       Matrix<GridElementType, 2, 2> metric;
+  //       metric = { ones<GridElementType>(), zeros<GridElementType>(), zeros<GridElementType>(), r*r };
   //       return metric;
   //     }
 
@@ -926,16 +940,16 @@ namespace mathq {
   //       using namespace display;
   //       std::string s = "PolarCoords";
   //       s += StyledString::get(ANGLE1).get();
-  //       Element d;
+  //       GridElementType d;
   //       s += getTypeName(d);
   //       s += StyledString::get(ANGLE2).get();
   //       return s;
   //     }
 
 
-  //     inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords<Element>& var) {
-  //       const Element& r = var[0];
-  //       const Element& phi = var[1];
+  //     inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords<GridElementType>& var) {
+  //       const GridElementType& r = var[0];
+  //       const GridElementType& phi = var[1];
   //       stream << "(r=";
   //       stream << r;
   //       stream << ", φ=";
@@ -948,14 +962,14 @@ namespace mathq {
   //   };
 
 
-  //   template <class Element>
-  //   auto dot(const PolarCoords<Element>& v1, const PolarCoords<Element>& v2) {
+  //   template <class GridElementType>
+  //   auto dot(const PolarCoords<GridElementType>& v1, const PolarCoords<GridElementType>& v2) {
   //     return v1[0] * v2[0] * std::cos(v1[1] - v2[1]);
   //   }
 
-  //   // template <class Element>
-  //   // auto& addpts(const PolarCoords<Element>& v1, const PolarCoords<Element>& v2) {
-  //   //   const Vector<Element, 2> p = v1.toCartesian() + v2.toCartesian();
+  //   // template <class GridElementType>
+  //   // auto& addpts(const PolarCoords<GridElementType>& v1, const PolarCoords<GridElementType>& v2) {
+  //   //   const Vector<GridElementType, 2> p = v1.toCartesian() + v2.toCartesian();
   //   //   return p.toPolar();
   //   // }
 
@@ -963,14 +977,14 @@ namespace mathq {
 
 
   //   // ***************************************************************************
-  //   // * PolarField<Num,RANK>
+  //   // * PolarField<GridElementType,RANK>
   //   //
   //   // physics field object: scalar field, vector field, tensor field 
   //   // uses curvilinear coordinates
   //   // ***************************************************************************
-  //   template <typename Num, size_t RANK> class PolarField : public MultiGrid_A<Num, 2, RANK> {
+  //   template <typename GridElementType, size_t RANK> class PolarField : public MultiGrid_A<GridElementType, 2, RANK> {
   //   public:
-  //     using Coords = PolarCoords<Num>;
+  //     using Coords = PolarCoords<GridElementType>;
   //     // need a grid
   //     // dot, grad, div
   // // Map a function to cartesian coordinates (pull-back)
@@ -986,7 +1000,7 @@ namespace mathq {
   //       using namespace display;
   //       std::string s = "PolarField";
   //       s += StyledString::get(ANGLE1).get();
-  //       Num d;
+  //       GridElementType d;
   //       s += getTypeName(d);
   //       s += StyledString::get(COMMA).get();
   //       s += "RANK=";
@@ -996,7 +1010,7 @@ namespace mathq {
   //     }
 
 
-  //     inline friend std::ostream& operator<<(std::ostream& stream, const PolarField<Num, RANK>& var) {
+  //     inline friend std::ostream& operator<<(std::ostream& stream, const PolarField<GridElementType, RANK>& var) {
   //       stream << "{ ";
   //       stream << "\n  coords=(";
   //       for (size_t n = 0; n < 2; n++) {
@@ -1017,11 +1031,11 @@ namespace mathq {
 
 
   //   //
-  //   // CurvilinearCoordinateSystem<Num>
+  //   // CurvilinearCoordinateSystem<GridElementType>
   //   //
 
   //   //   template <typename... U>
-  //     // typename std::enable_if<(std::is_same<U, Num>::value && ...), const Num>::type operator()(const U... args) 
+  //     // typename std::enable_if<(std::is_same<U, GridElementType>::value && ...), const GridElementType>::type operator()(const U... args) 
   //     // https://en.cppreference.com/w/cpp/language/parameter_pack
   //     // https://en.cppreference.com/w/cpp/concepts
 
@@ -1035,7 +1049,7 @@ namespace mathq {
   //     // https://stackoverflow.com/questions/69302003/how-to-use-c20-concepts-to-compile-time-enforce-match-of-number-of-args-for-gi
   //     // 
 
-  //   template <typename Num, size_t Ndims, typename CHILD>
+  //   template <typename GridElementType, size_t Ndims, typename CHILD>
   //   class
   //     CurvilinearCoordinateSystem {
   //   public:
@@ -1057,7 +1071,7 @@ namespace mathq {
   //       using namespace display;
   //       std::string s = "CurvilinearCoordinateSystem";
   //       s += StyledString::get(ANGLE1).get();
-  //       Num d;
+  //       GridElementType d;
   //       s += getTypeName(d);
   //       s += StyledString::get(COMMA).get();
   //       s += "Ndims=";
@@ -1076,13 +1090,13 @@ namespace mathq {
   //   };
 
 
-  //   template <typename Num>
+  //   template <typename GridElementType>
   //   class
-  //     PolarCoordSystem : public CurvilinearCoordinateSystem<Num, 2, PolarCoordSystem<Num>> {
+  //     PolarCoordSystem : public CurvilinearCoordinateSystem<GridElementType, 2, PolarCoordSystem<GridElementType>> {
   //   public:
-  //     using Func = std::function<Num(Num, Num)>;
-  //     using VecFunc = std::function<Vector<Num, 2>(Num, Num)>;
-  //     using Coords = PolarCoords<Num>;
+  //     using Func = std::function<GridElementType(GridElementType, GridElementType)>;
+  //     using VecFunc = std::function<Vector<GridElementType, 2>(GridElementType, GridElementType)>;
+  //     using Coords = PolarCoords<GridElementType>;
 
 
   //     PolarCoordSystem() {
@@ -1093,7 +1107,7 @@ namespace mathq {
   //       using namespace display;
   //       std::string s = "PolarCoordSystem";
   //       s += StyledString::get(ANGLE1).get();
-  //       Num d;
+  //       GridElementType d;
   //       s += getTypeName(d);
   //       s += StyledString::get(ANGLE2).get();
   //       return s;
@@ -1120,22 +1134,22 @@ namespace mathq {
   //   };
 
 
-    // template <typename Num>
-    // using PolarCoords = typename PolarCoordSystem<Num>::Coords;
+    // template <typename GridElementType>
+    // using PolarCoords = typename PolarCoordSystem<GridElementType>::Coords;
 
-    // template <typename Num = double>
-    // auto dot(const typename PolarCoordSystem<Num>::Coords& v1, const typename PolarCoordSystem<Num>::Coords& v2) {
+    // template <typename GridElementType = double>
+    // auto dot(const typename PolarCoordSystem<GridElementType>::Coords& v1, const typename PolarCoordSystem<GridElementType>::Coords& v2) {
     //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
     // }
 
 
-    // template <typename Num, template <typename> class T>
-    // auto dot(const typename T<Num>::Coords& v1, const typename T<Num>::Coords& v2) {
+    // template <typename GridElementType, template <typename> class T>
+    // auto dot(const typename T<GridElementType>::Coords& v1, const typename T<GridElementType>::Coords& v2) {
     //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
     // }
 
-    // template <typename Num>
-    // auto dot(const typename PolarCoordSystem<Num>::Coords& v1, const typename PolarCoordSystem<Num>::Coords& v2) {
+    // template <typename GridElementType>
+    // auto dot(const typename PolarCoordSystem<GridElementType>::Coords& v1, const typename PolarCoordSystem<GridElementType>::Coords& v2) {
     //   return v1.r * v2.r * std::cos(v1.phi - v2.phi);
     // }
 
@@ -1157,17 +1171,17 @@ namespace mathq {
     // // 1D
     // //
 
-    // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
-    // auto grad(const Vector<Num>& gridfunc, const Interval<Num>& range, const int Dpts = 7, const bool periodic = false) {
+    // template <typename GridElementType, typename = typename std::enable_if<std::is_arithmetic<GridElementType>::value, GridElementType>::type>
+    // auto grad(const Vector<GridElementType>& gridfunc, const Interval<GridElementType>& range, const int Dpts = 7, const bool periodic = false) {
     //   const size_t N = gridfunc.size();
-    //   Vector<Num>* df = new Vector<Num>(N);
+    //   Vector<GridElementType>* df = new Vector<GridElementType>(N);
     //   *df = gridfunc;
     //   df->deriv(range.a, range.b, 1, Dpts, periodic);
     //   return *df;
     // }
 
-    // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
-    // auto operator&(const Nabla_old<void> i, std::pair<Vector<Num>, Interval<Num>> funcANDrange) {
+    // template <typename GridElementType, typename = typename std::enable_if<std::is_arithmetic<GridElementType>::value, GridElementType>::type>
+    // auto operator&(const Nabla_old<void> i, std::pair<Vector<GridElementType>, Interval<GridElementType>> funcANDrange) {
     //   return grad(funcANDrange.first, funcANDrange.second);
     // }
 
@@ -1175,31 +1189,31 @@ namespace mathq {
     // // 2D
     // //
 
-    // // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
-    // // auto fgrid(std::function<Num(Num, Num)> func, const Vector<Matrix<Num>, 2>& grid) {
-    // //   const Matrix<Num>& X = grid(0);
-    // //   const Matrix<Num>& Y = grid(1);
-    // //   auto* y = new Matrix<Num>(X.Nrows(), X.Ncols());
+    // // template <typename GridElementType, typename = typename std::enable_if<std::is_arithmetic<GridElementType>::value, GridElementType>::type>
+    // // auto fgrid(std::function<GridElementType(GridElementType, GridElementType)> func, const Vector<Matrix<GridElementType>, 2>& grid) {
+    // //   const Matrix<GridElementType>& X = grid(0);
+    // //   const Matrix<GridElementType>& Y = grid(1);
+    // //   auto* y = new Matrix<GridElementType>(X.Nrows(), X.Ncols());
     // //   for (int k = 0; k < X.size(); k++) {
     // //     (*y)[k] = func(X[k], Y[k]);
     // //   }
     // //   return *y;
     // // }
 
-    // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
-    // auto grad(const Matrix<Num>& gridfunc, const Interval<Num>& domX, const Interval<Num>& domY, const int Dpts = 7, const bool periodic = false) {
+    // template <typename GridElementType, typename = typename std::enable_if<std::is_arithmetic<GridElementType>::value, GridElementType>::type>
+    // auto grad(const Matrix<GridElementType>& gridfunc, const Interval<GridElementType>& domX, const Interval<GridElementType>& domY, const int Dpts = 7, const bool periodic = false) {
 
     //   // TODO: rewrite with slices
 
     //   const size_t NR = gridfunc.Nrows();
     //   const size_t NC = gridfunc.Ncols();
-    //   Vector<Matrix<Num>, 2>* df = new Vector<Matrix<Num>, 2>();
+    //   Vector<Matrix<GridElementType>, 2>* df = new Vector<Matrix<GridElementType>, 2>();
     //   // starts off with empty matrices
     //   // TRDISP(*df);
 
     //   // take d/dx
-    //   Vector<Num> vtemp = Vector<Num>(NC);
-    //   Matrix<Num> mtemp = Matrix<Num>(NR, NC);
+    //   Vector<GridElementType> vtemp = Vector<GridElementType>(NC);
+    //   Matrix<GridElementType> mtemp = Matrix<GridElementType>(NR, NC);
     //   for (int r = 0; r < NR; r++) {
     //     for (int c = 0; c < NC; c++) {
     //       vtemp(c) = gridfunc(r, c);
@@ -1228,8 +1242,8 @@ namespace mathq {
     //   return *df;
     // }
 
-    // template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
-    // auto operator&(const Nabla_old<void> i, std::tuple<Matrix<Num>, Interval<Num>, Interval<Num>> funcANDrange) {
+    // template <typename GridElementType, typename = typename std::enable_if<std::is_arithmetic<GridElementType>::value, GridElementType>::type>
+    // auto operator&(const Nabla_old<void> i, std::tuple<Matrix<GridElementType>, Interval<GridElementType>, Interval<GridElementType>> funcANDrange) {
     //   return grad(std::get<0>(funcANDrange), std::get<1>(funcANDrange), std::get<2>(funcANDrange));
     // }
 

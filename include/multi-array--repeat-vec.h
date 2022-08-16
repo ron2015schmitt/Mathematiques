@@ -80,7 +80,7 @@ namespace mathq {
       //
       //**********************************************************************
       std::valarray<Element> vector;
-      const size_t index_value;
+      size_t index_value;
 
     public:
 
@@ -91,24 +91,18 @@ namespace mathq {
       // --------------------- default CONSTRUCTOR ---------------------
 
       MultiArray_RepeatVector() : index_value(0) {
-        if constexpr (!is_dynamic_value) {
-          initial_size();
-        }
+        initial_size();
       }
 
       // --------------------- basic CONSTRUCTOR ---------------------
 
       MultiArray_RepeatVector(const size_t index_value) : index_value(index_value) {
-        if constexpr (!is_dynamic_value) {
-          initial_size();
-        }
+        initial_size();
       }
 
       // --------------------- copy constructor --------------------
       MultiArray_RepeatVector(const Type& var) : index_value(var.index_value) {
-        if constexpr (!is_dynamic_value) {
-          initial_size();
-        }
+        initial_size();
         *this = var;
       }
 
@@ -127,26 +121,20 @@ namespace mathq {
 
       // ----------------------- std::vector ---------------------
       explicit MultiArray_RepeatVector(const size_t index_value, const std::vector<Element>& var) : index_value(index_value) {
-        if constexpr (!is_dynamic_value) {
-          initial_size();
-        }
+        initial_size();
         *this = var;
       }
 
       // ----------------------- std::valarray ---------------------
       explicit MultiArray_RepeatVector(const size_t index_value, const std::valarray<Element>& var) : index_value(index_value) {
-        if constexpr (!is_dynamic_value) {
-          initial_size();
-        }
+        initial_size();
         *this = var;
       }
 
       // ----------------------- std::array ---------------------
       template<size_t NE2>
       explicit MultiArray_RepeatVector(const size_t index_value, const std::array<Element, NE2>& var) : index_value(index_value) {
-        if constexpr (!is_dynamic_value) {
-          initial_size();
-        }
+        initial_size();
         *this = var;
       }
 
@@ -263,7 +251,7 @@ namespace mathq {
 
       inline size_t size(void) const {
         if constexpr (is_dynamic_value) {
-          return std::accumulate(ParentDataType::dynamic_dims_array.begin(), ParentDataType::dynamic_dims_array.end(), 1, std::multiplies<size_t>());  // product of elements
+          return std::accumulate(dims_array().begin(), dims_array().end(), 1, std::multiplies<size_t>());  // product of elements
         }
         else {
           return compile_time_size;
@@ -382,15 +370,19 @@ namespace mathq {
         return *this;
       }
 
-      //**********************************************************************
-      //                          Resize
+      //**********************************************************************//                          Resize
       //
       // resize / reshape is not allowed unless fixed-dimensions 
       //**********************************************************************
 
-      template <bool enabled = !is_dynamic_value> requires (enabled)
-        Type& initial_size() {
-        vector.resize(static_dims_array[index_value]);
+      Type& initial_size() {
+        if constexpr (is_dynamic_value) {
+          resize(Dimensions(rank_value)); // default is all zeroes
+          vector.resize(0);
+        }
+        else {
+          vector.resize(static_dims_array[index_value]);
+        }
         return *this;
       }
 
@@ -402,16 +394,28 @@ namespace mathq {
       }
 
 
-
       template <bool enabled = is_dynamic_value> requires (enabled)
         Type& resize(const Dimensions& new_dims) {
-        if (new_dims != dims()) {
-          for (size_t i = 0; i < ParentDataType::dynamic_dims_array.size(); i++) {
-            ParentDataType::dynamic_dims_array[i] = new_dims[i];
-          }
-          size_t new_size = new_dims[index_value];
-          if (actual_size() != new_size) {
-            vector.resize(new_size);
+        if constexpr (is_dynamic_value) {
+          if (new_dims != dims()) {
+            if constexpr (rank_value == 0) {
+            }
+            else if constexpr (rank_value == 1) {
+              ParentDataType::N0 = new_dims[0];
+            }
+            else if constexpr (rank_value == 2) {
+              ParentDataType::N0 = new_dims[0];
+              ParentDataType::N1 = new_dims[1];
+            }
+            else {
+              for (size_t i = 0; i < rank_value; i++) {
+                ParentDataType::dynamic_dims_array[i] = new_dims[i];
+              }
+            }
+            size_t new_size = new_dims[index_value];
+            if (actual_size() != new_size) {
+              vector.resize(new_size);
+            }
           }
         }
         return *this;
@@ -442,7 +446,7 @@ namespace mathq {
         if constexpr (depth_value > 1) {
           if (depth_index < resize_depth) {
             for (size_t ii = 0; ii < size(); ii++) {
-              ParentDataType::data_[ii].recurse_resize(parent_rdims, depth_index);
+              (*this)[ii].recurse_resize(parent_rdims, depth_index);
             }
           }
         }
@@ -458,20 +462,20 @@ namespace mathq {
 
 
       //**********************************************************************
-      //********************* Direct access to ParentDataType::data_  ***********************************
+      //********************* Direct access to (*this)  ***********************************
       //**********************************************************************
 
       // -------------------- data_obj() --------------------
       // "read/write" to the wrapped valarray/aray
       auto& data_obj() {
-        return ParentDataType::data_;
+        return (*this);
       }
 
       // get C pointer to raw data
       // https://stackoverflow.com/questions/66072510/why-is-there-no-stddata-overload-for-stdvalarray
       Element* data() {
         // MutltiArrays are always wrap avalarray<Element>
-        return &(ParentDataType::data_[0]);
+        return &((*this)[0]);
       }
 
       //**********************************************************************
@@ -546,13 +550,13 @@ namespace mathq {
           if (k < 0) {
             k += size();
           }
-          return ParentDataType::data_[k];
+          return (*this)[k];
         }
         else {
           const int Ndeep = this->el_total_size();
           const int j = n / Ndeep;
           const int k = n % Ndeep;
-          return ParentDataType::data_[j].dat(k);
+          return (*this)[j].dat(k);
         }
       }
 
@@ -565,13 +569,13 @@ namespace mathq {
           if (k < 0) {
             k += size();
           }
-          return ParentDataType::data_[k];
+          return (*this)[k];
         }
         else {
           const int Ndeep = this->el_total_size();
           const int j = n / Ndeep;
           const int k = n % Ndeep;
-          return ParentDataType::data_[j].dat(k);
+          return (*this)[j].dat(k);
         }
       }
 
@@ -981,6 +985,7 @@ namespace mathq {
 
       friend std::ostream& operator<<(std::ostream& stream, const Type& t) {
         using namespace display;
+        stream << "vector_index=" << std::to_string(t.index_value);
         size_t n = 0;
         t.send(stream, n, t.dims());
         return stream;
