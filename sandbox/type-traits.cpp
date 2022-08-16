@@ -1,8 +1,8 @@
 #include "mathq.h"
 
 template<size_t N, size_t... ints>
-constexpr std::array<size_t  , N> compile_time_fill_array() {
-  return std::array<size_t  , N>{ (static_cast<size_t>(ints))... };
+constexpr std::array<size_t, N> compile_time_fill_array() {
+  return std::array<size_t, N>{ (static_cast<size_t>(ints))... };
 }
 
 
@@ -18,22 +18,29 @@ int main(int argc, char* argv[]) {
   cout << "running: " <<myname << std::endl;
   cout << std::endl;
 
-  cout << "IsMultiArrayOrExpression" << std::endl;
-  cout << "double: " << IsMultiArrayOrExpression<double>::value << "\n";
-  cout << "Vector: " << IsMultiArrayOrExpression<Vector<double>>::value << "\n";
-  cout << "ExpressionR: " << IsMultiArrayOrExpression<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
-  cout << "ExpressionRW: " << IsMultiArrayOrExpression<ExpressionRW<Vector<double>, double, double, 1, 1>>::value << "\n";
+  cout << "IsReadableExpression" << std::endl;
+  cout << "double: " << IsReadableExpression<double> << "\n";
+  cout << "Vector: " << IsReadableExpression<Vector<double>> << "\n";
+  cout << "Matrix: " << IsReadableExpression<Matrix<double, 4, 2>> << "\n";
+  cout << "MultiArray: " << IsReadableExpression<MultiArray<double, 3, 2, 3, 4>> << "\n";
+  cout << "Vector_Constant: " << IsReadableExpression<Vector_Constant<double>> << "\n";
+  cout << "ExpressionR: " << IsReadableExpression<ExpressionR<Vector<double>, double, double, 1, 1>> << "\n";
+  cout << "ExpressionRW: " << IsReadableExpression<ExpressionRW<Vector<double>, double, double, 1, 1>> << "\n";
   cout << std::endl;
 
   cout << "IsMultiArray" << std::endl;
-  cout << "double: " << IsMultiArray<double>::value << "\n";
-  cout << "Vector: " << IsMultiArray<Vector<double>>::value << "\n";
-  cout << "ExpressionR: " << IsMultiArray<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
+  cout << "double: " << IsMultiArray<double> << "\n";
+  cout << "Vector: " << IsMultiArray<Vector<double>> << "\n";
+  cout << "Matrix: " << IsMultiArray<Matrix<double, 4, 2>> << "\n";
+  cout << "MultiArray: " << IsMultiArray<MultiArray<double, 3, 2, 3, 4>> << "\n";
+  cout << "Vector_Constant: " << IsMultiArray<Vector_Constant<double>> << "\n";
+  cout << "ExpressionR: " << IsMultiArray<ExpressionR<Vector<double>, double, double, 1, 1>> << "\n";
   cout << std::endl;
 
   cout << "IsMultiArrayExp" << std::endl;
   cout << "double: " << IsMultiArrayExp<double>::value << "\n";
   cout << "Vector: " << IsMultiArrayExp<Vector<double>>::value << "\n";
+  // cout << "Vector_Constant: " << IsMultiArrayExp<Vector_Constant<double>> << "\n";
   cout << "ExpressionR: " << IsMultiArrayExp<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
   cout << "ExpressionRW: " << IsMultiArrayExp<ExpressionRW<Vector<double>, double, double, 1, 1>>::value << "\n";
   cout << std::endl;
@@ -41,6 +48,7 @@ int main(int argc, char* argv[]) {
   cout << "IsMultiArrayExpRW" << std::endl;
   cout << "double: " << IsMultiArrayExpRW<double>::value << "\n";
   cout << "Vector: " << IsMultiArrayExpRW<Vector<double>>::value << "\n";
+  // cout << "Vector_Constant: " << IsMultiArrayExpRW<Vector_Constant<double>> << "\n";
   cout << "ExpressionR: " << IsMultiArrayExpRW<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
   cout << "ExpressionRW: " << IsMultiArrayExpRW<ExpressionRW<Vector<double>, double, double, 1, 1>>::value << "\n";
   cout << std::endl;
@@ -96,7 +104,7 @@ int main(int argc, char* argv[]) {
   DISP(SimpleNumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::depth());
   cout << std::endl;
 
-  std::array<size_t  , 7> ron{ 1, 5};
+  std::array<size_t, 7> ron{ 1, 5 };
 
   TRDISP(ron);
 

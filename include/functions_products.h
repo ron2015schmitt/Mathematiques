@@ -228,7 +228,7 @@ namespace mathq
 
   // TODO: implement
   // template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  //           EnableIf<(D1 >= 2) && (D2 == 1) && (IsMultiArrayOrExpression< E1>::value)> = 0>
+  //           EnableIf<(D1 >= 2) && (D2 == 1) && (IsReadableExpression<E1>::value)> = 0>
   // auto dot(const ExpressionR<A, E1, NT1, D1, rank> &x1, const ExpressionR<B, NT2, NT2, D2, rank> &x2)
   // {
 
@@ -258,7 +258,7 @@ namespace mathq
   // TODO: implement
 
   // template <class A, class B, class E2, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  //           EnableIf<(D1 == 1) && (D2 >= 2) && (IsMultiArrayOrExpression< E2>::value)> = 0>
+  //           EnableIf<(D1 == 1) && (D2 >= 2) && (IsReadableExpression<E2>::value)> = 0>
   // auto dot(const ExpressionR<A, NT1, NT1, D1, rank> &x1, const ExpressionR<B, E2, NT2, D2, rank> &x2)
   // {
   //   // NOT SURE WHICH OF THE THREE IS BEST

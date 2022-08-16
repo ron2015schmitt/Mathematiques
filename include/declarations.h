@@ -213,21 +213,7 @@ namespace mathq {
 
 
 
-  // *********************************************************************
-  // * Special MultiArrays
-  // ********************************************************************
-
-// Every one of these classes needs to have a specilization for 
-//   IsMultiArrayOrExpression
-//   IsMultiArray
-//   NumberTrait
-//   ReplacedNumberTrait
-//   SimpleNumberTrait
-//   DimensionsTrait
-//   InversionType
-
-
-// Constant
+  // Constant
 
   template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
     class MultiArray_Constant;
