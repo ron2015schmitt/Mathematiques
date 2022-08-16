@@ -819,27 +819,26 @@ namespace mathq {
 
 
 
-  //  MultiArray<Element>
-  // template <IsReadableExpressionOrArray T, typename C>
-  // class InversionType<T, C> {
-  // public:
-  //   using ElementType = typename T::ElementType;
-  //   using NumberType = typename NumberTrait<ElementType>::Type;
-  //   using T_as_MultiArray = MultiArrayType<T>;
-  //   using MultiArray_NumberType = typename ReplaceNumberTrait< T_as_MultiArray, NumberType >::Type; // top level array becomes bottom level array
-  //   using MultiArray_C = typename ReplaceNumberTrait< T_as_MultiArray, C >::Type;  // this is for the intermediate arrays
-  //   using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<ElementType, MultiArray_NumberType>::Type, typename InversionType<ElementType, MultiArray_C>::Type  >::type;
-  // };
-
-
-  template <typename Element, size_t rank, size_t... ints, typename C>
-  class InversionType<MultiArray<Element, rank, ints...>, C> {
-  public:
-    using NumberType = typename NumberTrait<Element>::Type;
-    using MultiArrayD = MultiArray<NumberType, rank, ints...>; // top level array becomes bottom level array
-    using MultiArrayC = MultiArray<C, rank, ints...>;  // this is for the intermediate arrays
-    using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type  >::type;
+  //  MultiArray
+  template <typename T, typename C> requires (IsMultiArray<T>)
+    class InversionType<T, C> {
+    public:
+      using ElementType = typename T::ElementType;
+      using NumberType = typename NumberTrait<ElementType>::Type;
+      using MultiArray_NumberType = typename ReplaceElementTrait< T, NumberType >::Type; // top level array becomes bottom level array
+      using MultiArray_C = typename ReplaceElementTrait< T, C >::Type;  // this is for the intermediate arrays
+      using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<ElementType, MultiArray_NumberType>::Type, typename InversionType<ElementType, MultiArray_C>::Type  >::type;
   };
+
+
+  // template <typename Element, size_t rank, size_t... ints, typename C>
+  // class InversionType<MultiArray<Element, rank, ints...>, C> {
+  // public:
+  //   using NumberType = typename NumberTrait<Element>::Type;
+  //   using MultiArrayD = MultiArray<NumberType, rank, ints...>; // top level array becomes bottom level array
+  //   using MultiArrayC = MultiArray<C, rank, ints...>;  // this is for the intermediate arrays
+  //   using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type  >::type;
+  // };
 
 
 
@@ -1069,10 +1068,6 @@ namespace mathq {
 
 
 
-
-
-
-
   template <typename Num, size_t NDIMS, size_t rank, typename G>
   class GridTraits {
     constexpr static bool isMultiArrayOfGrids = false;
@@ -1105,14 +1100,6 @@ namespace mathq {
 
   template <typename Num>
   class Domain;
-
-
-
-
-
-
-
-
 
 
 
