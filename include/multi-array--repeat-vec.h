@@ -80,7 +80,7 @@ namespace mathq {
       //
       //**********************************************************************
       std::valarray<Element> vector;
-      size_t index_value;
+      size_t vector_index;
 
     public:
 
@@ -90,25 +90,25 @@ namespace mathq {
 
       // --------------------- default CONSTRUCTOR ---------------------
 
-      MultiArray_RepeatVector() : index_value(0) {
+      MultiArray_RepeatVector() : vector_index(0) {
         initial_size();
       }
 
       // --------------------- basic CONSTRUCTOR ---------------------
 
-      MultiArray_RepeatVector(const size_t index_value) : index_value(index_value) {
+      MultiArray_RepeatVector(const size_t vector_index) : vector_index(vector_index) {
         initial_size();
       }
 
       // --------------------- copy constructor --------------------
-      MultiArray_RepeatVector(const Type& var) : index_value(var.index_value) {
+      MultiArray_RepeatVector(const Type& var) : vector_index(var.vector_index) {
         initial_size();
         *this = var;
       }
 
       // ----------------------- indices initializer_list ---------------------
       // not explicit: allows use of nested init lists when depth_value > 1
-      MultiArray_RepeatVector(const size_t index_value, const InitializerType& var) : index_value(index_value) {
+      MultiArray_RepeatVector(const size_t vector_index, const InitializerType& var) : vector_index(vector_index) {
         if constexpr (is_dynamic_value) {
           auto mysizes = InitializerTrait< InitializerType >::get_size_array(var);
           resize(Dimensions(mysizes));
@@ -120,27 +120,27 @@ namespace mathq {
       }
 
       // ----------------------- std::vector ---------------------
-      explicit MultiArray_RepeatVector(const size_t index_value, const std::vector<Element>& var) : index_value(index_value) {
+      explicit MultiArray_RepeatVector(const size_t vector_index, const std::vector<Element>& var) : vector_index(vector_index) {
         initial_size();
         *this = var;
       }
 
       // ----------------------- std::valarray ---------------------
-      explicit MultiArray_RepeatVector(const size_t index_value, const std::valarray<Element>& var) : index_value(index_value) {
+      explicit MultiArray_RepeatVector(const size_t vector_index, const std::valarray<Element>& var) : vector_index(vector_index) {
         initial_size();
         *this = var;
       }
 
       // ----------------------- std::array ---------------------
       template<size_t NE2>
-      explicit MultiArray_RepeatVector(const size_t index_value, const std::array<Element, NE2>& var) : index_value(index_value) {
+      explicit MultiArray_RepeatVector(const size_t vector_index, const std::array<Element, NE2>& var) : vector_index(vector_index) {
         initial_size();
         *this = var;
       }
 
       // //--------------------- EXPRESSION CONSTRUCTOR --------------------
       // template <class Derived>
-      // MultiArray_RepeatVector(const size_t index_value, const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x)  : index_value(index_value)  {
+      // MultiArray_RepeatVector(const size_t vector_index, const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x)  : vector_index(vector_index)  {
       //   *this = x;
       // }
 
@@ -152,7 +152,7 @@ namespace mathq {
       // --------------------- FIXED SIZE: from dynamic MultiArray_RepeatVector --------------------
 
       template<bool enable = !is_dynamic_value> requires (enable)
-        explicit MultiArray_RepeatVector(const MultiArray_RepeatVector<Element, rank_value>& var) : index_value(var.index_value) {
+        explicit MultiArray_RepeatVector(const MultiArray_RepeatVector<Element, rank_value>& var) : vector_index(var.vector_index) {
         initial_size();
         *this = var;
       }
@@ -160,7 +160,7 @@ namespace mathq {
       // --------------------- FIXED SIZE: set all to same value   ---------------------
 
       template<bool enable = !is_dynamic_value> requires (enable)
-        explicit MultiArray_RepeatVector(const size_t index_value, const Element val) : index_value(index_value) {
+        explicit MultiArray_RepeatVector(const size_t vector_index, const Element val) : vector_index(vector_index) {
         initial_size();
         *this = val;
       }
@@ -170,7 +170,7 @@ namespace mathq {
       // template<typename NT = NumberType, EnableIf<(!is_dynamic_value)&&(depth_value>1)&&(!std::is_same<Element, NT>::value)> = 1>
 
       template<bool enable = !is_dynamic_value> requires ((enable) && (depth_value>1) && (!std::is_same<Element, NumberType>::value))
-        explicit MultiArray_RepeatVector(const size_t index_value, const NumberType val) : index_value(index_value) {
+        explicit MultiArray_RepeatVector(const size_t vector_index, const NumberType val) : vector_index(vector_index) {
         initial_size();
         *this = val;
       }
@@ -178,7 +178,7 @@ namespace mathq {
       // ----------------------- FIXED SIZE: flat initializer_list ---------------------
       // not explicit: allows use of nested init lists when depth_value > 1
       template<bool enable = !is_dynamic_value> requires (enable)
-        MultiArray_RepeatVector(const size_t index_value, const std::initializer_list<Element>& var) : index_value(index_value) {
+        MultiArray_RepeatVector(const size_t vector_index, const std::initializer_list<Element>& var) : vector_index(vector_index) {
         initial_size();
         *this = var;
       }
@@ -190,7 +190,7 @@ namespace mathq {
       // --------------------- dynamic MultiArray_RepeatVector --------------------
 
       template<size_t...mysizes> requires (is_dynamic_value)
-        explicit MultiArray_RepeatVector(const MultiArray_RepeatVector<Element, rank_value, mysizes...>& var) : index_value(var.index_value) {
+        explicit MultiArray_RepeatVector(const MultiArray_RepeatVector<Element, rank_value, mysizes...>& var) : vector_index(var.vector_index) {
         *this = var;
       }
 
@@ -198,14 +198,14 @@ namespace mathq {
       // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
       template<bool enable = is_dynamic_value> requires (enable)
-        explicit MultiArray_RepeatVector(const size_t index_value, const Dimensions& dims) : index_value(index_value) {
+        explicit MultiArray_RepeatVector(const size_t vector_index, const Dimensions& dims) : vector_index(vector_index) {
         // TRDISP(dims);
         this->resize(dims);
       }
 
       // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
       template<bool enable = is_dynamic_value> requires (enable)
-        explicit MultiArray_RepeatVector(const size_t index_value, const RecursiveDimensions& recursive_dims) : index_value(index_value) {
+        explicit MultiArray_RepeatVector(const size_t vector_index, const RecursiveDimensions& recursive_dims) : vector_index(vector_index) {
         // TRDISP(recursive_dims);
         this->resize(recursive_dims);
       }
@@ -214,7 +214,7 @@ namespace mathq {
       // --------------------- DYNAMIC SIZE: set dims and set all to same value  ---------------------
 
       template<bool enable = is_dynamic_value> requires (enable)
-        explicit MultiArray_RepeatVector(const size_t index_value, const Dimensions& dims, const Element val) : index_value(index_value) {
+        explicit MultiArray_RepeatVector(const size_t vector_index, const Dimensions& dims, const Element val) : vector_index(vector_index) {
         this->resize(dims);
         *this = val;
       }
@@ -381,7 +381,7 @@ namespace mathq {
           vector.resize(0);
         }
         else {
-          vector.resize(static_dims_array[index_value]);
+          vector.resize(static_dims_array[vector_index]);
         }
         return *this;
       }
@@ -412,7 +412,7 @@ namespace mathq {
                 ParentDataType::dynamic_dims_array[i] = new_dims[i];
               }
             }
-            size_t new_size = new_dims[index_value];
+            size_t new_size = new_dims[vector_index];
             if (actual_size() != new_size) {
               vector.resize(new_size);
             }
@@ -511,13 +511,13 @@ namespace mathq {
       template <typename... U>
       Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_unsigned<U>...>::value && (sizeof...(args) == rank_value)) {
         Indices inds = Indices({ args... });
-        return vector[inds[index_value]];
+        return vector[inds[vector_index]];
       }
 
       template <typename... U>
       const Element& operator()(const U... args) const requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_unsigned<U>...>::value && (sizeof...(args) == rank_value)) {
         Indices inds = Indices({ args... });
-        return vector[inds[index_value]];
+        return vector[inds[vector_index]];
       }
 
 
@@ -526,13 +526,13 @@ namespace mathq {
       template <typename... U>
       Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
         Indices inds({ signed_index_to_unsigned_index(args, size())... });
-        return vector[inds[index_value]];
+        return vector[inds[vector_index]];
       }
 
       template <typename... U>
       const Element& operator()(const U... args) const requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
         Indices inds({ signed_index_to_unsigned_index(args, size())... });
-        return vector[inds[index_value]];
+        return vector[inds[vector_index]];
       }
 
 
@@ -589,7 +589,7 @@ namespace mathq {
         Element& operator[](const T n) {
         // OUTPUT("[] 1");
         Indices inds = indices(n);
-        return vector[inds[index_value]];
+        return vector[inds[vector_index]];
       }
 
       // read
@@ -597,7 +597,7 @@ namespace mathq {
         const Element& operator[](const T n)  const {
         // OUTPUT("[] 2");
         Indices inds = indices(n);
-        return vector[inds[index_value]];
+        return vector[inds[vector_index]];
       }
 
       // "read/write"
@@ -624,10 +624,10 @@ namespace mathq {
 
       // ---------------- A[Indices]--------------
       Element& operator[](const Indices& inds) {
-        vector[inds[index_value]];
+        vector[inds[vector_index]];
       }
       const Element& operator[](const Indices& inds) const {
-        vector[inds[index_value]];
+        vector[inds[vector_index]];
       }
 
       // -------------------------------------------------------------
@@ -711,7 +711,7 @@ namespace mathq {
         Indices inds(dims());
         for (size_t i = 0; i < dims().num_elements(); i++) {
           Indices inds_ref(dims());
-          inds_ref[index_value] = inds[index_value];
+          inds_ref[vector_index] = inds[vector_index];
           // MDISP(inds, inds_ref);
           if (x[inds.index(dims())] != x[inds_ref.index(dims())]) {
             OUTPUT("ERROR: attepmt to set MultiArray_RepeatVector from non-compatible expression.");
@@ -745,8 +745,8 @@ namespace mathq {
           }
 
           Indices inds(dims());
-          for (size_t i = 0; i < dims()[index_value]; i++) {
-            inds[index_value] = i;
+          for (size_t i = 0; i < dims()[vector_index]; i++) {
+            inds[vector_index] = i;
             // we assume that expression has equiv dimensions, as checked in verify
 
             vector[i] = x[inds.index(dims())];
@@ -896,7 +896,7 @@ namespace mathq {
         using namespace display;
         Style& style = FormatDataVector::style_for_punctuation;
         // TRDISP(rank_value);
-        // TRDISP(index_value);
+        // TRDISP(vector_index);
         // TRDISP(static_dims_array);
         // TRDISP(sizeof...(dim_ints));
         std::string s = "MultiArray_RepeatVector";
@@ -907,7 +907,7 @@ namespace mathq {
         s += " rank=";
         s += std::to_string(rank_value);
         // s += ", index=";
-        // s += std::to_string(index_value);
+        // s += std::to_string(vector_index);
         if constexpr (!is_dynamic_value) {
           for (size_t ii = 0; ii < static_dims_array.size(); ii++) {
             if (ii == 0) {
@@ -985,7 +985,7 @@ namespace mathq {
 
       friend std::ostream& operator<<(std::ostream& stream, const Type& t) {
         using namespace display;
-        stream << "vector_index=" << std::to_string(t.index_value);
+        stream << "vector_index=" << std::to_string(t.vector_index);
         size_t n = 0;
         t.send(stream, n, t.dims());
         return stream;

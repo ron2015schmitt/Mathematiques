@@ -382,7 +382,7 @@ namespace mathq {
 
     Type& setup_grids(void) {
       for (size_t c = 0; c < Ndims; c++) {
-        (*this)[c].index_value = c;
+        (*this)[c].vector_index = c;
       }
       return *this;
     }
