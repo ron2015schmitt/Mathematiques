@@ -95,11 +95,11 @@ int main(int argc, char* argv[]) {
     MOUT << " ";
     MDISP(Vd1, Vd2, Vd3);
 
-    TLDISP(IsWritableExpression<mathq::ExpressionR_Join<mathq::ExpressionR<mathq::ExpressionRW<mathq::ExpressionRW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>, mathq::ExpressionR<mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1, 1>, double, double, 1>>::value);
+    TLDISP(IsWritableExpression<mathq::ExpressionR_Join<mathq::ExpressionR<mathq::ExpressionRW<mathq::ExpressionRW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>, mathq::ExpressionR<mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1, 1>, double, double, 1>>);
 
-    TLDISP(IsWritableExpression<mathq::ExpressionR<mathq::ExpressionRW<mathq::ExpressionRW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>>::value);
+    TLDISP(IsWritableExpression<mathq::ExpressionR<mathq::ExpressionRW<mathq::ExpressionRW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>>);
 
-    TLDISP(IsWritableExpression<mathq::ExpressionRW_Join<mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1>>::value);
+    TLDISP(IsWritableExpression<mathq::ExpressionRW_Join<mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1>>);
   }
 
 

@@ -48,19 +48,19 @@ int main(int argc, char* argv[]) {
   cout << std::endl;
 
   cout << "IsReadableExpression" << std::endl;
-  cout << "double: " << IsReadableExpression<double>::value << "\n";
-  cout << "Vector: " << IsReadableExpression<Vector<double>>::value << "\n";
+  cout << "double: " << IsReadableExpression<double> << "\n";
+  cout << "Vector: " << IsReadableExpression<Vector<double>> << "\n";
   // cout << "Vector_Constant: " << IsReadableExpression<Vector_Constant<double>> << "\n";
-  cout << "ExpressionR: " << IsReadableExpression<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
-  cout << "ExpressionRW: " << IsReadableExpression<ExpressionRW<Vector<double>, double, double, 1, 1>>::value << "\n";
+  cout << "ExpressionR: " << IsReadableExpression<ExpressionR<Vector<double>, double, double, 1, 1>> << "\n";
+  cout << "ExpressionRW: " << IsReadableExpression<ExpressionRW<Vector<double>, double, double, 1, 1>> << "\n";
   cout << std::endl;
 
   cout << "IsWritableExpression" << std::endl;
-  cout << "double: " << IsWritableExpression<double>::value << "\n";
-  cout << "Vector: " << IsWritableExpression<Vector<double>>::value << "\n";
+  cout << "double: " << IsWritableExpression<double> << "\n";
+  cout << "Vector: " << IsWritableExpression<Vector<double>> << "\n";
   // cout << "Vector_Constant: " << IsWritableExpression<Vector_Constant<double>> << "\n";
-  cout << "ExpressionR: " << IsWritableExpression<ExpressionR<Vector<double>, double, double, 1, 1>>::value << "\n";
-  cout << "ExpressionRW: " << IsWritableExpression<ExpressionRW<Vector<double>, double, double, 1, 1>>::value << "\n";
+  cout << "ExpressionR: " << IsWritableExpression<ExpressionR<Vector<double>, double, double, 1, 1>> << "\n";
+  cout << "ExpressionRW: " << IsWritableExpression<ExpressionRW<Vector<double>, double, double, 1, 1>> << "\n";
   cout << std::endl;
 
 

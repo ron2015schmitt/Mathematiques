@@ -289,22 +289,7 @@ namespace mathq {
   // ***************************************************************************
 
   template <typename T>
-  class IsReadableExpression {
-  public:
-    constexpr static bool value = false;
-  };
-
-  template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
-  class IsReadableExpression<ExpressionR<Derived, Element, Num, depth, rank>> {
-  public:
-    constexpr static bool value = true;
-  };
-
-  template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
-  class IsReadableExpression<ExpressionRW<Derived, Element, Num, depth, rank>> {
-  public:
-    constexpr static bool value = true;
-  };
+  concept IsReadableExpression = IsReadableExpressionOrArray<T> && !IsMultiArray<T>;
 
 
   // ***************************************************************************
@@ -312,16 +297,7 @@ namespace mathq {
   // ***************************************************************************
 
   template <typename T>
-  class IsWritableExpression {
-  public:
-    constexpr static bool value = false;
-  };
-
-  template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
-  class IsWritableExpression<ExpressionRW<Derived, Element, Num, depth, rank>> {
-  public:
-    constexpr static bool value = true;
-  };
+  concept IsWritableExpression = IsWritableExpressionOrArray<T> && !IsMultiArray<T>;
 
 
 
@@ -394,12 +370,14 @@ namespace mathq {
   // 2. By general we mean a MultiArray and not a specialization like MultiArray_Constant
   // ************************************************************************************
 
+  // default case for Expressions
   template <IsReadableExpressionOrArray X>
   class MultiArrayTypeTrait {
   public:
     using Type = MultiArray<typename X::ElementType, X::rank_value>;
   };
 
+  // MultiArrays
   template <IsReadableExpressionOrArray X> requires (HasStaticSizes<X>)
     class MultiArrayTypeTrait<X> {
     public:
