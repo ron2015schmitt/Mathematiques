@@ -503,29 +503,22 @@ namespace mathq {
   template <typename T, typename NewNumber>
   class ReplaceNumberTrait {
   public:
-    using Type = T;
+    using Type = void;
   };
 
-  // template <typename NewNumber>
-  // class ReplaceNumberTrait<NullType, NewNumber> {
-  // public:
-  //   using Type = NewNumber;
-  // };
-
-
   // built in ordered number types: bool, int, double etc
-  template <IsNumber Num, IsNumber NewNum>
+  template <IsNumber T, typename NewNum>
   class
-    ReplaceNumberTrait<Num, NewNum> {
+    ReplaceNumberTrait<T, NewNum> {
   public:
     using Type = NewNum;
   };
 
 
 
-  //  IsReadableExpressionOrArray
+  //  IsReadableExpression
 
-  template <IsReadableExpressionOrArray T, typename NewNumber>
+  template <IsReadableExpression T, typename NewNumber>
   class
     ReplaceNumberTrait<T, NewNumber> {
   public:
@@ -544,30 +537,6 @@ namespace mathq {
     using Type = MultiArray<ElementType, rank, ints...>;
   };
 
-  //  ExpressionR
-
-  template <typename NewNumber, class Derived, typename Element, typename Num, size_t depth_in, size_t rank>
-  class
-    ReplaceNumberTrait<ExpressionR<Derived, Element, Num, depth_in, rank>, NewNumber> {
-  public:
-    using ElementType = typename ReplaceNumberTrait<Element, NewNumber>::Type;
-    using Type = typename ReplaceNumberTrait<Derived, NewNumber>::Type;
-    using DerivedType = Type;
-    using ExpressionType = ExpressionR<DerivedType, ElementType, NewNumber, depth_in, rank>;
-  };
-
-
-  //  ExpressionRW
-
-  template <typename NewNumber, class Derived, typename Element, typename Num, size_t depth_in, size_t rank>
-  class
-    ReplaceNumberTrait<ExpressionRW<Derived, Element, Num, depth_in, rank>, NewNumber> {
-  public:
-    using ElementType = typename ReplaceNumberTrait<Element, NewNumber>::Type;
-    using Type = typename ReplaceNumberTrait<Derived, NewNumber>::Type;
-    using DerivedType = Type;
-    using ExpressionType = ExpressionRW<DerivedType, ElementType, NewNumber, depth_in, rank>;
-  };
 
 
 
