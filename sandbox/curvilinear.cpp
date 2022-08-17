@@ -21,22 +21,29 @@ int main(int argc, char* argv[]) {
 
   Domain<double> dom1 = Domain<double>::interval_CC(0, 10, 11);
   TRDISP(dom1);
-  TRDISP(dom1.getGrid());
+  TRDISP(dom1.grid());
 
   CurvilinearCoords<double, 2, NullType> tcoords;
   TRDISP(tcoords[0]);
   TRDISP(tcoords[1]);
 
-  // CartesianCoords<double, 2> cart_coords2a;
-  // TRDISP(cart_coords2a);
+  CartesianCoords<double, 2> cart_coords2a;
+  TRDISP(cart_coords2a);
 
-  // CartesianCoords<double, 2> cart_coords2b(
-  //   {
-  //     Domain<double>::interval_CC(-1,1,10),
-  //     Domain<double>::interval_CC(0,1,5),
-  //   });
-  // TRDISP(cart_coords2b);
+  CartesianCoords<double, 2> cart_coords2b({
+      Domain<double>::interval_CC(-1,1,5),
+      Domain<double>::interval_CC(2,3,3),
+    });
+  TRDISP(cart_coords2b);
+  TRDISP(cart_coords2b.grid_dims());
+  TRDISP(cart_coords2b[0]);
+  TRDISP(cart_coords2b[1]);
 
+  ECHO_CODE(CartesianCoords<double, 2> cart_coords2c(cart_coords2b));
+  TRDISP(cart_coords2c);
+
+  TRDISP(cart_coords2c[0]);
+  TRDISP(cart_coords2c[1]);
 
   return 0;
 }

@@ -70,12 +70,12 @@ int main() {
   CR();
   ECHO_CODE(Domain<double>  rs(-2, +2, 5));
   TRDISP(rs);
-  TRDISP(rs.getGrid());
+  TRDISP(rs.grid());
 
   CR();
   ECHO_CODE(Domain<double>  rs1(-2, +3, 5, GridScale::LINEAR, true, false));
   TRDISP(rs1);
-  TRDISP(rs1.getGrid());
+  TRDISP(rs1.grid());
 
 
   CR();
@@ -85,29 +85,29 @@ int main() {
   CR();
   ECHO_CODE(Domain<double>  rs3(10, 1e5, 10, GridScale::LOG));
   TRDISP(rs3);
-  TRDISP(rs3.getGrid());
-  TRDISP(mathq::log10(rs3.getGrid()));
+  TRDISP(rs3.grid());
+  TRDISP(mathq::log10(rs3.grid()));
 
 
   CR();
   ECHO_CODE(auto rs4 = Domain<double>::point(2.5));
   TRDISP(rs4);
-  TRDISP(rs4.getGrid());
+  TRDISP(rs4.grid());
 
 
   CR();
   ECHO_CODE(Domain<double> rx(-10, +10, 3));
   TRDISP(rx);
-  TRDISP(rx.getGrid());
+  TRDISP(rx.grid());
 
   CR();
   ECHO_CODE(Domain<double> ry(-20, 20, 5, GridScale::LINEAR));
   TRDISP(ry);
-  TRDISP(ry.getGrid());
+  TRDISP(ry.grid());
 
   ECHO_CODE(Domain<double> rz(30, 33, 4, GridScale::LINEAR));
   TRDISP(rz);
-  TRDISP(rz.getGrid());
+  TRDISP(rz.grid());
 
   // CR();
   // auto setXY = std::make_tuple(rx, ry);
@@ -117,14 +117,14 @@ int main() {
   // CR();
   // ECHO_CODE(RealMultiSet<double, 2> setXY({ rx, ry }));
   // TRDISP(setXY);
-  // TRDISP(setXY.getGrid()[0]);
-  // TRDISP(setXY.getGrid()[1]);
-  // // TRDISP(insideout(setXY.getGrid()));
+  // TRDISP(setXY.grid()[0]);
+  // TRDISP(setXY.grid()[1]);
+  // // TRDISP(insideout(setXY.grid()));
 
   // CR();
   // ECHO_CODE(RealMultiSet<double, 3> setXYZ({ rx, ry, rz }));
   // TRDISP(setXYZ);
-  // auto XYZ = setXYZ.getGrid();
+  // auto XYZ = setXYZ.grid();
   // // TRDISP(setXYZ);
   // auto X = XYZ[0];
   // TRDISP(X);
@@ -218,7 +218,7 @@ int main() {
 
 
 
-  // TRDISP(insideout(setXYZ.getGrid()));
+  // TRDISP(insideout(setXYZ.grid()));
 
   // ECHO_CODE(Coordinate2<double, Interval> x_coord2("x", x_interval));
   // TRDISP(x_coord2.gridSet);
@@ -239,7 +239,7 @@ int main() {
   // TRDISP(y_interval);
 
 
-  // ECHO_CODE(auto gridX0 = x_interval.getGrid());
+  // ECHO_CODE(auto gridX0 = x_interval.grid());
   // TRDISP(x_interval);
   // TRDISP(gridX0);
 

@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.44-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.45-c++20</h1>
 
 <details>
 
@@ -65,34 +65,34 @@
 
 Domain<double> rs(-2, +2, 5);
 ☀ rs ➜ Domain<double> {interval=[-2, 2], N=5, scale=LINEAR};
-☀ rs.getGrid() ➜ Vector<double> {-2, -1, 0, 1, 2};
+☀ rs.grid() ➜ Vector<double> {-2, -1, 0, 1, 2};
 
 Domain<double> rs1(-2, +3, 5, GridScale::LINEAR, true, false);
 ☀ rs1 ➜ Domain<double> {interval=[-2, 3], N=5, scale=LINEAR};
-☀ rs1.getGrid() ➜ Vector<double> {-2, -1, 0, 1, 2};
+☀ rs1.grid() ➜ Vector<double> {-2, -1, 0, 1, 2};
 
 Domain<double> rs2 = Domain<double>::realLine();
 ☀ rs2 ➜ Domain<double> {interval=[-inf, inf], N=0, scale=LINEAR};
 
 Domain<double> rs3(10, 1e5, 10, GridScale::LOG);
 ☀ rs3 ➜ Domain<double> {interval=[10, 100000], N=10, scale=LOG};
-☀ rs3.getGrid() ➜ Vector<double> {10, 27.8256, 77.4264, 215.443, 599.484, 1668.1, 4641.59, 12915.5, 35938.1, 100000};
-☀ mathq::log10(rs3.getGrid()) ➜ Vector<double> {1, 1.44444, 1.88889, 2.33333, 2.77778, 3.22222, 3.66667, 4.11111, 4.55556, 5};
+☀ rs3.grid() ➜ Vector<double> {10, 27.8256, 77.4264, 215.443, 599.484, 1668.1, 4641.59, 12915.5, 35938.1, 100000};
+☀ mathq::log10(rs3.grid()) ➜ Vector<double> {1, 1.44444, 1.88889, 2.33333, 2.77778, 3.22222, 3.66667, 4.11111, 4.55556, 5};
 
 auto rs4 = Domain<double>::point(2.5);
 ☀ rs4 ➜ Domain<double> {point=2.5};
-☀ rs4.getGrid() ➜ Vector<double> {2.5};
+☀ rs4.grid() ➜ Vector<double> {2.5};
 
 Domain<double> rx(-10, +10, 3);
 ☀ rx ➜ Domain<double> {interval=[-10, 10], N=3, scale=LINEAR};
-☀ rx.getGrid() ➜ Vector<double> {-10, 0, 10};
+☀ rx.grid() ➜ Vector<double> {-10, 0, 10};
 
 Domain<double> ry(-20, 20, 5, GridScale::LINEAR);
 ☀ ry ➜ Domain<double> {interval=[-20, 20], N=5, scale=LINEAR};
-☀ ry.getGrid() ➜ Vector<double> {-20, -10, 0, 10, 20};
+☀ ry.grid() ➜ Vector<double> {-20, -10, 0, 10, 20};
 Domain<double> rz(30, 33, 4, GridScale::LINEAR);
 ☀ rz ➜ Domain<double> {interval=[30, 33], N=4, scale=LINEAR};
-☀ rz.getGrid() ➜ Vector<double> {30, 31, 32, 33};
+☀ rz.grid() ➜ Vector<double> {30, 31, 32, 33};
 ```
 
 

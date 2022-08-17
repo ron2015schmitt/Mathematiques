@@ -68,7 +68,9 @@ namespace mathq {
   template <typename GridElementType> requires(IsSimpleNumber<GridElementType>)
     class
     Domain<GridElementType> {
+
     public:
+      using Type = Domain<GridElementType>;
       size_t N;
       GridElementType a;
       GridElementType b;
@@ -78,12 +80,13 @@ namespace mathq {
 
       // dependent variables
       // move to private
+
       GridElementType log_a;
       GridElementType log_b;
       size_t Neff;
       GridElementType start;
       GridElementType step;
-      mathq::Vector<GridElementType> grid;
+      mathq::Vector<GridElementType> grid_vector;
 
       Domain() noexcept {
         include_a = true;
@@ -91,6 +94,7 @@ namespace mathq {
         include_b = true;
         b = std::numeric_limits<GridElementType>::infinity();
         N = 0;
+        scale = GridScale::LINEAR;
         this->init();
       }
       Domain(const GridElementType& a, const GridElementType& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR, const bool include_a = true, const bool include_b = true) noexcept :
@@ -100,12 +104,12 @@ namespace mathq {
       ~Domain() {
       }
 
-      mathq::Vector<GridElementType>& getGrid() {
+      mathq::Vector<GridElementType>& grid() {
         refreshGrid();
-        return grid;
+        return grid_vector;
       }
       mathq::Vector<GridElementType>& refreshGrid() {
-        grid.resize(N);
+        grid_vector.resize(N);
         init();
         if (scale == GridScale::LOG) {
           return makeGrid_Log();
@@ -113,6 +117,10 @@ namespace mathq {
         else {
           return makeGrid_Linear();
         }
+      }
+
+      size_t size() const {
+        return grid_vector.size();
       }
 
     private:
@@ -142,40 +150,43 @@ namespace mathq {
       }
 
       mathq::Vector<GridElementType>& makeGrid_Linear() {
-        if (N == 0) return grid;
+        if (N == 0) return grid_vector;
 
         for (size_t c = 0; c<(N-1); c++) {
-          grid[c] = start + static_cast<GridElementType>(c)*step;
+          grid_vector[c] = start + static_cast<GridElementType>(c)*step;
         }
         if (include_b) {
-          grid[N-1] = b;
+          grid_vector[N-1] = b;
         }
         else {
-          grid[N-1] = b - step;
+          grid_vector[N-1] = b - step;
         }
-        return grid;
+        return grid_vector;
       }
 
       mathq::Vector<GridElementType>& makeGrid_Log() {
-        if (N == 0) return grid;
+        if (N == 0) return grid_vector;
 
         for (size_t c = 0; c<(N-1); c++) {
-          grid[c] = std::pow(10, start + static_cast<GridElementType>(c)*step);
+          grid_vector[c] = std::pow(10, start + static_cast<GridElementType>(c)*step);
         }
         if (include_b) {
-          grid[N-1] = b;
+          grid_vector[N-1] = b;
         }
         else {
-          grid[N-1] = std::pow(10, log_b - step);
+          grid_vector[N-1] = std::pow(10, log_b - step);
         }
-        return grid;
+        return grid_vector;
       }
     public:
 
 
+      //------------------------------------------------------------------------------------
       //
-      // static "factor" methods"
+      // static "factory" methods
       //
+      //------------------------------------------------------------------------------------
+
       static Domain<GridElementType> emptySet() {
         return Domain<GridElementType>(0, 0, 0, GridScale::LINEAR, false, false);
       }
@@ -284,7 +295,7 @@ namespace mathq {
           stream << "{point=";
           dispval_strm(stream, var.a);
           // stream << ", gridState=";
-          // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
+          // dispval_strm(stream, (var.grid_vector.size() == 0) ? "deflated" : "inflated");
           stream << "}";
         }
         else {
@@ -312,7 +323,7 @@ namespace mathq {
           dispval_strm(stream, var.scale);
 
           // stream << ", gridState=";
-          // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
+          // dispval_strm(stream, (var.grid_vector.size() == 0) ? "deflated" : "inflated");
           stream << "}";
         }
         return stream;
@@ -335,11 +346,15 @@ namespace mathq {
     // CurvilinearCoords : public MultiArray_RepeatVector<GridElementType, Ndims, dim_ints...> {
   public:
     static constexpr size_t Ndims_value = Ndims;
+    constexpr static std::array<size_t, Ndims_value> static_grid_dims_array = { dim_ints... };
+    constexpr static bool is_dynamic_value = (sizeof...(dim_ints) == 0);
 
     using Type = CurvilinearCoords<GridElementType, Ndims, Derived, dim_ints...>;
     using ElementType = MultiArray_RepeatVector<GridElementType, Ndims, dim_ints...>;
     using NumberType = GridElementType;
     using SimpleNumberType = typename SimpleNumberTrait<GridElementType>::Type;
+    using DomainType = Domain<GridElementType>;
+    using GridType = ElementType;
 
     using ParentType = Vector< ElementType, Ndims >;
     using ConcreteType = Vector< MultiArray<GridElementType, Ndims, dim_ints...>, Ndims >;
@@ -356,17 +371,23 @@ namespace mathq {
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
 
-    std::array<Domain<GridElementType>, Ndims> domains;
+    std::array<DomainType, Ndims> domains;
 
 
     CurvilinearCoords() : ParentType() {
-      setup_grids();
+      setup_vector_indices();
     }
 
-    CurvilinearCoords(const std::initializer_list<Domain<GridElementType>>& mylist) {
-      // setup_grids();
-      // *this = mylist;
+    CurvilinearCoords(const std::initializer_list<DomainType>& mylist) : ParentType() {
+      setup_vector_indices();
+      *this = mylist;
     }
+
+    CurvilinearCoords(const CurvilinearCoords& coords) : ParentType() {
+      setup_vector_indices();
+      *this = coords;
+    }
+
 
     Derived& derived() {
       return static_cast<Derived&>(*this);
@@ -379,149 +400,68 @@ namespace mathq {
       return Ndims;
     }
 
+    Dimensions& grid_dims(void) const {
+      if constexpr (Ndims > 0) {
+        return grid(0).dims();
+      }
+    }
 
-    Type& setup_grids(void) {
+    Type& grid_resize(const Dimensions& dims) {
+      for (size_t c = 0; c < Ndims; c++) {
+        grid(c).resize(dims);
+      }
+      return *this;
+    }
+
+
+    Type& setup_vector_indices(void) {
       for (size_t c = 0; c < Ndims; c++) {
         (*this)[c].vector_index = c;
       }
       return *this;
     }
 
+    const GridType& grid(size_t g) const {
+      return (*this)[g];
+    }
+    GridType& grid(size_t g) {
+      return (*this)[g];
+    }
 
-    // CurvilinearCoords& init() {
-    //   inflateGrids_();
-    //   return *this;
-    // }
-
-    // CurvilinearCoords& deflateGrids_() {
-    //   for (size_t g = 0; g < Ndims; g++) {
-    //     get(g).deflateGrid_();
-    //     grid[g].resize(0);
-    //   }
-    //   return *this;
-    // }
-    // CurvilinearCoords& inflateGrids_() {
-    //   const Dimensions gdims = gridDims();
-    //   OUTPUT("inflategrids");
-    //   TRDISP(gdims);
-    //   for (size_t g = 0; g < Ndims; g++) {
-    //     Domain<GridElementType>& set = get(g);
-    //     set.inflateGrid_();
-    //     grid[g].resize(gdims);
-    //   }
-    //   return *this;
-    // }
-    // bool hasInflatedGrids_() {
-    //   if (Ndims == 0) return false;
-    //   for (size_t g = 0; g < Ndims; g++) {
-    //     if (!(get(g)).hasInflatedGrid_()) {
-    //       return false;
-    //     }
-    //     if (grid[g].size() == 0) {
-    //       return false;
-    //     }
-    //   }
-    //   return true;
-    // }
-
-    // inline size_t gridDepth(void) const {
-    //   return 1;
-    // }
-
-    // size_t gridRank(void) const {
-    //   return Ndims;
-    // }
-
-    // Dimensions gridDims(void) {
-    //   Dimensions dims;
-    //   for (size_t g = 0; g < Ndims; g++) {
-    //     Domain<GridElementType>& rs = get(g);
-    //     dims.push_back(rs.N);
-    //   }
-    //   return dims;
-    // }
-
-    CurvilinearCoords& operator=(const std::initializer_list<Domain<GridElementType>>& mylist) {
+    CurvilinearCoords& operator=(const std::initializer_list<DomainType>& mylist) {
       size_t i = 0;
-      typename std::initializer_list<Domain<GridElementType>>::iterator it;
-      for (it = mylist.begin(); it != mylist.end(); ++it) {
-        domains[i++] = *it;
+      typename std::initializer_list<DomainType>::iterator it;
+      Dimensions dims(Ndims);
+      for (it = mylist.begin(); it != mylist.end(); ++it, i++) {
+        DomainType& domain = domains[i];
+        domain = *it;
+        dims[i] = domain.size();
+      }
+      if constexpr (is_dynamic_value) {
+        grid_resize(dims);
+      }
+      for (size_t c = 0; c < Ndims; c++) {
+        auto vec = domains[c].grid();
+        grid(c) = vec;
       }
       return *this;
     }
 
-
-    // Domain<GridElementType>& get(size_t g) {
-    //   return (*this)[g];
-    // }
-
-    // MULTIGRID& getGrid() {
-    //   TRDISP(hasInflatedGrids_());
-    //   if (hasInflatedGrids_()) return grid;
-    //   return forceRegenGrid();
-    // }
-
-
-    // MULTIGRID& forceRegenGrid() {
-    //   init();
-
-    //   if constexpr (Ndims == 0) {
-    //     // do something?
-    //   }
-    //   else if constexpr (Ndims == 1) {
-    //     grid = get(0).forceRegenGrid();
-    //   }
-    //   else if constexpr (Ndims == 2) {
-    //     Grid<GridElementType, 1>& xgrid = get(0).forceRegenGrid();
-    //     Grid<GridElementType, 1>& ygrid = get(1).forceRegenGrid();
-    //     Grid<GridElementType, Ndims>& X = grid[0];
-    //     Grid<GridElementType, Ndims>& Y = grid[1];
-    //     const size_t Nx = gridDims()[0];
-    //     const size_t Ny = gridDims()[1];
-    //     X.resize(Nx, Ny);
-    //     Y.resize(Nx, Ny);
-    //     for (size_t r = 0; r < Nx; r++) {
-    //       for (size_t c = 0; c < Ny; c++) {
-    //         X(r, c) = xgrid[r];
-    //         Y(r, c) = ygrid[c];
-    //       }
-    //     }
-    //   }
-    //   else {
-    //     for (size_t g = 0; g < Ndims; g++) {
-    //       get(g).forceRegenGrid();
-    //     }
-    //     Indices indices(Ndims);  // all zeros
-    //     // TRDISP(indices);
-    //     setGrid_(0, indices);
-    //     // DISP("DONE");
-    //   }
-    //   return grid;
-    // }
-
-    // void setGrid_(int coord, Indices& indices) {
-    //   const size_t Npts = gridDims()[coord];  // grdi size of coord-th coordinate
-    //   // MDISP("ENTRY for coord", coord, Npts);
-    //   for (int p = 0; p < Npts; p++) {
-    //     indices[coord] = p;
-    //     if (coord < Ndims-1) {
-    //       // OUTPUT("GO TO NEXT coord");
-    //       setGrid_(coord+1, indices);
-    //     }
-    //     else {
-    //       // we are inside the last coordinate's loop, ie inside all the loops
-    //       // MDISP(coord, p, indices);
-    //       for (int g = 0; g < Ndims; g++) {
-    //         // this loop is for the Ndims different grids (vectors of size N)
-    //         // we set the grid value of each grid
-    //         Domain<GridElementType>& rs = get(g);
-    //         // MDISP(g, indices[g]);
-    //         grid[g][indices] = rs.getGrid()[indices[g]];
-    //       }
-    //     }
-    //   }
-    //   // OUTPUT("EXIT");
-    // }
+    CurvilinearCoords& operator=(const CurvilinearCoords& coords) {
+      if constexpr (is_dynamic_value) {
+        grid_resize(coords.grid_dims());
+      }
+      for (size_t c = 0; c < Ndims; c++) {
+        DomainType domain = coords.domains[c];
+        domains[c] = domain;
+      }
+      for (size_t c = 0; c < Ndims; c++) {
+        TRDISP(domains[c].grid());
+        TRDISP(grid(c));
+        grid(c) = domains[c].grid();
+      }
+      return *this;
+    }
 
     //**********************************************************************
     //************************** Text and debugging ************************
@@ -560,76 +500,17 @@ namespace mathq {
   };
 
 
-  //   // ***************************************************************************
-  //   // * CurvilinearCoords<GridElementType, Ndims>
-  //   // ***************************************************************************
-
-  //   template <class GridElementType, size_t Ndims, class CHILD>
-  //   class CurvilinearCoords : public Vector<GridElementType, Ndims> {
-  //   public:
-  //     typedef CurvilinearCoords<GridElementType, Ndims, CHILD> CLASS;
-  //     typedef Vector<GridElementType, Ndims> PARENT;
-
-  //     CHILD& child() {
-  //       return static_cast<CHILD&>(*this);
-  //     }
-  //     const  CHILD& child() const {
-  //       return static_cast<const CHILD&>(*this);
-  //     }
 
 
-  //     // Jacobian 
-  //     GridElementType J() const {
-  //       return child().J();
-  //     }
-
-  //     // metric tensor g^{ij} 
-  //     Matrix<GridElementType, Ndims, Ndims> g() const {
-  //       return child().g();
-  //     }
-  //     // CartesianCoords<GridElementType, Ndims>& pos() const {
-  //     //   return child().pos();
-  //     // }
-  //     // CartesianCoords<GridElementType, Ndims>& toCartesian() const {
-  //     //   return child().toCartesian();
-  //     // }
-  //     Vector<GridElementType, Ndims>& basis_vec(size_t n) const {
-  //       return child().basis_vec();
-  //     }
-
-
-
-  //     std::array<std::string, Ndims>& names() const {
-  //       return child().names();
-  //     }
-
-  //     const std::string& name(size_t n) const {
-  //       return child().name(n);
-  //     }
-
-  //     inline std::string classname() const {
-  //       return child().classname();
-  //     }
-
-
-  //     inline friend std::ostream& operator<<(std::ostream& stream, const CLASS& var) {
-  //       return stream << var.child();
-  //     }
-
-
-  //   };
-
-
-    // ***************************************************************************
-    // * CartesianCoords<GridElementType, Ndims>
-    // ***************************************************************************
+  // ***************************************************************************
+  // * CartesianCoords<GridElementType, Ndims>
+  // ***************************************************************************
 
   template <class GridElementType, size_t Ndims>
   class CartesianCoords : public CurvilinearCoords<GridElementType, Ndims, CartesianCoords<GridElementType, Ndims>> {
   public:
-
-    using ParentType = CurvilinearCoords<GridElementType, Ndims, CartesianCoords<GridElementType, Ndims>>;
-
+    using Type = CartesianCoords<GridElementType, Ndims>;
+    using ParentType = CurvilinearCoords<GridElementType, Ndims, Type>;
     // template<size_t TEMP = Ndims>
     // static EnableMethodIf<TEMP==2, CartesianCoords<GridElementType, Ndims>> fromPolar(const GridElementType& r, const GridElementType& phi) {
     //   GridElementType x = r * std::cos(phi);
@@ -648,18 +529,16 @@ namespace mathq {
     explicit CartesianCoords(const std::initializer_list<Domain<GridElementType>>& mylist) : ParentType(mylist) {
     }
 
-    explicit CartesianCoords(const CartesianCoords<GridElementType, Ndims>& v2) {
-      // BASE& me = *this;
-      // me = v2;
+    explicit CartesianCoords(const Type& obj) : ParentType(obj) {
     }
 
-    // std::array<std::string, Ndims>& names() const {
-    //   std::array<std::string, Ndims> names;
-    //   for (size_t c = 0; c < Ndims; c++) {
-    //     names[c] = name(c);
-    //   }
-    //   return names;
-    // }
+    std::array<std::string, Ndims>& names() const {
+      std::array<std::string, Ndims> names;
+      for (size_t c = 0; c < Ndims; c++) {
+        names[c] = name(c);
+      }
+      return names;
+    }
 
     const std::string& name(size_t n) const {
       std::string* s = new std::string("x");
@@ -668,12 +547,12 @@ namespace mathq {
     }
 
 
-    // // Jacobian 
-    // GridElementType& J() const {
-    //   GridElementType* jacob = new GridElementType();
-    //   *jacob = 1;
-    //   return *jacob;
-    // }
+    // Jacobian 
+    GridElementType& J() const {
+      GridElementType& jacob = *(new GridElementType);
+      jacob = 1;
+      return jacob;
+    }
 
     // // metric tensor g^{ij} 
     // Matrix<GridElementType, Ndims, Ndims> g() const {

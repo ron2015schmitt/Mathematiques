@@ -393,6 +393,15 @@ namespace mathq {
         return resize(new_dims);
       }
 
+      Type& resize_vector(const size_t size) {
+        Dimensions mydims = dims();
+        mydims[vector_index] = size;
+        if constexpr (is_dynamic_value) {
+          resize(mydims);
+        }
+        return *this;
+      }
+
 
       template <bool enabled = is_dynamic_value> requires (enabled)
         Type& resize(const Dimensions& new_dims) {
@@ -764,11 +773,23 @@ namespace mathq {
 
 
 
+      // ------------------------ MultiArray_RepeatVector = Vector ----------------
+
+      Type& operator=(const Vector<Element>& q) {
+        resize_vector(q.size());
+        for (size_t i = 0; i < actual_size(); i++) {
+          vector[i] = q[i];
+        }
+        return *this;
+      }
+
+
       // ------------------------ MultiArray_RepeatVector = array[] ----------------
 
-      Type& operator=(const Element array[]) {
-        for (size_t i = 0; i < size(); i++) {
-          vector[i] = array[i];
+      Type& operator=(const Element q[]) {
+        resize_vector(q.size());
+        for (size_t i = 0; i < actual_size(); i++) {
+          vector[i] = q[i];
         }
         return *this;
       }
@@ -776,9 +797,10 @@ namespace mathq {
 
       // ------------------------ MultiArray_RepeatVector = list ----------------
 
-      Type& operator=(const std::list<Element>& mylist) {
+      Type& operator=(const std::list<Element>& q) {
+        resize_vector(q.size());
         size_t i = 0;
-        for (typename std::list<Element>::const_iterator it = mylist.begin(); it != mylist.end(); it++) {
+        for (typename std::list<Element>::const_iterator it = q.begin(); it != q.end(); it++) {
           vector[i++] = *it;
         }
         return *this;
@@ -787,11 +809,11 @@ namespace mathq {
 
       // ------------------------ MultiArray_RepeatVector = initializer_list ----------------
 
-      Type& operator=(const std::initializer_list<Element>& mylist) {
-        size_t k = 0;
-        typename std::initializer_list<Element>::iterator it;
-        for (it = mylist.begin(); it != mylist.end(); it++, k++) {
-          vector[k] = *it;
+      Type& operator=(const std::initializer_list<Element>& q) {
+        resize_vector(q.size());
+        size_t i = 0;
+        for (typename std::initializer_list<Element>::const_iterator it = q.begin(); it != q.end(); it++) {
+          vector[i++] = *it;
         }
         return *this;
       }
@@ -799,9 +821,11 @@ namespace mathq {
 
       // ------------------------ MultiArray_RepeatVector = std::vector ----------------
 
-      Type& operator=(const std::vector<Element>& vstd) {
-        for (size_t i = 0; i < size(); i++)
-          vector[i] = vstd[i];
+      Type& operator=(const std::vector<Element>& q) {
+        resize_vector(q);
+        for (size_t i = 0; i < actual_size(); i++) {
+          vector[i] = q[i];
+        }
         return *this;
       }
 
@@ -809,20 +833,22 @@ namespace mathq {
       // ------------------------ MultiArray_RepeatVector = std::array ----------------
 
       template <size_t N>
-      Type& operator=(const std::array<NumberType, N>& varray) {
-        for (size_t i = 0; i < size(); i++)
-          vector[i] = varray[i];
-
+      Type& operator=(const std::array<NumberType, N>& q) {
+        resize_vector(q);
+        for (size_t i = 0; i < actual_size(); i++) {
+          vector[i] = q[i];
+        }
         return *this;
       }
 
 
       // ------------------------ MultiArray_RepeatVector = std::valarray ----------------
 
-      Type& operator=(const std::valarray<Element>& varray) {
-        for (size_t i = 0; i < size(); i++)
-          vector[i] = varray[i];
-
+      Type& operator=(const std::valarray<Element>& q) {
+        resize_vector(q);
+        for (size_t i = 0; i < actual_size(); i++) {
+          vector[i] = q[i];
+        }
         return *this;
       }
 
@@ -926,7 +952,7 @@ namespace mathq {
 #if MATHQ_DEBUG >= 1
       std::string expression(void) const {
         return "";
-      }
+  }
 #endif
 
       // this is recursive 
@@ -985,7 +1011,8 @@ namespace mathq {
 
       friend std::ostream& operator<<(std::ostream& stream, const Type& t) {
         using namespace display;
-        stream << "vector_index=" << std::to_string(t.vector_index);
+        stream << "vector_index=" << t.vector_index;
+        stream << ", dims=" << t.dims();
         size_t n = 0;
         t.send(stream, n, t.dims());
         return stream;
@@ -997,7 +1024,7 @@ namespace mathq {
         return (st >> x);
       }
 
-  };
+};
 
 }; // namespace mathq
 
