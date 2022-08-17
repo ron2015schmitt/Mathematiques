@@ -60,8 +60,8 @@ int main(int argc, char* argv[]) {
   CurvilinearField<double, 0, CartesianCoords<double, 2>> field0(cart_coords2c);
   // CurvilinearField<double, 0> field0(cart_coords2c);
   {
-    auto x = cart_coords2c.x();
-    auto y = cart_coords2c.y();
+    auto& x = cart_coords2c.x();
+    auto& y = cart_coords2c.y();
     field0() = sqrt(x*x+y*y);
     // field0 = { abs(x) };
   }
