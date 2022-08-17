@@ -640,9 +640,42 @@ namespace mathq {
     }
 
     const static inline std::string& Name(size_t n) {
-      std::string* s = new std::string("x");
-      *s += std::to_string(n+1);
-      return *s;
+      std::string& s = *(new std::string());
+      if (n >= Ndims) {
+        // TODO: error 
+        s += "bad coord";
+      }
+      if constexpr (Ndims == 1) {
+        s += "x";
+      }
+      else if constexpr (Ndims == 2) {
+        switch (n) {
+        case 0:
+          s += "x";
+          break;
+        case 1:
+          s += "y";
+          break;
+        }
+      }
+      else if constexpr (Ndims == 3) {
+        switch (n) {
+        case 0:
+          s += "x";
+          break;
+        case 1:
+          s += "y";
+          break;
+        case 2:
+          s += "z";
+          break;
+        }
+      }
+      else {
+        s += "x";
+        s += std::to_string(n+1);
+      }
+      return s;
     }
 
 
@@ -753,10 +786,10 @@ namespace mathq {
 
 
 
-  template <class GridElementType, size_t Ndims>
-  auto dot(const CartesianCoords<GridElementType, Ndims>& v1, const CartesianCoords<GridElementType, Ndims>& v2) {
-    return v1 | v2;
-  }
+  // template <class GridElementType, size_t Ndims>
+  // auto dot(const CartesianCoords<GridElementType, Ndims>& v1, const CartesianCoords<GridElementType, Ndims>& v2) {
+  //   return v1 | v2;
+  // }
 
 
 
