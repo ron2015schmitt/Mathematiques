@@ -51,6 +51,7 @@ int main(int argc, char* argv[]) {
   TRDISP(cart_coords2c.basis());
   TRDISP(cart_coords2c.at(0, 0));
   TRDISP(cart_coords2c.at(3, 2));
+  TRDISP(cart_coords2c.at(3, 2).classname());
 
   return 0;
 }

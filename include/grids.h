@@ -511,7 +511,7 @@ namespace mathq {
   public:
     using Type = CartesianCoords<GridElementType, Ndims>;
     using ParentType = CurvilinearCoords<GridElementType, Ndims, Type>;
-    using CoordinateSet = Vector<GridElementType, Ndims>;
+    class Point;  // sub class
 
 
     // template<size_t TEMP = Ndims>
@@ -535,25 +535,12 @@ namespace mathq {
     explicit CartesianCoords(const Type& obj) : ParentType(obj) {
     }
 
-    std::array<std::string, Ndims>& names() const {
-      std::array<std::string, Ndims> names;
-      for (size_t c = 0; c < Ndims; c++) {
-        names[c] = name(c);
-      }
-      return names;
-    }
-
-    const std::string& name(size_t n) const {
-      std::string* s = new std::string("x");
-      *s += std::to_string(n+1);
-      return *s;
-    }
 
 
     // coordinates at a grid point
     template <typename... U> requires ((ParentType::is_dynamic_value) && (std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == Ndims))
-      CoordinateSet& at(const U... args) {
-      CoordinateSet& vec = *(new CoordinateSet);
+      Point& at(const U... args) {
+      Point& vec = *(new Point);
       for (size_t c = 0; c < Ndims; c++) {
         typename ParentType::GridType& grid = ParentType::grid(c);
         vec[c] = grid(args...);
@@ -603,8 +590,15 @@ namespace mathq {
     }
 
 
+    // instance classname() method 
 
     inline std::string classname() const {
+      return ClassName();
+    }
+
+    // static ClassName() method 
+
+    static inline std::string ClassName() {
       using namespace display;
       std::string s = "CartesianCoords";
       s += StyledString::get(ANGLE1).get();
@@ -629,6 +623,27 @@ namespace mathq {
       return stream;
     }
 
+
+    std::array<std::string, Ndims>& names() const {
+      return Names();
+    }
+    static inline std::array<std::string, Ndims>& Names() {
+      std::array<std::string, Ndims> names;
+      for (size_t c = 0; c < Ndims; c++) {
+        names[c] = name(c);
+      }
+      return names;
+    }
+
+    const std::string& name(size_t n) const {
+      return Name(n);
+    }
+
+    const static inline std::string& Name(size_t n) {
+      std::string* s = new std::string("x");
+      *s += std::to_string(n+1);
+      return *s;
+    }
 
 
     // template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
@@ -694,6 +709,45 @@ namespace mathq {
     //   (*this)[0] = v2.r() * std::cos(v2.phi());
     //   (*this)[1] = v2.r() * std::sin(v2.phi());
     // }
+
+
+    class Point : public Vector<GridElementType, Ndims> {
+    public:
+      // instance classname() method 
+
+      inline std::string classname() const {
+        return ClassName();
+      }
+
+      // static ClassName() method 
+
+      static inline std::string ClassName() {
+        using namespace display;
+        std::string s = "CartesianCoords";
+        s += StyledString::get(ANGLE1).get();
+        GridElementType d;
+        s += getTypeName(d);
+        s += StyledString::get(COMMA).get();
+        s += std::to_string(Ndims);
+        s += StyledString::get(ANGLE2).get();
+        s += "::Point";
+        return s;
+      }
+
+
+      inline friend std::ostream& operator<<(std::ostream& stream, const Type::Point& var) {
+        stream << "(";
+        for (size_t c = 0; c < Ndims; c++) {
+          if (c>0) stream << ", ";
+          stream << Type::Name(c);
+          stream << "=";
+          stream << var[c];
+        }
+        stream << ")";
+        return stream;
+      }
+
+    };
 
   };
 
