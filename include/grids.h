@@ -511,6 +511,9 @@ namespace mathq {
   public:
     using Type = CartesianCoords<GridElementType, Ndims>;
     using ParentType = CurvilinearCoords<GridElementType, Ndims, Type>;
+    using CoordinateSet = Vector<GridElementType, Ndims>;
+
+
     // template<size_t TEMP = Ndims>
     // static EnableMethodIf<TEMP==2, CartesianCoords<GridElementType, Ndims>> fromPolar(const GridElementType& r, const GridElementType& phi) {
     //   GridElementType x = r * std::cos(phi);
@@ -547,6 +550,17 @@ namespace mathq {
     }
 
 
+    // coordinates at a grid point
+    template <typename... U> requires ((ParentType::is_dynamic_value) && (std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == Ndims))
+      CoordinateSet& at(const U... args) {
+      CoordinateSet& vec = *(new CoordinateSet);
+      for (size_t c = 0; c < Ndims; c++) {
+        typename ParentType::GridType& grid = ParentType::grid(c);
+        vec[c] = grid(args...);
+      }
+      return vec;
+    }
+
     // Jacobian 
     GridElementType& J() const {
       GridElementType& jacob = *(new GridElementType);
@@ -554,16 +568,15 @@ namespace mathq {
       return jacob;
     }
 
-    // // metric tensor g^{ij} 
-    // Matrix<GridElementType, Ndims, Ndims> g() const {
-    //   Matrix<GridElementType, Ndims, Ndims> metric;
-    //   for (size_t r = 0; r < Ndims; r++) {
-    //     for (size_t c = 0; c < Ndims; c++) {
-    //       metric(r, c) = (r==c) ? 1 : 0;
-    //     }
-    //   }
-    //   return metric;
-    // }
+    Matrix<GridElementType, Ndims, Ndims>& g() const {
+      Matrix<GridElementType, Ndims, Ndims>& metric = *(new Matrix<GridElementType, Ndims, Ndims>);
+      for (size_t r = 0; r < Ndims; r++) {
+        for (size_t c = 0; c < Ndims; c++) {
+          metric(r, c) = (r==c) ? 1 : 0;
+        }
+      }
+      return metric;
+    }
 
     // CartesianCoords<GridElementType, Ndims>& pos() const {
     //   return toCartesian();
@@ -572,11 +585,23 @@ namespace mathq {
     //   return *(new CartesianCoords<GridElementType, Ndims>(*this));
     // }
 
-    // Vector<GridElementType, Ndims>& basis_vec(size_t n) const {
-    //   Vector<GridElementType, Ndims>* vec = new Vector<GridElementType, Ndims>(0);
-    //   (*vec)[n] = 1;
-    //   return *vec;
-    // }
+    Vector<GridElementType, Ndims>& basis_vec(size_t n) const {
+      Vector<GridElementType, Ndims>& vec = *(new Vector<GridElementType, Ndims>);
+      for (size_t c = 0; c < Ndims; c++) {
+        vec[c] = (c == n) ? 1 : 0;
+      }
+      return vec;
+    }
+
+    Vector<Vector<GridElementType, Ndims>, Ndims>& basis() const {
+      Vector<Vector<GridElementType, Ndims>, Ndims>& vec = *(new Vector<Vector<GridElementType, Ndims>, Ndims>);
+      for (size_t c = 0; c < Ndims; c++) {
+        vec[c] = basis_vec(c);
+      }
+      return vec;
+
+    }
+
 
 
     inline std::string classname() const {

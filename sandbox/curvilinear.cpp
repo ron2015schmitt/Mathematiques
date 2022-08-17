@@ -44,6 +44,13 @@ int main(int argc, char* argv[]) {
 
   TRDISP(cart_coords2c[0]);
   TRDISP(cart_coords2c[1]);
+  TRDISP(cart_coords2c.J());
+  TRDISP(cart_coords2c.g());
+  TRDISP(cart_coords2c.basis_vec(0));
+  TRDISP(cart_coords2c.basis_vec(1));
+  TRDISP(cart_coords2c.basis());
+  TRDISP(cart_coords2c.at(0, 0));
+  TRDISP(cart_coords2c.at(3, 2));
 
   return 0;
 }

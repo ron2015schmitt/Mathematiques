@@ -250,8 +250,11 @@ namespace mathq {
       }
 
       inline size_t size(void) const {
+        OUTPUT("SIZE");
         if constexpr (is_dynamic_value) {
-          return std::accumulate(dims_array().begin(), dims_array().end(), 1, std::multiplies<size_t>());  // product of elements
+          auto myarray = dims_array();
+          OUTPUT("SIZE::dynamic");
+          return std::accumulate(myarray.begin(), myarray.end(), 1, std::multiplies<size_t>());  // product of elements
         }
         else {
           return compile_time_size;
@@ -519,7 +522,9 @@ namespace mathq {
 
       template <typename... U>
       Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_unsigned<U>...>::value && (sizeof...(args) == rank_value)) {
+        OUTPUT("inside");
         Indices inds = Indices({ args... });
+        TRDISP(inds);
         return vector[inds[vector_index]];
       }
 
@@ -952,7 +957,7 @@ namespace mathq {
 #if MATHQ_DEBUG >= 1
       std::string expression(void) const {
         return "";
-  }
+      }
 #endif
 
       // this is recursive 
@@ -1024,7 +1029,7 @@ namespace mathq {
         return (st >> x);
       }
 
-};
+  };
 
 }; // namespace mathq
 
