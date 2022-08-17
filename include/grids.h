@@ -406,7 +406,7 @@ namespace mathq {
       }
     }
 
-    Type& grid_resize(const Dimensions& dims) {
+    Type& grids_resize(const Dimensions& dims) {
       for (size_t c = 0; c < Ndims; c++) {
         coord(c).resize(dims);
       }
@@ -438,7 +438,7 @@ namespace mathq {
         dims[i] = domain.size();
       }
       if constexpr (is_dynamic_value) {
-        grid_resize(dims);
+        grids_resize(dims);
       }
       for (size_t c = 0; c < Ndims; c++) {
         auto vec = domains[c].coord();
@@ -449,15 +449,13 @@ namespace mathq {
 
     CurvilinearCoords& operator=(const CurvilinearCoords& coords) {
       if constexpr (is_dynamic_value) {
-        grid_resize(coords.grid_dims());
+        grids_resize(coords.grid_dims());
       }
       for (size_t c = 0; c < Ndims; c++) {
         DomainType domain = coords.domains[c];
         domains[c] = domain;
       }
       for (size_t c = 0; c < Ndims; c++) {
-        TRDISP(domains[c].coord());
-        TRDISP(coord(c));
         coord(c) = domains[c].coord();
       }
       return *this;
@@ -1034,16 +1032,72 @@ namespace mathq {
   // * CurvilinearField
   // ***************************************************************************
 
-  template <typename TargetElement, size_t target_rank, IsCurvilinear CoordsType>
+  template <typename TargetElement, size_t target_rank, IsCurvilinear Coords>
   class
-    CurvilinearField : public MultiArray< MultiArray<TargetElement, CoordsType::Ndims_value>, target_rank > {
+    CurvilinearField : public MultiArray< MultiArray<TargetElement, Coords::Ndims_value>, target_rank > {
   public:
     static constexpr size_t rank_value = target_rank;
     constexpr static bool is_dynamic_value = true;
 
+    using ParentType = MultiArray< MultiArray<TargetElement, Coords::Ndims_value>, target_rank >;
     using GridElement = TargetElement;
-    using CoordGridType = CoordsType::NumberType;
-    // using Type = CurvilinearField<GridElement, target_rank>;
+    using CoordGridType = Coords::NumberType;
+    using Type = CurvilinearField<TargetElement, target_rank, Coords>;
+
+    const Coords& coords;
+    CurvilinearField(const Coords& coords) : coords(coords) {
+      grids_resize(coords.grid_dims());
+    }
+
+    Dimensions& grid_dims(void) const {
+      if constexpr (rank_value > 0) {
+        return (*this)[0].dims();
+      }
+      else {
+        return (*this)().dims();
+      }
+    }
+
+    Type& grids_resize(const Dimensions& dims) {
+      if constexpr (rank_value > 0) {
+        for (size_t c = 0; c < rank_value; c++) {
+          (*this)[c].resize(dims);
+        }
+      }
+      else {
+        (*this)().resize(dims);
+      }
+      return *this;
+    }
+
+
+    //**********************************************************************
+    //************************** Text and debugging ************************
+    //**********************************************************************
+
+    // instance classname() method 
+
+    inline std::string classname() const {
+      return ClassName();
+    }
+
+    // static ClassName() method 
+
+    static inline std::string ClassName() {
+      using namespace display;
+      std::string s = "CurvilinearField";
+      s += StyledString::get(ANGLE1).get();
+      TargetElement d;
+      s += getTypeName(d);
+      s += StyledString::get(COMMA).get();
+      s += std::to_string(target_rank);
+      s += StyledString::get(COMMA).get();
+      s += Coords::ClassName();
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+
+
   };
 
 

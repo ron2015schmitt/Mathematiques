@@ -57,8 +57,17 @@ int main(int argc, char* argv[]) {
   TRDISP(cart_coords2c.y() = cart_coords2c.x());
 
   TRDISP(curvilinear_coords_test(cart_coords2c));
-  CurvilinearField<double, 0, CartesianCoords<double, 2>> field0;
+  CurvilinearField<double, 0, CartesianCoords<double, 2>> field0(cart_coords2c);
+  // CurvilinearField<double, 0> field0(cart_coords2c);
+  {
+    auto x = cart_coords2c.x();
+    auto y = cart_coords2c.y();
+    field0() = sqrt(x*x+y*y);
+    // field0 = { abs(x) };
+  }
   TRDISP(field0);
+
+
 
   return 0;
 }
