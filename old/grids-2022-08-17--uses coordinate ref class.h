@@ -507,12 +507,27 @@ namespace mathq {
   // ***************************************************************************
 
 
+  template <class GridElementType, size_t Ndims>
+  class CartesianCoords;
+  template <class GridElementType, size_t Ndims>
+  class CartesianRefs {
+  public:
+    using OwnerType = CartesianCoords<GridElementType, Ndims>;
+    const CurvilinearCoords<GridElementType, Ndims, CartesianCoords<GridElementType, Ndims>>::GridType& x;
+    CartesianRefs(const OwnerType& owner) : x(owner.grid(0)) {
+
+    }
+  };
+
+
+
 
   template <class GridElementType, size_t Ndims>
-  class CartesianCoords : public CurvilinearCoords<GridElementType, Ndims, CartesianCoords<GridElementType, Ndims>> {
+  class CartesianCoords : public CurvilinearCoords<GridElementType, Ndims, CartesianCoords<GridElementType, Ndims>>, public CartesianRefs<GridElementType, Ndims> {
   public:
     using Type = CartesianCoords<GridElementType, Ndims>;
     using ParentType = CurvilinearCoords<GridElementType, Ndims, Type>;
+    using RefType = CartesianRefs<GridElementType, Ndims>;
     class Point;  // sub class
 
 
@@ -528,13 +543,13 @@ namespace mathq {
     // }
 
 
-    explicit CartesianCoords() : ParentType() {
+    explicit CartesianCoords() : ParentType(), RefType(*this) {
     }
 
-    explicit CartesianCoords(const std::initializer_list<Domain<GridElementType>>& mylist) : ParentType(mylist) {
+    explicit CartesianCoords(const std::initializer_list<Domain<GridElementType>>& mylist) : ParentType(mylist), RefType(*this) {
     }
 
-    explicit CartesianCoords(const Type& obj) : ParentType(obj) {
+    explicit CartesianCoords(const Type& obj) : ParentType(obj), RefType(*this) {
     }
 
 
@@ -592,36 +607,6 @@ namespace mathq {
 
     }
 
-
-    //**********************************************************************
-    //                    Named coordinate acces
-    //**********************************************************************
-
-    // "read/write"
-    ParentType::GridType& x()  requires ((Ndims >= 1) && (Ndims <= 3)) {
-      return ParentType::grid(0);
-    }
-    ParentType::GridType& y()  requires ((Ndims >= 2) && (Ndims <= 3)) {
-      return ParentType::grid(1);
-    }
-    ParentType::GridType& z()  requires ((Ndims >= 3) && (Ndims <= 3)) {
-      return ParentType::grid(2);
-    }
-
-    // "read only"
-    const ParentType::GridType& x() const requires ((Ndims >= 1) && (Ndims <= 3)) {
-      return ParentType::grid(0);
-    }
-    const ParentType::GridType& y() const requires ((Ndims >= 2) && (Ndims <= 3)) {
-      return ParentType::grid(1);
-    }
-    const ParentType::GridType& z() const requires ((Ndims >= 3) && (Ndims <= 3)) {
-      return ParentType::grid(2);
-    }
-
-    //**********************************************************************
-    //                    Derivatives
-    //**********************************************************************
 
     // deriv(const ExpressionR<X, Element, Num, depth, rank>& f, const Num a, const Num b, const size_t n = 1, size_t Dpts = 7, const bool periodic = false)
 

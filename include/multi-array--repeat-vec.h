@@ -250,10 +250,8 @@ namespace mathq {
       }
 
       inline size_t size(void) const {
-        OUTPUT("SIZE");
         if constexpr (is_dynamic_value) {
           auto myarray = dims_array();
-          OUTPUT("SIZE::dynamic");
           return std::accumulate(myarray.begin(), myarray.end(), 1, std::multiplies<size_t>());  // product of elements
         }
         else {
@@ -1029,8 +1027,8 @@ namespace mathq {
         return (st >> x);
       }
 
-  };
+      };
 
-}; // namespace mathq
+  }; // namespace mathq
 
 #endif
