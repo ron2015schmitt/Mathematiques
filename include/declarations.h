@@ -341,43 +341,19 @@ namespace mathq {
   using GridScaleEnum = GridScale::Type;
 
 
-
-
-
   // ***************************************************************************
-  // * MultiGrid_A - for coordinates 
+  // * CoordGrid - for coordinates
   //
-  // This is a nested structure with depth=2:
-  //   top level: a Vector of size NDIMS
-  //   second level: multiarrays of fixed rank=NDIMS but dynamic size
-  //
-  // A[i] -> gives the grid (a MultiArray of rank NDIMS) for the i-th coordinate
   // ***************************************************************************
 
-  // template <typename Num, size_t NDIMS, size_t... ints>
-  // using MultiGrid_A = std::tuple< MultiArray_RepeatVector<Num, NDIMS, ints>...>;
-
-
-  // ***************************************************************************
-  // * MultiGrid_B - for coordinates
-  //
-  // This is a nested structure with depth=2:
-  //   top level: a single multiarray of fixed rank=NDIMS but dynamic size
-  //   second level: Vectors of size NDIMS
-  //
-  // This type has the same total number of elements as MultiGrid_A.
-  // The two types can be converted from one to another using the function 'evert'.
-  //
-  // B[j] -> gives the coordinate vector (technically an ordered set) for grid point j
-  // ***************************************************************************
-
-  // template <typename Num, size_t NDIMS>
-  // using MultiGrid_B = MultiArray_RepeatVector< Vector<Num, NDIMS>, NDIMS>;
+  template <typename Element, size_t Ndims, size_t... dim_ints >
+  using CoordGrid = MultiArray_RepeatVector<Element, Ndims, dim_ints...>;
 
 
 
-  // template <typename Num, size_t NDIMS, size_t rank, typename G>
-  // class GridTraits;
+
+
+
 
 
 

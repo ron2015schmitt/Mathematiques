@@ -70,12 +70,12 @@ int main() {
   CR();
   ECHO_CODE(Domain<double>  rs(-2, +2, 5));
   TRDISP(rs);
-  TRDISP(rs.grid());
+  TRDISP(rs.coord());
 
   CR();
   ECHO_CODE(Domain<double>  rs1(-2, +3, 5, GridScale::LINEAR, true, false));
   TRDISP(rs1);
-  TRDISP(rs1.grid());
+  TRDISP(rs1.coord());
 
 
   CR();
@@ -85,29 +85,29 @@ int main() {
   CR();
   ECHO_CODE(Domain<double>  rs3(10, 1e5, 10, GridScale::LOG));
   TRDISP(rs3);
-  TRDISP(rs3.grid());
-  TRDISP(mathq::log10(rs3.grid()));
+  TRDISP(rs3.coord());
+  TRDISP(mathq::log10(rs3.coord()));
 
 
   CR();
   ECHO_CODE(auto rs4 = Domain<double>::point(2.5));
   TRDISP(rs4);
-  TRDISP(rs4.grid());
+  TRDISP(rs4.coord());
 
 
   CR();
   ECHO_CODE(Domain<double> rx(-10, +10, 3));
   TRDISP(rx);
-  TRDISP(rx.grid());
+  TRDISP(rx.coord());
 
   CR();
   ECHO_CODE(Domain<double> ry(-20, 20, 5, GridScale::LINEAR));
   TRDISP(ry);
-  TRDISP(ry.grid());
+  TRDISP(ry.coord());
 
   ECHO_CODE(Domain<double> rz(30, 33, 4, GridScale::LINEAR));
   TRDISP(rz);
-  TRDISP(rz.grid());
+  TRDISP(rz.coord());
 
   // CR();
   // auto setXY = std::make_tuple(rx, ry);
@@ -117,14 +117,14 @@ int main() {
   // CR();
   // ECHO_CODE(RealMultiSet<double, 2> setXY({ rx, ry }));
   // TRDISP(setXY);
-  // TRDISP(setXY.grid()[0]);
-  // TRDISP(setXY.grid()[1]);
-  // // TRDISP(insideout(setXY.grid()));
+  // TRDISP(setXY.coord()[0]);
+  // TRDISP(setXY.coord()[1]);
+  // // TRDISP(insideout(setXY.coord()));
 
   // CR();
   // ECHO_CODE(RealMultiSet<double, 3> setXYZ({ rx, ry, rz }));
   // TRDISP(setXYZ);
-  // auto XYZ = setXYZ.grid();
+  // auto XYZ = setXYZ.coord();
   // // TRDISP(setXYZ);
   // auto X = XYZ[0];
   // TRDISP(X);
@@ -218,7 +218,7 @@ int main() {
 
 
 
-  // TRDISP(insideout(setXYZ.grid()));
+  // TRDISP(insideout(setXYZ.coord()));
 
   // ECHO_CODE(Coordinate2<double, Interval> x_coord2("x", x_interval));
   // TRDISP(x_coord2.gridSet);
@@ -239,7 +239,7 @@ int main() {
   // TRDISP(y_interval);
 
 
-  // ECHO_CODE(auto gridX0 = x_interval.grid());
+  // ECHO_CODE(auto gridX0 = x_interval.coord());
   // TRDISP(x_interval);
   // TRDISP(gridX0);
 
@@ -249,7 +249,7 @@ int main() {
   // }
   // TRDISP(g);
 
-  // auto gridX = grid(x_interval);
+  // auto gridX = coord(x_interval);
   // TRDISP(gridX);
 
 
@@ -270,10 +270,10 @@ int main() {
   // TRDISP(rz);
 
 
-  // auto divX = grad(grid(x_interval), x_interval);
+  // auto divX = grad(coord(x_interval), x_interval);
   // TRDISP(divX);
   // Interval<double> rx2(-10, 10, 21);
-  // auto gridX2 = grid(rx2);
+  // auto gridX2 = coord(rx2);
   // TRDISP(gridX2);
   // auto gradX2 = grad(gridX2, rx2);
   // TRDISP(gradX2);
@@ -296,10 +296,10 @@ int main() {
   // TRDISP(fgrid(func4, gridX));
   // CR();
   // TRDISP(y_interval);
-  // TRDISP(grid(y_interval));
+  // TRDISP(coord(y_interval));
   // TRDISP(rz);
-  // TRDISP(grid(rz));
-  // auto gridXY = grid(x_interval, y_interval);
+  // TRDISP(coord(rz));
+  // auto gridXY = coord(x_interval, y_interval);
   // TRDISP(gridXY(0));
   // TRDISP(gridXY(1));
 
@@ -319,7 +319,7 @@ int main() {
 
 
   // CR();
-  // auto gridXYZ = grid(x_interval, y_interval, rz);
+  // auto gridXYZ = coord(x_interval, y_interval, rz);
   // TRDISP(gridXYZ(0));
   // TRDISP(gridXYZ(1));
   // TRDISP(gridXYZ(2));
