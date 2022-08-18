@@ -696,24 +696,33 @@ namespace mathq {
       using ResultType = MultiArrayHelper< MyGridType, result_dims >;
       ResultType& result = *(new ResultType);
       Dimensions grid_dims = ParentType::grid_dims();
+
       for (size_t c = 0; c < Ndims; c++) {
+        Domain<double> domain = ParentType::domains[c];
         MyGridType& mygrid = result[c];
         mygrid.resize(grid_dims);
         Indices inds(Ndims);
         inds = 0;
-        size_t other = !c;
-        const size_t n = grid_dims[other];
-        Domain<double> domain = ParentType::domains[c];
-        // TRDISP(domain);
-        for (size_t i = 0; i < n; i++) {
-          inds[other] = i;
-          // TRDISP(inds);
+
+        size_t sz = 1;
+        for (size_t k = 0; k < Ndims; k++) {
+          if (k != c) {
+            sz *= grid_dims[k];
+          }
+        }
+        CR();
+        CR();
+        std::cout << "coordinate #"<< c;
+        CR();
+        // for loop throgh each index, skipping c
+        for (size_t k = 0; k < sz; k++) {
+          TRDISP(inds);
           auto vec = get_vector(f, c, inds);
-          // TRDISP(vec);
           // perform derivative in cth direction
           vec.deriv(domain.a, domain.b);
           // TRDISP(vec);
           set_vector(mygrid, c, inds, vec);
+          inds.increment(grid_dims, c);
         }
       }
       return result;
