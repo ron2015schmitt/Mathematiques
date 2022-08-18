@@ -273,6 +273,7 @@ namespace mathq {
   template <class T>
   concept IsMultiArray = requires(T x) {
     T::isNotExpression;
+      requires (IsWritableExpressionOrArray<T>);
       requires std::is_same_v<bool const, decltype(T::isNotExpression)>;
       requires (T::isNotExpression == true);
   };
@@ -289,6 +290,14 @@ namespace mathq {
     X::static_dims_array;
   };
 
+
+  // ***************************************************************************
+  //  IsGridlike<T>
+  //
+  // ***************************************************************************
+
+  template <class T>
+  concept IsGridlike = IsMultiArray<T> && (T::depth_value == 1);
 
 
   // ***************************************************************************

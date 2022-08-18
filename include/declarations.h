@@ -341,17 +341,44 @@ namespace mathq {
   using GridScaleEnum = GridScale::Type;
 
 
+
+  // ***************************************************************************
+    // * CoordGrid - for coordinates
+    //
+    // ***************************************************************************
+
+  template <typename Element, size_t Ndims, size_t... dim_ints >
+  using CoordGrid = MultiArray_RepeatVector<Element, Ndims, dim_ints...>;
+
+  template <typename Element, size_t Ndims, size_t... dim_ints >
+  bool coord_grid_test(const CoordGrid<Element, Ndims, dim_ints...>& x) {
+    return true;
+  }
+
+  template <class X>
+  concept IsCoordGrid = requires(X x) {
+    coord_grid_test(x);
+  };
+
+
+
   // ***************************************************************************
   // * CoordGrid - for coordinates
   //
   // ***************************************************************************
 
   template <typename Element, size_t Ndims, size_t... dim_ints >
-  using CoordGrid = MultiArray_RepeatVector<Element, Ndims, dim_ints...>;
+  using Grid = MultiArray<Element, Ndims, dim_ints...>;
 
+  template <typename Element, size_t Ndims, size_t... dim_ints >
+  bool grid_test(const Grid<Element, Ndims, dim_ints...>& x) {
+    return true;
+  }
 
-
-
+  template <class X>
+  concept IsGrid = requires(X x) {
+    grid_test(x);
+  };
 
 
 

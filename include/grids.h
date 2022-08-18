@@ -690,15 +690,19 @@ namespace mathq {
     //   return result;
     // }
     template <class T>
-    auto& grad(const T& f) const {
-      using MyGridType = MultiArray<double, Ndims>;
+    // auto& grad(const T& f) const requires (IsGridlike<T>) {
+    auto& grad(const T& f) const requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
+      using MyGridType = MultiArray<GridElement, Ndims>;
       constexpr auto result_dims = array_of_one_value<size_t, Ndims, 1>();
       using ResultType = MultiArrayHelper< MyGridType, result_dims >;
       ResultType& result = *(new ResultType);
       Dimensions grid_dims = ParentType::grid_dims();
 
+      // TRDISP(GridElement());
+      // TRDISP(typename T::NumberType());
+
       for (size_t c = 0; c < Ndims; c++) {
-        Domain<double> domain = ParentType::domains[c];
+        Domain<GridElement> domain = ParentType::domains[c];
         MyGridType& mygrid = result[c];
         mygrid.resize(grid_dims);
         Indices inds(Ndims);

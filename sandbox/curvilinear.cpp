@@ -63,6 +63,7 @@ int main(int argc, char* argv[]) {
   field0() = sqrt(x*x+y*y);
   // field0 = { abs(x) };
   TRDISP(field0);
+  TRDISP(field0());
 
   TRDISP(x);
   TRDISP(y);
@@ -70,7 +71,10 @@ int main(int argc, char* argv[]) {
   TRDISP(cart_coords2c.grad(y));
   TRDISP(cart_coords2c.grad(field0()));
 
+  TRDISP(typename std::remove_cvref<decltype(field0())>::type::ElementType());
 
+  TRDISP(typename std::remove_cvref<decltype(field0)>::type::NumberType());
+  TRDISP(std::is_convertible_v<decltype(field0)::NumberType, std::complex<double>>);
 
   return 0;
 }
