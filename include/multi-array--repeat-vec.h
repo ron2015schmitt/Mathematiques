@@ -636,10 +636,10 @@ namespace mathq {
 
       // ---------------- A[Indices]--------------
       Element& operator[](const Indices& inds) {
-        vector[inds[vector_index]];
+        return vector[inds[vector_index]];
       }
       const Element& operator[](const Indices& inds) const {
-        vector[inds[vector_index]];
+        return vector[inds[vector_index]];
       }
 
       // -------------------------------------------------------------
@@ -1027,8 +1027,8 @@ namespace mathq {
         return (st >> x);
       }
 
-      };
+  };
 
-  }; // namespace mathq
+}; // namespace mathq
 
 #endif

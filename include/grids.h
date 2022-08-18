@@ -364,6 +364,7 @@ namespace mathq {
     using ElementDimensionsType = typename DimensionsTrait<ElementType>::Type;
     using DeepDimensionsType = RecursiveDimensions;
 
+
     // using InitializerType = typename MakeInitializer<ElementType, 1 >::Type;  
 
 
@@ -499,6 +500,55 @@ namespace mathq {
 
 
 
+  // ***************************************************************************
+  // * return slice
+  //
+  // TODO: convert to slice expression
+  // ***************************************************************************
+  template <typename T>
+  auto& get_vector(const T& x, const size_t n, const Indices& inds_) {
+    using ElementType = typename T::ElementType;
+    const size_t rank = T::rank_value;
+    const Dimensions dims = x.dims();
+    const size_t N = dims[n];
+    Vector<ElementType>& v = *(new Vector<ElementType>);
+    v.resize(N);
+
+    Indices inds = inds_;
+    for (size_t i = 0; i < N; i++) {
+      inds[n] = i;
+      // TRDISP(inds);
+      // TRDISP(x[inds]);
+      v[i] = x[inds];
+    }
+    return v;
+  }
+
+
+  // ***************************************************************************
+  // * return slice
+  //
+  // TODO: convert to slice expression
+  // ***************************************************************************
+  template <typename T>
+  auto& set_vector(T& x, const size_t n, const Indices& inds_, const Vector<typename T::ElementType>& v) {
+    using ElementType = typename T::ElementType;
+    const size_t rank = T::rank_value;
+    const Dimensions dims = x.dims();
+    const size_t N = dims[n];
+    Indices inds = inds_;
+    for (size_t i = 0; i < N; i++) {
+      inds[n] = i;
+      // TRDISP(inds);
+      // TRDISP(x[inds]);
+      x[inds] = v[i];
+    }
+    return v;
+  }
+
+
+
+
 
   // ***************************************************************************
   // * CartesianCoords<GridElement, Ndims>
@@ -622,10 +672,51 @@ namespace mathq {
     //                    Derivatives
     //**********************************************************************
 
-    // deriv(const ExpressionR<X, Element, Num, depth, rank>& f, const Num a, const Num b, const size_t n = 1, size_t Dpts = 7, const bool periodic = false)
 
-    void grad() {
-      // Vector<Vector<GridElement, Ndims>, Ndims>
+
+  // template <typename TargetElement, size_t target_rank, IsCurvilinear Coords>
+  // class
+  //   CurvilinearField : public MultiArray< MultiArray<TargetElement, Coords::Ndims_value>, target_rank > {
+
+    // TODO: make into an expression
+    // template <typename TargetElement, size_t target_rank>
+    // auto& grad(const MultiArray< MultiArray<TargetElement, Ndims>, target_rank >& f) const {
+    //   MultiArray< MultiArray<TargetElement, Ndims>, target_rank+1 > result = *(new MultiArray< MultiArray<TargetElement, Ndims>, target_rank+1 >);
+    //   return result;
+    // }
+    // template <typename TargetElement>
+    // auto& grad(const MultiArray<TargetElement, Ndims>& fscalar) const {
+    //   MultiArray< MultiArray<TargetElement, Ndims>, 1 > result = *(new MultiArray< MultiArray<TargetElement, Ndims>, 1 >);
+    //   return result;
+    // }
+    template <class T>
+    auto& grad(const T& f) const {
+      using MyGridType = MultiArray<double, Ndims>;
+      constexpr auto result_dims = array_of_one_value<size_t, Ndims, 1>();
+      using ResultType = MultiArrayHelper< MyGridType, result_dims >;
+      ResultType& result = *(new ResultType);
+      Dimensions grid_dims = ParentType::grid_dims();
+      for (size_t c = 0; c < Ndims; c++) {
+        MyGridType& mygrid = result[c];
+        mygrid.resize(grid_dims);
+        Indices inds(Ndims);
+        inds = 0;
+        size_t other = !c;
+        const size_t n = grid_dims[other];
+        Domain<double> domain = ParentType::domains[c];
+        // TRDISP(domain);
+        for (size_t i = 0; i < n; i++) {
+          inds[other] = i;
+          // TRDISP(inds);
+          auto vec = get_vector(f, c, inds);
+          // TRDISP(vec);
+          // perform derivative in cth direction
+          vec.deriv(domain.a, domain.b);
+          // TRDISP(vec);
+          set_vector(mygrid, c, inds, vec);
+        }
+      }
+      return result;
     }
 
     //**********************************************************************
