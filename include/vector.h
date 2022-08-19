@@ -417,6 +417,12 @@ namespace mathq {
       return *this;
     }
 
+    Type& yap(const Dimensions& new_dims) {
+      return resize(new_dims);
+    }
+
+
+
     Type& resize(const Dimensions& new_dims) {
       return resize(new_dims[0]);
     }

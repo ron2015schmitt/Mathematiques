@@ -691,7 +691,7 @@ namespace mathq {
     // }
     template <class T>
     // auto& grad(const T& f) const requires (IsGridlike<T>) {
-    auto& grad(const T& f) const requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
+    auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
       using MyGridType = MultiArray<GridElement, Ndims>;
       constexpr auto result_dims = array_of_one_value<size_t, Ndims, 1>();
       using ResultType = MultiArrayHelper< MyGridType, result_dims >;
@@ -723,7 +723,7 @@ namespace mathq {
           TRDISP(inds);
           auto vec = get_vector(f, c, inds);
           // perform derivative in cth direction
-          vec.deriv(domain.a, domain.b);
+          vec.deriv(domain.a, domain.b, 1, nabla.Nwindow);
           // TRDISP(vec);
           set_vector(mygrid, c, inds, vec);
           inds.increment(grid_dims, c);
@@ -1148,10 +1148,20 @@ namespace mathq {
     using CoordGridType = Coords::NumberType;
     using Type = CurvilinearField<TargetElement, target_rank, Coords>;
 
-    const Coords& coords;
+    using ParentType::operator=;
+    using ParentType::resize;  // needed to find overloaded funcs
+
+    const Coords coords;
+
     CurvilinearField(const Coords& coords) : coords(coords) {
+      Dimensions d(rank_value);
+      d = Coords::Ndims_value;
+      if constexpr (rank_value > 0) {
+        ParentType::resize(d);
+      }
       grids_resize(coords.grid_dims());
     }
+
 
     Dimensions& grid_dims(void) const {
       if constexpr (rank_value > 0) {
@@ -1163,13 +1173,13 @@ namespace mathq {
     }
 
     Type& grids_resize(const Dimensions& dims) {
-      if constexpr (rank_value > 0) {
-        for (size_t c = 0; c < rank_value; c++) {
-          (*this)[c].resize(dims);
-        }
+      if constexpr (rank_value == 0) {
+        (*this)().resize(dims);
       }
       else {
-        (*this)().resize(dims);
+        for (size_t c = 0; c < ParentType::size(); c++) {
+          (*this)[c].resize(dims);
+        }
       }
       return *this;
     }
@@ -1477,9 +1487,18 @@ namespace mathq {
     // }
 
 
+  template <typename TargetElement, IsCurvilinear Coords>
+  CurvilinearField<TargetElement, 1, Coords> grad(const CurvilinearField<TargetElement, 0, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
+    CurvilinearField<TargetElement, 1, Coords>& g = *(new CurvilinearField<TargetElement, 1, Coords>(f.coords));
+    g = f.coords.grad(f(), nabla);
+    return g;
+  }
 
 
-
+  template <typename TargetElement, IsCurvilinear Coords>
+  CurvilinearField<TargetElement, 1, Coords> operator&(const Nabla<>& nabla, const CurvilinearField<TargetElement, 0, Coords>& f) {
+    return grad(f, nabla);
+  }
 
 
 };
