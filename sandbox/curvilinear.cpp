@@ -86,6 +86,13 @@ int main(int argc, char* argv[]) {
   TRDISP(pd(field0, 0));
   TRDISP(pd(field0, 1));
 
+  // div
+  ECHO_CODE(auto A = grad(field0));
+  TRDISP(A);
+  TRDISP(cart_coords2c.div(A));
+  TRDISP(div(A));
+  TRDISP(nabla | A);
+
 
   return 0;
 }

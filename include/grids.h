@@ -27,6 +27,8 @@ namespace mathq {
     ~Nabla() {
     }
 
+
+
     inline std::string classname() const {
       return ClassName();
     }
@@ -675,19 +677,20 @@ namespace mathq {
     //
     // df/dc 
     //     - partial derivative - with respect to coordinate c  (zero-referenced)
-    //     - f is a depth=1 grid
+    //     - f is a grid
     //
 
     template <class T>
     auto& pd(const T& f, const size_t c, const Nabla<>& nabla = Nabla<>()) const
       requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
 
-      Domain<GridElement> domain = ParentType::domains[c];
       Dimensions grid_dims = ParentType::grid_dims();
 
       using MyGridType = MultiArray<GridElement, Ndims>;
       MyGridType& mygrid = *(new MyGridType);
-      mygrid.resize(grid_dims);
+      if constexpr (mygrid.is_dynamic_value) {
+        mygrid.resize(grid_dims);
+      }
 
       // compute size of grid without cth dimension: grid_dims.num_elements()/grid_dims[c] 
       size_t sz = 1;
@@ -698,10 +701,11 @@ namespace mathq {
       }
 
       // for loop throgh each index, skipping coordinate c
+      Domain<GridElement> domain = ParentType::domains[c];
       Indices inds(Ndims);
       inds = 0;
       for (size_t k = 0; k < sz; k++) {
-        TRDISP(inds);
+        // TRDISP(inds);
         auto vec = get_vector(f, c, inds);
         vec.deriv(domain.a, domain.b, 1, nabla.Nwindow);
         set_vector(mygrid, c, inds, vec);
@@ -712,7 +716,7 @@ namespace mathq {
 
 
     //
-    // grad(f) - f is a depth=1 grid
+    // grad(f) - f is a grid
     //
 
     template <class T>
@@ -727,6 +731,35 @@ namespace mathq {
 
       for (size_t c = 0; c < Ndims; c++) {
         result[c] = pd(f, c, nabla);
+      }
+      return result;
+    }
+
+
+
+    //
+    // div(f) - f is a vector
+    //
+
+    template <class T>
+    auto& div(const T& f, const Nabla<>& nabla = Nabla<>()) const
+      requires
+    (
+      (IsReadableExpressionOrArray<T>) && (T::rank_value == 1)
+      &&
+      (std::is_convertible_v<typename T::NumberType, GridElement>)
+      ) {
+
+      using MyGridType = MultiArray<GridElement, Ndims>;
+      MyGridType& result = *(new MyGridType);
+      if constexpr (result.is_dynamic_value) {
+        Dimensions grid_dims = ParentType::grid_dims();
+        result.resize(grid_dims);
+      }
+      result = 0;
+
+      for (size_t c = 0; c < Ndims; c++) {
+        result = result + pd(f[c], c, nabla);
       }
       return result;
     }
@@ -1557,6 +1590,29 @@ namespace mathq {
 
 
   //
+  // div(f) - for vector f
+  //
+
+  template <typename TargetElement, IsCurvilinear Coords>
+  CurvilinearField<TargetElement, 0, Coords> div(const CurvilinearField<TargetElement, 1, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
+
+    Coords const& coords = f.coords();
+    CurvilinearField<TargetElement, 0, Coords>& g = *(new CurvilinearField<TargetElement, 0, Coords>(coords));
+    g = coords.div(f, nabla);
+    return g;
+  }
+
+  //
+  // nabla | f - for vector f
+  //
+
+  template <typename TargetElement, IsCurvilinear Coords>
+  CurvilinearField<TargetElement, 0, Coords> operator|(const Nabla<>& nabla, const CurvilinearField<TargetElement, 1, Coords>& f) {
+    return div(f, nabla);
+  }
+
+
+  //
   // pd(f,c) - for scalar f
   //
 
@@ -1569,9 +1625,9 @@ namespace mathq {
     return g;
   }
 
-  // //
-  // // nabla.pd f - for scalar f
-  // //
+  //
+  // pd f - for scalar f
+  //
 
   // template <typename TargetElement, IsCurvilinear Coords>
   // CurvilinearField<TargetElement, 1, Coords> operator&(const Nabla<>& nabla, const CurvilinearField<TargetElement, 0, Coords>& f) {
