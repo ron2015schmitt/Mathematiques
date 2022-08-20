@@ -187,7 +187,7 @@ namespace mathq {
       return *this;
     }
 
-    Indices& increment(const Dimensions& dims, const size_t skip) {
+    Indices& increment_over(const Dimensions& dims, const size_t skip) {
       const size_t rank = size();
       for (size_t n = 0; n < rank; n++) {
         size_t k = rank - 1 - n;

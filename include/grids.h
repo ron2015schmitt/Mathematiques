@@ -672,65 +672,98 @@ namespace mathq {
     //                    Derivatives
     //**********************************************************************
 
+    //
+    // df/dc 
+    //     - partial derivative - with respect to coordinate c  (zero-referenced)
+    //     - f is a depth=1 grid
+    //
 
-
-  // template <typename TargetElement, size_t target_rank, IsCurvilinear Coords>
-  // class
-  //   CurvilinearField : public MultiArray< MultiArray<TargetElement, Coords::Ndims_value>, target_rank > {
-
-    // TODO: make into an expression
-    // template <typename TargetElement, size_t target_rank>
-    // auto& grad(const MultiArray< MultiArray<TargetElement, Ndims>, target_rank >& f) const {
-    //   MultiArray< MultiArray<TargetElement, Ndims>, target_rank+1 > result = *(new MultiArray< MultiArray<TargetElement, Ndims>, target_rank+1 >);
-    //   return result;
-    // }
-    // template <typename TargetElement>
-    // auto& grad(const MultiArray<TargetElement, Ndims>& fscalar) const {
-    //   MultiArray< MultiArray<TargetElement, Ndims>, 1 > result = *(new MultiArray< MultiArray<TargetElement, Ndims>, 1 >);
-    //   return result;
-    // }
     template <class T>
-    // auto& grad(const T& f) const requires (IsGridlike<T>) {
-    auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
-      using MyGridType = MultiArray<GridElement, Ndims>;
-      constexpr auto result_dims = array_of_one_value<size_t, Ndims, 1>();
-      using ResultType = MultiArrayHelper< MyGridType, result_dims >;
-      ResultType& result = *(new ResultType);
+    auto& pd(const T& f, const size_t c, const Nabla<>& nabla = Nabla<>()) const
+      requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
+
+      Domain<GridElement> domain = ParentType::domains[c];
       Dimensions grid_dims = ParentType::grid_dims();
 
-      // TRDISP(GridElement());
-      // TRDISP(typename T::NumberType());
+      using MyGridType = MultiArray<GridElement, Ndims>;
+      MyGridType& mygrid = *(new MyGridType);
+      mygrid.resize(grid_dims);
+
+      // compute size of grid without cth dimension: grid_dims.num_elements()/grid_dims[c] 
+      size_t sz = 1;
+      for (size_t k = 0; k < Ndims; k++) {
+        if (k != c) {
+          sz *= grid_dims[k];
+        }
+      }
+
+      // for loop throgh each index, skipping coordinate c
+      Indices inds(Ndims);
+      inds = 0;
+      for (size_t k = 0; k < sz; k++) {
+        TRDISP(inds);
+        auto vec = get_vector(f, c, inds);
+        vec.deriv(domain.a, domain.b, 1, nabla.Nwindow);
+        set_vector(mygrid, c, inds, vec);
+        inds.increment_over(grid_dims, c);  // this will skip over index c
+      }
+      return mygrid;
+    }
+
+
+    //
+    // grad(f) - f is a depth=1 grid
+    //
+
+    template <class T>
+    auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const
+      requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
+
+      using MyGridType = MultiArray<GridElement, Ndims>;
+      constexpr auto result_dims = array_of_one_value<size_t, Ndims, 1>(); // Vector<Ndims>
+
+      using ResultType = MultiArrayHelper< MyGridType, result_dims >;
+      ResultType& result = *(new ResultType);
 
       for (size_t c = 0; c < Ndims; c++) {
-        Domain<GridElement> domain = ParentType::domains[c];
-        MyGridType& mygrid = result[c];
-        mygrid.resize(grid_dims);
-        Indices inds(Ndims);
-        inds = 0;
-
-        size_t sz = 1;
-        for (size_t k = 0; k < Ndims; k++) {
-          if (k != c) {
-            sz *= grid_dims[k];
-          }
-        }
-        CR();
-        CR();
-        std::cout << "coordinate #"<< c;
-        CR();
-        // for loop throgh each index, skipping c
-        for (size_t k = 0; k < sz; k++) {
-          TRDISP(inds);
-          auto vec = get_vector(f, c, inds);
-          // perform derivative in cth direction
-          vec.deriv(domain.a, domain.b, 1, nabla.Nwindow);
-          // TRDISP(vec);
-          set_vector(mygrid, c, inds, vec);
-          inds.increment(grid_dims, c);
-        }
+        result[c] = pd(f, c, nabla);
       }
       return result;
     }
+
+
+
+
+    //
+    // df/dx - for convenience
+    //
+
+    template <class T>
+    auto& pdx(const T& f, const Nabla<>& nabla = Nabla<>()) const
+      requires ((IsGridlike<T>) && (std::is_convertible_v<typename T::NumberType, GridElement>) && (Ndims >= 1) && (Ndims <= 3)) {
+      return pd(f, 0, nabla);
+    }
+
+    //
+    // df/dy - for convenience
+    //
+
+    template <class T>
+    auto& pdy(const T& f, const Nabla<>& nabla = Nabla<>()) const
+      requires ((IsGridlike<T>) && (std::is_convertible_v<typename T::NumberType, GridElement>) && (Ndims >= 2) && (Ndims <= 3)) {
+      return pd(f, 1, nabla);
+    }
+
+    //
+    // df/dz - for convenience
+    //
+
+    template <class T>
+    auto& pdz(const T& f, const Nabla<>& nabla = Nabla<>()) const
+      requires ((IsGridlike<T>) && (std::is_convertible_v<typename T::NumberType, GridElement>) && (Ndims >= 3) && (Ndims <= 3)) {
+      return pd(f, 2, nabla);
+    }
+
 
     //**********************************************************************
     //************************** Text and debugging ************************
