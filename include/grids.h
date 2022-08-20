@@ -1184,9 +1184,9 @@ namespace mathq {
     using ParentType::operator=;
     using ParentType::resize;  // needed to find overloaded funcs
 
-    const Coords coords;
+    const Coords& coordinates;
 
-    CurvilinearField(const Coords& coords) : coords(coords) {
+    CurvilinearField(const Coords& coords) : coordinates(coords) {
       Dimensions d(rank_value);
       d = Coords::Ndims_value;
       if constexpr (rank_value > 0) {
@@ -1215,6 +1215,19 @@ namespace mathq {
         }
       }
       return *this;
+    }
+
+
+    //**********************************************************************
+    //                    coordinates access
+    //  Note: you cannot change the reference that holds the Coordinates 
+    //        because C++ never allows this.
+    //        and cannot change the coordinates themselves becasue they are const.
+    //**********************************************************************
+
+    // "read only"
+    const Coords& coords() const {
+      return coordinates;
     }
 
 
@@ -1520,18 +1533,51 @@ namespace mathq {
     // }
 
 
+  //
+  // grad(f) - for scalar f
+  //
+
   template <typename TargetElement, IsCurvilinear Coords>
   CurvilinearField<TargetElement, 1, Coords> grad(const CurvilinearField<TargetElement, 0, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
-    CurvilinearField<TargetElement, 1, Coords>& g = *(new CurvilinearField<TargetElement, 1, Coords>(f.coords));
-    g = f.coords.grad(f(), nabla);
+
+    Coords const& coords = f.coords();
+    CurvilinearField<TargetElement, 1, Coords>& g = *(new CurvilinearField<TargetElement, 1, Coords>(coords));
+    g = coords.grad(f(), nabla);
     return g;
   }
 
+  //
+  // nabla & f - for scalar f
+  //
 
   template <typename TargetElement, IsCurvilinear Coords>
   CurvilinearField<TargetElement, 1, Coords> operator&(const Nabla<>& nabla, const CurvilinearField<TargetElement, 0, Coords>& f) {
     return grad(f, nabla);
   }
+
+
+  //
+  // pd(f,c) - for scalar f
+  //
+
+  template <typename TargetElement, IsCurvilinear Coords>
+  CurvilinearField<TargetElement, 0, Coords> pd(const CurvilinearField<TargetElement, 0, Coords>& f, const size_t c, const Nabla<>& nabla = Nabla<>()) {
+
+    Coords const& coords = f.coords();
+    auto& g = *(new CurvilinearField<TargetElement, 0, Coords>(coords));
+    g = coords.pd(f(), c, nabla);
+    return g;
+  }
+
+  // //
+  // // nabla.pd f - for scalar f
+  // //
+
+  // template <typename TargetElement, IsCurvilinear Coords>
+  // CurvilinearField<TargetElement, 1, Coords> operator&(const Nabla<>& nabla, const CurvilinearField<TargetElement, 0, Coords>& f) {
+  //   return grad(f, nabla);
+  // }
+
 
 
 };

@@ -76,12 +76,16 @@ int main(int argc, char* argv[]) {
   TRDISP(typename std::remove_cvref<decltype(field0)>::type::NumberType());
   TRDISP(std::is_convertible_v<decltype(field0)::NumberType, std::complex<double>>);
 
-  // TRDISP(field0 = 2*field0 + 3);
+  // TRDISP(2*field0 + 3);
 
   TRDISP(grad(field0));
 
   Nabla<> nabla;
   TRDISP(nabla & field0);
+
+  TRDISP(pd(field0, 0));
+  TRDISP(pd(field0, 1));
+
 
   return 0;
 }
