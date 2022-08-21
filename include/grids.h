@@ -724,7 +724,7 @@ namespace mathq {
       requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
 
       using MyGridType = MultiArray<GridElement, Ndims>;
-      constexpr auto result_dims = array_of_one_value<size_t, Ndims, 1>(); // Vector<Ndims>
+      constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
 
       using ResultType = MultiArrayHelper< MyGridType, result_dims >;
       ResultType& result = *(new ResultType);

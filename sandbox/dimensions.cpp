@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v4b.dims());
 
   CR();
-  ECHO_CODE(Vector<double,5> v4c(3.14));  // set all vlaues to 3.14
+  ECHO_CODE(Vector<double, 5> v4c(3.14));  // set all vlaues to 3.14
   TRDISP(v4c);
   TRDISP(v4c.size());
   TRDISP(v4c.is_dynamic_value);
@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
   ECHO_CODE(dims2b = { 3,1,2,1 });
   TRDISP(dims2b);
   TRDISP(dims2b.getReduced());
-  TRDISP(equiv(dims2,dims2b));
+  TRDISP(equiv(dims2, dims2b));
 
 
 
@@ -190,20 +190,20 @@ int main(int argc, char* argv[]) {
   TRDISP(u.dat(0));
   TRDISP(u.dat(5));
 
-  TRDISP(Indices{1,1});
-  TRDISP(DeepIndices{{0},{0}});
-  TRDISP(u[DeepIndices{{0},{0}}]);
-  TRDISP(DeepIndices{{0},{1}});
-  TRDISP(u[DeepIndices{{0},{1}}]);
-  TRDISP(DeepIndices{{1},{0}});
-  TRDISP(u[DeepIndices{{1},{0}}]);
-  TRDISP(DeepIndices{{1},{1}});
-  TRDISP(u[DeepIndices{{1},{1}}]);
-  TRDISP(DeepIndices{{2},{0}});
-  TRDISP(u[DeepIndices{{2},{0}}]);
-  TRDISP(DeepIndices{{2},{1}});
-  TRDISP(u[DeepIndices{{2},{1}}]);
-  
+  TRDISP(Indices{ 1,1 });
+  TRDISP(DeepIndices{ {0},{0} });
+  TRDISP(u[DeepIndices{ {0},{0} }]);
+  TRDISP(DeepIndices{ {0},{1} });
+  TRDISP(u[DeepIndices{ {0},{1} }]);
+  TRDISP(DeepIndices{ {1},{0} });
+  TRDISP(u[DeepIndices{ {1},{0} }]);
+  TRDISP(DeepIndices{ {1},{1} });
+  TRDISP(u[DeepIndices{ {1},{1} }]);
+  TRDISP(DeepIndices{ {2},{0} });
+  TRDISP(u[DeepIndices{ {2},{0} }]);
+  TRDISP(DeepIndices{ {2},{1} });
+  TRDISP(u[DeepIndices{ {2},{1} }]);
+
   TRDISP(sizeof(u)/(u.total_size()*sizeof(double)));
 
 
@@ -218,7 +218,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v6);
 
   CR();
-  ECHO_CODE(Dimensions dims7({3}));
+  ECHO_CODE(Dimensions dims7({ 3 }));
   TRDISP(dims7);
   ECHO_CODE(Vector<double> v7(dims7));
   TRDISP(v7.size());
@@ -252,23 +252,23 @@ int main(int argc, char* argv[]) {
   TRDISP(v11);
 
   CR();
-  ECHO_CODE(Vector<double,3> v12({ 2.2, 3.3, 4.4 }));
+  ECHO_CODE(Vector<double, 3> v12({ 2.2, 3.3, 4.4 }));
   TRDISP(v12.size());
   TRDISP(v12.element_size());
   TRDISP(v12.dims());
   TRDISP(v12);
 
   CR();
-  ECHO_CODE(Vector<double,3> v13{ 2.2, 3.3, 4.4 });
+  ECHO_CODE(Vector<double, 3> v13{ 2.2, 3.3, 4.4 });
   TRDISP(v13.size());
   TRDISP(v13.element_size());
   TRDISP(v13.dims());
   TRDISP(v13);
-  TRDISP( static_cast<std::valarray<double>>(v13) );
+  TRDISP(static_cast<std::valarray<double>>(v13));
 
 
   CR();
-  ECHO_CODE(Indices ind1{2});
+  ECHO_CODE(Indices ind1{ 2 });
   TRDISP(ind1);
   TRDISP(v13[ind1]);
 
@@ -286,30 +286,30 @@ int main(int argc, char* argv[]) {
 
   TRDISP(InitializerTrait< std::initializer_list<double> >::depth());
   {
-    ECHO_CODE(typename InitializerTrait< std::initializer_list<double> >::BottomType temp{0});
+    ECHO_CODE(typename InitializerTrait< std::initializer_list<double> >::BottomType temp{ 0 });
     TRDISP(temp);
   }
   TRDISP(InitializerTrait< std::initializer_list<std::initializer_list<double>> >::depth());
   {
-    ECHO_CODE(typename InitializerTrait< std::initializer_list<std::initializer_list<double>> >::BottomType temp{0});
+    ECHO_CODE(typename InitializerTrait< std::initializer_list<std::initializer_list<double>> >::BottomType temp{ 0 });
     TRDISP(temp);
   }
 
-  TRDISP(InitializerTrait< std::initializer_list<double> >::get_size_array({ 1 , 2, 3 }) );
-  TRDISP(InitializerTrait< std::initializer_list< std::initializer_list<double> > >::get_size_array({ {1, 2}, {3, 4}, {5, 6} }) );
+  TRDISP(InitializerTrait< std::initializer_list<double> >::get_size_array({ 1 , 2, 3 }));
+  TRDISP(InitializerTrait< std::initializer_list< std::initializer_list<double> > >::get_size_array({ {1, 2}, {3, 4}, {5, 6} }));
 
   using List0 = typename MakeInitializer<double, 0>::Type;
-  TRDISP( display::getTypeName< List0 >());
+  TRDISP(display::getTypeName< List0 >());
   using List1 = typename MakeInitializer<double, 1>::Type;
-  TRDISP( List0{4.4});
-  TRDISP( display::getTypeName< List1 >());
-  TRDISP( List1{1,2,3});
+  TRDISP(List0{ 4.4 });
+  TRDISP(display::getTypeName< List1 >());
+  TRDISP(List1{ 1,2,3 });
   using List2 = typename MakeInitializer<double, 2>::Type;
-  TRDISP( display::getTypeName< List2 >());
-  TRDISP( List2{ {1, 2}, {3, 4}, {5, 6} });
+  TRDISP(display::getTypeName< List2 >());
+  TRDISP(List2{ {1, 2}, {3, 4}, {5, 6} });
 
 
-  TRDISP(array_of_one_value<int, -1,7>());
+  TRDISP(array_of_one_value<int, 7, -1>());
 
   TRDISP((std::is_unsigned<decltype(1)>::value));
   TRDISP((std::is_unsigned<decltype(1u)>::value));

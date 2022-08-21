@@ -3,34 +3,34 @@
 
 
 template <typename Element, size_t rank, size_t... dims > requires (rank < 100)
-class Test;
+  class Test;
 
 
 template <typename Element, size_t rank, size_t... dims > requires (rank < 100)
-class Test {
-public:
-  Test() {
-    using namespace mathq;
-    using namespace display;
-    OUTPUT("\nInside main Test constructor");
-    TRDISP(rank);
-  }
+  class Test {
+  public:
+    Test() {
+      using namespace mathq;
+      using namespace display;
+      OUTPUT("\nInside main Test constructor");
+      TRDISP(rank);
+    }
 };
 
 template <typename Element, size_t rank> requires (rank < 100)
-class Test<Element, rank> {
-public:
-  Test() {
-    using namespace mathq;
-    using namespace display;
-    OUTPUT("\nInside specialization Test constructor");
-    TRDISP(rank);
-  }
+  class Test<Element, rank> {
+  public:
+    Test() {
+      using namespace mathq;
+      using namespace display;
+      OUTPUT("\nInside specialization Test constructor");
+      TRDISP(rank);
+    }
 };
 
 
 
-template <typename Element, size_t rank, size_t... dims > requires (!mathq::check_dynamic<rank,dims...>())
+template <typename Element, size_t rank, size_t... dims > requires (!mathq::check_dynamic<rank, dims...>())
 class Test2 {
 public:
   Test2() {
@@ -56,11 +56,11 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(typename MakeInitializer<double,0>::Type init0{3});
+  ECHO_CODE(typename MakeInitializer<double, 0>::Type init0{ 3 });
   TRDISP(init0);
-  ECHO_CODE(typename MakeInitializer<double,1>::Type init1{3,2,1});
+  ECHO_CODE(typename MakeInitializer<double, 1>::Type init1{ 3,2,1 });
   TRDISP(init1);
-  ECHO_CODE(typename MakeInitializer<double,2>::Type init2{{1}, {1,2}, {1,2,3}});
+  ECHO_CODE(typename MakeInitializer<double, 2>::Type init2{ {1}, {1,2}, {1,2,3} });
   TRDISP(init2);
 
 
@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
   // MultiArray*Data* tests
   CR();
   OUTPUT("rank = 0, fixed size (no dynamic size)");
-  ECHO_CODE(MultiArrayData<double,0> testdata0);
+  ECHO_CODE(MultiArrayData<double, 0> testdata0);
   testdata0.data_ = { 0 };
   TRDISP(testdata0);
   TRDISP(testdata0.classname());
@@ -78,8 +78,8 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("rank = 1, fixed size");
-  ECHO_CODE(MultiArrayData<double,1, 10> testdata1);
-  testdata1.data_ = array_of_one_value<double,0.,10>();
+  ECHO_CODE(MultiArrayData<double, 1, 10> testdata1);
+  testdata1.data_ = array_of_one_value<double, 10, 0.>();
   TRDISP(testdata1);
   TRDISP(testdata1.classname());
   TRDISP(sizeof(testdata1)/sizeof(double));
@@ -87,8 +87,8 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("rank = 2, fixed size");
-  ECHO_CODE(MultiArrayData<double,2, 3,4> testdata2);
-  testdata2.data_ = array_of_one_value<double,0.,12>();
+  ECHO_CODE(MultiArrayData<double, 2, 3, 4> testdata2);
+  testdata2.data_ = array_of_one_value<double, 12, 0.>();
   TRDISP(testdata2);
   TRDISP(testdata2.classname());
   TRDISP(sizeof(testdata2)/sizeof(double));
@@ -96,7 +96,7 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("MultiArray: rank = 2, fixed size => should Matrix");
-  ECHO_CODE(MultiArray<double,2, 3,4> x2);
+  ECHO_CODE(MultiArray<double, 2, 3, 4> x2);
   x2 = 0.;
   TRDISP(x2);
   TRDISP(x2.asMultiArrayData());
@@ -104,8 +104,8 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("rank = 3, fixed size");
-  ECHO_CODE(MultiArrayData<double,3, 3,4,2> testdata3);
-  testdata3.data_ = array_of_one_value<double,0.,24>();
+  ECHO_CODE(MultiArrayData<double, 3, 3, 4, 2> testdata3);
+  testdata3.data_ = array_of_one_value<double, 24, 0.>();
   TRDISP(testdata3);
   TRDISP(testdata3.classname());
   TRDISP(sizeof(testdata3)/sizeof(double));
@@ -113,8 +113,8 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("rank = 4, fixed size");
-  ECHO_CODE(MultiArrayData<double,4, 2,3,4,2> testdata4);
-  testdata4.data_ = array_of_one_value<double,0.,48>();
+  ECHO_CODE(MultiArrayData<double, 4, 2, 3, 4, 2> testdata4);
+  testdata4.data_ = array_of_one_value<double, 48, 0.>();
   TRDISP(testdata4);
   TRDISP(testdata4.classname());
   TRDISP(sizeof(testdata4)/sizeof(double));
@@ -122,8 +122,8 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("rank = 5, fixed size");
-  ECHO_CODE(MultiArrayData<double,5, 3,4,4,3,2> testdata5);
-  testdata5.data_ = array_of_one_value<double,0.,288>();
+  ECHO_CODE(MultiArrayData<double, 5, 3, 4, 4, 3, 2> testdata5);
+  testdata5.data_ = array_of_one_value<double, 288, 0.>();
   TRDISP(testdata5);
   TRDISP(testdata5.classname());
   TRDISP(sizeof(testdata5)/sizeof(double));
@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("rank = 1, dynamic size");
-  ECHO_CODE(MultiArrayData<double,1> testdata1d);
+  ECHO_CODE(MultiArrayData<double, 1> testdata1d);
   TRDISP(testdata1d);
   TRDISP(testdata1d.classname());
   TRDISP(sizeof(testdata1d)/sizeof(double));
@@ -141,7 +141,7 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("rank = 2, dynamic size");
-  ECHO_CODE(MultiArrayData<double,2> testdata2d);
+  ECHO_CODE(MultiArrayData<double, 2> testdata2d);
   TRDISP(testdata2d);
   TRDISP(testdata2d.classname());
   TRDISP(sizeof(testdata2d)/sizeof(double));
@@ -149,14 +149,14 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("MultiArray: rank = 2, dynamic size => should be Matrix");
-  ECHO_CODE(MultiArray<double,2> xd2);
+  ECHO_CODE(MultiArray<double, 2> xd2);
   xd2 = 0.;
   TRDISP(xd2);
   TRDISP(xd2.asMultiArrayData());
 
   CR();
   OUTPUT("rank = 3, dynamic size");
-  ECHO_CODE(MultiArrayData<double,3> testdata3d);
+  ECHO_CODE(MultiArrayData<double, 3> testdata3d);
   TRDISP(testdata3d);
   TRDISP(testdata3d.classname());
   TRDISP(sizeof(testdata3d)/sizeof(double));
@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("rank = 4, dynamic size");
-  ECHO_CODE(MultiArrayData<double,4> testdata4d);
+  ECHO_CODE(MultiArrayData<double, 4> testdata4d);
   TRDISP(testdata4d);
   TRDISP(testdata4d.classname());
   TRDISP(sizeof(testdata4d)/sizeof(double));
@@ -175,7 +175,7 @@ int main(int argc, char* argv[]) {
 
   CR();
   OUTPUT("rank = 5, dynamic size");
-  ECHO_CODE(MultiArrayData<double,5> testdata5d);
+  ECHO_CODE(MultiArrayData<double, 5> testdata5d);
   TRDISP(testdata5d);
   TRDISP(testdata5d.classname());
   TRDISP(sizeof(testdata5d)/sizeof(double));

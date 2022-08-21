@@ -196,7 +196,7 @@ namespace mathq {
       // Object Data
 
       MyArrayType data_;
-      std::array<size_t, rank> dynamic_dims_array = array_of_one_value<size_t, 0, rank>();
+      std::array<size_t, rank> dynamic_dims_array = array_of_one_value<size_t, rank, 0>();
 
       // methods
 
@@ -480,7 +480,7 @@ namespace mathq {
       using MyArrayType = typename ArrayTypeTrait<Element, compile_time_size>::Type;
 
       // Object Data
-      std::array<size_t, rank> dynamic_dims_array = array_of_one_value<size_t, 0, rank>();
+      std::array<size_t, rank> dynamic_dims_array = array_of_one_value<size_t, rank, 0>();
 
       // methods
 

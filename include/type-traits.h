@@ -30,7 +30,7 @@ namespace mathq {
 
 
   // TODO: change to template<typename T, size_t N, T val>
-  template<typename T, T val, size_t N>
+  template<typename T, size_t N, T val>
   constexpr auto array_of_one_value() {
     std::array<T, N> A;
     for (size_t i = 0; i < N; ++i) {
