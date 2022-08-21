@@ -337,18 +337,18 @@ namespace mathq
 // OPERATOR &
 // TODO: rewrite so that (a&b) is defined only floating point base types so that bitwise operators can be used
 
-  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2>
-  auto operator^(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
-    // OUTPUT("operator|");
-    return prodw(x1, x2);
-  }
+  // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2> 
+  // auto operator^(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
+  //   // OUTPUT("operator|");
+  //   return prodw(x1, x2);
+  // }
 
-  // prodw(a,b)
+  // // prodw(a,b)
 
-  template <class E1, class E2>
-  auto prodw(const Scalar<E1>& a, const Scalar<E2>& b) {
-    return 0;
-  }
+  // template <class E1, class E2>
+  // auto prodw(const Scalar<E1>& a, const Scalar<E2>& b) {
+  //   return 0;
+  // }
 
 
 
@@ -383,6 +383,23 @@ namespace mathq
 ****************************************************************************
 */
 
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2>
+  auto& operator^(const ExpressionR<A, E1, NT1, depth1, 1>& a, const ExpressionR<B, E2, NT2, depth2, 1>& b) {
+    return cross(a, b);
+  }
+
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2>
+  auto& cross(const ExpressionR<A, E1, NT1, depth1, 1>& a, const ExpressionR<B, E2, NT2, depth2, 1>& b) {
+    // TODO: check that x1, x2 have size=3
+    using NT3 = typename AddType<NT1, NT2>::Type;
+    using E3 = typename ReplaceNumberTrait<E1, NT3>::Type;
+    using T3 = Vector<E3, 3>;
+    T3& x3 = *(new T3);
+    x3[0] = a[1]*b[2] - a[2]*b[1];
+    x3[1] = a[2]*b[0] - a[0]*b[2];
+    x3[2] = a[0]*b[1] - a[1]*b[0];
+    return x3;
+  }
 
 
 };

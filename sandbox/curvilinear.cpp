@@ -92,6 +92,11 @@ int main(int argc, char* argv[]) {
   TRDISP(cart_coords2c.div(A));
   TRDISP(div(A));
   TRDISP(nabla | A);
+  ECHO_CODE(Vector<double, 3> b{ 1,1,0 });
+  ECHO_CODE(Vector<double, 3> c{ 0,0,1 });
+  TRDISP(c);
+  TRDISP(b^c);
+  TRDISP(cross(c, b));
 
 
   return 0;
