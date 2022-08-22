@@ -26,11 +26,19 @@ namespace mathq {
     //**********************************************************************
     //                            CONSTRUCTORS 
     //**********************************************************************
-    static Type& reduce(const Type& dims1, const Type& dims2) {
+    inline static Type& reduce(const Type& dims1, const Type& dims2) {
       return reduce(dims1, dims2, dims1.rank() - 1, 0);
     }
 
     inline static Type& reduce(const Type& dims1, const Type& dims2, const size_t& index1, const size_t& index2);
+
+    inline static Type& concat(const Type& dims1, const Type& dims2) {
+      Dimensions& dims3 = *(new Dimensions(dims1));
+      for (size_t c = 0; c < dims2.size(); c++) {
+        dims3.push_back(dims2[c]);
+      }
+      return dims3;
+    }
 
     Dimensions() {
       this->resize(0);

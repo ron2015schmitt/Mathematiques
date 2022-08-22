@@ -279,7 +279,7 @@ namespace mathq
 
 
   /****************************************************************************
-   * prodt(a,b)
+   * tensor_product(a,b)
    *
    * tensor product (outer product)
    *
@@ -291,97 +291,108 @@ namespace mathq
    // TODO: rewrite so that (a&b) is defined only floating point base types so that bitwise operators can be used
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2>
-  auto operator&(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
+  auto& operator&(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
     // OUTPUT("operator|");
-    return prodt(x1, x2);
+    return tensor_product(x1, x2);
   }
 
   // scalar scalar
 
-  template <class E1, class E2>
-  auto prodt(const Scalar<E1>& a, const Scalar<E2>& b) {
-    return a() * b();
+
+  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2>
+  auto& tensor_product(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
+    using NT3 = typename MultType<NT1, NT2>::Type;
+    using E3 = typename ReplaceNumberTrait<E1, NT3>::Type;
+    using T3 = MultiArray<E3, rank1 + rank2>;
+    T3& x3 = *(new T3);
+    // concat dims, then resize x3
+    const Dimensions dims1 = x1.dims();
+    const Dimensions dims2 = x2.dims();
+    const Dimensions dims3 = Dimensions::concat(dims1, dims2);
+    x3.resize(dims3);
+    // TRDISP(dims1);
+    // TRDISP(dims2);
+    // TRDISP(dims3);
+    const size_t N1 = dims1.num_elements();
+    const size_t N2 = dims2.num_elements();
+    const size_t N3 = dims3.num_elements();
+    // TRDISP(N1);
+    // TRDISP(N2);
+    // TRDISP(N3);
+    Indices inds1(dims1.rank()), inds2(dims2.rank()), inds3(dims3.rank());
+    for (size_t i = 0; i < N1; i++) {
+      for (size_t j = 0; j < N2; j++) {
+        // MDISP(inds1, inds2, inds3);
+        // TRDISP(x1[inds1]);
+        // TRDISP(x2[inds2]);
+        x3[inds3] = x1[inds1] * x2[inds2];
+        inds2.increment(dims2);
+        inds3.increment(dims3);
+      }
+      inds1.increment(dims1);
+    }
+    return x3;
   }
 
-  //   // (a&b)
-
-  // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-  // auto operator&(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
-  //   typedef typename MultType<NT1,NT2>::Type NT3;
-  //   typedef typename NumberTrait<E1,NT3>::Type E3;   // see TODO note above
-
-  //     // (Scalar&Scalar)
-  //     if ((a.rank() == 0) && (b.rank() == 0)) {
-  //       return a[0]*b[0];
-  //     }
-
-  //   }
-
-  //   // prodt(a,b)
-
-  // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-  // auto prodt(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
-  //     return (a&b);
-  //   }
 
 
-/****************************************************************************
-* prodt(a,b)
-*
-* antisymmetric tensor product (wedge product)
-*
-* for non-integer Numbers can also use (a^b) notation
-****************************************************************************
-*/
+  /****************************************************************************
+  * prodw(a,b)
+  *
+  * antisymmetric tensor product (wedge product)
+  *
+  * for non-integer Numbers can also use (a^b) notation
+  ****************************************************************************
+  */
 
-// OPERATOR &
-// TODO: rewrite so that (a&b) is defined only floating point base types so that bitwise operators can be used
+  // OPERATOR &
+  // TODO: rewrite so that (a&b) is defined only floating point base types so that bitwise operators can be used
 
-  // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2> 
-  // auto operator^(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
-  //   // OUTPUT("operator|");
-  //   return prodw(x1, x2);
-  // }
+    // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2, size_t rank1, size_t rank2> 
+    // auto operator^(const ExpressionR<A, E1, NT1, depth1, rank1>& x1, const ExpressionR<B, E2, NT2, depth2, rank2>& x2) {
+    //   // OUTPUT("operator|");
+    //   return prodw(x1, x2);
+    // }
 
-  // // prodw(a,b)
+    // // prodw(a,b)
 
-  // template <class E1, class E2>
-  // auto prodw(const Scalar<E1>& a, const Scalar<E2>& b) {
-  //   return 0;
-  // }
+    // template <class E1, class E2>
+    // auto prodw(const Scalar<E1>& a, const Scalar<E2>& b) {
+    //   return 0;
+    // }
 
 
 
-  //   // (a^b)
+    //   // (a^b)
 
-  // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-  // auto operator^(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
-  //   typedef typename MultType<NT1,NT2>::Type NT3;
-  //   typedef typename NumberTrait<E1,NT3>::Type E3;   // see TODO note above
+    // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
+    // auto operator^(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
+    //   typedef typename MultType<NT1,NT2>::Type NT3;
+    //   typedef typename NumberTrait<E1,NT3>::Type E3;   // see TODO note above
 
-  //     // (Scalar^Scalar)
-  //     if ((a.rank() == 0) && (b.rank() == 0)) {
-  //       return a[0]*b[0];
-  //     }
+    //     // (Scalar^Scalar)
+    //     if ((a.rank() == 0) && (b.rank() == 0)) {
+    //       return a[0]*b[0];
+    //     }
 
-  //   }
+    //   }
 
-  //   // prodw(a,b)
+    //   // prodw(a,b)
 
-  // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
-  // auto prodw(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
-  //     return (a^b);
-  //   }
+    // template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth, size_t rank>
+    // auto prodw(const ExpressionR<A,E1,NT1,depth,rank>& a, const ExpressionR<B,E2,NT2,depth,rank>& b) {
+    //     return (a^b);
+    //   }
 
 
-/****************************************************************************
-* prodt(a,b)
-*
-* vector cross product
-*
-* for non-integer Numbers can also use (a^b) notation
-****************************************************************************
-*/
+  /****************************************************************************
+  * tensor_product(a,b)
+  *
+  * vector cross product
+  *
+  * for non-integer Numbers can also use (a^b) notation
+  ****************************************************************************
+  */
 
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2>
   auto& operator^(const ExpressionR<A, E1, NT1, depth1, 1>& a, const ExpressionR<B, E2, NT2, depth2, 1>& b) {

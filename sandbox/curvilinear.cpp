@@ -97,7 +97,18 @@ int main(int argc, char* argv[]) {
   TRDISP(c);
   TRDISP(b^c);
   TRDISP(cross(c, b));
+  TRDISP(tensor_product(c, b));
 
+
+
+  ECHO_CODE(Dimensions dims1{ 4,3,2 });
+  TRDISP(dims1);
+  ECHO_CODE(Dimensions dims2{ 7,5,6 });
+  TRDISP(dims2);
+  ECHO_CODE(Dimensions dims3);
+  TRDISP(dims3);
+  dims3 = Dimensions::concat(dims1, dims2);
+  TRDISP(dims3);
 
   return 0;
 }
