@@ -672,11 +672,13 @@ namespace mathq {
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
-    // Assign all elements to the same constant value
-    template<typename T> requires (std::is_convertible<T, Element>::value)
-      Type& operator=(const T& e) {
-      return equals(e);
+    template<typename T>
+    Type& operator=(const T& t) {
+      return equals(t);
     }
+
+
+    // Assign all elements to the same constant value
     template<typename T> requires (std::is_convertible<T, Element>::value)
       Type& equals(const T& e) {
       // OUTPUT("Element");
@@ -687,10 +689,6 @@ namespace mathq {
     }
 
     // set bottom elements to same value
-    template <class T = Element>
-    typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N0>& >::type operator=(const NumberType& d) {
-      return equals(d);
-    }
 
     template <class T = Element> requires(!std::is_same<T, NumberType>::value)
       Type& equals(const NumberType& d) {
@@ -705,12 +703,6 @@ namespace mathq {
 
 
     // ------------------------ Vector = Vector----------------
-
-    template <int NE2>
-    Type& operator=(const Vector<Element, NE2>& v) {
-      return equals(v);
-    }
-
     template <int NE2>
     Type& equals(const Vector<Element, NE2>& v) {
       // OUTPUT("Vector");
@@ -739,10 +731,6 @@ namespace mathq {
 
 
     // // ------------------------ Vector = ExpressionR ----------------
-    template <class X>
-    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
-      return equals(x);
-    }
     template <class X>
     Type& equals(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
       // OUTPUT("Expression");
@@ -781,10 +769,6 @@ namespace mathq {
 
     // ------------------------ Vector = list ----------------
 
-    Type& operator=(const std::list<Element>& mylist) {
-      return equals(mylist);
-    }
-
     Type& equals(const std::list<Element>& mylist) {
       // OUTPUT("list");
       if constexpr (is_dynamic_value) {
@@ -801,10 +785,6 @@ namespace mathq {
 
 
     // ------------------------ Vector = initializer_list ----------------
-
-    Type& operator=(const std::initializer_list<Element>& mylist) {
-      return equals(mylist);
-    }
 
     Type& equals(const std::initializer_list<Element>& mylist) {
       // OUTPUT("initializer_list");
@@ -825,10 +805,6 @@ namespace mathq {
 
     // ------------------------ Vector = std::vector ----------------
 
-    Type& operator=(const std::vector<Element>& vstd) {
-      return equals(vstd);
-    }
-
     Type& equals(const std::vector<Element>& vstd) {
       // OUTPUT("vector");
       if constexpr (is_dynamic_value) {
@@ -843,11 +819,6 @@ namespace mathq {
 
 
     // ------------------------ Vector = std::array ----------------
-
-    template <size_t N>
-    Type& operator=(const std::array<NumberType, N>& varray) {
-      return equals(varray);
-    }
 
     template <size_t N>
     Type& equals(const std::array<NumberType, N>& varray) {
@@ -866,10 +837,6 @@ namespace mathq {
 
 
     // ------------------------ Vector = std::valarray ----------------
-
-    Type& operator=(const std::valarray<Element>& varray) {
-      return equals(varray);
-    }
 
     Type& equals(const std::valarray<Element>& varray) {
       // OUTPUT("valarray");
