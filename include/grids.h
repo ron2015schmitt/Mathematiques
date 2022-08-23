@@ -198,22 +198,25 @@ namespace mathq {
       }
 
       // [a,b]
-      static Domain<GridElement> interval_CC(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      inline static Domain<GridElement> c_interval_c(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
         return Domain<GridElement>(a, b, N, scale, true, true);
+      }
+      inline static Domain<GridElement> interval(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+        return c_interval_c(a, b, N, scale);
       }
 
       // (a,b]
-      static Domain<GridElement> interval_OC(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      static Domain<GridElement> o_interval_c(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
         return Domain<GridElement>(a, b, N, scale, false, true);
       }
 
       // [a,b)
-      static Domain<GridElement> interval_CO(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      static Domain<GridElement> c_interval_o(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
         return Domain<GridElement>(a, b, N, scale, true, false);
       }
 
       // (a,b)
-      static Domain<GridElement> interval_OO(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
+      static Domain<GridElement> o_interval_o(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
         return Domain<GridElement>(a, b, N, scale, false, false);
       }
 
@@ -1603,6 +1606,15 @@ namespace mathq {
     //   return grad(std::get<0>(funcANDrange), std::get<1>(funcANDrange), std::get<2>(funcANDrange));
     // }
 
+
+
+  //
+  // MathFunction - multivariable scalar function in Cartesian metric
+  //
+
+
+  template <typename GridElement, size_t Ndims, typename TargetElement = GridElement>
+  using MathFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims>>;
 
   //
   // grad(f) - for scalar f

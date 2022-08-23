@@ -11,6 +11,7 @@ int main(int argc, char* argv[]) {
   using namespace std;
   using namespace mathq;
 
+
   std::string myname = argv[0];
 
   cout << std::endl;
@@ -19,7 +20,7 @@ int main(int argc, char* argv[]) {
 
 
 
-  Domain<double> dom1 = Domain<double>::interval_CC(0, 10, 11);
+  Domain<double> dom1 = Domain<double>::interval(0, 10, 11);
   TRDISP(dom1);
   TRDISP(dom1.coord());
 
@@ -31,8 +32,8 @@ int main(int argc, char* argv[]) {
   TRDISP(cart_coords2a);
 
   CartesianCoords<double, 2> cart_coords2b({
-      Domain<double>::interval_CC(-1,1,5),
-      Domain<double>::interval_CC(2,3,3),
+      Domain<double>::interval(-1,1,5),
+      Domain<double>::interval(2,3,3),
     });
   TRDISP(cart_coords2b);
   TRDISP(cart_coords2b.grid_dims());
@@ -116,9 +117,9 @@ int main(int argc, char* argv[]) {
     using namespace cross_product;
 
     CartesianCoords<double, 3> cart_coords3({
-        Domain<double>::interval_CC(-1,1,5),
-        Domain<double>::interval_CC(-1,1,5),
-        Domain<double>::interval_CC(-1,1,5),
+        Domain<double>::interval(-1,1,5),
+        Domain<double>::interval(-1,1,5),
+        Domain<double>::interval(-1,1,5),
       });
     TRDISP(cart_coords3);
 
@@ -136,9 +137,9 @@ int main(int argc, char* argv[]) {
   {
     using namespace cross_product;
     CartesianCoords<double, 3> cart_coords3({
-        Domain<double>::interval_CC(-1,1,5),
-        Domain<double>::interval_CC(-1,1,5),
-        Domain<double>::interval_CC(-1,1,5),
+        Domain<double>::interval(-1,1,5),
+        Domain<double>::interval(-1,1,5),
+        Domain<double>::interval(-1,1,5),
       });
     TRDISP(cart_coords3);
     ECHO_CODE(CurvilinearField<double, 1, CartesianCoords<double, 3>> A(cart_coords3));
@@ -156,9 +157,9 @@ int main(int argc, char* argv[]) {
     using namespace cross_product;
     using mathq::unit_imaginary::i;
     CartesianCoords<double, 3> cart_coords3({
-        Domain<double>::interval_CC(-1,1,5),
-        Domain<double>::interval_CC(-1,1,5),
-        Domain<double>::interval_CC(-1,1,5),
+        Domain<double>::interval(-1,1,5),
+        Domain<double>::interval(-1,1,5),
+        Domain<double>::interval(-1,1,5),
       });
     TRDISP(cart_coords3);
     CurvilinearField<std::complex<double>, 1, CartesianCoords<double, 3>> A(cart_coords3);
