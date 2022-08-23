@@ -675,6 +675,11 @@ namespace mathq {
     // Assign all elements to the same constant value
     template<typename T> requires (std::is_convertible<T, Element>::value)
       Type& operator=(const T& e) {
+      return equals(e);
+    }
+    template<typename T> requires (std::is_convertible<T, Element>::value)
+      Type& equals(const T& e) {
+      // OUTPUT("Element");
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = e;
       }
@@ -684,12 +689,26 @@ namespace mathq {
     // set bottom elements to same value
     template <class T = Element>
     typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N0>& >::type operator=(const NumberType& d) {
+      return equals(d);
+    }
+
+    template <class T = Element> requires(!std::is_same<T, NumberType>::value)
+      Type& equals(const NumberType& d) {
+      // OUTPUT("NumberType");
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
       return *this;
     }
 
+    // Type&
+    //   operator=(const double& d) {
+    //   // OUTPUT("double");
+    //   for (size_t i = 0; i < total_size(); i++) {
+    //     (*this).dat(i) = d;
+    //   }
+    //   return *this;
+    // }
 
 
 
@@ -697,6 +716,12 @@ namespace mathq {
 
     template <int NE2>
     Type& operator=(const Vector<Element, NE2>& v) {
+      return equals(v);
+    }
+
+    template <int NE2>
+    Type& equals(const Vector<Element, NE2>& v) {
+      // OUTPUT("Vector");
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
           if (this->size() != v.size()) {
@@ -719,10 +744,16 @@ namespace mathq {
     }
 
 
-    // // ------------------------ Vector = ExpressionR ----------------
 
+
+    // // ------------------------ Vector = ExpressionR ----------------
     template <class X>
     Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+      return equals(x);
+    }
+    template <class X>
+    Type& equals(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+      // OUTPUT("Expression");
 
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
@@ -745,19 +776,21 @@ namespace mathq {
 
 
 
-    // ------------------------ Vector = array[] ----------------
-
-    Type& operator=(const Element array[]) {
-      for (size_t i = 0; i < size(); i++) {
-        (*this)(i) = array[i];
-      }
-      return *this;
-    }
+    // // ------------------------ Vector = array[] ----------------
+    // this gets called for  A = 0; and causes segmentation fault
+    // Type& operator=(const Element array[]) {
+    //   OUTPUT("array");
+    //   for (size_t i = 0; i < size(); i++) {
+    //     (*this)(i) = array[i];
+    //   }
+    //   return *this;
+    // }
 
 
     // ------------------------ Vector = list ----------------
 
     Type& operator=(const std::list<Element>& mylist) {
+      // OUTPUT("list");
       if constexpr (is_dynamic_value) {
         if (this->size() != mylist.size()) {
           resize(mylist.size());
@@ -774,6 +807,8 @@ namespace mathq {
     // ------------------------ Vector = initializer_list ----------------
 
     Type& operator=(const std::initializer_list<Element>& mylist) {
+      // OUTPUT("initializer_list");
+
       if constexpr (is_dynamic_value) {
         resize(mylist.size());
       }
@@ -791,6 +826,7 @@ namespace mathq {
     // ------------------------ Vector = std::vector ----------------
 
     Type& operator=(const std::vector<Element>& vstd) {
+      // OUTPUT("vector");
       if constexpr (is_dynamic_value) {
         if (this->size() != vstd.size()) {
           resize(vstd.size());
@@ -806,6 +842,7 @@ namespace mathq {
 
     template <size_t N>
     Type& operator=(const std::array<NumberType, N>& varray) {
+      // OUTPUT("std::array");
       if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
           resize(varray.size());
@@ -822,6 +859,7 @@ namespace mathq {
     // ------------------------ Vector = std::valarray ----------------
 
     Type& operator=(const std::valarray<Element>& varray) {
+      // OUTPUT("valarray");
 
       if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {

@@ -94,12 +94,14 @@ int main(int argc, char* argv[]) {
   TRDISP(nabla | A);
   ECHO_CODE(Vector<double, 3> b{ 1,1,0 });
   ECHO_CODE(Vector<double, 3> c{ 0,0,1 });
+
   TRDISP(c);
-  TRDISP(b^c);
+  {
+    using namespace cross_product;
+    TRDISP(b^c);
+  }
   TRDISP(cross(c, b));
   TRDISP(tensor_product(c, b));
-
-
 
   ECHO_CODE(Dimensions dims1{ 4,3,2 });
   TRDISP(dims1);
@@ -109,6 +111,43 @@ int main(int argc, char* argv[]) {
   TRDISP(dims3);
   dims3 = Dimensions::concat(dims1, dims2);
   TRDISP(dims3);
+
+  {
+    using namespace cross_product;
+
+    CartesianCoords<double, 3> cart_coords3({
+        Domain<double>::interval_CC(-1,1,5),
+        Domain<double>::interval_CC(-1,1,5),
+        Domain<double>::interval_CC(-1,1,5),
+      });
+    TRDISP(cart_coords3);
+
+    TRDISP(cart_coords3.z());
+    Vector<MultiArray<double, 3>, 3> A;
+    RecursiveDimensions rdims = RecursiveDimensions{ Dimensions{3}, Dimensions{5,5,5} };
+    TRDISP(A.recursive_dims());
+    A.resize(rdims);
+    TRDISP(A.recursive_dims());
+    A = 0;
+    A[0] = cart_coords3.z();
+    TRDISP(roundzero(cart_coords3.curl(A), 1e-14));
+  }
+
+  {
+    using namespace cross_product;
+    CartesianCoords<double, 3> cart_coords3({
+        Domain<double>::interval_CC(-1,1,5),
+        Domain<double>::interval_CC(-1,1,5),
+        Domain<double>::interval_CC(-1,1,5),
+      });
+    TRDISP(cart_coords3);
+    CurvilinearField<double, 1, CartesianCoords<double, 3>> A(cart_coords3);
+    A = 0.;
+    A[0] = cart_coords3.z();
+    auto B = curl(A);
+    TRDISP(B);
+    B = nabla ^ A;
+  }
 
   return 0;
 }

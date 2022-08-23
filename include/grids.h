@@ -766,6 +766,33 @@ namespace mathq {
 
 
 
+    //
+    // curl(f) - f is a vector of length = 3
+    //
+
+    template <class T>
+    auto& curl(const T& f, const Nabla<>& nabla = Nabla<>()) const
+      requires
+    (
+      (IsReadableExpressionOrArray<T>) && (T::rank_value == 1)
+      &&
+      (std::is_convertible_v<typename T::NumberType, GridElement>)
+      ) {
+
+      using MyGridType = MultiArray<GridElement, Ndims>;
+      constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
+
+      using ResultType = MultiArrayHelper< MyGridType, result_dims >;
+      ResultType& result = *(new ResultType);
+      if constexpr (result.is_dynamic_value) {
+        Dimensions grid_dims = ParentType::grid_dims();
+        result.resize(grid_dims);
+      }
+      result[0] = pd(f[2], 1, nabla) - pd(f[1], 2, nabla);
+      result[1] = pd(f[0], 2, nabla) - pd(f[2], 0, nabla);
+      result[2] = pd(f[1], 0, nabla) - pd(f[0], 1, nabla);
+      return result;
+    }
 
     //
     // df/dx - for convenience
@@ -1216,6 +1243,7 @@ namespace mathq {
 
     using ParentType::operator=;
     using ParentType::resize;  // needed to find overloaded funcs
+    using ParentType::equals;  // needed to find overloaded funcs
 
     const Coords& coordinates;
 
@@ -1261,6 +1289,20 @@ namespace mathq {
     // "read only"
     const Coords& coords() const {
       return coordinates;
+    }
+
+
+    template<typename T>
+    inline Type& operator=(const T& rhs) {
+      // TRDISP(ParentType());
+      ParentType::equals(rhs);
+      return *this;
+    }
+
+    inline Type& operator=(const Type& rhs) {
+      // TRDISP(ParentType());
+      ParentType::equals(rhs);
+      return *this;
     }
 
 
@@ -1611,6 +1653,32 @@ namespace mathq {
     return div(f, nabla);
   }
 
+
+  //
+  // curl(f) - for vector f
+  //
+
+  template <typename TargetElement, IsCurvilinear Coords>
+  CurvilinearField<TargetElement, 1, Coords> curl(const CurvilinearField<TargetElement, 1, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
+
+    Coords const& coords = f.coords();
+    CurvilinearField<TargetElement, 1, Coords>& g = *(new CurvilinearField<TargetElement, 1, Coords>(coords));
+    g = coords.curl(f, nabla);
+    return g;
+  }
+
+
+  namespace cross_product {
+
+    //
+    // nabla ^ f - for vector f
+    //
+
+    template <typename TargetElement, IsCurvilinear Coords>
+    CurvilinearField<TargetElement, 1, Coords> operator^(const Nabla<>& nabla, const CurvilinearField<TargetElement, 1, Coords>& f) {
+      return curl(f, nabla);
+    }
+  };
 
   //
   // pd(f,c) - for scalar f

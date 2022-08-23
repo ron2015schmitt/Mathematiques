@@ -386,7 +386,7 @@ namespace mathq
 
 
   /****************************************************************************
-  * tensor_product(a,b)
+  * cross(a,b)
   *
   * vector cross product
   *
@@ -394,11 +394,13 @@ namespace mathq
   ****************************************************************************
   */
 
-  template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2>
-  auto& operator^(const ExpressionR<A, E1, NT1, depth1, 1>& a, const ExpressionR<B, E2, NT2, depth2, 1>& b) {
-    return cross(a, b);
-  }
+  namespace cross_product {
+    template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2>
+    auto& operator^(const ExpressionR<A, E1, NT1, depth1, 1>& a, const ExpressionR<B, E2, NT2, depth2, 1>& b) {
+      return cross(a, b);
+    }
 
+  };
   template <class A, class B, class E1, class E2, class NT1, class NT2, size_t depth1, size_t depth2>
   auto& cross(const ExpressionR<A, E1, NT1, depth1, 1>& a, const ExpressionR<B, E2, NT2, depth2, 1>& b) {
     // TODO: check that x1, x2 have size=3
@@ -411,7 +413,6 @@ namespace mathq
     x3[2] = a[0]*b[1] - a[1]*b[0];
     return x3;
   }
-
 
 };
 
