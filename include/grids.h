@@ -682,11 +682,11 @@ namespace mathq {
 
     template <class T>
     auto& pd(const T& f, const size_t c, const Nabla<>& nabla = Nabla<>()) const
-      requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
+      requires (IsGridlike<T>) {
 
       Dimensions grid_dims = ParentType::grid_dims();
 
-      using MyGridType = MultiArray<GridElement, Ndims>;
+      using MyGridType = MultiArray<typename T::NumberType, Ndims>;
       MyGridType& mygrid = *(new MyGridType);
       if constexpr (mygrid.is_dynamic_value) {
         mygrid.resize(grid_dims);
@@ -721,9 +721,9 @@ namespace mathq {
 
     template <class T>
     auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires (IsGridlike<T>&& std::is_convertible_v<typename T::NumberType, GridElement>) {
+      requires (IsGridlike<T>) {
 
-      using MyGridType = MultiArray<GridElement, Ndims>;
+      using MyGridType = MultiArray<typename T::NumberType, Ndims>;
       constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
 
       using ResultType = MultiArrayHelper< MyGridType, result_dims >;
@@ -746,11 +746,9 @@ namespace mathq {
       requires
     (
       (IsReadableExpressionOrArray<T>) && (T::rank_value == 1)
-      &&
-      (std::is_convertible_v<typename T::NumberType, GridElement>)
       ) {
 
-      using MyGridType = MultiArray<GridElement, Ndims>;
+      using MyGridType = MultiArray<typename T::NumberType, Ndims>;
       MyGridType& result = *(new MyGridType);
       if constexpr (result.is_dynamic_value) {
         Dimensions grid_dims = ParentType::grid_dims();
@@ -775,11 +773,9 @@ namespace mathq {
       requires
     (
       (IsReadableExpressionOrArray<T>) && (T::rank_value == 1)
-      &&
-      (std::is_convertible_v<typename T::NumberType, GridElement>)
       ) {
 
-      using MyGridType = MultiArray<GridElement, Ndims>;
+      using MyGridType = MultiArray<typename T::NumberType, Ndims>;
       constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
 
       using ResultType = MultiArrayHelper< MyGridType, result_dims >;
@@ -800,7 +796,7 @@ namespace mathq {
 
     template <class T>
     auto& pdx(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((IsGridlike<T>) && (std::is_convertible_v<typename T::NumberType, GridElement>) && (Ndims >= 1) && (Ndims <= 3)) {
+      requires ((IsGridlike<T>) && (Ndims >= 1) && (Ndims <= 3)) {
       return pd(f, 0, nabla);
     }
 
@@ -810,7 +806,7 @@ namespace mathq {
 
     template <class T>
     auto& pdy(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((IsGridlike<T>) && (std::is_convertible_v<typename T::NumberType, GridElement>) && (Ndims >= 2) && (Ndims <= 3)) {
+      requires ((IsGridlike<T>) && (Ndims >= 2) && (Ndims <= 3)) {
       return pd(f, 1, nabla);
     }
 
@@ -820,7 +816,7 @@ namespace mathq {
 
     template <class T>
     auto& pdz(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((IsGridlike<T>) && (std::is_convertible_v<typename T::NumberType, GridElement>) && (Ndims >= 3) && (Ndims <= 3)) {
+      requires ((IsGridlike<T>) && (Ndims >= 3) && (Ndims <= 3)) {
       return pd(f, 2, nabla);
     }
 

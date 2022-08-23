@@ -166,7 +166,7 @@ int main(int argc, char* argv[]) {
     ECHO_CODE(A = 0);
     ECHO_CODE(A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) });
     TRDISP(A);
-    // auto B = curl(A);
+    auto B = curl(A);
     // TRDISP(B);
     // B = nabla ^ A;
   }
