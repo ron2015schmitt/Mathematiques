@@ -826,6 +826,7 @@ namespace display {
   SPECIALIZE_getTypeStyle(wchar_t);
   SPECIALIZE_getTypeStyle(bool);
   SPECIALIZE_getTypeStyle(mathq::GridScaleEnum);
+  SPECIALIZE_getTypeStyle(mathq::TensorIndexEnum);
 
   // container type
   template <typename D, template <typename> typename C>
@@ -910,6 +911,8 @@ namespace display {
   template <>
   inline void dispval_strm<mathq::GridScaleEnum>(std::ostream& stream, const mathq::GridScaleEnum& e);
 
+  template <>
+  inline void dispval_strm<mathq::TensorIndexEnum>(std::ostream& stream, const mathq::TensorIndexEnum& e);
 
 
   //------------------------------------------------------------------
@@ -998,6 +1001,7 @@ namespace display {
   }
 
   SPECIALIZE_getTypeName_mathq(GridScaleEnum);
+  SPECIALIZE_getTypeName_mathq(TensorIndexEnum);
 
 
   // std::complex
@@ -1427,6 +1431,27 @@ namespace display {
       break;
     default:
       s = "[unknown GridScale]" + std::to_string(int(e));
+      break;
+    }
+    stream << style.apply(s);
+  }
+
+
+  // TensorIndex - enumns can't have members, but could use a class instead of a namespace to enclose them
+  template <>
+  inline void dispval_strm<mathq::TensorIndexEnum>(std::ostream& stream, const mathq::TensorIndexEnum& e) {
+    using namespace std;
+    Style style = FormatData<double>::style_for_value;
+    std::string s;
+    switch (e) {
+    case mathq::TensorIndex::COVARIANT:
+      s = "L";
+      break;
+    case mathq::TensorIndex::CONTRAVARIANT:
+      s = "H";
+      break;
+    default:
+      s = "[unknown TensorIndex]" + std::to_string(int(e));
       break;
     }
     stream << style.apply(s);

@@ -35,6 +35,7 @@
 
 #include "declarations.h"
 #include "type-traits.h"
+#include "tensor.h"
 #include "display.h"
 #include "fileio.h"
 #include "util.h"

@@ -172,6 +172,19 @@ int main(int argc, char* argv[]) {
     // B = nabla ^ A;
   }
 
+  using namespace mathq::TensorIndex;
+  Vector<double, 3>::Tensor<COVARIANT> covec;
+  covec = { 1,2,3 };
+  // covec = 5.;
+  TRDISP(covec);
+
+  Vector<double, 3>::Tensor<CONTRAVARIANT> vec;
+  vec = { 3,2,1 };
+  TRDISP(vec);
+
+  TRDISP(covec(vec));
+  TRDISP(vec(covec));
+  // TRDISP(vec(vec)); // should cause compile-time error
 
   return 0;
 }

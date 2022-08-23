@@ -1639,12 +1639,162 @@ namespace mathq {
       return y;
     }
 
+
+
+    //**********************************************************************
+    //                      Tensor subclass
+    //**********************************************************************
+
+    template <TensorIndexEnum... enums> requires (sizeof...(enums) == 1)
+      class Tensor;
+
+
   };
 
 
+  // template <typename Element, size_t... sizes>
+  // class MultiArray<Element, 1, sizes...> : public ExpressionRW<
+  //   Vector<Element, sizes...>
+
+  template <typename Element, size_t... sizes>
+  template <TensorIndexEnum... enums> requires (sizeof...(enums) == 1)
+    class Vector<Element, sizes...>::Tensor : public Vector<Element, sizes...> {
+    public:
+      using Type = Vector<Element, sizes...>::Tensor<enums...>;
+      using ParentType = Vector<Element, sizes...>;
+      constexpr static std::array<TensorIndexEnum, ParentType::rank_value> static_enums_array = { enums... };
 
 
-};
+      //**********************************************************************
+      //                            CONSTRUCTORS 
+      //**********************************************************************
+
+      // Note the following allows user to set L/H Tensor to each other as well as operating on each other
+      // using ParentType::ParentType;
+
+
+      // Note the following allows user to set L/H Tensor to each other as well as operating on each other
+      // Tensor(const ParentType& var) {
+      //   OUTPUT("ParentType copy constr");
+      //   *this = var;
+      // }
+
+      // -------------------  default  --------------------
+      Tensor() {
+      }
+
+      // --------------------- copy constructor --------------------
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::L)
+        Tensor(const Vector<Element, sizes...>::Tensor<TensorIndex::L>& var) {
+        // OUTPUT("Tensor copy constr-L");
+        *this = var;
+      }
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::H)
+        Tensor(const Vector<Element, sizes...>::Tensor<TensorIndex::H>& var) {
+        // OUTPUT("Tensor copy constr-H");
+        *this = var;
+      }
+
+      // ----------------------- initializer_list ---------------------
+      // not explicit: allows use of nested init lists when depth_value > 1
+      Tensor(const std::initializer_list<Element>& var) {
+        if (is_dynamic_value) {
+          resize(var.size());
+        }
+        *this = var;
+      }
+
+
+      //**********************************************************************
+      //                             DESTRUCTOR 
+      //**********************************************************************
+
+      ~Tensor() {
+      }
+
+
+
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::L)
+        inline Element operator()(const Vector<Element, sizes...>::Tensor<TensorIndex::H>& vec) {
+        return dot(*this, vec);
+      }
+
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::H)
+        inline Element operator()(const Vector<Element, sizes...>::Tensor<TensorIndex::L>& covec) {
+        return dot(*this, covec);
+      }
+
+      //**********************************************************************
+      //                             ASSIGNMENT
+      //**********************************************************************
+
+      template<typename T>
+      inline Type& operator=(const T& rhs) {
+        // TRDISP(ParentType());
+        ParentType::set_equal_to(rhs);
+        return *this;
+      }
+
+      inline Type& operator=(const Type& rhs) {
+        // OUTPUT("operator= of field");
+        ParentType::set_equal_to(rhs);
+        return *this;
+      }
+
+
+      //**********************************************************************
+      //************************** Text and debugging ************************
+      //**********************************************************************
+
+      // instance classname() method 
+
+      inline std::string classname() const {
+        return ClassName();
+      }
+
+      // static ClassName() method 
+
+      static inline std::string ClassName() {
+        using namespace display;
+        std::stringstream strm;
+        std::string s = "Vector";
+        s += StyledString::get(ANGLE1).get();
+        Element d;
+        s += getTypeName(d);
+        if constexpr (!is_dynamic_value) {
+          s += StyledString::get(COMMA).get();
+          s += "N0=";
+          s += std::to_string(N0);
+        }
+        s += StyledString::get(ANGLE2).get();
+        s += "::Tensor";
+        s += StyledString::get(ANGLE1).get();
+        dispval_strm(strm, static_enums_array[0]);
+        s += strm.str();
+        s += StyledString::get(ANGLE2).get();
+        return s;
+      }
+
+#if MATHQ_DEBUG>=1
+      std::string expression(void) const {
+        return "";
+      }
+#endif
+
+
+      // stream << operator
+
+      friend std::ostream& operator<<(std::ostream& stream, const Type& v) {
+        using namespace display;
+        return operator<<(stream, static_cast<ParentType>(v));
+      }
+      };
+
+
+
+
+
+  };
 
 
 #endif 
