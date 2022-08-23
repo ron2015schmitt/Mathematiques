@@ -701,14 +701,6 @@ namespace mathq {
       return *this;
     }
 
-    // Type&
-    //   operator=(const double& d) {
-    //   // OUTPUT("double");
-    //   for (size_t i = 0; i < total_size(); i++) {
-    //     (*this).dat(i) = d;
-    //   }
-    //   return *this;
-    // }
 
 
 
@@ -790,6 +782,10 @@ namespace mathq {
     // ------------------------ Vector = list ----------------
 
     Type& operator=(const std::list<Element>& mylist) {
+      return equals(mylist);
+    }
+
+    Type& equals(const std::list<Element>& mylist) {
       // OUTPUT("list");
       if constexpr (is_dynamic_value) {
         if (this->size() != mylist.size()) {
@@ -807,6 +803,10 @@ namespace mathq {
     // ------------------------ Vector = initializer_list ----------------
 
     Type& operator=(const std::initializer_list<Element>& mylist) {
+      return equals(mylist);
+    }
+
+    Type& equals(const std::initializer_list<Element>& mylist) {
       // OUTPUT("initializer_list");
 
       if constexpr (is_dynamic_value) {
@@ -826,6 +826,10 @@ namespace mathq {
     // ------------------------ Vector = std::vector ----------------
 
     Type& operator=(const std::vector<Element>& vstd) {
+      return equals(vstd);
+    }
+
+    Type& equals(const std::vector<Element>& vstd) {
       // OUTPUT("vector");
       if constexpr (is_dynamic_value) {
         if (this->size() != vstd.size()) {
@@ -842,6 +846,11 @@ namespace mathq {
 
     template <size_t N>
     Type& operator=(const std::array<NumberType, N>& varray) {
+      return equals(varray);
+    }
+
+    template <size_t N>
+    Type& equals(const std::array<NumberType, N>& varray) {
       // OUTPUT("std::array");
       if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
@@ -859,6 +868,10 @@ namespace mathq {
     // ------------------------ Vector = std::valarray ----------------
 
     Type& operator=(const std::valarray<Element>& varray) {
+      return equals(varray);
+    }
+
+    Type& equals(const std::valarray<Element>& varray) {
       // OUTPUT("valarray");
 
       if constexpr (is_dynamic_value) {

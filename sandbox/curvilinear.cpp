@@ -149,5 +149,26 @@ int main(int argc, char* argv[]) {
     B = nabla ^ A;
   }
 
+
+  {
+    using namespace cross_product;
+    using mathq::unit_imaginary::i;
+    CartesianCoords<double, 3> cart_coords3({
+        Domain<double>::interval_CC(-1,1,5),
+        Domain<double>::interval_CC(-1,1,5),
+        Domain<double>::interval_CC(-1,1,5),
+      });
+    TRDISP(cart_coords3);
+    CurvilinearField<std::complex<double>, 1, CartesianCoords<double, 3>> A(cart_coords3);
+    auto& z = cart_coords3.z();
+    A = 0;
+    A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) };
+    TRDISP(A);
+    // auto B = curl(A);
+    // TRDISP(B);
+    // B = nabla ^ A;
+  }
+
+
   return 0;
 }
