@@ -1243,7 +1243,7 @@ namespace mathq {
 
     using ParentType::operator=;
     using ParentType::resize;  // needed to find overloaded funcs
-    using ParentType::equals;  // needed to find overloaded funcs
+    using ParentType::set_equal_to;  // needed to find overloaded funcs
 
     const Coords& coordinates;
 
@@ -1295,13 +1295,13 @@ namespace mathq {
     template<typename T>
     inline Type& operator=(const T& rhs) {
       // TRDISP(ParentType());
-      ParentType::equals(rhs);
+      ParentType::set_equal_to(rhs);
       return *this;
     }
 
     inline Type& operator=(const Type& rhs) {
-      // TRDISP(ParentType());
-      ParentType::equals(rhs);
+      // OUTPUT("operator= of field");
+      ParentType::set_equal_to(rhs);
       return *this;
     }
 

@@ -373,20 +373,26 @@ namespace mathq {
     //************************** ASSIGNMENT ********************************
     //**********************************************************************
 
+    template<typename T>
+    Type& operator=(const T& t) {
+      return set_equal_to(t);
+    }
+
+
     // Any new assignment operators should also be addedc to ExpressionRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
     // Assign all elements to the same constant value
     template<typename T> requires (std::is_convertible<T, Element>::value)
-      Type& operator=(const T& e) {
+      Type& set_equal_to(const T& e) {
       data_ = e;
       return *this;
     }
 
     // set bottom elements to same value
     template <class T = Element>
-    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type operator=(const NumberType& d) {
+    typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type set_equal_to(const NumberType& d) {
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
@@ -395,7 +401,7 @@ namespace mathq {
 
     // ------------------------  Scalar----------------
 
-    Type& operator=(const Type& x) {
+    Type& set_equal_to(const Type& x) {
       data_ = x();
       return *this;
     }
@@ -404,7 +410,7 @@ namespace mathq {
     // // ------------------------ ExpressionR ----------------
 
     template <class X>
-    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+    Type& set_equal_to(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
       TRDISP(x[0]);
       if constexpr (depth_value <= 1) {
         data_ = x[0];
@@ -422,7 +428,7 @@ namespace mathq {
 
     // ------------------------ Vector = initializer_list ----------------
 
-    Type& operator=(const std::initializer_list<Element>& mylist) {
+    Type& set_equal_to(const std::initializer_list<Element>& mylist) {
       data_ = *(mylist.begin());
       return *this;
     }
@@ -430,7 +436,7 @@ namespace mathq {
 
     // ------------------------ Vector = std::vector ----------------
 
-    Type& operator=(const std::vector<Element>& vstd) {
+    Type& set_equal_to(const std::vector<Element>& vstd) {
       data_ = vstd[0];
       return *this;
     }
@@ -439,7 +445,7 @@ namespace mathq {
     // ------------------------ Vector = std::array ----------------
 
     template <size_t N>
-    Type& operator=(const std::array<NumberType, N>& varray) {
+    Type& set_equal_to(const std::array<NumberType, N>& varray) {
       data_ = varray[0];
       return *this;
     }
@@ -447,7 +453,7 @@ namespace mathq {
 
     // ------------------------ Vector = std::valarray ----------------
 
-    Type& operator=(const std::valarray<Element>& varray) {
+    Type& set_equal_to(const std::valarray<Element>& varray) {
       data_ = varray[0];
       return *this;
     }

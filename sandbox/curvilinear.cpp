@@ -141,12 +141,14 @@ int main(int argc, char* argv[]) {
         Domain<double>::interval_CC(-1,1,5),
       });
     TRDISP(cart_coords3);
-    CurvilinearField<double, 1, CartesianCoords<double, 3>> A(cart_coords3);
+    ECHO_CODE(CurvilinearField<double, 1, CartesianCoords<double, 3>> A(cart_coords3));
     A = 0.;
-    A[0] = cart_coords3.z();
-    auto B = curl(A);
+    ECHO_CODE(A[0] = cart_coords3.z());
+    ECHO_CODE(auto B = curl(A));
     TRDISP(B);
-    B = nabla ^ A;
+    OUTPUT("=========================");
+    ECHO_CODE(B = nabla ^ A);
+    OUTPUT("=========================");
   }
 
 
@@ -160,9 +162,9 @@ int main(int argc, char* argv[]) {
       });
     TRDISP(cart_coords3);
     CurvilinearField<std::complex<double>, 1, CartesianCoords<double, 3>> A(cart_coords3);
-    auto& z = cart_coords3.z();
-    A = 0;
-    A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) };
+    ECHO_CODE(auto& z = cart_coords3.z());
+    ECHO_CODE(A = 0);
+    ECHO_CODE(A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) });
     TRDISP(A);
     // auto B = curl(A);
     // TRDISP(B);
