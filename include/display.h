@@ -852,7 +852,7 @@ namespace display {
 
 
   template <class D>
-  Style getTypeStyle(const mathq::Domain<D>& var) {
+  Style getTypeStyle(const mathq::Interval<D>& var) {
     Style style = CREATESTYLE(CYAN);
     return style;
   }

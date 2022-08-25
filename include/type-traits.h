@@ -1098,10 +1098,11 @@ namespace mathq {
   // * Domain 
   // ***************************************************************************
 
-  template <typename Num>
+  template <typename GridElement>
   class Domain;
 
-
+  template <typename GridElement> requires(IsSimpleNumber<GridElement>)
+    class Interval;
 
 
 
