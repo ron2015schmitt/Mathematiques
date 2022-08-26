@@ -72,6 +72,8 @@ namespace mathq {
     Domain<GridElement> {
     public:
 
+      constexpr static size_t number_of_dims = 1;
+
       virtual bool uniform_spaced() {
         return false;
       }
@@ -93,6 +95,39 @@ namespace mathq {
       }
       virtual Vector<GridElement>& grid() const {
         Vector<GridElement>& grid = *(new Vector<GridElement>);
+        return grid;
+      }
+  };
+
+
+  template <typename GridElement> requires(IsComplex<GridElement>::value)
+    class
+    Domain<GridElement> {
+    public:
+      using SimpleNumberType = typename SimpleNumberTrait<GridElement>::Type;
+      constexpr static size_t number_of_dims = 2;
+
+      virtual bool uniform_spaced() {
+        return false;
+      }
+      virtual bool mesh() {
+        return false;
+      }
+
+      virtual size_t num_elements() const {
+        return 0;
+      }
+      virtual size_t length() const {
+        return 0;
+      }
+      virtual size_t start() const {
+        return 0;
+      }
+      virtual size_t end() const {
+        return 0;
+      }
+      virtual Matrix<SimpleNumberType>& grid() const {
+        Matrix<SimpleNumberType>& grid = *(new Matrix<SimpleNumberType>);
         return grid;
       }
   };
@@ -336,90 +371,81 @@ namespace mathq {
     public:
       using Type = PointSequence<GridElement>;
       using ParentType = Domain<GridElement>;
-
-      size_t N;
-      GridElement a;
-      GridElement b;
-      bool include_a;
-      bool include_b;
+      using GridType = Vector<GridElement>;
 
       bool uniform_spaced() {
-        return true;
+        return false;
       }
       bool mesh() {
         return false;
       }
 
 
-      PointSequence() noexcept :
-        a(-std::numeric_limits<GridElement>::infinity()), b(std::numeric_limits<GridElement>::infinity()), N(0), include_a(true), include_b(true) {
-        verify();
+      const GridType grid_data;
+
+      PointSequence() : grid_data(*(new GridType())) {
       }
 
-      PointSequence(const GridElement& a, const GridElement& b, const size_t N, const bool include_a = true, const bool include_b = true) noexcept :
-        a(a), b(b), N(N), include_a(include_a), include_b(include_b) {
-        verify();
+      PointSequence(const GridType& grid_in) : grid_data(grid_in) {
       }
+
+      PointSequence(const Type& ps) : grid_data(ps.grid()) {
+      }
+
+      // PointSequence() noexcept :
+      //   a(-std::numeric_limits<GridElement>::infinity()), b(std::numeric_limits<GridElement>::infinity()), N(0), include_a(true), include_b(true) {
+      //   verify();
+      // }
+
+      // PointSequence(const GridElement& a, const GridElement& b, const size_t N, const bool include_a = true, const bool include_b = true) noexcept :
+      //   a(a), b(b), N(N), include_a(include_a), include_b(include_b) {
+      //   verify();
+      // }
 
       // note that copy constructor works but not operator= (hence we don;t define one)
-      PointSequence(const Type& x) noexcept :
-        a(x.a), b(x.b), N(x.N), include_a(x.include_a), include_b(x.include_b) {
-        verify();
-      }
+      // PointSequence(const Type& x) noexcept :
+      //   a(x.a), b(x.b), N(x.N), include_a(x.include_a), include_b(x.include_b) {
+      //   verify();
+      // }
 
       ~PointSequence() {
       }
 
       size_t num_elements() const {
-        if (N == 0) return 0;
-        return N +  size_t(!include_a) + size_t(!include_b);
+        return grid_data.size();
       }
       size_t length() const {
-        return b-a;
+        return end()-start();
       }
       size_t start() const {
-        return a;
+        return grid_data[0];
       }
       size_t end() const {
-        return b;
+        return grid_data[num_elements()-1];
       }
 
 
       void verify() const {
-        if (b < a) {
+        // TODO: check all points and sort if needed
+        if (length() < 0) {
           // TODO: issue error
-          OUTPUT("ERROR: b must be greate than a");
-          MDISP(a, b);
+          OUTPUT("ERROR: points must be ordered");
+          TRDISP(*this);
         }
       }
 
 
-      Vector<GridElement>& grid() const {
-        Vector<GridElement>& grid = *(new Vector<GridElement>);
-        if (N == 0) return grid;
-
-        size_t Neff = num_elements();
-        grid.resize(Neff);
-        GridElement step = (b - a)/static_cast<GridElement>(Neff-1);
-        GridElement start = (include_a) ? a : a + step;
-
-        for (size_t c = 0; c<(N-1); c++) {
-          grid[c] = start + static_cast<GridElement>(c)*step;
-        }
-        if (include_b) {
-          grid[N-1] = b;
-        }
-        else {
-          grid[N-1] = b - step;
-        }
-
-        return grid;
+      GridType& grid() const {
+        GridType& grid_copy = *(new GridType(grid_data));
+        return grid_copy;
       }
 
+
+      // TODO: need to use non-euiqspaced derivative
 
       template <typename TargetElement, size_t... sizes>
       Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
-        f.deriv(a, b, n, nabla.Nwindow, periodic);
+        // f.deriv(grid_data, n, nabla.Nwindow, periodic);
         return f;
       }
 
@@ -452,23 +478,7 @@ namespace mathq {
 
       inline friend std::ostream& operator<<(std::ostream& stream, const PointSequence& var) {
         using namespace display;
-        if (var.include_a) {
-          stream << "[";
-        }
-        else {
-          stream << "(";
-        }
-        dispval_strm(stream, var.a);
-        stream << ", ";
-        dispval_strm(stream, var.b);
-        if (var.include_a) {
-          stream << "]";
-        }
-        else {
-          stream << ")";
-        }
-        stream << ", N=";
-        dispval_strm(stream, var.N);
+        dispval_strm(stream, var.grid_data);
         return stream;
       }
 
