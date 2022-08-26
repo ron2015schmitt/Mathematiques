@@ -6,7 +6,7 @@ namespace mathq {
 
 
 
-  template <class GridElement, size_t Ndims>
+  template <class GridElement, size_t Ndims, bool TimeCoord>
   class CartesianCoords;
   template <class GridElement>
   class PolarCoords;
@@ -132,10 +132,11 @@ namespace mathq {
         verify();
       }
 
-      // Interval(const Type& x) noexcept :
-      //   a(x.a), b(x.b), N(x.N), include_a(x.include_a), include_b(x.include_b) {
-      //   verify();
-      // }
+      // note that copy constructor works but not operator= (hence we don;t define one)
+      Interval(const Type& x) noexcept :
+        a(x.a), b(x.b), N(x.N), include_a(x.include_a), include_b(x.include_b) {
+        verify();
+      }
 
       ~Interval() {
       }
@@ -319,6 +320,160 @@ namespace mathq {
       }
 
   };
+
+
+
+
+  //
+  // PointSequence
+  //
+  // construct from:
+  // 1. A defined interval, a&b, but in log space. stored as a sequence of points
+  // 2. A sequence of aribitrary points given in a vector
+  template <typename GridElement> requires(IsSimpleNumber<GridElement>)
+    class
+    PointSequence : public Domain<GridElement> {
+    public:
+      using Type = PointSequence<GridElement>;
+      using ParentType = Domain<GridElement>;
+
+      size_t N;
+      GridElement a;
+      GridElement b;
+      bool include_a;
+      bool include_b;
+
+      bool uniform_spaced() {
+        return true;
+      }
+      bool mesh() {
+        return false;
+      }
+
+
+      PointSequence() noexcept :
+        a(-std::numeric_limits<GridElement>::infinity()), b(std::numeric_limits<GridElement>::infinity()), N(0), include_a(true), include_b(true) {
+        verify();
+      }
+
+      PointSequence(const GridElement& a, const GridElement& b, const size_t N, const bool include_a = true, const bool include_b = true) noexcept :
+        a(a), b(b), N(N), include_a(include_a), include_b(include_b) {
+        verify();
+      }
+
+      // note that copy constructor works but not operator= (hence we don;t define one)
+      PointSequence(const Type& x) noexcept :
+        a(x.a), b(x.b), N(x.N), include_a(x.include_a), include_b(x.include_b) {
+        verify();
+      }
+
+      ~PointSequence() {
+      }
+
+      size_t num_elements() const {
+        if (N == 0) return 0;
+        return N +  size_t(!include_a) + size_t(!include_b);
+      }
+      size_t length() const {
+        return b-a;
+      }
+      size_t start() const {
+        return a;
+      }
+      size_t end() const {
+        return b;
+      }
+
+
+      void verify() const {
+        if (b < a) {
+          // TODO: issue error
+          OUTPUT("ERROR: b must be greate than a");
+          MDISP(a, b);
+        }
+      }
+
+
+      Vector<GridElement>& grid() const {
+        Vector<GridElement>& grid = *(new Vector<GridElement>);
+        if (N == 0) return grid;
+
+        size_t Neff = num_elements();
+        grid.resize(Neff);
+        GridElement step = (b - a)/static_cast<GridElement>(Neff-1);
+        GridElement start = (include_a) ? a : a + step;
+
+        for (size_t c = 0; c<(N-1); c++) {
+          grid[c] = start + static_cast<GridElement>(c)*step;
+        }
+        if (include_b) {
+          grid[N-1] = b;
+        }
+        else {
+          grid[N-1] = b - step;
+        }
+
+        return grid;
+      }
+
+
+      template <typename TargetElement, size_t... sizes>
+      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
+        f.deriv(a, b, n, nabla.Nwindow, periodic);
+        return f;
+      }
+
+
+      //------------------------------------------------------------------------------------
+      //
+      // static "factory" methods
+      //
+      //------------------------------------------------------------------------------------
+
+      // [a,b]
+      inline static PointSequence<GridElement> c_interval_c(const GridElement& a, const GridElement& b, const size_t N) {
+        return PointSequence<GridElement>(a, b, N, true, true);
+      }
+
+      inline std::string classname() const {
+        return ClassName();
+      }
+
+      static inline std::string ClassName() {
+        using namespace display;
+        std::string s = "PointSequence";
+        s += StyledString::get(ANGLE1).get();
+        GridElement d;
+        s += getTypeName(d);
+        s += StyledString::get(ANGLE2).get();
+        return s;
+      }
+
+
+      inline friend std::ostream& operator<<(std::ostream& stream, const PointSequence& var) {
+        using namespace display;
+        if (var.include_a) {
+          stream << "[";
+        }
+        else {
+          stream << "(";
+        }
+        dispval_strm(stream, var.a);
+        stream << ", ";
+        dispval_strm(stream, var.b);
+        if (var.include_a) {
+          stream << "]";
+        }
+        else {
+          stream << ")";
+        }
+        stream << ", N=";
+        dispval_strm(stream, var.N);
+        return stream;
+      }
+
+  };
+
 
 
 
@@ -599,6 +754,156 @@ namespace mathq {
   // };
 
 
+  //
+  // Region
+  //
+  template <typename GridElement> requires(IsComplex<GridElement>::value)
+    class
+    Region : public Domain<GridElement> {
+    public:
+      using Type = Region<GridElement>;
+      using ParentType = Domain<GridElement>;
+
+      size_t N;
+      GridElement a;
+      GridElement b;
+      bool include_a;
+      bool include_b;
+
+      bool uniform_spaced() {
+        return true;
+      }
+      bool mesh() {
+        return false;
+      }
+
+
+      Region() noexcept :
+        a(-std::numeric_limits<GridElement>::infinity()), b(std::numeric_limits<GridElement>::infinity()), N(0), include_a(true), include_b(true) {
+        verify();
+      }
+
+      Region(const GridElement& a, const GridElement& b, const size_t N, const bool include_a = true, const bool include_b = true) noexcept :
+        a(a), b(b), N(N), include_a(include_a), include_b(include_b) {
+        verify();
+      }
+
+      // note that copy constructor works but not operator= (hence we don;t define one)
+      Region(const Type& x) noexcept :
+        a(x.a), b(x.b), N(x.N), include_a(x.include_a), include_b(x.include_b) {
+        verify();
+      }
+
+      ~Region() {
+      }
+
+      size_t num_elements() const {
+        if (N == 0) return 0;
+        return N +  size_t(!include_a) + size_t(!include_b);
+      }
+      size_t length() const {
+        return b-a;
+      }
+      size_t start() const {
+        return a;
+      }
+      size_t end() const {
+        return b;
+      }
+
+
+      void verify() const {
+        if (b < a) {
+          // TODO: issue error
+          OUTPUT("ERROR: b must be greate than a");
+          MDISP(a, b);
+        }
+      }
+
+
+      Vector<GridElement>& grid() const {
+        Vector<GridElement>& grid = *(new Vector<GridElement>);
+        if (N == 0) return grid;
+
+        size_t Neff = num_elements();
+        grid.resize(Neff);
+        GridElement step = (b - a)/static_cast<GridElement>(Neff-1);
+        GridElement start = (include_a) ? a : a + step;
+
+        for (size_t c = 0; c<(N-1); c++) {
+          grid[c] = start + static_cast<GridElement>(c)*step;
+        }
+        if (include_b) {
+          grid[N-1] = b;
+        }
+        else {
+          grid[N-1] = b - step;
+        }
+
+        return grid;
+      }
+
+
+      template <typename TargetElement, size_t... sizes>
+      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
+        f.deriv(a, b, n, nabla.Nwindow, periodic);
+        return f;
+      }
+
+
+      //------------------------------------------------------------------------------------
+      //
+      // static "factory" methods
+      //
+      //------------------------------------------------------------------------------------
+
+      // [a,b]
+      inline static Region<GridElement> c_interval_c(const GridElement& a, const GridElement& b, const size_t N) {
+        return Region<GridElement>(a, b, N, true, true);
+      }
+      inline static Region<GridElement> interval(const GridElement& a, const GridElement& b, const size_t N) {
+        return c_interval_c(a, b, N);
+      }
+
+      inline std::string classname() const {
+        return ClassName();
+      }
+
+      static inline std::string ClassName() {
+        using namespace display;
+        std::string s = "Region";
+        s += StyledString::get(ANGLE1).get();
+        GridElement d;
+        s += getTypeName(d);
+        s += StyledString::get(ANGLE2).get();
+        return s;
+      }
+
+
+      inline friend std::ostream& operator<<(std::ostream& stream, const Region& var) {
+        using namespace display;
+        if (var.include_a) {
+          stream << "[";
+        }
+        else {
+          stream << "(";
+        }
+        dispval_strm(stream, var.a);
+        stream << ", ";
+        dispval_strm(stream, var.b);
+        if (var.include_a) {
+          stream << "]";
+        }
+        else {
+          stream << ")";
+        }
+        stream << ", N=";
+        dispval_strm(stream, var.N);
+        return stream;
+      }
+
+  };
+
 
 
 
@@ -608,25 +913,27 @@ namespace mathq {
   // * CurvilinearCoords 
   // ***************************************************************************
 
-  template <typename GridElement, size_t Ndims, class Derived, size_t... dim_ints>
+  template <typename GridElement, size_t Ndims, bool TimeCoord, class Derived, size_t... dim_ints>
   class
-    CurvilinearCoords : public Vector< CoordGrid<GridElement, Ndims, dim_ints...>, Ndims > {
+    CurvilinearCoords : public Vector< CoordGrid<GridElement, Ndims+size_t(TimeCoord), dim_ints...>, Ndims+size_t(TimeCoord) > {
     // CurvilinearCoords : public Vector< double, Ndims > {
     // CurvilinearCoords : public CoordGrid<GridElement, Ndims, dim_ints...> {
   public:
     static constexpr size_t Ndims_value = Ndims;
-    constexpr static std::array<size_t, Ndims_value> static_grid_dims_array = { dim_ints... };
+    static constexpr bool TimeCoord_value = TimeCoord;
+    static constexpr size_t total_num_dims = Ndims + size_t(TimeCoord);
+    constexpr static std::array<size_t, total_num_dims> static_grid_dims_array = { dim_ints... };
     constexpr static bool is_dynamic_value = (sizeof...(dim_ints) == 0);
 
-    using Type = CurvilinearCoords<GridElement, Ndims, Derived, dim_ints...>;
-    using ElementType = CoordGrid<GridElement, Ndims, dim_ints...>;
+    using Type = CurvilinearCoords<GridElement, Ndims, TimeCoord, Derived, dim_ints...>;
+    using ElementType = CoordGrid<GridElement, total_num_dims, dim_ints...>;
     using NumberType = GridElement;
     using SimpleNumberType = typename SimpleNumberTrait<GridElement>::Type;
     using DomainType = Interval<GridElement>;
     using GridType = ElementType;
 
-    using ParentType = Vector< ElementType, Ndims >;
-    using ConcreteType = Vector< MultiArray<GridElement, Ndims, dim_ints...>, Ndims >;
+    using ParentType = Vector< ElementType, total_num_dims >;
+    using ConcreteType = Vector< MultiArray<GridElement, total_num_dims, dim_ints...>, total_num_dims >;
     using DerivedType = Derived;
 
     using DimensionsType = Dimensions;
@@ -641,7 +948,7 @@ namespace mathq {
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
 
-    std::array<DomainType, Ndims> domains;
+    std::array<DomainType, total_num_dims> domains;
 
     CurvilinearCoords() : ParentType() {
       setup_vector_indices();
@@ -666,17 +973,17 @@ namespace mathq {
     }
 
     size_t ndims(void) const {
-      return Ndims;
+      return total_num_dims;
     }
 
     Dimensions& grid_dims(void) const {
-      if constexpr (Ndims > 0) {
+      if constexpr (total_num_dims > 0) {
         return coord(0).dims();
       }
     }
 
     Type& grids_resize(const Dimensions& dims) {
-      for (size_t c = 0; c < Ndims; c++) {
+      for (size_t c = 0; c < total_num_dims; c++) {
         coord(c).resize(dims);
       }
       return *this;
@@ -684,7 +991,7 @@ namespace mathq {
 
 
     Type& setup_vector_indices(void) {
-      for (size_t c = 0; c < Ndims; c++) {
+      for (size_t c = 0; c < total_num_dims; c++) {
         (*this)[c].vector_index = c;
       }
       return *this;
@@ -700,7 +1007,7 @@ namespace mathq {
     CurvilinearCoords& operator=(const std::initializer_list<DomainType>& mylist) {
       size_t i = 0;
       typename std::initializer_list<DomainType>::iterator it;
-      Dimensions dims(Ndims);
+      Dimensions dims(total_num_dims);
       for (it = mylist.begin(); it != mylist.end(); ++it, i++) {
         DomainType& domain = domains[i];
         domain = *it;
@@ -709,7 +1016,7 @@ namespace mathq {
       if constexpr (is_dynamic_value) {
         grids_resize(dims);
       }
-      for (size_t c = 0; c < Ndims; c++) {
+      for (size_t c = 0; c < total_num_dims; c++) {
         auto vec = domains[c].grid();
         coord(c) = vec;
       }
@@ -720,11 +1027,11 @@ namespace mathq {
       if constexpr (is_dynamic_value) {
         grids_resize(coords.grid_dims());
       }
-      for (size_t c = 0; c < Ndims; c++) {
+      for (size_t c = 0; c < total_num_dims; c++) {
         DomainType domain = coords.domains[c];
         domains[c] = domain;
       }
-      for (size_t c = 0; c < Ndims; c++) {
+      for (size_t c = 0; c < total_num_dims; c++) {
         coord(c) = domains[c].grid();
       }
       return *this;
@@ -746,6 +1053,9 @@ namespace mathq {
       s += StyledString::get(COMMA).get();
       s += "Ndims=";
       s += num2string(Ndims);
+      s += StyledString::get(COMMA).get();
+      s += "TimeCoord=";
+      s += num2string(TimeCoord);
       s += StyledString::get(ANGLE2).get();
       return s;
     }
@@ -822,16 +1132,21 @@ namespace mathq {
   // * CartesianCoords<GridElement, Ndims>
   // ***************************************************************************
 
+// TODO: need a way include optinal time coordinate, perhaps template bool
 
 
-  template <class GridElement, size_t Ndims>
-  class CartesianCoords : public CurvilinearCoords<GridElement, Ndims, CartesianCoords<GridElement, Ndims>> {
+  template <class GridElement, size_t Ndims, bool TimeCoord>
+  class CartesianCoords : public CurvilinearCoords<GridElement, Ndims, TimeCoord, CartesianCoords<GridElement, Ndims, TimeCoord>> {
   public:
-    using Type = CartesianCoords<GridElement, Ndims>;
-    using ParentType = CurvilinearCoords<GridElement, Ndims, Type>;
+    using Type = CartesianCoords<GridElement, Ndims, TimeCoord>;
+    using ParentType = CurvilinearCoords<GridElement, Ndims, TimeCoord, Type>;
     class Point;  // sub class
 
     constexpr static bool isNotAbstract = true;
+    static constexpr size_t Ndims_value = Ndims;
+    static constexpr bool TimeCoord_value = TimeCoord;
+    static constexpr size_t total_num_dims = Ndims + size_t(TimeCoord);
+    constexpr static bool is_dynamic_value = ParentType::is_dynamic_value;
 
     // template<size_t TEMP = Ndims>
     // static EnableMethodIf<TEMP==2, CartesianCoords<GridElement, Ndims>> fromPolar(const GridElement& r, const GridElement& phi) {
@@ -858,10 +1173,10 @@ namespace mathq {
 
 
     // coordinates at a grid point
-    template <typename... U> requires ((ParentType::is_dynamic_value) && (std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == Ndims))
+    template <typename... U> requires ((ParentType::is_dynamic_value) && (std::conjunction<std::is_integral<U>...>::value) && (sizeof...(U) == total_num_dims))
       Point& at(const U... args) {
       Point& vec = *(new Point);
-      for (size_t c = 0; c < Ndims; c++) {
+      for (size_t c = 0; c < total_num_dims; c++) {
         typename ParentType::GridType& grid = ParentType::coord(c);
         vec[c] = grid(args...);
       }
@@ -925,6 +1240,9 @@ namespace mathq {
     ParentType::GridType& z()  requires ((Ndims >= 3) && (Ndims <= 3)) {
       return ParentType::coord(2);
     }
+    ParentType::GridType& t()  requires (TimeCoord) {
+      return ParentType::coord(Ndims_value);
+    }
 
     // "read only"
     const ParentType::GridType& x() const requires ((Ndims >= 1) && (Ndims <= 3)) {
@@ -935,6 +1253,9 @@ namespace mathq {
     }
     const ParentType::GridType& z() const requires ((Ndims >= 3) && (Ndims <= 3)) {
       return ParentType::coord(2);
+    }
+    const ParentType::GridType& t() const requires (TimeCoord) {
+      return ParentType::coord(Ndims_value);
     }
 
     //**********************************************************************
@@ -953,7 +1274,7 @@ namespace mathq {
 
       Dimensions grid_dims = ParentType::grid_dims();
 
-      using MyGridType = MultiArray<typename T::NumberType, Ndims>;
+      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
       MyGridType& mygrid = *(new MyGridType);
       if constexpr (mygrid.is_dynamic_value) {
         mygrid.resize(grid_dims);
@@ -1039,7 +1360,7 @@ namespace mathq {
     auto& curl(const T& f, const Nabla<>& nabla = Nabla<>()) const
       requires
     (
-      (IsReadableExpressionOrArray<T>) && (T::rank_value == 1)
+      (IsReadableExpressionOrArray<T>) && (T::rank_value == 1) && (Ndims == 3)
       ) {
 
       using MyGridType = MultiArray<typename T::NumberType, Ndims>;
@@ -1087,6 +1408,16 @@ namespace mathq {
       return pd(f, 2, nabla);
     }
 
+    //
+    // df/dt - for convenience
+    //
+
+    template <class T>
+    auto& pdt(const T& f, const Nabla<>& nabla = Nabla<>()) const
+      requires ((IsGridlike<T>) && (TimeCoord)) {
+      return pd(f, Ndims, nabla);
+    }
+
 
     //**********************************************************************
     //************************** Text and debugging ************************
@@ -1108,14 +1439,16 @@ namespace mathq {
       s += getTypeName(d);
       s += StyledString::get(COMMA).get();
       s += std::to_string(Ndims);
+      s += StyledString::get(COMMA).get();
+      s += std::to_string(TimeCoord);
       s += StyledString::get(ANGLE2).get();
       return s;
     }
 
 
-    inline friend std::ostream& operator<<(std::ostream& stream, const CartesianCoords<GridElement, Ndims>& var) {
+    inline friend std::ostream& operator<<(std::ostream& stream, const CartesianCoords<GridElement, Ndims, TimeCoord>& var) {
       stream << "(";
-      for (size_t c = 0; c < Ndims; c++) {
+      for (size_t c = 0; c < total_num_dims; c++) {
         if (c>0) stream << ", ";
         stream << var.name(c);
         stream << "=";
@@ -1126,12 +1459,12 @@ namespace mathq {
     }
 
 
-    std::array<std::string, Ndims>& names() const {
+    std::array<std::string, total_num_dims>& names() const {
       return Names();
     }
-    static inline std::array<std::string, Ndims>& Names() {
-      std::array<std::string, Ndims> names;
-      for (size_t c = 0; c < Ndims; c++) {
+    static inline std::array<std::string, total_num_dims>& Names() {
+      std::array<std::string, total_num_dims> names;
+      for (size_t c = 0; c < total_num_dims; c++) {
         names[c] = name(c);
       }
       return names;
@@ -1143,9 +1476,15 @@ namespace mathq {
 
     const static inline std::string& Name(size_t n) {
       std::string& s = *(new std::string());
-      if (n >= Ndims) {
+      if (n >= total_num_dims) {
         // TODO: error 
         s += "bad coord";
+      }
+      if constexpr (TimeCoord) {
+        if (n == Ndims) {
+          s += "t";
+          return s;
+        }
       }
       if constexpr (Ndims == 1) {
         s += "x";
@@ -1475,8 +1814,8 @@ namespace mathq {
 
   // template <typename GridElement, size_t Ndims, class Derived, size_t... dim_ints>
 
-  template <typename T, typename GridElement, size_t Ndims>
-  bool curvilinear_coords_test(CurvilinearCoords<GridElement, Ndims, T>& x) {
+  template <typename T, typename GridElement, size_t Ndims, bool TimeCoord>
+  bool curvilinear_coords_test(CurvilinearCoords<GridElement, Ndims, TimeCoord, T>& x) {
     return true;
   }
 
@@ -1494,12 +1833,12 @@ namespace mathq {
 
   template <typename TargetElement, size_t target_rank, IsCurvilinear Coords>
   class
-    CurvilinearField : public MultiArray< MultiArray<TargetElement, Coords::Ndims_value>, target_rank > {
+    CurvilinearField : public MultiArray< MultiArray<TargetElement, Coords::total_num_dims>, target_rank > {
   public:
     static constexpr size_t rank_value = target_rank;
     constexpr static bool is_dynamic_value = true;
 
-    using ParentType = MultiArray< MultiArray<TargetElement, Coords::Ndims_value>, target_rank >;
+    using ParentType = MultiArray< MultiArray<TargetElement, Coords::total_num_dims>, target_rank >;
     using GridElement = TargetElement;
     using CoordGridType = Coords::NumberType;
     using Type = CurvilinearField<TargetElement, target_rank, Coords>;
@@ -1512,7 +1851,7 @@ namespace mathq {
 
     CurvilinearField(const Coords& coords) : coordinates(coords) {
       Dimensions d(rank_value);
-      d = Coords::Ndims_value;
+      d = Coords::total_num_dims;
       if constexpr (rank_value > 0) {
         ParentType::resize(d);
       }
@@ -1877,8 +2216,8 @@ namespace mathq {
   //
 
 
-  template <typename GridElement, size_t Ndims, typename TargetElement = GridElement>
-  using MathFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims>>;
+  template <typename GridElement, size_t Ndims, bool TimeCoord, typename TargetElement = GridElement>
+  using MathFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims, TimeCoord>>;
 
   //
   // grad(f) - for scalar f

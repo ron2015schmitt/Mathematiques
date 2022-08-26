@@ -57,9 +57,9 @@ int main(int argc, char* argv[]) {
   cout << std::endl;
 
 
-  CurvilinearCoords<double, 2, NullType> tcoords;
+  CurvilinearCoords<double, 2, false, NullType> tcoords;
 
-  TRDISP(SimpleNumberTrait< CurvilinearCoords<double, 2, NullType> >::Type());
+  TRDISP(SimpleNumberTrait< CurvilinearCoords<double, 2, false, NullType> >::Type());
 
   TRDISP(SimpleNumberTrait< Vector<double> >::Type());
   TRDISP(SimpleNumberTrait< MultiArray<double, 3, 2, 3, 4> >::Type());
@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
   TRDISP(IsReadableExpressionOrArray<Vector<int> >);
   TRDISP(IsReadableExpressionOrArray<MultiArray_RepeatVector<double, 3, 2, 3, 4> >);
   TRDISP(IsReadableExpressionOrArray<std::vector<double> >);
-  TRDISP(IsReadableExpressionOrArray< CurvilinearCoords<double, 2, NullType> >);
+  TRDISP(IsReadableExpressionOrArray< CurvilinearCoords<double, 2, false, NullType> >);
   ECHO_CODE(Vector<double> v);
   TRDISP(IsReadableExpressionOrArray<decltype(v)>);
   TRDISP(IsWritableExpressionOrArray<decltype(v)>);
@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
   TRDISP(mystery5);
 
 
-  ECHO_CODE(MultiArrayType<CurvilinearCoords<double, 2, NullType>> mystery6);
+  ECHO_CODE(MultiArrayType<CurvilinearCoords<double, 2, false, NullType>> mystery6);
   TRDISP(mystery6);
 
   // test expressions

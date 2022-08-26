@@ -28,14 +28,14 @@ int main(int argc, char* argv[]) {
 
 
 
-  CurvilinearCoords<double, 2, NullType> tcoords;
+  CurvilinearCoords<double, 2, false, NullType> tcoords;
   TRDISP(tcoords[0]);
   TRDISP(tcoords[1]);
 
-  CartesianCoords<double, 2> cart_coords2a;
+  CartesianCoords<double, 2, false> cart_coords2a;
   TRDISP(cart_coords2a);
 
-  CartesianCoords<double, 2> cart_coords2b({
+  CartesianCoords<double, 2, false> cart_coords2b({
       Interval<double>::interval(-1,1,5),
       Interval<double>::interval(2,3,3),
     });
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
   TRDISP(cart_coords2b[0]);
   TRDISP(cart_coords2b[1]);
 
-  ECHO_CODE(CartesianCoords<double, 2> cart_coords2c(cart_coords2b));
+  ECHO_CODE(CartesianCoords<double, 2, false> cart_coords2c(cart_coords2b));
   TRDISP(cart_coords2c);
 
   TRDISP(cart_coords2c[0]);
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
   TRDISP(cart_coords2c.y());
 
   TRDISP(curvilinear_coords_test(cart_coords2c));
-  CurvilinearField<double, 0, CartesianCoords<double, 2>> field0(cart_coords2c);
+  CurvilinearField<double, 0, CartesianCoords<double, 2, false>> field0(cart_coords2c);
   // CurvilinearField<double, 0> field0(cart_coords2c);
   auto& x = cart_coords2c.x();
   auto& y = cart_coords2c.y();
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
   {
     using namespace cross_product;
 
-    CartesianCoords<double, 3> cart_coords3({
+    CartesianCoords<double, 3, false> cart_coords3({
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
@@ -140,13 +140,13 @@ int main(int argc, char* argv[]) {
 
   {
     using namespace cross_product;
-    CartesianCoords<double, 3> cart_coords3({
+    CartesianCoords<double, 3, false> cart_coords3({
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
       });
     TRDISP(cart_coords3);
-    ECHO_CODE(CurvilinearField<double, 1, CartesianCoords<double, 3>> A(cart_coords3));
+    ECHO_CODE(CurvilinearField<double, 1, CartesianCoords<double, 3, false>> A(cart_coords3));
     A = 0.;
     ECHO_CODE(A[0] = cart_coords3.z());
     ECHO_CODE(auto B = curl(A));
@@ -160,13 +160,13 @@ int main(int argc, char* argv[]) {
   {
     using namespace cross_product;
     using mathq::unit_imaginary::i;
-    CartesianCoords<double, 3> cart_coords3({
+    CartesianCoords<double, 3, false> cart_coords3({
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
       });
     TRDISP(cart_coords3);
-    CurvilinearField<std::complex<double>, 1, CartesianCoords<double, 3>> A(cart_coords3);
+    CurvilinearField<std::complex<double>, 1, CartesianCoords<double, 3, false>> A(cart_coords3);
     ECHO_CODE(auto& z = cart_coords3.z());
     ECHO_CODE(A = 0);
     ECHO_CODE(A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) });
