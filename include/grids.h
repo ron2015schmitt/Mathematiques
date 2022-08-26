@@ -72,6 +72,13 @@ namespace mathq {
     Domain<GridElement> {
     public:
 
+      virtual bool uniform_spaced() {
+        return false;
+      }
+      virtual bool mesh() {
+        return false;
+      }
+
       virtual size_t num_elements() const {
         return 0;
       }
@@ -106,6 +113,14 @@ namespace mathq {
       GridElement b;
       bool include_a;
       bool include_b;
+
+      bool uniform_spaced() {
+        return true;
+      }
+      bool mesh() {
+        return false;
+      }
+
 
       Interval() noexcept :
         a(-std::numeric_limits<GridElement>::infinity()), b(std::numeric_limits<GridElement>::infinity()), N(0), include_a(true), include_b(true) {
@@ -169,6 +184,13 @@ namespace mathq {
         }
 
         return grid;
+      }
+
+
+      template <typename TargetElement, size_t... sizes>
+      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
+        f.deriv(a, b, n, nabla.Nwindow, periodic);
+        return f;
       }
 
 
@@ -952,7 +974,7 @@ namespace mathq {
       for (size_t k = 0; k < sz; k++) {
         // TRDISP(inds);
         auto vec = get_vector(f, c, inds);
-        vec.deriv(domain.start(), domain.end(), 1, nabla.Nwindow);
+        domain.deriv(vec, 1, nabla, false);
         set_vector(mygrid, c, inds, vec);
         inds.increment_over(grid_dims, c);  // this will skip over index c
       }
