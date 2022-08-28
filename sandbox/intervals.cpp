@@ -146,6 +146,12 @@ int main(int argc, char* argv[]) {
 
     TRDISP(func2({ x,p }));
 
+    TRDISP(IsInterval<decltype(x)>);
+    TRDISP(IsInterval<decltype(p)>);
+
+    TRDISP(IsPointSequence<decltype(x)>);
+    TRDISP(IsPointSequence<decltype(p)>);
+
   }
 
 

@@ -4,14 +4,13 @@
 
 namespace mathq {
 
+  template <typename GridElement> requires(IsSimpleNumber<GridElement>)
+    class
+    Interval;
 
-  // ***************************************************************************
-  //  IsDomain<T>
-  //
-  // ***************************************************************************
 
   template <typename GridElement>
-  bool is_interval_test(Interval<GridElement>& x) {
+  bool is_interval_test(Interval<GridElement> x) {
     return true;
   }
 
@@ -19,6 +18,45 @@ namespace mathq {
   concept IsInterval = requires(T x) {
     is_interval_test(x);
   };
+
+  template <typename GridElement> requires(IsSimpleNumber<GridElement>)
+    class
+    PointSequence;
+
+  template <typename GridElement>
+  bool is_point_sequence_test(PointSequence<GridElement> x) {
+    return true;
+  }
+
+  template <class T>
+  concept IsPointSequence = requires(T x) {
+    is_point_sequence_test(x);
+  };
+
+
+  template <typename GridElement> requires(IsComplex<GridElement>::value)
+    class
+    Region;
+
+
+  template <typename GridElement>
+  bool is_region_test(Region<GridElement> x) {
+    return true;
+  }
+
+  template <class T>
+  concept IsRegion = requires(T x) {
+    is_region_test(x);
+  };
+
+
+
+
+
+  template <class T>
+  concept IsDomain = IsInterval<T> || IsPointSequence<T> || IsRegion<T>;
+
+
 
 
   template <typename GridElement, size_t Ndims, bool TimeCoord, class Derived, size_t... dim_ints>
