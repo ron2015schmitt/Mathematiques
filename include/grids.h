@@ -5,6 +5,21 @@
 namespace mathq {
 
 
+  // ***************************************************************************
+  //  IsDomain<T>
+  //
+  // ***************************************************************************
+
+  template <typename GridElement>
+  bool is_domain_test(Domain<GridElement>& x) {
+    return true;
+  }
+
+  template <class T>
+  concept IsDomain = requires(T x) {
+    is_domain_test(x);
+  };
+
 
   template <typename GridElement, size_t Ndims, bool TimeCoord, class Derived, size_t... dim_ints>
   class CurvilinearCoords;
@@ -133,6 +148,28 @@ namespace mathq {
         Vector<GridElement>& grid = *(new Vector<GridElement>);
         return grid;
       }
+
+
+      virtual inline std::string classname() const {
+        return *(new std::string);
+      }
+
+      static inline std::string ClassName() {
+        using namespace display;
+        std::string s = "Domain";
+        s += StyledString::get(ANGLE1).get();
+        GridElement d;
+        s += getTypeName(d);
+        s += StyledString::get(ANGLE2).get();
+        return s;
+      }
+
+
+      inline friend std::ostream& operator<<(std::ostream& stream, const Domain& var) {
+        using namespace display;
+        return stream;
+      }
+
   };
 
 
@@ -166,6 +203,7 @@ namespace mathq {
         Matrix<SimpleNumberType>& grid = *(new Matrix<SimpleNumberType>);
         return grid;
       }
+
   };
 
 
@@ -1003,7 +1041,10 @@ namespace mathq {
       setup_vector_indices();
     }
 
-    CurvilinearCoords(const std::initializer_list<DomainType>& mylist) : ParentType() {
+    // template <typename T> requires (IsDomain<T>)
+    CurvilinearCoords(const std::initializer_list<Interval<GridElement>>& mylist) : ParentType() {
+      // TRDISP(mylist);
+      // return;
       setup_vector_indices();
       *this = mylist;
     }
@@ -1203,7 +1244,7 @@ namespace mathq {
   // * CartesianCoords<GridElement, Ndims>
   // ***************************************************************************
 
-// TODO: need a way include optinal time coordinate, perhaps template bool
+  // TODO: need a way include optinal time coordinate, perhaps template bool
 
 
   template <class GridElement, size_t Ndims, bool TimeCoord>
