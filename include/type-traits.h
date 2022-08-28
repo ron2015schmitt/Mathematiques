@@ -272,10 +272,10 @@ namespace mathq {
 
   template <class T>
   concept IsMultiArray = requires(T x) {
-    T::isNotExpression;
+    std::remove_cvref_t<T>::isNotExpression;
       requires (IsWritableExpressionOrArray<T>);
-      requires std::is_same_v<bool const, decltype(T::isNotExpression)>;
-      requires (T::isNotExpression == true);
+      requires std::is_same_v<bool const, decltype(std::remove_cvref_t<T>::isNotExpression)>;
+      requires (std::remove_cvref_t<T>::isNotExpression == true);
   };
 
   // ***************************************************************************
@@ -287,17 +287,18 @@ namespace mathq {
 
   template <class X>
   concept HasStaticSizes = requires(X x) {
-    X::static_dims_array;
+    std::remove_cvref_t<X>::static_dims_array;
   };
 
 
   // ***************************************************************************
   //  IsGridlike<T>
   //
+  // TODO: is this a good def?
   // ***************************************************************************
 
   template <class T>
-  concept IsGridlike = IsMultiArray<T> && (T::depth_value == 1);
+  concept IsGridlike = IsMultiArray<T> && (std::remove_cvref_t<T>::depth_value == 1);
 
 
   // ***************************************************************************

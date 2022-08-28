@@ -6,10 +6,46 @@ namespace mathq {
 
 
 
+  template <typename GridElement, size_t Ndims, bool TimeCoord, class Derived, size_t... dim_ints>
+  class CurvilinearCoords;
+
   template <class GridElement, size_t Ndims, bool TimeCoord>
   class CartesianCoords;
   template <class GridElement>
   class PolarCoords;
+
+
+  // ***************************************************************************
+  //  HasTimeCoord<T>
+  //
+  // For CurvilinearCoords 
+  // ***************************************************************************
+
+  template <typename GridElement, size_t Ndims, class Derived, size_t... dim_ints>
+  bool has_time_coord_test(const CurvilinearCoords<GridElement, Ndims, true, Derived, dim_ints...>& x) {
+    return true;
+  }
+
+  template <class T>
+  concept HasTimeCoord = requires(T x) {
+    has_time_coord_test(x);
+  };
+
+  // ***************************************************************************
+  //  HasNotTimeCoord<T>
+  //
+  // For CurvilinearCoords 
+  // ***************************************************************************
+
+  template <typename GridElement, size_t Ndims, class Derived, size_t... dim_ints>
+  bool has_not_time_coord_test(const CurvilinearCoords<GridElement, Ndims, false, Derived, dim_ints...>& x) {
+    return true;
+  }
+
+  template <class T>
+  concept HasNotTimeCoord = requires(T x) {
+    has_not_time_coord_test(x);
+  };
 
 
   // ***************************************************************************
@@ -942,6 +978,9 @@ namespace mathq {
     using DomainType = Interval<GridElement>;
     using GridType = ElementType;
 
+    using TypeWithTime = CurvilinearCoords<GridElement, Ndims, true, Derived, dim_ints...>;
+    using TypeWithoutTime = CurvilinearCoords<GridElement, Ndims, false, Derived, dim_ints...>;
+
     using ParentType = Vector< ElementType, total_num_dims >;
     using ConcreteType = Vector< MultiArray<GridElement, total_num_dims, dim_ints...>, total_num_dims >;
     using DerivedType = Derived;
@@ -972,6 +1011,27 @@ namespace mathq {
     CurvilinearCoords(const CurvilinearCoords& coords) : ParentType() {
       setup_vector_indices();
       *this = coords;
+    }
+
+
+    // Copy constructor: (coords w/o time) -> (coords with time)
+    template <typename T>
+    CurvilinearCoords(const T& coords, DomainType& time_domain)
+      requires (HasNotTimeCoord<T>&& TimeCoord) : ParentType() {
+      setup_vector_indices();
+      std::list<DomainType> mylist(begin(coords.domains), end(coords.domains));
+      mylist.push_back(time_domain); // add time domain
+      *this = mylist;
+    }
+
+    // Copy constructor: (coords with time) -> (coords w/o time)
+    template <typename T>
+    CurvilinearCoords(const T& coords)
+      requires (HasTimeCoord<T> && !TimeCoord) : ParentType() {
+      setup_vector_indices();
+      std::list<DomainType> mylist(begin(coords.domains), end(coords.domains));
+      mylist.pop_back(); // remove time domain
+      *this = mylist;
     }
 
 
@@ -1037,11 +1097,11 @@ namespace mathq {
       if constexpr (is_dynamic_value) {
         grids_resize(coords.grid_dims());
       }
-      for (size_t c = 0; c < total_num_dims; c++) {
+      for (size_t c = 0; c < coords.total_num_dims; c++) {
         DomainType domain = coords.domains[c];
         domains[c] = domain;
       }
-      for (size_t c = 0; c < total_num_dims; c++) {
+      for (size_t c = 0; c < coords.total_num_dims; c++) {
         coord(c) = domains[c].grid();
       }
       return *this;
@@ -1075,7 +1135,7 @@ namespace mathq {
       stream << "{\n";
       for (size_t g = 0; g < var.size(); g++) {
         if (g > 0)
-          stream << ", \n";
+          stream << "; \n";
         stream << "  ";
         display::dispval_strm(stream, var[g]);
       }
@@ -1094,10 +1154,11 @@ namespace mathq {
   // TODO: convert to slice expression
   // ***************************************************************************
   template <typename T>
-  auto& get_vector(const T& x, const size_t n, const Indices& inds_) {
+  auto& get_vector(const T& x_in, const size_t n, const Indices& inds_) {
     using ElementType = typename T::ElementType;
+    // TRDISP(x_in);
     const size_t rank = T::rank_value;
-    const Dimensions dims = x.dims();
+    const Dimensions dims = x_in.dims();
     const size_t N = dims[n];
     Vector<ElementType>& v = *(new Vector<ElementType>);
     v.resize(N);
@@ -1107,7 +1168,7 @@ namespace mathq {
       inds[n] = i;
       // TRDISP(inds);
       // TRDISP(x[inds]);
-      v[i] = x[inds];
+      v[i] = x_in[inds];
     }
     return v;
   }
@@ -1149,6 +1210,9 @@ namespace mathq {
   class CartesianCoords : public CurvilinearCoords<GridElement, Ndims, TimeCoord, CartesianCoords<GridElement, Ndims, TimeCoord>> {
   public:
     using Type = CartesianCoords<GridElement, Ndims, TimeCoord>;
+    using TypeWithTime = CartesianCoords<GridElement, Ndims, true>;
+    using TypeWithoutTime = CartesianCoords<GridElement, Ndims, false>;
+
     using ParentType = CurvilinearCoords<GridElement, Ndims, TimeCoord, Type>;
     class Point;  // sub class
 
@@ -1179,6 +1243,7 @@ namespace mathq {
 
     explicit CartesianCoords(const Type& obj) : ParentType(obj) {
     }
+
 
 
 
@@ -1270,12 +1335,16 @@ namespace mathq {
 
     //**********************************************************************
     //                    Derivatives
+    //  These all except bare grids, not CurvilinearFields.
+    //
+    // You need to use the stand alone functions and nabla operators for 
+    // CurvilinearFields
     //**********************************************************************
 
     //
-    // df/dc 
+    // df/dx_c 
     //     - partial derivative - with respect to coordinate c  (zero-referenced)
-    //     - f is a grid
+    //     - f is a single grid
     //
 
     template <class T>
@@ -1283,27 +1352,24 @@ namespace mathq {
       requires (IsGridlike<T>) {
 
       Dimensions grid_dims = ParentType::grid_dims();
-
+      // TRDISP(grid_dims);
       using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
       MyGridType& mygrid = *(new MyGridType);
       if constexpr (mygrid.is_dynamic_value) {
         mygrid.resize(grid_dims);
       }
-
-      // compute size of grid without cth dimension: grid_dims.num_elements()/grid_dims[c] 
       size_t sz = 1;
-      for (size_t k = 0; k < Ndims; k++) {
+      for (size_t k = 0; k < total_num_dims; k++) {
         if (k != c) {
           sz *= grid_dims[k];
         }
       }
 
-      // for loop throgh each index, skipping coordinate c
+      // for loop throgh each index, skipping coordinate c, which is grabbed as a vector taken
       Interval<GridElement> domain = ParentType::domains[c];
-      Indices inds(Ndims);
+      Indices inds(total_num_dims);
       inds = 0;
       for (size_t k = 0; k < sz; k++) {
-        // TRDISP(inds);
         auto vec = get_vector(f, c, inds);
         domain.deriv(vec, 1, nabla, false);
         set_vector(mygrid, c, inds, vec);
@@ -1321,7 +1387,7 @@ namespace mathq {
     auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const
       requires (IsGridlike<T>) {
 
-      using MyGridType = MultiArray<typename T::NumberType, Ndims>;
+      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
       constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
 
       using ResultType = MultiArrayHelper< MyGridType, result_dims >;
@@ -1333,20 +1399,15 @@ namespace mathq {
       return result;
     }
 
-
-
     //
     // div(f) - f is a vector
     //
 
     template <class T>
     auto& div(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires
-    (
-      (IsReadableExpressionOrArray<T>) && (T::rank_value == 1)
-      ) {
+      requires ((IsReadableExpressionOrArray<T>) && (T::rank_value == 1)) {
 
-      using MyGridType = MultiArray<typename T::NumberType, Ndims>;
+      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
       MyGridType& result = *(new MyGridType);
       if constexpr (result.is_dynamic_value) {
         Dimensions grid_dims = ParentType::grid_dims();
@@ -1368,12 +1429,9 @@ namespace mathq {
 
     template <class T>
     auto& curl(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires
-    (
-      (IsReadableExpressionOrArray<T>) && (T::rank_value == 1) && (Ndims == 3)
-      ) {
+      requires ((IsReadableExpressionOrArray<T>) && (T::rank_value == 1) && (Ndims == 3)) {
 
-      using MyGridType = MultiArray<typename T::NumberType, Ndims>;
+      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
       constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
 
       using ResultType = MultiArrayHelper< MyGridType, result_dims >;
@@ -1394,7 +1452,7 @@ namespace mathq {
 
     template <class T>
     auto& pdx(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((IsGridlike<T>) && (Ndims >= 1) && (Ndims <= 3)) {
+      requires ((Ndims >= 1) && (Ndims <= 3)) {
       return pd(f, 0, nabla);
     }
 
@@ -1404,7 +1462,7 @@ namespace mathq {
 
     template <class T>
     auto& pdy(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((IsGridlike<T>) && (Ndims >= 2) && (Ndims <= 3)) {
+      requires ((Ndims >= 2) && (Ndims <= 3)) {
       return pd(f, 1, nabla);
     }
 
@@ -1414,7 +1472,7 @@ namespace mathq {
 
     template <class T>
     auto& pdz(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((IsGridlike<T>) && (Ndims >= 3) && (Ndims <= 3)) {
+      requires ((Ndims >= 3) && (Ndims <= 3)) {
       return pd(f, 2, nabla);
     }
 
@@ -1424,7 +1482,7 @@ namespace mathq {
 
     template <class T>
     auto& pdt(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((IsGridlike<T>) && (TimeCoord)) {
+      requires (TimeCoord) {
       return pd(f, Ndims, nabla);
     }
 
@@ -1448,9 +1506,11 @@ namespace mathq {
       GridElement d;
       s += getTypeName(d);
       s += StyledString::get(COMMA).get();
-      s += std::to_string(Ndims);
+      s += "Ndims=";
+      s += num2string(Ndims);
       s += StyledString::get(COMMA).get();
-      s += std::to_string(TimeCoord);
+      s += "TimeCoord=";
+      s += TimeCoord ? "true" : "false";
       s += StyledString::get(ANGLE2).get();
       return s;
     }
@@ -1459,7 +1519,7 @@ namespace mathq {
     inline friend std::ostream& operator<<(std::ostream& stream, const CartesianCoords<GridElement, Ndims, TimeCoord>& var) {
       stream << "(";
       for (size_t c = 0; c < total_num_dims; c++) {
-        if (c>0) stream << ", ";
+        if (c>0) stream << "; ";
         stream << var.name(c);
         stream << "=";
         stream << var.domains[c];
@@ -1595,7 +1655,7 @@ namespace mathq {
     // }
 
 
-    class Point : public Vector<GridElement, Ndims> {
+    class Point : public Vector<GridElement, total_num_dims> {
     public:
       // instance classname() method 
 
@@ -1607,13 +1667,7 @@ namespace mathq {
 
       static inline std::string ClassName() {
         using namespace display;
-        std::string s = "CartesianCoords";
-        s += StyledString::get(ANGLE1).get();
-        GridElement d;
-        s += getTypeName(d);
-        s += StyledString::get(COMMA).get();
-        s += std::to_string(Ndims);
-        s += StyledString::get(ANGLE2).get();
+        std::string s = CartesianCoords::ClassName();
         s += "::Point";
         return s;
       }
@@ -1621,7 +1675,7 @@ namespace mathq {
 
       inline friend std::ostream& operator<<(std::ostream& stream, const Type::Point& var) {
         stream << "(";
-        for (size_t c = 0; c < Ndims; c++) {
+        for (size_t c = 0; c < total_num_dims; c++) {
           if (c>0) stream << ", ";
           stream << Type::Name(c);
           stream << "=";
@@ -1852,6 +1906,11 @@ namespace mathq {
     using GridElement = TargetElement;
     using CoordGridType = Coords::NumberType;
     using Type = CurvilinearField<TargetElement, target_rank, Coords>;
+    using CoordsWithoutTime = typename Coords::TypeWithoutTime;
+    using TypeWithoutTime = CurvilinearField<TargetElement, target_rank, CoordsWithoutTime>;
+
+    template <size_t new_rank>
+    using ReplaceRankType = CurvilinearField<TargetElement, new_rank, Coords>;
 
     using ParentType::operator=;
     using ParentType::resize;  // needed to find overloaded funcs
@@ -1901,6 +1960,12 @@ namespace mathq {
     // "read only"
     const Coords& coords() const {
       return coordinates;
+    }
+
+    bool at_time(const size_t t_i) const
+      requires (Coords::TimeCoord_value) {
+      // TypeWithoutTime& field = *(new TypeWithoutTime)
+      return true;
     }
 
 
@@ -2234,7 +2299,7 @@ namespace mathq {
   //
 
   template <typename TargetElement, IsCurvilinear Coords>
-  CurvilinearField<TargetElement, 1, Coords> grad(const CurvilinearField<TargetElement, 0, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
+  auto& grad(const CurvilinearField<TargetElement, 0, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
 
     Coords const& coords = f.coords();
     CurvilinearField<TargetElement, 1, Coords>& g = *(new CurvilinearField<TargetElement, 1, Coords>(coords));
