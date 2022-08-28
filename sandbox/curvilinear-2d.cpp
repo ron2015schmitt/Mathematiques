@@ -51,8 +51,6 @@ int main(int argc, char* argv[]) {
     ECHO_CODE(Interval<double> dom1 = Interval<double>::interval(0, 10, 11));
     TRDISP(dom1);
     TRDISP(dom1.grid());
-    ECHO_CODE(Domain<double>&dom2 = dom1);
-    TRDISP(dom2.grid());
   }
 
   {

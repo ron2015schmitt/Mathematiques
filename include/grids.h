@@ -11,13 +11,13 @@ namespace mathq {
   // ***************************************************************************
 
   template <typename GridElement>
-  bool is_domain_test(Domain<GridElement>& x) {
+  bool is_interval_test(Interval<GridElement>& x) {
     return true;
   }
 
   template <class T>
-  concept IsDomain = requires(T x) {
-    is_domain_test(x);
+  concept IsInterval = requires(T x) {
+    is_interval_test(x);
   };
 
 
@@ -106,105 +106,6 @@ namespace mathq {
 
 
 
-  //
-  // Interval<GridElement>
-  //
-
-  template <typename GridElement>
-  class
-    Domain {
-  public:
-
-  };
-
-
-  template <typename GridElement> requires(IsSimpleNumber<GridElement>)
-    class
-    Domain<GridElement> {
-    public:
-
-      constexpr static size_t number_of_dims = 1;
-
-      virtual bool uniform_spaced() {
-        return false;
-      }
-      virtual bool mesh() {
-        return false;
-      }
-
-      virtual size_t num_elements() const {
-        return 0;
-      }
-      virtual size_t length() const {
-        return 0;
-      }
-      virtual size_t start() const {
-        return 0;
-      }
-      virtual size_t end() const {
-        return 0;
-      }
-      virtual Vector<GridElement>& grid() const {
-        Vector<GridElement>& grid = *(new Vector<GridElement>);
-        return grid;
-      }
-
-
-      virtual inline std::string classname() const {
-        return *(new std::string);
-      }
-
-      static inline std::string ClassName() {
-        using namespace display;
-        std::string s = "Domain";
-        s += StyledString::get(ANGLE1).get();
-        GridElement d;
-        s += getTypeName(d);
-        s += StyledString::get(ANGLE2).get();
-        return s;
-      }
-
-
-      inline friend std::ostream& operator<<(std::ostream& stream, const Domain& var) {
-        using namespace display;
-        return stream;
-      }
-
-  };
-
-
-  template <typename GridElement> requires(IsComplex<GridElement>::value)
-    class
-    Domain<GridElement> {
-    public:
-      using SimpleNumberType = typename SimpleNumberTrait<GridElement>::Type;
-      constexpr static size_t number_of_dims = 2;
-
-      virtual bool uniform_spaced() {
-        return false;
-      }
-      virtual bool mesh() {
-        return false;
-      }
-
-      virtual size_t num_elements() const {
-        return 0;
-      }
-      virtual size_t length() const {
-        return 0;
-      }
-      virtual size_t start() const {
-        return 0;
-      }
-      virtual size_t end() const {
-        return 0;
-      }
-      virtual Matrix<SimpleNumberType>& grid() const {
-        Matrix<SimpleNumberType>& grid = *(new Matrix<SimpleNumberType>);
-        return grid;
-      }
-
-  };
 
 
   //
@@ -212,10 +113,9 @@ namespace mathq {
   //
   template <typename GridElement> requires(IsSimpleNumber<GridElement>)
     class
-    Interval : public Domain<GridElement> {
+    Interval {
     public:
       using Type = Interval<GridElement>;
-      using ParentType = Domain<GridElement>;
 
       size_t N;
       GridElement a;
@@ -441,10 +341,9 @@ namespace mathq {
   // 2. A sequence of aribitrary points given in a vector
   template <typename GridElement> requires(IsSimpleNumber<GridElement>)
     class
-    PointSequence : public Domain<GridElement> {
+    PointSequence {
     public:
       using Type = PointSequence<GridElement>;
-      using ParentType = Domain<GridElement>;
       using GridType = Vector<GridElement>;
 
       bool uniform_spaced() {
@@ -846,10 +745,9 @@ namespace mathq {
   //
   template <typename GridElement> requires(IsComplex<GridElement>::value)
     class
-    Region : public Domain<GridElement> {
+    Region {
     public:
       using Type = Region<GridElement>;
-      using ParentType = Domain<GridElement>;
 
       size_t N;
       GridElement a;
