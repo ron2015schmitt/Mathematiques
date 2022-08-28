@@ -455,7 +455,7 @@ namespace mathq {
       }
 
 
-      const GridType grid_data;
+      GridType grid_data;
 
       PointSequence() : grid_data(*(new GridType())) {
       }
@@ -523,6 +523,9 @@ namespace mathq {
         return f;
       }
 
+      // Type& operator=(const Type& x) {
+      //   return *this;
+      // }
 
       //------------------------------------------------------------------------------------
       //
