@@ -181,22 +181,19 @@ namespace mathq {
 
       GridType& grid() const {
         GridType& grid = *(new GridType);
+        grid.resize(N);
+
         if (N == 0) return grid;
 
-        size_t Neff = num_elements();
-        grid.resize(Neff);
+        GridElement Neff = N + size_t(!include_a) + size_t(!include_b);
         GridElement step = (b - a)/static_cast<GridElement>(Neff-1);
         GridElement start = (include_a) ? a : a + step;
+        GridElement end = (include_b) ? b : b - step;
 
         for (size_t c = 0; c<(N-1); c++) {
           grid[c] = start + static_cast<GridElement>(c)*step;
         }
-        if (include_b) {
-          grid[N-1] = b;
-        }
-        else {
-          grid[N-1] = b - step;
-        }
+        grid[N-1] = end;
 
         return grid;
       }
@@ -204,7 +201,13 @@ namespace mathq {
 
       template <typename TargetElement, size_t... sizes>
       Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const GridElement periodic = 0) const {
-        f.deriv(a, b, n, nabla.Nwindow, (periodic != 0));
+
+        GridElement Neff = N + size_t(!include_a) + size_t(!include_b);
+        GridElement step = (b - a)/static_cast<GridElement>(Neff-1);
+        GridElement start = (include_a) ? a : a + step;
+        GridElement end = (include_b) ? b : b - step;
+
+        f.deriv(start, end, n, nabla.Nwindow, (periodic != 0));
         return f;
       }
 
@@ -563,23 +566,20 @@ namespace mathq {
       // [a,b]
 
       inline static Type log10(const GridElement& a, const GridElement& b, const size_t N, const bool include_a = true, const bool include_b = true) {
-        GridType grid;
+        GridType grid(N);
         if (N == 0) return grid;
 
         GridElement Neff = N + size_t(!include_a) + size_t(!include_b);
         GridElement log_a = std::log10(a);
         GridElement log_b = std::log10(b);
         GridElement step = (log_b - log_a)/static_cast<GridElement>(Neff-1);
-
         GridElement start = include_a ? log_a : log_a + step;
+        GridElement end = (include_b) ? b : std::pow(10, log_b - step);
 
         for (size_t c = 0; c<(N-1); c++) {
           grid[c] = std::pow(10, start + static_cast<GridElement>(c)*step);
         }
-
-        grid[N-1] = include_b ? b : std::pow(10, log_b - step);
-
-        return grid;
+        grid[N-1] = end;
 
         return *(new PointSequence<GridElement>(grid));
       }
@@ -610,283 +610,6 @@ namespace mathq {
   };
 
 
-
-
-  // //
-  // // LogInterval
-  // //
-  // template <typename GridElement> requires(IsSimpleNumber<GridElement>)
-  //   class
-  //   LogInterval : public Interval<GridElement> {
-
-  //   public:
-  //     using Type = Interval<GridElement>;
-  //     size_t N;
-  //     GridElement a;
-  //     GridElement b;
-  //     bool include_a;
-  //     bool include_b;
-  //     GridScaleEnum scale;
-
-  //     // dependent variables
-  //     // move to private
-
-  //     GridElement log_a;
-  //     GridElement log_b;
-  //     size_t Neff;
-  //     GridElement start;
-  //     GridElement step;
-  //     mathq::GridType grid;
-
-  //     Interval() noexcept {
-  //       include_a = true;
-  //       a = -std::numeric_limits<GridElement>::infinity();
-  //       include_b = true;
-  //       b = std::numeric_limits<GridElement>::infinity();
-  //       N = 0;
-  //       scale = GridScale::LINEAR;
-  //       this->init();
-  //     }
-  //     Interval(const GridElement& a, const GridElement& b, const size_t N, const bool include_a = true, const bool include_b = true) noexcept :
-  //       a(a), b(b), N(N), scale(scale), include_a(include_a), include_b(include_b) {
-  //       refreshGrid();
-  //     }
-  //     ~Interval() {
-  //     }
-
-  //     void grid() override const {
-  //       return mathq::GridType;
-  //     }
-
-  //     mathq::GridType& coord() {
-  //       refreshGrid();
-  //       return grid;
-  //     }
-  //     mathq::GridType& refreshGrid() {
-  //       grid.resize(N);
-  //       init();
-  //       if (scale == GridScale::LOG) {
-  //         return makeGrid_Log();
-  //       }
-  //       else {
-  //         return makeGrid_Linear();
-  //       }
-  //     }
-
-  //     size_t size() const {
-  //       return grid.size();
-  //     }
-
-  //   private:
-  //     Interval& init() {
-  //       Neff = N +  size_t(!include_a) + size_t(!include_b);
-  //       if (scale == GridScale::LOG) {
-  //         log_a = std::log10(a);
-  //         log_b = std::log10(b);
-  //         step = (log_b - log_a)/static_cast<GridElement>(Neff-1);
-  //         if (include_a) {
-  //           start = log_a;
-  //         }
-  //         else {
-  //           start = log_a + step;
-  //         }
-  //       }
-  //       else {
-  //         step = (b - a)/static_cast<GridElement>(Neff-1);
-  //         if (include_a) {
-  //           start = a;
-  //         }
-  //         else {
-  //           start = a + step;
-  //         }
-  //       }
-  //       return *this;
-  //     }
-
-  //     mathq::GridType& makeGrid_Linear() {
-  //       if (N == 0) return grid;
-
-  //       for (size_t c = 0; c<(N-1); c++) {
-  //         grid[c] = start + static_cast<GridElement>(c)*step;
-  //       }
-  //       if (include_b) {
-  //         grid[N-1] = b;
-  //       }
-  //       else {
-  //         grid[N-1] = b - step;
-  //       }
-  //       return grid;
-  //     }
-
-  //     mathq::GridType& makeGrid_Log() {
-  //       if (N == 0) return grid;
-
-  //       for (size_t c = 0; c<(N-1); c++) {
-  //         grid[c] = std::pow(10, start + static_cast<GridElement>(c)*step);
-  //       }
-  //       if (include_b) {
-  //         grid[N-1] = b;
-  //       }
-  //       else {
-  //         grid[N-1] = std::pow(10, log_b - step);
-  //       }
-  //       return grid;
-  //     }
-  //   public:
-
-
-  //     //------------------------------------------------------------------------------------
-  //     //
-  //     // static "factory" methods
-  //     //
-  //     //------------------------------------------------------------------------------------
-
-  //     static Interval<GridElement> emptySet() {
-  //       return Interval<GridElement>(0, 0, 0, GridScale::LINEAR, false, false);
-  //     }
-
-  //     static Interval<GridElement> point(const GridElement& p) {
-  //       return Interval<GridElement>(p, p, 1, GridScale::LINEAR, true, true);
-  //     }
-
-  //     // [a,b]
-  //     inline static Interval<GridElement> c_interval_c(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-  //       return Interval<GridElement>(a, b, N, scale, true, true);
-  //     }
-  //     inline static Interval<GridElement> interval(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-  //       return c_interval_c(a, b, N, scale);
-  //     }
-
-  //     // (a,b]
-  //     static Interval<GridElement> o_interval_c(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-  //       return Interval<GridElement>(a, b, N, scale, false, true);
-  //     }
-
-  //     // [a,b)
-  //     static Interval<GridElement> c_interval_o(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-  //       return Interval<GridElement>(a, b, N, scale, true, false);
-  //     }
-
-  //     // (a,b)
-  //     static Interval<GridElement> o_interval_o(const GridElement& a, const GridElement& b, const size_t N, const GridScaleEnum& scale = GridScale::LINEAR) {
-  //       return Interval<GridElement>(a, b, N, scale, false, false);
-  //     }
-
-
-
-  //     static Interval<GridElement> realLine(const bool include_a = true, const bool include_b = true) {
-  //       GridElement a;
-  //       if (include_a) {
-  //         a = -std::numeric_limits<GridElement>::infinity();
-  //       }
-  //       else {
-  //         a = std::numeric_limits<GridElement>::lowest();
-  //       }
-  //       GridElement b;
-  //       if (include_b) {
-  //         b = std::numeric_limits<GridElement>::infinity();
-  //       }
-  //       else {
-  //         b = std::numeric_limits<GridElement>::max();
-  //       }
-  //       return Interval<GridElement>(a, b, 0, scale, include_a, include_b);
-  //     }
-
-  //     static Interval<GridElement> realLineNeg(const bool include_a = true, const bool include_b = true) {
-  //       GridElement a;
-  //       if (include_a) {
-  //         a = -std::numeric_limits<GridElement>::infinity();
-  //       }
-  //       else {
-  //         a = std::numeric_limits<GridElement>::lowest();
-  //       }
-  //       GridElement b;
-  //       if (include_b) {
-  //         b = 0;
-  //       }
-  //       else {
-  //         b = -std::numeric_limits<GridElement>::min();
-  //       }
-  //       return Interval<GridElement>(a, b, 0, scale, include_a, include_b);
-  //     }
-
-  //     static Interval<GridElement> realLinePos(const bool include_a = true, const bool include_b = true) {
-  //       GridElement a;
-  //       if (include_a) {
-  //         a = 0;
-  //       }
-  //       else {
-  //         a = std::numeric_limits<GridElement>::min();
-  //       }
-  //       GridElement b;
-  //       if (include_b) {
-  //         b = std::numeric_limits<GridElement>::infinity();
-  //       }
-  //       else {
-  //         b = std::numeric_limits<GridElement>::max();
-  //       }
-  //       return Interval<GridElement>(a, b, 0, include_a, include_b);
-  //     }
-
-
-
-  //     inline std::string classname() const {
-  //       return ClassName();
-  //     }
-
-  //     static inline std::string ClassName() {
-  //       using namespace display;
-  //       std::string s = "Interval";
-  //       s += StyledString::get(ANGLE1).get();
-  //       GridElement d;
-  //       s += getTypeName(d);
-  //       s += StyledString::get(ANGLE2).get();
-  //       return s;
-  //     }
-
-
-  //     inline friend std::ostream& operator<<(std::ostream& stream, const Interval& var) {
-  //       using namespace display;
-  //       if (var.a == var.b) {
-  //         // point
-  //         stream << "{point=";
-  //         dispval_strm(stream, var.a);
-  //         // stream << ", gridState=";
-  //         // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-  //         stream << "}";
-  //       }
-  //       else {
-  //         stream << "{";
-  //         stream << "interval=";
-  //         if (var.include_a) {
-  //           stream << "[";
-  //         }
-  //         else {
-  //           stream << "(";
-  //         }
-  //         dispval_strm(stream, var.a);
-  //         stream << ", ";
-  //         dispval_strm(stream, var.b);
-  //         if (var.include_a) {
-  //           stream << "]";
-  //         }
-  //         else {
-  //           stream << ")";
-  //         }
-  //         stream << ", N=";
-  //         dispval_strm(stream, var.N);
-
-  //         stream << ", scale=";
-  //         dispval_strm(stream, var.scale);
-
-  //         // stream << ", gridState=";
-  //         // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-  //         stream << "}";
-  //       }
-  //       return stream;
-  //     }
-
-  // };
 
 
   //
@@ -953,23 +676,6 @@ namespace mathq {
 
       GridType& grid() const {
         GridType& grid = *(new GridType);
-        if (N == 0) return grid;
-
-        size_t Neff = num_elements();
-        grid.resize(Neff);
-        GridElement step = (b - a)/static_cast<GridElement>(Neff-1);
-        GridElement start = (include_a) ? a : a + step;
-
-        for (size_t c = 0; c<(N-1); c++) {
-          grid[c] = start + static_cast<GridElement>(c)*step;
-        }
-        if (include_b) {
-          grid[N-1] = b;
-        }
-        else {
-          grid[N-1] = b - step;
-        }
-
         return grid;
       }
 
@@ -980,20 +686,6 @@ namespace mathq {
         return f;
       }
 
-
-      //------------------------------------------------------------------------------------
-      //
-      // static "factory" methods
-      //
-      //------------------------------------------------------------------------------------
-
-      // [a,b]
-      inline static Region<GridElement> c_interval_c(const GridElement& a, const GridElement& b, const size_t N) {
-        return Region<GridElement>(a, b, N, true, true);
-      }
-      inline static Region<GridElement> interval(const GridElement& a, const GridElement& b, const size_t N) {
-        return c_interval_c(a, b, N);
-      }
 
       inline std::string classname() const {
         return ClassName();
@@ -1031,6 +723,19 @@ namespace mathq {
         dispval_strm(stream, var.N);
         return stream;
       }
+
+      //------------------------------------------------------------------------------------
+      //
+      // static "factory" methods
+      //
+      //------------------------------------------------------------------------------------
+
+      // [a,b]
+      inline static Region<GridElement> interval(const GridElement& a, const GridElement& b, const size_t N) {
+        return c_interval_c(a, b, N);
+      }
+
+
 
   };
 

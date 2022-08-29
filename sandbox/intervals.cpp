@@ -69,8 +69,30 @@ int main(int argc, char* argv[]) {
 
 
   {
-    title("Interval - real uniform");
-    ECHO_CODE(Interval<double> dom1 = Interval<double>::interval(0, 10, 11));
+    title("Interval - [0,1]");
+    ECHO_CODE(Interval<double> dom1 = Interval<double>::interval(0, 1, 11));
+    TRDISP(dom1);
+    TRDISP(dom1.grid());
+  }
+
+
+  {
+    title("Interval - (0,1]");
+    ECHO_CODE(Interval<double> dom1 = Interval<double>::o_interval_c(0, 1, 10));
+    TRDISP(dom1);
+    TRDISP(dom1.grid());
+  }
+
+  {
+    title("Interval - [0,1)");
+    ECHO_CODE(Interval<double> dom1 = Interval<double>::c_interval_o(0, 1, 10));
+    TRDISP(dom1);
+    TRDISP(dom1.grid());
+  }
+
+  {
+    title("Interval - (0,1)");
+    ECHO_CODE(Interval<double> dom1 = Interval<double>::o_interval_o(0, 1, 9));
     TRDISP(dom1);
     TRDISP(dom1.grid());
   }
@@ -81,6 +103,16 @@ int main(int argc, char* argv[]) {
     TRDISP(dom1);
     TRDISP(dom1.grid());
   }
+
+  {
+    title("Log10 - [1,10]");
+    ECHO_CODE(PointSequence<double> dom1 = PointSequence<double>::log10(1, 10, 11));
+    TRDISP(dom1);
+    TRDISP(dom1.grid());
+  }
+
+
+
 
 
   {
