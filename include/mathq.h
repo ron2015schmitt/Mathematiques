@@ -97,7 +97,10 @@
 // #include "array4-constant.h"
 // #include "array4-repeat-vec.h"
 
-#include "grids.h"
+#include "nabla.h"
+#include "domains.h"
+#include "curvilinear-coords.h"
+#include "curvilinear-fields.h"
 
 #include "expressions-r.h"
 #include "expressions-rw.h"
