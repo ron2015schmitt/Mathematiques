@@ -245,12 +245,13 @@ namespace mathq {
       }
       for (size_t c = 0; c < total_num_dims; c++) {
         DomainWrapper<GridElement> domain = domains[c];
-        GridType vec;
+        Vector<GridElement> vec;
         std::visit([&vec](auto&& arg) {
           TRDISP(arg);
           vec = arg.grid();
           }, domain);
-        // coord(c) = vec;
+        TRDISP(vec);
+        coord(c) = vec;
       }
       return *this;
     }
