@@ -124,7 +124,7 @@ namespace mathq {
     CurvilinearCoords(const std::initializer_list<DomainWrapper<GridElement>>& mylist) : ParentType() {
       // OUTPUT("initializer_list<DomainWrapper");
       setup_vector_indices();
-      *this = std::list(mylist);
+      *this = mylist;
     }
 
     CurvilinearCoords(const CurvilinearCoords& coords) : ParentType() {
@@ -211,6 +211,12 @@ namespace mathq {
       return *this;
     }
 
+
+
+    CurvilinearCoords& operator=(const std::initializer_list<DomainWrapper<GridElement>>& mylist) {
+      *this = std::list<DomainWrapper<GridElement>>(mylist);
+      return *this;
+    }
 
     CurvilinearCoords& operator=(const std::list<DomainWrapper<GridElement>>& mylist) {
       domains.clear();
