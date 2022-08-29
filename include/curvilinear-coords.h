@@ -532,7 +532,7 @@ namespace mathq {
         size_t dim;
 
         std::visit([&vec, &nabla](auto&& arg) {
-          arg.deriv(vec, 1, nabla, false);
+          arg.deriv(vec, 1, nabla, 0);
           }, domain);
 
         set_vector(mygrid, c, inds, vec);

@@ -203,8 +203,8 @@ namespace mathq {
 
 
       template <typename TargetElement, size_t... sizes>
-      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
-        f.deriv(a, b, n, nabla.Nwindow, periodic);
+      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const GridElement periodic = 0) const {
+        f.deriv(a, b, n, nabla.Nwindow, (periodic != 0));
         return f;
       }
 
@@ -353,13 +353,15 @@ namespace mathq {
 
       constexpr static size_t num_dims = 1;
 
-
       GridType grid_data;
 
       PointSequence() : grid_data(*(new GridType())) {
       }
 
       PointSequence(const GridType& grid_in) : grid_data(grid_in) {
+      }
+
+      PointSequence(const GridType& grid_in, const GridElement& period) : grid_data(grid_in) {
       }
 
       PointSequence(const Type& ps) : grid_data(ps.grid()) {
@@ -417,7 +419,7 @@ namespace mathq {
       // TODO: need to use non-euiqspaced derivative
 
       template <typename TargetElement, size_t... sizes>
-      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
+      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const GridElement period = 0) const {
         const size_t N = f.size();
         size_t Dpts = nabla.Nwindow;
 
@@ -430,77 +432,119 @@ namespace mathq {
 
         if (Dpts > 3) {
           //TODO: error or warning
-          Dpts = 2;
+          Dpts = 3;
         }
 
 
         if (Dpts == 2) {
           TargetElement f0;
-          GridElement g0;
-          if (periodic) {
+          GridElement d0;
+          if (period != 0) {
             f0 = f[0] - f[N-1];
-            // TODO: Need to apply periodic function here
-            g0 = grid_data[0] - grid_data[N-1];
+            d0 = grid_data[0] + (period - grid_data[N-1]);
           }
           else {
             f0 = f[1] - f[0];
-            g0 = grid_data[1] - grid_data[0];
+            d0 = grid_data[1] - grid_data[0];
           }
           for (size_t i = 0; i < N-1; i++) {
             f[N-1-i] = f[N-1-i] - f[N-2-i];
           }
-          f[0] = f0/g0;
+          f[0] = f0/d0;
           for (size_t i = 1; i < N; i++) {
             f[i] = f[i]/(grid_data[i] - grid_data[i-1]);
           }
         }
-        // else if (Dpts == 3) {
-        //   Element prev;
-        //   Element curr;
-        //   Element last;
-        //   if (periodic) {
-        //     // first point
-        //     prev = f[1] - f[N-1];
-        //     // last
-        //     last = f[0] - f[N-2];
-        //   }
-        //   else {
-        //     // first point
-        //     prev = -3*f[0] + 4*f[1] - f[2];
-        //     // last
-        //     last = 3*f[N-1] - 4*f[N-2] + f[N-3];
-        //   }
+        else if (Dpts == 3) {
+          TargetElement prev;
+          TargetElement curr;
+          TargetElement last;
+          if (period != 0) {
+            // first point
+            {
+              // (-d1,0,d2)  
+              const size_t i0 = N-1;
+              const size_t i1 = 0;
+              const size_t i2 = 1;
+              const GridElement d1 = grid_data[i1] - (grid_data[i0] - period);
+              const GridElement d2 = grid_data[i2] - grid_data[i1];
+              const GridElement coef0 = -d2/(d1*d1 + d1*d2);
+              const GridElement coef1 = 1/d1-1/d2;
+              const GridElement coef2 = d1/(d2*d2 + d1*d2);
+              prev = coef0*f[i0] +coef1*f[i1] + coef2*f[i2];
+            }
+            // last
+            {
+              // (-d1,0,d2)  
+              const size_t i0 = N-2;
+              const size_t i1 = N-1;
+              const size_t i2 = 0;
+              const GridElement d1 = grid_data[i1]-grid_data[i0];
+              const GridElement d2 = (grid_data[i2] + period) - grid_data[i1];
+              const GridElement coef0 = -d2/(d1*d1 + d1*d2);
+              const GridElement coef1 = 1/d1-1/d2;
+              const GridElement coef2 = d1/(d2*d2 + d1*d2);
+              last = coef0*f[i0] +coef1*f[i1] + coef2*f[i2];
+            }
+          }
+          else {
+            // first point
+            {
+              // (0,x1,x2)
+              const GridElement x1 = grid_data[1]-grid_data[0];
+              const GridElement x2 = grid_data[2]-grid_data[0];  // NOTE: subtract 0th elemnt here
+              const GridElement coef0 = -(x1+x2)/(x1*x2);
+              const GridElement coef1 = -x2/(x1*x1-x1*x2);
+              const GridElement coef2 = -x1/(x2*x2-x1*x2);
+              prev = coef0*f[0] +coef1*f[1] + coef2*f[2];
+            }
+            // last
+            {
+              // (-x2,-x1,0)
+              const GridElement x2 = grid_data[N-1]-grid_data[N-3];
+              const GridElement x1 = grid_data[N-1]-grid_data[N-2];
+              const GridElement coef2 = sqr(x2)/(cube(x1)- cube(x2));
+              const GridElement coef1 = -sqr(x1)/(cube(x1)- cube(x2));
+              const GridElement coef0 = (x1+x2)/(sqr(x1) + x1*x2 + sqr(x2));
+              last = coef2*f[N-3] + coef1*f[N-2] + coef0*f[N-1];
+            }
+          }
 
-        //   const Element c0 = 0.5/dx;
-        //   for (size_t i = 1; i < N-1; i++) {
-        //     curr = f[i+1] - f[i-1];
-        //     f[i-1] = c0*prev;
-        //     prev = curr;
-        //   }
-        //   f[N-2] = c0*prev;
-        //   f[N-1] = c0*last;
-        // }
+          for (size_t i = 1; i < N-1; i++) {
+            // (-d1,0,d2)  
+            const GridElement d1 = grid_data[1]-grid_data[0];
+            const GridElement d2 = grid_data[2]-grid_data[1];
+            const GridElement coef0 = -d2/(d1*d1 + d1*d2);
+            const GridElement coef1 = 1/d1-1/d2;
+            const GridElement coef2 = d1/(d2*d2 + d1*d2);
+            curr = coef0*f[i-1] +coef1*f[i] + coef2*f[i+1];
+            f[i-1] = prev;
+            prev = curr;
+          }
+          f[N-2] = prev;
+          f[N-1] = last;
+        }
         else {
           //TODO: issue error
         }
         if (n>1) {
-          return deriv(f, n-1, nabla, periodic);
+          return deriv(f, n-1, nabla, period);
         }
         return f;
       }
 
 
-      static inline Vector<GridElement>& coefs(const Vector<GridElement>& grid_points) {
-        const size_t npts = grid_points.size();
-        Vector<GridElement>& coef = *(new Vector<GridElement>(npts));
-        // TODO: implement other numbers of pts
-        const GridElement d1 = grid_points[1]-grid_points[0];
-        const GridElement d2 = grid_points[2]-grid_points[1];
-        coef[0] = -d2/(d1*d1 + d1*d2);
-        coef[1] = 1/d1-1/d2;
-        coef[2] = d1/(d2*d2 + d1*d2);
-        return coef;
-      }
+      // static inline Vector<GridElement>& coefs(const Vector<GridElement>& grid_points) {
+      //   const size_t npts = grid_points.size();
+      //   Vector<GridElement>& coef = *(new Vector<GridElement>(npts));
+      //   // TODO: implement other numbers of pts
+      //   const GridElement d1 = grid_points[1]-grid_points[0];
+      //   const GridElement d2 = grid_points[2]-grid_points[1];
+      //   coef[0] = -d2/(d1*d1 + d1*d2);
+      //   coef[1] = 1/d1-1/d2;
+      //   coef[2] = d1/(d2*d2 + d1*d2);
+      //   return coef;
+      // }
 
       // Type& operator=(const Type& x) {
       //   return *this;

@@ -180,12 +180,12 @@ int main(int argc, char* argv[]) {
 
   }
 
-  {
-    ECHO_CODE(PointSequence<double> p = PointSequence<double>({ 33,34,35 }));
-    TRDISP(p);
-    ECHO_CODE(Vector<double> grid = Vector<double>({ 33,34,40 }));
-    TRDISP(p.coefs(grid));
-  }
+  // {
+  //   ECHO_CODE(PointSequence<double> p = PointSequence<double>({ 33,34,35 }));
+  //   TRDISP(p);
+  //   ECHO_CODE(Vector<double> grid = Vector<double>({ 33,34,40 }));
+  //   TRDISP(p.coefs(grid));
+  // }
 
   {
     ECHO_CODE(PointSequence<double> p = PointSequence<double>({ -1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1 }));
