@@ -49,16 +49,16 @@ namespace mathq {
 
 
   //
-  // Region
+  // ComplexRectangle
   //
 
   template <typename GridElement> requires(IsComplex<GridElement>::value)
     class
-    Region;
+    ComplexRectangle;
 
 
   template <typename GridElement>
-  bool is_region_test(Region<GridElement> x) {
+  bool is_region_test(ComplexRectangle<GridElement> x) {
     return true;
   }
 
@@ -613,78 +613,71 @@ namespace mathq {
 
 
   //
-  // Region
+  // ComplexRectangle
   //
   template <typename GridElement> requires(IsComplex<GridElement>::value)
     class
-    Region {
+    ComplexRectangle {
     public:
-      using Type = Region<GridElement>;
-      using GridType = Vector<GridElement>;
+      using Type = ComplexRectangle<GridElement>;
+      using GridType = MultiArray_RepeatVector<GridElement, 2>;
+      using SimpleNumberType = typename SimpleNumberTrait<GridElement>::Type;
+      using IntervalType = Interval<SimpleNumberType>;
 
       constexpr static size_t num_dims = 1;
 
-      size_t N;
-      GridElement a;
-      GridElement b;
-      bool include_a;
-      bool include_b;
+      IntervalType real_interval;
+      IntervalType imag_interval;
 
-
-      Region() noexcept :
-        a(-std::numeric_limits<GridElement>::infinity()), b(std::numeric_limits<GridElement>::infinity()), N(0), include_a(true), include_b(true) {
+      ComplexRectangle() : real_interval(IntervalType()), imag_interval(IntervalType()) {
         verify();
       }
 
-      Region(const GridElement& a, const GridElement& b, const size_t N, const bool include_a = true, const bool include_b = true) noexcept :
-        a(a), b(b), N(N), include_a(include_a), include_b(include_b) {
-        verify();
+
+      // // note that copy constructor works but not operator= (hence we don;t define one)
+      // ComplexRectangle(const Type& x) noexcept :
+      // {
+      //   verify();
+      // }
+
+      ~ComplexRectangle() {
       }
 
-      // note that copy constructor works but not operator= (hence we don;t define one)
-      Region(const Type& x) noexcept :
-        a(x.a), b(x.b), N(x.N), include_a(x.include_a), include_b(x.include_b) {
-        verify();
-      }
-
-      ~Region() {
-      }
-
-      size_t num_elements() const {
-        if (N == 0) return 0;
-        return N +  size_t(!include_a) + size_t(!include_b);
-      }
-      size_t length() const {
-        return b-a;
-      }
-      size_t start() const {
-        return a;
-      }
-      size_t end() const {
-        return b;
-      }
+      // size_t num_elements() const {
+      //   if (N == 0) return 0;
+      //   return N +  size_t(!include_a) + size_t(!include_b);
+      // }
+      // size_t length() const {
+      //   return b-a;
+      // }
+      // size_t start() const {
+      //   return a;
+      // }
+      // size_t end() const {
+      //   return b;
+      // }
 
 
       void verify() const {
-        if (b < a) {
-          // TODO: issue error
-          OUTPUT("ERROR: b must be greate than a");
-          MDISP(a, b);
-        }
+        // if (b < a) {
+        //   // TODO: issue error
+        //   OUTPUT("ERROR: b must be greate than a");
+        //   MDISP(a, b);
+        // }
       }
 
 
-      GridType& grid() const {
-        GridType& grid = *(new GridType);
-        return grid;
-      }
+      // GridType& grid() const {
+      //   GridType& grid = *(new GridType);
+      //   return grid;
+      // }
 
 
-      template <typename TargetElement, size_t... sizes>
-      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
-        f.deriv(a, b, n, nabla.Nwindow, periodic);
-        return f;
-      }
+      // template <typename TargetElement, size_t... sizes>
+      // Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
+      //   f.deriv(a, b, n, nabla.Nwindow, periodic);
+      //   return f;
+      // }
 
 
       inline std::string classname() const {
@@ -693,7 +686,7 @@ namespace mathq {
 
       static inline std::string ClassName() {
         using namespace display;
-        std::string s = "Region";
+        std::string s = "ComplexRectangle";
         s += StyledString::get(ANGLE1).get();
         GridElement d;
         s += getTypeName(d);
@@ -702,38 +695,17 @@ namespace mathq {
       }
 
 
-      inline friend std::ostream& operator<<(std::ostream& stream, const Region& var) {
+      inline friend std::ostream& operator<<(std::ostream& stream, const ComplexRectangle& x) {
         using namespace display;
-        if (var.include_a) {
-          stream << "[";
-        }
-        else {
-          stream << "(";
-        }
-        dispval_strm(stream, var.a);
-        stream << ", ";
-        dispval_strm(stream, var.b);
-        if (var.include_a) {
-          stream << "]";
-        }
-        else {
-          stream << ")";
-        }
-        stream << ", N=";
-        dispval_strm(stream, var.N);
+        stream << "( ";
+        stream << "real: ";
+        dispval_strm(stream, x.real_interval);
+        stream << "; imag: ";
+        dispval_strm(stream, x.imag_interval);
+        stream << " )";
         return stream;
       }
 
-      //------------------------------------------------------------------------------------
-      //
-      // static "factory" methods
-      //
-      //------------------------------------------------------------------------------------
-
-      // [a,b]
-      inline static Region<GridElement> interval(const GridElement& a, const GridElement& b, const size_t N) {
-        return c_interval_c(a, b, N);
-      }
 
 
 

@@ -211,6 +211,29 @@ int main(int argc, char* argv[]) {
 
   }
 
+  {
+    subtitle("CurvilinearField - Complex 1D");
+    // ECHO_CODE(CartesianCoords<std::complex<double>, 1, false> coords({
+    //     Interval<double>::interval(-1,1,5),
+    //   }));
+    // // TRDISP(coords1);
+    // // TRDISP(coords1.grid_dims());
+    // // TRDISP(coords1[0]);
+    // // TRDISP(coords1[1]);
+
+    // ECHO_CODE(MathFunction<std::complex<double>, 1, false> field0(coords));
+    // ECHO_CODE(auto& z = coords.x());
+    // ECHO_CODE(field0() = -3*x);
+    // TRDISP(field0);
+
+    // TRDISP(x);
+    // TRDISP(y);
+
+    // TRDISP(IsGridlike<decltype(x)>);
+    // TRDISP(IsMultiArray<decltype(x)>);
+    // TRDISP(IsWritableExpressionOrArray<decltype(x)>);
+    // TRDISP(x.isNotExpression);
+  }
 
 
   return 0;
