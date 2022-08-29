@@ -1033,7 +1033,11 @@ namespace mathq {
       setup_vector_indices();
     }
 
-    // CurvilinearCoords(const std::initializer_list<DomainWrapper<GridElement>>& mylist) : ParentType() {
+    CurvilinearCoords(const std::initializer_list<DomainWrapper<GridElement>>& mylist) : ParentType() {
+      setup_vector_indices();
+      *this = mylist;
+    }
+
     CurvilinearCoords(const std::initializer_list<Interval<GridElement>>& mylist) : ParentType() {
       // TRDISP(mylist);
       // return;
@@ -1125,6 +1129,27 @@ namespace mathq {
       }
       return *this;
     }
+
+    CurvilinearCoords& operator=(const std::initializer_list<DomainWrapper<GridElement>>& mylist) {
+      size_t i = 0;
+      typename std::initializer_list<DomainWrapper<GridElement>>::iterator it;
+      Dimensions dims(total_num_dims);
+      for (it = mylist.begin(); it != mylist.end(); ++it, i++) {
+        DomainWrapper<GridElement> domain = *it;
+        TRDISP(domain.index());
+        // dims[i] = domain.num_elements();
+        domains.push_back(domain);
+      }
+      if constexpr (is_dynamic_value) {
+        grids_resize(dims);
+      }
+      for (size_t c = 0; c < total_num_dims; c++) {
+        // auto vec = domains[c].grid();
+        // coord(c) = vec;
+      }
+      return *this;
+    }
+
 
     CurvilinearCoords& operator=(const CurvilinearCoords& coords) {
       if constexpr (is_dynamic_value) {
@@ -1274,7 +1299,7 @@ namespace mathq {
     CartesianCoords(const std::initializer_list<Interval<GridElement>>& mylist) : ParentType(mylist) {
     }
 
-    CartesianCoords(const std::initializer_list<mathq::DomainWrapper<GridElement>>& mylist) {
+    CartesianCoords(const std::initializer_list<mathq::DomainWrapper<GridElement>>& mylist) : ParentType(mylist) {
     }
 
     explicit CartesianCoords(const Type& obj) : ParentType(obj) {

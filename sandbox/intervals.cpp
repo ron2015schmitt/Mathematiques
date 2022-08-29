@@ -178,6 +178,7 @@ int main(int argc, char* argv[]) {
     //   }));
 
     TRDISP(coords);
+    // TRDISP(coords.domains[0].index());
     TRDISP(coords.grid_dims());
     TRDISP(coords[0]);
     TRDISP(coords[1]);
