@@ -561,9 +561,30 @@ namespace mathq {
       //------------------------------------------------------------------------------------
 
       // [a,b]
-      inline static PointSequence<GridElement> c_interval_c(const GridElement& a, const GridElement& b, const size_t N) {
-        return PointSequence<GridElement>(a, b, N, true, true);
+
+      inline static Type log10(const GridElement& a, const GridElement& b, const size_t N, const bool include_a = true, const bool include_b = true) {
+        GridType grid;
+        if (N == 0) return grid;
+
+        GridElement Neff = N + size_t(!include_a) + size_t(!include_b);
+        GridElement log_a = std::log10(a);
+        GridElement log_b = std::log10(b);
+        GridElement step = (log_b - log_a)/static_cast<GridElement>(Neff-1);
+
+        GridElement start = include_a ? log_a : log_a + step;
+
+        for (size_t c = 0; c<(N-1); c++) {
+          grid[c] = std::pow(10, start + static_cast<GridElement>(c)*step);
+        }
+
+        grid[N-1] = include_b ? b : std::pow(10, log_b - step);
+
+        return grid;
+
+        return *(new PointSequence<GridElement>(grid));
       }
+
+
 
       inline std::string classname() const {
         return ClassName();
@@ -615,7 +636,7 @@ namespace mathq {
   //     size_t Neff;
   //     GridElement start;
   //     GridElement step;
-  //     mathq::GridType grid_vector;
+  //     mathq::GridType grid;
 
   //     Interval() noexcept {
   //       include_a = true;
@@ -639,10 +660,10 @@ namespace mathq {
 
   //     mathq::GridType& coord() {
   //       refreshGrid();
-  //       return grid_vector;
+  //       return grid;
   //     }
   //     mathq::GridType& refreshGrid() {
-  //       grid_vector.resize(N);
+  //       grid.resize(N);
   //       init();
   //       if (scale == GridScale::LOG) {
   //         return makeGrid_Log();
@@ -653,7 +674,7 @@ namespace mathq {
   //     }
 
   //     size_t size() const {
-  //       return grid_vector.size();
+  //       return grid.size();
   //     }
 
   //   private:
@@ -683,33 +704,33 @@ namespace mathq {
   //     }
 
   //     mathq::GridType& makeGrid_Linear() {
-  //       if (N == 0) return grid_vector;
+  //       if (N == 0) return grid;
 
   //       for (size_t c = 0; c<(N-1); c++) {
-  //         grid_vector[c] = start + static_cast<GridElement>(c)*step;
+  //         grid[c] = start + static_cast<GridElement>(c)*step;
   //       }
   //       if (include_b) {
-  //         grid_vector[N-1] = b;
+  //         grid[N-1] = b;
   //       }
   //       else {
-  //         grid_vector[N-1] = b - step;
+  //         grid[N-1] = b - step;
   //       }
-  //       return grid_vector;
+  //       return grid;
   //     }
 
   //     mathq::GridType& makeGrid_Log() {
-  //       if (N == 0) return grid_vector;
+  //       if (N == 0) return grid;
 
   //       for (size_t c = 0; c<(N-1); c++) {
-  //         grid_vector[c] = std::pow(10, start + static_cast<GridElement>(c)*step);
+  //         grid[c] = std::pow(10, start + static_cast<GridElement>(c)*step);
   //       }
   //       if (include_b) {
-  //         grid_vector[N-1] = b;
+  //         grid[N-1] = b;
   //       }
   //       else {
-  //         grid_vector[N-1] = std::pow(10, log_b - step);
+  //         grid[N-1] = std::pow(10, log_b - step);
   //       }
-  //       return grid_vector;
+  //       return grid;
   //     }
   //   public:
 
@@ -831,7 +852,7 @@ namespace mathq {
   //         stream << "{point=";
   //         dispval_strm(stream, var.a);
   //         // stream << ", gridState=";
-  //         // dispval_strm(stream, (var.grid_vector.size() == 0) ? "deflated" : "inflated");
+  //         // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
   //         stream << "}";
   //       }
   //       else {
@@ -859,7 +880,7 @@ namespace mathq {
   //         dispval_strm(stream, var.scale);
 
   //         // stream << ", gridState=";
-  //         // dispval_strm(stream, (var.grid_vector.size() == 0) ? "deflated" : "inflated");
+  //         // dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
   //         stream << "}";
   //       }
   //       return stream;
