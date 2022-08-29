@@ -118,6 +118,7 @@ namespace mathq {
     Interval {
     public:
       using Type = Interval<GridElement>;
+      using GridType = Vector<GridElement>;
 
       constexpr static size_t num_dims = 1;
 
@@ -178,8 +179,8 @@ namespace mathq {
       }
 
 
-      Vector<GridElement>& grid() const {
-        Vector<GridElement>& grid = *(new Vector<GridElement>);
+      GridType& grid() const {
+        GridType& grid = *(new GridType);
         if (N == 0) return grid;
 
         size_t Neff = num_elements();
@@ -493,7 +494,7 @@ namespace mathq {
   //     size_t Neff;
   //     GridElement start;
   //     GridElement step;
-  //     mathq::Vector<GridElement> grid_vector;
+  //     mathq::GridType grid_vector;
 
   //     Interval() noexcept {
   //       include_a = true;
@@ -512,14 +513,14 @@ namespace mathq {
   //     }
 
   //     void grid() override const {
-  //       return mathq::Vector<GridElement>;
+  //       return mathq::GridType;
   //     }
 
-  //     mathq::Vector<GridElement>& coord() {
+  //     mathq::GridType& coord() {
   //       refreshGrid();
   //       return grid_vector;
   //     }
-  //     mathq::Vector<GridElement>& refreshGrid() {
+  //     mathq::GridType& refreshGrid() {
   //       grid_vector.resize(N);
   //       init();
   //       if (scale == GridScale::LOG) {
@@ -560,7 +561,7 @@ namespace mathq {
   //       return *this;
   //     }
 
-  //     mathq::Vector<GridElement>& makeGrid_Linear() {
+  //     mathq::GridType& makeGrid_Linear() {
   //       if (N == 0) return grid_vector;
 
   //       for (size_t c = 0; c<(N-1); c++) {
@@ -575,7 +576,7 @@ namespace mathq {
   //       return grid_vector;
   //     }
 
-  //     mathq::Vector<GridElement>& makeGrid_Log() {
+  //     mathq::GridType& makeGrid_Log() {
   //       if (N == 0) return grid_vector;
 
   //       for (size_t c = 0; c<(N-1); c++) {
@@ -754,6 +755,8 @@ namespace mathq {
     Region {
     public:
       using Type = Region<GridElement>;
+      using GridType = Vector<GridElement>;
+
       constexpr static size_t num_dims = 1;
 
       size_t N;
@@ -806,8 +809,8 @@ namespace mathq {
       }
 
 
-      Vector<GridElement>& grid() const {
-        Vector<GridElement>& grid = *(new Vector<GridElement>);
+      GridType& grid() const {
+        GridType& grid = *(new GridType);
         if (N == 0) return grid;
 
         size_t Neff = num_elements();

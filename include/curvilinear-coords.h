@@ -180,7 +180,10 @@ namespace mathq {
 
     Type& grids_resize(const Dimensions& dims) {
       for (size_t c = 0; c < total_num_dims; c++) {
+        TRDISP(c);
+        TRDISP(dims);
         coord(c).resize(dims);
+        TRDISP(coord(c));
       }
       return *this;
     }
@@ -222,18 +225,31 @@ namespace mathq {
     CurvilinearCoords& operator=(const std::initializer_list<DomainWrapper<GridElement>>& mylist) {
       size_t i = 0;
       typename std::initializer_list<DomainWrapper<GridElement>>::iterator it;
+
       Dimensions dims(total_num_dims);
       for (it = mylist.begin(); it != mylist.end(); ++it, i++) {
         DomainWrapper<GridElement> domain = *it;
         TRDISP(domain.index());
-        // dims[i] = domain.num_elements();
+        size_t dim;
+        std::visit([&dim](auto&& arg) {
+          TRDISP(arg);
+          dim = arg.num_elements();
+          }, domain);
+        dims[i] = dim;
         domains.push_back(domain);
       }
+      TRDISP(dims);
       if constexpr (is_dynamic_value) {
+        TRDISP(dims);
         grids_resize(dims);
       }
       for (size_t c = 0; c < total_num_dims; c++) {
-        // auto vec = domains[c].grid();
+        DomainWrapper<GridElement> domain = domains[c];
+        GridType vec;
+        std::visit([&vec](auto&& arg) {
+          TRDISP(arg);
+          vec = arg.grid();
+          }, domain);
         // coord(c) = vec;
       }
       return *this;
