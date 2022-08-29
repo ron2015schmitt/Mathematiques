@@ -162,27 +162,46 @@ int main(int argc, char* argv[]) {
     double x = 5.5;
     std::complex<double> z = complex(1., 2.);
     TRDISP(func({ x,z }));
+  }
+
+
+  {
+
+    ECHO_CODE(CartesianCoords<double, 1, false> coords({
+        Interval<double>::interval(-1,1,11),
+      }));
+
+    TRDISP(coords);
+    TRDISP(Interval<double>::interval(-1, 1, 11).grid());
+    ECHO_CODE(CurvilinearField<double, 0, decltype(coords)> field0(coords));
+    field0 = -5*coords.x();
+    TRDISP(field0);
+    TRDISP(grad(field0));
 
   }
 
   {
-    Interval<double> x{ Interval<double>::interval(-1, 1, 3) };
-    TRDISP(x);
-    PointSequence<double> p = PointSequence<double>({ 0,1,3,4.5,5 });
+    ECHO_CODE(PointSequence<double> p = PointSequence<double>({ 33,34,35 }));
     TRDISP(p);
-
-    TRDISP(func2<double>({ x,p }));
-    TRDISP(func2<double>({ x,x }));
-
-    TRDISP(IsInterval<decltype(x)>);
-    TRDISP(IsInterval<decltype(p)>);
-
-    TRDISP(IsPointSequence<decltype(x)>);
-    TRDISP(IsPointSequence<decltype(p)>);
-
+    ECHO_CODE(Vector<double> grid = Vector<double>({ 33,34,40 }));
+    TRDISP(p.coefs(grid));
   }
 
+  {
+    ECHO_CODE(PointSequence<double> p = PointSequence<double>({ -1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1 }));
 
+    ECHO_CODE(CartesianCoords<double, 1, false> coords({
+        p,
+      }));
+
+    TRDISP(coords);
+
+    ECHO_CODE(CurvilinearField<double, 0, decltype(coords)> field0(coords));
+    field0 = -5*coords.x();
+    TRDISP(field0);
+    TRDISP(grad(field0));
+
+  }
 
 
 

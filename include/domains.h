@@ -418,20 +418,97 @@ namespace mathq {
 
       template <typename TargetElement, size_t... sizes>
       Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
-        // f.deriv(grid_data, n, nabla.Nwindow, periodic);
+        const size_t N = f.size();
+        size_t Dpts = nabla.Nwindow;
+
+        if (N<=1) return f;
+
+        if (Dpts > N) {
+          //TODO: error or warning
+          Dpts = N;
+        }
+
+        if (Dpts > 3) {
+          //TODO: error or warning
+          Dpts = 2;
+        }
+
+
+        if (Dpts == 2) {
+          TargetElement f0;
+          GridElement g0;
+          if (periodic) {
+            f0 = f[0] - f[N-1];
+            // TODO: Need to apply periodic function here
+            g0 = grid_data[0] - grid_data[N-1];
+          }
+          else {
+            f0 = f[1] - f[0];
+            g0 = grid_data[1] - grid_data[0];
+          }
+          for (size_t i = 0; i < N-1; i++) {
+            f[N-1-i] = f[N-1-i] - f[N-2-i];
+          }
+          f[0] = f0/g0;
+          for (size_t i = 1; i < N; i++) {
+            f[i] = f[i]/(grid_data[i] - grid_data[i-1]);
+          }
+        }
+        // else if (Dpts == 3) {
+        //   Element prev;
+        //   Element curr;
+        //   Element last;
+        //   if (periodic) {
+        //     // first point
+        //     prev = f[1] - f[N-1];
+        //     // last
+        //     last = f[0] - f[N-2];
+        //   }
+        //   else {
+        //     // first point
+        //     prev = -3*f[0] + 4*f[1] - f[2];
+        //     // last
+        //     last = 3*f[N-1] - 4*f[N-2] + f[N-3];
+        //   }
+
+        //   const Element c0 = 0.5/dx;
+        //   for (size_t i = 1; i < N-1; i++) {
+        //     curr = f[i+1] - f[i-1];
+        //     f[i-1] = c0*prev;
+        //     prev = curr;
+        //   }
+        //   f[N-2] = c0*prev;
+        //   f[N-1] = c0*last;
+        // }
+        else {
+          //TODO: issue error
+        }
+        if (n>1) {
+          return deriv(f, n-1, nabla, periodic);
+        }
         return f;
+      }
+
+
+      static inline Vector<GridElement>& coefs(const Vector<GridElement>& grid_points) {
+        const size_t npts = grid_points.size();
+        Vector<GridElement>& coef = *(new Vector<GridElement>(npts));
+        // TODO: implement other numbers of pts
+        const GridElement d1 = grid_points[1]-grid_points[0];
+        const GridElement d2 = grid_points[2]-grid_points[1];
+        coef[0] = -d2/(d1*d1 + d1*d2);
+        coef[1] = 1/d1-1/d2;
+        coef[2] = d1/(d2*d2 + d1*d2);
+        return coef;
       }
 
       // Type& operator=(const Type& x) {
       //   return *this;
       // }
-
-
-
-      operator DomainWrapper<GridElement>() const {
-        DomainWrapper<GridElement> dw{ this };
-        return dw;
-      }
+      // operator DomainWrapper<GridElement>() const {
+      //   DomainWrapper<GridElement> dw{ this };
+      //   return dw;
+      // }
 
       //------------------------------------------------------------------------------------
       //
