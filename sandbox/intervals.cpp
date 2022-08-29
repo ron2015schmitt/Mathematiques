@@ -17,9 +17,10 @@ auto func(std::initializer_list<std::variant<double, std::complex<double>>> myli
 
 using Variant = std::variant<mathq::Interval<double>, mathq::PointSequence<double>>;
 
-auto func2(std::initializer_list<Variant> mylist) {
+template <mathq::IsNumber T>
+auto func2(const std::initializer_list<mathq::DomainWrapper<T>>& mylist) {
   // TRDISP(std::get<double>(w[0]));
-  for (std::initializer_list<Variant>::iterator it = mylist.begin(); it != mylist.end(); ++it) {
+  for (typename std::initializer_list<mathq::DomainWrapper<T>>::iterator it = mylist.begin(); it != mylist.end(); ++it) {
     TRDISP(it->index());
   }
   return true;
@@ -65,6 +66,8 @@ int main(int argc, char* argv[]) {
 
   Style mystyle1 = CREATESTYLE(BOLD + BLUE);
 
+
+
   {
     title("Interval - real uniform");
     ECHO_CODE(Interval<double> dom1 = Interval<double>::interval(0, 10, 11));
@@ -95,8 +98,13 @@ int main(int argc, char* argv[]) {
   }
 
 
+  std::variant<Interval<double>, PointSequence<double>> test;  // need to put this here using g++ 11.1.0. bug with variant and is_copy_constructible_v
+  TRDISP(std::is_copy_constructible_v<PointSequence<double>>);
+
   {
-    std::variant<PointSequence<double>, Interval<double>> x{ Interval<double>::interval(-1, 1, 3) };
+    std::variant<PointSequence<double>, Interval<double>> x;
+
+    x = { Interval<double>::interval(-1, 1, 3) };
     Interval<double> y = std::get<Interval<double>>(x);
     TRDISP(y);
 
@@ -111,6 +119,7 @@ int main(int argc, char* argv[]) {
     x = y;
     x2 = z;
   }
+  TRDISP(std::is_copy_constructible_v<PointSequence<double>>);
 
   {
     std::variant<double, std::complex<double>> x;
@@ -144,7 +153,7 @@ int main(int argc, char* argv[]) {
     PointSequence<double> p = PointSequence<double>({ 0,1,3,4.5,5 });
     TRDISP(p);
 
-    TRDISP(func2({ x,p }));
+    TRDISP(func2<double>({ x,p }));
 
     TRDISP(IsInterval<decltype(x)>);
     TRDISP(IsInterval<decltype(p)>);
@@ -155,21 +164,30 @@ int main(int argc, char* argv[]) {
   }
 
 
-  // {
+  {
 
-  //   title("2D CartesianCoords from PointeSequence and Interval");
-  //   ECHO_CODE(CartesianCoords<double, 2, false> coords({
-  //       Interval<double>::interval(-1,1,3),
-  //        PointSequence<double>({ 0,1,3,10 }),
-  //     }));
+    title("2D CartesianCoords from PointeSequence and Interval");
+    ECHO_CODE(CartesianCoords<double, 2, false> coords({
+        Interval<double>::interval(-1,1,3),
+         PointSequence<double>({ 0,1,3,10 }),
+      }));
 
-  //   TRDISP(coords);
-  //   TRDISP(coords.grid_dims());
-  //   TRDISP(coords[0]);
-  //   TRDISP(coords[1]);
+    // ECHO_CODE(CartesianCoords<double, 2, false>::tester({
+    //     Interval<double>::interval(-1,1,3),
+    //      PointSequence<double>({ 0,1,3,10 }),
+    //   }));
+
+    TRDISP(coords);
+    TRDISP(coords.grid_dims());
+    TRDISP(coords[0]);
+    TRDISP(coords[1]);
 
 
-  // }
+  }
+
+
+
+
 
   return 0;
 }

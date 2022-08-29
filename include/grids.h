@@ -4,10 +4,20 @@
 
 namespace mathq {
 
+
+
+  // ***************************************************************************
+  //                                 Domains
+  //
+  // ***************************************************************************
+
+  //
+  // Interval
+  //
+
   template <typename GridElement> requires(IsSimpleNumber<GridElement>)
     class
     Interval;
-
 
   template <typename GridElement>
   bool is_interval_test(Interval<GridElement> x) {
@@ -18,6 +28,10 @@ namespace mathq {
   concept IsInterval = requires(T x) {
     is_interval_test(x);
   };
+
+  //
+  // PointSequence
+  //
 
   template <typename GridElement> requires(IsSimpleNumber<GridElement>)
     class
@@ -33,6 +47,10 @@ namespace mathq {
     is_point_sequence_test(x);
   };
 
+
+  //
+  // Region
+  //
 
   template <typename GridElement> requires(IsComplex<GridElement>::value)
     class
@@ -50,14 +68,48 @@ namespace mathq {
   };
 
 
+  //
+  // Mesh
+  //
+  // TODO: presence of Ndims implies that it can't be used in DomainWrapper
+  //       num_dims will need to be set at compile time via constructor
+  template <typename GridElement, size_t Ndims> requires(IsSimpleNumber<GridElement>)
+    class Mesh {
+    public:
+      constexpr static size_t num_dims = Ndims;
+  };
 
 
+  template <typename GridElement, size_t Ndims>
+  bool is_mesh_test(Mesh<GridElement, Ndims> x) {
+    return true;
+  }
 
   template <class T>
-  concept IsDomain = IsInterval<T> || IsPointSequence<T> || IsRegion<T>;
+  concept IsMesh = requires(T x) {
+    is_mesh_test(x);
+  };
 
 
+  //
+  // IsDomain
+  //
 
+  template <class T>
+  concept IsDomain = IsInterval<T> || IsPointSequence<T> || IsRegion<T> || IsMesh<T>;
+
+  //
+  // DomainWrapper
+  //
+
+  template <typename GridElement>
+  using DomainWrapper = std::variant<Interval<GridElement>, PointSequence<GridElement>>;
+
+
+  // ***************************************************************************
+  //                                 Coords
+  //
+  // ***************************************************************************
 
   template <typename GridElement, size_t Ndims, bool TimeCoord, class Derived, size_t... dim_ints>
   class CurvilinearCoords;
@@ -154,6 +206,8 @@ namespace mathq {
     Interval {
     public:
       using Type = Interval<GridElement>;
+
+      constexpr static size_t num_dims = 1;
 
       size_t N;
       GridElement a;
@@ -384,12 +438,7 @@ namespace mathq {
       using Type = PointSequence<GridElement>;
       using GridType = Vector<GridElement>;
 
-      bool uniform_spaced() {
-        return false;
-      }
-      bool mesh() {
-        return false;
-      }
+      constexpr static size_t num_dims = 1;
 
 
       GridType grid_data;
@@ -463,6 +512,13 @@ namespace mathq {
       // Type& operator=(const Type& x) {
       //   return *this;
       // }
+
+
+
+      operator DomainWrapper<GridElement>() const {
+        DomainWrapper<GridElement> dw{ this };
+        return dw;
+      }
 
       //------------------------------------------------------------------------------------
       //
@@ -786,19 +842,13 @@ namespace mathq {
     Region {
     public:
       using Type = Region<GridElement>;
+      constexpr static size_t num_dims = 1;
 
       size_t N;
       GridElement a;
       GridElement b;
       bool include_a;
       bool include_b;
-
-      bool uniform_spaced() {
-        return true;
-      }
-      bool mesh() {
-        return false;
-      }
 
 
       Region() noexcept :
@@ -974,13 +1024,16 @@ namespace mathq {
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
 
-    std::array<DomainType, total_num_dims> domains;
+    std::array<DomainType, total_num_dims> domains_old;
+
+    std::vector<DomainWrapper<GridElement>> domains;
+
 
     CurvilinearCoords() : ParentType() {
       setup_vector_indices();
     }
 
-    // template <typename T> requires (IsDomain<T>)
+    // CurvilinearCoords(const std::initializer_list<DomainWrapper<GridElement>>& mylist) : ParentType() {
     CurvilinearCoords(const std::initializer_list<Interval<GridElement>>& mylist) : ParentType() {
       // TRDISP(mylist);
       // return;
@@ -999,7 +1052,7 @@ namespace mathq {
     CurvilinearCoords(const T& coords, DomainType& time_domain)
       requires (HasNotTimeCoord<T>&& TimeCoord) : ParentType() {
       setup_vector_indices();
-      std::list<DomainType> mylist(begin(coords.domains), end(coords.domains));
+      std::list<DomainType> mylist(begin(coords.domains_old), end(coords.domains_old));
       mylist.push_back(time_domain); // add time domain
       *this = mylist;
     }
@@ -1009,7 +1062,7 @@ namespace mathq {
     CurvilinearCoords(const T& coords)
       requires (HasTimeCoord<T> && !TimeCoord) : ParentType() {
       setup_vector_indices();
-      std::list<DomainType> mylist(begin(coords.domains), end(coords.domains));
+      std::list<DomainType> mylist(begin(coords.domains_old), end(coords.domains_old));
       mylist.pop_back(); // remove time domain
       *this = mylist;
     }
@@ -1059,7 +1112,7 @@ namespace mathq {
       typename std::initializer_list<DomainType>::iterator it;
       Dimensions dims(total_num_dims);
       for (it = mylist.begin(); it != mylist.end(); ++it, i++) {
-        DomainType& domain = domains[i];
+        DomainType& domain = domains_old[i];
         domain = *it;
         dims[i] = domain.num_elements();
       }
@@ -1067,7 +1120,7 @@ namespace mathq {
         grids_resize(dims);
       }
       for (size_t c = 0; c < total_num_dims; c++) {
-        auto vec = domains[c].grid();
+        auto vec = domains_old[c].grid();
         coord(c) = vec;
       }
       return *this;
@@ -1078,11 +1131,11 @@ namespace mathq {
         grids_resize(coords.grid_dims());
       }
       for (size_t c = 0; c < coords.total_num_dims; c++) {
-        DomainType domain = coords.domains[c];
-        domains[c] = domain;
+        DomainType domain = coords.domains_old[c];
+        domains_old[c] = domain;
       }
       for (size_t c = 0; c < coords.total_num_dims; c++) {
-        coord(c) = domains[c].grid();
+        coord(c) = domains_old[c].grid();
       }
       return *this;
     }
@@ -1218,13 +1271,14 @@ namespace mathq {
     explicit CartesianCoords() : ParentType() {
     }
 
-    explicit CartesianCoords(const std::initializer_list<Interval<GridElement>>& mylist) : ParentType(mylist) {
+    CartesianCoords(const std::initializer_list<Interval<GridElement>>& mylist) : ParentType(mylist) {
+    }
+
+    CartesianCoords(const std::initializer_list<mathq::DomainWrapper<GridElement>>& mylist) {
     }
 
     explicit CartesianCoords(const Type& obj) : ParentType(obj) {
     }
-
-
 
 
     // coordinates at a grid point
@@ -1346,7 +1400,7 @@ namespace mathq {
       }
 
       // for loop throgh each index, skipping coordinate c, which is grabbed as a vector taken
-      Interval<GridElement> domain = ParentType::domains[c];
+      Interval<GridElement> domain = ParentType::domains_old[c];
       Indices inds(total_num_dims);
       inds = 0;
       for (size_t k = 0; k < sz; k++) {
@@ -1502,7 +1556,7 @@ namespace mathq {
         if (c>0) stream << "; ";
         stream << var.name(c);
         stream << "=";
-        stream << var.domains[c];
+        stream << var.domains_old[c];
       }
       stream << ")";
       return stream;
