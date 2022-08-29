@@ -53,17 +53,11 @@ int main(int argc, char* argv[]) {
     TRDISP(dom1.grid());
   }
 
-  {
-    title("Coords - NullType");
-    ECHO_CODE(CurvilinearCoords<double, 2, false, NullType> coords);
-    TRDISP(coords[0]);
-    TRDISP(coords[1]);
-  }
 
   {
     title("CartesianCoords - default constructor");
     ECHO_CODE(CartesianCoords<double, 2, false> coords);
-    TRDISP(coords);
+    // TRDISP(coords);
     TRDISP(HasTimeCoord<decltype(coords)>);
     TRDISP(HasNotTimeCoord<decltype(coords)>);
   }

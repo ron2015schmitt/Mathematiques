@@ -91,6 +91,24 @@ int main(int argc, char* argv[]) {
         Interval<double>::interval(2,3,3),
       }));
 
+
+    TRDISP(coords);
+    TRDISP(coords.grid_dims());
+    TRDISP(coords[0]);
+    TRDISP(coords[1]);
+  }
+
+
+  {
+
+    title("2D CartesianCoords from Interval and PointSequence");
+
+    ECHO_CODE(CartesianCoords<double, 2, false> coords({
+      Interval<double>::interval(-1,1,3),
+       PointSequence<double>({ 0,1,3,10 }),
+      }));
+
+
     TRDISP(coords);
     TRDISP(coords.grid_dims());
     TRDISP(coords[0]);
@@ -154,6 +172,7 @@ int main(int argc, char* argv[]) {
     TRDISP(p);
 
     TRDISP(func2<double>({ x,p }));
+    TRDISP(func2<double>({ x,x }));
 
     TRDISP(IsInterval<decltype(x)>);
     TRDISP(IsInterval<decltype(p)>);
@@ -163,28 +182,6 @@ int main(int argc, char* argv[]) {
 
   }
 
-
-  {
-
-    title("2D CartesianCoords from PointeSequence and Interval");
-    ECHO_CODE(CartesianCoords<double, 2, false> coords({
-        Interval<double>::interval(-1,1,3),
-         PointSequence<double>({ 0,1,3,10 }),
-      }));
-
-    // ECHO_CODE(CartesianCoords<double, 2, false>::tester({
-    //     Interval<double>::interval(-1,1,3),
-    //      PointSequence<double>({ 0,1,3,10 }),
-    //   }));
-
-    TRDISP(coords);
-    // TRDISP(coords.domains[0].index());
-    TRDISP(coords.grid_dims());
-    TRDISP(coords[0]);
-    TRDISP(coords[1]);
-
-
-  }
 
 
 
