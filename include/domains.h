@@ -58,13 +58,13 @@ namespace mathq {
 
 
   template <typename GridElement>
-  bool is_region_test(ComplexRectangle<GridElement> x) {
+  bool is_complex_rectangle_test(ComplexRectangle<GridElement> x) {
     return true;
   }
 
   template <class T>
-  concept IsRegion = requires(T x) {
-    is_region_test(x);
+  concept IsComplexRectangle = requires(T x) {
+    is_complex_rectangle_test(x);
   };
 
 
@@ -92,17 +92,31 @@ namespace mathq {
 
 
   //
+  // IsRealDomain
+  //
+
+  template <class T>
+  concept IsRealDomain = IsInterval<T> || IsPointSequence<T>;
+
+  //
   // IsDomain
   //
 
   template <class T>
-  concept IsDomain = IsInterval<T> || IsPointSequence<T> || IsRegion<T> || IsMesh<T>;
+  concept IsDomain = IsInterval<T> || IsPointSequence<T> || IsComplexRectangle<T>;
+
+  //
+  // RealDomainWrapper
+  //
+  template <typename GridElement>
+  using RealDomainWrapper = std::variant<Interval<GridElement>, PointSequence<GridElement>>;
+
 
   //
   // DomainWrapper
   //
-
   template <typename GridElement>
+  // using DomainWrapper = std::variant<Interval<GridElement>, PointSequence<GridElement>, ComplexRectangle<GridElement>>;
   using DomainWrapper = std::variant<Interval<GridElement>, PointSequence<GridElement>>;
 
 

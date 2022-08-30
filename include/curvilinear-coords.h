@@ -228,7 +228,7 @@ namespace mathq {
         DomainWrapper<GridElement> domain = *it;
         size_t dim;
         std::visit([&dim](auto&& arg) {
-          dim = arg.num_elements();
+          dim = arg.dims()[0];
           }, domain);
         dims[i] = dim;
         domains.push_back(domain);
