@@ -52,13 +52,18 @@ int main(int argc, char* argv[]) {
 
   {
     title("CurvilinearField - Complex 1D");
-    ECHO_CODE(ComplexRectangle<std::complex<double>> rect);
+    ECHO_CODE(ComplexRectangle<double> rect);
     TRDISP(rect);
   }
   {
     title("CurvilinearField - Complex 1D");
-    ECHO_CODE(ComplexRectangle<std::complex<double>> rect);
+    ComplexRectangle<double> rect(
+      Interval<double>::interval(-1, 1, 5),
+      Interval<double>::interval(-1, 1, 5)
+    );
     TRDISP(rect);
+    TRDISP(rect.dims());
+    TRDISP(rect.grid());
 
     // {
     //   Interval<double>::interval(-1,1,5),

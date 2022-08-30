@@ -52,7 +52,7 @@ namespace mathq {
   // ComplexRectangle
   //
 
-  template <typename GridElement> requires(IsComplex<GridElement>::value)
+  template <typename GridElement> requires(IsSimpleNumber<GridElement>)
     class
     ComplexRectangle;
 
@@ -157,7 +157,7 @@ namespace mathq {
 
       size_t num_elements() const {
         if (N == 0) return 0;
-        return N +  size_t(!include_a) + size_t(!include_b);
+        return N;
       }
       size_t length() const {
         return b-a;
@@ -169,6 +169,9 @@ namespace mathq {
         return b;
       }
 
+      Dimensions& dims(void) const {
+        return *(new Dimensions({ num_elements() }));
+      }
 
       void verify() const {
         if (b < a) {
@@ -402,6 +405,10 @@ namespace mathq {
         return grid_data[num_elements()-1];
       }
 
+      Dimensions& dims(void) const {
+        return *(new Dimensions({ num_elements() }));
+      }
+
 
       void verify() const {
         // TODO: check all points and sort if needed
@@ -615,16 +622,17 @@ namespace mathq {
   //
   // ComplexRectangle
   //
-  template <typename GridElement> requires(IsComplex<GridElement>::value)
+  template <typename SimpleNumber> requires(IsSimpleNumber<SimpleNumber>)
     class
     ComplexRectangle {
     public:
-      using Type = ComplexRectangle<GridElement>;
-      using GridType = MultiArray_RepeatVector<GridElement, 2>;
-      using SimpleNumberType = typename SimpleNumberTrait<GridElement>::Type;
+      using Type = ComplexRectangle<SimpleNumber>;
+      using GridElement = std::complex<SimpleNumber>;
+      using GridType = Matrix<GridElement>;
+      using SimpleNumberType = SimpleNumber;
       using IntervalType = Interval<SimpleNumberType>;
 
-      constexpr static size_t num_dims = 1;
+      constexpr static size_t num_dims = 2;
 
       IntervalType real_interval;
       IntervalType imag_interval;
@@ -633,29 +641,22 @@ namespace mathq {
         verify();
       }
 
+      ComplexRectangle(const IntervalType& real_interval, const IntervalType& imag_interval) : real_interval(real_interval), imag_interval(imag_interval) {
+        verify();
+      }
+
 
       // // note that copy constructor works but not operator= (hence we don;t define one)
-      // ComplexRectangle(const Type& x) noexcept :
-      // {
-      //   verify();
-      // }
+      ComplexRectangle(const Type& x) : real_interval(x.real_interval), imag_interval(x.imag_interval) {
+        verify();
+      }
 
       ~ComplexRectangle() {
       }
 
-      // size_t num_elements() const {
-      //   if (N == 0) return 0;
-      //   return N +  size_t(!include_a) + size_t(!include_b);
-      // }
-      // size_t length() const {
-      //   return b-a;
-      // }
-      // size_t start() const {
-      //   return a;
-      // }
-      // size_t end() const {
-      //   return b;
-      // }
+      Dimensions& dims(void) const {
+        return *(new Dimensions({ real_interval.num_elements(), imag_interval.num_elements() }));
+      }
 
 
       void verify() const {
@@ -667,17 +668,28 @@ namespace mathq {
       }
 
 
-      // GridType& grid() const {
-      //   GridType& grid = *(new GridType);
-      //   return grid;
-      // }
+      GridType& grid() const {
+        GridType& grid = *(new GridType);
+        const Vector<SimpleNumber> real_grid = real_interval.grid();
+        const Vector<SimpleNumber> imag_grid = imag_interval.grid();
+        grid.resize(real_grid.size(), imag_grid.size());
+        for (size_t rr = 0; rr < real_grid.size(); rr++) {
+          SimpleNumber real_value = real_grid[rr];
+          for (size_t ii = 0; ii < imag_grid.size(); ii++) {
+            SimpleNumber imag_value = imag_grid[ii];
+            grid(rr, ii) = std::complex<SimpleNumber>(real_value, imag_value);
+          }
+        }
+        return grid;
+      }
 
 
-      // template <typename TargetElement, size_t... sizes>
-      // Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
-      //   f.deriv(a, b, n, nabla.Nwindow, periodic);
-      //   return f;
-      // }
+      template <typename TargetElement, size_t... sizes>
+      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
+        // TODO: write this
+        // f.deriv(a, b, n, nabla.Nwindow, periodic);
+        return f;
+      }
 
 
       inline std::string classname() const {
@@ -688,7 +700,7 @@ namespace mathq {
         using namespace display;
         std::string s = "ComplexRectangle";
         s += StyledString::get(ANGLE1).get();
-        GridElement d;
+        SimpleNumber d;
         s += getTypeName(d);
         s += StyledString::get(ANGLE2).get();
         return s;
