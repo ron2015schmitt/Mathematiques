@@ -9,6 +9,19 @@ namespace mathq {
 
 
   // ***************************************************************************
+  //                                 dot product
+  //
+  // ***************************************************************************
+
+
+  // template <class GridElement, size_t Ndims>
+  // auto dot(const CartesianCoords<GridElement, Ndims>& v1, const CartesianCoords<GridElement, Ndims>& v2) {
+  //   return v1 | v2;
+  // }
+
+
+
+  // ***************************************************************************
   //                                 Coords
   //
   // ***************************************************************************
@@ -309,55 +322,6 @@ namespace mathq {
 
 
   };
-
-
-
-  // ***************************************************************************
-  // * return slice
-  //
-  // TODO: convert to slice expression
-  // ***************************************************************************
-  template <typename T>
-  auto& get_vector(const T& x_in, const size_t n, const Indices& inds_) {
-    using ElementType = typename T::ElementType;
-    // TRDISP(x_in);
-    const size_t rank = T::rank_value;
-    const Dimensions dims = x_in.dims();
-    const size_t N = dims[n];
-    Vector<ElementType>& v = *(new Vector<ElementType>);
-    v.resize(N);
-
-    Indices inds = inds_;
-    for (size_t i = 0; i < N; i++) {
-      inds[n] = i;
-      // TRDISP(inds);
-      // TRDISP(x[inds]);
-      v[i] = x_in[inds];
-    }
-    return v;
-  }
-
-
-  // ***************************************************************************
-  // * return slice
-  //
-  // TODO: convert to slice expression
-  // ***************************************************************************
-  template <typename T>
-  auto& set_vector(T& x, const size_t n, const Indices& inds_, const Vector<typename T::ElementType>& v) {
-    using ElementType = typename T::ElementType;
-    const size_t rank = T::rank_value;
-    const Dimensions dims = x.dims();
-    const size_t N = dims[n];
-    Indices inds = inds_;
-    for (size_t i = 0; i < N; i++) {
-      inds[n] = i;
-      // TRDISP(inds);
-      // TRDISP(x[inds]);
-      x[inds] = v[i];
-    }
-    return v;
-  }
 
 
 
@@ -874,12 +838,6 @@ namespace mathq {
 
 
 
-  // template <class GridElement, size_t Ndims>
-  // auto dot(const CartesianCoords<GridElement, Ndims>& v1, const CartesianCoords<GridElement, Ndims>& v2) {
-  //   return v1 | v2;
-  // }
-
-
 
 
   //   // ***************************************************************************
@@ -1060,6 +1018,8 @@ namespace mathq {
   // bool writable_expression_test(const ExpressionRW<X, Element, Num, depth, rank>& x) {
 
   // template <typename GridElement, size_t Ndims, class Derived, size_t... dim_ints>
+
+
 
 
 

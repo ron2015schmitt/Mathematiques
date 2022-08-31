@@ -101,6 +101,7 @@
 #include "domains.h"
 #include "curvilinear-coords.h"
 #include "curvilinear-fields.h"
+#include "complex-coords.h"
 
 #include "expressions-r.h"
 #include "expressions-rw.h"
