@@ -350,11 +350,18 @@ namespace mathq {
     static constexpr size_t total_num_dims = Ndims + size_t(TimeCoord);
     constexpr static bool is_dynamic_value = ParentType::is_dynamic_value;
 
+    //Polar coords: factory, constructor, to method.
+
     // template<size_t TEMP = Ndims>
     // static EnableMethodIf<TEMP==2, CartesianCoords<GridElement, Ndims>> fromPolar(const GridElement& r, const GridElement& phi) {
     //   GridElement x = r * std::cos(phi);
     //   GridElement y = r * std::sin(phi);
     //   return CartesianCoords<GridElement, Ndims>(x, y);
+    // }
+    // template<size_t TEMP = Ndims, EnableIf<(TEMP==2)> = 0>
+    // explicit CartesianCoords<GridElement, Ndims>(const PolarCoords<GridElement>& v2) {
+    //   (*this)[0] = v2.r() * std::cos(v2.phi());
+    //   (*this)[1] = v2.r() * std::sin(v2.phi());
     // }
     // template<size_t TEMP = Ndims>
     // EnableMethodIf<TEMP==2, PolarCoords<GridElement>> toPolar() {
@@ -471,6 +478,42 @@ namespace mathq {
     const ParentType::GridType& t() const requires (TimeCoord) {
       return ParentType::coord(Ndims_value);
     }
+
+
+    //**********************************************************************
+    //                   Named coordinate access: x1,x2,x3,x0
+    //**********************************************************************
+
+    // "read/write"
+
+    ParentType::GridType& x1()  requires ((Ndims >= 1) && (Ndims <= 3)) {
+      return ParentType::coord(0);
+    }
+    ParentType::GridType& x2()  requires ((Ndims >= 2) && (Ndims <= 3)) {
+      return ParentType::coord(1);
+    }
+    ParentType::GridType& x3()  requires ((Ndims >= 3) && (Ndims <= 3)) {
+      return ParentType::coord(2);
+    }
+    ParentType::GridType& x0()  requires (TimeCoord) {
+      return ParentType::coord(Ndims_value);
+    }
+
+    // "read only"
+    const ParentType::GridType& x1() const requires ((Ndims >= 1) && (Ndims <= 3)) {
+      return ParentType::coord(0);
+    }
+    const ParentType::GridType& x2() const requires ((Ndims >= 2) && (Ndims <= 3)) {
+      return ParentType::coord(1);
+    }
+    const ParentType::GridType& x3() const requires ((Ndims >= 3) && (Ndims <= 3)) {
+      return ParentType::coord(2);
+    }
+    const ParentType::GridType& x0() const requires (TimeCoord) {
+      return ParentType::coord(Ndims_value);
+    }
+
+
 
     //**********************************************************************
     //                    Derivatives
@@ -737,70 +780,6 @@ namespace mathq {
     }
 
 
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
-    // GridElement& x1() const {
-    //   return (*this)[0];
-    // }
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
-    // CartesianCoords<GridElement, Ndims>& x1(const GridElement& x1) const {
-    //   (*this)[0] = x1;
-    //   return *this;
-    // }
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
-    // GridElement& x() const {
-    //   return (*this)[0];
-    // }
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=1)> = 0>
-    // CartesianCoords<GridElement, Ndims>& x(const GridElement& x) const {
-    //   (*this)[0] = x;
-    //   return *this;
-    // }
-
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
-    // GridElement& x2() const {
-    //   return (*this)[1];
-    // }
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
-    // CartesianCoords<GridElement, Ndims>& x2(const GridElement& x2) const {
-    //   (*this)[1] = x2;
-    //   return *this;
-    // }
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
-    // GridElement& y() const {
-    //   return (*this)[1];
-    // }
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=2)> = 0>
-    // CartesianCoords<GridElement, Ndims>& y(const GridElement& y) const {
-    //   (*this)[1] = y;
-    //   return *this;
-    // }
-
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
-    // GridElement& x3() const {
-    //   return (*this)[2];
-    // }
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
-    // CartesianCoords<GridElement, Ndims>& x3(const GridElement& x3) const {
-    //   (*this)[2] = x3;
-    //   return *this;
-    // }
-
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
-    // GridElement& z() const {
-    //   return (*this)[2];
-    // }
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP>=3)> = 0>
-    // CartesianCoords<GridElement, Ndims>& z(const GridElement& z) const {
-    //   (*this)[2] = z;
-    //   return *this;
-    // }
-
-    // template<size_t TEMP = Ndims, EnableIf<(TEMP==2)> = 0>
-    // explicit CartesianCoords<GridElement, Ndims>(const PolarCoords<GridElement>& v2) {
-    //   (*this)[0] = v2.r() * std::cos(v2.phi());
-    //   (*this)[1] = v2.r() * std::sin(v2.phi());
-    // }
-
 
     class Point : public Vector<GridElement, total_num_dims> {
     public:
@@ -840,184 +819,186 @@ namespace mathq {
 
 
 
-  //   // ***************************************************************************
-  //   // * PolarCoords<GridElement>(r, phi)
-  //   // ***************************************************************************
-
-  //   template <class GridElement>
-  //   class PolarCoords : public CurvilinearCoords<GridElement, 2, PolarCoords<GridElement>> {
-  //   public:
-  //     typedef PolarCoords<GridElement> CLASS;
-  //     typedef CurvilinearCoords<GridElement, 2, CLASS> PARENT;
-  //     typedef typename PARENT::PARENT BASE;
-
-  //     static PolarCoords<GridElement> fromCartesian(GridElement x, GridElement y) {
-  //       return PolarCoords<GridElement>(std::sqrt(x*x + y*y), std::atan2(y, x));
-  //     }
-
-  //     PolarCoords(const GridElement r, const GridElement phi) {
-  //       (*this)[0] = r;
-  //       (*this)[1] = phi;
-  //     }
-  //     PolarCoords(const std::initializer_list<GridElement>& mylist) {
-  //       BASE& me = *this;
-  //       me = mylist;
-  //     }
-
-  //     PolarCoords(const PolarCoords<GridElement>& v2) {
-  //       BASE& me = *this;
-  //       me = v2;
-  //     }
-
-  //     PolarCoords(const CartesianCoords<GridElement, 2>& v2) {
-  //       (*this)[0] = std::sqrt(x*x + y*y);
-  //       (*this)[1] = std::atan2(y, x);
-  //     }
-
-
-  //     // const std::vector<bool> periodic = { false, true };
-
-  //     std::vector<std::string>& names() const {
-  //       std::vector<std::string> names = { "r","𝜑" };
-  //       return names;
-  //     }
-  //     const std::string& name(size_t n) const {
-  //       if (n == 0) {
-  //         return std::string("r");
-  //       }
-  //       else {
-  //         return std::string("phi");
-  //       }
-  //     }
-
-
-  //     GridElement& r() const {
-  //       return (*this)[0];
-  //     }
-  //     GridElement& phi() const {
-  //       return (*this)[1];
-  //     }
-
-  //     PolarCoords<GridElement>& r(const GridElement& r) const {
-  //       (*this)[0] = r;
-  //       return *this;
-  //     }
-  //     PolarCoords<GridElement>& phi(const GridElement& phi) const {
-  //       (*this)[1] = phi;
-  //       return *this;
-  //     }
-
-
-  //     GridElement x() const {
-  //       const GridElement& r = (*this)[0];
-  //       const GridElement& phi = (*this)[1];
-  //       return r * std::cos(phi);
-  //     }
-  //     GridElement x1() const {
-  //       return x();
-  //     }
-
-  //     GridElement y() const {
-  //       const GridElement& r = (*this)[0];
-  //       const GridElement& phi = (*this)[1];
-  //       return r * std::sin(phi);
-  //     }
-  //     GridElement x2() const {
-  //       return y();
-  //     }
-
-
-  //     CartesianCoords<GridElement, 2>& pos() const {
-  //       return toCartesian();
-  //     }
-  //     CartesianCoords<GridElement, 2>& toCartesian() const {
-  //       return *(new CartesianCoords<GridElement, 2>({ x(), y() }));
-  //     }
-
-
-  //     // unit vectors
-  //     Vector<GridElement, 2>& basis_r() const {
-  //       const GridElement& r = (*this)[0];
-  //       const GridElement& phi = (*this)[1];
-  //       return *(new Vector<GridElement, 2>{ std::cos(phi), std::sin(phi) });
-  //     }
-  //     Vector<GridElement, 2>& basis_phi() const {
-  //       const GridElement& r = (*this)[0];
-  //       const GridElement& phi = (*this)[1];
-  //       return *(new Vector<GridElement, 2>{ -std::sin(phi), std::cos(phi) });
-  //     }
-
-  //     Vector<GridElement, 2>& basis_vec(size_t n) const {
-  //       if (n == 0) {
-  //         return basis_r();
-  //       }
-  //       else {
-  //         return basis_phi();
-  //       }
-  //     }
-
-
-  //     // Jacobian 
-  //     GridElement J() const {
-  //       const GridElement& r = (*this)[0];
-  //       const GridElement& phi = (*this)[1];
-  //       return r;
-  //     }
-
-  //     // metric tensor g^{ij} 
-  //     Matrix<GridElement, 2, 2> g() const {
-  //       const GridElement& r = (*this)[0];
-  //       const GridElement& phi = (*this)[1];
-  //       Matrix<GridElement, 2, 2> metric;
-  //       metric = { ones<GridElement>(), zeros<GridElement>(), zeros<GridElement>(), r*r };
-  //       return metric;
-  //     }
-
-  //     inline std::string classname() const {
-  //       using namespace display;
-  //       std::string s = "PolarCoords";
-  //       s += StyledString::get(ANGLE1).get();
-  //       GridElement d;
-  //       s += getTypeName(d);
-  //       s += StyledString::get(ANGLE2).get();
-  //       return s;
-  //     }
-
-
-  //     inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords<GridElement>& var) {
-  //       const GridElement& r = var[0];
-  //       const GridElement& phi = var[1];
-  //       stream << "(r=";
-  //       stream << r;
-  //       stream << ", φ=";
-  //       stream << phi;
-  //       stream << ")";
-  //       return stream;
-  //     }
-
-
-  //   };
-
-
-  //   template <class GridElement>
-  //   auto dot(const PolarCoords<GridElement>& v1, const PolarCoords<GridElement>& v2) {
-  //     return v1[0] * v2[0] * std::cos(v1[1] - v2[1]);
-  //   }
-
-  //   // template <class GridElement>
-  //   // auto& addpts(const PolarCoords<GridElement>& v1, const PolarCoords<GridElement>& v2) {
-  //   //   const Vector<GridElement, 2> p = v1.toCartesian() + v2.toCartesian();
-  //   //   return p.toPolar();
-  //   // }
-
-  //   // TODO: pmult for scalar * PolarCoords
+  // ***************************************************************************
+  // * PolarCoords<GridElement>(r, phi)
+  // ***************************************************************************
 
 
 
-  // template <class X, class Element, typename Num, size_t depth, size_t rank>
-  // bool writable_expression_test(const ExpressionRW<X, Element, Num, depth, rank>& x) {
+//   template <class GridElement>
+//   class PolarCoords : public CurvilinearCoords<GridElement, 2, PolarCoords<GridElement>> {
+//   public:
+//     typedef PolarCoords<GridElement> CLASS;
+//     typedef CurvilinearCoords<GridElement, 2, CLASS> PARENT;
+//     typedef typename PARENT::PARENT BASE;
 
-  // template <typename GridElement, size_t Ndims, class Derived, size_t... dim_ints>
+//     static PolarCoords<GridElement> fromCartesian(GridElement x, GridElement y) {
+//       return PolarCoords<GridElement>(std::sqrt(x*x + y*y), std::atan2(y, x));
+//     }
+
+//     PolarCoords(const GridElement r, const GridElement phi) {
+//       (*this)[0] = r;
+//       (*this)[1] = phi;
+//     }
+//     PolarCoords(const std::initializer_list<GridElement>& mylist) {
+//       BASE& me = *this;
+//       me = mylist;
+//     }
+
+//     PolarCoords(const PolarCoords<GridElement>& v2) {
+//       BASE& me = *this;
+//       me = v2;
+//     }
+
+//     PolarCoords(const CartesianCoords<GridElement, 2>& v2) {
+//       (*this)[0] = std::sqrt(x*x + y*y);
+//       (*this)[1] = std::atan2(y, x);
+//     }
+
+
+//     // const std::vector<bool> periodic = { false, true };
+
+//     std::vector<std::string>& names() const {
+//       std::vector<std::string> names = { "r","𝜑" };
+//       return names;
+//     }
+//     const std::string& name(size_t n) const {
+//       if (n == 0) {
+//         return std::string("r");
+//       }
+//       else {
+//         return std::string("phi");
+//       }
+//     }
+
+
+//     GridElement& r() const {
+//       return (*this)[0];
+//     }
+//     GridElement& phi() const {
+//       return (*this)[1];
+//     }
+
+//     PolarCoords<GridElement>& r(const GridElement& r) const {
+//       (*this)[0] = r;
+//       return *this;
+//     }
+//     PolarCoords<GridElement>& phi(const GridElement& phi) const {
+//       (*this)[1] = phi;
+//       return *this;
+//     }
+
+
+//     GridElement x() const {
+//       const GridElement& r = (*this)[0];
+//       const GridElement& phi = (*this)[1];
+//       return r * std::cos(phi);
+//     }
+//     GridElement x1() const {
+//       return x();
+//     }
+
+//     GridElement y() const {
+//       const GridElement& r = (*this)[0];
+//       const GridElement& phi = (*this)[1];
+//       return r * std::sin(phi);
+//     }
+//     GridElement x2() const {
+//       return y();
+//     }
+
+
+//     CartesianCoords<GridElement, 2>& pos() const {
+//       return toCartesian();
+//     }
+//     CartesianCoords<GridElement, 2>& toCartesian() const {
+//       return *(new CartesianCoords<GridElement, 2>({ x(), y() }));
+//     }
+
+
+//     // unit vectors
+//     Vector<GridElement, 2>& basis_r() const {
+//       const GridElement& r = (*this)[0];
+//       const GridElement& phi = (*this)[1];
+//       return *(new Vector<GridElement, 2>{ std::cos(phi), std::sin(phi) });
+//     }
+//     Vector<GridElement, 2>& basis_phi() const {
+//       const GridElement& r = (*this)[0];
+//       const GridElement& phi = (*this)[1];
+//       return *(new Vector<GridElement, 2>{ -std::sin(phi), std::cos(phi) });
+//     }
+
+//     Vector<GridElement, 2>& basis_vec(size_t n) const {
+//       if (n == 0) {
+//         return basis_r();
+//       }
+//       else {
+//         return basis_phi();
+//       }
+//     }
+
+
+//     // Jacobian 
+//     GridElement J() const {
+//       const GridElement& r = (*this)[0];
+//       const GridElement& phi = (*this)[1];
+//       return r;
+//     }
+
+//     // metric tensor g^{ij} 
+//     Matrix<GridElement, 2, 2> g() const {
+//       const GridElement& r = (*this)[0];
+//       const GridElement& phi = (*this)[1];
+//       Matrix<GridElement, 2, 2> metric;
+//       metric = { ones<GridElement>(), zeros<GridElement>(), zeros<GridElement>(), r*r };
+//       return metric;
+//     }
+
+//     inline std::string classname() const {
+//       using namespace display;
+//       std::string s = "PolarCoords";
+//       s += StyledString::get(ANGLE1).get();
+//       GridElement d;
+//       s += getTypeName(d);
+//       s += StyledString::get(ANGLE2).get();
+//       return s;
+//     }
+
+
+//     inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords<GridElement>& var) {
+//       const GridElement& r = var[0];
+//       const GridElement& phi = var[1];
+//       stream << "(r=";
+//       stream << r;
+//       stream << ", φ=";
+//       stream << phi;
+//       stream << ")";
+//       return stream;
+//     }
+
+
+//   };
+
+
+//   template <class GridElement>
+//   auto dot(const PolarCoords<GridElement>& v1, const PolarCoords<GridElement>& v2) {
+//     return v1[0] * v2[0] * std::cos(v1[1] - v2[1]);
+//   }
+
+//   // template <class GridElement>
+//   // auto& addpts(const PolarCoords<GridElement>& v1, const PolarCoords<GridElement>& v2) {
+//   //   const Vector<GridElement, 2> p = v1.toCartesian() + v2.toCartesian();
+//   //   return p.toPolar();
+//   // }
+
+//   // TODO: pmult for scalar * PolarCoords
+
+
+
+// template <class X, class Element, typename Num, size_t depth, size_t rank>
+// bool writable_expression_test(const ExpressionRW<X, Element, Num, depth, rank>& x) {
+
+// template <typename GridElement, size_t Ndims, class Derived, size_t... dim_ints>
 
 
 
