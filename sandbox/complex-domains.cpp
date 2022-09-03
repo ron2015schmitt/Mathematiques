@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
     title("CurvilinearField - Complex 1D");
     ComplexRectangle<double> rect(
       Interval<double>::interval(-1, 1, 5),
-      Interval<double>::interval(-2, 2, 3)
+      Interval<double>::interval(-2, 2, 5)
     );
     TRDISP(rect);
     TRDISP(rect.dims());
@@ -77,10 +77,20 @@ int main(int argc, char* argv[]) {
     TRDISP(coords.z());
 
     ECHO_CODE(ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords));
+    ECHO_CODE(auto& x = coords.x());
+    ECHO_CODE(auto& y = coords.y());
     ECHO_CODE(auto& z = coords.z());
-    ECHO_CODE(field0() = -3*z);
+    ECHO_CODE(field0() = -3*x + 5*Imaginary<double>(1)*x);
     TRDISP(field0);
+    TRDISP(real(field0));
+    TRDISP(imag(field0));
     TRDISP(pd(field0, 0));
+    TRDISP(IsMultiArray<decltype(field0)>);
+    TRDISP(IsMultiArray<decltype(field0())>);
+    TRDISP(IsComplex<typename NumberTrait<decltype(field0)>::Type>::value);
+    TRDISP(dz(field0));
+    ECHO_CODE(field0() = -3*x + 5*Imaginary<double>(1)*y);
+    TRDISP(dz_star(field0));
   }
 
 
@@ -92,6 +102,7 @@ int main(int argc, char* argv[]) {
     );
 
     ComplexCoords<double, true> coords(rect, Interval<double>::interval(0, 1, 5));
+
     // TRDISP(coords);
     // TRDISP(coords.grid_dims());
     // TRDISP(coords[0]);

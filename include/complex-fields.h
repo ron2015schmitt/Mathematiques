@@ -139,6 +139,35 @@ namespace mathq {
     return g;
   }
 
+
+  //
+  // dz(f,c) - for scalar f
+  //
+
+  template <typename TargetElement, IsComplexCoords Coords>
+  ComplexMathFunction<TargetElement, Coords> dz(const ComplexMathFunction<TargetElement, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
+
+    Coords const& coords = f.coords();
+    auto& g = *(new ComplexMathFunction<TargetElement, Coords>(coords));
+    g = coords.dz(f(), nabla);
+    return g;
+  }
+
+  //
+  // dz_star(f,c) - for scalar f
+  //
+
+  template <typename TargetElement, IsComplexCoords Coords>
+  ComplexMathFunction<TargetElement, Coords> dz_star(const ComplexMathFunction<TargetElement, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
+
+    Coords const& coords = f.coords();
+    auto& g = *(new ComplexMathFunction<TargetElement, Coords>(coords));
+    g = coords.dz_star(f(), nabla);
+    return g;
+  }
+
+
+
 };
 
 #endif 

@@ -733,14 +733,61 @@ namespace mathq {
         return imag_interval.grid();
       }
 
-      template <typename TargetElement, size_t... sizes>
-      Vector<TargetElement, sizes...>& dx(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
-        // f.deriv(a, b, n, nabla.Nwindow, periodic);
+      template <typename TargetElement, size_t... sizes> requires (IsSimpleNumber<TargetElement>)
+        Vector<TargetElement, sizes...>& dx(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
+        f.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
         return f;
       }
-      template <typename TargetElement, size_t... sizes>
-      Vector<TargetElement, sizes...>& dy(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
-        // f.deriv(a, b, n, nabla.Nwindow, periodic);
+      template <typename TargetElement, size_t... sizes> requires (IsSimpleNumber<TargetElement>)
+        Vector<TargetElement, sizes...>& dy(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
+        f.deriv(imag_interval.a, imag_interval.b, n, nabla.Nwindow, false);
+        return f;
+      }
+
+      template <typename TargetElement, size_t... sizes> requires (IsComplex<TargetElement>::value)
+        Vector<TargetElement, sizes...>& dx(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
+        using SimpleNumberType = typename SimpleNumberTrait<TargetElement>::Type;
+        Vector<SimpleNumberType, sizes...> fr = real(f);
+        Vector<SimpleNumberType, sizes...> fi = imag(f);
+        TRDISP(fr);
+        TRDISP(fi);
+        fr.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
+        fi.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
+        TRDISP(fr);
+        TRDISP(fi);
+        f = fr + Imaginary<SimpleNumberType>(1)*fi;
+        TRDISP(f);
+        return f;
+      }
+      template <typename TargetElement, size_t... sizes> requires (IsComplex<TargetElement>::value)
+        Vector<TargetElement, sizes...>& dy(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
+        using SimpleNumberType = typename SimpleNumberTrait<TargetElement>::Type;
+        Vector<SimpleNumberType, sizes...> fr = real(f);
+        Vector<SimpleNumberType, sizes...> fi = imag(f);
+        fr.deriv(imag_interval.a, imag_interval.b, n, nabla.Nwindow, false);
+        fi.deriv(imag_interval.a, imag_interval.b, n, nabla.Nwindow, false);
+        f = fr + Imaginary<SimpleNumberType>(1)*fi;
+        return f;
+      }
+
+      template <typename TargetElement, size_t... sizes> requires (IsComplex<TargetElement>::value)
+        Vector<TargetElement, sizes...>& dz(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
+        using SimpleNumberType = typename SimpleNumberTrait<TargetElement>::Type;
+        Vector<SimpleNumberType, sizes...> fr = real(f);
+        Vector<SimpleNumberType, sizes...> fi = imag(f);
+        fr.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nwindow, false);
+        fi.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nwindow, false);
+        f = fr + Imaginary<SimpleNumberType>(1)*fi;
+        return f;
+      }
+      template <typename TargetElement, size_t... sizes> requires (IsComplex<TargetElement>::value)
+        Vector<TargetElement, sizes...>& dz_star(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
+        using SimpleNumberType = typename SimpleNumberTrait<TargetElement>::Type;
+        Vector<SimpleNumberType, sizes...> fr = real(f);
+        Vector<SimpleNumberType, sizes...> fi = imag(f);
+        fr.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nwindow, false);
+        fi.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nwindow, false);
+        f = fr - Imaginary<SimpleNumberType>(1)*fi;
         return f;
       }
 

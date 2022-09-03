@@ -257,7 +257,7 @@ namespace mathq {
         }
       }
 
-      // for loop throgh each index, skipping coordinate c, which is grabbed as a vector taken
+      // for loop throgh each index, skipping coordinate g, which is grabbed as a vector taken
       Indices inds(total_num_dims);
       inds = 0;
       for (size_t k = 0; k < sz; k++) {
@@ -277,32 +277,32 @@ namespace mathq {
         }
 
         set_vector(mygrid, g, inds, vec);
-        inds.increment_over(gdims, g);  // this will skip over index c
+        inds.increment_over(gdims, g);  // this will skip over index g
       }
       return mygrid;
     }
 
 
-    // //
-    // // grad(f) - f is a grid
-    // //
+    //
+    // dz(f) - f is a grid
+    //
+    //&& IsComplex<typename NumberTrait<T>::Type>::value
 
-    // template <class T>
-    // auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const
-    //   requires (IsGridlike<T>) {
+    template <class T>
+    auto& dz(const T& f, const Nabla<>& nabla = Nabla<>()) const
+      requires (IsMultiArray<T>&& IsComplex<typename NumberTrait<T>::Type>::value) {
+      return pd(f, 0, nabla);
+    }
 
-    //   using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
-    //   constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
+    //
+    // dz_star(f) - f is a grid
+    //
 
-    //   using ResultType = MultiArrayHelper< MyGridType, result_dims >;
-    //   ResultType& result = *(new ResultType);
-
-    //   for (size_t c = 0; c < Ndims; c++) {
-    //     result[c] = pd(f, c, nabla);
-    //   }
-    //   return result;
-    // }
-
+    template <class T>
+    auto& dz_star(const T& f, const Nabla<>& nabla = Nabla<>()) const
+      requires (IsMultiArray<T>&& IsComplex<typename NumberTrait<T>::Type>::value) {
+      return pd(f, 1, nabla);
+    }
 
     //**********************************************************************
     //************************** Text and debugging ************************
