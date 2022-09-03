@@ -59,32 +59,59 @@ int main(int argc, char* argv[]) {
     title("CurvilinearField - Complex 1D");
     ComplexRectangle<double> rect(
       Interval<double>::interval(-1, 1, 5),
-      Interval<double>::interval(-1, 1, 5)
+      Interval<double>::interval(-2, 2, 3)
     );
     TRDISP(rect);
     TRDISP(rect.dims());
-    TRDISP(rect.grid());
+    TRDISP(rect.grid_complex());
+    TRDISP(rect.grid_real());
+    TRDISP(rect.grid_imag());
 
-    // {
-    //   Interval<double>::interval(-1,1,5),
-    // }));
 
-  // // TRDISP(coords1);
-  // // TRDISP(coords1.grid_dims());
-  // // TRDISP(coords1[0]);
-  // // TRDISP(coords1[1]);
+    ComplexCoords<double, false> coords(rect);
+    TRDISP(coords);
+    TRDISP(coords.grid_dims());
+    // TRDISP(coords[0]);
+    // TRDISP(coords[1]);
 
-  // ECHO_CODE(MathFunction<std::complex<double>, 1, false> field0(coords));
-  // ECHO_CODE(auto& z = coords.x());
-  // ECHO_CODE(field0() = -3*x);
-  // TRDISP(field0);
+    // ECHO_CODE(MathFunction<std::complex<double>, 1, false> field0(coords));
+    // ECHO_CODE(auto& z = coords.x());
+    // ECHO_CODE(field0() = -3*x);
+    // TRDISP(field0);
 
-  // TRDISP(x);
+    // TRDISP(x);
 
-  // TRDISP(IsGridlike<decltype(x)>);
-  // TRDISP(IsMultiArray<decltype(x)>);
-  // TRDISP(IsWritableExpressionOrArray<decltype(x)>);
-  // TRDISP(x.isNotExpression);
+    // TRDISP(IsGridlike<decltype(x)>);
+    // TRDISP(IsMultiArray<decltype(x)>);
+    // TRDISP(IsWritableExpressionOrArray<decltype(x)>);
+    // TRDISP(x.isNotExpression);
+  }
+
+
+  {
+    title("CurvilinearField - Complex 1D with time");
+    ComplexRectangle<double> rect(
+      Interval<double>::interval(-1, 1, 5),
+      Interval<double>::interval(-2, 2, 3)
+    );
+
+    ComplexCoords<double, true> coords(rect, Interval<double>::interval(0, 1, 5));
+    TRDISP(coords);
+    // TRDISP(coords.grid_dims());
+    // TRDISP(coords[0]);
+    // TRDISP(coords[1]);
+
+    // ECHO_CODE(MathFunction<std::complex<double>, 1, false> field0(coords));
+    // ECHO_CODE(auto& z = coords.x());
+    // ECHO_CODE(field0() = -3*x);
+    // TRDISP(field0);
+
+    // TRDISP(x);
+
+    // TRDISP(IsGridlike<decltype(x)>);
+    // TRDISP(IsMultiArray<decltype(x)>);
+    // TRDISP(IsWritableExpressionOrArray<decltype(x)>);
+    // TRDISP(x.isNotExpression);
   }
 
 

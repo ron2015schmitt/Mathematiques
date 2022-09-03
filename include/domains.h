@@ -98,12 +98,22 @@ namespace mathq {
   template <class T>
   concept IsRealDomain = IsInterval<T> || IsPointSequence<T>;
 
+
   //
-  // IsDomain
+  // IsComplexDomain
   //
 
   template <class T>
-  concept IsDomain = IsInterval<T> || IsPointSequence<T> || IsComplexRectangle<T>;
+  concept IsComplexDomain = IsComplexRectangle<T>;
+
+
+  // //
+  // // IsDomain
+  // //
+
+  // template <class T>
+  // concept IsDomain = IsRealDomain<T> || IsComplexDomain<T>;
+
 
   //
   // RealDomainWrapper
@@ -113,11 +123,19 @@ namespace mathq {
 
 
   //
-  // DomainWrapper
+  // ComplexDomainWrapper
   //
   template <typename GridElement>
-  // using DomainWrapper = std::variant<Interval<GridElement>, PointSequence<GridElement>, ComplexRectangle<GridElement>>;
-  using DomainWrapper = std::variant<Interval<GridElement>, PointSequence<GridElement>>;
+  using ComplexDomainWrapper = std::variant<ComplexRectangle<GridElement>>;
+
+
+
+  // //
+  // // DomainWrapper
+  // //
+  // template <typename GridElement>
+  // // using DomainWrapper = std::variant<Interval<GridElement>, PointSequence<GridElement>, ComplexRectangle<GridElement>>;
+  // using DomainWrapper = std::variant<Interval<GridElement>, PointSequence<GridElement>>;
 
 
 
@@ -642,8 +660,10 @@ namespace mathq {
     public:
       using Type = ComplexRectangle<SimpleNumber>;
       using GridElement = std::complex<SimpleNumber>;
-      using GridType = Matrix<GridElement>;
+      using ComplexGridType = Matrix<GridElement>;
       using SimpleNumberType = SimpleNumber;
+      using RealGridType = CoordGrid<SimpleNumberType, 2>;
+      using RealGridsType = Vector<RealGridType, 2>;
       using IntervalType = Interval<SimpleNumberType>;
 
       constexpr static size_t num_dims = 2;
@@ -682,8 +702,8 @@ namespace mathq {
       }
 
 
-      GridType& grid() const {
-        GridType& grid = *(new GridType);
+      ComplexGridType& grid_complex() const {
+        ComplexGridType& grid = *(new ComplexGridType);
         const Vector<SimpleNumber> real_grid = real_interval.grid();
         const Vector<SimpleNumber> imag_grid = imag_interval.grid();
         grid.resize(real_grid.size(), imag_grid.size());
@@ -697,6 +717,13 @@ namespace mathq {
         return grid;
       }
 
+      Vector<SimpleNumber>& grid_real() const {
+        return real_interval.grid();
+      }
+
+      Vector<SimpleNumber>& grid_imag() const {
+        return imag_interval.grid();
+      }
 
       template <typename TargetElement, size_t... sizes>
       Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {

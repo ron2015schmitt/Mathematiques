@@ -18,9 +18,9 @@ auto func(std::initializer_list<std::variant<double, std::complex<double>>> myli
 using Variant = std::variant<mathq::Interval<double>, mathq::PointSequence<double>>;
 
 template <mathq::IsNumber T>
-auto func2(const std::initializer_list<mathq::DomainWrapper<T>>& mylist) {
+auto func2(const std::initializer_list<mathq::RealDomainWrapper<T>>& mylist) {
   // TRDISP(std::get<double>(w[0]));
-  for (typename std::initializer_list<mathq::DomainWrapper<T>>::iterator it = mylist.begin(); it != mylist.end(); ++it) {
+  for (typename std::initializer_list<mathq::RealDomainWrapper<T>>::iterator it = mylist.begin(); it != mylist.end(); ++it) {
     TRDISP(it->index());
   }
   return true;
