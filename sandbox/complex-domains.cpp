@@ -80,6 +80,7 @@ int main(int argc, char* argv[]) {
     ECHO_CODE(auto& z = coords.z());
     ECHO_CODE(field0() = -3*z);
     TRDISP(field0);
+    TRDISP(pd(field0, 0));
   }
 
 

@@ -235,14 +235,14 @@ namespace mathq {
 
 
       template <typename TargetElement, size_t... sizes>
-      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const GridElement periodic = 0) const {
+      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const GridElement period = 0) const {
 
         GridElement Neff = N + size_t(!include_a) + size_t(!include_b);
         GridElement step = (b - a)/static_cast<GridElement>(Neff-1);
         GridElement start = (include_a) ? a : a + step;
         GridElement end = (include_b) ? b : b - step;
 
-        f.deriv(start, end, n, nabla.Nwindow, (periodic != 0));
+        f.deriv(start, end, n, nabla.Nwindow, (period != 0));
         return f;
       }
 
@@ -734,8 +734,12 @@ namespace mathq {
       }
 
       template <typename TargetElement, size_t... sizes>
-      Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const bool periodic = false) const {
-        // TODO: write this
+      Vector<TargetElement, sizes...>& dx(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
+        // f.deriv(a, b, n, nabla.Nwindow, periodic);
+        return f;
+      }
+      template <typename TargetElement, size_t... sizes>
+      Vector<TargetElement, sizes...>& dy(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
         // f.deriv(a, b, n, nabla.Nwindow, periodic);
         return f;
       }

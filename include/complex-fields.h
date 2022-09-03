@@ -126,7 +126,18 @@ namespace mathq {
 
   };
 
+  //
+  // pd(f,c) - for scalar f
+  //
 
+  template <typename TargetElement, IsComplexCoords Coords>
+  ComplexMathFunction<TargetElement, Coords> pd(const ComplexMathFunction<TargetElement, Coords>& f, const size_t c, const Nabla<>& nabla = Nabla<>()) {
+
+    Coords const& coords = f.coords();
+    auto& g = *(new ComplexMathFunction<TargetElement, Coords>(coords));
+    g = coords.pd(f(), c, nabla);
+    return g;
+  }
 
 };
 

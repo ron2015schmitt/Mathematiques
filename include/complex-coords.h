@@ -230,6 +230,80 @@ namespace mathq {
     }
 
 
+
+    //
+    // df/dx
+    //     - partial derivative - with respect to coordinate:  
+    //       0 => x = real part of z,  
+    //       1 => y = imag part of z
+    //       2 => t = time
+    //
+
+    template <class T>
+    auto& pd(const T& f, const size_t g, const Nabla<>& nabla = Nabla<>()) const
+      requires (IsGridlike<T>) {
+
+      Dimensions gdims = grid_dims();
+      // TRDISP(gdims);
+      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
+      MyGridType& mygrid = *(new MyGridType);
+      if constexpr (mygrid.is_dynamic_value) {
+        mygrid.resize(gdims);
+      }
+      size_t sz = 1;
+      for (size_t k = 0; k < total_num_dims; k++) {
+        if (k != g) {
+          sz *= gdims[k];
+        }
+      }
+
+      // for loop throgh each index, skipping coordinate c, which is grabbed as a vector taken
+      Indices inds(total_num_dims);
+      inds = 0;
+      for (size_t k = 0; k < sz; k++) {
+        auto vec = get_vector(f, g, inds);
+        size_t dim;
+
+        switch (g) {
+        case 0:
+          domain.dx(vec, 1, nabla);
+          break;
+        case 1:
+          domain.dy(vec, 1, nabla);
+          break;
+        case 2:
+          time_domain.deriv(vec, 1, nabla);
+          break;
+        }
+
+        set_vector(mygrid, g, inds, vec);
+        inds.increment_over(gdims, g);  // this will skip over index c
+      }
+      return mygrid;
+    }
+
+
+    // //
+    // // grad(f) - f is a grid
+    // //
+
+    // template <class T>
+    // auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const
+    //   requires (IsGridlike<T>) {
+
+    //   using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
+    //   constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
+
+    //   using ResultType = MultiArrayHelper< MyGridType, result_dims >;
+    //   ResultType& result = *(new ResultType);
+
+    //   for (size_t c = 0; c < Ndims; c++) {
+    //     result[c] = pd(f, c, nabla);
+    //   }
+    //   return result;
+    // }
+
+
     //**********************************************************************
     //************************** Text and debugging ************************
     //**********************************************************************
