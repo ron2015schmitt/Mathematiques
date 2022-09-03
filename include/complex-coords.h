@@ -47,6 +47,8 @@ namespace mathq {
     using GridType = ElementType;
     using NumberType = GridElement;
     using SimpleNumberType = typename SimpleNumberTrait<GridElement>::Type;
+    using ComplexType = std::complex<SimpleNumberType>;
+    using ComplexGridType = typename ReplaceNumberTrait<GridType, std::complex<SimpleNumberType>>::Type;
 
     using TypeWithTime = ComplexCoords<GridElement, true>;
     using TypeWithoutTime = ComplexCoords<GridElement, false>;
@@ -188,6 +190,45 @@ namespace mathq {
       init_grids();
       return *this;
     }
+
+
+    //**********************************************************************
+    //                    Named coordinate acces
+    //**********************************************************************
+
+    // "read/write"
+    GridType& x() {
+      return coord(0);
+    }
+    GridType& y() {
+      return coord(1);
+    }
+    Matrix<std::complex<double>>& z() {
+      const Imaginary<SimpleNumberType> i(1);
+      // TRDISP(i*coord(1));
+      // TRDISP(coord(0)+i*coord(1));
+      Matrix<std::complex<double>>& result = *(new Matrix<std::complex<double>>);
+      result = coord(0)+i*coord(1);
+      return result;
+    }
+    GridType& t()  requires (TimeCoord) {
+      return coord(2);
+    }
+
+    // "read only"
+    const GridType& x() const {
+      return coord(0);
+    }
+    const GridType& y() const {
+      return coord(1);
+    }
+    // const ComplexGridType& z() const {
+    //   return coord(0) + numbercast<std::complex<SimpleNumberType>>(coord(1));
+    // }
+    const GridType& t() const requires (TimeCoord) {
+      return coord(2);
+    }
+
 
     //**********************************************************************
     //************************** Text and debugging ************************

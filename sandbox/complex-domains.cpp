@@ -72,20 +72,14 @@ int main(int argc, char* argv[]) {
     TRDISP(coords);
     TRDISP(coords.grid_dims());
     TRDISP(IsComplexCoords<decltype(coords)>);
-    // TRDISP(coords[0]);
-    // TRDISP(coords[1]);
+    TRDISP(coords.x());
+    TRDISP(coords.y());
+    TRDISP(coords.z());
 
-    // ECHO_CODE(ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords));
-    // ECHO_CODE(auto& z = coords.x());
-    // ECHO_CODE(field0() = -3*x);
-    // TRDISP(field0);
-
-    // TRDISP(x);
-
-    // TRDISP(IsGridlike<decltype(x)>);
-    // TRDISP(IsMultiArray<decltype(x)>);
-    // TRDISP(IsWritableExpressionOrArray<decltype(x)>);
-    // TRDISP(x.isNotExpression);
+    ECHO_CODE(ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords));
+    ECHO_CODE(auto& z = coords.z());
+    ECHO_CODE(field0() = -3*z);
+    TRDISP(field0);
   }
 
 
@@ -97,7 +91,7 @@ int main(int argc, char* argv[]) {
     );
 
     ComplexCoords<double, true> coords(rect, Interval<double>::interval(0, 1, 5));
-    TRDISP(coords);
+    // TRDISP(coords);
     // TRDISP(coords.grid_dims());
     // TRDISP(coords[0]);
     // TRDISP(coords[1]);
