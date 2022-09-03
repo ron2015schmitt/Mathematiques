@@ -203,11 +203,11 @@ namespace mathq {
     GridType& y() {
       return coord(1);
     }
-    Matrix<std::complex<double>>& z() {
+    auto& z() {
       const Imaginary<SimpleNumberType> i(1);
       // TRDISP(i*coord(1));
       // TRDISP(coord(0)+i*coord(1));
-      Matrix<std::complex<double>>& result = *(new Matrix<std::complex<double>>);
+      auto& result = *(new MultiArray<std::complex<double>, total_num_dims>);
       result = coord(0)+i*coord(1);
       return result;
     }

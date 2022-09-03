@@ -101,17 +101,22 @@ int main(int argc, char* argv[]) {
       Interval<double>::interval(-2, 2, 3)
     );
 
-    ComplexCoords<double, true> coords(rect, Interval<double>::interval(0, 1, 5));
+    ComplexCoords<double, true> coords(rect, Interval<double>::interval(0, 1, 2));
+    TRDISP(coords.z());
+    TRDISP(coords.t());
 
     // TRDISP(coords);
     // TRDISP(coords.grid_dims());
     // TRDISP(coords[0]);
     // TRDISP(coords[1]);
 
-    // ECHO_CODE(MathFunction<std::complex<double>, 1, false> field0(coords));
-    // ECHO_CODE(auto& z = coords.x());
-    // ECHO_CODE(field0() = -3*x);
-    // TRDISP(field0);
+    ECHO_CODE(ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords));
+    ECHO_CODE(auto& x = coords.x());
+    ECHO_CODE(auto& z = coords.z());
+    ECHO_CODE(auto& t = coords.t());
+    ECHO_CODE(field0() = exp(2*z) + 5*t);
+    TRDISP(field0);
+    TRDISP(pd(field0, 2));
 
     // TRDISP(x);
 
