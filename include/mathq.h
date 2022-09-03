@@ -99,6 +99,7 @@
 
 #include "nabla.h"
 #include "domains.h"
+#include "complex-domains.h"
 #include "curvilinear-coords.h"
 #include "complex-coords.h"
 #include "curvilinear-fields.h"
