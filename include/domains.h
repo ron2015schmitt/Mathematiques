@@ -717,6 +717,14 @@ namespace mathq {
         return grid;
       }
 
+      size_t num_elements_real() const {
+        return real_interval.num_elements();
+      }
+
+      size_t num_elements_imag() const {
+        return imag_interval.num_elements();
+      }
+
       Vector<SimpleNumber>& grid_real() const {
         return real_interval.grid();
       }

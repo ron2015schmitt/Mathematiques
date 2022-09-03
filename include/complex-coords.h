@@ -5,6 +5,19 @@
 namespace mathq {
 
 
+  template <typename GridElement, bool TimeCoord> //requires (IsComplex<GridElement>::value)
+  class ComplexCoords;
+
+
+  template <typename GridElement, bool TimeCoord>
+  bool complex_coords_test(ComplexCoords<GridElement, TimeCoord>& x) {
+    return true;
+  }
+
+  template <typename T>
+  concept IsComplexCoords = requires (T x) {
+    complex_coords_test(x);
+  };
 
 
   // ***************************************************************************
@@ -15,7 +28,7 @@ namespace mathq {
 // template<class Iter>
 // container(Iter b, Iter e) -> container<typename std::iterator_traits<Iter>::value_type>;
 
-  template <typename GridElement, bool TimeCoord>
+  template <typename GridElement, bool TimeCoord> //requires (IsComplex<GridElement>::value)
   class
     ComplexCoords : public Vector< CoordGrid<GridElement, 2+size_t(TimeCoord)>, 2+size_t(TimeCoord) > {
     // ComplexCoords : public Vector< double, Ndims > {
@@ -52,8 +65,8 @@ namespace mathq {
     // For low dimensions, this type will be Scalar, Vector or Matrix, etc for efficency
     // the dimensions of the multiarray are dynamic
 
-    ComplexDomainWrapper<GridElement> domain;
-    // ComplexDomainWrapper<GridElement> time_domain;
+    ComplexRectangle<GridElement> domain;
+    Interval<GridElement> time_domain;
 
 
     ComplexCoords() : ParentType() {
@@ -63,14 +76,17 @@ namespace mathq {
     ComplexCoords(const ComplexRectangle<GridElement>& dom) : ParentType() {
       // OUTPUT("initializer_list<ComplexDomainWrapper");
       setup_vector_indices();
-      // *this = dom;
+      domain = dom;
+      init_grids();
     }
 
 
     ComplexCoords(const ComplexRectangle<GridElement>& dom, const Interval<GridElement>& time_dom) : ParentType() {
       // OUTPUT("initializer_list<ComplexDomainWrapper");
       setup_vector_indices();
-      // *this = dom;
+      domain = dom;
+      time_domain = time_dom;
+      init_grids();
     }
 
 
@@ -135,17 +151,29 @@ namespace mathq {
       return (*this)[g];
     }
 
-    GridType& set_grid(size_t g) {
-      // ComplexDomainWrapper<GridElement> domain = domains[g];
-      // Vector<GridElement> vec;
-      // std::visit([&vec](auto&& arg) {
-      //   vec = arg.grid();
-      //   }, domain);
-      // (*this)[g] = vec;
+    Type& set_grid(size_t g) {
+      switch (g) {
+      case 0:
+        (*this)[g] = domain.grid_real();
+        break;
+      case 1:
+        (*this)[g] = domain.grid_imag();
+        break;
+      case 2:
+        (*this)[g] = time_domain.grid();
+        break;
+      }
       return *this;
     }
 
     Type& init_grids() {
+      Dimensions dims(total_num_dims);
+      dims[0] = domain.num_elements_real();
+      dims[1] = domain.num_elements_imag();
+      if constexpr (TimeCoord) {
+        dims[2] = time_domain.num_elements();
+      }
+      resize_grids(dims);
       for (size_t c = 0; c < total_num_dims; c++) {
         set_grid(c);
       }
@@ -154,39 +182,10 @@ namespace mathq {
 
 
 
-
-    ComplexCoords& operator=(ComplexRectangle<GridElement>& dom) {
-      // Dimensions dims(total_num_dims);
-      // // get each domain and size
-      // size_t i = 0;
-      // typename std::list<ComplexDomainWrapper<GridElement>>::const_iterator it;
-      // for (it = mylist.begin(); it != mylist.end(); ++it, i++) {
-      //   ComplexDomainWrapper<GridElement> domain = *it;
-      //   size_t dim;
-      //   std::visit([&dim](auto&& arg) {
-      //     dim = arg.dims()[0];
-      //     }, domain);
-      //   dims[i] = dim;
-      //   domains.push_back(domain);
-      // }
-
-      // resize_grids(dims);
-      // init_grids();
-      return *this;
-    }
-
-
     ComplexCoords& operator=(const ComplexCoords& coords) {
-      // domains.clear();
-
-      // // get each domain 
-      // for (size_t c = 0; c < coords.total_num_dims; c++) {
-      //   ComplexDomainWrapper<GridElement> domain = coords.domains[c];
-      //   domains.push_back(domain);
-      // }
-
-      // resize_grids(coords.grid_dims());
-      // init_grids();
+      domain = coords.domain;
+      time_domain = coords.time_domain;
+      init_grids();
       return *this;
     }
 

@@ -71,10 +71,11 @@ int main(int argc, char* argv[]) {
     ComplexCoords<double, false> coords(rect);
     TRDISP(coords);
     TRDISP(coords.grid_dims());
+    TRDISP(IsComplexCoords<decltype(coords)>);
     // TRDISP(coords[0]);
     // TRDISP(coords[1]);
 
-    // ECHO_CODE(MathFunction<std::complex<double>, 1, false> field0(coords));
+    // ECHO_CODE(ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords));
     // ECHO_CODE(auto& z = coords.x());
     // ECHO_CODE(field0() = -3*x);
     // TRDISP(field0);

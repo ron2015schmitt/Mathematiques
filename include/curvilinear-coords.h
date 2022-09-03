@@ -82,17 +82,17 @@ namespace mathq {
   };
 
 
-  template <typename GridElement, size_t Ndims, bool TimeCoord>
-  class CurvilinearCoordsTrait {
-  public:
-    static constexpr size_t total_num_dims = Ndims + size_t(TimeCoord);
-  };
+  // template <typename GridElement, size_t Ndims, bool TimeCoord>
+  // class CurvilinearCoordsTrait {
+  // public:
+  //   static constexpr size_t total_num_dims = Ndims + size_t(TimeCoord);
+  // };
 
-  template <typename Element, size_t Ndims, bool TimeCoord>
-  class CurvilinearCoordsTrait<std::complex<Element>, Ndims, TimeCoord> {
-  public:
-    static constexpr size_t total_num_dims = 2*Ndims + size_t(TimeCoord);
-  };
+  // template <typename Element, size_t Ndims, bool TimeCoord>
+  // class CurvilinearCoordsTrait<std::complex<Element>, Ndims, TimeCoord> {
+  // public:
+  //   static constexpr size_t total_num_dims = 2*Ndims + size_t(TimeCoord);
+  // };
 
 
   // ***************************************************************************
