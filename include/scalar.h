@@ -118,6 +118,8 @@ namespace mathq {
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
     template <class Derived>
     MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
+      TRDISP(x.recursive_dims());
+      this->recurse_dims(x.recursive_dims());
       *this = x;
     }
 
@@ -411,7 +413,7 @@ namespace mathq {
 
     template <class X>
     Type& set_equal_to(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
-      TRDISP(x[0]);
+      // TRDISP(x[0]);
       if constexpr (depth_value <= 1) {
         data_ = x[0];
       }

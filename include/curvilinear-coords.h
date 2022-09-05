@@ -122,7 +122,7 @@ namespace mathq {
     using NumberType = GridElement;
     using SimpleNumberType = typename SimpleNumberTrait<GridElement>::Type;
     using DomainType = Interval<GridElement>;
-    using GridType = ElementType;
+    using CoordGridType = ElementType;
 
     using TypeWithTime = CurvilinearCoords<GridElement, Ndims, true, Derived, dim_ints...>;
     using TypeWithoutTime = CurvilinearCoords<GridElement, Ndims, false, Derived, dim_ints...>;
@@ -218,14 +218,14 @@ namespace mathq {
       return *this;
     }
 
-    const GridType& coord(size_t g) const {
+    const CoordGridType& coord(size_t g) const {
       return (*this)[g];
     }
-    GridType& coord(size_t g) {
+    CoordGridType& coord(size_t g) {
       return (*this)[g];
     }
 
-    GridType& set_grid(size_t g) {
+    CoordGridType& set_grid(size_t g) {
       RealDomainWrapper<GridElement> domain = domains[g];
       Vector<GridElement> vec;
       std::visit([&vec](auto&& arg) {
@@ -340,6 +340,8 @@ namespace mathq {
     using TypeWithoutTime = CartesianCoords<GridElement, Ndims, false>;
 
     using ParentType = CurvilinearCoords<GridElement, Ndims, TimeCoord, Type>;
+    using CoordGridType = typename ParentType::CoordGridType;
+
     class Point;  // sub class
 
     constexpr static bool isNotAbstract = true;
@@ -396,7 +398,7 @@ namespace mathq {
       Point& at(const U... args) {
       Point& vec = *(new Point);
       for (size_t c = 0; c < total_num_dims; c++) {
-        typename ParentType::GridType& grid = ParentType::coord(c);
+        CoordGridType& grid = ParentType::coord(c);
         vec[c] = grid(args...);
       }
       return vec;
@@ -450,30 +452,30 @@ namespace mathq {
     //**********************************************************************
 
     // "read/write"
-    ParentType::GridType& x()  requires ((Ndims >= 1) && (Ndims <= 3)) {
+    CoordGridType& x()  requires ((Ndims >= 1) && (Ndims <= 3)) {
       return ParentType::coord(0);
     }
-    ParentType::GridType& y()  requires ((Ndims >= 2) && (Ndims <= 3)) {
+    CoordGridType& y()  requires ((Ndims >= 2) && (Ndims <= 3)) {
       return ParentType::coord(1);
     }
-    ParentType::GridType& z()  requires ((Ndims >= 3) && (Ndims <= 3)) {
+    CoordGridType& z()  requires ((Ndims >= 3) && (Ndims <= 3)) {
       return ParentType::coord(2);
     }
-    ParentType::GridType& t()  requires (TimeCoord) {
+    CoordGridType& t()  requires (TimeCoord) {
       return ParentType::coord(Ndims_value);
     }
 
     // "read only"
-    const ParentType::GridType& x() const requires ((Ndims >= 1) && (Ndims <= 3)) {
+    const CoordGridType& x() const requires ((Ndims >= 1) && (Ndims <= 3)) {
       return ParentType::coord(0);
     }
-    const ParentType::GridType& y() const requires ((Ndims >= 2) && (Ndims <= 3)) {
+    const CoordGridType& y() const requires ((Ndims >= 2) && (Ndims <= 3)) {
       return ParentType::coord(1);
     }
-    const ParentType::GridType& z() const requires ((Ndims >= 3) && (Ndims <= 3)) {
+    const CoordGridType& z() const requires ((Ndims >= 3) && (Ndims <= 3)) {
       return ParentType::coord(2);
     }
-    const ParentType::GridType& t() const requires (TimeCoord) {
+    const CoordGridType& t() const requires (TimeCoord) {
       return ParentType::coord(Ndims_value);
     }
 
@@ -484,30 +486,30 @@ namespace mathq {
 
     // "read/write"
 
-    ParentType::GridType& x1()  requires ((Ndims >= 1) && (Ndims <= 3)) {
+    CoordGridType& x1()  requires ((Ndims >= 1) && (Ndims <= 3)) {
       return ParentType::coord(0);
     }
-    ParentType::GridType& x2()  requires ((Ndims >= 2) && (Ndims <= 3)) {
+    CoordGridType& x2()  requires ((Ndims >= 2) && (Ndims <= 3)) {
       return ParentType::coord(1);
     }
-    ParentType::GridType& x3()  requires ((Ndims >= 3) && (Ndims <= 3)) {
+    CoordGridType& x3()  requires ((Ndims >= 3) && (Ndims <= 3)) {
       return ParentType::coord(2);
     }
-    ParentType::GridType& x0()  requires (TimeCoord) {
+    CoordGridType& x0()  requires (TimeCoord) {
       return ParentType::coord(Ndims_value);
     }
 
     // "read only"
-    const ParentType::GridType& x1() const requires ((Ndims >= 1) && (Ndims <= 3)) {
+    const CoordGridType& x1() const requires ((Ndims >= 1) && (Ndims <= 3)) {
       return ParentType::coord(0);
     }
-    const ParentType::GridType& x2() const requires ((Ndims >= 2) && (Ndims <= 3)) {
+    const CoordGridType& x2() const requires ((Ndims >= 2) && (Ndims <= 3)) {
       return ParentType::coord(1);
     }
-    const ParentType::GridType& x3() const requires ((Ndims >= 3) && (Ndims <= 3)) {
+    const CoordGridType& x3() const requires ((Ndims >= 3) && (Ndims <= 3)) {
       return ParentType::coord(2);
     }
-    const ParentType::GridType& x0() const requires (TimeCoord) {
+    const CoordGridType& x0() const requires (TimeCoord) {
       return ParentType::coord(Ndims_value);
     }
 
@@ -533,8 +535,8 @@ namespace mathq {
 
       Dimensions grid_dims = ParentType::grid_dims();
       // TRDISP(grid_dims);
-      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
-      MyGridType& mygrid = *(new MyGridType);
+      using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
+      MyCoordGridType& mygrid = *(new MyCoordGridType);
       if constexpr (mygrid.is_dynamic_value) {
         mygrid.resize(grid_dims);
       }
@@ -572,10 +574,10 @@ namespace mathq {
     auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const
       requires (IsGridlike<T>) {
 
-      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
+      using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
       constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
 
-      using ResultType = MultiArrayHelper< MyGridType, result_dims >;
+      using ResultType = MultiArrayHelper< MyCoordGridType, result_dims >;
       ResultType& result = *(new ResultType);
 
       for (size_t c = 0; c < Ndims; c++) {
@@ -592,8 +594,8 @@ namespace mathq {
     auto& div(const T& f, const Nabla<>& nabla = Nabla<>()) const
       requires ((IsReadableExpressionOrArray<T>) && (T::rank_value == 1)) {
 
-      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
-      MyGridType& result = *(new MyGridType);
+      using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
+      MyCoordGridType& result = *(new MyCoordGridType);
       if constexpr (result.is_dynamic_value) {
         Dimensions grid_dims = ParentType::grid_dims();
         result.resize(grid_dims);
@@ -616,10 +618,10 @@ namespace mathq {
     auto& curl(const T& f, const Nabla<>& nabla = Nabla<>()) const
       requires ((IsReadableExpressionOrArray<T>) && (T::rank_value == 1) && (Ndims == 3)) {
 
-      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
+      using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
       constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
 
-      using ResultType = MultiArrayHelper< MyGridType, result_dims >;
+      using ResultType = MultiArrayHelper< MyCoordGridType, result_dims >;
       ResultType& result = *(new ResultType);
       if constexpr (result.is_dynamic_value) {
         Dimensions grid_dims = ParentType::grid_dims();
@@ -817,30 +819,29 @@ namespace mathq {
 
 
 
+
+
   // ***************************************************************************
   //
   //
   //   PolarCoords<GridElement>(r, phi)
   //
   //
+  // TODO: allows 2 (Polar) or 3 Dims (Cylindrical)
   // ***************************************************************************
 
-//   template <class GridElement>
-//   class PolarCoords : public CurvilinearCoords<GridElement, 2, PolarCoords<GridElement>> {
-//   public:
-//     typedef PolarCoords<GridElement> CLASS;
-//     typedef CurvilinearCoords<GridElement, 2, CLASS> PARENT;
-//     typedef typename PARENT::PARENT BASE;
-
   template <class GridElement, bool TimeCoord>
-  class PolarCoords : public CurvilinearCoords<GridElement, 1, TimeCoord, PolarCoords<GridElement, TimeCoord>> {
+  class PolarCoords : public CurvilinearCoords<GridElement, 2, TimeCoord, PolarCoords<GridElement, TimeCoord>> {
   public:
-    static constexpr size_t Ndims = 1;
+
+    static constexpr size_t Ndims = 2;
     using Type = PolarCoords<GridElement, TimeCoord>;
     using TypeWithTime = PolarCoords<GridElement, true>;
     using TypeWithoutTime = PolarCoords<GridElement, false>;
 
     using ParentType = CurvilinearCoords<GridElement, Ndims, TimeCoord, Type>;
+    using CoordGridType = typename ParentType::CoordGridType;
+    using GridType = MultiArray<GridElement, Ndims>;
     class Point;  // sub class
 
     constexpr static bool isNotAbstract = true;
@@ -857,13 +858,13 @@ namespace mathq {
       //Polar coords: factory, constructor, to method.
 
       // template<size_t TEMP = Ndims>
-      // static EnableMethodIf<TEMP==2, PolarCoords<GridElement, Ndims>> fromPolar(const GridElement& r, const GridElement& phi) {
+      // static EnableMethodIf<TEMP==2, Type> fromPolar(const GridElement& r, const GridElement& phi) {
       //   GridElement x = r * std::cos(phi);
       //   GridElement y = r * std::sin(phi);
-      //   return PolarCoords<GridElement, Ndims>(x, y);
+      //   return Type(x, y);
       // }
       // template<size_t TEMP = Ndims, EnableIf<(TEMP==2)> = 0>
-      // explicit PolarCoords<GridElement, Ndims>(const PolarCoords<GridElement>& v2) {
+      // explicit Type(const PolarCoords<GridElement>& v2) {
       //   (*this)[0] = v2.r() * std::cos(v2.phi());
       //   (*this)[1] = v2.r() * std::sin(v2.phi());
       // }
@@ -919,7 +920,6 @@ namespace mathq {
     //     }
 
 
-    //     // const std::vector<bool> periodic = { false, true };
 
 
       // coordinates at a grid point
@@ -927,250 +927,148 @@ namespace mathq {
       Point& at(const U... args) {
       Point& vec = *(new Point);
       for (size_t c = 0; c < total_num_dims; c++) {
-        typename ParentType::GridType& grid = ParentType::coord(c);
+        CoordGridType& grid = ParentType::coord(c);
         vec[c] = grid(args...);
       }
       return vec;
     }
 
-    // Jacobian 
-    GridElement& J() const {
-      GridElement& jacob = *(new GridElement);
-      jacob = 1;
-      return jacob;
+
+
+    Type& toCartesian() const {
+      return *(new Type(*this));
     }
 
-    // TODO: use diagonal specialty matrix
-    Matrix<GridElement, Ndims, Ndims>& g() const {
-      Matrix<GridElement, Ndims, Ndims>& metric = *(new Matrix<GridElement, Ndims, Ndims>);
-      for (size_t r = 0; r < Ndims; r++) {
-        for (size_t c = 0; c < Ndims; c++) {
-          metric(r, c) = (r==c) ? 1 : 0;
-        }
-      }
-      return metric;
+
+    // unit vectors
+    Vector<GridType, 2>& basis_r() const {
+      const CoordGridType& r = (*this)[0];
+      const CoordGridType& phi = (*this)[1];
+      auto& vec = *(new Vector<GridType, 2>);
+      vec[0] = cos(phi);
+      vec[1] = sin(phi);
+      return vec;
     }
-
-    // PolarCoords<GridElement, Ndims>& pos() const {
-    //   return toCartesian();
-    // }
-    // PolarCoords<GridElement, Ndims>& toCartesian() const {
-    //   return *(new PolarCoords<GridElement, Ndims>(*this));
-    // }
-
-    Vector<GridElement, Ndims>& basis_vec(size_t n) const {
-      Vector<GridElement, Ndims>& vec = *(new Vector<GridElement, Ndims>);
-      for (size_t c = 0; c < Ndims; c++) {
-        vec[c] = (c == n) ? 1 : 0;
-      }
+    Vector<GridType, 2>& basis_phi() const {
+      const CoordGridType& r = (*this)[0];
+      const CoordGridType& phi = (*this)[1];
+      auto& vec = *(new Vector<GridType, 2>);
+      vec[0] = -sin(phi);
+      vec[1] = cos(phi);
       return vec;
     }
 
-    Vector<Vector<GridElement, Ndims>, Ndims>& basis() const {
-      Vector<Vector<GridElement, Ndims>, Ndims>& vec = *(new Vector<Vector<GridElement, Ndims>, Ndims>);
+    Vector<GridType, 2>& basis_vec(size_t n) const {
+      if (n == 0) {
+        return basis_r();
+      }
+      else {
+        return basis_phi();
+      }
+    }
+
+    Vector<Vector<GridType, Ndims>, Ndims>& basis() const {
+      Vector<Vector<GridType, Ndims>, Ndims>& vec = *(new Vector<Vector<GridType, Ndims>, Ndims>);
       for (size_t c = 0; c < Ndims; c++) {
         vec[c] = basis_vec(c);
       }
       return vec;
-
     }
 
-    //     CartesianCoords<GridElement, 2>& pos() const {
-    //       return toCartesian();
-    //     }
 
 
-    //     // unit vectors
-    //     Vector<GridElement, 2>& basis_r() const {
-    //       const GridElement& r = (*this)[0];
-    //       const GridElement& phi = (*this)[1];
-    //       return *(new Vector<GridElement, 2>{ std::cos(phi), std::sin(phi) });
-    //     }
-    //     Vector<GridElement, 2>& basis_phi() const {
-    //       const GridElement& r = (*this)[0];
-    //       const GridElement& phi = (*this)[1];
-    //       return *(new Vector<GridElement, 2>{ -std::sin(phi), std::cos(phi) });
-    //     }
-
-    //     Vector<GridElement, 2>& basis_vec(size_t n) const {
-    //       if (n == 0) {
-    //         return basis_r();
-    //       }
-    //       else {
-    //         return basis_phi();
-    //       }
-    //     }
-
-
-    //     // Jacobian 
-    //     GridElement J() const {
-    //       const GridElement& r = (*this)[0];
-    //       const GridElement& phi = (*this)[1];
-    //       return r;
-    //     }
-
-    //     // metric tensor g^{ij} 
-    //     Matrix<GridElement, 2, 2> g() const {
-    //       const GridElement& r = (*this)[0];
-    //       const GridElement& phi = (*this)[1];
-    //       Matrix<GridElement, 2, 2> metric;
-    //       metric = { ones<GridElement>(), zeros<GridElement>(), zeros<GridElement>(), r*r };
-    //       return metric;
-    //     }
-
-    //     inline std::string classname() const {
-    //       using namespace display;
-    //       std::string s = "PolarCoords";
-    //       s += StyledString::get(ANGLE1).get();
-    //       GridElement d;
-    //       s += getTypeName(d);
-    //       s += StyledString::get(ANGLE2).get();
-    //       return s;
-    //     }
-
-
-    //     inline friend std::ostream& operator<<(std::ostream& stream, const PolarCoords<GridElement>& var) {
-    //       const GridElement& r = var[0];
-    //       const GridElement& phi = var[1];
-    //       stream << "(r=";
-    //       stream << r;
-    //       stream << ", φ=";
-    //       stream << phi;
-    //       stream << ")";
-    //       return stream;
-    //     }
-
-
-    //   };
-
-
-
-
-      //**********************************************************************
-      // POLAR                Named coordinate acces
-      //**********************************************************************
-
-      // "read/write"
-    ParentType::GridType& x()  requires ((Ndims >= 1) && (Ndims <= 3)) {
-      return ParentType::coord(0);
-    }
-    ParentType::GridType& y()  requires ((Ndims >= 2) && (Ndims <= 3)) {
-      return ParentType::coord(1);
-    }
-    ParentType::GridType& z()  requires ((Ndims >= 3) && (Ndims <= 3)) {
-      return ParentType::coord(2);
-    }
-    ParentType::GridType& t()  requires (TimeCoord) {
-      return ParentType::coord(Ndims_value);
+    // Jacobian 
+    CoordGridType& J() const {
+      CoordGridType& r = *(new CoordGridType);
+      r = (*this)[0];
+      return r;
     }
 
-    // "read only"
-    const ParentType::GridType& x() const requires ((Ndims >= 1) && (Ndims <= 3)) {
-      return ParentType::coord(0);
+    // metric tensor g^{ij} 
+    Matrix<GridType, 2, 2> g() const {
+      const CoordGridType& r = (*this)[0];
+      Matrix<GridType, 2, 2> metric;
+      metric(0, 0).resize(r.dims()) = 1;
+      metric(0, 1).resize(r.dims()) = 0;
+      metric(1, 0).resize(r.dims()) = 0;
+      metric(1, 1) = r * r;
+      return metric;
     }
-    const ParentType::GridType& y() const requires ((Ndims >= 2) && (Ndims <= 3)) {
-      return ParentType::coord(1);
-    }
-    const ParentType::GridType& z() const requires ((Ndims >= 3) && (Ndims <= 3)) {
-      return ParentType::coord(2);
-    }
-    const ParentType::GridType& t() const requires (TimeCoord) {
-      return ParentType::coord(Ndims_value);
-    }
+
+
 
 
     //**********************************************************************
-    //  POLAR              Named coordinate access: x1,x2,x3,x0
+    //  POLAR              Named coordinate access: r,phi,t 
     //**********************************************************************
 
     // "read/write"
+    CoordGridType& r() {
+      return (*this)[0];
+    }
+    CoordGridType& phi() {
+      return (*this)[1];
+    }
+    CoordGridType& t() requires (TimeCoord) {
+      return (*this)[2];
+    }
 
-    ParentType::GridType& x1()  requires ((Ndims >= 1) && (Ndims <= 3)) {
-      return ParentType::coord(0);
-    }
-    ParentType::GridType& x2()  requires ((Ndims >= 2) && (Ndims <= 3)) {
-      return ParentType::coord(1);
-    }
-    ParentType::GridType& x3()  requires ((Ndims >= 3) && (Ndims <= 3)) {
-      return ParentType::coord(2);
-    }
-    ParentType::GridType& x0()  requires (TimeCoord) {
-      return ParentType::coord(Ndims_value);
-    }
 
     // "read only"
-    const ParentType::GridType& x1() const requires ((Ndims >= 1) && (Ndims <= 3)) {
-      return ParentType::coord(0);
+
+    const CoordGridType& r() const {
+      return (*this)[0];
     }
-    const ParentType::GridType& x2() const requires ((Ndims >= 2) && (Ndims <= 3)) {
-      return ParentType::coord(1);
+    const CoordGridType& phi() const {
+      return (*this)[1];
     }
-    const ParentType::GridType& x3() const requires ((Ndims >= 3) && (Ndims <= 3)) {
-      return ParentType::coord(2);
-    }
-    const ParentType::GridType& x0() const requires (TimeCoord) {
-      return ParentType::coord(Ndims_value);
+    const CoordGridType& t() const requires (TimeCoord) {
+      return (*this)[2];
     }
 
-    //     GridElement& r() const {
-    //       return (*this)[0];
-    //     }
-    //     GridElement& phi() const {
-    //       return (*this)[1];
-    //     }
-
-    //     PolarCoords<GridElement>& r(const GridElement& r) const {
-    //       (*this)[0] = r;
-    //       return *this;
-    //     }
-    //     PolarCoords<GridElement>& phi(const GridElement& phi) const {
-    //       (*this)[1] = phi;
-    //       return *this;
-    //     }
 
 
-    //     GridElement x() const {
-    //       const GridElement& r = (*this)[0];
-    //       const GridElement& phi = (*this)[1];
-    //       return r * std::cos(phi);
-    //     }
-    //     GridElement x1() const {
-    //       return x();
-    //     }
+    CoordGridType x() const {
+      const CoordGridType& r = (*this)[0];
+      const CoordGridType& phi = (*this)[1];
+      return r * std::cos(phi);
+    }
+    CoordGridType x1() const {
+      return x();
+    }
 
-    //     GridElement y() const {
-    //       const GridElement& r = (*this)[0];
-    //       const GridElement& phi = (*this)[1];
-    //       return r * std::sin(phi);
-    //     }
-    //     GridElement x2() const {
-    //       return y();
-    //     }
+    CoordGridType y() const {
+      const CoordGridType& r = (*this)[0];
+      const CoordGridType& phi = (*this)[1];
+      return r * std::sin(phi);
+    }
+    CoordGridType x2() const {
+      return y();
+    }
 
 
 
-      //**********************************************************************
-      //   POLAR              Derivatives
-      //  These all except bare grids, not CurvilinearFields.
-      //
-      // You need to use the stand alone functions and nabla operators for 
-      // CurvilinearFields
-      //**********************************************************************
+    //**********************************************************************
+    //   POLAR              Derivatives
+    //  These all except bare grids, not CurvilinearFields.
+    //
+    // You need to use the stand alone functions and nabla operators for 
+    // CurvilinearFields
+    //**********************************************************************
 
-      //
-      // df/dx_c 
-      //     - partial derivative - with respect to coordinate c  (zero-referenced)
-      //     - f is a single grid
-      //
+    //
+    // df/dx_c 
+    //     - partial derivative - with respect to coordinate c  (zero-referenced)
+    //     - f is a single grid
+    //
 
     template <class T>
-    auto& pd(const T& f, const size_t c, const Nabla<>& nabla = Nabla<>()) const
-      requires (IsGridlike<T>) {
+    auto& pd(const T& f, const size_t c, const Nabla<>& nabla = Nabla<>()) const {
 
       Dimensions grid_dims = ParentType::grid_dims();
       // TRDISP(grid_dims);
-      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
-      MyGridType& mygrid = *(new MyGridType);
+      using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
+      MyCoordGridType& mygrid = *(new MyCoordGridType);
       if constexpr (mygrid.is_dynamic_value) {
         mygrid.resize(grid_dims);
       }
@@ -1189,7 +1087,8 @@ namespace mathq {
         auto vec = get_vector(f, c, inds);
         size_t dim;
 
-        std::visit([&vec, &nabla](auto&& arg) {
+        const GridElement period = (c == 1) ? 2*3.141592653589793238462643383279 : 0;
+        std::visit([&vec, &nabla, &period](auto&& arg) {
           arg.deriv(vec, 1, nabla, 0);
           }, domain);
 
@@ -1205,18 +1104,16 @@ namespace mathq {
     //
 
     template <class T>
-    auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires (IsGridlike<T>) {
+    auto& grad(const T& f, const Nabla<>& nabla = Nabla<>()) const {
 
-      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
+      using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
       constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
 
-      using ResultType = MultiArrayHelper< MyGridType, result_dims >;
+      using ResultType = MultiArrayHelper< MyCoordGridType, result_dims >;
       ResultType& result = *(new ResultType);
 
-      for (size_t c = 0; c < Ndims; c++) {
-        result[c] = pd(f, c, nabla);
-      }
+      result[0] = pd(f, 0, nabla);
+      result[1] = pd(f, 1, nabla)/r();
       return result;
     }
 
@@ -1225,23 +1122,19 @@ namespace mathq {
     //
 
     template <class T>
-    auto& div(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((IsReadableExpressionOrArray<T>) && (T::rank_value == 1)) {
+    auto& div(const T& f, const Nabla<>& nabla = Nabla<>()) const {
 
-      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
-      MyGridType& result = *(new MyGridType);
-      if constexpr (result.is_dynamic_value) {
-        Dimensions grid_dims = ParentType::grid_dims();
-        result.resize(grid_dims);
-      }
+      using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
+      MyCoordGridType& result = *(new MyCoordGridType);
+      Dimensions grid_dims = ParentType::grid_dims();
+      result.resize(grid_dims);
       result = 0;
-
-      for (size_t c = 0; c < Ndims; c++) {
-        result = result + pd(f[c], c, nabla);
-      }
+      MyCoordGridType temp(grid_dims);
+      temp = r()*f[0];
+      result = result + pd(temp, 0, nabla)/r();
+      result = result + pd(f[1], 1, nabla)/r();
       return result;
     }
-
 
 
     //
@@ -1252,57 +1145,46 @@ namespace mathq {
     auto& curl(const T& f, const Nabla<>& nabla = Nabla<>()) const
       requires ((IsReadableExpressionOrArray<T>) && (T::rank_value == 1) && (Ndims == 3)) {
 
-      using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
+      using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
       constexpr auto result_dims = array_of_one_value<size_t, 1, Ndims>(); // Vector<Ndims>
 
-      using ResultType = MultiArrayHelper< MyGridType, result_dims >;
+      using ResultType = MultiArrayHelper< MyCoordGridType, result_dims >;
       ResultType& result = *(new ResultType);
       if constexpr (result.is_dynamic_value) {
         Dimensions grid_dims = ParentType::grid_dims();
         result.resize(grid_dims);
       }
-      result[0] = pd(f[2], 1, nabla) - pd(f[1], 2, nabla);
+      result[0] = pd(f[2], 1, nabla)/r() - pd(f[1], 2, nabla);
       result[1] = pd(f[0], 2, nabla) - pd(f[2], 0, nabla);
-      result[2] = pd(f[1], 0, nabla) - pd(f[0], 1, nabla);
+      result[2] = (pd(r()*f[1], 0, nabla) - pd(f[0], 1, nabla))/r();
       return result;
     }
 
     //
-    // df/dx - for convenience
+    // df/dr - for convenience
     //
 
     template <class T>
-    auto& pdx(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((Ndims >= 1) && (Ndims <= 3)) {
+    auto& pd_r(const T& f, const Nabla<>& nabla = Nabla<>()) const {
       return pd(f, 0, nabla);
     }
 
     //
-    // df/dy - for convenience
+    // df/dphi - for convenience
     //
 
     template <class T>
-    auto& pdy(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((Ndims >= 2) && (Ndims <= 3)) {
+    auto& pd_phi(const T& f, const Nabla<>& nabla = Nabla<>()) const {
       return pd(f, 1, nabla);
     }
 
-    //
-    // df/dz - for convenience
-    //
-
-    template <class T>
-    auto& pdz(const T& f, const Nabla<>& nabla = Nabla<>()) const
-      requires ((Ndims >= 3) && (Ndims <= 3)) {
-      return pd(f, 2, nabla);
-    }
 
     //
     // df/dt - for convenience
     //
 
     template <class T>
-    auto& pdt(const T& f, const Nabla<>& nabla = Nabla<>()) const
+    auto& pd_t(const T& f, const Nabla<>& nabla = Nabla<>()) const
       requires (TimeCoord) {
       return pd(f, Ndims, nabla);
     }
@@ -1381,53 +1263,31 @@ namespace mathq {
           return s;
         }
       }
-      if constexpr (Ndims == 1) {
-        s += "x";
-      }
-      else if constexpr (Ndims == 2) {
+      if constexpr (Ndims == 2) {
         switch (n) {
         case 0:
-          s += "x";
+          s += "r";
           break;
         case 1:
-          s += "y";
+          s += "𝜑";
           break;
         }
       }
       else if constexpr (Ndims == 3) {
         switch (n) {
         case 0:
-          s += "x";
+          s += "r";
           break;
         case 1:
-          s += "y";
+          s += "𝜑";
           break;
         case 2:
           s += "z";
           break;
         }
       }
-      else {
-        s += "x";
-        s += std::to_string(n+1);
-      }
       return s;
     }
-
-    //     std::vector<std::string>& names() const {
-    //       std::vector<std::string> names = { "r","𝜑" };
-    //       return names;
-    //     }
-    //     const std::string& name(size_t n) const {
-    //       if (n == 0) {
-    //         return std::string("r");
-    //       }
-    //       else {
-    //         return std::string("phi");
-    //       }
-    //     }
-
-
 
     class Point : public Vector<GridElement, total_num_dims> {
     public:

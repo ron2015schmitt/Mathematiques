@@ -209,31 +209,71 @@ int main(int argc, char* argv[]) {
     TRDISP(grad(field));
     TRDISP(div(grad(field)));
 
+
   }
+
 
   {
-    subtitle("CurvilinearField - Complex 1D");
-    // ECHO_CODE(CartesianCoords<std::complex<double>, 1, false> coords({
-    //     Interval<double>::interval(-1,1,5),
-    //   }));
-    // // TRDISP(coords1);
-    // // TRDISP(coords1.grid_dims());
-    // // TRDISP(coords1[0]);
-    // // TRDISP(coords1[1]);
+    title("2D PolarCoords & CurvilinearField");
 
-    // ECHO_CODE(MathFunction<std::complex<double>, 1, false> field0(coords));
-    // ECHO_CODE(auto& z = coords.x());
-    // ECHO_CODE(field0() = -3*x);
-    // TRDISP(field0);
+    subtitle("2D PolarCoords Properties");
 
-    // TRDISP(x);
-    // TRDISP(y);
+    ECHO_CODE(PolarCoords<double, false> coords({
+        Interval<double>::o_interval_c(0,1,3),
+        Interval<double>::c_interval_o(0,2*3.14159265,5),
+      }));
+    TRDISP(coords);
+    TRDISP(HasTimeCoord<decltype(coords)>);
+    TRDISP(HasNotTimeCoord<decltype(coords)>);
 
-    // TRDISP(IsGridlike<decltype(x)>);
-    // TRDISP(IsMultiArray<decltype(x)>);
-    // TRDISP(IsWritableExpressionOrArray<decltype(x)>);
-    // TRDISP(x.isNotExpression);
+    TRDISP(coords.r());
+    TRDISP(coords.phi());
+    TRDISP(coords.dims());
+
+    TRDISP(coords.J());
+    TRDISP(coords.g());
+    TRDISP(coords.basis_vec(0));
+    TRDISP(coords.basis_vec(1));
+    TRDISP(coords.basis());
+    TRDISP(coords.at(0, 0));
+    TRDISP(coords.at(1, 2));
+    TRDISP(coords.at(0, 0)+coords.at(1, 2));
+
+
+    subtitle("2D PolarCoords Scalar CurvilinearField");
+    ECHO_CODE(CurvilinearField<double, 0, decltype(coords)> field(coords));
+
+    ECHO_CODE(auto& r = coords.r());
+    ECHO_CODE(auto& phi = coords.phi());
+    ECHO_CODE(field() = -4*r + 5*phi);
+    TRDISP(field);
+
+
+    subtitle("2D  PolarCoords Partials of Scalar CurvilinearField");
+    TRDISP(pd(field, 0));
+    TRDISP(pd(field, 1));
+    TRDISP(pd(field, 1)()/r);
+
+    subtitle("2D PolarCoords Gradient of Scalar CurvilinearField");
+    TRDISP(grad(field));
+
+    subtitle("Divergence of a 2D PolarCoords CurvilinearField - ex 1");
+    // div
+    ECHO_CODE(auto A = grad(field));
+    TRDISP(A);
+    // TRDISP(coords.div(A));
+    TRDISP(div(A));
+    // TRDISP(nabla | A);
+
+
+    subtitle("Divergence of a 2D+1 CurvilinearField - ex 2");
+    ECHO_CODE(field() = r*r);
+    TRDISP(grad(field));
+    TRDISP(div(grad(field)));
+
+
   }
+
 
 
   return 0;
