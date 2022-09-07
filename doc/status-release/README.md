@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.107-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.108-c++20</h1>
 
 <details>
 
@@ -8,7 +8,7 @@
 1. [License](../license/README.md)<br>
 2. [About](../about/README.md)<br>
 3. _Status, Planned Work & Release Notes_ <br>
-4. [Description and Example Usage](../overview/README.md)<br>
+4. [Introduction with Examples](../overview/README.md)<br>
 5. [Installation](../installation/README.md)<br>
 6. [Your First Mathématiques Project](../first-project/README.md)<br>
 7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
@@ -25,29 +25,32 @@
 
 ## Status
 
-Currently, in 2022, Mathématiques is undergoing the final changes to make it sponsorship-ready.  This process includes full documentation in markdown, finalizing the syntax, and code refactoring.
-
-## News 
-
-The first two refactoring projects have been completed.
-
+As of v0.41, Mathématiques is now sponsorship-ready.  The core functionality has been implemented, demonstrating its feasibility and utility.
 
 ## Coming soon
 
-+ Vector Calculus
-  + curvilinear coordinate systems
-
-+ Tensor Calculus in generalized coordinates / Differential Geometry
-  + covariant and contravariant tensors
++ Tensor Calculus / Differential Geometry in generalized coordinates for flat or curved space-time
+  + covariant and contravariant tensor fields
+  + differential forms
+  + tensor operations
 
 + Documenation
-  + Rewritten User Manual
-  + _Usage Guide_, covering all the functionality
-  + New _Developer Guide_
-
+  + Complete the _Usage Guide_, covering all the functionality
+  + Complete the _Developer Guide_
 
 
 ## Release Notes
+
+### **0.41** Vector Calculus
+  + New class hierarchies
+    + `Domain` - define regions on the real line or complex plane
+    + `CurvilinearCoords` - define multivariable coordinate systems in various dimensions
+    + `CurvilinearField` - define functions (ie scalar, vector, tensor fields) for multivariable, vector, and complex-number calculus
+      + partial derivatives
+      + div, grad, curl
+    + `Tensor` - contravariant and covariant *algebraic* tensors as subclass of MultiArrays
+      + tensor products
+      + tensor contraction
 
 ### **0.40** MultiArray Refactoring
   + changed numbering system to start with 0. V3.5 is now 0.40.
@@ -123,6 +126,6 @@ The first two refactoring projects have been completed.
   + CI/CT using Docker images in progress
 
 
-| ⇦ <br />[About](../about/README.md)  | [Documentation](../README.md)<br />Status, Planned Work & Release Notes<br /><img width=1000/> | ⇨ <br />[Description and Example Usage](../overview/README.md)   |
+| ⇦ <br />[About](../about/README.md)  | [Documentation](../README.md)<br />Status, Planned Work & Release Notes<br /><img width=1000/> | ⇨ <br />[Introduction with Examples](../overview/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

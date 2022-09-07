@@ -4,17 +4,17 @@
 
 <summary>Documentation</summary>
 
-# [Documentation](../../../README.md)<br>
-1. [License](../../../license/README.md)<br>
-2. [About](../../../about/README.md)<br>
-3. [Status, Planned Work & Release Notes](../../../status-release/README.md)<br>
-4. [Introduction with Examples](../../../overview/README.md)<br>
-5. [Installation](../../../installation/README.md)<br>
-6. [Your First Mathématiques Project](../../../first-project/README.md)<br>
-7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
-8. [Benchmarks](../../../benchmarks/README.md)<br>
-9. [Tests](../../../test/README.md)<br>
-10. [Developer Guide: Modifying and Extending Mathématiques](../../../developer-guide/README.md)<br>
+# [Documentation](../../README.md)<br>
+1. [License](../../license/README.md)<br>
+2. [About](../../about/README.md)<br>
+3. [Status, Planned Work & Release Notes](../../status-release/README.md)<br>
+4. _Introduction with Examples_ <br>
+5. [Installation](../../installation/README.md)<br>
+6. [Your First Mathématiques Project](../../first-project/README.md)<br>
+7. [Usage Guide: Syntax, Data Types, Functions, etc](../../user-guide/README.md)<br>
+8. [Benchmarks](../../benchmarks/README.md)<br>
+9. [Tests](../../test/README.md)<br>
+10. [Developer Guide: Modifying and Extending Mathématiques](../../developer-guide/README.md)<br>
 
 
 </details>
@@ -23,45 +23,18 @@
 
 <details>
 
-<summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>
+<summary>Introduction with Examples</summary>
 
-# [7. Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
-7.1. [Usage Guide Notation](../../notation/README.md)<br>
-7.2. _Scalar Types (Real, Imaginary, Complex & Quaternion)_ <br>
-7.3. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>
-7.4. [Operators](../../operators/README.md)<br>
-7.5. [Functions](../../functions/README.md)<br>
-7.6. [Linear Algebra](../../linear-algebra/README.md)<br>
-7.7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>
-7.8. [Ranges and Grids](../../ranges-grids/README.md)<br>
-7.9. [Calculus](../../calculus/README.md)<br>
-7.10. [Vector Calculus](../../vector-calculus/README.md)<br>
-7.11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>
-7.12. [Display of Results](../../display/README.md)<br>
-7.13. [FILE I/O](../../file-io/README.md)<br>
-7.14. [Debug Modes](../../debug/README.md)<br>
+# [4. Introduction with Examples](../README.md)<br>
+
+4.1. _Mixed Math: Real, Imaginary, Complex, Quaternion_ <br>
 
 
 </details>
 
 
 
-<details>
-
-<summary>Scalar Types (Real, Imaginary, Complex & Quaternion)</summary>
-
-# [7.2. Scalar Types (Real, Imaginary, Complex & Quaternion)](../README.md)<br>
-7.2.1. [Reals](../real/README.md)<br>
-7.2.2. [Complex numbers](../complex/README.md)<br>
-7.2.3. [Imaginary numbers](../imaginary/README.md)<br>
-7.2.4. _Quaternions_ <br>
-
-
-</details>
-
-
-
-# 7.2.4. Quaternions
+# 4.1. Mixed Math: Real, Imaginary, Complex, Quaternion
 
 
 
@@ -256,6 +229,6 @@ auto v = Vector<Quaternion<double>>({ 16 + 2*i + 3*j + 13*k, 5 + 11*i + 10*j + 8
 ```
 
 
-| ⇦ <br />[Imaginary numbers](../imaginary/README.md)  | [Scalar Types (Real, Imaginary, Complex & Quaternion)](../README.md)<br />Quaternions<br /><img width=1000/> | ⇨ <br />   |
+| ⇦ <br />  | [Introduction with Examples](../README.md)<br />Mixed Math: Real, Imaginary, Complex, Quaternion<br /><img width=1000/> | ⇨ <br />   |
 | ------------ | :-------------------------------: | ------------ |
 

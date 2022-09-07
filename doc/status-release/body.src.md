@@ -1,28 +1,31 @@
 ## Status
 
-Currently, in 2022, Mathématiques is undergoing the final changes to make it sponsorship-ready.  This process includes full documentation in markdown, finalizing the syntax, and code refactoring.
-
-## News 
-
-The first two refactoring projects have been completed.
-
+As of v0.41, Mathématiques is now sponsorship-ready.  The core functionality has been implemented, demonstrating its feasibility and utility.
 
 ## Coming soon
 
-+ Vector Calculus
-  + curvilinear coordinate systems
-
-+ Tensor Calculus in generalized coordinates / Differential Geometry
-  + covariant and contravariant tensors
++ Tensor Calculus / Differential Geometry in generalized coordinates for flat or curved space-time
+  + covariant and contravariant tensor fields
+  + differential forms
+  + tensor operations
 
 + Documenation
-  + Rewritten User Manual
-  + _Usage Guide_, covering all the functionality
-  + New _Developer Guide_
-
+  + Complete the _Usage Guide_, covering all the functionality
+  + Complete the _Developer Guide_
 
 
 ## Release Notes
+
+### **0.41** Vector Calculus
+  + New class hierarchies
+    + `Domain` - define regions on the real line or complex plane
+    + `CurvilinearCoords` - define multivariable coordinate systems in various dimensions
+    + `CurvilinearField` - define functions (ie scalar, vector, tensor fields) for multivariable, vector, and complex-number calculus
+      + partial derivatives
+      + div, grad, curl
+    + `Tensor` - contravariant and covariant *algebraic* tensors as subclass of MultiArrays
+      + tensor products
+      + tensor contraction
 
 ### **0.40** MultiArray Refactoring
   + changed numbering system to start with 0. V3.5 is now 0.40.
