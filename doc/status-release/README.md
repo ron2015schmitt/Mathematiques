@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.108-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.109-c++20</h1>
 
 <details>
 
@@ -8,7 +8,7 @@
 1. [License](../license/README.md)<br>
 2. [About](../about/README.md)<br>
 3. _Status, Planned Work & Release Notes_ <br>
-4. [Introduction with Examples](../overview/README.md)<br>
+4. [Introduction with Examples](../intro/README.md)<br>
 5. [Installation](../installation/README.md)<br>
 6. [Your First Mathématiques Project](../first-project/README.md)<br>
 7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
@@ -126,6 +126,6 @@ As of v0.41, Mathématiques is now sponsorship-ready.  The core functionality ha
   + CI/CT using Docker images in progress
 
 
-| ⇦ <br />[About](../about/README.md)  | [Documentation](../README.md)<br />Status, Planned Work & Release Notes<br /><img width=1000/> | ⇨ <br />[Introduction with Examples](../overview/README.md)   |
+| ⇦ <br />[About](../about/README.md)  | [Documentation](../README.md)<br />Status, Planned Work & Release Notes<br /><img width=1000/> | ⇨ <br />[Introduction with Examples](../intro/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

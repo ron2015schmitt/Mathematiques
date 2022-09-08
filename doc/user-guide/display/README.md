@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.108-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.109-c++20</h1>
 
 <details>
 
@@ -8,7 +8,7 @@
 1. [License](../../license/README.md)<br>
 2. [About](../../about/README.md)<br>
 3. [Status, Planned Work & Release Notes](../../status-release/README.md)<br>
-4. [Introduction with Examples](../../overview/README.md)<br>
+4. [Introduction with Examples](../../intro/README.md)<br>
 5. [Installation](../../installation/README.md)<br>
 6. [Your First Mathématiques Project](../../first-project/README.md)<br>
 7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
@@ -27,7 +27,7 @@
 
 # [7. Usage Guide: Syntax, Data Types, Functions, etc](../README.md)<br>
 7.1. [Usage Guide Notation](../notation/README.md)<br>
-7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../scalars/README.md)<br>
+7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../numbers/README.md)<br>
 7.3. [Container Types (Vector, Matrix & MultiArray)](../multiarrays/README.md)<br>
 7.4. [Operators](../operators/README.md)<br>
 7.5. [Functions](../functions/README.md)<br>

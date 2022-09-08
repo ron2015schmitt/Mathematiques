@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.108-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.109-c++20</h1>
 
 <details>
 
@@ -8,7 +8,7 @@
 1. [License](../../../license/README.md)<br>
 2. [About](../../../about/README.md)<br>
 3. [Status, Planned Work & Release Notes](../../../status-release/README.md)<br>
-4. [Introduction with Examples](../../../overview/README.md)<br>
+4. [Introduction with Examples](../../../intro/README.md)<br>
 5. [Installation](../../../installation/README.md)<br>
 6. [Your First Mathématiques Project](../../../first-project/README.md)<br>
 7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
@@ -116,8 +116,8 @@ Two associated constants are defined: `true` and `false`.
 ```C++
 ☀ CHAR_BIT*sizeof(bool) ➜ 8 bits;
 
-☀ false ➜ bool 0;
-☀ true ➜ bool 1;
+☀ false ➜ bool false;
+☀ true ➜ bool true;
 ```
 
 <br>

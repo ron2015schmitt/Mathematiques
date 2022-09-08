@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.108-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.109-c++20</h1>
 
 <details>
 
@@ -8,7 +8,7 @@
 1. [License](../../../license/README.md)<br>
 2. [About](../../../about/README.md)<br>
 3. [Status, Planned Work & Release Notes](../../../status-release/README.md)<br>
-4. [Introduction with Examples](../../../overview/README.md)<br>
+4. [Introduction with Examples](../../../intro/README.md)<br>
 5. [Installation](../../../installation/README.md)<br>
 6. [Your First Mathématiques Project](../../../first-project/README.md)<br>
 7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
@@ -27,7 +27,7 @@
 
 # [7. Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
 7.1. [Usage Guide Notation](../../notation/README.md)<br>
-7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../scalars/README.md)<br>
+7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../numbers/README.md)<br>
 7.3. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>
 7.4. _Operators_ <br>
 7.5. [Functions](../../functions/README.md)<br>
@@ -84,22 +84,22 @@ For details refer [Logical Operators](https://en.cppreference.com/w/c/language/o
 Examples:
 
 ```C++
-☀ true ➜ bool 1;
-☀ false ➜ bool 0;
-☀ !true ➜ bool 0;
-☀ !false ➜ bool 1;
-☀ true && true ➜ bool 1;
-☀ true && false ➜ bool 0;
-☀ true || false ➜ bool 1;
+☀ true ➜ bool true;
+☀ false ➜ bool false;
+☀ !true ➜ bool false;
+☀ !false ➜ bool true;
+☀ true && true ➜ bool true;
+☀ true && false ➜ bool false;
+☀ true || false ➜ bool true;
 ```
 * In C++ logical operators work for all real and integer types: `0` corresponds to `false` and all non-zero values correspond to `true`
 
 ```C++
-☀ !true ➜ bool 0;
-☀ !8 ➜ bool 0;
-☀ !!8.293 ➜ bool 1;
-☀ true && 3 ➜ bool 1;
-☀ true && 0 ➜ bool 0;
+☀ !true ➜ bool false;
+☀ !8 ➜ bool false;
+☀ !!8.293 ➜ bool true;
+☀ true && 3 ➜ bool true;
+☀ true && 0 ➜ bool false;
 ```
 
 <br>

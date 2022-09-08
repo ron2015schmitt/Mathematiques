@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.108-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.109-c++20</h1>
 
 <details>
 
@@ -24,10 +24,3 @@
 # 4. Introduction with Examples
 
 4.1. [Mixed Math: Real, Imaginary, Complex, Quaternion](numbers/README.md)<br>
-
-## Introduction
-
-Mathématiques is numerical library that looks more like math than code. It can perform linear algebra, calculus, vector calculus, etc in C++ via simple MATLAB-like syntax while also providing run-time performance and memory usage of hand-coded C or Fortran.  
-
-_Mathématiques distinguishes itself from other libraries by an elegance and versatility that are only possible using the features of C++11,14, and 17._
-

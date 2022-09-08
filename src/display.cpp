@@ -192,8 +192,8 @@ namespace display {
   // bool
   Style FormatData<bool>::style_for_true = CREATESTYLE(GREEN1);
   Style FormatData<bool>::style_for_false = CREATESTYLE(GRAY1);
-  std::string FormatData<bool>::string_for_true = "1";
-  std::string FormatData<bool>::string_for_false = "0";
+  std::string FormatData<bool>::string_for_true = "true";
+  std::string FormatData<bool>::string_for_false = "false";
 
   // Vector
   // TODO: this shoudl be size_t
