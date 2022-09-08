@@ -23,7 +23,7 @@ int main() {
   // using namespace mathq::unit_imaginary;
   // using std::sqrt;
 
-  OUTPUT("Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.");
+  OUTPUT("Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.   These containers can be nested any number of levels.");
 
 
   GMD_VSPACE();

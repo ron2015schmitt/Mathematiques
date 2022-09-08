@@ -28,8 +28,8 @@
 # [4. Introduction with Examples](../README.md)<br>
 4.1. [Pretty Printing and Debugging](../print-debug/README.md)<br>
 4.2. [Number Systems](../numbers/README.md)<br>
-4.3. _Vectors, Matrices, and MultiArrays_ <br>
-4.4. [Nested MultiArrays](../nested-multiarrays/README.md)<br>
+4.3. [Vectors, Matrices, and MultiArrays](../multiarrays/README.md)<br>
+4.4. _Nested MultiArrays_ <br>
 4.5. [Mathematical functions](../math-functions/README.md)<br>
 4.6. [Linear Algebra](../linear-algebra/README.md)<br>
 4.7. [Calculus and Vector Calculus](../vector-calculus/README.md)<br>
@@ -41,11 +41,11 @@
 
 
 
-# 4.3. Vectors, Matrices, and MultiArrays
+# 4.4. Nested MultiArrays
 
 
 
-Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.
+Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.   These containers can be nested any number of levels.
 
 <br>
 
@@ -131,6 +131,6 @@ A `Matrix` is simply an alias for a `MultiArray` of rank 2.
 
 
 
-| ⇦ <br />[Number Systems](../numbers/README.md)  | [Introduction with Examples](../README.md)<br />Vectors, Matrices, and MultiArrays<br /><img width=1000/> | ⇨ <br />[Nested MultiArrays](../nested-multiarrays/README.md)   |
+| ⇦ <br />[Vectors, Matrices, and MultiArrays](../multiarrays/README.md)  | [Introduction with Examples](../README.md)<br />Nested MultiArrays<br /><img width=1000/> | ⇨ <br />[Mathematical functions](../math-functions/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 
