@@ -28,7 +28,7 @@ int main() {
 
   GMD_VSPACE();
   GMD_HEADER2("Vectors");
-  OUTPUT("Vectors can be fixed length, with length determined at compile-time, or dynamic length.");
+  OUTPUT("Vectors can be fixed length, with length determined at compile-time, or dynamic length.  Fixed-length vectors allow for better optimzation by the compiler.");
 
   GMD_HEADER3("Fixed-length Vectors");
   {
@@ -109,10 +109,11 @@ int main() {
 
 
   GMD_VSPACE();
-  GMD_HEADER2("MultiArrays");
-  OUTPUT("MultiArrays can be created of arbitrary rank, `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.");
+  GMD_HEADER2("General MultiArrays");
+  OUTPUT("MultiArrays can be created of arbitrary rank via the syntax `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.");
   OUTPUT("In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. ");
-  OUTPUT("A `Matrix` is simply an alias for a `MultiArray` of rank 2. ");
+  OUTPUT("A `Matrix` is simply an alias for a `MultiArray` of rank 2.  ");
+  OUTPUT("Multiarrays are sometimes referred to as tensors.  To be accurate, multiarrays are Cartesian algebraic tensors.  General tensors are also supported by Mathématiques, but described later in this introduction.");
 
   GMD_VSPACE();
   return 0;

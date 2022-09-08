@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.113-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.114-c++20</h1>
 
 <details>
 
@@ -50,7 +50,7 @@ Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.
 <br>
 
 ## Vectors
-Vectors can be fixed length, with length determined at compile-time, or dynamic length.
+Vectors can be fixed length, with length determined at compile-time, or dynamic length.  Fixed-length vectors allow for better optimzation by the compiler.
 ### Fixed-length Vectors
 ```C++
 Vector<double, 3> v{ 1,2,3 };
@@ -122,10 +122,11 @@ v[2] = v[1] = v[0];
 
 <br>
 
-## MultiArrays
-MultiArrays can be created of arbitrary rank, `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.
+## General MultiArrays
+MultiArrays can be created of arbitrary rank via the syntax `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.
 In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. 
-A `Matrix` is simply an alias for a `MultiArray` of rank 2. 
+A `Matrix` is simply an alias for a `MultiArray` of rank 2.  
+Multiarrays are sometimes referred to as tensors.  To be accurate, multiarrays are Cartesian algebraic tensors.  General tensors are also supported by Mathématiques, but described later in this introduction.
 
 <br>
 
