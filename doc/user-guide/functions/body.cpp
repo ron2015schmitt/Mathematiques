@@ -13,7 +13,7 @@ int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   GMD_PREAMBLE();
 
@@ -165,7 +165,7 @@ int main() {
   CR();
 
 
-    OUTPUT("\n<br>\n");
+  OUTPUT("\n<br>\n");
   GMD_HEADER3("Mathematical functions from the C++ [``std::complex`` header](https://en.cppreference.com/w/cpp/numeric/complex)");
 
 
@@ -333,10 +333,10 @@ int main() {
   {
     OUTPUT("Examples:\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(int n = 3);
+    ECHO(int n = 3);
     DISP(typeid(n).name());
     // OUTPUT("typeid(n).name() -> \"i\"");
-    ECHO_CODE(string s = "hello");
+    ECHO(string s = "hello");
     DISP(typeid(s).name());
     // OUTPUT("typeid(s).name() -> \"NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE\"");
     GMD_CODE_END();
@@ -348,10 +348,10 @@ int main() {
   {
     OUTPUT("Examples:\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(int n = 3);
+    ECHO(int n = 3);
     DISP(getTypeName(n));
     // OUTPUT("getTypeName(n) -> \"int\"");
-    ECHO_CODE(string s = "hello");
+    ECHO(string s = "hello");
     DISP(getTypeName(s));
     // OUTPUT("getTypeName(s) -> \"std::string\"");
     GMD_CODE_END();
@@ -367,18 +367,18 @@ int main() {
   {
     OUTPUT("Examples:\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(short n1 = 3);
-    ECHO_CODE(int n2 = 100);
+    ECHO(short n1 = 3);
+    ECHO(int n2 = 100);
     TRDISP(n1 * n2);
     // OUTPUT("n1 * n2 -> int 300");
     CR();
-    ECHO_CODE(float x1 = 3);
-    ECHO_CODE(double x2 = 0.1415);
+    ECHO(float x1 = 3);
+    ECHO(double x2 = 0.1415);
     TRDISP(x1 + x2);
     // OUTPUT("x1 + x2 -> double 3.1415");
     CR();
-    ECHO_CODE(int8_t y1 = 25);
-    ECHO_CODE(double y2 = 0.25);
+    ECHO(int8_t y1 = 25);
+    ECHO(double y2 = 0.25);
     TRDISP(y1 / y2 + y2);
     // OUTPUT("y1 / y2 + y2 -> double 100.25");
     GMD_CODE_END();
@@ -394,10 +394,10 @@ int main() {
   {
     OUTPUT("Converting a floating point type to an integer:\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(int n1 = (int)3.14);
+    ECHO(int n1 = (int)3.14);
     TRDISP(n1);
     // OUTPUT("n1 -> 3");
-    ECHO_CODE(int n2 = int(3.14));
+    ECHO(int n2 = int(3.14));
     TRDISP(n2);
     // OUTPUT("n2 -> 3");
     GMD_CODE_END();
@@ -406,10 +406,10 @@ int main() {
   {
     OUTPUT("Forcing floating point division by converting the numerator to a `float`\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(double x = (21 + 1) / 7);
+    ECHO(double x = (21 + 1) / 7);
     TRDISP(x);
     // OUTPUT("x -> 3");
-    ECHO_CODE(double y = float(21 + 1) / 7);
+    ECHO(double y = float(21 + 1) / 7);
     TRDISP(y);
     // OUTPUT("y -> 3.14286");
     GMD_CODE_END();

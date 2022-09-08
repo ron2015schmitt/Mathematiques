@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
 
   {
     title("CurvilinearField - Complex 1D");
-    ECHO_CODE(ComplexRectangle<double> rect);
+    ECHO(ComplexRectangle<double> rect);
     TRDISP(rect);
   }
   {
@@ -76,11 +76,11 @@ int main(int argc, char* argv[]) {
     TRDISP(coords.y());
     TRDISP(coords.z());
 
-    ECHO_CODE(ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords));
-    ECHO_CODE(auto& x = coords.x());
-    ECHO_CODE(auto& y = coords.y());
-    ECHO_CODE(auto& z = coords.z());
-    ECHO_CODE(field0() = -3*x + 5*Imaginary<double>(1)*x);
+    ECHO(ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords));
+    ECHO(auto& x = coords.x());
+    ECHO(auto& y = coords.y());
+    ECHO(auto& z = coords.z());
+    ECHO(field0() = -3*x + 5*Imaginary<double>(1)*x);
     TRDISP(field0);
     TRDISP(real(field0));
     TRDISP(imag(field0));
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
     TRDISP(IsMultiArray<decltype(field0())>);
     TRDISP(IsComplex<typename NumberTrait<decltype(field0)>::Type>::value);
     TRDISP(dz(field0));
-    ECHO_CODE(field0() = -3*x + 5*Imaginary<double>(1)*y);
+    ECHO(field0() = -3*x + 5*Imaginary<double>(1)*y);
     TRDISP(dz_star(field0));
   }
 
@@ -110,11 +110,11 @@ int main(int argc, char* argv[]) {
     // TRDISP(coords[0]);
     // TRDISP(coords[1]);
 
-    ECHO_CODE(ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords));
-    ECHO_CODE(auto& x = coords.x());
-    ECHO_CODE(auto& z = coords.z());
-    ECHO_CODE(auto& t = coords.t());
-    ECHO_CODE(field0() = exp(2*z) + 5*t);
+    ECHO(ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords));
+    ECHO(auto& x = coords.x());
+    ECHO(auto& z = coords.z());
+    ECHO(auto& t = coords.t());
+    ECHO(field0() = exp(2*z) + 5*t);
     TRDISP(field0);
     TRDISP(pd(field0, 2));
 

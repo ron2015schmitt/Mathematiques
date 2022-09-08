@@ -124,14 +124,14 @@ int main() {
   CR();
   CR();
   GMD_CODE_START("C++");
-  ECHO_CODE(using namespace mathq);
-  ECHO_CODE(using namespace mathq::unit_imaginary);
-  ECHO_CODE(using namespace mathq::unit_quaternion);
+  ECHO(using namespace mathq);
+  ECHO(using namespace mathq::unit_imaginary);
+  ECHO(using namespace mathq::unit_quaternion);
   CR();
-  ECHO_CODE(auto q1 = Quaternion<double>(1, 2, -1, -3));
-  ECHO_CODE(auto q2 = Quaternion<double>(4, 3, -2, -5));
-  ECHO_CODE(auto q = Quaternion<double>() = 16 + 2*i + 3*j + 13*k);
-  ECHO_CODE(auto p = Quaternion<double>() = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k);
+  ECHO(auto q1 = Quaternion<double>(1, 2, -1, -3));
+  ECHO(auto q2 = Quaternion<double>(4, 3, -2, -5));
+  ECHO(auto q = Quaternion<double>() = 16 + 2*i + 3*j + 13*k);
+  ECHO(auto p = Quaternion<double>() = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k);
   GMD_CODE_END();
 
   MOUT << "In the above expressions we used the constants `i`, `j`, and `k`, which are defined as follows:\n";
@@ -200,7 +200,7 @@ int main() {
   CR();
 
 
-  OUTPUT("A few examples are shown below."); 
+  OUTPUT("A few examples are shown below.");
 
   CR();
   GMD_CODE_START("C++");
@@ -255,7 +255,7 @@ int main() {
   FormatDataVector::max_elements_per_line = 1;
   FormatDataVector::string_endofline = "\n";
   GMD_CODE_START("C++");
-  ECHO_CODE(auto v = Vector<Quaternion<double>>({ 16 + 2*i + 3*j + 13*k,
+  ECHO(auto v = Vector<Quaternion<double>>({ 16 + 2*i + 3*j + 13*k,
                                                  5 + 11*i + 10*j + 8*k,
                                                  9 + 7*i + 6*j + 12*k,
                                                  4 + 14*i + 15*j + 1*k }));

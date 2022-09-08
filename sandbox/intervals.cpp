@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
 
   {
     title("Interval - [0,1]");
-    ECHO_CODE(Interval<double> dom1 = Interval<double>::interval(0, 1, 11));
+    ECHO(Interval<double> dom1 = Interval<double>::interval(0, 1, 11));
     TRDISP(dom1);
     TRDISP(dom1.grid());
   }
@@ -78,35 +78,35 @@ int main(int argc, char* argv[]) {
 
   {
     title("Interval - (0,1]");
-    ECHO_CODE(Interval<double> dom1 = Interval<double>::o_interval_c(0, 1, 10));
+    ECHO(Interval<double> dom1 = Interval<double>::o_interval_c(0, 1, 10));
     TRDISP(dom1);
     TRDISP(dom1.grid());
   }
 
   {
     title("Interval - [0,1)");
-    ECHO_CODE(Interval<double> dom1 = Interval<double>::c_interval_o(0, 1, 10));
+    ECHO(Interval<double> dom1 = Interval<double>::c_interval_o(0, 1, 10));
     TRDISP(dom1);
     TRDISP(dom1.grid());
   }
 
   {
     title("Interval - (0,1)");
-    ECHO_CODE(Interval<double> dom1 = Interval<double>::o_interval_o(0, 1, 9));
+    ECHO(Interval<double> dom1 = Interval<double>::o_interval_o(0, 1, 9));
     TRDISP(dom1);
     TRDISP(dom1.grid());
   }
 
   {
     title("PointSequence");
-    ECHO_CODE(PointSequence<double> dom1 = PointSequence<double>({ 0,1,3,4.5,5 }));
+    ECHO(PointSequence<double> dom1 = PointSequence<double>({ 0,1,3,4.5,5 }));
     TRDISP(dom1);
     TRDISP(dom1.grid());
   }
 
   {
     title("Log10 - [1,10]");
-    ECHO_CODE(PointSequence<double> dom1 = PointSequence<double>::log10(1, 10, 11));
+    ECHO(PointSequence<double> dom1 = PointSequence<double>::log10(1, 10, 11));
     TRDISP(dom1);
     TRDISP(dom1.grid());
   }
@@ -118,7 +118,7 @@ int main(int argc, char* argv[]) {
   {
 
     title("2D CartesianCoords from Intervals");
-    ECHO_CODE(CartesianCoords<double, 2, false> coords({
+    ECHO(CartesianCoords<double, 2, false> coords({
         Interval<double>::interval(-1,1,3),
         Interval<double>::interval(2,3,3),
       }));
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
 
     title("2D CartesianCoords from Interval and PointSequence");
 
-    ECHO_CODE(CartesianCoords<double, 2, false> coords({
+    ECHO(CartesianCoords<double, 2, false> coords({
       Interval<double>::interval(-1,1,3),
        PointSequence<double>({ 0,1,3,10 }),
       }));
@@ -199,13 +199,13 @@ int main(int argc, char* argv[]) {
 
   {
 
-    ECHO_CODE(CartesianCoords<double, 1, false> coords({
+    ECHO(CartesianCoords<double, 1, false> coords({
         Interval<double>::interval(-1,1,11),
       }));
 
     TRDISP(coords);
     TRDISP(Interval<double>::interval(-1, 1, 11).grid());
-    ECHO_CODE(CurvilinearField<double, 0, decltype(coords)> field0(coords));
+    ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
     field0 = -5*coords.x();
     TRDISP(field0);
     TRDISP(grad(field0));
@@ -213,22 +213,22 @@ int main(int argc, char* argv[]) {
   }
 
   // {
-  //   ECHO_CODE(PointSequence<double> p = PointSequence<double>({ 33,34,35 }));
+  //   ECHO(PointSequence<double> p = PointSequence<double>({ 33,34,35 }));
   //   TRDISP(p);
-  //   ECHO_CODE(Vector<double> grid = Vector<double>({ 33,34,40 }));
+  //   ECHO(Vector<double> grid = Vector<double>({ 33,34,40 }));
   //   TRDISP(p.coefs(grid));
   // }
 
   {
-    ECHO_CODE(PointSequence<double> p = PointSequence<double>({ -1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1 }));
+    ECHO(PointSequence<double> p = PointSequence<double>({ -1, -0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1 }));
 
-    ECHO_CODE(CartesianCoords<double, 1, false> coords({
+    ECHO(CartesianCoords<double, 1, false> coords({
         p,
       }));
 
     TRDISP(coords);
 
-    ECHO_CODE(CurvilinearField<double, 0, decltype(coords)> field0(coords));
+    ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
     field0 = -5*coords.x();
     TRDISP(field0);
     TRDISP(grad(field0));

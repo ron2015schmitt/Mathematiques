@@ -54,43 +54,43 @@ int main() {
   CR();
   GMD_CODE_START("C++");
   {
-    ECHO_CODE(using namespace mathq);
+    ECHO(using namespace mathq);
     CR();
-    ECHO_CODE(auto velocity2D = Vector<double, 2>(0));
-    ECHO_CODE(auto velocity3D = Vector<double, 3>(0));
-    ECHO_CODE(auto vector = Vector<double, 11>(0));
+    ECHO(auto velocity2D = Vector<double, 2>(0));
+    ECHO(auto velocity3D = Vector<double, 3>(0));
+    ECHO(auto vector = Vector<double, 11>(0));
     TRDISP(velocity2D);
     TRDISP(velocity3D);
     TRDISP(vector);
   }
   {
     CR();
-    ECHO_CODE(Vector<double, 2> velocity2D(0));
-    ECHO_CODE(Vector<double, 3> velocity3D(1));
+    ECHO(Vector<double, 2> velocity2D(0));
+    ECHO(Vector<double, 3> velocity3D(1));
     TRDISP(velocity2D);
     TRDISP(velocity3D);
   }
   {
     CR();
-    ECHO_CODE(Vector<double, 2> velocity2D);
-    ECHO_CODE(velocity2D = 4);
-    ECHO_CODE(Vector<double, 3> velocity3D);
-    ECHO_CODE(velocity3D = -0.55);
+    ECHO(Vector<double, 2> velocity2D);
+    ECHO(velocity2D = 4);
+    ECHO(Vector<double, 3> velocity3D);
+    ECHO(velocity3D = -0.55);
     TRDISP(velocity2D);
     TRDISP(velocity3D);
   }
   {
     CR();
-    ECHO_CODE(Vector<double, 2> velocity2D({ 70.5, -30 }));
-    ECHO_CODE(Vector<double, 3> velocity3D({ 10, 0, -15 }));
+    ECHO(Vector<double, 2> velocity2D({ 70.5, -30 }));
+    ECHO(Vector<double, 3> velocity3D({ 10, 0, -15 }));
     TRDISP(velocity2D);
-    ECHO_CODE(Vector<double> v3(3));
+    ECHO(Vector<double> v3(3));
     TRDISP(velocity3D);
   }
   {
     CR();
-    ECHO_CODE(Vector<double, 2> velocity2D = Vector<double, 2>({ 70.5, -30 }));
-    ECHO_CODE(Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 }));
+    ECHO(Vector<double, 2> velocity2D = Vector<double, 2>({ 70.5, -30 }));
+    ECHO(Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 }));
     TRDISP(velocity2D);
     TRDISP(velocity3D);
   }
@@ -267,7 +267,7 @@ int main() {
   // FormatDataVector::max_elements_per_line = 1;
   // FormatDataVector::string_endofline = "\n";
   // GMD_CODE_START("C++");
-  // ECHO_CODE(auto v = Vector<Quaternion<double>>({ 16 + 2*i + 3*j + 13*k,
+  // ECHO(auto v = Vector<Quaternion<double>>({ 16 + 2*i + 3*j + 13*k,
   //                                                5 + 11*i + 10*j + 8*k,
   //                                                9 + 7*i + 6*j + 12*k,
   //                                                4 + 14*i + 15*j + 1*k }));

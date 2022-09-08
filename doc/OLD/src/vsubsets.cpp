@@ -13,15 +13,14 @@
 
 
 
-int main()
-{
+int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
-  
+
+
   int Nex = 1;
-  
+
   mathq_toc();
   CR();CR();
   GMD_TITLE("Access subsets of Vector elements");
@@ -29,7 +28,7 @@ int main()
 
   OUTPUT("You can ccess avector elements using a `Vector` of indices or a C++11 `initializer_list` of indices");
 
-  
+
   GMD_HEADER2("Access vector elements using a `Vector` of indices");
 
   GMD_HEADER3("Element access `Vector[Vector]`");
@@ -39,26 +38,26 @@ int main()
   {
     CR();
     CR();
-    EXAMPLE(Nex++,"Access via a Vector of indices");
+    EXAMPLE(Nex++, "Access via a Vector of indices");
     GMD_CODE_START("C++");
-    ECHO_CODE( Vector<double> v( linspace<double>(0,1,11) ) );
-    ECHO_CODE( Vector<size_t> veven( range<size_t>(0,10,2) ) );
-    ECHO_CODE( Vector<size_t> vodd( range<size_t>(1,10,2) ) );
-    ECHO_CODE( Vector<size_t> vconst(15,1 ) );
+    ECHO(Vector<double> v(linspace<double>(0, 1, 11)));
+    ECHO(Vector<size_t> veven(range<size_t>(0, 10, 2)));
+    ECHO(Vector<size_t> vodd(range<size_t>(1, 10, 2)));
+    ECHO(Vector<size_t> vconst(15, 1));
     GMD_CODE_END();
     CR();
     resultstart();
-    resultmulti( v );
-    resultmulti( veven );
-    resultmulti( v[veven] );
-    resultmulti( v[veven[1]] );
-    resultmulti( vodd );
-    resultmulti( v[vodd] );
-    resultmulti( v[vodd[1]]);
-    resultmulti( v[veven,vodd] );
-    resultmulti( v[vodd[veven[1]]]);
-    resultmulti( vconst );
-    resultmulti( v[vconst] );
+    resultmulti(v);
+    resultmulti(veven);
+    resultmulti(v[veven]);
+    resultmulti(v[veven[1]]);
+    resultmulti(vodd);
+    resultmulti(v[vodd]);
+    resultmulti(v[vodd[1]]);
+    resultmulti(v[veven, vodd]);
+    resultmulti(v[vodd[veven[1]]]);
+    resultmulti(vconst);
+    resultmulti(v[vconst]);
     resultend();
   }
 
@@ -73,18 +72,18 @@ int main()
   {
     CR();
     CR();
-    EXAMPLE(Nex++,"Access via a C++11 initializer_list");
+    EXAMPLE(Nex++, "Access via a C++11 initializer_list");
     GMD_CODE_START("C++");
-    ECHO_CODE( Vector<double> v( linspace<double>(0,1,11) ) );
+    ECHO(Vector<double> v(linspace<double>(0, 1, 11)));
     DISP(v);
     GMD_CODE_END();
     CR();
     resultstart();
-    resultmulti( v[{0,4}] );
-    resultmulti( v[{4,0,1,4}] );
-    resultmulti( v[{1,0,2}] );
-    resultmulti( v[{4,3,2,1,0}] );
-    resultmulti( v[{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}] );
+    resultmulti(v[{0, 4}]);
+    resultmulti(v[{4, 0, 1, 4}]);
+    resultmulti(v[{1, 0, 2}]);
+    resultmulti(v[{4, 3, 2, 1, 0}]);
+    resultmulti(v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}]);
     resultend();
   }
 

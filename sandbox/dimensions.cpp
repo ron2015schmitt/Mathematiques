@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
   cout << std::endl;
 
   CR();
-  ECHO_CODE(Vector<double, 3> v1);
+  ECHO(Vector<double, 3> v1);
   TRDISP(v1.size());
   TRDISP(v1.is_dynamic_value);
   TRDISP(v1.static_dims_array);
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Vector<double> v2{ 3.1, 22.5, 100 });
+  ECHO(Vector<double> v2{ 3.1, 22.5, 100 });
   TRDISP(v2);
   TRDISP(v2.size());
   TRDISP(v2.dims());
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v2.resize(4));
 
   CR();
-  ECHO_CODE(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
+  ECHO(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
   TRDISP(v3);
   TRDISP(v3.size());
   TRDISP(v3.is_dynamic_value);
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v3.dims());
 
   CR();
-  ECHO_CODE(Vector<double> v4);
+  ECHO(Vector<double> v4);
   TRDISP(v4);
   TRDISP(v4.size());
   TRDISP(v4.is_dynamic_value);
@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v4.dims());
 
   CR();
-  ECHO_CODE(Vector<double> v4b(3));  // size 3
+  ECHO(Vector<double> v4b(3));  // size 3
   TRDISP(v4b);
   TRDISP(v4b.size());
   TRDISP(v4b.is_dynamic_value);
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
   TRDISP(v4b.dims());
 
   CR();
-  ECHO_CODE(Vector<double, 5> v4c(3.14));  // set all vlaues to 3.14
+  ECHO(Vector<double, 5> v4c(3.14));  // set all vlaues to 3.14
   TRDISP(v4c);
   TRDISP(v4c.size());
   TRDISP(v4c.is_dynamic_value);
@@ -69,23 +69,23 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Dimensions dims);
+  ECHO(Dimensions dims);
   TRDISP(dims.size());
   TRDISP(dims);
-  ECHO_CODE(dims.resize(2));
-  ECHO_CODE(dims[0] = 14);
-  ECHO_CODE(dims[1] = 42);
+  ECHO(dims.resize(2));
+  ECHO(dims[0] = 14);
+  ECHO(dims[1] = 42);
   TRDISP(dims);
 
 
 
   CR();
-  ECHO_CODE(Dimensions dims2);
-  ECHO_CODE(dims2 = { 3,2,1 });
+  ECHO(Dimensions dims2);
+  ECHO(dims2 = { 3,2,1 });
   TRDISP(dims2);
   TRDISP(dims2.getReduced());
-  ECHO_CODE(Dimensions dims2b);
-  ECHO_CODE(dims2b = { 3,1,2,1 });
+  ECHO(Dimensions dims2b);
+  ECHO(dims2b = { 3,1,2,1 });
   TRDISP(dims2b);
   TRDISP(dims2b.getReduced());
   TRDISP(equiv(dims2, dims2b));
@@ -93,22 +93,22 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Dimensions dims3{ 33, 46, 77, 81 });
+  ECHO(Dimensions dims3{ 33, 46, 77, 81 });
   TRDISP(dims3.size());
   TRDISP(dims3);
-  ECHO_CODE(dims3 = { 13, 42, 56, 99 });
+  ECHO(dims3 = { 13, 42, 56, 99 });
   TRDISP(dims3);
 
 
   CR();
-  ECHO_CODE(Dimensions dims4 = *(new Dimensions(5)));
+  ECHO(Dimensions dims4 = *(new Dimensions(5)));
   TRDISP(dims4);
 
   CR();
-  ECHO_CODE(Dimensions dims5{ 33, 46, 77, 81 });
+  ECHO(Dimensions dims5{ 33, 46, 77, 81 });
   TRDISP(dims5.size());
   TRDISP(dims5);
-  ECHO_CODE(dims5 = { 13, 42, 56, 99 });
+  ECHO(dims5 = { 13, 42, 56, 99 });
   TRDISP(dims5);
   TRDISP(dims5.getReduced());
   TRDISP(dims5.num_elements());
@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(RecursiveDimensions ndims1(2));
+  ECHO(RecursiveDimensions ndims1(2));
   TRDISP(ndims1.size());
   TRDISP(ndims1);
   ndims1[0] = dims;
@@ -126,18 +126,18 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(RecursiveDimensions ndims2(2));
+  ECHO(RecursiveDimensions ndims2(2));
   TRDISP(ndims2.size());
   TRDISP(ndims2);
   ndims2 = { dims, dims3 };
   TRDISP(ndims2);
 
   CR();
-  ECHO_CODE(RecursiveDimensions ndims3{ dims, dims3 });
+  ECHO(RecursiveDimensions ndims3{ dims, dims3 });
   TRDISP(ndims3);
 
   CR();
-  ECHO_CODE(RecursiveDimensions ndims4{ {3,2}, {5,7,1}, {3} });
+  ECHO(RecursiveDimensions ndims4{ {3,2}, {5,7,1}, {3} });
   TRDISP(ndims4);
   TRDISP(ndims4.getEverse());
 
@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Vector<Vector<double, 2>> u2);
+  ECHO(Vector<Vector<double, 2>> u2);
   TRDISP(u2);
   TRDISP(u2.size());
   TRDISP(u2.element_size());
@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Vector<Vector<double, 2>, 3> u);
+  ECHO(Vector<Vector<double, 2>, 3> u);
   TRDISP(u.size());
   TRDISP(u.element_size());
   TRDISP(u.dims());
@@ -208,7 +208,7 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Vector<double> v6(3));
+  ECHO(Vector<double> v6(3));
   TRDISP(v6.size());
   TRDISP(v6.element_size());
   TRDISP(v6.dims());
@@ -218,9 +218,9 @@ int main(int argc, char* argv[]) {
   TRDISP(v6);
 
   CR();
-  ECHO_CODE(Dimensions dims7({ 3 }));
+  ECHO(Dimensions dims7({ 3 }));
   TRDISP(dims7);
-  ECHO_CODE(Vector<double> v7(dims7));
+  ECHO(Vector<double> v7(dims7));
   TRDISP(v7.size());
   TRDISP(v7.element_size());
   TRDISP(v7.dims());
@@ -231,35 +231,35 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Vector<double> v9(6, 7));
+  ECHO(Vector<double> v9(6, 7));
   TRDISP(v9.size());
   TRDISP(v9.element_size());
   TRDISP(v9.dims());
   TRDISP(v9);
 
   CR();
-  ECHO_CODE(Vector<double> v10({ 2.2, 3.3, 4.4 }));
+  ECHO(Vector<double> v10({ 2.2, 3.3, 4.4 }));
   TRDISP(v10.size());
   TRDISP(v10.element_size());
   TRDISP(v10.dims());
   TRDISP(v10);
 
   CR();
-  ECHO_CODE(Vector<double> v11{ 2.2, 3.3, 4.4 });
+  ECHO(Vector<double> v11{ 2.2, 3.3, 4.4 });
   TRDISP(v11.size());
   TRDISP(v11.element_size());
   TRDISP(v11.dims());
   TRDISP(v11);
 
   CR();
-  ECHO_CODE(Vector<double, 3> v12({ 2.2, 3.3, 4.4 }));
+  ECHO(Vector<double, 3> v12({ 2.2, 3.3, 4.4 }));
   TRDISP(v12.size());
   TRDISP(v12.element_size());
   TRDISP(v12.dims());
   TRDISP(v12);
 
   CR();
-  ECHO_CODE(Vector<double, 3> v13{ 2.2, 3.3, 4.4 });
+  ECHO(Vector<double, 3> v13{ 2.2, 3.3, 4.4 });
   TRDISP(v13.size());
   TRDISP(v13.element_size());
   TRDISP(v13.dims());
@@ -268,15 +268,15 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  ECHO_CODE(Indices ind1{ 2 });
+  ECHO(Indices ind1{ 2 });
   TRDISP(ind1);
   TRDISP(v13[ind1]);
 
   CR();
-  ECHO_CODE(Vector<double> k = 100*range<double>(0, 10));
+  ECHO(Vector<double> k = 100*range<double>(0, 10));
   TRDISP(k);
   TRDISP(SLC::even);
-  ECHO_CODE(Vector<size_t> vindex(11, SLC::even));
+  ECHO(Vector<size_t> vindex(11, SLC::even));
   TRDISP(vindex);
   TRDISP(k[vindex]);
   TRDISP(k[SLC::even]);
@@ -286,12 +286,12 @@ int main(int argc, char* argv[]) {
 
   TRDISP(InitializerTrait< std::initializer_list<double> >::depth());
   {
-    ECHO_CODE(typename InitializerTrait< std::initializer_list<double> >::BottomType temp{ 0 });
+    ECHO(typename InitializerTrait< std::initializer_list<double> >::BottomType temp{ 0 });
     TRDISP(temp);
   }
   TRDISP(InitializerTrait< std::initializer_list<std::initializer_list<double>> >::depth());
   {
-    ECHO_CODE(typename InitializerTrait< std::initializer_list<std::initializer_list<double>> >::BottomType temp{ 0 });
+    ECHO(typename InitializerTrait< std::initializer_list<std::initializer_list<double>> >::BottomType temp{ 0 });
     TRDISP(temp);
   }
 

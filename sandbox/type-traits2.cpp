@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
   TRDISP(IsReadableExpressionOrArray<MultiArray_RepeatVector<double, 3, 2, 3, 4> >);
   TRDISP(IsReadableExpressionOrArray<std::vector<double> >);
   TRDISP(IsReadableExpressionOrArray< CurvilinearCoords<double, 2, false, NullType> >);
-  ECHO_CODE(Vector<double> v);
+  ECHO(Vector<double> v);
   TRDISP(IsReadableExpressionOrArray<decltype(v)>);
   TRDISP(IsWritableExpressionOrArray<decltype(v)>);
   TRDISP(IsReadableExpressionOrArray<decltype(+v)>);
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
   MultiArrayHelper<float, sizes2> B;
   TRDISP(B);
 
-  ECHO_CODE(MultiArrayType<MultiArray<double, 2, 3, 4>> mystery);
+  ECHO(MultiArrayType<MultiArray<double, 2, 3, 4>> mystery);
   TRDISP(mystery);
 
 
@@ -116,30 +116,30 @@ int main(int argc, char* argv[]) {
   constexpr std::array<size_t, 3> zeroarray = { 0,0,0 };
   TRDISP(is_all_zeros(zeroarray));
 
-  ECHO_CODE(MultiArrayType<MultiArray<double, 2>> mystery2);
+  ECHO(MultiArrayType<MultiArray<double, 2>> mystery2);
   TRDISP(mystery2);
 
-  ECHO_CODE(MultiArrayType<MultiArray<double, 3>> mystery3);
+  ECHO(MultiArrayType<MultiArray<double, 3>> mystery3);
   TRDISP(mystery3);
 
-  ECHO_CODE(MultiArrayType<Vector_Constant<double, 3>> mystery4);
+  ECHO(MultiArrayType<Vector_Constant<double, 3>> mystery4);
   TRDISP(mystery4);
 
-  ECHO_CODE(MultiArrayType<MultiArray_RepeatVector<double, 3, 4, 6, 7>> mystery5);
+  ECHO(MultiArrayType<MultiArray_RepeatVector<double, 3, 4, 6, 7>> mystery5);
   TRDISP(mystery5);
 
 
-  ECHO_CODE(MultiArrayType<CurvilinearCoords<double, 2, false, NullType>> mystery6);
+  ECHO(MultiArrayType<CurvilinearCoords<double, 2, false, NullType>> mystery6);
   TRDISP(mystery6);
 
   // test expressions
 
   // note that we lose the static dims in expressions
-  ECHO_CODE(MultiArrayType<decltype(+mystery)> mysteryb);
+  ECHO(MultiArrayType<decltype(+mystery)> mysteryb);
   TRDISP(mysteryb);
 
 
-  ECHO_CODE(MultiArrayType<decltype(-mystery2)> mystery2b);
+  ECHO(MultiArrayType<decltype(-mystery2)> mystery2b);
   TRDISP(mystery2b);
 
   TRDISP(MyTrait< double >::value);

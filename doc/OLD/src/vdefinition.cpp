@@ -15,16 +15,15 @@
 
 
 
-int main()
-{
+int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
   int Nex = 1;
 
 
-  
+
   mathq_toc();
   CR();CR();
   GMD_TITLE("under the hood—`Vector` definition");
@@ -41,11 +40,11 @@ int main()
     EXAMPLE(Nex++, "Getting the `valarray` wrapped by a `Vector`.");
     CR();
     GMD_CODE_START("C++");
-    ECHO_CODE(using namespace std);
-    codemultiNoteC11Array( Vector<double> vec({0,1,2,3}) );
-    ECHO_CODE( valarray<double>& valias = vec.dataobj() );
-    ECHO_CODE( vec[1] = -1 );
-    ECHO_CODE( valias[2] = -2 );
+    ECHO(using namespace std);
+    codemultiNoteC11Array(Vector<double> vec({ 0,1,2,3 }));
+    ECHO(valarray<double>&valias = vec.dataobj());
+    ECHO(vec[1] = -1);
+    ECHO(valias[2] = -2);
     GMD_CODE_END();
     CR();
     resultstart();
@@ -66,11 +65,11 @@ int main()
     EXAMPLE(Nex++, "Setting and getting the wrapped `valarray`");
     CR();
     GMD_CODE_START("C++");
-    ECHO_CODE(using namespace std);
-    ECHO_CODE( Vector<double> vec(2) );
-    ECHO_CODE( valarray<double>& valias = vec.dataobj() );
-    ECHO_CODE( vec[1] = 1 );
-    ECHO_CODE( valias[2] = 2 );
+    ECHO(using namespace std);
+    ECHO(Vector<double> vec(2));
+    ECHO(valarray<double>&valias = vec.dataobj());
+    ECHO(vec[1] = 1);
+    ECHO(valias[2] = 2);
     GMD_CODE_END();
     CR();
     resultstart();
@@ -81,8 +80,8 @@ int main()
   }
 
 
-  
+
   mathq_toc();
-  
+
   return 0;
 }

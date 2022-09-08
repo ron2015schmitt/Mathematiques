@@ -61,10 +61,10 @@ int main() {
   // TargetSet<std::complex<double>> u(1, 0);
   // TRDISP(u);
 
-  // ECHO_CODE(GridSet<double> gs);
+  // ECHO(GridSet<double> gs);
   // TRDISP(gs);
 
-  // ECHO_CODE(Interval<double> x_interval(-1, 1, 5));
+  // ECHO(Interval<double> x_interval(-1, 1, 5));
   // TRDISP(x_interval);
 
 

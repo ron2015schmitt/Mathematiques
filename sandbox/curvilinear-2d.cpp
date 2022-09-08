@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
 
   {
     title("Intervals");
-    ECHO_CODE(Interval<double> dom1 = Interval<double>::interval(0, 10, 11));
+    ECHO(Interval<double> dom1 = Interval<double>::interval(0, 10, 11));
     TRDISP(dom1);
     TRDISP(dom1.grid());
   }
@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
 
   {
     title("CartesianCoords - default constructor");
-    ECHO_CODE(CartesianCoords<double, 2, false> coords);
+    ECHO(CartesianCoords<double, 2, false> coords);
     // TRDISP(coords);
     TRDISP(HasTimeCoord<decltype(coords)>);
     TRDISP(HasNotTimeCoord<decltype(coords)>);
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
   {
     title("2D CartesianCoords & CurvilinearField");
     subtitle("2D CartesianCoords from Intervals");
-    ECHO_CODE(CartesianCoords<double, 2, false> coords1({
+    ECHO(CartesianCoords<double, 2, false> coords1({
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(2,3,3),
       }));
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
     // TRDISP(coords1[1]);
 
     subtitle("2D CartesianCoords copy constructor");
-    ECHO_CODE(CartesianCoords<double, 2, false> coords(coords1));
+    ECHO(CartesianCoords<double, 2, false> coords(coords1));
     TRDISP(coords);
     TRDISP(HasTimeCoord<decltype(coords)>);
     TRDISP(HasNotTimeCoord<decltype(coords)>);
@@ -96,10 +96,10 @@ int main(int argc, char* argv[]) {
     // TRDISP(curvilinear_coords_test(coords));
 
     subtitle("CurvilinearField - Scalar 2D");
-    ECHO_CODE(CurvilinearField<double, 0, decltype(coords)> field0(coords));
-    ECHO_CODE(auto& x = coords.x());
-    ECHO_CODE(auto& y = coords.y());
-    ECHO_CODE(field0() = -3*x + 2*y);
+    ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
+    ECHO(auto& x = coords.x());
+    ECHO(auto& y = coords.y());
+    ECHO(field0() = -3*x + 2*y);
     TRDISP(field0);
 
     TRDISP(x);
@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
 
     subtitle("Divergence of a 2D CurvilinearField - ex 1");
     // div
-    ECHO_CODE(auto A = grad(field0));
+    ECHO(auto A = grad(field0));
     TRDISP(A);
     // TRDISP(coords.div(A));
     TRDISP(div(A));
@@ -141,7 +141,7 @@ int main(int argc, char* argv[]) {
 
 
     subtitle("Divergence of a 2D CurvilinearField - ex 2");
-    ECHO_CODE(field0() = sqrt(x*x+y*y));
+    ECHO(field0() = sqrt(x*x+y*y));
     TRDISP(grad(field0));
     TRDISP(div(grad(field0)));
 
@@ -152,7 +152,7 @@ int main(int argc, char* argv[]) {
 
     subtitle("2+1D CartesianCoords Properties");
 
-    ECHO_CODE(CartesianCoords<double, 2, true> coords({
+    ECHO(CartesianCoords<double, 2, true> coords({
         Interval<double>::interval(-1,1,3),
         Interval<double>::interval(-1,1,3),
         Interval<double>::interval(0,2,3),
@@ -179,11 +179,11 @@ int main(int argc, char* argv[]) {
 
 
     subtitle("2+1D Scalar CurvilinearField");
-    ECHO_CODE(CurvilinearField<double, 0, decltype(coords)> field(coords));
+    ECHO(CurvilinearField<double, 0, decltype(coords)> field(coords));
 
-    ECHO_CODE(auto& x = coords.x());
-    ECHO_CODE(auto& y = coords.y());
-    ECHO_CODE(field() = -4*x + 5*y);
+    ECHO(auto& x = coords.x());
+    ECHO(auto& y = coords.y());
+    ECHO(field() = -4*x + 5*y);
     TRDISP(field);
 
 
@@ -197,7 +197,7 @@ int main(int argc, char* argv[]) {
 
     subtitle("Divergence of a 2D+1 CurvilinearField - ex 1");
     // div
-    ECHO_CODE(auto A = grad(field));
+    ECHO(auto A = grad(field));
     TRDISP(A);
     // TRDISP(coords.div(A));
     TRDISP(div(A));
@@ -205,7 +205,7 @@ int main(int argc, char* argv[]) {
 
 
     subtitle("Divergence of a 2D+1 CurvilinearField - ex 2");
-    ECHO_CODE(field() = sqrt(x*x+y*y));
+    ECHO(field() = sqrt(x*x+y*y));
     TRDISP(grad(field));
     TRDISP(div(grad(field)));
 
@@ -218,7 +218,7 @@ int main(int argc, char* argv[]) {
 
     subtitle("2D PolarCoords Properties");
 
-    ECHO_CODE(PolarCoords<double, false> coords({
+    ECHO(PolarCoords<double, false> coords({
         Interval<double>::o_interval_c(0,1,3),
         Interval<double>::c_interval_o(0,2*3.14159265,5),
       }));
@@ -241,11 +241,11 @@ int main(int argc, char* argv[]) {
 
 
     subtitle("2D PolarCoords Scalar CurvilinearField");
-    ECHO_CODE(CurvilinearField<double, 0, decltype(coords)> field(coords));
+    ECHO(CurvilinearField<double, 0, decltype(coords)> field(coords));
 
-    ECHO_CODE(auto& r = coords.r());
-    ECHO_CODE(auto& phi = coords.phi());
-    ECHO_CODE(field() = -4*r + 5*phi);
+    ECHO(auto& r = coords.r());
+    ECHO(auto& phi = coords.phi());
+    ECHO(field() = -4*r + 5*phi);
     TRDISP(field);
 
 
@@ -259,7 +259,7 @@ int main(int argc, char* argv[]) {
 
     subtitle("Divergence of a 2D PolarCoords CurvilinearField - ex 1");
     // div
-    ECHO_CODE(auto A = grad(field));
+    ECHO(auto A = grad(field));
     TRDISP(A);
     // TRDISP(coords.div(A));
     TRDISP(div(A));
@@ -267,7 +267,7 @@ int main(int argc, char* argv[]) {
 
 
     subtitle("Divergence of a 2D+1 CurvilinearField - ex 2");
-    ECHO_CODE(field() = r*r);
+    ECHO(field() = r*r);
     TRDISP(grad(field));
     TRDISP(div(grad(field)));
 

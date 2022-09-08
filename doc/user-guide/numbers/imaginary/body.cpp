@@ -60,12 +60,12 @@ int main() {
   CR();
   CR();
   GMD_CODE_START("C++");
-  ECHO_CODE(using namespace mathq);
-  ECHO_CODE(using namespace mathq::unit_imaginary);
+  ECHO(using namespace mathq);
+  ECHO(using namespace mathq::unit_imaginary);
   CR();
-  ECHO_CODE(Imaginary<double> q1 = Imaginary<double>(2.5));
-  ECHO_CODE(auto q2 = Imaginary<double>() = 2*i);
-  ECHO_CODE(auto q = Imaginary<double>() = -i/0.25);
+  ECHO(Imaginary<double> q1 = Imaginary<double>(2.5));
+  ECHO(auto q2 = Imaginary<double>() = 2*i);
+  ECHO(auto q = Imaginary<double>() = -i/0.25);
   CR();
   TRDISP(q1);
   TRDISP(q2);
@@ -134,7 +134,7 @@ int main() {
 
   CR();
   GMD_CODE_START("C++");
-  ECHO_CODE(double pi = 3.14159265358979311599796346854);
+  ECHO(double pi = 3.14159265358979311599796346854);
   TRDISP(2*i*i);
   TRDISP(20*i*i/(4*i));
   TRDISP(2*i*i + 3);
@@ -158,7 +158,7 @@ int main() {
 
 
   GMD_CODE_START("C++");
-  ECHO_CODE(auto v = Vector<Imaginary<double>>({ i, i, -i, i }));
+  ECHO(auto v = Vector<Imaginary<double>>({ i, i, -i, i }));
   GMD_CODE_END();
 
 

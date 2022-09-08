@@ -50,8 +50,8 @@ int main(int argc, char* argv[]) {
     title("3D cross product of simple 3D vectors (not fields)");
 
     // cross product
-    ECHO_CODE(Vector<double, 3> b{ 1,1,0 });
-    ECHO_CODE(Vector<double, 3> c{ 0,0,1 });
+    ECHO(Vector<double, 3> b{ 1,1,0 });
+    ECHO(Vector<double, 3> c{ 0,0,1 });
 
     TRDISP(c);
     {
@@ -67,17 +67,17 @@ int main(int argc, char* argv[]) {
 
     subtitle("concat of dimensions - needed for outer product");
 
-    ECHO_CODE(Dimensions dims1{ 4,3,2 });
+    ECHO(Dimensions dims1{ 4,3,2 });
     TRDISP(dims1);
-    ECHO_CODE(Dimensions dims2{ 7,5,6 });
+    ECHO(Dimensions dims2{ 7,5,6 });
     TRDISP(dims2);
-    ECHO_CODE(Dimensions dims3);
+    ECHO(Dimensions dims3);
     TRDISP(dims3);
     TRDISP(dims3 = Dimensions::concat(dims1, dims2));
 
     subtitle("outer product");
-    ECHO_CODE(Vector<double, 3> b{ 1,1,0 });
-    ECHO_CODE(Vector<double, 3> c{ 0,0,1 });
+    ECHO(Vector<double, 3> b{ 1,1,0 });
+    ECHO(Vector<double, 3> c{ 0,0,1 });
     TRDISP(tensor_product(c, b));
 
 
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
 
     using namespace cross_product;
 
-    ECHO_CODE(CartesianCoords<double, 3, false> coords({
+    ECHO(CartesianCoords<double, 3, false> coords({
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
@@ -115,8 +115,8 @@ int main(int argc, char* argv[]) {
     TRDISP(coords);
 
     TRDISP(coords.z());
-    ECHO_CODE(Vector<MultiArray<double, 3>, 3> A);
-    ECHO_CODE(RecursiveDimensions rdims = RecursiveDimensions{ Dimensions{3}, Dimensions{5,5,5} });
+    ECHO(Vector<MultiArray<double, 3>, 3> A);
+    ECHO(RecursiveDimensions rdims = RecursiveDimensions{ Dimensions{3}, Dimensions{5,5,5} });
     TRDISP(A.recursive_dims());
     A.resize(rdims);
     TRDISP(A.recursive_dims());
@@ -135,14 +135,14 @@ int main(int argc, char* argv[]) {
         Interval<double>::interval(-1,1,5),
       });
     TRDISP(coords);
-    ECHO_CODE(CurvilinearField<double, 1, CartesianCoords<double, 3, false>> A(coords));
+    ECHO(CurvilinearField<double, 1, CartesianCoords<double, 3, false>> A(coords));
     A = 0.;
-    ECHO_CODE(A[0] = coords.z());
-    ECHO_CODE(auto B = curl(A));
+    ECHO(A[0] = coords.z());
+    ECHO(auto B = curl(A));
     TRDISP(B);
     // OUTPUT("=========================");
     // Nabla<> nabla;
-    // ECHO_CODE(B = nabla ^ A);
+    // ECHO(B = nabla ^ A);
     // OUTPUT("=========================");
   }
 
@@ -158,9 +158,9 @@ int main(int argc, char* argv[]) {
       });
     TRDISP(coords);
     CurvilinearField<std::complex<double>, 1, CartesianCoords<double, 3, false>> A(coords);
-    ECHO_CODE(auto& z = coords.z());
-    ECHO_CODE(A = 0);
-    ECHO_CODE(A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) });
+    ECHO(auto& z = coords.z());
+    ECHO(A = 0);
+    ECHO(A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) });
     TRDISP(A);
     TRDISP(curl(A));
     TRDISP(roundzero(coords.curl(A), 1e-14));
@@ -180,9 +180,9 @@ int main(int argc, char* argv[]) {
       });
     TRDISP(coords);
     CurvilinearField<std::complex<double>, 1, CartesianCoords<double, 3, true>> A(coords);
-    ECHO_CODE(auto& z = coords.z());
-    ECHO_CODE(A = 0);
-    ECHO_CODE(A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) });
+    ECHO(auto& z = coords.z());
+    ECHO(A = 0);
+    ECHO(A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) });
     TRDISP(A);
     TRDISP(curl(A));
     TRDISP(roundzero(coords.curl(A), 1e-14));

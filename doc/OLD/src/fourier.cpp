@@ -13,16 +13,15 @@
 
 
 
-int main()
-{
- 
+int main() {
+
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   int Nex = 1;
-  
+
   mathq_toc();
   CR();CR();
   mdtitle0("Calculating a function via Fourier series and plotting the results in Matlab");
@@ -40,14 +39,14 @@ int main()
     CR();
     OUTPUT("Set up the output format so that we can copy and paste into Matlab");
     GMD_CODE_START("C++");
-    ECHO_CODE( using namespace display  );
-    ECHO_CODE( FormatDataVector::string_opening =  "[ ...\n    "  );
-    ECHO_CODE( FormatDataVector::string_delimeter = ", "  );
-    ECHO_CODE( FormatDataVector::max_elements_per_line = 5  );
-    ECHO_CODE( FormatDataVector::string_endofline = " ...\n    "  );
-    ECHO_CODE( FormatDataVector::string_closing =   " ...\n]"  );
-    ECHO_CODE( setFormatString<double>("% 10.8e")  );
-    ECHO_CODE(  FormatData<double>::tens = false );
+    ECHO(using namespace display);
+    ECHO(FormatDataVector::string_opening = "[ ...\n    ");
+    ECHO(FormatDataVector::string_delimeter = ", ");
+    ECHO(FormatDataVector::max_elements_per_line = 5);
+    ECHO(FormatDataVector::string_endofline = " ...\n    ");
+    ECHO(FormatDataVector::string_closing = " ...\n]");
+    ECHO(setFormatString<double>("% 10.8e"));
+    ECHO(FormatData<double>::tens = false);
     GMD_CODE_END();
     CR();
 
@@ -55,23 +54,23 @@ int main()
     OUTPUT("Define the coefficient vectors: ");
     CR();
 
-    
+
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_t N = 20 );
-    ECHO_CODE( Vector<double> k = range<double>(0,N-1)  );
-    ECHO_CODE( Vector<double> An = 1/k );
-    ECHO_CODE( An[0] = 0. );
-    ECHO_CODE( Vector<double> Bn = Vector<double>(N,0.) );
+    ECHO(const size_t N = 20);
+    ECHO(Vector<double> k = range<double>(0, N-1));
+    ECHO(Vector<double> An = 1/k);
+    ECHO(An[0] = 0.);
+    ECHO(Vector<double> Bn = Vector<double>(N, 0.));
     GMD_CODE_END();
     CR();
 
 
     OUTPUT("Define the coordinate vector `t` as 51 points over the interval [0,+2pi]: ");
     CR();
-    
+
     GMD_CODE_START("C++");
-    ECHO_CODE(   const double pi = M_PI  );
-    ECHO_CODE(   Vector<double> t = linspace<double>(0,2*pi,51) );
+    ECHO(const double pi = M_PI);
+    ECHO(Vector<double> t = linspace<double>(0, 2*pi, 51));
     GMD_CODE_END();
     CR();
 
@@ -79,13 +78,13 @@ int main()
     OUTPUT("Calculate the Fourier series and store the results in vector `CL1`: ");
     CR();
     GMD_CODE_START("C++");
-    ECHO_CODE(     const double T = 2*pi );
-    ECHO_CODE(     const double omega = 2*pi/T );
-    ECHO_CODE(     Vector<double> CL1 = ifourier(An,Bn, t, An.size(), omega ) );
+    ECHO(const double T = 2*pi);
+    ECHO(const double omega = 2*pi/T);
+    ECHO(Vector<double> CL1 = ifourier(An, Bn, t, An.size(), omega));
     GMD_CODE_END();
     CR();
 
-    
+
     OUTPUT("The results `t` and `CL1` are:");
     CR();
     GMD_CODE_START("Matlab");
@@ -109,7 +108,7 @@ int main()
     OUTPUT("![Closed form for CL1(t)](ClausenFormula_n1.png)");
     CR();
     CR();
-    
+
     OUTPUT("We exclude the end points, 0 and pi, because the function is infinite at these points.");
 
     OUTPUT("This yields the following plot comparing the Fourier series [red dots] to the exact function [solid blue].");
@@ -125,7 +124,7 @@ int main()
     CR();
     OUTPUT("Set up the output format so that we can copy and paste into Matlab, this time using the function `set_matlab_var_format()`");
     GMD_CODE_START("C++");
-    ECHO_CODE( set_matlab_var_format()  );
+    ECHO(set_matlab_var_format());
     GMD_CODE_END();
     CR();
 
@@ -133,23 +132,23 @@ int main()
     OUTPUT("Define the coefficient vectors: ");
     CR();
 
-    
+
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_t N = 20 );
-    ECHO_CODE( Vector<double> k = range<double>(0,N-1)  );
-    ECHO_CODE( Vector<double> An = Vector<double>(N,0.) );
-    ECHO_CODE( Vector<double> Bn = 1./sqr(k) );
-    ECHO_CODE( Bn[0] = 0. );
+    ECHO(const size_t N = 20);
+    ECHO(Vector<double> k = range<double>(0, N-1));
+    ECHO(Vector<double> An = Vector<double>(N, 0.));
+    ECHO(Vector<double> Bn = 1./sqr(k));
+    ECHO(Bn[0] = 0.);
     GMD_CODE_END();
     CR();
 
 
     OUTPUT("Define the coordinate vector `t` as 51 points over the interval [0,+2pi]: ");
     CR();
-    
+
     GMD_CODE_START("C++");
-    ECHO_CODE(   const double pi = M_PI  );
-    ECHO_CODE(   Vector<double> t = linspace<double>(0,2*pi,51) );
+    ECHO(const double pi = M_PI);
+    ECHO(Vector<double> t = linspace<double>(0, 2*pi, 51));
     GMD_CODE_END();
     CR();
 
@@ -157,13 +156,13 @@ int main()
     OUTPUT("Calculate the Fourier series and store the results in vector `CL2`: ");
     CR();
     GMD_CODE_START("C++");
-    ECHO_CODE(     const double T = 2*pi );
-    ECHO_CODE(     const double omega = 2*pi/T );
-    ECHO_CODE(     Vector<double> CL2 = ifourier(An,Bn, t, An.size(), omega ) );
+    ECHO(const double T = 2*pi);
+    ECHO(const double omega = 2*pi/T);
+    ECHO(Vector<double> CL2 = ifourier(An, Bn, t, An.size(), omega));
     GMD_CODE_END();
     CR();
 
-    
+
     OUTPUT("The results `t` and `CL2` are:");
     CR();
     GMD_CODE_START("Matlab");
@@ -197,6 +196,6 @@ int main()
 
   mathq_toc();
 
-  
+
   return 0;
 }

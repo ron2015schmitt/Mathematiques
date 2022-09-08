@@ -210,7 +210,7 @@ int main() {
 
   CR();
   GMD_CODE_START("C++");
-  ECHO_CODE(double pi = 3.14159265358979311599796346854);
+  ECHO(double pi = 3.14159265358979311599796346854);
   // cout.precision(numeric_limits<double>::max_digits10);
   cout.precision(22);
   cout << "☀ pi  ➜  double " << fixed << pi << ";" << endl;
@@ -236,7 +236,7 @@ int main() {
   // FormatDataVector::max_elements_per_line = 1;
   // FormatDataVector::string_endofline = "\n";
   GMD_CODE_START("C++");
-  ECHO_CODE(auto v = Vector<double>() = { 0, 1, 2, 3, 4 });
+  ECHO(auto v = Vector<double>() = { 0, 1, 2, 3, 4 });
   TRDISP(v);
   TRDISP(pi*v/4);
   TRDISP(10*sin(pi*v/4));

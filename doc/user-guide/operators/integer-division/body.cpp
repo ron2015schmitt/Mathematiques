@@ -13,7 +13,7 @@ int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   GMD_PREAMBLE();
 
@@ -42,7 +42,7 @@ int main() {
   OUTPUT("* The function [`std::div`](https://en.cppreference.com/w/cpp/numeric/math/div) can also be used for integer division, It returns both the result and remainder.\n");
 
   GMD_CODE_START("C++");
-  ECHO_CODE(div_t result = div(7, 2));
+  ECHO(div_t result = div(7, 2));
   GMD_CODE_END();
   OUTPUT("With result:\n");
   GMD_CODE_START("C++");

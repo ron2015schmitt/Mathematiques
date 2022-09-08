@@ -25,9 +25,9 @@ int main() {
   CR();
   CR();
   GMD_CODE_START("C++");
-  ECHO_CODE(double pi = 3.14);
-  ECHO_CODE(double r = 2.5);
-  ECHO_CODE(double area = pi * pow(r, 2));
+  ECHO(double pi = 3.14);
+  ECHO(double r = 2.5);
+  ECHO(double area = pi * pow(r, 2));
   GMD_CODE_END();
 
   MOUT << "Results are also shown in code blocks but with each line preceded by the symbol `" << Display::prefixStyledString << "`";
@@ -62,7 +62,7 @@ int main() {
   CR();
   CR();
   GMD_CODE_START("C++");
-  ECHO_CODE(double x = 1.52);
+  ECHO(double x = 1.52);
   TRDISP(x);
   GMD_CODE_END();
 

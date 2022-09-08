@@ -58,14 +58,14 @@ int main() {
   OUTPUT("#include <complex>;");
   OUTPUT("#include <cmath>;");
   OUTPUT("...");
-  ECHO_CODE(using namespace std);
-  ECHO_CODE(using namespace std::complex_literals);
+  ECHO(using namespace std);
+  ECHO(using namespace std::complex_literals);
   CR();
-  ECHO_CODE(complex<double> c1);
-  ECHO_CODE(complex<double> c2 = complex<double>(2, -3.5));
-  ECHO_CODE(complex<double> c3(1, 2.3));
-  ECHO_CODE(complex<double> c4 = 1.4 + 3.5i);
-  ECHO_CODE(auto c5 = complex<double>(1.3, -10.5));
+  ECHO(complex<double> c1);
+  ECHO(complex<double> c2 = complex<double>(2, -3.5));
+  ECHO(complex<double> c3(1, 2.3));
+  ECHO(complex<double> c4 = 1.4 + 3.5i);
+  ECHO(auto c5 = complex<double>(1.3, -10.5));
   CR();
   TRDISP(c1);
   TRDISP(c2);
@@ -109,7 +109,7 @@ int main() {
   CR();
   GMD_CODE_START("C++");
   {
-    ECHO_CODE(complex<double> z = 1.5 + 3.5i);
+    ECHO(complex<double> z = 1.5 + 3.5i);
     TRDISP(z);
     TRDISP(z.real());
     TRDISP(z.imag());
@@ -167,11 +167,11 @@ int main() {
 
   GMD_CODE_START("C++");
   {
-    ECHO_CODE(using namespace std);
-    ECHO_CODE(using namespace std::complex_literals);
+    ECHO(using namespace std);
+    ECHO(using namespace std::complex_literals);
     CR();
-    ECHO_CODE(complex<double> z = 1.5 + 3.5i);
-    ECHO_CODE(Vector<complex<double>> v = Vector<complex<double>>({ 1, 1i, 1 + 1i, 1 - 1i }));
+    ECHO(complex<double> z = 1.5 + 3.5i);
+    ECHO(Vector<complex<double>> v = Vector<complex<double>>({ 1, 1i, 1 + 1i, 1 - 1i }));
     CR();
     TRDISP(z);
     TRDISP(v);

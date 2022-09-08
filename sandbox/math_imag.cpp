@@ -14,18 +14,18 @@ int main(int argc, char* argv[]) {
 
   {
     CR();
-    ECHO_CODE(Imaginary<float> x1{ 0.001 });
+    ECHO(Imaginary<float> x1{ 0.001 });
     TRDISP(roundzero(x1));
-    ECHO_CODE(Imaginary<float> x2{ 3e-7 });
+    ECHO(Imaginary<float> x2{ 3e-7 });
     TRDISP(x2);
     TRDISP(roundzero(x2));
   }
 
   {
     CR();
-    ECHO_CODE(Imaginary<double> x1{ 0.001 });
+    ECHO(Imaginary<double> x1{ 0.001 });
     TRDISP(roundzero(x1));
-    ECHO_CODE(Imaginary<double> x2{ 1e-16 });
+    ECHO(Imaginary<double> x2{ 1e-16 });
     TRDISP(x2);
     TRDISP(roundzero(x2));
   }
@@ -33,9 +33,9 @@ int main(int argc, char* argv[]) {
 
   {
     CR();
-    ECHO_CODE(Imaginary<quad> x1{ 0.001 });
+    ECHO(Imaginary<quad> x1{ 0.001 });
     TRDISP(roundzero(x1));
-    ECHO_CODE(Imaginary<quad> x2{ 1e-30 });
+    ECHO(Imaginary<quad> x2{ 1e-30 });
     TRDISP(x2);
     TRDISP(roundzero(x2));
   }
@@ -52,10 +52,10 @@ int main(int argc, char* argv[]) {
   TRDISP(one<Imaginary<quad>>());
 
   CR();
-  ECHO_CODE(Imaginary<int> ii{ 42 });
-  ECHO_CODE(Imaginary<double> dub{ 3.14 });
-  ECHO_CODE(Imaginary<int> nii{ -13 });
-  ECHO_CODE(Imaginary<double> ndub{ -2.73 });
+  ECHO(Imaginary<int> ii{ 42 });
+  ECHO(Imaginary<double> dub{ 3.14 });
+  ECHO(Imaginary<int> nii{ -13 });
+  ECHO(Imaginary<double> ndub{ -2.73 });
 
   CR();
   TRDISP(mathq::real(ii));

@@ -172,11 +172,11 @@
 
 
 //
-// ECHO_CODE
+// ECHO
 //
 // line of code is both executed and printted to MOUT
 
-#define ECHO_CODE(...)                                                                                        \
+#define ECHO(...)                                                                                        \
   MOUT << display::Display::codePrefixStyledString << display::printf2str(stringify(__VA_ARGS__)) << ";" << std::endl; \
   __VA_ARGS__
 
@@ -310,7 +310,7 @@
 // EXAMPLE:
 //  GMD_CODE_START();
 //  x = 0;  // line of code is executed
-//  ECHO_CODE( x = (43.2 - 1)/2 );  // line of code is both executed and also put in the Markdown code block
+//  ECHO( x = (43.2 - 1)/2 );  // line of code is both executed and also put in the Markdown code block
 //  GMD_CODE_END()
 //
 
@@ -322,7 +322,7 @@
 
 #define GMD_CODE_BLOCK(...) \
   GMD_CODE_START();         \
-  ECHO_CODE(__VA_ARGS__);   \
+  ECHO(__VA_ARGS__);   \
   GMD_CODE_END()
 
 // for providing some vertical space
@@ -1787,7 +1787,7 @@ namespace display {
   //****************************************************************************
 
   // TODO:
-  //       add method that supports ECHO_CODE?
+  //       add method that supports ECHO?
   //       add class variable that if defined overrides the default, taken from the Format class
 
   class Display {

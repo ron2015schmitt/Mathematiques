@@ -39,7 +39,7 @@ int main() {
 
   GMD_HEADER3("Boolean");
   {  GMD_CODE_START("C++");
-  ECHO_CODE(bool q = (5 > 3));
+  ECHO(bool q = (5 > 3));
   TRDISP(q);
   TRDISP(!q);
   CR();
@@ -54,7 +54,7 @@ int main() {
   GMD_HEADER3("Unsigned integers");
   {
     GMD_CODE_START("C++");
-    ECHO_CODE(unsigned int n = 23);
+    ECHO(unsigned int n = 23);
     TRDISP(n);
     TRDISP(n + 102 - 2*4);
     TRDISP(n - 24);
@@ -67,7 +67,7 @@ int main() {
   GMD_HEADER3("Signed integers");
   {
     GMD_CODE_START("C++");
-    ECHO_CODE(int n = 23);
+    ECHO(int n = 23);
     TRDISP(n);
     TRDISP(n + 102 - 2*4);
     TRDISP(n - 24);
@@ -82,7 +82,7 @@ int main() {
   GMD_HEADER3("Floating point (reals)");
   {
     GMD_CODE_START("C++");
-    ECHO_CODE(double x = 23);
+    ECHO(double x = 23);
     TRDISP(x);
     TRDISP(4.5*x + 35/(2+3));
     CR();
@@ -95,14 +95,14 @@ int main() {
   GMD_HEADER3("Imaginary");
   {
     GMD_CODE_START("C++");
-    ECHO_CODE(Imaginary<double> y{ 4 });
+    ECHO(Imaginary<double> y{ 4 });
     TRDISP(y);
     CR();
-    ECHO_CODE(double x{ 3 });
+    ECHO(double x{ 3 });
     TRDISP(x);
     TRDISP(x + y);
     CR();
-    ECHO_CODE(using namespace mathq::unit_imaginary);
+    ECHO(using namespace mathq::unit_imaginary);
     TRDISP(3 + 4*i);
     GMD_CODE_END();
   }
@@ -111,14 +111,14 @@ int main() {
   GMD_HEADER3("Complex");
   {
     GMD_CODE_START("C++");
-    ECHO_CODE(using std::complex);
-    ECHO_CODE(complex<double> z(10, -20));
+    ECHO(using std::complex);
+    ECHO(complex<double> z(10, -20));
     TRDISP(z);
     TRDISP(abs(z));
     CR();
     TRDISP(z/complex(1, 2));
     CR();
-    ECHO_CODE(using namespace mathq::unit_imaginary);
+    ECHO(using namespace mathq::unit_imaginary);
     TRDISP(z/(1 + i*2));
     GMD_CODE_END();
   }
@@ -127,8 +127,8 @@ int main() {
   GMD_HEADER3("Quaternion");
   {
     GMD_CODE_START("C++");
-    ECHO_CODE(auto q1 = Quaternion<double>(1, 2, -1, -3));
-    ECHO_CODE(auto q2 = Quaternion<double>(4, 3, -2, -5));
+    ECHO(auto q1 = Quaternion<double>(1, 2, -1, -3));
+    ECHO(auto q2 = Quaternion<double>(4, 3, -2, -5));
     TRDISP(q1);
     TRDISP(q2);
     TRDISP(q1+q2);
@@ -137,19 +137,19 @@ int main() {
     TRDISP(q2/q1);
 
     CR();
-    ECHO_CODE(using namespace mathq::unit_imaginary);
-    ECHO_CODE(using namespace mathq::unit_quaternion);
-    ECHO_CODE(auto q = Quaternion<double>() = 16 + 2*i + 3*j + 13*k);
-    ECHO_CODE(auto p = Quaternion<double>() = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k);
+    ECHO(using namespace mathq::unit_imaginary);
+    ECHO(using namespace mathq::unit_quaternion);
+    ECHO(auto q = Quaternion<double>() = 16 + 2*i + 3*j + 13*k);
+    ECHO(auto p = Quaternion<double>() = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k);
     TRDISP(q);
     TRDISP(p);
 
     CR();
-    ECHO_CODE(double x{ 3 });
+    ECHO(double x{ 3 });
     TRDISP(x);
-    ECHO_CODE(Imaginary<double> y{ 4 });
+    ECHO(Imaginary<double> y{ 4 });
     TRDISP(y);
-    ECHO_CODE(std::complex<double> z(1, 2));
+    ECHO(std::complex<double> z(1, 2));
     TRDISP(x + y + z + 5*j);
 
     GMD_CODE_END();

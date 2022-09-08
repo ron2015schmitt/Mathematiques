@@ -16,15 +16,14 @@
 // ************************************************************
 
 
-int main()
-{
+int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   int Nex = 1;
-  
+
   mathq_toc();
   CR();CR();
   GMD_TITLE("\\*Formatted and styled printing");
@@ -35,27 +34,27 @@ int main()
 
 
   // DISP()
-  
+
   GMD_HEADER2("The function `DISP(x)`");
   CR();CR();
 
   OUTPUT("The function `DISP(x)` displays both the variable name (or expression) as well as its value, formatted according to the user.   This is an incredibly useful function.");
   CR();CR();
-  
-  EXAMPLE(Nex++,"simple examples of `DISP(x)` usage");
+
+  EXAMPLE(Nex++, "simple examples of `DISP(x)` usage");
   CR();CR();
   OUTPUT("Define and initialize some variables:");
   CR();CR();
   GMD_CODE_START("C++");
-  ECHO_CODE(  int n = 45 );
-  ECHO_CODE(  int m =256 );
-  ECHO_CODE(  double x = 3.14 );
-  ECHO_CODE(  double vals[] = {1.1,2.2,3.3} );
-  ECHO_CODE(  bool done = true );
-  ECHO_CODE( Vector<double> v = range<double>(1,10) );
-  ECHO_CODE(  char str[] = "hello" );
-  ECHO_CODE(  std::string s = "world"  );
-  ECHO_CODE(  ComplexDouble z(1,-1)  );
+  ECHO(int n = 45);
+  ECHO(int m = 256);
+  ECHO(double x = 3.14);
+  ECHO(double vals[] = { 1.1,2.2,3.3 });
+  ECHO(bool done = true);
+  ECHO(Vector<double> v = range<double>(1, 10));
+  ECHO(char str[] = "hello");
+  ECHO(std::string s = "world");
+  ECHO(ComplexDouble z(1, -1));
   GMD_CODE_END();
 
   OUTPUT("display each variable using `disp`:");
@@ -77,7 +76,7 @@ int main()
   OUTPUT("The actual screen-shot of the output is shown below:");
   CR();CR();
   OUTPUT("![disp example 1](disp_example1.png)");
-  
+
   // TLDISP()
 
   GMD_HEADER2("The function `TLDISP(x)`");
@@ -85,8 +84,8 @@ int main()
 
   OUTPUT("The function `TLDISP(x)` displays the variable type, in addition to the variable name and value");
   CR();CR();
-  
-  EXAMPLE(Nex++," `TLDISP(x)` usage");
+
+  EXAMPLE(Nex++, " `TLDISP(x)` usage");
 
   CR();CR();
 
@@ -118,9 +117,9 @@ int main()
   OUTPUT("  * the arguments passed to a function");
   OUTPUT("  * the variables inside a for loop");
   CR();CR();
-  
 
-  EXAMPLE(Nex++," `MDISP(x1,x2,...)` usage");
+
+  EXAMPLE(Nex++, " `MDISP(x1,x2,...)` usage");
   CR();CR();
 
   GMD_CODE_START("C++");
@@ -144,9 +143,9 @@ int main()
 
   OUTPUT("* The function `DISPVAL(x)` prints only the variable value, without the name and equals sign, and _without a carriage return_.");
   CR();CR();
-  
 
-  EXAMPLE(Nex++," `DISPVAL(x)` usage");
+
+  EXAMPLE(Nex++, " `DISPVAL(x)` usage");
   CR();CR();
 
   GMD_CODE_START("C++");
@@ -168,9 +167,9 @@ int main()
   OUTPUT("* The functions introduced above can also be used to display expressions.");
   OUTPUT("* vector and matrix expressions can be displayed in this manner.");
   CR();CR();
-  
 
-  EXAMPLE(Nex++," displaying expressions");
+
+  EXAMPLE(Nex++, " displaying expressions");
   CR();CR();
 
   GMD_CODE_START("C++");
@@ -228,9 +227,9 @@ int main()
   OUTPUT("| `TLDISP(x)`  | `TDISP_STRM(ostream,x)`  |");
   OUTPUT("| `MDISP(x,y,...)`  | `MDISP_STRM(ostream,x,y,...)`  |");
   CR();CR();
-  
 
-  
+
+
   // debug-only printing
 
   GMD_HEADER2("Debug-only printing");
@@ -256,13 +255,13 @@ int main()
 
   GMD_HEADER3("Debug-only printing: `print[123]`, `printf[123]`");
   CR();CR();
-  
+
   OUTPUT("* The functions `print1`, `print2`, `print3` each take a single std::string (or C string) as input and print the string to the stream `MOUT` followed by a carriage return.");
 
   OUTPUT("* The functions `PRINTF1`, `PRINTF2`, `PRINTF3` function like printf, but actually use sprintf and then output to the stream `MOUT` using C++ methodlogy.");
 
 
-  
+
   GMD_HEADER2("Changing the mathq output stream and controlling color");
   OUTPUT("* All output uses C++ streams (*no* `printf`)");
   OUTPUT("* By default all output is sent to `std::cout`");
@@ -290,7 +289,7 @@ int main()
   OUTPUT("Terminal::setOverrideValue(true);");
   OUTPUT("```\n");
   OUTPUT("This latter setting can be used to print in colors to a file, which will display properly when the file is viewed via a terminal command like `more`,`less`, or `cat`.\n");
-  
+
   CR();CR();
   GMD_HEADER2("The `Style` class");
   OUTPUT("* Color and other text attributes are controlled using the [ANSI escape codes for terminals](https://en.wikipedia.org/wiki/ANSI_escape_code).\n");
@@ -331,10 +330,10 @@ int main()
   OUTPUT("display::MOUT << mybold.apply(\"Hello World\") << std::endl; ");
   GMD_CODE_END();
   OUTPUT("* Place the attributes, eg `BOLD`, `UNDERLINE`, before the color styles");
-  
+
   OUTPUT("* Wikipedia lists the allowable [8-bit color definitions](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit)\n");
 
-  
+
   GMD_HEADER2("Customizing display format for data types");
   CR();CR();
   GMD_HEADER3("Customizing number formats");
@@ -342,24 +341,24 @@ int main()
 
   {
     CR();CR();
-    EXAMPLE(Nex++," `double` number format");
-      
+    EXAMPLE(Nex++, " `double` number format");
+
     GMD_CODE_START("C++");
-    ECHO_CODE( using namespace display );
-    ECHO_CODE( double x = 2.51  );
+    ECHO(using namespace display);
+    ECHO(double x = 2.51);
     GMD_CODE_END();
     OUTPUT("");
 
     resultstart3(": The default format is `\"%g\"` which yields");
-    resultmulti(x );
+    resultmulti(x);
     resultend();
 
     GMD_CODE_START("C++");
-    ECHO_CODE( setFormatString<double>("%+18.15f")  );
+    ECHO(setFormatString<double>("%+18.15f"));
     GMD_CODE_END();
     OUTPUT("");
     resultstart3(": The format `\"%+18.15f\"`  yields");
-    resultmulti(x );
+    resultmulti(x);
     resultend();
 
   }
@@ -367,11 +366,11 @@ int main()
 
   {
     CR();CR();
-    EXAMPLE(Nex++," `int` number format");
+    EXAMPLE(Nex++, " `int` number format");
 
     GMD_CODE_START("C++");
-    ECHO_CODE( using namespace display );
-    ECHO_CODE( int n = -1024  );
+    ECHO(using namespace display);
+    ECHO(int n = -1024);
     GMD_CODE_END();
     OUTPUT("");
 
@@ -380,7 +379,7 @@ int main()
     resultend();
 
     GMD_CODE_START("C++");
-    ECHO_CODE( setFormatString<int>("%10d")  );
+    ECHO(setFormatString<int>("%10d"));
     GMD_CODE_END();
     OUTPUT("");
     resultstart3(": The format `\"%10d\"`  yields");
@@ -401,8 +400,8 @@ int main()
   {
     CR();CR();
     GMD_CODE_START("C++");
-    ECHO_CODE( using namespace display );
-    ECHO_CODE( bool a = true );
+    ECHO(using namespace display);
+    ECHO(bool a = true);
     GMD_CODE_END();
     OUTPUT("");
 
@@ -414,9 +413,9 @@ int main()
 
     OUTPUT("For example, we can change the bool display value to true/false as follows.");
     GMD_CODE_START("C++");
-    ECHO_CODE( using namespace display );
-    ECHO_CODE( FormatData<bool>::string_for_true = "true" );
-    ECHO_CODE( FormatData<bool>::string_for_false = "false" );
+    ECHO(using namespace display);
+    ECHO(FormatData<bool>::string_for_true = "true");
+    ECHO(FormatData<bool>::string_for_false = "false");
     GMD_CODE_END();
     OUTPUT("");
 
@@ -425,28 +424,28 @@ int main()
     resultmulti(!a);
     resultend();
     CR();CR();
-  } 
+  }
 
 
-  
+
   GMD_HEADER3("Customizing complex number format");
   OUTPUT("The format for complex numbers is set using the function `setFormatStringComplex`.  The default format is `\"(%s, %s)\"`\n");
   CR();CR();
 
   {
     set_default_format();
-    EXAMPLE(Nex++," complex number formats");
+    EXAMPLE(Nex++, " complex number formats");
     GMD_CODE_START("C++");
-    ECHO_CODE( using namespace display );
-    ECHO_CODE( ComplexDouble z(1,-2)  );
+    ECHO(using namespace display);
+    ECHO(ComplexDouble z(1, -2));
     GMD_CODE_END();
-      
+
     CR();CR();
     OUTPUT("Default format: `\"(%s, %s)\"`\n");
     GMD_CODE_START("C++");
     DISP(z);
     GMD_CODE_END();
-      
+
     CR();CR();
     OUTPUT("Matlab input format `\"%s + i*%s\"`\n");
     setFormatStringComplex("%s + i*%s");
@@ -471,14 +470,14 @@ int main()
     CR();CR();
     OUTPUT("Note that the format of the real and imaginary parts of `complex<D>` are controlled by the format string for the template data type.`\n");
     GMD_CODE_START("C++");
-    ECHO_CODE( setFormatString<double>("%9.6f")  );
+    ECHO(setFormatString<double>("%9.6f"));
     GMD_CODE_END();
     OUTPUT("The above statement changes the display of `z` to\n");
     GMD_CODE_START("C++");
     DISP(z);
     GMD_CODE_END();
 
-  
+
   }
 
   GMD_HEADER3("Customizing Vector format");
@@ -497,17 +496,17 @@ int main()
 
   {
     set_default_format();
-    EXAMPLE(Nex++," default Vector format");
+    EXAMPLE(Nex++, " default Vector format");
     GMD_CODE_START("C++");
-    ECHO_CODE( using namespace mathq );
-    ECHO_CODE( Vector<double> v = range<double>(1001,1010);  );
+    ECHO(using namespace mathq);
+    ECHO(Vector<double> v = range<double>(1001, 1010); );
     GMD_CODE_END();
     OUTPUT("The default format yields\n");
     GMD_CODE_START("C++");
     DISP(v);
     GMD_CODE_END();
   }
-  
+
   GMD_HEADER4("Mathematica-style Vector format");
   CR();CR();
   OUTPUT("The Mathematica-style format allows you to cut and paste results directly into a Mathematica notebook.  ");
@@ -525,24 +524,24 @@ int main()
   OUTPUT("* This function also changes the format for doubles and complex numbers");
   CR();CR();
   GMD_CODE_START("C++");
-  ECHO_CODE( setFormatString<double>("% 10.8e") );
-  ECHO_CODE( FormatData<double>::tens = true );
-  ECHO_CODE( setFormatStringComplex("%s + I*%s") );
+  ECHO(setFormatString<double>("% 10.8e"));
+  ECHO(FormatData<double>::tens = true);
+  ECHO(setFormatStringComplex("%s + I*%s"));
   GMD_CODE_END();
   {
-    
-    EXAMPLE(Nex++," Mathematica Vector format");
+
+    EXAMPLE(Nex++, " Mathematica Vector format");
     GMD_CODE_START("C++");
-    ECHO_CODE( using namespace mathq );
-    ECHO_CODE( Vector<double> v = range<double>(1001,1010);  );
-    ECHO_CODE( set_mathematica_var_format() );
+    ECHO(using namespace mathq);
+    ECHO(Vector<double> v = range<double>(1001, 1010); );
+    ECHO(set_mathematica_var_format());
     GMD_CODE_END();
     OUTPUT("The Mathematica format yields\n");
     GMD_CODE_START("C++");
     DISP(v);
     GMD_CODE_END();
   }
-  
+
   GMD_HEADER4("Matlab-style Vector format");
   CR();CR();
   OUTPUT("The Matlab-style format allows you to cut and paste results directly into the Matlab command line or m-file.  ");
@@ -560,17 +559,17 @@ int main()
   OUTPUT("* This function also changes the format for doubles and complex numbers");
   CR();CR();
   GMD_CODE_START("C++");
-  ECHO_CODE( setFormatString<double>("% 10.8e") );
-  ECHO_CODE( FormatData<double>::tens = false );
-  ECHO_CODE( setFormatStringComplex("%s + i*%s") );
+  ECHO(setFormatString<double>("% 10.8e"));
+  ECHO(FormatData<double>::tens = false);
+  ECHO(setFormatStringComplex("%s + i*%s"));
   GMD_CODE_END();
   {
-    
-    EXAMPLE(Nex++," Matlab Vector format");
+
+    EXAMPLE(Nex++, " Matlab Vector format");
     GMD_CODE_START("C++");
-    ECHO_CODE( using namespace mathq );
-    ECHO_CODE( Vector<double> v = range<double>(1001,1010);  );
-    ECHO_CODE( set_matlab_var_format() );
+    ECHO(using namespace mathq);
+    ECHO(Vector<double> v = range<double>(1001, 1010); );
+    ECHO(set_matlab_var_format());
     GMD_CODE_END();
     OUTPUT("The Matlab format yields\n");
     GMD_CODE_START("C++");
@@ -649,7 +648,7 @@ int main()
   OUTPUT("| style_for_type_name | Style(GREEN) | ");
   OUTPUT("| style_for_punctuation | Style(GRAY1) | ");
   CR();CR();
-  
+
   GMD_HEADER3("Color and style settings for `Vector`\n");
   CR();CR();
   OUTPUT("| **FormatDataVector** class variable | default value | ");
