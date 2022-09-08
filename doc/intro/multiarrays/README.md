@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.111-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.112-c++20</h1>
 
 <details>
 
@@ -34,7 +34,6 @@
 4.6. [Calculus and Vector Calculus](../vector-calculus/README.md)<br>
 4.7. [Tensors](../tensors/README.md)<br>
 4.8. [Series and transforms](../series-transforms/README.md)<br>
-4.9. [Future Work](../future/README.md)<br>
 
 
 </details>
@@ -45,30 +44,44 @@
 
 
 
-## Pretty Printing
-Mathématiques supports the follow number systems:
+Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.   These containers can be nested any number of levels.
+## Vectors
+Vectors can be fixed length, with length determined at compile-time, or dynamic length.
+### Fixed-length Vectors
 ```C++
-bool q = (5 > 3);
-☀ q ➜ bool true;
-☀ !q ➜ bool false;
+Vector<double, 3> v{ 1,2,3 };
 
-☀ true || false ➜ bool true;
-☀ true && false ➜ bool false;
-
-☀ true + 9 ➜ int 10;
+☀ v ➜ Vector<double,N0=3> {1, 2, 3};
 ```
 
 <br>
 
-## Debugging Modes
-Mathématiques supports mixed math and automatically promotes numbers as needed
+### Dynamic-length Vectors
 ```C++
-unsigned int n = 23;
-☀ n ➜ unsigned int 23;
-☀ n + 102 - 2*4 ➜ unsigned int 117;
-☀ n - 24 ➜ unsigned int 4294967295;
-☀ n/2 ➜ unsigned int 11;
-☀ n % 2 ➜ unsigned int 1;
+Vector<double> v{ 1,2,3,4,5 };
+
+☀ v ➜ Vector<double> {1, 2, 3, 4, 5};
+v = 100*v;
+☀ v ➜ Vector<double> {100, 200, 300, 400, 500};
+v.resize(10);
+☀ v ➜ Vector<double> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+v = linspace<double>(0, 1, 10);
+☀ v ➜ Vector<double> {0, 0.111111, 0.222222, 0.333333, 0.444444, 0.555556, 0.666667, 0.777778, 0.888889, 1};
+```
+
+<br>
+
+### Element access
+```C++
+Vector<double, 3> v{ 1,2,3 };
+
+☀ v[0] ➜ double 1;
+☀ v[1] ➜ double 2;
+☀ v[2] ➜ double 3;
+v[0] = 200;
+☀ v ➜ Vector<double,N0=3> {200, 2, 3};
+v[2] = v[1] = v[0];
+☀ v ➜ Vector<double,N0=3> {200, 200, 200};
 ```
 
 <br>

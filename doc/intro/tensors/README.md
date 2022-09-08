@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.111-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.112-c++20</h1>
 
 <details>
 
@@ -34,7 +34,6 @@
 4.6. [Calculus and Vector Calculus](../vector-calculus/README.md)<br>
 4.7. _Tensors_ <br>
 4.8. [Series and transforms](../series-transforms/README.md)<br>
-4.9. [Future Work](../future/README.md)<br>
 
 
 </details>

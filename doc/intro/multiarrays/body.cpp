@@ -23,33 +23,96 @@ int main() {
   // using namespace mathq::unit_imaginary;
   // using std::sqrt;
 
-  GMD_HEADER2("Pretty Printing");
-  OUTPUT("Mathématiques supports the follow number systems:");
+  OUTPUT("Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.   These containers can be nested any number of levels.");
 
-  {  GMD_CODE_START("C++");
-  ECHO(bool q = (5 > 3));
-  TRDISP(q);
-  TRDISP(!q);
-  CR();
-  TRDISP(true || false);
-  TRDISP(true && false);
-  CR();
-  TRDISP(true + 9);
-  GMD_CODE_END();
+
+  GMD_HEADER2("Vectors");
+  OUTPUT("Vectors can be fixed length, with length determined at compile-time, or dynamic length.");
+
+  GMD_HEADER3("Fixed-length Vectors");
+  {
+    GMD_CODE_START("C++");
+    ECHO(Vector<double, 3> v{ 1,2,3 });
+    CR();
+    TRDISP(v);
+    GMD_CODE_END();
   }
   GMD_VSPACE();
 
-  GMD_HEADER2("Debugging Modes");
-  OUTPUT("Mathématiques supports mixed math and automatically promotes numbers as needed");
-
+  GMD_HEADER3("Dynamic-length Vectors");
   {
     GMD_CODE_START("C++");
-    ECHO(unsigned int n = 23);
-    TRDISP(n);
-    TRDISP(n + 102 - 2*4);
-    TRDISP(n - 24);
-    TRDISP(n/2);
-    TRDISP(n % 2);
+    ECHO(Vector<double> v{ 1,2,3,4,5 });
+    CR();
+    TRDISP(v);
+    ECHO(v = 100*v);
+    TRDISP(v);
+    ECHO(v.resize(10));
+    TRDISP(v);
+    ECHO(v = linspace<double>(0, 1, 10));
+    TRDISP(v);
+    GMD_CODE_END();
+  }
+  GMD_VSPACE();
+
+  GMD_HEADER3("Element access");
+  {
+    GMD_CODE_START("C++");
+    ECHO(Vector<double, 3> v{ 1,2,3 });
+    CR();
+    TRDISP(v[0]);
+    TRDISP(v[1]);
+    TRDISP(v[2]);
+    ECHO(v[0] = 200);
+    TRDISP(v);
+    ECHO(v[2] = v[1] = v[0]);
+    TRDISP(v);
+    GMD_CODE_END();
+  }
+  GMD_VSPACE();
+
+
+  GMD_HEADER2("Vectors");
+  OUTPUT("Vectors can be fixed length, with length determined at compile-time, or dynamic length.");
+
+  GMD_HEADER3("Fixed-length Vectors");
+  {
+    GMD_CODE_START("C++");
+    ECHO(Vector<double, 3> v{ 1,2,3 });
+    CR();
+    TRDISP(v);
+    GMD_CODE_END();
+  }
+  GMD_VSPACE();
+
+  GMD_HEADER3("Dynamic-length Vectors");
+  {
+    GMD_CODE_START("C++");
+    ECHO(Vector<double> v{ 1,2,3,4,5 });
+    CR();
+    TRDISP(v);
+    ECHO(v = 100*v);
+    TRDISP(v);
+    ECHO(v.resize(10));
+    TRDISP(v);
+    ECHO(v = linspace<double>(0, 1, 10));
+    TRDISP(v);
+    GMD_CODE_END();
+  }
+  GMD_VSPACE();
+
+  GMD_HEADER3("Element access");
+  {
+    GMD_CODE_START("C++");
+    ECHO(Vector<double, 3> v{ 1,2,3 });
+    CR();
+    TRDISP(v[0]);
+    TRDISP(v[1]);
+    TRDISP(v[2]);
+    ECHO(v[0] = 200);
+    TRDISP(v);
+    ECHO(v[2] = v[1] = v[0]);
+    TRDISP(v);
     GMD_CODE_END();
   }
   GMD_VSPACE();
