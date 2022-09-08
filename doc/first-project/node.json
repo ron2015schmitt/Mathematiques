@@ -3,7 +3,7 @@
   "name": "first-project",
   "skip-readme": false,
   "title": "Your First Math\u00e9matiques Project",
-  "version": "v0.41.110-c++20",
+  "version": "v0.41.111-c++20",
   "prefix": "6.",
   "src": "first-project/template.md",
   "dest": "first-project/README.md",
@@ -12,10 +12,10 @@
     "title": "Documentation",
     "prefix": "",
     "level": 1,
-    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.110-c++20</h1>"
+    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.111-c++20</h1>"
   },
   "prev": "installation",
   "next": "user-guide",
-  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.110-c++20</h1>\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../README.md)<br>\n1. [License](../license/README.md)<br>\n2. [About](../about/README.md)<br>\n3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>\n4. [Introduction with Examples](../intro/README.md)<br>\n5. [Installation](../installation/README.md)<br>\n6. _Your First Math\u00e9matiques Project_ <br>\n7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>\n8. [Benchmarks](../benchmarks/README.md)<br>\n9. [Tests](../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
+  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.111-c++20</h1>\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../README.md)<br>\n1. [License](../license/README.md)<br>\n2. [About](../about/README.md)<br>\n3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>\n4. [Introduction with Examples](../intro/README.md)<br>\n5. [Installation](../installation/README.md)<br>\n6. _Your First Math\u00e9matiques Project_ <br>\n7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>\n8. [Benchmarks](../benchmarks/README.md)<br>\n9. [Tests](../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
   "footer": "\n\n| \u21e6 <br />[Installation](../installation/README.md)  | [Documentation](../README.md)<br />Your First Math\u00e9matiques Project<br /><img width=1000/> | \u21e8 <br />[Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
 }
