@@ -45,7 +45,6 @@ if sys.argv[2] != "--chapters-and-headers":
 # process all arguments
 NAMES = []
 CHAPTERS = {}
-Nchapters = 0
 stage="CHAPTERS-AND-HEADERS"
 for i in range(3,N):
   arg=sys.argv[i]
@@ -67,11 +66,10 @@ for i in range(3,N):
     print("inside CHAPTERS-AND-HEADERS")
     name = arg
     NAMES.append(name)
-    Nchapters += 1
     chapter = {
-      "index": Nchapters,
       "name": name,
       "skip-readme": False,
+      "is-header": False,
     }   
     CHAPTERS[name] = chapter
   elif stage == "BRANCHES":
@@ -80,7 +78,7 @@ for i in range(3,N):
     CHAPTERS[name]["skip-readme"] = True
   elif stage == "HEADERS":
     print("inside HEADERS")
-    dummy=""
+    CHAPTERS[name]["is-heading"] = True
   else:
     print("say what?")
 
@@ -90,7 +88,6 @@ if len(NAMES) == 0:
   
 print("NAMES={}".format(NAMES))
 #print("CHAPTERS={}".format(CHAPTERS))
-
 
   
 
@@ -141,7 +138,10 @@ else:
 print("node: "+str(node))
 
 # read in chapter/title.src.md for each chapter
+Nchapters = 0
 for name in NAMES:
+  Nchapters+=1
+  CHAPTERS[name]["index"] = Nchapters
   lines = []
   fn = name+"/title.src.md"
   with open(fn, 'r') as f:
