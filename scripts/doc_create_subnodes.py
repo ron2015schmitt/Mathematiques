@@ -48,18 +48,22 @@ CHAPTERS = {}
 Nchapters = 0
 stage="chapters-and-headers"
 for i in range(3,N):
+  arg=sys.argv[i]
+  print("stage={} {}".format(stage,arg))
 
   # --options
-  if sys.argv[i] == "--chapters-and-headers":
+  if arg == "--chapters-and-headers":
     stage="chapters-and-headers"
-  elif sys.argv[i] == "--branches":
+  elif arg == "--branches":
     stage="branches"
-  elif sys.argv[i] == "--headers":
+    print("branches")
+  elif arg == "--headers":
     stage="headers"
+    print("headers")
 
   # words
   elif stage == "chapters-and-headers":
-    name = sys.argv[i]
+    name = arg
     NAMES.append(name)
     Nchapters += 1
     chapter = {
@@ -69,7 +73,7 @@ for i in range(3,N):
     }   
     CHAPTERS[name] = chapter
   elif stage == "branches":
-    name = sys.argv[i]
+    name = arg
     NAMES.append(name)
     Nchapters += 1
     chapter = {
@@ -80,6 +84,8 @@ for i in range(3,N):
     CHAPTERS[name] = chapter
   elif stage == "headers":
     dummy=""
+  else:
+    print("say what?")
 
 if len(NAMES) == 0:
   print("\nNo CHAPTERS specified--Nothing to do: {}\n".format(cmd) + usage)
