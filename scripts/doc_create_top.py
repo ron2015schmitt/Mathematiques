@@ -25,6 +25,7 @@ if n != 3:
     print("Invalid number of command line arguments ({})\n".format(n) + usage)
     sys.exit(1)
 
+# load tag file
 tag_file = sys.argv[1]
 lines = []
 with open(tag_file, 'r') as f:
@@ -40,7 +41,7 @@ header = """
 
 """.format(tag)
 
-
+# load body file
 template = sys.argv[2]
 f = open(template, 'r')
 body = f.read()

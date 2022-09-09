@@ -91,12 +91,14 @@ doc: FORCE
 sandbox: FORCE
 	\cd $(DIR_MATHQ)/sandbox && make -j all 
 
+# not used currently
 body.temp.md: body.src.md doc/about/part-one.src.md
-#	@cat body.src.md doc/about/part-one.src.md > $@
-	echo ""> $@
-README.md: $(CREATE_DOC_TOP) $(TAG_FILE_MATHQ) title.src.md body.temp.md
-	python3 $(CREATE_DOC_TOP) $(TAG_FILE_MATHQ) body.temp.md 
-	@chmod a-w README.md body.temp.md
+	@cat body.src.md doc/about/part-one.src.md > $@
+
+README.md: $(CREATE_DOC_TOP) $(TAG_FILE_MATHQ) title.src.md body.src.md
+	python3 $(CREATE_DOC_TOP) $(TAG_FILE_MATHQ) body.src.md 
+	@chmod a-w README.md 
+#	@chmod a-w README.md body.temp.md
 
 some: README.md
 
