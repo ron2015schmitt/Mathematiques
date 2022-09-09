@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.131-c++20</h1>](../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.132-c++20</h1>](../README.md)
 
 # Chapter  Documentation
 
