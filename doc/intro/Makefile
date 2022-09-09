@@ -2,7 +2,7 @@
 # VARIABLES
 #############################################################
 
-CHAPTERS = print-debug numbers multiarrays nested-multiarrays special-multiarrays \
+CHAPTERS_AND_HEADINGS = print-debug numbers multiarrays nested-multiarrays special-multiarrays \
 multiarray-arithmetic linear-algebra sort-mask-slice math-functions multi-var-calculus \
 complex-calculus vector-calculus tensors series-transforms
 

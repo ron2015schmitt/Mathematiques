@@ -2,7 +2,7 @@
 # VARIABLES
 #############################################################
 
-CHAPTERS = vector matrix multi-array
+CHAPTERS_AND_HEADINGS = vector matrix multi-array
 
 include ../../../make-lib/dirmathq.config.mk
 include $(DIR_MATHQ)/make-lib/doc.variables.mk

@@ -18,6 +18,8 @@ CREATE_DOC_BRANCH := $(DIR_MATHQ)/scripts/doc_create_subnodes.py
 CREATE_DOC_LEAF := $(DIR_MATHQ)/scripts/doc_create_leaf.py
 
 # CHAPTERS must be defined in the specific makefile
+HEADINGS = $(filter %.heading,$(CHAPTERS_AND_HEADINGS))
+CHAPTERS = $(filter-out %.heading,$(CHAPTERS_AND_HEADINGS))
 CHAPTER_NODES = $(addsuffix /node.json,$(CHAPTERS))
 CHAPTER_BRANCHES = $(subst /,,$(MAKE_SUBDIRS))
 CHAPTER_LEAVES = $(filter-out $(CHAPTER_BRANCHES),$(CHAPTERS))
