@@ -65,7 +65,7 @@ STRIKE_OFF := '\e[29m'
 
 
 define echovar
- echo -e $(BOLD)"${1}"$(BOLD_OFF)"  :=  ${${1}}"
+ echo -e $(BOLD)$(GREEN)"${1}"$(DEFCLR)$(BOLD_OFF)$(GRAYDARK)" ("$(origin $(1))")"$(DEFCLR)" :=  ${${1}}"
 endef
 
 define title
