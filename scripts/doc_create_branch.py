@@ -156,11 +156,12 @@ if os.path.exists(fn):
   print("  FOUND: "+fn)
   with open(fn) as f:
     node = json.load(f)
+    node["prefix"] = node["prefix"].replace("Chapter ","")
 else:
   print("  NOT FOUND: "+fn+". Assuming Top level of User Manual and using default node.")
   node = {
     "title": title_text,
-    "prefix": "",
+    "prefix": "Chapter ",
     "level": 1,
     "header": MATHQ_TITLE,
   }
@@ -256,15 +257,19 @@ top = """
 
 mytoc = ""
 print("START: create TOC")
+i=0
 for name in CHAPTERS:
   chapter = CHAPTERS[name]
   if chapter["is-heading"] == True:
     text = "**"+chapter["title"]+"**"
+    if i > 0:
+      text = "<br>"+text
   else:
     link = "[{}]({})".format(chapter["title"], name+"/README.md")
     text = chapter["prefix"]+ " " + link
   print("  name={} processed: {}".format(name,text))
   mytoc += text + "<br>\n"
+  i += 1
 print("DONE: create TOC\n")
 
 footer = ""
