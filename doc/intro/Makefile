@@ -2,9 +2,9 @@
 # VARIABLES
 #############################################################
 
-CHAPTERS_AND_HEADINGS = print-debug numbers multiarrays nested-multiarrays special-multiarrays \
-multiarray-arithmetic linear-algebra sort-mask-slice math-functions multi-var-calculus \
-complex-calculus vector-calculus tensors series-transforms
+CHAPTERS_AND_HEADINGS = basics.src.heading print-debug numbers multiarrays.src.heading multiarrays nested-multiarrays special-multiarrays \
+math.src.heading multiarray-arithmetic linear-algebra sort-mask-slice math-functions \
+calculus.src.heading multi-var-calculus complex-calculus vector-calculus tensors series-transforms
 
 include ../../make-lib/dirmathq.config.mk
 include $(DIR_MATHQ)/make-lib/doc.variables.mk
