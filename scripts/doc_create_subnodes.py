@@ -127,7 +127,7 @@ print("DONE: Read version tag={}\n".format(tag))
 
 # Set Document title
 #MATHQ_TITLE = "# Mathématiques {}\n".format(tag)
-MATHQ_TITLE = "<h1 style='border: 2px solid; text-align: center'>[Mathématiques {}](../README.md)</h1>".format(tag)
+MATHQ_TITLE = "[<h1 style='border: 2px solid; text-align: center'>Mathématiques {}</h1>](../README.md)".format(tag)
 
 
 # read in body file
