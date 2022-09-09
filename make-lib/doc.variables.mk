@@ -14,7 +14,7 @@ include $(DIR_MATHQ)/make-lib/variables.mk
 MAKEFILE_REL := $(subst $(DIR_MATHQ)/,,$(MAKEFILE))
 
 # Scripts
-CREATE_DOC_BRANCH := $(DIR_MATHQ)/scripts/doc_create_subnodes.py
+CREATE_DOC_BRANCH := $(DIR_MATHQ)/scripts/doc_create_branch.py
 CREATE_DOC_LEAF := $(DIR_MATHQ)/scripts/doc_create_leaf.py
 
 # CHAPTERS must be defined in the specific makefile

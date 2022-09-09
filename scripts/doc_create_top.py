@@ -13,9 +13,12 @@ def delete(fname):
 today = datetime.datetime.now().strftime("%d %B %Y")
 #print(today)
 
+cmd = "python3 " + sys.argv[0]
+fullcmd = "python3 " + ' '.join(sys.argv)
+
 usage="""
 USAGE: python3 {} TAG_FILE_MATHQ body.md
-""".format(sys.argv[0])
+""".format(cmd)
 
 n = len(sys.argv)
 if n != 3: 

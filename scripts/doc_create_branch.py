@@ -15,12 +15,13 @@ def delete(fname):
 today = datetime.datetime.now().strftime("%d %B %Y")
 #print(today)
 
-cmd = "python3 " + ' '.join(sys.argv)
+cmd = "python3 " + sys.argv[0]
+fullcmd = "python3 " + ' '.join(sys.argv)
 
 usage="""
-USAGE: python3 createdocbranch.py TAG_FILE_MATHQ --chapters-and-headings CHAPTER1 ... [--branches CHAPTERS_THAT_HAVE_OWN_MAKEFILE1= ...] [--headings HEADER1= ...]
+USAGE: {} TAG_FILE_MATHQ --chapters-and-headings CHAPTER1 ... [--branches CHAPTERS_THAT_HAVE_OWN_MAKEFILE1= ...] [--headings HEADER1= ...]
 
-"""
+""".format(cmd)
 
 N = len(sys.argv)
 
@@ -198,16 +199,15 @@ print("DONE: Read title text from files\n")
 print("START: create rest of node data for each child (actual chapters)")
 for name in CHILDREN:
   chapter = CHAPTERS[name]
-  if chapter["is-heading"] == False:
-    index = chapter["index"]
-    chapter["version"] = tag
-    chapter["prefix"] = node["prefix"] + str(index) + "."
-    chapter["src"] = name+"/template.md"
-    chapter["dest"] = name+"/README.md"
-    chapter["level"] = node["level"] +1
-    chapter["parent"] = node
-    # print("  name={}, chapter={}".format(name,chapter))
-    print("  name={} processed".format(name))
+  index = chapter["index"]
+  chapter["version"] = tag
+  chapter["prefix"] = node["prefix"] + str(index) + "."
+  chapter["src"] = name+"/template.md"
+  chapter["dest"] = name+"/README.md"
+  chapter["level"] = node["level"] +1
+  chapter["parent"] = node
+  # print("  name={}, chapter={}".format(name,chapter))
+  print("  name={} processed".format(name))
 print("DONE: create rest of node data for each child (actual chapters)\n")
 
 
@@ -297,27 +297,26 @@ menu = """
 print("START: create child headers")
 for name in CHILDREN:
   chapter = CHAPTERS[name]
-  if chapter["is-heading"] == False:
-    title = node["title"]
-    print("  child={}".format(name))
-    # print("  chapter={}".format(chapter))
-    numandtitle = node["prefix"]+ (len(node["prefix"])>0)*" " + title
-    file = "../README.md"
-    link = "[{}]({})".format(numandtitle, file)
-    toc = "# " + link + "<br>\n"
-    for name2 in CHILDREN:
-      chapter2 = CHAPTERS[name2]
-      if chapter2["is-heading"] == False:
-        # print("    name2={}".format(name2))
-        if name == name2:
-          line = chapter["prefix"]+ " _" + chapter["title"] + "_ <br>\n"      
-          if chapter["index"] == 1:
-            line = "\n" + line
-        else: 
-          link = "[{}]({})".format(chapter2["title"], "../"+name2+"/README.md")
-          line = chapter2["prefix"]+ " " + link + "<br>\n"
-        toc += line
-    chapter["header"] = re.sub('\(\.\.', '(../..', node["header"]) + menu.format(title, toc)
+  title = node["title"]
+  print("  child={}".format(name))
+  # print("  chapter={}".format(chapter))
+  numandtitle = node["prefix"]+ (len(node["prefix"])>0)*" " + title
+  file = "../README.md"
+  link = "[{}]({})".format(numandtitle, file)
+  toc = "# " + link + "<br>\n"
+  for name2 in CHILDREN:
+    chapter2 = CHAPTERS[name2]
+    if chapter2["is-heading"] == False:
+      # print("    name2={}".format(name2))
+      if name == name2:
+        line = chapter["prefix"]+ " _" + chapter["title"] + "_ <br>\n"      
+        if chapter["index"] == 1:
+          line = "\n" + line
+      else: 
+        link = "[{}]({})".format(chapter2["title"], "../"+name2+"/README.md")
+        line = chapter2["prefix"]+ " " + link + "<br>\n"
+      toc += line
+  chapter["header"] = re.sub('\(\.\.', '(../..', node["header"]) + menu.format(title, toc)
 print("DONE: create child headers\n")
 
 
@@ -333,24 +332,23 @@ footer = """
 print("START: create child footers")
 for name in CHILDREN:
   chapter = CHAPTERS[name]
-  if chapter["is-heading"] == False:
-    print("  child={}".format(name))
-    # print("  chapter={}".format(chapter))
-    mytitle = chapter["title"]
-    parent = "[{}]({})".format(node["title"], "../README.md")
-    nameP = chapter["prev"]
-    if nameP == None:
-      linkP = ""  
-    else:
-      chapterP = CHAPTERS[nameP]
-      linkP = "[{}]({})".format(chapterP["title"], "../"+nameP+"/README.md")
-    nameN = chapter["next"]
-    if nameN == None:
-      linkN = ""  
-    else:
-      chapterN = CHAPTERS[nameN]
-      linkN = "[{}]({})".format(chapterN["title"], "../"+nameN+"/README.md")
-    chapter["footer"] = footer.format(linkP, parent, mytitle, linkN)
+  print("  child={}".format(name))
+  # print("  chapter={}".format(chapter))
+  mytitle = chapter["title"]
+  parent = "[{}]({})".format(node["title"], "../README.md")
+  nameP = chapter["prev"]
+  if nameP == None:
+    linkP = ""  
+  else:
+    chapterP = CHAPTERS[nameP]
+    linkP = "[{}]({})".format(chapterP["title"], "../"+nameP+"/README.md")
+  nameN = chapter["next"]
+  if nameN == None:
+    linkN = ""  
+  else:
+    chapterN = CHAPTERS[nameN]
+    linkN = "[{}]({})".format(chapterN["title"], "../"+nameN+"/README.md")
+  chapter["footer"] = footer.format(linkP, parent, mytitle, linkN)
 print("DONE: create child footers\n")
 
     
@@ -359,147 +357,12 @@ print("DONE: create child footers\n")
 #############################################################
 print("START: write child node.json files")
 for name in CHILDREN:
-  if CHAPTERS[name]["is-heading"] == False:
-    fn = name+"/node.json"
-    delete(fn)
-    with open(fn, 'w') as f:
-      json.dump(CHAPTERS[name], f,  indent=2)
+  fn = name+"/node.json"
+  delete(fn)
+  with open(fn, 'w') as f:
+    json.dump(CHAPTERS[name], f,  indent=2)
 print("DONE: write child node.json files\n")
 
 
 sys.exit()
 
-# i = 1
-# CHAPTERS = {}
-# for name in CHILDREN:
-#     print("{} {}".format(i, name))
-#     split = line.split('|')
-#     fullindex = str(i) 
-#     if prefix:
-#       fullindex = prefix + "." + str(i)
-#     else: 
-#       fullindex = str(i)      
-#     numtitle = fullindex+ ". "+title
-#     link = "[{}]({})".format(title, dest)
-#     numlink = "[{}]({})".format(numtitle, dest)
-#     toplink = "[{}](doc/{})".format(title, dest)
-#     chapter = {
-#         "index": i,
-#         "fullindex": fullindex,
-#         "name": name,
-#         "title": title,
-#         "src": src,
-#         "dest": dest,
-#         "desttoc": name+"/toc.above.md",
-#         "link": link,
-#         "toplink": toplink,
-#         "numlink": numlink,
-#         "numtitle": numtitle,
-#         "prev": None,
-#         "next": None,
-#     }
-#     CHAPTERS[name] = chapter
-#     CHILDREN.append(name)
-#     i += 1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#############################################################
-# create header.md
-#############################################################
-
-header = """
-
-<details>
-
-<summary>User Guide</summary>
-
-{}
-
-</details>
-
-"""
-
-# write TOC to header.md
-delete("header.md")
-f = open("header.md", "w")
-f.write(header.format(toc))
-f.close()
-
-
-#############################################################
-# create and write dictionary for child node
-#############################################################
-
-
-for subdir in CHAPTERS:
-  childdict = {}
-  
-  # create toc that highlights the child's chapter
-  for name in CHAPTERS:
-    chapter = CHAPTERS[name]
-    toc = ""
-    if subdir == name:
-      toc += "\n" + chapter["fullindex"]+ ". " + chapter["link"] + "*\n\n"
-    else:
-      toc += chapter["fullindex"]+ ". " + chapter["link"] + "\n"
-    
-  
-  # toc
-  childdict["toc"] = toc    
-  
-  # chap prefix
-  childdict["prefix"] = chapter["fullindex"]
-  
-  # write to node.json
-  fn = subdir + "/node.json"
-  delete(fn)
-  f = open(fn, "w")
-  json.dump(CHAPTERS, f,  indent=2)
-  f.close()
-
-
-#############################################################
-# create header.above.md for each subdir
-#############################################################
-for subdir in CHAPTERS:
-  toc = ""
-  for name in CHAPTERS:
-      chapter = CHAPTERS[name]
-      if subdir == name:
-        toc += "\n" + chapter["fullindex"]+ ". " + chapter["link"] + "*\n\n"
-      else:
-        toc += chapter["fullindex"]+ ". " + chapter["link"] + "\n"
-  # write TOC to header.md
-  fn = subdir + "/header.above.md"
-  delete(fn)
-  f = open(fn, "w")
-  chapter = CHAPTERS[subdir]
-  title = chapter["title"]
-  print(title)
-  f.write(header.format(toc.replace("User Guide", title)))
-  f.close()
-
-
-#############################################################
-# save indices to subdirs
-#############################################################
-
-for i in range(N):
-  name = CHILDREN[i]
-  chapter = CHAPTERS[name]
-  fn = name + "/chap-num.md"
-  delete(fn)
-  with open(fn, 'w') as f:
-    f.write(chapter["fullindex"])
