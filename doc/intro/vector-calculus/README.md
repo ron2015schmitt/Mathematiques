@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.115-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.116-c++20</h1>
 
 <details>
 
@@ -30,18 +30,23 @@
 4.2. [Number Systems](../numbers/README.md)<br>
 4.3. [Vectors, Matrices, and MultiArrays](../multiarrays/README.md)<br>
 4.4. [Nested MultiArrays](../nested-multiarrays/README.md)<br>
-4.5. [Mathematical functions](../math-functions/README.md)<br>
-4.6. [Linear Algebra](../linear-algebra/README.md)<br>
-4.7. _Calculus and Vector Calculus_ <br>
-4.8. [Tensors](../tensors/README.md)<br>
-4.9. [Series and transforms](../series-transforms/README.md)<br>
+4.5. [Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)<br>
+4.6. [Special Vectors, Matrices, and MultiArrays](../multiarray-arithmetic/README.md)<br>
+4.7. [Linear Algebra](../linear-algebra/README.md)<br>
+4.8. [Special Vectors, Matrices, and MultiArrays](../sort-mask-slice/README.md)<br>
+4.9. [Mathematical functions](../math-functions/README.md)<br>
+4.10. [Special Vectors, Matrices, and MultiArrays](../multi-var-calculus/README.md)<br>
+4.11. [Special Vectors, Matrices, and MultiArrays](../complex-calculus/README.md)<br>
+4.12. _Calculus and Vector Calculus_ <br>
+4.13. [Tensors](../tensors/README.md)<br>
+4.14. [Series and transforms](../series-transforms/README.md)<br>
 
 
 </details>
 
 
 
-# 4.7. Calculus and Vector Calculus
+# 4.12. Calculus and Vector Calculus
 
 
 
@@ -75,6 +80,6 @@ unsigned int n = 23;
 
 
 
-| ⇦ <br />[Linear Algebra](../linear-algebra/README.md)  | [Introduction with Examples](../README.md)<br />Calculus and Vector Calculus<br /><img width=1000/> | ⇨ <br />[Tensors](../tensors/README.md)   |
+| ⇦ <br />[Special Vectors, Matrices, and MultiArrays](../complex-calculus/README.md)  | [Introduction with Examples](../README.md)<br />Calculus and Vector Calculus<br /><img width=1000/> | ⇨ <br />[Tensors](../tensors/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 
