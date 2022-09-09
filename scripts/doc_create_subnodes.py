@@ -127,7 +127,7 @@ print("DONE: Read version tag={}\n".format(tag))
 
 # Set Document title
 #MATHQ_TITLE = "# Mathématiques {}\n".format(tag)
-MATHQ_TITLE = "<h1 style='border: 2px solid; text-align: center'>Mathématiques {}</h1>".format(tag)
+MATHQ_TITLE = "<h1 style='border: 2px solid; text-align: center'>[Mathématiques {}](../README.md)</h1>".format(tag)
 
 
 # read in body file
@@ -194,8 +194,8 @@ print("DONE: Read title text from files\n")
 # complete the rest of CHAPTERS node
 #############################################################
 
-# create rest of node for each chapter
-print("START: create rest of node data for actual chapters")
+# create rest of node for each child
+print("START: create rest of node data for each child (actual chapters)")
 for name in CHILDREN:
   chapter = CHAPTERS[name]
   if chapter["is-heading"] == False:
@@ -208,11 +208,11 @@ for name in CHILDREN:
     chapter["parent"] = node
     # print("  name={}, chapter={}".format(name,chapter))
     print("  name={} processed".format(name))
-print("DONE: create rest of node data for actual chapters\n")
+print("DONE: create rest of node data for each child (actual chapters)\n")
 
 
 # add prev,next for chapter
-print("START: create prev/next for actual chapters")
+print("START: create prev/next for each child (actual chapters)")
 for i in range(Nchapters):
   name = CHILDREN[i]
   chapter = CHAPTERS[name]
@@ -226,7 +226,7 @@ for i in range(Nchapters):
     else:
       chapter["next"] = CHILDREN[i+1]
     print("  name={} processed".format(name))
-print("DONE: create prev/next for actual chapters\n")
+print("DONE: create prev/next for each child (actual chapters)\n")
 
 
 
@@ -308,7 +308,7 @@ for name in CHILDREN:
     for name2 in CHILDREN:
       chapter2 = CHAPTERS[name2]
       if chapter2["is-heading"] == False:
-        print("    name2={}".format(name2))
+        # print("    name2={}".format(name2))
         if name == name2:
           line = chapter["prefix"]+ " _" + chapter["title"] + "_ <br>\n"      
           if chapter["index"] == 1:
