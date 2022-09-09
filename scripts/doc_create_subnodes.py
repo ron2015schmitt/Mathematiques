@@ -46,23 +46,25 @@ if sys.argv[2] != "--chapters-and-headers":
 NAMES = []
 CHAPTERS = {}
 Nchapters = 0
-stage="chapters-and-headers"
+stage="CHAPTERS-AND-HEADERS"
 for i in range(3,N):
   arg=sys.argv[i]
   print("stage={} {}".format(stage,arg))
 
   # --options
   if arg == "--chapters-and-headers":
-    stage="chapters-and-headers"
+    stage="CHAPTERS-AND-HEADERS"
+    print("CHAPTERS-AND-HEADERS found")
   elif arg == "--branches":
-    stage="branches"
-    print("branches")
+    stage="BRANCHES"
+    print("BRANCHES found")
   elif arg == "--headers":
-    stage="headers"
-    print("headers")
+    stage="HEADERS"
+    print("HEADERS found")
 
   # words
-  elif stage == "chapters-and-headers":
+  elif stage == "CHAPTERS-AND-HEADERS":
+    print("inside CHAPTERS-AND-HEADERS")
     name = arg
     NAMES.append(name)
     Nchapters += 1
@@ -72,17 +74,12 @@ for i in range(3,N):
       "skip-readme": False,
     }   
     CHAPTERS[name] = chapter
-  elif stage == "branches":
+  elif stage == "BRANCHES":
+    print("inside BRANCHES")
     name = arg
-    NAMES.append(name)
-    Nchapters += 1
-    chapter = {
-      "index": Nchapters,
-      "name": name,
-      "skip-readme": True,
-    }   
-    CHAPTERS[name] = chapter
-  elif stage == "headers":
+    CHAPTERS[name]["skip-readme"] = True
+  elif stage == "HEADERS":
+    print("inside HEADERS")
     dummy=""
   else:
     print("say what?")
