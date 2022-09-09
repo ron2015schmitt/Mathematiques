@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.114-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.115-c++20</h1>
 
 <details>
 
@@ -55,7 +55,7 @@ Vectors can be fixed length, with length determined at compile-time, or dynamic 
 ```C++
 Vector<double, 3> v{ 1,2,3 };
 
-☀ v ➜ Vector<double,N0=3> {1, 2, 3};
+☀ v ➜ Vector<double,3> {1, 2, 3};
 ```
 ### Dynamic-length Vectors
 ```C++
@@ -69,7 +69,7 @@ v.resize(10);
 v = linspace<double>(0, 1, 10);
 ☀ v ➜ Vector<double> {0, 0.111111, 0.222222, 0.333333, 0.444444, 0.555556, 0.666667, 0.777778, 0.888889, 1};
 ```
-### Element access
+### Vector Element access
 ```C++
 Vector<double, 3> v{ 1,2,3 };
 
@@ -77,9 +77,9 @@ Vector<double, 3> v{ 1,2,3 };
 ☀ v[1] ➜ double 2;
 ☀ v[2] ➜ double 3;
 v[0] = 200;
-☀ v ➜ Vector<double,N0=3> {200, 2, 3};
+☀ v ➜ Vector<double,3> {200, 2, 3};
 v[2] = v[1] = v[0];
-☀ v ➜ Vector<double,N0=3> {200, 200, 200};
+☀ v ➜ Vector<double,3> {200, 200, 200};
 ```
 
 <br>
@@ -99,25 +99,46 @@ Matrix<double, 2, 2> A{ {1,2}, {3,4} };
 ### Dynamic-dimensions Matrices
 ```C++
 Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-
 ☀ A ➜ Matrix<double> 
 {
   {1, 2},
   {3, 4},
   {5, 6}
 };
-```
-### Element access
-```C++
-Vector<double, 3> v{ 1,2,3 };
 
-☀ v[0] ➜ double 1;
-☀ v[1] ➜ double 2;
-☀ v[2] ➜ double 3;
-v[0] = 200;
-☀ v ➜ Vector<double,N0=3> {200, 2, 3};
-v[2] = v[1] = v[0];
-☀ v ➜ Vector<double,N0=3> {200, 200, 200};
+A.resize(1, 2);
+☀ A ➜ Matrix<double> 
+{
+  {0, 0}
+};
+```
+### Matrix Element access
+Elements can be accessed via row and column indices:
+```C++
+Matrix<double> A{ {1,2}, {3,4}, {5,6} };
+☀ A ➜ Matrix<double> 
+{
+  {1, 2},
+  {3, 4},
+  {5, 6}
+};
+
+☀ A(0, 0) ➜ double 1;
+☀ A(2, 1) ➜ double 6;
+```
+Elements can also be accessed via a single row-major index:
+```C++
+Matrix<double> A{ {1,2}, {3,4}, {5,6} };
+☀ A ➜ Matrix<double> 
+{
+  {1, 2},
+  {3, 4},
+  {5, 6}
+};
+
+☀ A[0] ➜ double 1;
+☀ A[1] ➜ double 2;
+☀ A[2] ➜ double 3;
 ```
 
 <br>
@@ -126,7 +147,80 @@ v[2] = v[1] = v[0];
 MultiArrays can be created of arbitrary rank via the syntax `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.
 In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. 
 A `Matrix` is simply an alias for a `MultiArray` of rank 2.  
-Multiarrays are sometimes referred to as tensors.  To be accurate, multiarrays are Cartesian algebraic tensors.  General tensors are also supported by Mathématiques, but described later in this introduction.
+It should be noted, however, that `Vector` and `Matrix` have optimized implementations.
+Multiarrays are sometimes referred to as tensors.  To be accurate, multiarrays are Cartesian algebraic tensors.  Tensor fields are also supported by Mathématiques, but described later in this introduction.
+### Fixed-dimensions MultiArrays
+```C++
+MultiArray<double, 3, 2, 2, 2> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
+
+☀ M ➜ MultiArray<double, rank=3, 2⨯2⨯2> 
+{
+  {
+    {1, 2},
+    {3, 4}
+  },
+  {
+    {5, 6},
+    {7, 8}
+  }
+};
+```
+### Dynamic-dimensions MultiArrays
+```C++
+MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
+
+☀ M ➜ MultiArray<double, rank=3> 
+{
+  {
+    {1, 2},
+    {3, 4}
+  },
+  {
+    {5, 6},
+    {7, 8}
+  }
+};
+```
+### MultiArray Element access
+Elements can be accessed via multiple indices:
+```C++
+MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
+
+☀ M ➜ MultiArray<double, rank=3> 
+{
+  {
+    {1, 2},
+    {3, 4}
+  },
+  {
+    {5, 6},
+    {7, 8}
+  }
+};
+
+☀ M(0, 0, 0) ➜ double 1;
+☀ M(1, 1, 1) ➜ double 8;
+```
+Elements can also be accessed via a single row-major index:
+```C++
+MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
+
+☀ M ➜ MultiArray<double, rank=3> 
+{
+  {
+    {1, 2},
+    {3, 4}
+  },
+  {
+    {5, 6},
+    {7, 8}
+  }
+};
+
+☀ M[0] ➜ double 1;
+☀ M[1] ➜ double 2;
+☀ M[2] ➜ double 3;
+```
 
 <br>
 

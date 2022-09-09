@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.114-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.115-c++20</h1>
 
 <details>
 
@@ -36,17 +36,17 @@
 
 # Future work
 
-1. File I/O
 1. Tensor Calculus in Generalized Coordinates 
 1. Differential Geometry in curved space-time
 1. Differential and integral operators
 1. Differential Equations: Finite differences
 1. Differential Equations: Finite elements
 1. Differential Equations: Multigrid
-1. Parallel processing
+1. File I/O
 1. Matrix inverse and matrix decompositions
 1. FFTs
 1. Interpolation and smoothing
+1. Parallel processing
 1. Finite groups
 1. Lie groups
 1. Graded algebras: Clifford algebras

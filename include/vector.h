@@ -1356,7 +1356,6 @@ namespace mathq {
       s += getTypeName(d);
       if constexpr (!is_dynamic_value) {
         s += StyledString::get(COMMA).get();
-        s += "N0=";
         s += std::to_string(N0);
       }
       s += StyledString::get(ANGLE2).get();
@@ -1763,7 +1762,6 @@ namespace mathq {
         s += getTypeName(d);
         if constexpr (!is_dynamic_value) {
           s += StyledString::get(COMMA).get();
-          s += "N0=";
           s += std::to_string(N0);
         }
         s += StyledString::get(ANGLE2).get();
@@ -1788,13 +1786,13 @@ namespace mathq {
         using namespace display;
         return operator<<(stream, static_cast<ParentType>(v));
       }
-      };
-
-
-
-
-
   };
+
+
+
+
+
+};
 
 
 #endif 

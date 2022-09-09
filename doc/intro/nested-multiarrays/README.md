@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.114-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.115-c++20</h1>
 
 <details>
 
@@ -45,87 +45,87 @@
 
 
 
-Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.   These containers can be nested any number of levels.
-
-<br>
-
-## Vectors
-Vectors can be fixed length, with length determined at compile-time, or dynamic length.
-### Fixed-length Vectors
+MultiArrays can contain any number type, eg `int`, `double`, `complex<float>`, `Quaternion<extended>`.
+Additionally, the elements of a `MultiArray` can be another type of `MultiArray`.
+These containers can be nested any number of levels.
+### Vector of Matrices
+A Vector of Matrices is useful for storing the values of a vector field on a grid of points
 ```C++
-Vector<double, 3> v{ 1,2,3 };
+Vector<Matrix<double, 2, 2>, 3> E;
+☀ E ➜ Vector<Matrix<double, 2⨯2>,3> {
+{
+  {1, 2},
+  {3, 4}
+}, 
+{
+  {-1, -2},
+  {-3, -4}
+}, 
+{
+  {11, 12},
+  {13, 14}
+}};
 
-☀ v ➜ Vector<double,N0=3> {1, 2, 3};
-```
-### Dynamic-length Vectors
-```C++
-Vector<double> v{ 1,2,3,4,5 };
-
-☀ v ➜ Vector<double> {1, 2, 3, 4, 5};
-v = 100*v;
-☀ v ➜ Vector<double> {100, 200, 300, 400, 500};
-v.resize(10);
-☀ v ➜ Vector<double> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-v = linspace<double>(0, 1, 10);
-☀ v ➜ Vector<double> {0, 0.111111, 0.222222, 0.333333, 0.444444, 0.555556, 0.666667, 0.777778, 0.888889, 1};
-```
-### Element access
-```C++
-Vector<double, 3> v{ 1,2,3 };
-
-☀ v[0] ➜ double 1;
-☀ v[1] ➜ double 2;
-☀ v[2] ➜ double 3;
-v[0] = 200;
-☀ v ➜ Vector<double,N0=3> {200, 2, 3};
-v[2] = v[1] = v[0];
-☀ v ➜ Vector<double,N0=3> {200, 200, 200};
-```
-
-<br>
-
-## Matrices
-Matrices can be fixed dimensions, with dimensions determined at compile-time, or dynamic dimensions.
-### Fixed-dimensions Matrices
-```C++
-Matrix<double, 2, 2> A{ {1,2}, {3,4} };
-
-☀ A ➜ Matrix<double, 2⨯2> 
+☀ E[0] ➜ Matrix<double, 2⨯2> 
 {
   {1, 2},
   {3, 4}
 };
-```
-### Dynamic-dimensions Matrices
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
 
-☀ A ➜ Matrix<double> 
+☀ E[0](0, 1) ➜ double 2;
+```
+### Matrix of Vectors
+A Matrix of Vectors can also be used for storing the values of a vector field on a grid of points
+```C++
+Matrix<Vector<double, 3>, 2, 2> E;
+☀ E ➜ Matrix<Vector<double,3>, 2⨯2> 
+{
+  {{1, -1, 11}, {4, -4, 14}},
+  {{3, -3, 13}, {12, 13, 14}}
+};
+
+☀ E(0, 0) ➜ Vector<double,3> {1, -1, 11};
+
+☀ E(0, 1)[1] ➜ double -4;
+```
+### Eversion - turning a structure inside out
+A `Vector` of Matrices can be converted to a `Matrix` of `Vector`s and vice verse
+```C++
+Vector<Matrix<double, 2, 2>, 3> E{ { {1, 2}, {3, 4} }, { {-1, -2}, {-3, -4} }, { {11, 12}, {13, 14} } };
+☀ E ➜ Vector<Matrix<double, 2⨯2>,3> {
 {
   {1, 2},
-  {3, 4},
-  {5, 6}
+  {3, 4}
+}, 
+{
+  {-1, -2},
+  {-3, -4}
+}, 
+{
+  {11, 12},
+  {13, 14}
+}};
+
+☀ evert(E) ➜ Matrix<Vector<double,3>, 2⨯2> 
+{
+  {{1, -1, 11}, {2, -2, 12}},
+  {{3, -3, 13}, {4, -4, 14}}
 };
+
+☀ evert(evert(E)) ➜ Vector<Matrix<double, 2⨯2>,3> {
+{
+  {1, 2},
+  {3, 4}
+}, 
+{
+  {-1, -2},
+  {-3, -4}
+}, 
+{
+  {11, 12},
+  {13, 14}
+}};
 ```
-### Element access
-```C++
-Vector<double, 3> v{ 1,2,3 };
-
-☀ v[0] ➜ double 1;
-☀ v[1] ➜ double 2;
-☀ v[2] ➜ double 3;
-v[0] = 200;
-☀ v ➜ Vector<double,N0=3> {200, 2, 3};
-v[2] = v[1] = v[0];
-☀ v ➜ Vector<double,N0=3> {200, 200, 200};
-```
-
-<br>
-
-## MultiArrays
-MultiArrays can be created of arbitrary rank, `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.
-In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. 
-A `Matrix` is simply an alias for a `MultiArray` of rank 2. 
 
 <br>
 

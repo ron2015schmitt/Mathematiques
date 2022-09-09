@@ -3,7 +3,7 @@
   "name": "nested-multiarrays",
   "skip-readme": false,
   "title": "Nested MultiArrays",
-  "version": "v0.41.114-c++20",
+  "version": "v0.41.115-c++20",
   "prefix": "4.4.",
   "src": "nested-multiarrays/template.md",
   "dest": "nested-multiarrays/README.md",
@@ -13,7 +13,7 @@
     "name": "intro",
     "skip-readme": true,
     "title": "Introduction with Examples",
-    "version": "v0.41.114-c++20",
+    "version": "v0.41.115-c++20",
     "prefix": "4.",
     "src": "intro/template.md",
     "dest": "intro/README.md",
@@ -22,15 +22,15 @@
       "title": "Documentation",
       "prefix": "",
       "level": 1,
-      "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.114-c++20</h1>"
+      "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.115-c++20</h1>"
     },
     "prev": "status-release",
     "next": "installation",
-    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.114-c++20</h1>\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../README.md)<br>\n1. [License](../license/README.md)<br>\n2. [About](../about/README.md)<br>\n3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>\n4. _Introduction with Examples_ <br>\n5. [Installation](../installation/README.md)<br>\n6. [Your First Math\u00e9matiques Project](../first-project/README.md)<br>\n7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>\n8. [Benchmarks](../benchmarks/README.md)<br>\n9. [Tests](../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
+    "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.115-c++20</h1>\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../README.md)<br>\n1. [License](../license/README.md)<br>\n2. [About](../about/README.md)<br>\n3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>\n4. _Introduction with Examples_ <br>\n5. [Installation](../installation/README.md)<br>\n6. [Your First Math\u00e9matiques Project](../first-project/README.md)<br>\n7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>\n8. [Benchmarks](../benchmarks/README.md)<br>\n9. [Tests](../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
     "footer": "\n\n| \u21e6 <br />[Status, Planned Work & Release Notes](../status-release/README.md)  | [Documentation](../README.md)<br />Introduction with Examples<br /><img width=1000/> | \u21e8 <br />[Installation](../installation/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
   },
   "prev": "multiarrays",
   "next": "math-functions",
-  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.114-c++20</h1>\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../../README.md)<br>\n1. [License](../../license/README.md)<br>\n2. [About](../../about/README.md)<br>\n3. [Status, Planned Work & Release Notes](../../status-release/README.md)<br>\n4. _Introduction with Examples_ <br>\n5. [Installation](../../installation/README.md)<br>\n6. [Your First Math\u00e9matiques Project](../../first-project/README.md)<br>\n7. [Usage Guide: Syntax, Data Types, Functions, etc](../../user-guide/README.md)<br>\n8. [Benchmarks](../../benchmarks/README.md)<br>\n9. [Tests](../../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../../developer-guide/README.md)<br>\n\n\n</details>\n\n\n\n<details>\n\n<summary>Introduction with Examples</summary>\n\n# [4. Introduction with Examples](../README.md)<br>\n4.1. [Pretty Printing and Debugging](../print-debug/README.md)<br>\n4.2. [Number Systems](../numbers/README.md)<br>\n4.3. [Vectors, Matrices, and MultiArrays](../multiarrays/README.md)<br>\n4.4. _Nested MultiArrays_ <br>\n4.5. [Mathematical functions](../math-functions/README.md)<br>\n4.6. [Linear Algebra](../linear-algebra/README.md)<br>\n4.7. [Calculus and Vector Calculus](../vector-calculus/README.md)<br>\n4.8. [Tensors](../tensors/README.md)<br>\n4.9. [Series and transforms](../series-transforms/README.md)<br>\n\n\n</details>\n\n",
+  "header": "<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques v0.41.115-c++20</h1>\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../../README.md)<br>\n1. [License](../../license/README.md)<br>\n2. [About](../../about/README.md)<br>\n3. [Status, Planned Work & Release Notes](../../status-release/README.md)<br>\n4. _Introduction with Examples_ <br>\n5. [Installation](../../installation/README.md)<br>\n6. [Your First Math\u00e9matiques Project](../../first-project/README.md)<br>\n7. [Usage Guide: Syntax, Data Types, Functions, etc](../../user-guide/README.md)<br>\n8. [Benchmarks](../../benchmarks/README.md)<br>\n9. [Tests](../../test/README.md)<br>\n10. [Developer Guide: Modifying and Extending Math\u00e9matiques](../../developer-guide/README.md)<br>\n\n\n</details>\n\n\n\n<details>\n\n<summary>Introduction with Examples</summary>\n\n# [4. Introduction with Examples](../README.md)<br>\n4.1. [Pretty Printing and Debugging](../print-debug/README.md)<br>\n4.2. [Number Systems](../numbers/README.md)<br>\n4.3. [Vectors, Matrices, and MultiArrays](../multiarrays/README.md)<br>\n4.4. _Nested MultiArrays_ <br>\n4.5. [Mathematical functions](../math-functions/README.md)<br>\n4.6. [Linear Algebra](../linear-algebra/README.md)<br>\n4.7. [Calculus and Vector Calculus](../vector-calculus/README.md)<br>\n4.8. [Tensors](../tensors/README.md)<br>\n4.9. [Series and transforms](../series-transforms/README.md)<br>\n\n\n</details>\n\n",
   "footer": "\n\n| \u21e6 <br />[Vectors, Matrices, and MultiArrays](../multiarrays/README.md)  | [Introduction with Examples](../README.md)<br />Nested MultiArrays<br /><img width=1000/> | \u21e8 <br />[Mathematical functions](../math-functions/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
 }

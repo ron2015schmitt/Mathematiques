@@ -23,96 +23,67 @@ int main() {
   // using namespace mathq::unit_imaginary;
   // using std::sqrt;
 
-  OUTPUT("Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.   These containers can be nested any number of levels.");
+  OUTPUT("MultiArrays can contain any number type, eg `int`, `double`, `complex<float>`, `Quaternion<extended>`.");
+  OUTPUT("Additionally, the elements of a `MultiArray` can be another type of `MultiArray`.");
+  OUTPUT("These containers can be nested any number of levels.");
 
 
-  GMD_VSPACE();
-  GMD_HEADER2("Vectors");
-  OUTPUT("Vectors can be fixed length, with length determined at compile-time, or dynamic length.");
 
-  GMD_HEADER3("Fixed-length Vectors");
+  GMD_HEADER3("Vector of Matrices");
+
+  OUTPUT("A Vector of Matrices is useful for storing the values of a vector field on a grid of points");
+
   {
     GMD_CODE_START("C++");
-    ECHO(Vector<double, 3> v{ 1,2,3 });
+    ECHO(Vector<Matrix<double, 2, 2>, 3> E);
+    E[0] = { {1, 2}, {3, 4} };
+    E[1] = { {-1, -2}, {-3, -4} };
+    E[2] = { {11, 12}, {13, 14} };
+    TRDISP(E);
     CR();
-    TRDISP(v);
+    TRDISP(E[0]);
+    CR();
+    TRDISP(E[0](0, 1));
     GMD_CODE_END();
   }
 
-  GMD_HEADER3("Dynamic-length Vectors");
+  GMD_HEADER3("Matrix of Vectors");
+
+  OUTPUT("A Matrix of Vectors can also be used for storing the values of a vector field on a grid of points");
+
   {
     GMD_CODE_START("C++");
-    ECHO(Vector<double> v{ 1,2,3,4,5 });
+    ECHO(Matrix<Vector<double, 3>, 2, 2> E);
+    E(0, 0) = { {1, -1, 11} };
+    E(0, 1) = { {2, -2, 12} };
+    E(1, 0) = { {3, -3, 13} };
+    E(0, 1) = { {4, -4, 14} };
+    TRDISP(E);
     CR();
-    TRDISP(v);
-    ECHO(v = 100*v);
-    TRDISP(v);
-    ECHO(v.resize(10));
-    TRDISP(v);
-    ECHO(v = linspace<double>(0, 1, 10));
-    TRDISP(v);
+    TRDISP(E(0, 0));
+    CR();
+    TRDISP(E(0, 1)[1]);
     GMD_CODE_END();
   }
 
-  GMD_HEADER3("Element access");
+  GMD_HEADER3("Eversion - turning a structure inside out");
+
+  OUTPUT("A `Vector` of Matrices can be converted to a `Matrix` of `Vector`s and vice verse");
   {
     GMD_CODE_START("C++");
-    ECHO(Vector<double, 3> v{ 1,2,3 });
+    ECHO(Vector<Matrix<double, 2, 2>, 3> E{
+      { {1, 2}, {3, 4} },
+      { {-1, -2}, {-3, -4} },
+      { {11, 12}, {13, 14} }
+      });
+    TRDISP(E);
     CR();
-    TRDISP(v[0]);
-    TRDISP(v[1]);
-    TRDISP(v[2]);
-    ECHO(v[0] = 200);
-    TRDISP(v);
-    ECHO(v[2] = v[1] = v[0]);
-    TRDISP(v);
+    TRDISP(evert(E));
+    CR();
+    TRDISP(evert(evert(E)));
     GMD_CODE_END();
   }
 
-
-  GMD_VSPACE();
-  GMD_HEADER2("Matrices");
-  OUTPUT("Matrices can be fixed dimensions, with dimensions determined at compile-time, or dynamic dimensions.");
-
-  GMD_HEADER3("Fixed-dimensions Matrices");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Matrix<double, 2, 2> A{ {1,2}, {3,4} });
-    CR();
-    TRDISP(A);
-    GMD_CODE_END();
-  }
-
-  GMD_HEADER3("Dynamic-dimensions Matrices");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Matrix<double> A{ {1,2}, {3,4}, {5,6} });
-    CR();
-    TRDISP(A);
-    GMD_CODE_END();
-  }
-
-  GMD_HEADER3("Element access");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Vector<double, 3> v{ 1,2,3 });
-    CR();
-    TRDISP(v[0]);
-    TRDISP(v[1]);
-    TRDISP(v[2]);
-    ECHO(v[0] = 200);
-    TRDISP(v);
-    ECHO(v[2] = v[1] = v[0]);
-    TRDISP(v);
-    GMD_CODE_END();
-  }
-
-
-  GMD_VSPACE();
-  GMD_HEADER2("MultiArrays");
-  OUTPUT("MultiArrays can be created of arbitrary rank, `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.");
-  OUTPUT("In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. ");
-  OUTPUT("A `Matrix` is simply an alias for a `MultiArray` of rank 2. ");
 
   GMD_VSPACE();
   return 0;

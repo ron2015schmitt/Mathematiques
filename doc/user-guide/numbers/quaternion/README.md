@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.114-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.115-c++20</h1>
 
 <details>
 
@@ -195,18 +195,18 @@ A few examples are shown below.
 ☀ q1.kmag() ➜ double -3;
 ☀ q1.abs() ➜ double 3.87298;
 ☀ q1.scalar() ➜ double 1;
-☀ q1.vector() ➜ Vector<double,N0=3> {2, -1, -3};
+☀ q1.vector() ➜ Vector<double,3> {2, -1, -3};
 ☀ q1.vabs() ➜ double 3.74166;
-☀ q1.unitvector() ➜ Vector<double,N0=3> {0.534522, -0.267261, -0.801784};
+☀ q1.unitvector() ➜ Vector<double,3> {0.534522, -0.267261, -0.801784};
 ☀ q1.angle() ➜ double 1.30964;
-☀ q1.polar() ➜ std::tuple<double,double,Vector<double,N0=3>> {3.87298,1.30964,{0.534522, -0.267261, -0.801784}};
+☀ q1.polar() ➜ std::tuple<double,double,Vector<double,3>> {3.87298,1.30964,{0.534522, -0.267261, -0.801784}};
 ☀ q1.matrix2by2() ➜ Matrix<std::complex<double>, 2⨯2> 
 {
   {(1,2), (-1,-3)},
   {(1,-3), (1,-2)}
 };
 ```
-typename = std::tuple<double,double,Vector<double,N0=3>>
+typename = std::tuple<double,double,Vector<double,3>>
 ## Functions
 
 Mathématiques supports several quaternion functions.  These are listed in detail in the section on functions.
