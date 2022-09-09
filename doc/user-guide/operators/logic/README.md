@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.121-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.122-c++20</h1>
 
 <details>
 
@@ -8,13 +8,15 @@
 1. [License](../../../license/README.md)<br>
 2. [About](../../../about/README.md)<br>
 3. [Status, Planned Work & Release Notes](../../../status-release/README.md)<br>
-4. [Introduction with Examples](../../../intro/README.md)<br>
+11. [Introduction with Examples](../../../intro/README.md)<br>
 5. [Installation](../../../installation/README.md)<br>
 6. [Your First Mathématiques Project](../../../first-project/README.md)<br>
-7. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
+12. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
 8. [Benchmarks](../../../benchmarks/README.md)<br>
 9. [Tests](../../../test/README.md)<br>
 10. [Developer Guide: Modifying and Extending Mathématiques](../../../developer-guide/README.md)<br>
+11. [Introduction with Examples](../../../intro/README.md)<br>
+12. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
 
 
 </details>
@@ -25,21 +27,24 @@
 
 <summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>
 
-# [7. Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
-7.1. [Usage Guide Notation](../../notation/README.md)<br>
-7.2. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../numbers/README.md)<br>
-7.3. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>
-7.4. _Operators_ <br>
-7.5. [Functions](../../functions/README.md)<br>
-7.6. [Linear Algebra](../../linear-algebra/README.md)<br>
-7.7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>
-7.8. [Ranges and Grids](../../ranges-grids/README.md)<br>
-7.9. [Calculus](../../calculus/README.md)<br>
-7.10. [Vector Calculus](../../vector-calculus/README.md)<br>
-7.11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>
-7.12. [Display of Results](../../display/README.md)<br>
-7.13. [FILE I/O](../../file-io/README.md)<br>
-7.14. [Debug Modes](../../debug/README.md)<br>
+# [12. Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
+12.1. [Usage Guide Notation](../../notation/README.md)<br>
+12.16. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../numbers/README.md)<br>
+12.15. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>
+12.17. _Operators_ <br>
+12.5. [Functions](../../functions/README.md)<br>
+12.6. [Linear Algebra](../../linear-algebra/README.md)<br>
+12.7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>
+12.8. [Ranges and Grids](../../ranges-grids/README.md)<br>
+12.9. [Calculus](../../calculus/README.md)<br>
+12.10. [Vector Calculus](../../vector-calculus/README.md)<br>
+12.11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>
+12.12. [Display of Results](../../display/README.md)<br>
+12.13. [FILE I/O](../../file-io/README.md)<br>
+12.14. [Debug Modes](../../debug/README.md)<br>
+12.15. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>
+12.16. [Scalar Types (Real, Imaginary, Complex & Quaternion)](../../numbers/README.md)<br>
+12.17. _Operators_ <br>
 
 
 </details>
@@ -50,18 +55,18 @@
 
 <summary>Operators</summary>
 
-# [7.4. Operators](../README.md)<br>
-7.4.1. [Arithmetic](../arithmetic/README.md)<br>
-7.4.2. [Integer Division](../integer-division/README.md)<br>
-7.4.3. _Logic_ <br>
-7.4.4. [Relational](../relational/README.md)<br>
+# [12.17. Operators](../README.md)<br>
+12.17.1. [Arithmetic](../arithmetic/README.md)<br>
+12.17.2. [Integer Division](../integer-division/README.md)<br>
+12.17.3. _Logic_ <br>
+12.17.4. [Relational](../relational/README.md)<br>
 
 
 </details>
 
 
 
-# 7.4.3. Logic
+# 12.17.3. Logic
 
 _This document was generated from the C++ file_ `logic/body.cpp` _using macros and functions (in namespace `mathq::display`) from the header_ `"mathq.h"`. 
 

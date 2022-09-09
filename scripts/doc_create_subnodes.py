@@ -18,7 +18,7 @@ today = datetime.datetime.now().strftime("%d %B %Y")
 cmd = "python3 " + ' '.join(sys.argv)
 
 usage="""
-USAGE: python3 createdocbranch.py TAG_FILE_MATHQ --chapters CHAPTER1 ... [--branches CHAPExpressionR_WITH_OWN_MAKEFILE1 ...]
+USAGE: python3 createdocbranch.py TAG_FILE_MATHQ --chapters-and-headers CHAPTER1 ... [--branches CHAPTERS_THAT_HAVE_OWN_MAKEFILE1= ...] [--headers HEADER1= ...]
 
 """
 
@@ -38,18 +38,27 @@ if N < 3:
 # grab tag file name
 TAG_FILE = sys.argv[1]
 
-# process --chapter args
-if sys.argv[2] != "--chapters":
+if sys.argv[2] != "--chapters-and-headers":
     print("\nInvalid syntax: {}\n".format(cmd) + usage)
     sys.exit(1)
 
+# process all arguments
 NAMES = []
 CHAPTERS = {}
 Nchapters = 0
+stage="chapters-and-headers"
 for i in range(3,N):
-  if sys.argv[i] == "--branches":
-    break
-  else:
+
+  # --options
+  if sys.argv[i] == "--chapters-and-headers":
+    stage="chapters-and-headers"
+  elif sys.argv[i] == "--branches":
+    stage="branches"
+  elif sys.argv[i] == "--headers":
+    stage="headers"
+
+  # words
+  elif stage == "chapters-and-headers":
     name = sys.argv[i]
     NAMES.append(name)
     Nchapters += 1
@@ -59,6 +68,18 @@ for i in range(3,N):
       "skip-readme": False,
     }   
     CHAPTERS[name] = chapter
+  elif stage == "branches":
+    name = sys.argv[i]
+    NAMES.append(name)
+    Nchapters += 1
+    chapter = {
+      "index": Nchapters,
+      "name": name,
+      "skip-readme": True,
+    }   
+    CHAPTERS[name] = chapter
+  elif stage == "headers":
+    dummy=""
 
 if len(NAMES) == 0:
   print("\nNo CHAPTERS specified--Nothing to do: {}\n".format(cmd) + usage)
@@ -68,11 +89,6 @@ print("NAMES={}".format(NAMES))
 #print("CHAPTERS={}".format(CHAPTERS))
 
 
-# process --branches args (ie skip the README gen because it has a makefile, should be called branches)
-for i in range(i+1,N):
-    name = sys.argv[i]
-    print("Chapter '{}' has a Makefile. skipping README generation for this chapter...".format(name))
-    CHAPTERS[name]["skip-readme"] = True
   
 
 #############################################################
