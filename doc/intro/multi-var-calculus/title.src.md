@@ -1,1 +1,1 @@
-Special Vectors, Matrices, and MultiArrays
+Mutlivariate Calculus

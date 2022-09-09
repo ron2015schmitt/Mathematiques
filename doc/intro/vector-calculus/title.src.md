@@ -1,1 +1,1 @@
-Calculus and Vector Calculus
+Vector Calculus and Curvilinear Coordinates

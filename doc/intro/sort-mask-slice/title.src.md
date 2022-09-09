@@ -1,1 +1,1 @@
-Special Vectors, Matrices, and MultiArrays
+Sorting, Masks, Slices, etc.

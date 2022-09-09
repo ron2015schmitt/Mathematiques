@@ -1,1 +1,1 @@
-Special Vectors, Matrices, and MultiArrays
+MultiArray Arithmetic
