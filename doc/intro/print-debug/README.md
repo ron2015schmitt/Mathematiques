@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.139-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.140-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -63,11 +63,10 @@ ECHO(double y = x * 3.1415);
 
 <br>
 
-will print the following the terminal (actual screen captures)
-Light mode in Ubuntu WSL2 terminal on Windows
-Dark mode in VS Code terminal
-## ETV() for the value of C++ variables and C++ expressions
-`ETV` stands for 'Expression Type Value'.  All results are preceded by the `☀` Unicode character to distinguish results from code.
+The above C++ code will print the following the terminal (actual screen capture):
+[image]
+## ETV() for C++ variables and expressions
+`ETV` stands for 'Expression Type Value', and that is what it prints.  All results are preceded by the `☀` Unicode character to distinguish results from code.
 ```C++
 ECHO(int x = 5);
 ETV(x);
@@ -78,9 +77,17 @@ ETV(mathq::Vector<double> {1, 2, 3});
 
 <br>
 
-will print the following the terminal (actual screen captures)
+The above C++ code will print the following the terminal (actual screen captures):
+
+int x = 5;
+☀ x ➜ int 5;
+☀ 3 * 25 * std::sin(3.1415/20) ➜ double 11.7322;
+☀ mathq::Vector<double> {1, 2, 3} ➜ Vector<double> {1, 2, 3};
+
 Light mode in Ubuntu WSL2 terminal on Windows
+[image]
 Dark mode in VS Code terminal
+[image]
 ## Markdown code box generation
 In fact these online documentation files are automatically created using C++ files, python scripts for the table of contents and numbering, and make files that put it all together during the build process.
 The documentation is generated for every new version.
@@ -88,22 +95,23 @@ This ensures that results shown for every example in the documenation will match
 ```C++
 GMD_CODE_START("C++");
 ECHO(int x = 5);
-ECHO(double y = x * 3.1415);
+ECHO(mathq::Vector<double> v{1, 2, 3});
+ETV(10*v + 100*x);
 GMD_CODE_END();
 ```
 
 <br>
 
-
+The above C++ code generates the following markdown code box:
 ```C++
-☀ 3 * 25 * std::sin(3.1415/20) ➜ double 11.7322;
-☀ mathq::Vector<double> {1, 2, 3} ➜ Vector<double> {1, 2, 3};
-
+int x = 5;
+mathq::Vector<double> v{ 1, 2, 3 };
+☀ 10*v + 100*x ➜ Vector<double> {510, 520, 530};
 ```
 
 <br>
 
-Other MACROS and functions are also available, including marcros that aid in creating[github markdown]() files.
+Other macros and functions are also available, including macros that aid in creating[github markdown]() files.
 A full refactoring of the printing functionality is underway.
 ## Compilation Modes and Debugging Support
 Mathématiques supports various compilations modes to aid in debugging:

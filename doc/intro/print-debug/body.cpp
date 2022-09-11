@@ -19,10 +19,6 @@ int main() {
   CR();
   CR();
 
-  // using namespace mathq::unit_quaternion;
-  // using namespace mathq::unit_imaginary;
-  // using std::sqrt;
-
   GMD_HEADER2("Pretty Printing to a terminal");
   OUTPUT("Mathématiques provides printing of ASCII and Unicode text that is cleanly formatted, colored and stylized.");
   OUTPUT("Colors and styles require a terminal that support [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code). ");
@@ -37,16 +33,17 @@ int main() {
     GMD_CODE_END();
   }
   GMD_VSPACE();
+  OUTPUT("The above C++ code will print the following the terminal (actual screen capture):");
 
-  OUTPUT("will print the following the terminal (actual screen captures)");
+  // CR();
+  // ECHO(int x = 5);
+  // ECHO(double y = x * 3.1415);
+  // CR();
 
-  OUTPUT("Light mode in Ubuntu WSL2 terminal on Windows");
+  OUTPUT("[image]");
 
-  OUTPUT("Dark mode in VS Code terminal");
-
-
-  GMD_HEADER2("ETV() for the value of C++ variables and C++ expressions");
-  OUTPUT("`ETV` stands for 'Expression Type Value'.  All results are preceded by the `☀` Unicode character to distinguish results from code.");
+  GMD_HEADER2("ETV() for C++ variables and expressions");
+  OUTPUT("`ETV` stands for 'Expression Type Value', and that is what it prints.  All results are preceded by the `☀` Unicode character to distinguish results from code.");
   {
     GMD_CODE_START("C++");
     OUTPUT("ECHO(int x = 5);");
@@ -58,9 +55,17 @@ int main() {
   }
   GMD_VSPACE();
 
-  OUTPUT("will print the following the terminal (actual screen captures)");
+  OUTPUT("The above C++ code will print the following the terminal (actual screen captures):");
+  CR();
+  ECHO(int x = 5);
+  ETV(x);
+  ETV(3 * 25 * std::sin(3.1415/20));
+  ETV(mathq::Vector<double> {1, 2, 3});
+  CR();
   OUTPUT("Light mode in Ubuntu WSL2 terminal on Windows");
+  OUTPUT("[image]");
   OUTPUT("Dark mode in VS Code terminal");
+  OUTPUT("[image]");
 
   GMD_HEADER2("Markdown code box generation");
   OUTPUT("In fact these online documentation files are automatically created using C++ files, python scripts for the table of contents and numbering, and make files that put it all together during the build process.");
@@ -71,23 +76,24 @@ int main() {
     GMD_CODE_START("C++");
     OUTPUT("GMD_CODE_START(\"C++\");");
     OUTPUT("ECHO(int x = 5);");
-    OUTPUT("ECHO(double y = x * 3.1415);");
+    OUTPUT("ECHO(mathq::Vector<double> v{1, 2, 3});");
+    OUTPUT("ETV(10*v + 100*x);");
     OUTPUT("GMD_CODE_END();");
     GMD_CODE_END();
   }
   GMD_VSPACE();
 
-  OUTPUT("");
+  OUTPUT("The above C++ code generates the following markdown code box:");
   {
     GMD_CODE_START("C++");
-    ETV(3 * 25 * std::sin(3.1415/20));
-    ETV(mathq::Vector<double> {1, 2, 3});
-    CR();
+    ECHO(int x = 5);
+    ECHO(mathq::Vector<double> v{ 1, 2, 3 });
+    ETV(10*v + 100*x);
     GMD_CODE_END();
   }
   GMD_VSPACE();
 
-  OUTPUT("Other MACROS and functions are also available, including marcros that aid in creating[github markdown]() files.");
+  OUTPUT("Other macros and functions are also available, including macros that aid in creating[github markdown]() files.");
   OUTPUT("A full refactoring of the printing functionality is underway.");
 
   GMD_HEADER2("Compilation Modes and Debugging Support");
