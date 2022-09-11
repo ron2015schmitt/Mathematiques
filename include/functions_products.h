@@ -310,21 +310,21 @@ namespace mathq
     const Dimensions dims2 = x2.dims();
     const Dimensions dims3 = Dimensions::concat(dims1, dims2);
     x3.resize(dims3);
-    // TRDISP(dims1);
-    // TRDISP(dims2);
-    // TRDISP(dims3);
+    // ETV(dims1);
+    // ETV(dims2);
+    // ETV(dims3);
     const size_t N1 = dims1.num_elements();
     const size_t N2 = dims2.num_elements();
     const size_t N3 = dims3.num_elements();
-    // TRDISP(N1);
-    // TRDISP(N2);
-    // TRDISP(N3);
+    // ETV(N1);
+    // ETV(N2);
+    // ETV(N3);
     Indices inds1(dims1.rank()), inds2(dims2.rank()), inds3(dims3.rank());
     for (size_t i = 0; i < N1; i++) {
       for (size_t j = 0; j < N2; j++) {
         // MDISP(inds1, inds2, inds3);
-        // TRDISP(x1[inds1]);
-        // TRDISP(x2[inds2]);
+        // ETV(x1[inds1]);
+        // ETV(x2[inds2]);
         x3[inds3] = x1[inds1] * x2[inds2];
         inds2.increment(dims2);
         inds3.increment(dims3);

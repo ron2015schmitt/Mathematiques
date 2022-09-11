@@ -67,15 +67,15 @@ int main() {
   ECHO(auto q2 = Imaginary<double>() = 2*i);
   ECHO(auto q = Imaginary<double>() = -i/0.25);
   CR();
-  TRDISP(q1);
-  TRDISP(q2);
-  TRDISP(q);
+  ETV(q1);
+  ETV(q2);
+  ETV(q);
   GMD_CODE_END();
 
   MOUT << "In the above expressions we used the constant `i` which is defined as follows:\n";
   CR();
   GMD_CODE_START("C++");
-  TRDISP(mathq::unit_imaginary::i);
+  ETV(mathq::unit_imaginary::i);
   GMD_CODE_END();
 
   OUTPUT("Unlike the standard C++ `i`, which is an operator, the Mathématiques `i`, `j`, and `k` are constants");
@@ -87,10 +87,10 @@ int main() {
   OUTPUT("Mathématiques supports the four arithmetic operators for imaginary numbers:");
   CR();
   GMD_CODE_START("C++");
-  TRDISP(q1+q2);
-  TRDISP(q1-q2);
-  TRDISP(q1*q2);
-  TRDISP(q2/q1);
+  ETV(q1+q2);
+  ETV(q1-q2);
+  ETV(q1*q2);
+  ETV(q2/q1);
   GMD_CODE_END();
 
 
@@ -115,12 +115,12 @@ int main() {
 
   CR();
   GMD_CODE_START("C++");
-  TRDISP(q1);
-  TRDISP(q1.real());
-  TRDISP(q1.imag());
-  TRDISP(q1.value());
-  TRDISP(q1.abs());
-  TRDISP(q1.normsqr());
+  ETV(q1);
+  ETV(q1.real());
+  ETV(q1.imag());
+  ETV(q1.value());
+  ETV(q1.abs());
+  ETV(q1.normsqr());
   GMD_CODE_END();
 
 
@@ -135,18 +135,18 @@ int main() {
   CR();
   GMD_CODE_START("C++");
   ECHO(double pi = 3.14159265358979311599796346854);
-  TRDISP(2*i*i);
-  TRDISP(20*i*i/(4*i));
-  TRDISP(2*i*i + 3);
-  TRDISP(i/i + i/5 +4*i + 4);
-  TRDISP(1 + i);
-  TRDISP(20 + i/0.25);
-  TRDISP(10*exp(i*pi/4));
-  TRDISP(10*cos(pi/4) + 10*i*sin(pi/4));
-  TRDISP(exp(1+i*pi/4)/2.71828);
+  ETV(2*i*i);
+  ETV(20*i*i/(4*i));
+  ETV(2*i*i + 3);
+  ETV(i/i + i/5 +4*i + 4);
+  ETV(1 + i);
+  ETV(20 + i/0.25);
+  ETV(10*exp(i*pi/4));
+  ETV(10*cos(pi/4) + 10*i*sin(pi/4));
+  ETV(exp(1+i*pi/4)/2.71828);
   CR();
-  TRDISP(q);
-  TRDISP(pow(q, 7));
+  ETV(q);
+  ETV(pow(q, 7));
   GMD_CODE_END();
 
   GMD_HEADER2("Containers of Imaginary numbers");
@@ -163,23 +163,23 @@ int main() {
 
 
   GMD_CODE_START("C++");
-  TRDISP(q);
+  ETV(q);
   CR();
-  TRDISP(v);
+  ETV(v);
   CR();
-  TRDISP(v + q);
+  ETV(v + q);
   CR();
-  TRDISP(exp(v));
+  ETV(exp(v));
   CR();
-  TRDISP(exp(v) + v);
-  TRDISP(exp(v) + 1);
-  TRDISP(exp(v) + 2.3);
-  TRDISP(exp(v) + complex(1, 2));
-  TRDISP(2*exp(v) + Imaginary<double>(2));
-  // TRDISP(exp(v)*Imaginary<double>(1));  // bug?
+  ETV(exp(v) + v);
+  ETV(exp(v) + 1);
+  ETV(exp(v) + 2.3);
+  ETV(exp(v) + complex(1, 2));
+  ETV(2*exp(v) + Imaginary<double>(2));
+  // ETV(exp(v)*Imaginary<double>(1));  // bug?
 //  auto y = exp(v)*Imaginary<double>(1);  // yes, this also fails
-  // TRDISP(exp(v)*4);  // works
-  // TRDISP(v*i);  // fails
+  // ETV(exp(v)*4);  // works
+  // ETV(v*i);  // fails
 
   GMD_CODE_END();
 

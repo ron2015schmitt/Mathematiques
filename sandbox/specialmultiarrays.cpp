@@ -36,14 +36,14 @@ int main(int argc, char* argv[]) {
   CR();
   {
     ECHO(MultiArray_Constant<double, 3, 3, 2, 1> a(3.14));
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
+    ETV(a);
+    ETV(sizeof(a)/sizeof(double));
     a = 42.42;
-    TRDISP(a);
+    ETV(a);
     ECHO(MultiArray<double, 3, 3, 2, 1> b = a);
-    TRDISP(b);
+    ETV(b);
     ECHO(a = 10 + b);
-    TRDISP(a);
+    ETV(a);
   }
 
   CR();
@@ -51,10 +51,10 @@ int main(int argc, char* argv[]) {
   CR();
   {
     ECHO(MultiArray_Constant<double, 3> a(Dimensions({ 3,2,1 }), 6.78));
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
+    ETV(a);
+    ETV(sizeof(a)/sizeof(double));
     a = 42.42;
-    TRDISP(a(1, 1, 0));
+    ETV(a(1, 1, 0));
   }
 
   CR();
@@ -62,15 +62,15 @@ int main(int argc, char* argv[]) {
   CR();
   {
     ECHO(Matrix_Constant<double, 2, 3> a(3.14));
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
+    ETV(a);
+    ETV(sizeof(a)/sizeof(double));
     a = 42.42;
-    TRDISP(a(1, 2));
+    ETV(a(1, 2));
     ECHO(Matrix<double, 2, 3> b);
     ECHO(b = a);
-    TRDISP(b);
+    ETV(b);
     ECHO(a = 10 + b);
-    TRDISP(a);
+    ETV(a);
   }
 
   CR();
@@ -78,10 +78,10 @@ int main(int argc, char* argv[]) {
   CR();
   {
     ECHO(Matrix_Constant<double> a(Dimensions({ 2,3 }), 6.78));
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
+    ETV(a);
+    ETV(sizeof(a)/sizeof(double));
     a = 42.42;
-    TRDISP(a);
+    ETV(a);
   }
 
 
@@ -90,14 +90,14 @@ int main(int argc, char* argv[]) {
   CR();
   {
     ECHO(Vector_Constant<double, 4> a(3.14));
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
+    ETV(a);
+    ETV(sizeof(a)/sizeof(double));
     a = 42.42;
-    TRDISP(a);
+    ETV(a);
     ECHO(Vector<double, 4> b = a);
-    TRDISP(b);
+    ETV(b);
     ECHO(a = 10 + b);
-    TRDISP(a);
+    ETV(a);
   }
 
   CR();
@@ -105,10 +105,10 @@ int main(int argc, char* argv[]) {
   CR();
   {
     ECHO(Vector_Constant<double> a(Dimensions({ 5 }), 6.78));
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
+    ETV(a);
+    ETV(sizeof(a)/sizeof(double));
     a = 42.42;
-    TRDISP(a(3));
+    ETV(a(3));
   }
 
 
@@ -124,15 +124,15 @@ int main(int argc, char* argv[]) {
   CR();
   {
     ECHO(MultiArray_RepeatVector<double, 3, 2, 3, 4> a(1, 3.14));
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
+    ETV(a);
+    ETV(sizeof(a)/sizeof(double));
     a = { 1.1, 2.2, 3.3 };
-    TRDISP(a);
+    ETV(a);
     ECHO(MultiArray<double, 3> b = a);
     // b(1,2,3) = -999; // error injection
-    TRDISP(b);
+    ETV(b);
     ECHO(a = 10 + b);
-    TRDISP(a);
+    ETV(a);
   }
 
   CR();
@@ -140,10 +140,10 @@ int main(int argc, char* argv[]) {
   CR();
   {
     ECHO(MultiArray_RepeatVector<double, 3> a(1, Dimensions({ 2,3,4 }), 6.78));
-    TRDISP(a);
-    TRDISP(sizeof(a)/sizeof(double));
+    ETV(a);
+    ETV(sizeof(a)/sizeof(double));
     a = { 1.1, 2.2, 3.3 };
-    TRDISP(a);
+    ETV(a);
   }
 
 
@@ -154,21 +154,21 @@ int main(int argc, char* argv[]) {
   // {
   //   ECHO( Matrix_RepeatVector<double, 0, 3,3> a );
   //   a = 0;
-  //   TRDISP(a);
-  //   TRDISP(sizeof(a)/sizeof(double));
-  //   TRDISP(a.vector);
-  //   TRDISP(a.dims());
+  //   ETV(a);
+  //   ETV(sizeof(a)/sizeof(double));
+  //   ETV(a.vector);
+  //   ETV(a.dims());
   //   std::array<double,3> x{1.1,2.2,3.3};
-  //   TRDISP(x);
+  //   ETV(x);
   //   ECHO( a = x );
-  //   TRDISP(a);
+  //   ETV(a);
   //   ECHO( a = {-1.1,-2.2,-3.3} );
-  //   TRDISP(a);
+  //   ETV(a);
   //   ECHO( Matrix<double> b = -a );
   //   // b(1,2) = -999; // error injection
-  //   TRDISP(b);
+  //   ETV(b);
   //   ECHO( a = 10 + b );
-  //   TRDISP(a);
+  //   ETV(a);
 
   // }
 
@@ -177,10 +177,10 @@ int main(int argc, char* argv[]) {
   // CR();
   // {
   //   ECHO( Matrix_RepeatVector<double,1> a(Dimensions({3,3}), 6.78) );
-  //   TRDISP(a);
-  //   TRDISP(sizeof(a)/sizeof(double));
+  //   ETV(a);
+  //   ETV(sizeof(a)/sizeof(double));
   //   a = { 1.1, 2.2, 3.3 };
-  //   TRDISP(a);
+  //   ETV(a);
   // }
 
 

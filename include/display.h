@@ -140,14 +140,14 @@
 
 
 //
-// TRDISP(x)
+// ETV(x)
 //
 // same as DISP(x) but prints the typename on the RHS
 //
 // EXAMPLES:
-//   TRDISP(1+3); // "1+3  ➜  int 4"
+//   ETV(1+3); // "1+3  ➜  int 4"
 
-#define TRDISP(...) display::Display::trmydispcr(MOUT, __VA_ARGS__, #__VA_ARGS__)
+#define ETV(...) display::Display::trmydispcr(MOUT, __VA_ARGS__, #__VA_ARGS__)
 
 
 //
@@ -220,7 +220,7 @@
 #define MDISP1(...) MDISP(__VA_ARGS__)
 #define DISP1(...) DISP(__VA_ARGS__)
 #define TLDISP1(...) TLDISP(__VA_ARGS__)
-#define TRDISP1(...) TRDISP(__VA_ARGS__)
+#define TRDISP1(...) ETV(__VA_ARGS__)
 #else
 #define PRINTF1(...) \
   {}
@@ -239,7 +239,7 @@
 #define MDISP2(...) MDISP(__VA_ARGS__)
 #define DISP2(...) DISP(__VA_ARGS__)
 #define TLDISP2(...) TLDISP(__VA_ARGS__)
-#define TRDISP2(...) TRDISP(__VA_ARGS__)
+#define TRDISP2(...) ETV(__VA_ARGS__)
 #else
 #define PRINTF2(...) \
   {}
@@ -258,7 +258,7 @@
 #define MDISP3(...) MDISP(__VA_ARGS__)
 #define DISP3(...) DISP(__VA_ARGS__)
 #define TLDISP3(...) TLDISP(__VA_ARGS__)
-#define TRDISP3(...) TRDISP(__VA_ARGS__)
+#define TRDISP3(...) ETV(__VA_ARGS__)
 #else
 #define PRINTF3(...) \
   {}

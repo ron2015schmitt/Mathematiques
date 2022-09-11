@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
     Dimensions template_dims({ 2, 1, 2 });
     TLDISP(template_dims);
 
-    TRDISP(x()(size_t(1))(2, 1).resize(template_dims));
+    ETV(x()(size_t(1))(2, 1).resize(template_dims));
     x()(0)(0, 0).resize(template_dims);
 
     for (size_t h = 0; h < x().size(); h++) {
@@ -172,7 +172,7 @@ int main(int argc, char* argv[]) {
 
     if (x()(1)(2, 1)(1, 0, 0) != x[inds]) {
       OUTPUT("FAILED!!!");
-      TRDISP(x()(1)(2, 1)(1, 0, 0));
+      ETV(x()(1)(2, 1)(1, 0, 0));
       TLDISP(x[{ {}, { 1 }, { 2,1 }, { 1,0,0 } }]);
       return (1);
     }

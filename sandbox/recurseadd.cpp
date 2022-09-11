@@ -18,9 +18,11 @@ bool printCPUInfo() {
   while (std::getline(file, label, ':') && std::getline(file, value)) {
     if (label.find("model name") != std::string::npos) {
       mymap[label] = value;
-    } else if (label.find("cpu MHz") != std::string::npos) {
+    }
+    else if (label.find("cpu MHz") != std::string::npos) {
       mymap[label] = value;
-    } else if (label.find("cache size") != std::string::npos) {
+    }
+    else if (label.find("cache size") != std::string::npos) {
       mymap[label] = value;
     }
   }
@@ -67,7 +69,7 @@ bool printMemInfo() {
 
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 
   const double pi = M_PI;
   std::string myname = argv[0];
@@ -128,9 +130,9 @@ int main(int argc, char *argv[]) {
     TLDISP(v2);
 
     MOUT << "Deep add (v1+v2)" << std::endl;
-    // TRDISP(v1.recursive_dims());
-    // TRDISP(v2.recursive_dims());
-    // TRDISP(v3.recursive_dims());
+    // ETV(v1.recursive_dims());
+    // ETV(v2.recursive_dims());
+    // ETV(v3.recursive_dims());
     t.start_timer_silent();
     v3 = v1 + v2;
     t.stop_timer_curt();
@@ -148,17 +150,17 @@ int main(int argc, char *argv[]) {
 
     CR();
     MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("vector<vector<double>> x") << std::endl;
-    vector<vector<double>> x{{.1, .2}, {.3, .4}, {.5, .6}};
+    vector<vector<double>> x{ {.1, .2}, {.3, .4}, {.5, .6} };
     TLDISP(x);
-    TLDISP((void *)&x);
+    TLDISP((void*)&x);
     for (int i = 0; i < x.size(); i++) {
-      TLDISP((void *)&(x[i]));
+      TLDISP((void*)&(x[i]));
     }
 
 
     CR();
     MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("vector<vector<vector<double>>> v1") << std::endl;
-    vector<vector<vector<double>>> v1{{{.1, .2}, {.3, .4}, {.5, .6}}, {{.7, .8}, {.9, 1.0}, {1.1, 1.2}}};
+    vector<vector<vector<double>>> v1{ {{.1, .2}, {.3, .4}, {.5, .6}}, {{.7, .8}, {.9, 1.0}, {1.1, 1.2}} };
     TLDISP(v1);
   }
 
@@ -175,20 +177,20 @@ int main(int argc, char *argv[]) {
 
     CR();
     MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("Vector<Vector<double>> x") << std::endl;
-    Vector<Vector<double>> x{{.1, .2}, {.3, .4}, {.5, .6}};
+    Vector<Vector<double>> x{ {.1, .2}, {.3, .4}, {.5, .6} };
     TLDISP(x);
-    TLDISP((void *)&x);
+    TLDISP((void*)&x);
     for (int i = 0; i < x.size(); i++) {
-      TLDISP((void *)&(x[i]));
+      TLDISP((void*)&(x[i]));
     }
 
 
     CR();
     MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("Vector<Vector<Vector<double>>> v1") << std::endl;
-    Vector<Vector<Vector<double>>> v1{{{.1, .2}, {.3, .4}, {.5, .6}}, {{.7, .8}, {.9, 1.0}, {1.1, 1.2}}};
+    Vector<Vector<Vector<double>>> v1{ {{.1, .2}, {.3, .4}, {.5, .6}}, {{.7, .8}, {.9, 1.0}, {1.1, 1.2}} };
     TLDISP(v1);
 
-    Vector<Vector<Vector<double>>> v2{{{100., 200.}, {300., 400.}, {500., 600.}}, {{700., 800.}, {900., 1000.}, {1100., 1200.}}};
+    Vector<Vector<Vector<double>>> v2{ {{100., 200.}, {300., 400.}, {500., 600.}}, {{700., 800.}, {900., 1000.}, {1100., 1200.}} };
     Vector<Vector<Vector<double>>> v3(N1);
     Vector<Vector<Vector<double>>> v4(N1);
     for (int i = 0; i < N1; i++) {
@@ -230,11 +232,11 @@ int main(int argc, char *argv[]) {
     MOUT << "" << CREATESTYLE(BOLD).apply("Vector<Vector<double>> + Vector<double>") << ", N1=" << N1 << ", N2=" << N2 << std::endl;
 
     CR();
-    Vector<Vector<double>> pairs{{.1, .2}, {.3, .4}, {.5, .6}};
+    Vector<Vector<double>> pairs{ {.1, .2}, {.3, .4}, {.5, .6} };
     TLDISP(pairs);
-    Vector<double> origin{10., 20.};
+    Vector<double> origin{ 10., 20. };
     TLDISP(origin);
-    Vector<Vector<double>> v3{{0, 0}, {0, 0}, {0, 0}};
+    Vector<Vector<double>> v3{ {0, 0}, {0, 0}, {0, 0} };
     TLDISP(v3);
 
 
@@ -245,7 +247,7 @@ int main(int argc, char *argv[]) {
 
 
     MOUT << "" << CREATESTYLE(BOLD).apply("Vector<double> + Vector<Vector<double>>") << ", N1=" << N1 << ", N2=" << N2 << std::endl;
-    v3 = {{0, 0}, {0, 0}, {0, 0}};
+    v3 = { {0, 0}, {0, 0}, {0, 0} };
     TLDISP(v3);
     t.start_timer_silent();
     v3 = origin + pairs;

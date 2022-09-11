@@ -65,19 +65,19 @@ int main(int argc, char* argv[]) {
 
 
   cout << "NumberTrait" << std::endl;
-  // TRDISP(NumberTrait<NullType>::Type());    // causes compile error
-  TRDISP(NumberTrait<int>::Type());
-  TRDISP(NumberTrait<double>::Type());
-  TRDISP(NumberTrait<std::complex<double>>::Type());
-  // TRDISP(NumberTrait<std::complex<Vector<bool>>>::Type());
+  // ETV(NumberTrait<NullType>::Type());    // causes compile error
+  ETV(NumberTrait<int>::Type());
+  ETV(NumberTrait<double>::Type());
+  ETV(NumberTrait<std::complex<double>>::Type());
+  // ETV(NumberTrait<std::complex<Vector<bool>>>::Type());
   typename NumberTrait<Vector<double>>::Type x;
-  TRDISP(NumberTrait<Vector<std::complex<double>>>::Type());
-  TRDISP(NumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
-  TRDISP(NumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
+  ETV(NumberTrait<Vector<std::complex<double>>>::Type());
+  ETV(NumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
+  ETV(NumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
   cout << std::endl;
 
   cout << "NumberTrait" << std::endl;
-  // TRDISP(NumberTrait<NullType>::depth());    // causes compile error
+  // ETV(NumberTrait<NullType>::depth());    // causes compile error
   DISP(NumberTrait<int>::depth());
   DISP(NumberTrait<double>::depth());
   DISP(NumberTrait<std::complex<double>>::depth());
@@ -90,34 +90,34 @@ int main(int argc, char* argv[]) {
 
 
   cout << "SimpleNumberTrait" << std::endl;
-  TRDISP(SimpleNumberTrait<NullType>::Type());    // causes compile error
-  TRDISP(SimpleNumberTrait<int>::Type());
-  TRDISP(SimpleNumberTrait<double>::Type());
-  TRDISP(SimpleNumberTrait<std::complex<double>>::Type());
-  TRDISP(SimpleNumberTrait<std::complex<Vector<bool>>>::Type());
-  TRDISP(SimpleNumberTrait<Vector<double>>::Type());
-  TRDISP(SimpleNumberTrait<Vector<std::complex<double>>>::Type());
-  TRDISP(SimpleNumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
-  TRDISP(SimpleNumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
+  ETV(SimpleNumberTrait<NullType>::Type());    // causes compile error
+  ETV(SimpleNumberTrait<int>::Type());
+  ETV(SimpleNumberTrait<double>::Type());
+  ETV(SimpleNumberTrait<std::complex<double>>::Type());
+  ETV(SimpleNumberTrait<std::complex<Vector<bool>>>::Type());
+  ETV(SimpleNumberTrait<Vector<double>>::Type());
+  ETV(SimpleNumberTrait<Vector<std::complex<double>>>::Type());
+  ETV(SimpleNumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
+  ETV(SimpleNumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::Type());
   cout << std::endl;
 
 
   cout << "ReplaceElementTrait" << std::endl;
-  TRDISP(ReplaceElementTrait<Vector<double, 1>, int>::Type());
-  TRDISP(ReplaceElementTrait<Vector<std::complex<double>, 1>, float>::Type());
-  TRDISP(ReplaceElementTrait<Matrix<Vector<std::complex<double>, 1>, 3, 4>, Quaternion<float> >::Type());
-  TRDISP(ReplaceElementTrait< Matrix<Vector<std::complex<double>, 1>, 3, 4>, MultiArray<Quaternion<float>, 3, 1, 2, 3> >::Type());
+  ETV(ReplaceElementTrait<Vector<double, 1>, int>::Type());
+  ETV(ReplaceElementTrait<Vector<std::complex<double>, 1>, float>::Type());
+  ETV(ReplaceElementTrait<Matrix<Vector<std::complex<double>, 1>, 3, 4>, Quaternion<float> >::Type());
+  ETV(ReplaceElementTrait< Matrix<Vector<std::complex<double>, 1>, 3, 4>, MultiArray<Quaternion<float>, 3, 1, 2, 3> >::Type());
 
   cout << "ReplaceNumberTrait" << std::endl;
-  TRDISP(ReplaceNumberTrait<Vector<double, 1>, int>::Type());
-  TRDISP(ReplaceNumberTrait<Vector<std::complex<double>, 1>, float>::Type());
-  TRDISP(ReplaceNumberTrait<Matrix<Vector<std::complex<double>, 1>, 3, 4>, Quaternion<float> >::Type());
+  ETV(ReplaceNumberTrait<Vector<double, 1>, int>::Type());
+  ETV(ReplaceNumberTrait<Vector<std::complex<double>, 1>, float>::Type());
+  ETV(ReplaceNumberTrait<Matrix<Vector<std::complex<double>, 1>, 3, 4>, Quaternion<float> >::Type());
 
 
   cout << "ReplaceSimpleNumberTrait" << std::endl;
-  TRDISP(ReplaceSimpleNumberTrait<Vector<double, 1>, int>::Type());
-  TRDISP(ReplaceSimpleNumberTrait<Vector<std::complex<double>, 1>, float>::Type());
-  TRDISP(ReplaceSimpleNumberTrait<Matrix<Vector<std::complex<double>, 1>, 3, 4>, float >::Type());
+  ETV(ReplaceSimpleNumberTrait<Vector<double, 1>, int>::Type());
+  ETV(ReplaceSimpleNumberTrait<Vector<std::complex<double>, 1>, float>::Type());
+  ETV(ReplaceSimpleNumberTrait<Matrix<Vector<std::complex<double>, 1>, 3, 4>, float >::Type());
 
 
 

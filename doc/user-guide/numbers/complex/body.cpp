@@ -67,11 +67,11 @@ int main() {
   ECHO(complex<double> c4 = 1.4 + 3.5i);
   ECHO(auto c5 = complex<double>(1.3, -10.5));
   CR();
-  TRDISP(c1);
-  TRDISP(c2);
-  TRDISP(c3);
-  TRDISP(c4);
-  TRDISP(c5);
+  ETV(c1);
+  ETV(c2);
+  ETV(c3);
+  ETV(c4);
+  ETV(c5);
   GMD_CODE_END();
 
   OUTPUT("In the above expression `c4 = 1.4 + 3.5i`, the C++ operator `std::complex_literals::i` is used. ");
@@ -86,10 +86,10 @@ int main() {
   OUTPUT("The 4 fundamental arithmetic operators can be used with complex numbers.");
   GMD_CODE_START("C++");
   CR();
-  TRDISP(1.4 + 3.5i  +  2.6 + 1.5i);
-  TRDISP(complex<double>(1.3, -10.5) - complex<double>(1.3, -10.5));
-  TRDISP(2 + 4.5i  *  2 + 3i);
-  TRDISP(2 + 4.5i / 2 + 3i);
+  ETV(1.4 + 3.5i  +  2.6 + 1.5i);
+  ETV(complex<double>(1.3, -10.5) - complex<double>(1.3, -10.5));
+  ETV(2 + 4.5i  *  2 + 3i);
+  ETV(2 + 4.5i / 2 + 3i);
   CR();
   GMD_CODE_END();
 
@@ -110,9 +110,9 @@ int main() {
   GMD_CODE_START("C++");
   {
     ECHO(complex<double> z = 1.5 + 3.5i);
-    TRDISP(z);
-    TRDISP(z.real());
-    TRDISP(z.imag());
+    ETV(z);
+    ETV(z.real());
+    ETV(z.imag());
   }
   GMD_CODE_END();
 
@@ -123,12 +123,12 @@ int main() {
   OUTPUT("Mathématiques extends the C++ functionality so that mixed math (ints, floating pt, complex<int>, complex<floating pt>) is possible.");
   GMD_CODE_START("C++");
   CR();
-  TRDISP(1 + 10i);
-  TRDISP(complex<double>(1.3, -10.5) - complex<int>(1, 3));
-  TRDISP(complex<double>(1.3, -10.5) - complex<float>(1.2, 5));
-  TRDISP(5 + complex<double>(1.3, -10.5));
-  TRDISP(int(100) + complex<double>(1.3, -10.5));
-  TRDISP(float(100) + complex<double>(1.3, -10.5));
+  ETV(1 + 10i);
+  ETV(complex<double>(1.3, -10.5) - complex<int>(1, 3));
+  ETV(complex<double>(1.3, -10.5) - complex<float>(1.2, 5));
+  ETV(5 + complex<double>(1.3, -10.5));
+  ETV(int(100) + complex<double>(1.3, -10.5));
+  ETV(float(100) + complex<double>(1.3, -10.5));
   CR();
   GMD_CODE_END();
 
@@ -150,9 +150,9 @@ int main() {
 
   GMD_CODE_START("C++");
   CR();
-  TRDISP(sin(1.4 + 3.5i));
-  TRDISP(exp((3.1415/2)*1i));
-  TRDISP(pow(1.5 + 3i, 0.5));
+  ETV(sin(1.4 + 3.5i));
+  ETV(exp((3.1415/2)*1i));
+  ETV(pow(1.5 + 3i, 0.5));
   CR();
   GMD_CODE_END();
 
@@ -173,16 +173,16 @@ int main() {
     ECHO(complex<double> z = 1.5 + 3.5i);
     ECHO(Vector<complex<double>> v = Vector<complex<double>>({ 1, 1i, 1 + 1i, 1 - 1i }));
     CR();
-    TRDISP(z);
-    TRDISP(v);
+    ETV(z);
+    ETV(v);
     CR();
-    TRDISP(v + z);
-    TRDISP(v*1i);
-    TRDISP(exp(v));
-    TRDISP(exp(v) + 1);
-    TRDISP(exp(v) + complex(1, 2));
-    TRDISP(exp(v) + v);
-    TRDISP(exp(v)/v + v);
+    ETV(v + z);
+    ETV(v*1i);
+    ETV(exp(v));
+    ETV(exp(v) + 1);
+    ETV(exp(v) + complex(1, 2));
+    ETV(exp(v) + v);
+    ETV(exp(v)/v + v);
   }
   GMD_CODE_END();
 

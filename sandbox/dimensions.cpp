@@ -14,310 +14,310 @@ int main(int argc, char* argv[]) {
 
   CR();
   ECHO(Vector<double, 3> v1);
-  TRDISP(v1.size());
-  TRDISP(v1.is_dynamic_value);
-  TRDISP(v1.static_dims_array);
-  TRDISP(v1);
+  ETV(v1.size());
+  ETV(v1.is_dynamic_value);
+  ETV(v1.static_dims_array);
+  ETV(v1);
   v1[0] = 2.2;
-  TRDISP(v1);
+  ETV(v1);
   v1 = { 2.2, 4.4, -100.1 };
-  TRDISP(v1);
-  TRDISP(v1.dims());
-  TRDISP(sizeof(v1)/(v1.total_size()*sizeof(double)));
+  ETV(v1);
+  ETV(v1.dims());
+  ETV(sizeof(v1)/(v1.total_size()*sizeof(double)));
 
 
   CR();
   ECHO(Vector<double> v2{ 3.1, 22.5, 100 });
-  TRDISP(v2);
-  TRDISP(v2.size());
-  TRDISP(v2.dims());
-  TRDISP(v2.is_dynamic_value);
-  TRDISP(v2.static_dims_array);
-  TRDISP(v2.resize(4));
+  ETV(v2);
+  ETV(v2.size());
+  ETV(v2.dims());
+  ETV(v2.is_dynamic_value);
+  ETV(v2.static_dims_array);
+  ETV(v2.resize(4));
 
   CR();
   ECHO(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
-  TRDISP(v3);
-  TRDISP(v3.size());
-  TRDISP(v3.is_dynamic_value);
-  TRDISP(v3.static_dims_array);
-  TRDISP(v3.dims());
+  ETV(v3);
+  ETV(v3.size());
+  ETV(v3.is_dynamic_value);
+  ETV(v3.static_dims_array);
+  ETV(v3.dims());
 
   CR();
   ECHO(Vector<double> v4);
-  TRDISP(v4);
-  TRDISP(v4.size());
-  TRDISP(v4.is_dynamic_value);
-  TRDISP(v4.static_dims_array);
-  TRDISP(v4.dims());
+  ETV(v4);
+  ETV(v4.size());
+  ETV(v4.is_dynamic_value);
+  ETV(v4.static_dims_array);
+  ETV(v4.dims());
 
   CR();
   ECHO(Vector<double> v4b(3));  // size 3
-  TRDISP(v4b);
-  TRDISP(v4b.size());
-  TRDISP(v4b.is_dynamic_value);
-  TRDISP(v4b.static_dims_array);
-  TRDISP(v4b.dims());
+  ETV(v4b);
+  ETV(v4b.size());
+  ETV(v4b.is_dynamic_value);
+  ETV(v4b.static_dims_array);
+  ETV(v4b.dims());
 
   CR();
   ECHO(Vector<double, 5> v4c(3.14));  // set all vlaues to 3.14
-  TRDISP(v4c);
-  TRDISP(v4c.size());
-  TRDISP(v4c.is_dynamic_value);
-  TRDISP(v4c.static_dims_array);
-  TRDISP(v4c.dims());
+  ETV(v4c);
+  ETV(v4c.size());
+  ETV(v4c.is_dynamic_value);
+  ETV(v4c.static_dims_array);
+  ETV(v4c.dims());
 
 
   CR();
   ECHO(Dimensions dims);
-  TRDISP(dims.size());
-  TRDISP(dims);
+  ETV(dims.size());
+  ETV(dims);
   ECHO(dims.resize(2));
   ECHO(dims[0] = 14);
   ECHO(dims[1] = 42);
-  TRDISP(dims);
+  ETV(dims);
 
 
 
   CR();
   ECHO(Dimensions dims2);
   ECHO(dims2 = { 3,2,1 });
-  TRDISP(dims2);
-  TRDISP(dims2.getReduced());
+  ETV(dims2);
+  ETV(dims2.getReduced());
   ECHO(Dimensions dims2b);
   ECHO(dims2b = { 3,1,2,1 });
-  TRDISP(dims2b);
-  TRDISP(dims2b.getReduced());
-  TRDISP(equiv(dims2, dims2b));
+  ETV(dims2b);
+  ETV(dims2b.getReduced());
+  ETV(equiv(dims2, dims2b));
 
 
 
   CR();
   ECHO(Dimensions dims3{ 33, 46, 77, 81 });
-  TRDISP(dims3.size());
-  TRDISP(dims3);
+  ETV(dims3.size());
+  ETV(dims3);
   ECHO(dims3 = { 13, 42, 56, 99 });
-  TRDISP(dims3);
+  ETV(dims3);
 
 
   CR();
   ECHO(Dimensions dims4 = *(new Dimensions(5)));
-  TRDISP(dims4);
+  ETV(dims4);
 
   CR();
   ECHO(Dimensions dims5{ 33, 46, 77, 81 });
-  TRDISP(dims5.size());
-  TRDISP(dims5);
+  ETV(dims5.size());
+  ETV(dims5);
   ECHO(dims5 = { 13, 42, 56, 99 });
-  TRDISP(dims5);
-  TRDISP(dims5.getReduced());
-  TRDISP(dims5.num_elements());
-  TRDISP(dims5.num_elements() == 13*42*56*99);
+  ETV(dims5);
+  ETV(dims5.getReduced());
+  ETV(dims5.num_elements());
+  ETV(dims5.num_elements() == 13*42*56*99);
 
 
 
   CR();
   ECHO(RecursiveDimensions ndims1(2));
-  TRDISP(ndims1.size());
-  TRDISP(ndims1);
+  ETV(ndims1.size());
+  ETV(ndims1);
   ndims1[0] = dims;
   ndims1[1] = dims3;
-  TRDISP(ndims1);
+  ETV(ndims1);
 
 
   CR();
   ECHO(RecursiveDimensions ndims2(2));
-  TRDISP(ndims2.size());
-  TRDISP(ndims2);
+  ETV(ndims2.size());
+  ETV(ndims2);
   ndims2 = { dims, dims3 };
-  TRDISP(ndims2);
+  ETV(ndims2);
 
   CR();
   ECHO(RecursiveDimensions ndims3{ dims, dims3 });
-  TRDISP(ndims3);
+  ETV(ndims3);
 
   CR();
   ECHO(RecursiveDimensions ndims4{ {3,2}, {5,7,1}, {3} });
-  TRDISP(ndims4);
-  TRDISP(ndims4.getEverse());
+  ETV(ndims4);
+  ETV(ndims4.getEverse());
 
   CR();
-  TRDISP(v1);
-  TRDISP(v1.size());
-  TRDISP(v1.element_size());
-  TRDISP(v1.total_size());
-  TRDISP(v1.dims());
-  TRDISP(v1.depth());
-  TRDISP(v1.recursive_dims());
-  TRDISP(v1.element_dims());
+  ETV(v1);
+  ETV(v1.size());
+  ETV(v1.element_size());
+  ETV(v1.total_size());
+  ETV(v1.dims());
+  ETV(v1.depth());
+  ETV(v1.recursive_dims());
+  ETV(v1.element_dims());
 
 
   CR();
   ECHO(Vector<Vector<double, 2>> u2);
-  TRDISP(u2);
-  TRDISP(u2.size());
-  TRDISP(u2.element_size());
-  TRDISP(u2.total_size());
-  TRDISP(u2.dims());
-  TRDISP(u2.depth());
-  TRDISP(u2.recursive_dims());
-  TRDISP(u2.element_dims());
+  ETV(u2);
+  ETV(u2.size());
+  ETV(u2.element_size());
+  ETV(u2.total_size());
+  ETV(u2.dims());
+  ETV(u2.depth());
+  ETV(u2.recursive_dims());
+  ETV(u2.element_dims());
 
 
   CR();
   ECHO(Vector<Vector<double, 2>, 3> u);
-  TRDISP(u.size());
-  TRDISP(u.element_size());
-  TRDISP(u.dims());
+  ETV(u.size());
+  ETV(u.element_size());
+  ETV(u.dims());
   u[0] = { 1,2 };
   u[1] = { 3,4 };
   u[2] = { 5,6 };
-  TRDISP(u);
-  TRDISP(u.recursive_dims());
+  ETV(u);
+  ETV(u.recursive_dims());
   u = { {11,12}, {13,14}, {15,16} };
-  TRDISP(u);
-  TRDISP(u.size());
-  TRDISP(u.element_size());
-  TRDISP(u.el_total_size());
-  TRDISP(u.total_size());
-  TRDISP(u.dims());
-  TRDISP(u.dims_array());
-  TRDISP(u.depth());
-  TRDISP(u.recursive_dims());
-  TRDISP(u.element_dims());
-  TRDISP(u[0]);
-  TRDISP(u[2]);
-  TRDISP(u.dat(0));
-  TRDISP(u.dat(5));
+  ETV(u);
+  ETV(u.size());
+  ETV(u.element_size());
+  ETV(u.el_total_size());
+  ETV(u.total_size());
+  ETV(u.dims());
+  ETV(u.dims_array());
+  ETV(u.depth());
+  ETV(u.recursive_dims());
+  ETV(u.element_dims());
+  ETV(u[0]);
+  ETV(u[2]);
+  ETV(u.dat(0));
+  ETV(u.dat(5));
 
-  TRDISP(Indices{ 1,1 });
-  TRDISP(DeepIndices{ {0},{0} });
-  TRDISP(u[DeepIndices{ {0},{0} }]);
-  TRDISP(DeepIndices{ {0},{1} });
-  TRDISP(u[DeepIndices{ {0},{1} }]);
-  TRDISP(DeepIndices{ {1},{0} });
-  TRDISP(u[DeepIndices{ {1},{0} }]);
-  TRDISP(DeepIndices{ {1},{1} });
-  TRDISP(u[DeepIndices{ {1},{1} }]);
-  TRDISP(DeepIndices{ {2},{0} });
-  TRDISP(u[DeepIndices{ {2},{0} }]);
-  TRDISP(DeepIndices{ {2},{1} });
-  TRDISP(u[DeepIndices{ {2},{1} }]);
+  ETV(Indices{ 1,1 });
+  ETV(DeepIndices{ {0},{0} });
+  ETV(u[DeepIndices{ {0},{0} }]);
+  ETV(DeepIndices{ {0},{1} });
+  ETV(u[DeepIndices{ {0},{1} }]);
+  ETV(DeepIndices{ {1},{0} });
+  ETV(u[DeepIndices{ {1},{0} }]);
+  ETV(DeepIndices{ {1},{1} });
+  ETV(u[DeepIndices{ {1},{1} }]);
+  ETV(DeepIndices{ {2},{0} });
+  ETV(u[DeepIndices{ {2},{0} }]);
+  ETV(DeepIndices{ {2},{1} });
+  ETV(u[DeepIndices{ {2},{1} }]);
 
-  TRDISP(sizeof(u)/(u.total_size()*sizeof(double)));
+  ETV(sizeof(u)/(u.total_size()*sizeof(double)));
 
 
   CR();
   ECHO(Vector<double> v6(3));
-  TRDISP(v6.size());
-  TRDISP(v6.element_size());
-  TRDISP(v6.dims());
+  ETV(v6.size());
+  ETV(v6.element_size());
+  ETV(v6.dims());
   v6[0] = { 1 };
   v6[1] = { 3 };
   v6[2] = { 5 };
-  TRDISP(v6);
+  ETV(v6);
 
   CR();
   ECHO(Dimensions dims7({ 3 }));
-  TRDISP(dims7);
+  ETV(dims7);
   ECHO(Vector<double> v7(dims7));
-  TRDISP(v7.size());
-  TRDISP(v7.element_size());
-  TRDISP(v7.dims());
+  ETV(v7.size());
+  ETV(v7.element_size());
+  ETV(v7.dims());
   v7[0] = { 1 };
   v7[1] = { 3 };
   v7[2] = { 5 };
-  TRDISP(v7);
+  ETV(v7);
 
 
   CR();
   ECHO(Vector<double> v9(6, 7));
-  TRDISP(v9.size());
-  TRDISP(v9.element_size());
-  TRDISP(v9.dims());
-  TRDISP(v9);
+  ETV(v9.size());
+  ETV(v9.element_size());
+  ETV(v9.dims());
+  ETV(v9);
 
   CR();
   ECHO(Vector<double> v10({ 2.2, 3.3, 4.4 }));
-  TRDISP(v10.size());
-  TRDISP(v10.element_size());
-  TRDISP(v10.dims());
-  TRDISP(v10);
+  ETV(v10.size());
+  ETV(v10.element_size());
+  ETV(v10.dims());
+  ETV(v10);
 
   CR();
   ECHO(Vector<double> v11{ 2.2, 3.3, 4.4 });
-  TRDISP(v11.size());
-  TRDISP(v11.element_size());
-  TRDISP(v11.dims());
-  TRDISP(v11);
+  ETV(v11.size());
+  ETV(v11.element_size());
+  ETV(v11.dims());
+  ETV(v11);
 
   CR();
   ECHO(Vector<double, 3> v12({ 2.2, 3.3, 4.4 }));
-  TRDISP(v12.size());
-  TRDISP(v12.element_size());
-  TRDISP(v12.dims());
-  TRDISP(v12);
+  ETV(v12.size());
+  ETV(v12.element_size());
+  ETV(v12.dims());
+  ETV(v12);
 
   CR();
   ECHO(Vector<double, 3> v13{ 2.2, 3.3, 4.4 });
-  TRDISP(v13.size());
-  TRDISP(v13.element_size());
-  TRDISP(v13.dims());
-  TRDISP(v13);
-  TRDISP(static_cast<std::valarray<double>>(v13));
+  ETV(v13.size());
+  ETV(v13.element_size());
+  ETV(v13.dims());
+  ETV(v13);
+  ETV(static_cast<std::valarray<double>>(v13));
 
 
   CR();
   ECHO(Indices ind1{ 2 });
-  TRDISP(ind1);
-  TRDISP(v13[ind1]);
+  ETV(ind1);
+  ETV(v13[ind1]);
 
   CR();
   ECHO(Vector<double> k = 100*range<double>(0, 10));
-  TRDISP(k);
-  TRDISP(SLC::even);
+  ETV(k);
+  ETV(SLC::even);
   ECHO(Vector<size_t> vindex(11, SLC::even));
-  TRDISP(vindex);
-  TRDISP(k[vindex]);
-  TRDISP(k[SLC::even]);
-  TRDISP(k[-1]);
-  TRDISP(k[-2]);
+  ETV(vindex);
+  ETV(k[vindex]);
+  ETV(k[SLC::even]);
+  ETV(k[-1]);
+  ETV(k[-2]);
 
 
-  TRDISP(InitializerTrait< std::initializer_list<double> >::depth());
+  ETV(InitializerTrait< std::initializer_list<double> >::depth());
   {
     ECHO(typename InitializerTrait< std::initializer_list<double> >::BottomType temp{ 0 });
-    TRDISP(temp);
+    ETV(temp);
   }
-  TRDISP(InitializerTrait< std::initializer_list<std::initializer_list<double>> >::depth());
+  ETV(InitializerTrait< std::initializer_list<std::initializer_list<double>> >::depth());
   {
     ECHO(typename InitializerTrait< std::initializer_list<std::initializer_list<double>> >::BottomType temp{ 0 });
-    TRDISP(temp);
+    ETV(temp);
   }
 
-  TRDISP(InitializerTrait< std::initializer_list<double> >::get_size_array({ 1 , 2, 3 }));
-  TRDISP(InitializerTrait< std::initializer_list< std::initializer_list<double> > >::get_size_array({ {1, 2}, {3, 4}, {5, 6} }));
+  ETV(InitializerTrait< std::initializer_list<double> >::get_size_array({ 1 , 2, 3 }));
+  ETV(InitializerTrait< std::initializer_list< std::initializer_list<double> > >::get_size_array({ {1, 2}, {3, 4}, {5, 6} }));
 
   using List0 = typename MakeInitializer<double, 0>::Type;
-  TRDISP(display::getTypeName< List0 >());
+  ETV(display::getTypeName< List0 >());
   using List1 = typename MakeInitializer<double, 1>::Type;
-  TRDISP(List0{ 4.4 });
-  TRDISP(display::getTypeName< List1 >());
-  TRDISP(List1{ 1,2,3 });
+  ETV(List0{ 4.4 });
+  ETV(display::getTypeName< List1 >());
+  ETV(List1{ 1,2,3 });
   using List2 = typename MakeInitializer<double, 2>::Type;
-  TRDISP(display::getTypeName< List2 >());
-  TRDISP(List2{ {1, 2}, {3, 4}, {5, 6} });
+  ETV(display::getTypeName< List2 >());
+  ETV(List2{ {1, 2}, {3, 4}, {5, 6} });
 
 
-  TRDISP(array_of_one_value<int, 7, -1>());
+  ETV(array_of_one_value<int, 7, -1>());
 
-  TRDISP((std::is_unsigned<decltype(1)>::value));
-  TRDISP((std::is_unsigned<decltype(1u)>::value));
-  TRDISP((std::is_unsigned<decltype(0)>::value));
-  TRDISP((std::is_unsigned<decltype(0u)>::value));
-  TRDISP((std::is_convertible<decltype(0), size_t>::value));
-  TRDISP((std::is_convertible<decltype(-1), size_t>::value));
-  TRDISP((std::is_convertible<decltype(3.14), size_t>::value));
+  ETV((std::is_unsigned<decltype(1)>::value));
+  ETV((std::is_unsigned<decltype(1u)>::value));
+  ETV((std::is_unsigned<decltype(0)>::value));
+  ETV((std::is_unsigned<decltype(0u)>::value));
+  ETV((std::is_convertible<decltype(0), size_t>::value));
+  ETV((std::is_convertible<decltype(-1), size_t>::value));
+  ETV((std::is_convertible<decltype(3.14), size_t>::value));
 
   return 0;
 }

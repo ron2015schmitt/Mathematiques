@@ -13,7 +13,7 @@ template <typename Element, size_t rank, size_t... dims > requires (rank < 100)
       using namespace mathq;
       using namespace display;
       OUTPUT("\nInside main Test constructor");
-      TRDISP(rank);
+      ETV(rank);
     }
 };
 
@@ -24,7 +24,7 @@ template <typename Element, size_t rank> requires (rank < 100)
       using namespace mathq;
       using namespace display;
       OUTPUT("\nInside specialization Test constructor");
-      TRDISP(rank);
+      ETV(rank);
     }
 };
 
@@ -37,7 +37,7 @@ public:
     using namespace mathq;
     using namespace display;
     OUTPUT("\nInside main Test2 constructor");
-    TRDISP(rank);
+    ETV(rank);
   }
 };
 
@@ -57,11 +57,11 @@ int main(int argc, char* argv[]) {
 
   CR();
   ECHO(typename MakeInitializer<double, 0>::Type init0{ 3 });
-  TRDISP(init0);
+  ETV(init0);
   ECHO(typename MakeInitializer<double, 1>::Type init1{ 3,2,1 });
-  TRDISP(init1);
+  ETV(init1);
   ECHO(typename MakeInitializer<double, 2>::Type init2{ {1}, {1,2}, {1,2,3} });
-  TRDISP(init2);
+  ETV(init2);
 
 
 
@@ -71,116 +71,116 @@ int main(int argc, char* argv[]) {
   OUTPUT("rank = 0, fixed size (no dynamic size)");
   ECHO(MultiArrayData<double, 0> testdata0);
   testdata0.data_ = { 0 };
-  TRDISP(testdata0);
-  TRDISP(testdata0.classname());
-  TRDISP(sizeof(testdata0)/sizeof(double));
-  TRDISP(sizeof(testdata0.data_)/sizeof(double));
+  ETV(testdata0);
+  ETV(testdata0.classname());
+  ETV(sizeof(testdata0)/sizeof(double));
+  ETV(sizeof(testdata0.data_)/sizeof(double));
 
   CR();
   OUTPUT("rank = 1, fixed size");
   ECHO(MultiArrayData<double, 1, 10> testdata1);
   testdata1.data_ = array_of_one_value<double, 10, 0.>();
-  TRDISP(testdata1);
-  TRDISP(testdata1.classname());
-  TRDISP(sizeof(testdata1)/sizeof(double));
-  TRDISP(sizeof(testdata1.data_)/sizeof(double));
+  ETV(testdata1);
+  ETV(testdata1.classname());
+  ETV(sizeof(testdata1)/sizeof(double));
+  ETV(sizeof(testdata1.data_)/sizeof(double));
 
   CR();
   OUTPUT("rank = 2, fixed size");
   ECHO(MultiArrayData<double, 2, 3, 4> testdata2);
   testdata2.data_ = array_of_one_value<double, 12, 0.>();
-  TRDISP(testdata2);
-  TRDISP(testdata2.classname());
-  TRDISP(sizeof(testdata2)/sizeof(double));
-  TRDISP(sizeof(testdata2.data_)/sizeof(double));
+  ETV(testdata2);
+  ETV(testdata2.classname());
+  ETV(sizeof(testdata2)/sizeof(double));
+  ETV(sizeof(testdata2.data_)/sizeof(double));
 
   CR();
   OUTPUT("MultiArray: rank = 2, fixed size => should Matrix");
   ECHO(MultiArray<double, 2, 3, 4> x2);
   x2 = 0.;
-  TRDISP(x2);
-  TRDISP(x2.asMultiArrayData());
+  ETV(x2);
+  ETV(x2.asMultiArrayData());
 
 
   CR();
   OUTPUT("rank = 3, fixed size");
   ECHO(MultiArrayData<double, 3, 3, 4, 2> testdata3);
   testdata3.data_ = array_of_one_value<double, 24, 0.>();
-  TRDISP(testdata3);
-  TRDISP(testdata3.classname());
-  TRDISP(sizeof(testdata3)/sizeof(double));
-  TRDISP(sizeof(testdata3.data_)/sizeof(double));
+  ETV(testdata3);
+  ETV(testdata3.classname());
+  ETV(sizeof(testdata3)/sizeof(double));
+  ETV(sizeof(testdata3.data_)/sizeof(double));
 
   CR();
   OUTPUT("rank = 4, fixed size");
   ECHO(MultiArrayData<double, 4, 2, 3, 4, 2> testdata4);
   testdata4.data_ = array_of_one_value<double, 48, 0.>();
-  TRDISP(testdata4);
-  TRDISP(testdata4.classname());
-  TRDISP(sizeof(testdata4)/sizeof(double));
-  TRDISP(sizeof(testdata4.data_)/sizeof(double));
+  ETV(testdata4);
+  ETV(testdata4.classname());
+  ETV(sizeof(testdata4)/sizeof(double));
+  ETV(sizeof(testdata4.data_)/sizeof(double));
 
   CR();
   OUTPUT("rank = 5, fixed size");
   ECHO(MultiArrayData<double, 5, 3, 4, 4, 3, 2> testdata5);
   testdata5.data_ = array_of_one_value<double, 288, 0.>();
-  TRDISP(testdata5);
-  TRDISP(testdata5.classname());
-  TRDISP(sizeof(testdata5)/sizeof(double));
-  TRDISP(sizeof(testdata5.data_)/sizeof(double));
+  ETV(testdata5);
+  ETV(testdata5.classname());
+  ETV(sizeof(testdata5)/sizeof(double));
+  ETV(sizeof(testdata5.data_)/sizeof(double));
 
 
 
   CR();
   OUTPUT("rank = 1, dynamic size");
   ECHO(MultiArrayData<double, 1> testdata1d);
-  TRDISP(testdata1d);
-  TRDISP(testdata1d.classname());
-  TRDISP(sizeof(testdata1d)/sizeof(double));
-  TRDISP(sizeof(testdata1d.data_)/sizeof(double));
+  ETV(testdata1d);
+  ETV(testdata1d.classname());
+  ETV(sizeof(testdata1d)/sizeof(double));
+  ETV(sizeof(testdata1d.data_)/sizeof(double));
 
   CR();
   OUTPUT("rank = 2, dynamic size");
   ECHO(MultiArrayData<double, 2> testdata2d);
-  TRDISP(testdata2d);
-  TRDISP(testdata2d.classname());
-  TRDISP(sizeof(testdata2d)/sizeof(double));
-  TRDISP(sizeof(testdata2d.data_)/sizeof(double));
+  ETV(testdata2d);
+  ETV(testdata2d.classname());
+  ETV(sizeof(testdata2d)/sizeof(double));
+  ETV(sizeof(testdata2d.data_)/sizeof(double));
 
   CR();
   OUTPUT("MultiArray: rank = 2, dynamic size => should be Matrix");
   ECHO(MultiArray<double, 2> xd2);
   xd2 = 0.;
-  TRDISP(xd2);
-  TRDISP(xd2.asMultiArrayData());
+  ETV(xd2);
+  ETV(xd2.asMultiArrayData());
 
   CR();
   OUTPUT("rank = 3, dynamic size");
   ECHO(MultiArrayData<double, 3> testdata3d);
-  TRDISP(testdata3d);
-  TRDISP(testdata3d.classname());
-  TRDISP(sizeof(testdata3d)/sizeof(double));
-  TRDISP(sizeof(testdata3d.data_)/sizeof(double));
-  TRDISP(sizeof(testdata3d.dynamic_dims_array)/sizeof(size_t));
+  ETV(testdata3d);
+  ETV(testdata3d.classname());
+  ETV(sizeof(testdata3d)/sizeof(double));
+  ETV(sizeof(testdata3d.data_)/sizeof(double));
+  ETV(sizeof(testdata3d.dynamic_dims_array)/sizeof(size_t));
 
   CR();
   OUTPUT("rank = 4, dynamic size");
   ECHO(MultiArrayData<double, 4> testdata4d);
-  TRDISP(testdata4d);
-  TRDISP(testdata4d.classname());
-  TRDISP(sizeof(testdata4d)/sizeof(double));
-  TRDISP(sizeof(testdata4d.data_)/sizeof(double));
-  TRDISP(sizeof(testdata4d.dynamic_dims_array)/sizeof(size_t));
+  ETV(testdata4d);
+  ETV(testdata4d.classname());
+  ETV(sizeof(testdata4d)/sizeof(double));
+  ETV(sizeof(testdata4d.data_)/sizeof(double));
+  ETV(sizeof(testdata4d.dynamic_dims_array)/sizeof(size_t));
 
 
   CR();
   OUTPUT("rank = 5, dynamic size");
   ECHO(MultiArrayData<double, 5> testdata5d);
-  TRDISP(testdata5d);
-  TRDISP(testdata5d.classname());
-  TRDISP(sizeof(testdata5d)/sizeof(double));
-  TRDISP(sizeof(testdata5d.data_)/sizeof(double));
-  TRDISP(sizeof(testdata5d.dynamic_dims_array)/sizeof(size_t));
+  ETV(testdata5d);
+  ETV(testdata5d.classname());
+  ETV(sizeof(testdata5d)/sizeof(double));
+  ETV(sizeof(testdata5d.data_)/sizeof(double));
+  ETV(sizeof(testdata5d.dynamic_dims_array)/sizeof(size_t));
 
 
 

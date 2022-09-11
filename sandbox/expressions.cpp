@@ -13,7 +13,7 @@ template <typename Element, size_t rank, size_t... dims > requires (rank < 100)
       using namespace mathq;
       using namespace display;
       OUTPUT("\nInside main Test constructor");
-      TRDISP(rank);
+      ETV(rank);
     }
 };
 
@@ -24,7 +24,7 @@ template <typename Element, size_t rank> requires (rank < 100)
       using namespace mathq;
       using namespace display;
       OUTPUT("\nInside specialization Test constructor");
-      TRDISP(rank);
+      ETV(rank);
     }
 };
 
@@ -37,7 +37,7 @@ public:
     using namespace mathq;
     using namespace display;
     OUTPUT("\nInside main Test2 constructor");
-    TRDISP(rank);
+    ETV(rank);
   }
 };
 
@@ -62,34 +62,34 @@ int main(int argc, char* argv[]) {
   Test2<double, 3, 2, 4, 12> foo2;
   // Test2<double,3, 0,4,12> foo3;  // FAILS check_dynamic
 
-  TRDISP(std::array<size_t, 0>{});
-  TRDISP(NumberTrait<MultiArray<double, 2>>::depth());
-  TRDISP(std::valarray<size_t>{});
-  TRDISP(NumberTrait<double>::sum_of_ranks());
-  TRDISP(NumberTrait<double>::get_rank_array());
-  TRDISP(NumberTrait<MultiArray<double, 2>>::sum_of_ranks());
-  TRDISP(NumberTrait<MultiArray<double, 2>>::get_rank_array());
-  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1, 2, 3>, 4, 3, 2, 1, 1>>::sum_of_ranks());
-  TRDISP(NumberTrait<MultiArray<MultiArray<double, 3, 1, 2, 3>, 4, 3, 2, 1, 1>>::get_rank_array());
+  ETV(std::array<size_t, 0>{});
+  ETV(NumberTrait<MultiArray<double, 2>>::depth());
+  ETV(std::valarray<size_t>{});
+  ETV(NumberTrait<double>::sum_of_ranks());
+  ETV(NumberTrait<double>::get_rank_array());
+  ETV(NumberTrait<MultiArray<double, 2>>::sum_of_ranks());
+  ETV(NumberTrait<MultiArray<double, 2>>::get_rank_array());
+  ETV(NumberTrait<MultiArray<MultiArray<double, 3, 1, 2, 3>, 4, 3, 2, 1, 1>>::sum_of_ranks());
+  ETV(NumberTrait<MultiArray<MultiArray<double, 3, 1, 2, 3>, 4, 3, 2, 1, 1>>::get_rank_array());
 
 
   CR();
   ECHO(Vector<double> v2{ 3.1, 22.5, 100 });
-  TRDISP(v2);
+  ETV(v2);
 
   CR();
   ECHO(Vector<double, 3> v3{ 42.1, -2.5, 6.8 });
-  TRDISP(v3);
+  ETV(v3);
 
-  TRDISP(-v3);
-  TRDISP(exp(v3));
-  TRDISP(v2+v3);
-  TRDISP(std::sph_legendre(3, 0, 1.2345));
-  TRDISP(sph_legendre(2, 1, v3));
+  ETV(-v3);
+  ETV(exp(v3));
+  ETV(v2+v3);
+  ETV(std::sph_legendre(3, 0, 1.2345));
+  ETV(sph_legendre(2, 1, v3));
 
   Vector<double> J0Coeffs = Vector<double>({ 1.,0.,-0.25,0.,0.015625,0.,-0.000434028,0.,6.78168e-6,0.,-6.78168e-8,0.,4.7095e-10,0.,-2.40281e-12,0.,9.38597e-15,0.,-2.8969e-17,0. });
   Vector<double> r = linspace<double>(0, 10, 101);
-  TRDISP(taylor(J0Coeffs, r, 19));
+  ETV(taylor(J0Coeffs, r, 19));
 
 
   const size_t N = 20;
@@ -101,38 +101,38 @@ int main(int argc, char* argv[]) {
   Vector<double> t = linspace<double>(0, 2*pi, 51);
   const double T = 2*pi;
   const double omega = 2*pi/T;
-  TRDISP(ifourier(An, Bn, t, An.size(), omega));
+  ETV(ifourier(An, Bn, t, An.size(), omega));
 
-  TRDISP(k);
-  TRDISP(transpose(k));
+  ETV(k);
+  ETV(transpose(k));
 
-  TRDISP(join(k, k));
+  ETV(join(k, k));
 
-  TRDISP(rep(k, 3));
+  ETV(rep(k, 3));
 
 
   CR();
   ECHO(Vector<double> v1a);
-  TRDISP(v1a.classname());  // Vector
+  ETV(v1a.classname());  // Vector
 
   CR();
   ECHO(Vector<double> v1b);
-  TRDISP(v1b.classname());  // Vector
+  ETV(v1b.classname());  // Vector
 
   CR();
   ECHO(Vector<double, 5> v1c);
-  TRDISP(v1c.classname());  // Vector
+  ETV(v1c.classname());  // Vector
 
   CR();
   CR();
   OUTPUT("The following MultiArrays should use the Vector specialization");
   CR();
   ECHO(MultiArray<double, 1> x1a);
-  TRDISP(x1a.classname());  // Vector
+  ETV(x1a.classname());  // Vector
 
   CR();
   ECHO(MultiArray<double, 1, 5> x1b);
-  TRDISP(x1b.classname());  // Vector
+  ETV(x1b.classname());  // Vector
 
 
   CR();
@@ -140,28 +140,28 @@ int main(int argc, char* argv[]) {
   OUTPUT("Dynamic MultiArray");
 
   ECHO(MultiArray<double, 2> x2);
-  TRDISP(x2.classname());
-  TRDISP(x2.is_dynamic_value);
-  TRDISP(x2.compile_time_size);
-  TRDISP(x2.static_dims_array);
-  TRDISP(std::get<0>(x2.static_dims_array));
-  // TRDISP(x2.dims_array());
-  TRDISP(x2.rank());
-  TRDISP(x2.depth());
-  TRDISP(x2.dims());
-  TRDISP(x2.size());
-  TRDISP(sizeof(x2)/sizeof(double));
-  TRDISP(NumberTrait<decltype(x2)>::sum_of_ranks());
+  ETV(x2.classname());
+  ETV(x2.is_dynamic_value);
+  ETV(x2.compile_time_size);
+  ETV(x2.static_dims_array);
+  ETV(std::get<0>(x2.static_dims_array));
+  // ETV(x2.dims_array());
+  ETV(x2.rank());
+  ETV(x2.depth());
+  ETV(x2.dims());
+  ETV(x2.size());
+  ETV(sizeof(x2)/sizeof(double));
+  ETV(NumberTrait<decltype(x2)>::sum_of_ranks());
 
 
-  TRDISP(x2.data_);
-  TRDISP(sizeof(x2.data_)/sizeof(double));
+  ETV(x2.data_);
+  ETV(sizeof(x2.data_)/sizeof(double));
 
   // ECHO(x2.resize(6));
-  TRDISP(x2.size());
-  TRDISP(x2.data_);
-  TRDISP(sizeof(x2.data_)/sizeof(double));
-  TRDISP(sizeof(x2)/sizeof(double));
+  ETV(x2.size());
+  ETV(x2.data_);
+  ETV(sizeof(x2.data_)/sizeof(double));
+  ETV(sizeof(x2)/sizeof(double));
 
   CR();
   CR();
@@ -169,111 +169,111 @@ int main(int argc, char* argv[]) {
 
   CR();
   ECHO(MultiArray<double, 2, 3, 2> x3{ 10.0, 10.1, 11.0, 11.1, 12.0, 12.1 });
-  TRDISP(x3.classname());
-  TRDISP(x3.is_dynamic_value);
-  TRDISP(x3.compile_time_size);
-  TRDISP(x3.static_dims_array);
-  TRDISP(std::get<0>(x3.static_dims_array));
-  TRDISP(x3.size());
-  TRDISP(x3.rank());
-  TRDISP(x3.depth());
-  TRDISP(x3.dims_array());
-  TRDISP(x3.dims());
-  TRDISP(x3.recursive_dims());
-  TRDISP(NumberTrait<decltype(x3)>::sum_of_ranks());
-  TRDISP(x3.data_);
-  TRDISP(sizeof(x3.data_)/sizeof(double));
-  TRDISP(sizeof(x3)/sizeof(double));
-  TRDISP(x3);
-  TRDISP(x3[2]);
-  TRDISP(x3.indices(2));
-  TRDISP(x3.index({ 1,0 }));
-  TRDISP(x3.index(Indices({ 1,0 })));
-  TRDISP(x3.index(1, 0));
-  TRDISP(x3[Indices({ 1,0 })]);
-  TRDISP(x3[{1, 0}]);
-  TRDISP(x3(1, 0));
+  ETV(x3.classname());
+  ETV(x3.is_dynamic_value);
+  ETV(x3.compile_time_size);
+  ETV(x3.static_dims_array);
+  ETV(std::get<0>(x3.static_dims_array));
+  ETV(x3.size());
+  ETV(x3.rank());
+  ETV(x3.depth());
+  ETV(x3.dims_array());
+  ETV(x3.dims());
+  ETV(x3.recursive_dims());
+  ETV(NumberTrait<decltype(x3)>::sum_of_ranks());
+  ETV(x3.data_);
+  ETV(sizeof(x3.data_)/sizeof(double));
+  ETV(sizeof(x3)/sizeof(double));
+  ETV(x3);
+  ETV(x3[2]);
+  ETV(x3.indices(2));
+  ETV(x3.index({ 1,0 }));
+  ETV(x3.index(Indices({ 1,0 })));
+  ETV(x3.index(1, 0));
+  ETV(x3[Indices({ 1,0 })]);
+  ETV(x3[{1, 0}]);
+  ETV(x3(1, 0));
   // flat list
   ECHO(x3 = { 100.0, 100.1, 100.2, 100.3, 100.4, 100.5 });
-  TRDISP(x3);
+  ETV(x3);
   // nested list (indices)
   ECHO(x3 = { {-9900, -9901}, {-9910, -9911}, {-9920, -9921} });
-  TRDISP(x3);
+  ETV(x3);
 
 
 
   CR();
   ECHO(Vector<double> x4{ 1 , 3.5, 200, -1, 50, 2, -3 });
-  TRDISP(NumberTrait<decltype(x4)>::sum_of_ranks());
-  TRDISP(x4);
-  TRDISP(x4.sort());
-  TRDISP(x4);
+  ETV(NumberTrait<decltype(x4)>::sum_of_ranks());
+  ETV(x4);
+  ETV(x4.sort());
+  ETV(x4);
 
 
   // back to MultiArrays 
 
   CR();
   ECHO(MultiArray<double, 2, 3, 4> A1(3.14));
-  TRDISP(A1);
-  TRDISP(A1.dims());
-  TRDISP(sizeof(A1)/sizeof(double));
-  TRDISP(sizeof(A1.data_)/sizeof(double));
-  // TRDISP(A1.dynamic_dims_array);
-  TRDISP(A1.asMultiArrayData());
+  ETV(A1);
+  ETV(A1.dims());
+  ETV(sizeof(A1)/sizeof(double));
+  ETV(sizeof(A1.data_)/sizeof(double));
+  // ETV(A1.dynamic_dims_array);
+  ETV(A1.asMultiArrayData());
 
   CR();
   ECHO(MultiArray<double, 1, 10> A2);
-  TRDISP(A2.dims());
-  // TRDISP(A2.data_);
-  TRDISP(sizeof(A2)/sizeof(double));
-  TRDISP(sizeof(A2.data_)/sizeof(double));
-  // TRDISP(A2.dynamic_dims_array);
+  ETV(A2.dims());
+  // ETV(A2.data_);
+  ETV(sizeof(A2)/sizeof(double));
+  ETV(sizeof(A2.data_)/sizeof(double));
+  // ETV(A2.dynamic_dims_array);
 
   CR();
   ECHO(MultiArray<double, 2> A3);
-  TRDISP(A3.dims());
-  // TRDISP(A3.data_);
-  // TRDISP(A3.dynamic_dims_array);
-  TRDISP(sizeof(A3)/sizeof(double));
-  TRDISP(sizeof(A3.data_)/sizeof(double));
-  // TRDISP(sizeof(A3.dynamic_dims_array)/sizeof(size_t));
-  TRDISP(A3.is_dynamic_value);
-  TRDISP(A3.resize(2, 3));
-  TRDISP(A3.resize(Dimensions({ 4,1 })));
+  ETV(A3.dims());
+  // ETV(A3.data_);
+  // ETV(A3.dynamic_dims_array);
+  ETV(sizeof(A3)/sizeof(double));
+  ETV(sizeof(A3.data_)/sizeof(double));
+  // ETV(sizeof(A3.dynamic_dims_array)/sizeof(size_t));
+  ETV(A3.is_dynamic_value);
+  ETV(A3.resize(2, 3));
+  ETV(A3.resize(Dimensions({ 4,1 })));
 
   CR();
   ECHO(MultiArray<MultiArray<double, 3, 1, 2, 3>, 4, 3, 2, 1, 1> A4(42.42));
-  TRDISP(A4.data_);
-  TRDISP(A4.rank());
-  TRDISP(A4.size());
-  TRDISP(A4.dims());
-  TRDISP(A4.recursive_dims());
+  ETV(A4.data_);
+  ETV(A4.rank());
+  ETV(A4.size());
+  ETV(A4.dims());
+  ETV(A4.recursive_dims());
 
 
   {
     CR();
     ECHO(Scalar<double> x1);
-    TRDISP(x1);
+    ETV(x1);
     x1 = 0;
-    TRDISP(x1);
+    ETV(x1);
 
     CR();
     ECHO(Vector<double, 3> x2);
-    TRDISP(x2);
+    ETV(x2);
     x2 = 0;
-    TRDISP(x2);
+    ETV(x2);
 
     CR();
     ECHO(Matrix<double, 2, 2> x3);
-    TRDISP(x3);
+    ETV(x3);
     x3 = 0;
-    TRDISP(x3);
+    ETV(x3);
 
     CR();
     ECHO(MultiArray<double, 3, 2, 1, 2> x4);
-    TRDISP(x4);
+    ETV(x4);
     x4 = 0;
-    TRDISP(x4);
+    ETV(x4);
   }
 
   return 0;

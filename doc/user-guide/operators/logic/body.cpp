@@ -13,7 +13,7 @@ int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   GMD_PREAMBLE();
 
@@ -37,22 +37,22 @@ int main() {
   CR();
   OUTPUT("Examples:\n");
   GMD_CODE_START("C++");
-  TRDISP(true);
-  TRDISP(false);
-  TRDISP(!true);
-  TRDISP(!false);
-  TRDISP(true && true);
-  TRDISP(true && false);
-  TRDISP(true || false);
+  ETV(true);
+  ETV(false);
+  ETV(!true);
+  ETV(!false);
+  ETV(true && true);
+  ETV(true && false);
+  ETV(true || false);
   GMD_CODE_END();
 
   OUTPUT("* In C++ logical operators work for all real and integer types: `0` corresponds to `false` and all non-zero values correspond to `true`\n");
   GMD_CODE_START("C++");
-  TRDISP(!true);
-  TRDISP(!8);
-  TRDISP(!!8.293);
-  TRDISP(true && 3);
-  TRDISP(true && 0);
+  ETV(!true);
+  ETV(!8);
+  ETV(!!8.293);
+  ETV(true && 3);
+  ETV(true && 0);
   GMD_CODE_END();
 
   GMD_VSPACE();

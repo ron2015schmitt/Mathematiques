@@ -39,11 +39,11 @@ int main() {
     E[0] = { {1, 2}, {3, 4} };
     E[1] = { {-1, -2}, {-3, -4} };
     E[2] = { {11, 12}, {13, 14} };
-    TRDISP(E);
+    ETV(E);
     CR();
-    TRDISP(E[0]);
+    ETV(E[0]);
     CR();
-    TRDISP(E[0](0, 1));
+    ETV(E[0](0, 1));
     GMD_CODE_END();
   }
 
@@ -58,11 +58,11 @@ int main() {
     E(0, 1) = { {2, -2, 12} };
     E(1, 0) = { {3, -3, 13} };
     E(0, 1) = { {4, -4, 14} };
-    TRDISP(E);
+    ETV(E);
     CR();
-    TRDISP(E(0, 0));
+    ETV(E(0, 0));
     CR();
-    TRDISP(E(0, 1)[1]);
+    ETV(E(0, 1)[1]);
     GMD_CODE_END();
   }
 
@@ -76,11 +76,11 @@ int main() {
       { {-1, -2}, {-3, -4} },
       { {11, 12}, {13, 14} }
       });
-    TRDISP(E);
+    ETV(E);
     CR();
-    TRDISP(evert(E));
+    ETV(evert(E));
     CR();
-    TRDISP(evert(evert(E)));
+    ETV(evert(evert(E)));
     GMD_CODE_END();
   }
 

@@ -167,14 +167,14 @@ namespace mathq {
 
     template<bool enable = is_dynamic_value> requires (enable)
       explicit MultiArray_Constant(const Dimensions& dims) {
-      // TRDISP(dims);
+      // ETV(dims);
       this->resize(dims);
     }
 
     // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
     template<bool enable = is_dynamic_value> requires (enable)
       explicit MultiArray_Constant(const RecursiveDimensions& recursive_dims) {
-      // TRDISP(recursive_dims);
+      // ETV(recursive_dims);
       this->resize(recursive_dims);
     }
 
@@ -630,8 +630,8 @@ namespace mathq {
       for (size_t i = 0; i < size(); i++) {
         if (x[i] != temp) {
           OUTPUT("ERROR: attept to set MultiArray_Constant from non-compatible expression.");
-          TRDISP(*this);
-          TRDISP(x);
+          ETV(*this);
+          ETV(x);
           return false;
         }
       }

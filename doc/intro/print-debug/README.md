@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.134-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.135-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -51,23 +51,59 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-## Pretty Printing
-Mathématiques supports the follow number systems:
+## Pretty Printing to a terminal
+Mathématiques provides printing of ASCII and Unicode text that is cleanly formatted, colored and stylized.
+Colors and styles require a terminal that support [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code). 
+## ECHO() for C++ statements
+The `ECHO` macro prints the enclosed C++ statement to the stdout, in addition to the statement being compiled and included in the executable.
 ```C++
-bool q = (5 > 3);
-☀ q ➜ bool true;
-☀ !q ➜ bool false;
-
-☀ true || false ➜ bool true;
-☀ true && false ➜ bool false;
-
-☀ true + 9 ➜ int 10;
+ECHO(int x = 5);
+ECHO(double y = x * 3.1415);
 ```
 
 <br>
 
-## Debugging Modes
-Mathématiques supports mixed math and automatically promotes numbers as needed
+will print the following the terminal (actual screen captures)
+Light mode in Ubuntu WSL2 terminal on Windows
+Dark mode in VS Code terminal
+## ETV() for the value of C++ variables and C++ expressions
+Expression Type Value
+```C++
+ECHO(int x = 5);
+ETV(x)
+ETV(3 * 25 * std::sin(3.1415/20))
+ETV(mathq::Vector<double> {1, 2, 3})
+
+```
+
+<br>
+
+## Markdown code box generation
+In fact these online documentation files are automatically created using C++ files, python scripts for the table of contents and numbering, and make files that put it all together during the build process.
+The documentation is generated for every new version.
+This ensures that results shown for every example in the documenation will match what you compile.
+```C++
+GMD_CODE_START("C++");
+ECHO(int x = 5);
+ECHO(double y = x * 3.1415);
+GMD_CODE_END();
+```
+
+<br>
+
+
+```C++
+☀ 3 * 25 * std::sin(3.1415/20) ➜ double 11.7322;
+☀ mathq::Vector<double> {1, 2, 3} ➜ Vector<double> {1, 2, 3};
+
+```
+
+<br>
+
+Other MACROS and functions are also available, including marcros that aid in creating[github markdown]() files.
+A full refactoring of the printing functionality is underway.
+## Compilation Modes and Debugging Support
+Mathématiques supports various compilations modes to aid in debugging:
 ```C++
 unsigned int n = 23;
 ☀ n ➜ unsigned int 23;
@@ -79,6 +115,8 @@ unsigned int n = 23;
 
 <br>
 
+A full refactoring of the printing functionality is planned.  Currently all debug messages are disabled until the printing code is refactored.
+However, the `` preprocessor symbol can be utilized in user code at present.
 
 
 | ⇦ <br />  | [Introduction with Examples](../README.md)<br />Pretty Printing and Debugging<br /><img width=1000/> | ⇨ <br />[Number Systems](../numbers/README.md)   |

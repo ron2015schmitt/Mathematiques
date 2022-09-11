@@ -534,7 +534,7 @@ namespace mathq {
       requires (IsGridlike<T>) {
 
       Dimensions grid_dims = ParentType::grid_dims();
-      // TRDISP(grid_dims);
+      // ETV(grid_dims);
       using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
       MyCoordGridType& mygrid = *(new MyCoordGridType);
       if constexpr (mygrid.is_dynamic_value) {
@@ -1066,7 +1066,7 @@ namespace mathq {
     auto& pd(const T& f, const size_t c, const Nabla<>& nabla = Nabla<>()) const {
 
       Dimensions grid_dims = ParentType::grid_dims();
-      // TRDISP(grid_dims);
+      // ETV(grid_dims);
       using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
       MyCoordGridType& mygrid = *(new MyCoordGridType);
       if constexpr (mygrid.is_dynamic_value) {

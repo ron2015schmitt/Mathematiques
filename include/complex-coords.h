@@ -205,8 +205,8 @@ namespace mathq {
     }
     auto& z() {
       const Imaginary<SimpleNumberType> i(1);
-      // TRDISP(i*coord(1));
-      // TRDISP(coord(0)+i*coord(1));
+      // ETV(i*coord(1));
+      // ETV(coord(0)+i*coord(1));
       auto& result = *(new MultiArray<std::complex<double>, total_num_dims>);
       result = coord(0)+i*coord(1);
       return result;
@@ -244,7 +244,7 @@ namespace mathq {
       requires (IsGridlike<T>) {
 
       Dimensions gdims = grid_dims();
-      // TRDISP(gdims);
+      // ETV(gdims);
       using MyGridType = MultiArray<typename T::NumberType, total_num_dims>;
       MyGridType& mygrid = *(new MyGridType);
       if constexpr (mygrid.is_dynamic_value) {

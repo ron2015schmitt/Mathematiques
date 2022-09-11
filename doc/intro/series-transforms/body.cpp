@@ -28,13 +28,13 @@ int main() {
 
   {  GMD_CODE_START("C++");
   ECHO(bool q = (5 > 3));
-  TRDISP(q);
-  TRDISP(!q);
+  ETV(q);
+  ETV(!q);
   CR();
-  TRDISP(true || false);
-  TRDISP(true && false);
+  ETV(true || false);
+  ETV(true && false);
   CR();
-  TRDISP(true + 9);
+  ETV(true + 9);
   GMD_CODE_END();
   }
   GMD_VSPACE();
@@ -45,11 +45,11 @@ int main() {
   {
     GMD_CODE_START("C++");
     ECHO(unsigned int n = 23);
-    TRDISP(n);
-    TRDISP(n + 102 - 2*4);
-    TRDISP(n - 24);
-    TRDISP(n/2);
-    TRDISP(n % 2);
+    ETV(n);
+    ETV(n + 102 - 2*4);
+    ETV(n - 24);
+    ETV(n/2);
+    ETV(n % 2);
     GMD_CODE_END();
   }
   GMD_VSPACE();

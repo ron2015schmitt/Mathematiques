@@ -110,14 +110,14 @@ namespace mathq {
         using SimpleNumberType = typename SimpleNumberTrait<TargetElement>::Type;
         Vector<SimpleNumberType, sizes...> fr = real(f);
         Vector<SimpleNumberType, sizes...> fi = imag(f);
-        TRDISP(fr);
-        TRDISP(fi);
+        ETV(fr);
+        ETV(fi);
         fr.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
         fi.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
-        TRDISP(fr);
-        TRDISP(fi);
+        ETV(fr);
+        ETV(fi);
         f = fr + Imaginary<SimpleNumberType>(1)*fi;
-        TRDISP(f);
+        ETV(f);
         return f;
       }
       template <typename TargetElement, size_t... sizes> requires (IsComplex<TargetElement>::value)

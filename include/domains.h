@@ -447,7 +447,7 @@ namespace mathq {
         if (length() < 0) {
           // TODO: issue error
           OUTPUT("ERROR: points must be ordered");
-          TRDISP(*this);
+          ETV(*this);
         }
       }
 

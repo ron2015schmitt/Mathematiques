@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.134-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.135-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -79,9 +79,9 @@ The code used to display these results is:
 
 
 ```C++
-TRDISP(pi);
-TRDISP(r);
-TRDISP(area);
+ETV(pi);
+ETV(r);
+ETV(area);
 ```
 This topic is covered in detail in the Display section of this guide.
 

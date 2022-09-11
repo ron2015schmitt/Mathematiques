@@ -184,7 +184,7 @@ namespace mathq {
 
     template<bool enabled = is_dynamic_value> requires (enabled)
       explicit MultiArray(const Dimensions& dims) {
-      // TRDISP(dims);
+      // ETV(dims);
       this->resize(dims);
     }
 
@@ -192,7 +192,7 @@ namespace mathq {
 
     template<size_t dim_depth> requires (is_dynamic_value && (dim_depth <= depth_value))
       explicit MultiArray(const RecursiveDimensions& recursive_dims) {
-      // TRDISP(recursive_dims);
+      // ETV(recursive_dims);
       this->resize(recursive_dims);
     }
 
@@ -210,7 +210,7 @@ namespace mathq {
 
     template<bool enabled = is_dynamic_value> requires (enabled)
       explicit MultiArray(const Dimensions& dims, const Element val) {
-      // TRDISP(dims);
+      // ETV(dims);
       this->resize(dims);
       *this = val;
     }
@@ -1729,7 +1729,7 @@ namespace mathq {
 
       template<typename T>
       inline Type& operator=(const T& rhs) {
-        // TRDISP(ParentType());
+        // ETV(ParentType());
         ParentType::set_equal_to(rhs);
         return *this;
       }

@@ -53,12 +53,12 @@ int main(int argc, char* argv[]) {
     ECHO(Vector<double, 3> b{ 1,1,0 });
     ECHO(Vector<double, 3> c{ 0,0,1 });
 
-    TRDISP(c);
+    ETV(c);
     {
       using namespace cross_product;
-      TRDISP(b^c);
+      ETV(b^c);
     }
-    TRDISP(cross(c, b));
+    ETV(cross(c, b));
 
   }
 
@@ -68,17 +68,17 @@ int main(int argc, char* argv[]) {
     subtitle("concat of dimensions - needed for outer product");
 
     ECHO(Dimensions dims1{ 4,3,2 });
-    TRDISP(dims1);
+    ETV(dims1);
     ECHO(Dimensions dims2{ 7,5,6 });
-    TRDISP(dims2);
+    ETV(dims2);
     ECHO(Dimensions dims3);
-    TRDISP(dims3);
-    TRDISP(dims3 = Dimensions::concat(dims1, dims2));
+    ETV(dims3);
+    ETV(dims3 = Dimensions::concat(dims1, dims2));
 
     subtitle("outer product");
     ECHO(Vector<double, 3> b{ 1,1,0 });
     ECHO(Vector<double, 3> c{ 0,0,1 });
-    TRDISP(tensor_product(c, b));
+    ETV(tensor_product(c, b));
 
 
   }
@@ -90,15 +90,15 @@ int main(int argc, char* argv[]) {
     Vector<double, 3>::Tensor<COVARIANT> covec;
     covec = { 1,2,3 };
     // covec = 5.;
-    TRDISP(covec);
+    ETV(covec);
 
     Vector<double, 3>::Tensor<CONTRAVARIANT> vec;
     vec = { 3,2,1 };
-    TRDISP(vec);
+    ETV(vec);
 
-    TRDISP(covec(vec));
-    TRDISP(vec(covec));
-    // TRDISP(vec(vec)); // should cause compile-time error
+    ETV(covec(vec));
+    ETV(vec(covec));
+    // ETV(vec(vec)); // should cause compile-time error
   }
 
 
@@ -112,17 +112,17 @@ int main(int argc, char* argv[]) {
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
       }));
-    TRDISP(coords);
+    ETV(coords);
 
-    TRDISP(coords.z());
+    ETV(coords.z());
     ECHO(Vector<MultiArray<double, 3>, 3> A);
     ECHO(RecursiveDimensions rdims = RecursiveDimensions{ Dimensions{3}, Dimensions{5,5,5} });
-    TRDISP(A.recursive_dims());
+    ETV(A.recursive_dims());
     A.resize(rdims);
-    TRDISP(A.recursive_dims());
+    ETV(A.recursive_dims());
     A = 0;
     A[0] = coords.z();
-    TRDISP(roundzero(coords.curl(A), 1e-14));
+    ETV(roundzero(coords.curl(A), 1e-14));
   }
 
   {
@@ -134,12 +134,12 @@ int main(int argc, char* argv[]) {
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
       });
-    TRDISP(coords);
+    ETV(coords);
     ECHO(CurvilinearField<double, 1, CartesianCoords<double, 3, false>> A(coords));
     A = 0.;
     ECHO(A[0] = coords.z());
     ECHO(auto B = curl(A));
-    TRDISP(B);
+    ETV(B);
     // OUTPUT("=========================");
     // Nabla<> nabla;
     // ECHO(B = nabla ^ A);
@@ -156,14 +156,14 @@ int main(int argc, char* argv[]) {
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-1,1,5),
       });
-    TRDISP(coords);
+    ETV(coords);
     CurvilinearField<std::complex<double>, 1, CartesianCoords<double, 3, false>> A(coords);
     ECHO(auto& z = coords.z());
     ECHO(A = 0);
     ECHO(A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) });
-    TRDISP(A);
-    TRDISP(curl(A));
-    TRDISP(roundzero(coords.curl(A), 1e-14));
+    ETV(A);
+    ETV(curl(A));
+    ETV(roundzero(coords.curl(A), 1e-14));
     // B = nabla ^ A;
   }
 
@@ -178,16 +178,16 @@ int main(int argc, char* argv[]) {
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(0,1,2),
       });
-    TRDISP(coords);
+    ETV(coords);
     CurvilinearField<std::complex<double>, 1, CartesianCoords<double, 3, true>> A(coords);
     ECHO(auto& z = coords.z());
     ECHO(A = 0);
     ECHO(A = { exp(i*2*z),  0*exp(i*2*z) ,  0*exp(i*2*z) });
-    TRDISP(A);
-    TRDISP(curl(A));
-    TRDISP(roundzero(coords.curl(A), 1e-14));
+    ETV(A);
+    ETV(curl(A));
+    ETV(roundzero(coords.curl(A), 1e-14));
     // B = nabla ^ A;
-    TRDISP(A.recursive_dims());
+    ETV(A.recursive_dims());
   }
 
 

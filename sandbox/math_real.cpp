@@ -13,29 +13,29 @@ int main(int argc, char* argv[]) {
 
 
   CR();
-  TRDISP(roundzero(float(0.001)));
-  TRDISP(float(3e-7));
-  TRDISP(roundzero(float(3e-7)));
+  ETV(roundzero(float(0.001)));
+  ETV(float(3e-7));
+  ETV(roundzero(float(3e-7)));
 
   CR();
-  TRDISP(roundzero(double(0.001)));
-  TRDISP(double(1e-16));
-  TRDISP(roundzero(double(1e-16)));
+  ETV(roundzero(double(0.001)));
+  ETV(double(1e-16));
+  ETV(roundzero(double(1e-16)));
 
   CR();
-  TRDISP(roundzero(quad(0.001)));
-  TRDISP(quad(1e-30));
-  TRDISP(roundzero(quad(1e-30)));
+  ETV(roundzero(quad(0.001)));
+  ETV(quad(1e-30));
+  ETV(roundzero(quad(1e-30)));
 
   CR();
-  TRDISP(zero<int>());
-  TRDISP(zero<double>());
-  TRDISP(zero<quad>());
+  ETV(zero<int>());
+  ETV(zero<double>());
+  ETV(zero<quad>());
 
   CR();
-  TRDISP(one<int>());
-  TRDISP(one<double>());
-  TRDISP(one<quad>());
+  ETV(one<int>());
+  ETV(one<double>());
+  ETV(one<quad>());
 
   int ii = 42;
   double dub = 3.14;
@@ -43,46 +43,46 @@ int main(int argc, char* argv[]) {
   double ndub = -2.73;
 
   CR();
-  TRDISP(mathq::conj(ii));
-  TRDISP(mathq::conj(dub));
+  ETV(mathq::conj(ii));
+  ETV(mathq::conj(dub));
 
 
   CR();
-  TRDISP(mathq::real(ii));
-  TRDISP(mathq::real(dub));
+  ETV(mathq::real(ii));
+  ETV(mathq::real(dub));
 
   CR();
-  TRDISP(mathq::imag(ii));
-  TRDISP(mathq::imag(dub));
+  ETV(mathq::imag(ii));
+  ETV(mathq::imag(dub));
 
   CR();
-  TRDISP(mathq::sqr(ii));
-  TRDISP(mathq::sqr(dub));
+  ETV(mathq::sqr(ii));
+  ETV(mathq::sqr(dub));
 
   CR();
-  TRDISP(mathq::cube(ii));
-  TRDISP(mathq::cube(dub));
+  ETV(mathq::cube(ii));
+  ETV(mathq::cube(dub));
 
   CR();
-  TRDISP(mathq::logN(ii, 5));
-  TRDISP(mathq::logN(dub, 5));
+  ETV(mathq::logN(ii, 5));
+  ETV(mathq::logN(dub, 5));
 
   CR();
-  TRDISP(mathq::normsqr(ii));
-  TRDISP(mathq::normsqr(dub));
-  TRDISP(mathq::normsqr(nii));
-  TRDISP(mathq::normsqr(ndub));
+  ETV(mathq::normsqr(ii));
+  ETV(mathq::normsqr(dub));
+  ETV(mathq::normsqr(nii));
+  ETV(mathq::normsqr(ndub));
 
   CR();
-  TRDISP(mathq::sgn(ii));
-  TRDISP(mathq::sgn(dub));
-  TRDISP(mathq::sgn(nii));
-  TRDISP(mathq::sgn(ndub));
+  ETV(mathq::sgn(ii));
+  ETV(mathq::sgn(dub));
+  ETV(mathq::sgn(nii));
+  ETV(mathq::sgn(ndub));
 
   CR();
-  TRDISP(mathq::approx(ii, ii+1));
-  TRDISP(mathq::approx(dub, dub+1e-16));
-  TRDISP(mathq::approx(dub, dub+5e-16));
+  ETV(mathq::approx(ii, ii+1));
+  ETV(mathq::approx(dub, dub+1e-16));
+  ETV(mathq::approx(dub, dub+5e-16));
 
 
   return 0;

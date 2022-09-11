@@ -49,17 +49,17 @@ int main(int argc, char* argv[]) {
   {
     title("Intervals");
     ECHO(Interval<double> dom1 = Interval<double>::interval(0, 10, 11));
-    TRDISP(dom1);
-    TRDISP(dom1.grid());
+    ETV(dom1);
+    ETV(dom1.grid());
   }
 
 
   {
     title("CartesianCoords - default constructor");
     ECHO(CartesianCoords<double, 2, false> coords);
-    // TRDISP(coords);
-    TRDISP(HasTimeCoord<decltype(coords)>);
-    TRDISP(HasNotTimeCoord<decltype(coords)>);
+    // ETV(coords);
+    ETV(HasTimeCoord<decltype(coords)>);
+    ETV(HasNotTimeCoord<decltype(coords)>);
   }
 
   {
@@ -69,81 +69,81 @@ int main(int argc, char* argv[]) {
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(2,3,3),
       }));
-    // TRDISP(coords1);
-    // TRDISP(coords1.grid_dims());
-    // TRDISP(coords1[0]);
-    // TRDISP(coords1[1]);
+    // ETV(coords1);
+    // ETV(coords1.grid_dims());
+    // ETV(coords1[0]);
+    // ETV(coords1[1]);
 
     subtitle("2D CartesianCoords copy constructor");
     ECHO(CartesianCoords<double, 2, false> coords(coords1));
-    TRDISP(coords);
-    TRDISP(HasTimeCoord<decltype(coords)>);
-    TRDISP(HasNotTimeCoord<decltype(coords)>);
+    ETV(coords);
+    ETV(HasTimeCoord<decltype(coords)>);
+    ETV(HasNotTimeCoord<decltype(coords)>);
 
-    // TRDISP(coords[0]);
-    // TRDISP(coords[1]);
-    // TRDISP(coords.J());
-    // TRDISP(coords.g());
-    // TRDISP(coords.basis_vec(0));
-    // TRDISP(coords.basis_vec(1));
-    // TRDISP(coords.basis());
-    // TRDISP(coords.at(0, 0));
-    // TRDISP(coords.at(3, 2));
-    // TRDISP(coords.at(0, 0)+coords.at(3, 2));
-    // TRDISP(coords.x());
-    // TRDISP(coords.y());
+    // ETV(coords[0]);
+    // ETV(coords[1]);
+    // ETV(coords.J());
+    // ETV(coords.g());
+    // ETV(coords.basis_vec(0));
+    // ETV(coords.basis_vec(1));
+    // ETV(coords.basis());
+    // ETV(coords.at(0, 0));
+    // ETV(coords.at(3, 2));
+    // ETV(coords.at(0, 0)+coords.at(3, 2));
+    // ETV(coords.x());
+    // ETV(coords.y());
 
-    // TRDISP(curvilinear_coords_test(coords));
+    // ETV(curvilinear_coords_test(coords));
 
     subtitle("CurvilinearField - Scalar 2D");
     ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
     ECHO(auto& x = coords.x());
     ECHO(auto& y = coords.y());
     ECHO(field0() = -3*x + 2*y);
-    TRDISP(field0);
+    ETV(field0);
 
-    TRDISP(x);
-    TRDISP(y);
+    ETV(x);
+    ETV(y);
 
-    TRDISP(IsGridlike<decltype(x)>);
-    TRDISP(IsMultiArray<decltype(x)>);
-    TRDISP(IsWritableExpressionOrArray<decltype(x)>);
-    TRDISP(x.isNotExpression);
+    ETV(IsGridlike<decltype(x)>);
+    ETV(IsMultiArray<decltype(x)>);
+    ETV(IsWritableExpressionOrArray<decltype(x)>);
+    ETV(x.isNotExpression);
 
 
     subtitle("partials of a 2D grid");
-    TRDISP(coords.pd(x, 0));
-    TRDISP(coords.pd(x, 1));
+    ETV(coords.pd(x, 0));
+    ETV(coords.pd(x, 1));
 
     subtitle("partials of a 2D Scalar CurvilinearField");
-    TRDISP(pd(field0, 0));
-    TRDISP(pd(field0, 1));
+    ETV(pd(field0, 0));
+    ETV(pd(field0, 1));
 
 
     subtitle("Gradient of a 2D grid");
-    TRDISP(coords.grad(x));
-    TRDISP(coords.grad(y));
+    ETV(coords.grad(x));
+    ETV(coords.grad(y));
 
     subtitle("Gradient of a 2D CurvilinearField");
-    TRDISP(grad(field0));
+    ETV(grad(field0));
     Nabla<> nabla;
-    // TRDISP(nabla & field0);
+    // ETV(nabla & field0);
 
 
 
     subtitle("Divergence of a 2D CurvilinearField - ex 1");
     // div
     ECHO(auto A = grad(field0));
-    TRDISP(A);
-    // TRDISP(coords.div(A));
-    TRDISP(div(A));
-    // TRDISP(nabla | A);
+    ETV(A);
+    // ETV(coords.div(A));
+    ETV(div(A));
+    // ETV(nabla | A);
 
 
     subtitle("Divergence of a 2D CurvilinearField - ex 2");
     ECHO(field0() = sqrt(x*x+y*y));
-    TRDISP(grad(field0));
-    TRDISP(div(grad(field0)));
+    ETV(grad(field0));
+    ETV(div(grad(field0)));
 
   }
 
@@ -157,25 +157,25 @@ int main(int argc, char* argv[]) {
         Interval<double>::interval(-1,1,3),
         Interval<double>::interval(0,2,3),
       }));
-    TRDISP(coords);
-    TRDISP(HasTimeCoord<decltype(coords)>);
-    TRDISP(HasNotTimeCoord<decltype(coords)>);
+    ETV(coords);
+    ETV(HasTimeCoord<decltype(coords)>);
+    ETV(HasNotTimeCoord<decltype(coords)>);
 
-    TRDISP(coords[0]);
-    TRDISP(coords.x());
-    TRDISP(coords[1]);
-    TRDISP(coords.y());
-    TRDISP(coords[2]);
-    TRDISP(coords.t());
+    ETV(coords[0]);
+    ETV(coords.x());
+    ETV(coords[1]);
+    ETV(coords.y());
+    ETV(coords[2]);
+    ETV(coords.t());
 
-    TRDISP(coords.J());
-    TRDISP(coords.g());
-    TRDISP(coords.basis_vec(0));
-    TRDISP(coords.basis_vec(1));
-    TRDISP(coords.basis());
-    TRDISP(coords.at(0, 0, 0));
-    TRDISP(coords.at(1, 2, 2));
-    TRDISP(coords.at(0, 0, 0)+coords.at(1, 2, 2));
+    ETV(coords.J());
+    ETV(coords.g());
+    ETV(coords.basis_vec(0));
+    ETV(coords.basis_vec(1));
+    ETV(coords.basis());
+    ETV(coords.at(0, 0, 0));
+    ETV(coords.at(1, 2, 2));
+    ETV(coords.at(0, 0, 0)+coords.at(1, 2, 2));
 
 
     subtitle("2+1D Scalar CurvilinearField");
@@ -184,30 +184,30 @@ int main(int argc, char* argv[]) {
     ECHO(auto& x = coords.x());
     ECHO(auto& y = coords.y());
     ECHO(field() = -4*x + 5*y);
-    TRDISP(field);
+    ETV(field);
 
 
     subtitle("2+1D Partials of Scalar CurvilinearField");
-    TRDISP(pd(field, 0));
-    TRDISP(pd(field, 1));
-    TRDISP(pd(field, 2));
+    ETV(pd(field, 0));
+    ETV(pd(field, 1));
+    ETV(pd(field, 2));
 
     subtitle("2+1D Gradient of Scalar CurvilinearField");
-    TRDISP(grad(field));
+    ETV(grad(field));
 
     subtitle("Divergence of a 2D+1 CurvilinearField - ex 1");
     // div
     ECHO(auto A = grad(field));
-    TRDISP(A);
-    // TRDISP(coords.div(A));
-    TRDISP(div(A));
-    // TRDISP(nabla | A);
+    ETV(A);
+    // ETV(coords.div(A));
+    ETV(div(A));
+    // ETV(nabla | A);
 
 
     subtitle("Divergence of a 2D+1 CurvilinearField - ex 2");
     ECHO(field() = sqrt(x*x+y*y));
-    TRDISP(grad(field));
-    TRDISP(div(grad(field)));
+    ETV(grad(field));
+    ETV(div(grad(field)));
 
 
   }
@@ -222,22 +222,22 @@ int main(int argc, char* argv[]) {
         Interval<double>::o_interval_c(0,1,3),
         Interval<double>::c_interval_o(0,2*3.14159265,5),
       }));
-    TRDISP(coords);
-    TRDISP(HasTimeCoord<decltype(coords)>);
-    TRDISP(HasNotTimeCoord<decltype(coords)>);
+    ETV(coords);
+    ETV(HasTimeCoord<decltype(coords)>);
+    ETV(HasNotTimeCoord<decltype(coords)>);
 
-    TRDISP(coords.r());
-    TRDISP(coords.phi());
-    TRDISP(coords.dims());
+    ETV(coords.r());
+    ETV(coords.phi());
+    ETV(coords.dims());
 
-    TRDISP(coords.J());
-    TRDISP(coords.g());
-    TRDISP(coords.basis_vec(0));
-    TRDISP(coords.basis_vec(1));
-    TRDISP(coords.basis());
-    TRDISP(coords.at(0, 0));
-    TRDISP(coords.at(1, 2));
-    TRDISP(coords.at(0, 0)+coords.at(1, 2));
+    ETV(coords.J());
+    ETV(coords.g());
+    ETV(coords.basis_vec(0));
+    ETV(coords.basis_vec(1));
+    ETV(coords.basis());
+    ETV(coords.at(0, 0));
+    ETV(coords.at(1, 2));
+    ETV(coords.at(0, 0)+coords.at(1, 2));
 
 
     subtitle("2D PolarCoords Scalar CurvilinearField");
@@ -246,30 +246,30 @@ int main(int argc, char* argv[]) {
     ECHO(auto& r = coords.r());
     ECHO(auto& phi = coords.phi());
     ECHO(field() = -4*r + 5*phi);
-    TRDISP(field);
+    ETV(field);
 
 
     subtitle("2D  PolarCoords Partials of Scalar CurvilinearField");
-    TRDISP(pd(field, 0));
-    TRDISP(pd(field, 1));
-    TRDISP(pd(field, 1)()/r);
+    ETV(pd(field, 0));
+    ETV(pd(field, 1));
+    ETV(pd(field, 1)()/r);
 
     subtitle("2D PolarCoords Gradient of Scalar CurvilinearField");
-    TRDISP(grad(field));
+    ETV(grad(field));
 
     subtitle("Divergence of a 2D PolarCoords CurvilinearField - ex 1");
     // div
     ECHO(auto A = grad(field));
-    TRDISP(A);
-    // TRDISP(coords.div(A));
-    TRDISP(div(A));
-    // TRDISP(nabla | A);
+    ETV(A);
+    // ETV(coords.div(A));
+    ETV(div(A));
+    // ETV(nabla | A);
 
 
     subtitle("Divergence of a 2D+1 CurvilinearField - ex 2");
     ECHO(field() = r*r);
-    TRDISP(grad(field));
-    TRDISP(div(grad(field)));
+    ETV(grad(field));
+    ETV(div(grad(field)));
 
 
   }

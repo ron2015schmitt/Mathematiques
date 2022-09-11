@@ -59,16 +59,16 @@ int main() {
     ECHO(auto velocity2D = Vector<double, 2>(0));
     ECHO(auto velocity3D = Vector<double, 3>(0));
     ECHO(auto vector = Vector<double, 11>(0));
-    TRDISP(velocity2D);
-    TRDISP(velocity3D);
-    TRDISP(vector);
+    ETV(velocity2D);
+    ETV(velocity3D);
+    ETV(vector);
   }
   {
     CR();
     ECHO(Vector<double, 2> velocity2D(0));
     ECHO(Vector<double, 3> velocity3D(1));
-    TRDISP(velocity2D);
-    TRDISP(velocity3D);
+    ETV(velocity2D);
+    ETV(velocity3D);
   }
   {
     CR();
@@ -76,23 +76,23 @@ int main() {
     ECHO(velocity2D = 4);
     ECHO(Vector<double, 3> velocity3D);
     ECHO(velocity3D = -0.55);
-    TRDISP(velocity2D);
-    TRDISP(velocity3D);
+    ETV(velocity2D);
+    ETV(velocity3D);
   }
   {
     CR();
     ECHO(Vector<double, 2> velocity2D({ 70.5, -30 }));
     ECHO(Vector<double, 3> velocity3D({ 10, 0, -15 }));
-    TRDISP(velocity2D);
+    ETV(velocity2D);
     ECHO(Vector<double> v3(3));
-    TRDISP(velocity3D);
+    ETV(velocity3D);
   }
   {
     CR();
     ECHO(Vector<double, 2> velocity2D = Vector<double, 2>({ 70.5, -30 }));
     ECHO(Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 }));
-    TRDISP(velocity2D);
-    TRDISP(velocity3D);
+    ETV(velocity2D);
+    ETV(velocity3D);
   }
   GMD_CODE_END();
 
@@ -163,10 +163,10 @@ int main() {
   OUTPUT("Mathématiques supports the four arithmetic operators for quaternions:");
   CR();
   GMD_CODE_START("C++");
-  // TRDISP(q1+q2);
-  // TRDISP(q1-q2);
-  // TRDISP(q1*q2);
-  // TRDISP(q2/q1);
+  // ETV(q1+q2);
+  // ETV(q1-q2);
+  // ETV(q1*q2);
+  // ETV(q2/q1);
   GMD_CODE_END();
 
 
@@ -216,19 +216,19 @@ int main() {
 
   CR();
   GMD_CODE_START("C++");
-  // TRDISP(q1);
-  // TRDISP(q1.real());
-  // TRDISP(q1.imag());
-  // TRDISP(q1.jmag());
-  // TRDISP(q1.kmag());
-  // TRDISP(q1.abs());
-  // TRDISP(q1.scalar());
-  // TRDISP(q1.vector());
-  // TRDISP(q1.vabs());
-  // TRDISP(q1.unitvector());
-  // TRDISP(q1.angle());
-  // TRDISP(q1.polar());
-  // TRDISP(q1.matrix2by2());
+  // ETV(q1);
+  // ETV(q1.real());
+  // ETV(q1.imag());
+  // ETV(q1.jmag());
+  // ETV(q1.kmag());
+  // ETV(q1.abs());
+  // ETV(q1.scalar());
+  // ETV(q1.vector());
+  // ETV(q1.vabs());
+  // ETV(q1.unitvector());
+  // ETV(q1.angle());
+  // ETV(q1.polar());
+  // ETV(q1.matrix2by2());
   GMD_CODE_END();
 
   // // MOUT << "sizeof tuple = " << display::tuple_size_v<std::tuple<double, double, Vector<double, 3>>> << endl;
@@ -245,13 +245,13 @@ int main() {
 
   CR();
   GMD_CODE_START("C++");
-  // TRDISP(q);
-  // TRDISP(exp(q));
-  // TRDISP(log(q));
-  // TRDISP(pow(q, 2));
-  // TRDISP(pow(q, 0.5));
-  // TRDISP(inv(q));
-  // TRDISP(conj(q));
+  // ETV(q);
+  // ETV(exp(q));
+  // ETV(log(q));
+  // ETV(pow(q, 2));
+  // ETV(pow(q, 0.5));
+  // ETV(inv(q));
+  // ETV(conj(q));
   GMD_CODE_END();
 
 
@@ -275,20 +275,20 @@ int main() {
 
 
   GMD_CODE_START("C++");
-  // TRDISP(q);
+  // ETV(q);
   // CR();
-  // TRDISP(v);
+  // ETV(v);
   // CR();
-  // TRDISP(v + q);
+  // ETV(v + q);
   // CR();
-  // TRDISP(exp(v));
+  // ETV(exp(v));
   // CR();
-  // TRDISP(exp(v) + v);
-  // TRDISP(exp(v) + 1);
-  // TRDISP(exp(v) + 2.3);
-  // TRDISP(exp(v) + complex(1,2));
-  // TRDISP(exp(v) + Imaginary<double>(2));
-  // TRDISP(exp(v) + Quaternion<double>(1, 2, -1, -3));
+  // ETV(exp(v) + v);
+  // ETV(exp(v) + 1);
+  // ETV(exp(v) + 2.3);
+  // ETV(exp(v) + complex(1,2));
+  // ETV(exp(v) + Imaginary<double>(2));
+  // ETV(exp(v) + Quaternion<double>(1, 2, -1, -3));
   GMD_CODE_END();
 
   return 0;

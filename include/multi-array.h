@@ -175,14 +175,14 @@ namespace mathq {
 
       template<bool enable = is_dynamic_value> requires (enable)
         explicit MultiArray(const Dimensions& dims) {
-        // TRDISP(dims);
+        // ETV(dims);
         this->resize(dims);
       }
 
       // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
       template<bool enable = is_dynamic_value> requires (enable)
         explicit MultiArray(const RecursiveDimensions& recursive_dims) {
-        // TRDISP(recursive_dims);
+        // ETV(recursive_dims);
         this->resize(recursive_dims);
       }
 

@@ -275,9 +275,9 @@ int main(int argc, char* argv[]) {
     Vector<Matrix<double>> v1{ {{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}} };
     Vector<double> v0{ 100, 200, 300 };
 
-    TRDISP(IsReadableExpressionOrArray<double>);
-    TRDISP(IsReadableExpressionOrArray<Vector<double>>);
-    TRDISP(IsReadableExpressionOrArray<Vector<Matrix<double>>>);
+    ETV(IsReadableExpressionOrArray<double>);
+    ETV(IsReadableExpressionOrArray<Vector<double>>);
+    ETV(IsReadableExpressionOrArray<Vector<Matrix<double>>>);
 
     MOUT << blue.apply("Given:") << endl;
     MOUT << "  ";

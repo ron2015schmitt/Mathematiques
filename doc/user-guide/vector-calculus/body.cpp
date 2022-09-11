@@ -56,16 +56,16 @@ int main() {
   CR();
 
   Nabla d1;
-  TRDISP(d1);
+  ETV(d1);
 
   // TargetSet<std::complex<double>> u(1, 0);
-  // TRDISP(u);
+  // ETV(u);
 
   // ECHO(GridSet<double> gs);
-  // TRDISP(gs);
+  // ETV(gs);
 
   // ECHO(Interval<double> x_interval(-1, 1, 5));
-  // TRDISP(x_interval);
+  // ETV(x_interval);
 
 
   GMD_CODE_END();

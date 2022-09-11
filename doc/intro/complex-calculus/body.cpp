@@ -35,7 +35,7 @@ int main() {
     GMD_CODE_START("C++");
     ECHO(Vector<double, 3> v{ 1,2,3 });
     CR();
-    TRDISP(v);
+    ETV(v);
     GMD_CODE_END();
   }
 
@@ -44,13 +44,13 @@ int main() {
     GMD_CODE_START("C++");
     ECHO(Vector<double> v{ 1,2,3,4,5 });
     CR();
-    TRDISP(v);
+    ETV(v);
     ECHO(v = 100*v);
-    TRDISP(v);
+    ETV(v);
     ECHO(v.resize(10));
-    TRDISP(v);
+    ETV(v);
     ECHO(v = linspace<double>(0, 1, 10));
-    TRDISP(v);
+    ETV(v);
     GMD_CODE_END();
   }
 
@@ -59,13 +59,13 @@ int main() {
     GMD_CODE_START("C++");
     ECHO(Vector<double, 3> v{ 1,2,3 });
     CR();
-    TRDISP(v[0]);
-    TRDISP(v[1]);
-    TRDISP(v[2]);
+    ETV(v[0]);
+    ETV(v[1]);
+    ETV(v[2]);
     ECHO(v[0] = 200);
-    TRDISP(v);
+    ETV(v);
     ECHO(v[2] = v[1] = v[0]);
-    TRDISP(v);
+    ETV(v);
     GMD_CODE_END();
   }
 
@@ -79,7 +79,7 @@ int main() {
     GMD_CODE_START("C++");
     ECHO(Matrix<double, 2, 2> A{ {1,2}, {3,4} });
     CR();
-    TRDISP(A);
+    ETV(A);
     GMD_CODE_END();
   }
 
@@ -87,10 +87,10 @@ int main() {
   {
     GMD_CODE_START("C++");
     ECHO(Matrix<double> A{ {1,2}, {3,4}, {5,6} });
-    TRDISP(A);
+    ETV(A);
     CR();
     ECHO(A.resize(1, 2));
-    TRDISP(A);
+    ETV(A);
     GMD_CODE_END();
   }
 
@@ -99,10 +99,10 @@ int main() {
   {
     GMD_CODE_START("C++");
     ECHO(Matrix<double> A{ {1,2}, {3,4}, {5,6} });
-    TRDISP(A);
+    ETV(A);
     CR();
-    TRDISP(A(0, 0));
-    TRDISP(A(2, 1));
+    ETV(A(0, 0));
+    ETV(A(2, 1));
     GMD_CODE_END();
   }
 
@@ -110,11 +110,11 @@ int main() {
   {
     GMD_CODE_START("C++");
     ECHO(Matrix<double> A{ {1,2}, {3,4}, {5,6} });
-    TRDISP(A);
+    ETV(A);
     CR();
-    TRDISP(A[0]);
-    TRDISP(A[1]);
-    TRDISP(A[2]);
+    ETV(A[0]);
+    ETV(A[1]);
+    ETV(A[2]);
     GMD_CODE_END();
   }
 
@@ -132,7 +132,7 @@ int main() {
     GMD_CODE_START("C++");
     ECHO(MultiArray<double, 3, 2, 2, 2> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } });
     CR();
-    TRDISP(M);
+    ETV(M);
     GMD_CODE_END();
   }
 
@@ -141,7 +141,7 @@ int main() {
     GMD_CODE_START("C++");
     ECHO(MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } });
     CR();
-    TRDISP(M);
+    ETV(M);
     GMD_CODE_END();
   }
 
@@ -151,10 +151,10 @@ int main() {
     GMD_CODE_START("C++");
     ECHO(MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } });
     CR();
-    TRDISP(M);
+    ETV(M);
     CR();
-    TRDISP(M(0, 0, 0));
-    TRDISP(M(1, 1, 1));
+    ETV(M(0, 0, 0));
+    ETV(M(1, 1, 1));
     GMD_CODE_END();
   }
 
@@ -163,11 +163,11 @@ int main() {
     GMD_CODE_START("C++");
     ECHO(MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } });
     CR();
-    TRDISP(M);
+    ETV(M);
     CR();
-    TRDISP(M[0]);
-    TRDISP(M[1]);
-    TRDISP(M[2]);
+    ETV(M[0]);
+    ETV(M[1]);
+    ETV(M[2]);
     GMD_CODE_END();
   }
 

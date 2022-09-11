@@ -114,7 +114,7 @@ public:
     using namespace mathq;
     using namespace display;
     OUTPUT("\nInside main Test constructor");
-    TRDISP(rank);
+    ETV(rank);
   }
 };
 
@@ -125,7 +125,7 @@ public:
     using namespace mathq;
     using namespace display;
     OUTPUT("\nInside specialization Test constructor");
-    TRDISP(rank);
+    ETV(rank);
   }
 };
 ```

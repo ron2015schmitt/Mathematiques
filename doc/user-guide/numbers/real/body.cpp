@@ -78,8 +78,8 @@ int main() {
   GMD_CODE_START("C++");
   SRDISP(" bits", CHAR_BIT*sizeof(bool));
   CR();
-  TRDISP(false);
-  TRDISP(true);
+  ETV(false);
+  ETV(true);
   GMD_CODE_END();
 
   GMD_VSPACE();
@@ -214,15 +214,15 @@ int main() {
   // cout.precision(numeric_limits<double>::max_digits10);
   cout.precision(22);
   cout << "☀ pi  ➜  double " << fixed << pi << ";" << endl;
-  // TRDISP(pi);
-  TRDISP(pi/2+100-0.5*pi);
-  TRDISP(2*sin(pi/4) - 1);
-  TRDISP(3/pi*asin(0.86602540378));
-  TRDISP(exp(2));
-  TRDISP(log(10));
-  TRDISP(log10(10));
-  TRDISP(pow(2, 10));
-  TRDISP(pow(2, 2.5-2));
+  // ETV(pi);
+  ETV(pi/2+100-0.5*pi);
+  ETV(2*sin(pi/4) - 1);
+  ETV(3/pi*asin(0.86602540378));
+  ETV(exp(2));
+  ETV(log(10));
+  ETV(log10(10));
+  ETV(pow(2, 10));
+  ETV(pow(2, 2.5-2));
   GMD_CODE_END();
 
 
@@ -237,10 +237,10 @@ int main() {
   // FormatDataVector::string_endofline = "\n";
   GMD_CODE_START("C++");
   ECHO(auto v = Vector<double>() = { 0, 1, 2, 3, 4 });
-  TRDISP(v);
-  TRDISP(pi*v/4);
-  TRDISP(10*sin(pi*v/4));
-  TRDISP(10*sin(pi*v/4) + 100*v + 1 + v*v);
+  ETV(v);
+  ETV(pi*v/4);
+  ETV(10*sin(pi*v/4));
+  ETV(10*sin(pi*v/4) + 100*v + 1 + v*v);
   GMD_CODE_END();
 
 

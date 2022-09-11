@@ -13,7 +13,7 @@ namespace mathq {
   template <typename T>
   auto& get_vector(const T& x_in, const size_t n, const Indices& inds_) {
     using ElementType = typename T::ElementType;
-    // TRDISP(x_in);
+    // ETV(x_in);
     const size_t rank = T::rank_value;
     const Dimensions dims = x_in.dims();
     const size_t N = dims[n];
@@ -23,8 +23,8 @@ namespace mathq {
     Indices inds = inds_;
     for (size_t i = 0; i < N; i++) {
       inds[n] = i;
-      // TRDISP(inds);
-      // TRDISP(x[inds]);
+      // ETV(inds);
+      // ETV(x[inds]);
       v[i] = x_in[inds];
     }
     return v;
@@ -45,8 +45,8 @@ namespace mathq {
     Indices inds = inds_;
     for (size_t i = 0; i < N; i++) {
       inds[n] = i;
-      // TRDISP(inds);
-      // TRDISP(x[inds]);
+      // ETV(inds);
+      // ETV(x[inds]);
       x[inds] = v[i];
     }
     return v;

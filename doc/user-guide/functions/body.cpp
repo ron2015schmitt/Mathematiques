@@ -369,17 +369,17 @@ int main() {
     GMD_CODE_START("C++");
     ECHO(short n1 = 3);
     ECHO(int n2 = 100);
-    TRDISP(n1 * n2);
+    ETV(n1 * n2);
     // OUTPUT("n1 * n2 -> int 300");
     CR();
     ECHO(float x1 = 3);
     ECHO(double x2 = 0.1415);
-    TRDISP(x1 + x2);
+    ETV(x1 + x2);
     // OUTPUT("x1 + x2 -> double 3.1415");
     CR();
     ECHO(int8_t y1 = 25);
     ECHO(double y2 = 0.25);
-    TRDISP(y1 / y2 + y2);
+    ETV(y1 / y2 + y2);
     // OUTPUT("y1 / y2 + y2 -> double 100.25");
     GMD_CODE_END();
   }
@@ -395,10 +395,10 @@ int main() {
     OUTPUT("Converting a floating point type to an integer:\n");
     GMD_CODE_START("C++");
     ECHO(int n1 = (int)3.14);
-    TRDISP(n1);
+    ETV(n1);
     // OUTPUT("n1 -> 3");
     ECHO(int n2 = int(3.14));
-    TRDISP(n2);
+    ETV(n2);
     // OUTPUT("n2 -> 3");
     GMD_CODE_END();
   }
@@ -407,10 +407,10 @@ int main() {
     OUTPUT("Forcing floating point division by converting the numerator to a `float`\n");
     GMD_CODE_START("C++");
     ECHO(double x = (21 + 1) / 7);
-    TRDISP(x);
+    ETV(x);
     // OUTPUT("x -> 3");
     ECHO(double y = float(21 + 1) / 7);
-    TRDISP(y);
+    ETV(y);
     // OUTPUT("y -> 3.14286");
     GMD_CODE_END();
   }

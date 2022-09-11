@@ -7,9 +7,9 @@ namespace mathq {
 };
 
 auto func(std::initializer_list<std::variant<double, std::complex<double>>> mylist) {
-  // TRDISP(std::get<double>(w[0]));
+  // ETV(std::get<double>(w[0]));
   for (std::initializer_list<std::variant<double, std::complex<double>>>::iterator it = mylist.begin(); it != mylist.end(); ++it) {
-    TRDISP(it->index());
+    ETV(it->index());
   }
   return true;
 }
@@ -19,9 +19,9 @@ using Variant = std::variant<mathq::Interval<double>, mathq::PointSequence<doubl
 
 template <mathq::IsNumber T>
 auto func2(const std::initializer_list<mathq::RealDomainWrapper<T>>& mylist) {
-  // TRDISP(std::get<double>(w[0]));
+  // ETV(std::get<double>(w[0]));
   for (typename std::initializer_list<mathq::RealDomainWrapper<T>>::iterator it = mylist.begin(); it != mylist.end(); ++it) {
-    TRDISP(it->index());
+    ETV(it->index());
   }
   return true;
 }
@@ -71,44 +71,44 @@ int main(int argc, char* argv[]) {
   {
     title("Interval - [0,1]");
     ECHO(Interval<double> dom1 = Interval<double>::interval(0, 1, 11));
-    TRDISP(dom1);
-    TRDISP(dom1.grid());
+    ETV(dom1);
+    ETV(dom1.grid());
   }
 
 
   {
     title("Interval - (0,1]");
     ECHO(Interval<double> dom1 = Interval<double>::o_interval_c(0, 1, 10));
-    TRDISP(dom1);
-    TRDISP(dom1.grid());
+    ETV(dom1);
+    ETV(dom1.grid());
   }
 
   {
     title("Interval - [0,1)");
     ECHO(Interval<double> dom1 = Interval<double>::c_interval_o(0, 1, 10));
-    TRDISP(dom1);
-    TRDISP(dom1.grid());
+    ETV(dom1);
+    ETV(dom1.grid());
   }
 
   {
     title("Interval - (0,1)");
     ECHO(Interval<double> dom1 = Interval<double>::o_interval_o(0, 1, 9));
-    TRDISP(dom1);
-    TRDISP(dom1.grid());
+    ETV(dom1);
+    ETV(dom1.grid());
   }
 
   {
     title("PointSequence");
     ECHO(PointSequence<double> dom1 = PointSequence<double>({ 0,1,3,4.5,5 }));
-    TRDISP(dom1);
-    TRDISP(dom1.grid());
+    ETV(dom1);
+    ETV(dom1.grid());
   }
 
   {
     title("Log10 - [1,10]");
     ECHO(PointSequence<double> dom1 = PointSequence<double>::log10(1, 10, 11));
-    TRDISP(dom1);
-    TRDISP(dom1.grid());
+    ETV(dom1);
+    ETV(dom1.grid());
   }
 
 
@@ -124,10 +124,10 @@ int main(int argc, char* argv[]) {
       }));
 
 
-    TRDISP(coords);
-    TRDISP(coords.grid_dims());
-    TRDISP(coords[0]);
-    TRDISP(coords[1]);
+    ETV(coords);
+    ETV(coords.grid_dims());
+    ETV(coords[0]);
+    ETV(coords[1]);
   }
 
 
@@ -141,59 +141,59 @@ int main(int argc, char* argv[]) {
       }));
 
 
-    TRDISP(coords);
-    TRDISP(coords.grid_dims());
-    TRDISP(coords[0]);
-    TRDISP(coords[1]);
+    ETV(coords);
+    ETV(coords.grid_dims());
+    ETV(coords[0]);
+    ETV(coords[1]);
   }
 
 
   std::variant<Interval<double>, PointSequence<double>> test;  // need to put this here using g++ 11.1.0. bug with variant and is_copy_constructible_v
-  TRDISP(std::is_copy_constructible_v<PointSequence<double>>);
+  ETV(std::is_copy_constructible_v<PointSequence<double>>);
 
   {
     std::variant<PointSequence<double>, Interval<double>> x;
 
     x = { Interval<double>::interval(-1, 1, 3) };
     Interval<double> y = std::get<Interval<double>>(x);
-    TRDISP(y);
+    ETV(y);
 
     PointSequence<double> p = PointSequence<double>({ 0,1,3,4.5,5 });
-    TRDISP(p);
+    ETV(p);
     PointSequence<double> q = p;
-    TRDISP(q);
+    ETV(q);
     std::variant<PointSequence<double>, Interval<double>> x2{ p };
     PointSequence<double> z = std::get<PointSequence<double>>(x2);
-    TRDISP(z);
+    ETV(z);
     x = p;
     x = y;
     x2 = z;
   }
-  TRDISP(std::is_copy_constructible_v<PointSequence<double>>);
+  ETV(std::is_copy_constructible_v<PointSequence<double>>);
 
   {
     std::variant<double, std::complex<double>> x;
     x = 5.5;
     double y = std::get<double>(x);
-    TRDISP(y);
+    ETV(y);
     x = complex(1., 2.);
     std::complex<double> z = std::get<std::complex<double>>(x);
-    TRDISP(z);
+    ETV(z);
 
     std::vector<std::variant<double, std::complex<double>>> v(5);
     v[0] = 5.5;
-    TRDISP(std::get<double>(v[0]));
+    ETV(std::get<double>(v[0]));
 
     std::vector<std::variant<double, std::complex<double>>> w{ 5.5, complex(1., 2.) };
-    TRDISP(std::get<double>(w[0]));
-    TRDISP(std::get<std::complex<double>>(w[1]));
+    ETV(std::get<double>(w[0]));
+    ETV(std::get<std::complex<double>>(w[1]));
 
   }
 
   {
     double x = 5.5;
     std::complex<double> z = complex(1., 2.);
-    TRDISP(func({ x,z }));
+    ETV(func({ x,z }));
   }
 
 
@@ -203,20 +203,20 @@ int main(int argc, char* argv[]) {
         Interval<double>::interval(-1,1,11),
       }));
 
-    TRDISP(coords);
-    TRDISP(Interval<double>::interval(-1, 1, 11).grid());
+    ETV(coords);
+    ETV(Interval<double>::interval(-1, 1, 11).grid());
     ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
     field0 = -5*coords.x();
-    TRDISP(field0);
-    TRDISP(grad(field0));
+    ETV(field0);
+    ETV(grad(field0));
 
   }
 
   // {
   //   ECHO(PointSequence<double> p = PointSequence<double>({ 33,34,35 }));
-  //   TRDISP(p);
+  //   ETV(p);
   //   ECHO(Vector<double> grid = Vector<double>({ 33,34,40 }));
-  //   TRDISP(p.coefs(grid));
+  //   ETV(p.coefs(grid));
   // }
 
   {
@@ -226,12 +226,12 @@ int main(int argc, char* argv[]) {
         p,
       }));
 
-    TRDISP(coords);
+    ETV(coords);
 
     ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
     field0 = -5*coords.x();
-    TRDISP(field0);
-    TRDISP(grad(field0));
+    ETV(field0);
+    ETV(grad(field0));
 
   }
 

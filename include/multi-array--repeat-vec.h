@@ -199,14 +199,14 @@ namespace mathq {
 
       template<bool enable = is_dynamic_value> requires (enable)
         explicit MultiArray_RepeatVector(const size_t vector_index, const Dimensions& dims) : vector_index(vector_index) {
-        // TRDISP(dims);
+        // ETV(dims);
         this->resize(dims);
       }
 
       // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
       template<bool enable = is_dynamic_value> requires (enable)
         explicit MultiArray_RepeatVector(const size_t vector_index, const RecursiveDimensions& recursive_dims) : vector_index(vector_index) {
-        // TRDISP(recursive_dims);
+        // ETV(recursive_dims);
         this->resize(recursive_dims);
       }
 
@@ -522,7 +522,7 @@ namespace mathq {
       Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_unsigned<U>...>::value && (sizeof...(args) == rank_value)) {
         OUTPUT("inside");
         Indices inds = Indices({ args... });
-        TRDISP(inds);
+        ETV(inds);
         return vector[inds[vector_index]];
       }
 
@@ -716,8 +716,8 @@ namespace mathq {
         // TODO: it owuld be better to check equivalent dimensions. need to support this somehow via a new Indices method for Indices with dimension(s) = 1
         if (dims() != x.dims()) {
           OUTPUT("ERROR: attempt to set MultiArray_RepeatVector from expression with incompatible dimensions.");
-          TRDISP(dims());
-          TRDISP(x.dims());
+          ETV(dims());
+          ETV(x.dims());
           return false;
         }
         Indices inds(dims());
@@ -732,8 +732,8 @@ namespace mathq {
             OUTPUT("       for indices");
             MDISP(inds, inds_ref);
             OUTPUT("       should be equal.  ");
-            //  TRDISP(*this);
-            //  TRDISP(x);
+            //  ETV(*this);
+            //  ETV(x);
             return false;
           }
           inds.increment(dims());
@@ -924,10 +924,10 @@ namespace mathq {
       static inline std::string ClassName() {
         using namespace display;
         Style& style = FormatDataVector::style_for_punctuation;
-        // TRDISP(rank_value);
-        // TRDISP(vector_index);
-        // TRDISP(static_dims_array);
-        // TRDISP(sizeof...(dim_ints));
+        // ETV(rank_value);
+        // ETV(vector_index);
+        // ETV(static_dims_array);
+        // ETV(sizeof...(dim_ints));
         std::string s = "MultiArray_RepeatVector";
         s += StyledString::get(ANGLE1).get();
         Element d;

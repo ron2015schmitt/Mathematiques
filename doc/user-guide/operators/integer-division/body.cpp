@@ -33,11 +33,11 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER3("Examples: integer division");
   GMD_CODE_START("C++");
-  TRDISP(7 / 2);
+  ETV(7 / 2);
   GMD_CODE_END();
   OUTPUT("* The modulus operator `a % b`, gives the remainder after integer divison of `a` by `b`.\n");
   GMD_CODE_START("C++");
-  TRDISP(7 % 2);
+  ETV(7 % 2);
   GMD_CODE_END();
   OUTPUT("* The function [`std::div`](https://en.cppreference.com/w/cpp/numeric/math/div) can also be used for integer division, It returns both the result and remainder.\n");
 
@@ -46,8 +46,8 @@ int main() {
   GMD_CODE_END();
   OUTPUT("With result:\n");
   GMD_CODE_START("C++");
-  TRDISP(result.quot);
-  TRDISP(result.rem);
+  ETV(result.quot);
+  ETV(result.rem);
   GMD_CODE_END();
 
   return 0;
