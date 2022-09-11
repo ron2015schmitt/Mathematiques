@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.142-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.143-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -51,10 +51,10 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-## Pretty Printing to a terminal
-Mathématiques provides printing of ASCII and Unicode text that is cleanly formatted, colored and stylized.
+## Pretty Printing to a Terminal
+Mathématiques provides functions and macros for printing of ASCII and Unicode text that is cleanly formatted, colored and stylized.
 Colors and styles require a terminal that support [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code). 
-## ECHO() for C++ statements
+### ECHO for C++ statements
 The `ECHO` macro prints the enclosed C++ statement to the stdout, in addition to the statement being compiled and included in the executable.
 ```C++
 ECHO(int x = 5);
@@ -68,7 +68,7 @@ The above C++ code will print the following to stdout in the terminal (actual sc
 
 <br>
 
-## ETV() for C++ variables and expressions
+### ETV for C++ variables and expressions
 `ETV` stands for 'Expression Type Value', and that is what it prints.  All results are preceded by the `☀` Unicode character to distinguish results from code.
 ```C++
 ECHO(int x = 5);
@@ -76,19 +76,21 @@ ETV(x);
 ETV(3 * 25 * std::sin(3.1415/20));
 ETV(mathq::Vector<double> {1, 2, 3});
 ```
-The above C++ code will print the following the terminal (actual screen captures):
 The above C++ code will print the following to stdout in the terminal (actual screen captures):
+
 | <sub>Light mode in Ubuntu WSL2 terminal on Windows</sub> |
 | --- |
 | ![etv-light mode](https://user-images.githubusercontent.com/11559541/189542566-fcb8bd50-b9ea-4fcc-9c89-5b7c287d5487.png) |
+
 | <sub>Dark mode in VS Code terminal</sub> |
 | --- |
-| ![etv-dark mode](https ://user-images.githubusercontent.com/11559541/189542572-43356054-59e2-4861-9d35-a004dc1215b5.png) |
+| ![etv-dark mode](https://user-images.githubusercontent.com/11559541/189542572-43356054-59e2-4861-9d35-a004dc1215b5.png) |
 
 
 <br>
 
-## Markdown code box generation
+### GMD_CODEBOX for Markdown code box generation
+The macros `GMD_CODEBOX_START` and `GMD_CODEBOX_END` can be used to create a codebox using the [github markdown language](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
 In fact these online documentation files are automatically created using C++ files, python scripts for the table of contents and numbering, and make files that put it all together during the build process.
 The documentation is generated for every new version.
 This ensures that results shown for every example in the documenation will match what you compile.
@@ -99,10 +101,7 @@ ECHO(mathq::Vector<double> v{1, 2, 3});
 ETV(10*v + 100*x);
 GMD_CODE_END();
 ```
-
-<br>
-
-The above C++ code generates the following markdown code box:
+The above C++ code generates text for the following markdown code box:
 ```C++
 int x = 5;
 mathq::Vector<double> v{ 1, 2, 3 };
@@ -111,23 +110,56 @@ mathq::Vector<double> v{ 1, 2, 3 };
 
 <br>
 
-Other macros and functions are also available, including macros that aid in creating[github markdown]() files.
+### Other printing functionality
+Other macros and functions are also available.
 A full refactoring of the printing functionality is underway.
+
+<br>
+
 ## Compilation Modes and Debugging Support
-Mathématiques supports various compilations modes to aid in debugging:
+Mathématiques supports various compilations modes to aid in debugging using the tab `MATHQ_DEBUG`.
+
+
+<br>
+
+### Setting the compilation mode
+To compile in DEBUG mode, include `MATHQ_DEBUG=n` with your make command, where `n` is the DEBUG level. 
+Using `MATHQ_DEBUG=0` is equivalent to not specifying a value, ie the production compilation mode is used.
+```make
+make filename MATHQ_DEBUG=1
+```
+The makefile then adds `-D "MATHQ_DEBUG = n"` to the compiler options.
+
+In the C++ code, compilation will take place with the [C++ preprocessor](https://cplusplus.com/doc/tutorial/preprocessor/) symbol `MATHQ_DEBUG` defined and set to `n`.
+That is, it will be as if the line `#define MATHQ_DEBUG n` is include at the top of each source file.
+
+<br>
+
+### .compiler files
+
+
+<br>
+
+### Printing information about the compilation mode from C++
+
 ```C++
-unsigned int n = 23;
-☀ n ➜ unsigned int 23;
-☀ n + 102 - 2*4 ➜ unsigned int 117;
-☀ n - 24 ➜ unsigned int 4294967295;
-☀ n/2 ➜ unsigned int 11;
-☀ n % 2 ➜ unsigned int 1;
+display::print_mathq_info();
+```
+```make
+                                                                               
+Mathématiques v0.41.143-c++20 
+
+compile-time settings
+  MATHQ_DEBUG 0 (off/fast) 
+  C++ version: 202002
+                                                                               
 ```
 
 <br>
 
-A full refactoring of the printing functionality is planned.  Currently all debug messages are disabled until the printing code is refactored.
-However, the `` preprocessor symbol can be utilized in user code at present.
+### Current Status
+A full refactoring of the debug functionality is planned.
+Currently all debug messages are disabled until the printing code is refactored.
 
 
 | ⇦ <br />  | [Introduction with Examples](../README.md)<br />Pretty Printing and Debugging<br /><img width=1000/> | ⇨ <br />[Number Systems and Arithmetic](../numbers/README.md)   |
