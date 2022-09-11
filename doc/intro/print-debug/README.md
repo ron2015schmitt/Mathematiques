@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.138-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.139-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -28,7 +28,7 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 # [4. Introduction with Examples](../README.md)<br>
 
 4.1. _Pretty Printing and Debugging_ <br>
-4.2. [Number Systems](../numbers/README.md)<br>
+4.2. [Number Systems and Arithmetic](../numbers/README.md)<br>
 4.3. [Vectors, Matrices, and MultiArrays](../multiarrays/README.md)<br>
 4.4. [Nested MultiArrays](../nested-multiarrays/README.md)<br>
 4.5. [Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)<br>
@@ -122,6 +122,6 @@ A full refactoring of the printing functionality is planned.  Currently all debu
 However, the `` preprocessor symbol can be utilized in user code at present.
 
 
-| ⇦ <br />  | [Introduction with Examples](../README.md)<br />Pretty Printing and Debugging<br /><img width=1000/> | ⇨ <br />[Number Systems](../numbers/README.md)   |
+| ⇦ <br />  | [Introduction with Examples](../README.md)<br />Pretty Printing and Debugging<br /><img width=1000/> | ⇨ <br />[Number Systems and Arithmetic](../numbers/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

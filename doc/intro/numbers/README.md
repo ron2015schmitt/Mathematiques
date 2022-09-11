@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.138-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.139-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -27,7 +27,7 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 # [4. Introduction with Examples](../README.md)<br>
 4.1. [Pretty Printing and Debugging](../print-debug/README.md)<br>
-4.2. _Number Systems_ <br>
+4.2. _Number Systems and Arithmetic_ <br>
 4.3. [Vectors, Matrices, and MultiArrays](../multiarrays/README.md)<br>
 4.4. [Nested MultiArrays](../nested-multiarrays/README.md)<br>
 4.5. [Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)<br>
@@ -46,7 +46,7 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-# 4.2. Number Systems
+# 4.2. Number Systems and Arithmetic
 
 
 
@@ -175,6 +175,6 @@ std::complex<double> z(1, 2);
 
 
 
-| ⇦ <br />[Pretty Printing and Debugging](../print-debug/README.md)  | [Introduction with Examples](../README.md)<br />Number Systems<br /><img width=1000/> | ⇨ <br />[Vectors, Matrices, and MultiArrays](../multiarrays/README.md)   |
+| ⇦ <br />[Pretty Printing and Debugging](../print-debug/README.md)  | [Introduction with Examples](../README.md)<br />Number Systems and Arithmetic<br /><img width=1000/> | ⇨ <br />[Vectors, Matrices, and MultiArrays](../multiarrays/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

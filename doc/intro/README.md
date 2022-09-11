@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.138-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.139-c++20</h1>](../../README.md)
 
 <details>
 
@@ -25,7 +25,7 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../develop
 
 **Basics**<br>
 4.1. [Pretty Printing and Debugging](print-debug/README.md)<br>
-4.2. [Number Systems](numbers/README.md)<br>
+4.2. [Number Systems and Arithmetic](numbers/README.md)<br>
 <br>**MultiArrays**<br>
 4.3. [Vectors, Matrices, and MultiArrays](multiarrays/README.md)<br>
 4.4. [Nested MultiArrays](nested-multiarrays/README.md)<br>
@@ -43,7 +43,7 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../develop
 4.14. [Series and transforms](series-transforms/README.md)<br>
 
 
-# Future work
+# Planned Features
 
 1. Tensor Calculus in Generalized Coordinates 
 1. Differential Geometry in curved space-time

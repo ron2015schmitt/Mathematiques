@@ -1,6 +1,6 @@
 
 
-# Future work
+# Planned Features
 
 1. Tensor Calculus in Generalized Coordinates 
 1. Differential Geometry in curved space-time
