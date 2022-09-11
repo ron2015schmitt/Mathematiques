@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.141-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.142-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -66,13 +66,7 @@ The above C++ code will print the following to stdout in the terminal (actual sc
 | ![echo](https://user-images.githubusercontent.com/11559541/189542553-6190eb19-ca59-4a1e-92a3-debd5aa71335.png) |
 
 
-The above C++ code will print the following to stdout in the terminal (actual screen capture):
-
-| <sub>Light mode in Ubuntu WSL2 terminal on Windows</sub> | 
-| --- | 
-| ![echo](https://user-images.githubusercontent.com/11559541/189542553-6190eb19-ca59-4a1e-92a3-debd5aa71335.png) |
-
-
+<br>
 
 ## ETV() for C++ variables and expressions
 `ETV` stands for 'Expression Type Value', and that is what it prints.  All results are preceded by the `☀` Unicode character to distinguish results from code.
@@ -92,25 +86,8 @@ The above C++ code will print the following to stdout in the terminal (actual sc
 | ![etv-dark mode](https ://user-images.githubusercontent.com/11559541/189542572-43356054-59e2-4861-9d35-a004dc1215b5.png) |
 
 
-The above C++ code will print the following to stdout in the terminal (actual screen captures):
+<br>
 
-<<<<<<< HEAD
-=======
-| <sub>Light mode in Ubuntu WSL2 terminal on Windows</sub> | 
-| --- | 
-| ![etv-light mode](https://user-images.githubusercontent.com/11559541/189542566-fcb8bd50-b9ea-4fcc-9c89-5b7c287d5487.png) |
-
-  
-| <sub>Dark mode in VS Code terminal</sub> | 
-| --- | 
-| ![etv-dark mode](https://user-images.githubusercontent.com/11559541/189542572-43356054-59e2-4861-9d35-a004dc1215b5.png) |
-
-
-
-
-  
-
->>>>>>> dd41c3e16a45e69899b4f30c6a1284a4dc089b99
 ## Markdown code box generation
 In fact these online documentation files are automatically created using C++ files, python scripts for the table of contents and numbering, and make files that put it all together during the build process.
 The documentation is generated for every new version.
@@ -136,7 +113,6 @@ mathq::Vector<double> v{ 1, 2, 3 };
 
 Other macros and functions are also available, including macros that aid in creating[github markdown]() files.
 A full refactoring of the printing functionality is underway.
-
 ## Compilation Modes and Debugging Support
 Mathématiques supports various compilations modes to aid in debugging:
 ```C++
