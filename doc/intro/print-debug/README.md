@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.135-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.136-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -67,17 +67,20 @@ will print the following the terminal (actual screen captures)
 Light mode in Ubuntu WSL2 terminal on Windows
 Dark mode in VS Code terminal
 ## ETV() for the value of C++ variables and C++ expressions
-Expression Type Value
+`ETV` stands for 'Expression Type Value'.  All results are preceded by the `☀` Unicode character to distinguish results from code.
 ```C++
 ECHO(int x = 5);
-ETV(x)
-ETV(3 * 25 * std::sin(3.1415/20))
-ETV(mathq::Vector<double> {1, 2, 3})
+ETV(x);
+ETV(3 * 25 * std::sin(3.1415/20));
+ETV(mathq::Vector<double> {1, 2, 3});
 
 ```
 
 <br>
 
+will print the following the terminal (actual screen captures)
+Light mode in Ubuntu WSL2 terminal on Windows
+Dark mode in VS Code terminal
 ## Markdown code box generation
 In fact these online documentation files are automatically created using C++ files, python scripts for the table of contents and numbering, and make files that put it all together during the build process.
 The documentation is generated for every new version.

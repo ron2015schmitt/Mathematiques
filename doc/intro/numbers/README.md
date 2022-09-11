@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.135-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.136-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -52,14 +52,14 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 ## Number Systems Currently Supported
 Mathématiques supports the follow number systems:
-* Boolean numbers
-* signed and unsigned integers
-* real numbers, as approximated by floating point values
-* pure imaginary numbers, which saves memory for imaginary matrices
-* complex numbers
-* quaternions
+* **Boolean** numbers
+* signed and unsigned **integers**
+* **real** numbers, as approximated by **floating point** values
+* **pure imaginary** numbers, which saves memory for imaginary matrices
+* **complex numbers**
+* **quaternions**
+Mathématiques supports arithmetic and expressions with mixed number types and automatically promotes numbers as needed
 ## Examples
-Mathématiques supports mixed math and automatically promotes numbers as needed
 ### Boolean
 ```C++
 bool q = (5 > 3);

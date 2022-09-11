@@ -46,17 +46,21 @@ int main() {
 
 
   GMD_HEADER2("ETV() for the value of C++ variables and C++ expressions");
-  OUTPUT("`ETV` stands for 'Expression Type Value'");
+  OUTPUT("`ETV` stands for 'Expression Type Value'.  All results are preceded by the `☀` Unicode character to distinguish results from code.");
   {
     GMD_CODE_START("C++");
     OUTPUT("ECHO(int x = 5);");
-    OUTPUT("ETV(x)");
-    OUTPUT("ETV(3 * 25 * std::sin(3.1415/20))");
-    OUTPUT("ETV(mathq::Vector<double> {1, 2, 3})");
+    OUTPUT("ETV(x);");
+    OUTPUT("ETV(3 * 25 * std::sin(3.1415/20));");
+    OUTPUT("ETV(mathq::Vector<double> {1, 2, 3});");
     CR();
     GMD_CODE_END();
   }
   GMD_VSPACE();
+
+  OUTPUT("will print the following the terminal (actual screen captures)");
+  OUTPUT("Light mode in Ubuntu WSL2 terminal on Windows");
+  OUTPUT("Dark mode in VS Code terminal");
 
   GMD_HEADER2("Markdown code box generation");
   OUTPUT("In fact these online documentation files are automatically created using C++ files, python scripts for the table of contents and numbering, and make files that put it all together during the build process.");

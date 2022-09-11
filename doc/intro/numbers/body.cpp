@@ -19,22 +19,20 @@ int main() {
   CR();
   CR();
 
-  // using namespace mathq::unit_quaternion;
-  // using namespace mathq::unit_imaginary;
-  // using std::sqrt;
 
   GMD_HEADER2("Number Systems Currently Supported");
 
   OUTPUT("Mathématiques supports the follow number systems:");
-  OUTPUT("* Boolean numbers");
-  OUTPUT("* signed and unsigned integers");
-  OUTPUT("* real numbers, as approximated by floating point values");
-  OUTPUT("* pure imaginary numbers, which saves memory for imaginary matrices");
-  OUTPUT("* complex numbers");
-  OUTPUT("* quaternions");
+  OUTPUT("* **Boolean** numbers");
+  OUTPUT("* signed and unsigned **integers**");
+  OUTPUT("* **real** numbers, as approximated by **floating point** values");
+  OUTPUT("* **pure imaginary** numbers, which saves memory for imaginary matrices");
+  OUTPUT("* **complex numbers**");
+  OUTPUT("* **quaternions**");
+
+  OUTPUT("Mathématiques supports arithmetic and expressions with mixed number types and automatically promotes numbers as needed");
 
   GMD_HEADER2("Examples");
-  OUTPUT("Mathématiques supports mixed math and automatically promotes numbers as needed");
 
 
   GMD_HEADER3("Boolean");
