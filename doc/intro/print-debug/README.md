@@ -64,7 +64,11 @@ ECHO(double y = x * 3.1415);
 <br>
 
 The above C++ code will print the following the terminal (actual screen capture):
-[image]
+
+![echo](https://user-images.githubusercontent.com/11559541/189542553-6190eb19-ca59-4a1e-92a3-debd5aa71335.png)
+
+
+
 ## ETV() for C++ variables and expressions
 `ETV` stands for 'Expression Type Value', and that is what it prints.  All results are preceded by the `☀` Unicode character to distinguish results from code.
 ```C++
@@ -85,8 +89,13 @@ int x = 5;
 ☀ mathq::Vector<double> {1, 2, 3} ➜ Vector<double> {1, 2, 3};
 
 Light mode in Ubuntu WSL2 terminal on Windows
-[image]
+  ![etv-light mode](https://user-images.githubusercontent.com/11559541/189542566-fcb8bd50-b9ea-4fcc-9c89-5b7c287d5487.png)
+
+  
 Dark mode in VS Code terminal
+  ![etv-dark mode](https://user-images.githubusercontent.com/11559541/189542572-43356054-59e2-4861-9d35-a004dc1215b5.png)
+
+  
 [image]
 ## Markdown code box generation
 In fact these online documentation files are automatically created using C++ files, python scripts for the table of contents and numbering, and make files that put it all together during the build process.
