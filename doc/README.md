@@ -1,6 +1,6 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.137-c++20</h1>](../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.138-c++20</h1>](../README.md)
 
-# Chapter  Documentation
+# Documentation
 
 **Front Matter**<br>
 Chapter 1. [License](license/README.md)<br>

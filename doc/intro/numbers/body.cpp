@@ -29,9 +29,8 @@ int main() {
   OUTPUT("* **pure imaginary** numbers, which saves memory for imaginary matrices");
   OUTPUT("* **complex numbers**");
   OUTPUT("* **quaternions**");
-
   GMD_VSPACE();
-  OUTPUT("Mathématiques supports arithmetic and expressions with mixed number types and automatically promotes numbers as needed");
+  OUTPUT("Mathématiques supports arithmetic and expressions with mixed number types and automatically promotes number types as needed.");
 
   GMD_HEADER2("Examples");
 

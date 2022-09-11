@@ -248,11 +248,17 @@ print("DONE: create prev/next for each child (actual chapters)\n")
 
 header = node["header"]
 
+node_title = ""
+if node["level"] == 1:
+  node_title = node["title"]
+else:
+  node_title = node["prefix"] + (len(node["prefix"])>0)*" " + node["title"]
+  
 top = """
 
 {} {}
 
-""".format("#", node["prefix"] + (len(node["prefix"])>0)*" " + node["title"])
+""".format("#", node_title)
 #""".format(node["level"]*"#", node["prefix"] + (len(node["prefix"])>0)*" " + node["title"])
 
 mytoc = ""
