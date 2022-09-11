@@ -1,9 +1,9 @@
 
 
-# Mathématiques v0.41.136-c++20
+# Mathématiques v0.41.137-c++20
 
 
-## Phase 1 (in progess): C++ Numerical Library
+## Phase 1 (in progress): C++ Numerical Library
  
  
 Create an extensive, open source, numerical C++ library that 
@@ -26,12 +26,12 @@ The above goals are accomplished, in part, by
 
 Of course, Mathématiques can be **combined with standard C++ syntax, techniques, and libraries**.
 
-✳ [Introduction with Examples](doc/intro/README.md)
+✳ [Introduction with Examples](doc/intro/README.md) ✳ 
 
 [Full Documentation](doc/README.md)
 
 ---------------------------------
-## Phase 2 (planned): Mathematics Built-in to a Modern Language
+## Phase 2 (planned): Mathematics Built into a Modern Language
 
 Create a new language that implements the phase 1 library above plus
 * supports unicode characters in source code 

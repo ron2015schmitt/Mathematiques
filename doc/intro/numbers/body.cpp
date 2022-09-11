@@ -30,6 +30,7 @@ int main() {
   OUTPUT("* **complex numbers**");
   OUTPUT("* **quaternions**");
 
+  GMD_VSPACE();
   OUTPUT("Mathématiques supports arithmetic and expressions with mixed number types and automatically promotes numbers as needed");
 
   GMD_HEADER2("Examples");

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.136-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.137-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -58,6 +58,9 @@ Mathématiques supports the follow number systems:
 * **pure imaginary** numbers, which saves memory for imaginary matrices
 * **complex numbers**
 * **quaternions**
+
+<br>
+
 Mathématiques supports arithmetic and expressions with mixed number types and automatically promotes numbers as needed
 ## Examples
 ### Boolean
