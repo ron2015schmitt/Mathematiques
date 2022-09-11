@@ -32,16 +32,18 @@ int main() {
     OUTPUT("ECHO(double y = x * 3.1415);");
     GMD_CODE_END();
   }
-  GMD_VSPACE();
-  OUTPUT("The above C++ code will print the following the terminal (actual screen capture):");
 
   // CR();
   // ECHO(int x = 5);
   // ECHO(double y = x * 3.1415);
   // CR();
+  OUTPUT("The above C++ code will print the following to stdout in the terminal (actual screen capture):");
+  OUTPUT("| <sub>Light mode in Ubuntu WSL2 terminal on Windows</sub> |");
+  OUTPUT("| --- |");
+  OUTPUT("| ![echo](https://user-images.githubusercontent.com/11559541/189542553-6190eb19-ca59-4a1e-92a3-debd5aa71335.png) |");
+  CR();
 
-  OUTPUT("[image]");
-
+  GMD_VSPACE();
   GMD_HEADER2("ETV() for C++ variables and expressions");
   OUTPUT("`ETV` stands for 'Expression Type Value', and that is what it prints.  All results are preceded by the `☀` Unicode character to distinguish results from code.");
   {
@@ -50,23 +52,28 @@ int main() {
     OUTPUT("ETV(x);");
     OUTPUT("ETV(3 * 25 * std::sin(3.1415/20));");
     OUTPUT("ETV(mathq::Vector<double> {1, 2, 3});");
-    CR();
     GMD_CODE_END();
   }
-  GMD_VSPACE();
 
   OUTPUT("The above C++ code will print the following the terminal (actual screen captures):");
-  CR();
-  ECHO(int x = 5);
-  ETV(x);
-  ETV(3 * 25 * std::sin(3.1415/20));
-  ETV(mathq::Vector<double> {1, 2, 3});
-  CR();
-  OUTPUT("Light mode in Ubuntu WSL2 terminal on Windows");
-  OUTPUT("[image]");
-  OUTPUT("Dark mode in VS Code terminal");
-  OUTPUT("[image]");
 
+  // CR();
+  // ECHO(int x = 5);
+  // ETV(x);
+  // ETV(3 * 25 * std::sin(3.1415/20));
+  // ETV(mathq::Vector<double> {1, 2, 3});
+  // CR();
+
+  OUTPUT("The above C++ code will print the following to stdout in the terminal (actual screen captures):");
+  OUTPUT("| <sub>Light mode in Ubuntu WSL2 terminal on Windows</sub> |");
+  OUTPUT("| --- |");
+  OUTPUT("| ![etv-light mode](https://user-images.githubusercontent.com/11559541/189542566-fcb8bd50-b9ea-4fcc-9c89-5b7c287d5487.png) |");
+  OUTPUT("| <sub>Dark mode in VS Code terminal</sub> |");
+  OUTPUT("| --- |");
+  OUTPUT("| ![etv-dark mode](https ://user-images.githubusercontent.com/11559541/189542572-43356054-59e2-4861-9d35-a004dc1215b5.png) |");
+  CR();
+
+  GMD_VSPACE();
   GMD_HEADER2("Markdown code box generation");
   OUTPUT("In fact these online documentation files are automatically created using C++ files, python scripts for the table of contents and numbering, and make files that put it all together during the build process.");
   OUTPUT("The documentation is generated for every new version.");
