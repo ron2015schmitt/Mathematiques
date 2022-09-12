@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.147-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.148-c++20</h1>](../../README.md)
 
 <details>
 
@@ -8,13 +8,14 @@
 Chapter 1. [License](../license/README.md)<br>
 Chapter 2. [About](../about/README.md)<br>
 Chapter 3. _Status & Release Notes_ <br>
-Chapter 4. [Introduction with Examples](../intro/README.md)<br>
-Chapter 5. [Installation](../installation/README.md)<br>
-Chapter 6. [Your First Mathématiques Project](../first-project/README.md)<br>
-Chapter 7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-Chapter 8. [Benchmarks](../benchmarks/README.md)<br>
-Chapter 9. [Tests](../test/README.md)<br>
-Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
+Chapter 4. [Development Schedule](../development-schedule/README.md)<br>
+Chapter 5. [Introduction with Examples](../intro/README.md)<br>
+Chapter 6. [Installation](../installation/README.md)<br>
+Chapter 7. [Your First Mathématiques Project](../first-project/README.md)<br>
+Chapter 8. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 9. [Benchmarks](../benchmarks/README.md)<br>
+Chapter 10. [Tests](../test/README.md)<br>
+Chapter 11. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
 
 
 </details>
@@ -30,12 +31,9 @@ As of v0.41, Mathématiques is now sponsorship-ready.  The core functionality ha
 ## Current Build Information
 
 ```
-Mon Sep 12 13:21:58 EDT 2022
-Mathématiques v0.41.146-c++20
-Distributor ID:	Ubuntu
+Mon Sep 12 13:31:51 EDT 2022
+Mathématiques v0.41.147-c++20
 Description:	Ubuntu 22.04.1 LTS
-Release:	22.04
-Codename:	jammy
 g++ (Ubuntu 11.2.0-19ubuntu1) 11.2.0
 g++ -pipe -std=c++20 -O3 -finline-limit=750 -Wfatal-errors -I /home/rs2015/Mathematiques/include 
 
@@ -129,6 +127,6 @@ g++ -pipe -std=c++20 -O3 -finline-limit=750 -Wfatal-errors -I /home/rs2015/Mathe
 /home/rs2015/Mathematiques/doc
 
 
-| ⇦ <br />[About](../about/README.md)  | [Documentation](../README.md)<br />Status & Release Notes<br /><img width=1000/> | ⇨ <br />[Introduction with Examples](../intro/README.md)   |
+| ⇦ <br />[About](../about/README.md)  | [Documentation](../README.md)<br />Status & Release Notes<br /><img width=1000/> | ⇨ <br />[Development Schedule](../development-schedule/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 
