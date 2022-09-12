@@ -135,6 +135,7 @@ int main() {
   CR();
   OUTPUT("This file contains the following information:");
   OUTPUT("* a timestamp");
+  OUTPUT("* the Mathématiques build version");
   OUTPUT("* the linux distro and version");
   OUTPUT("* the compiler and version");
   OUTPUT("* the full compile command with options");
@@ -201,8 +202,8 @@ int main() {
 
   GMD_VSPACE();
   GMD_HEADER3("Current Status");
-  OUTPUT("A full refactoring of the debug functionality is planned.");
-  OUTPUT("✏ Currently all debug messages are disabled until the printing code is refactored.");
+  OUTPUT("✏ A full refactoring of the debug functionality is planned.");
+  OUTPUT("Currently all debug messages are disabled.");
 
   return 0;
 }

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.144-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.145-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -138,6 +138,7 @@ When a C++ source file is compiled, a file with the extension `.compiler` is gen
 
 This file contains the following information:
 * a timestamp
+* the Mathématiques build version
 * the linux distro and version
 * the compiler and version
 * the full compile command with options
@@ -174,7 +175,7 @@ ETV(std::string(mathq::version));
 ```make
 ☀ __cplusplus ➜ long 202002;
 ☀ MATHQ_DEBUG ➜ int 0;
-☀ std::string(mathq::version) ➜ std::string v0.41.144-c++20;
+☀ std::string(mathq::version) ➜ std::string v0.41.145-c++20;
 ```
 This information can also be printed using the function `display::print_mathq_info()`
 ```C++
@@ -182,7 +183,7 @@ display::print_mathq_info();
 ```
 ```C++
                                                                                
-Mathématiques v0.41.144-c++20 
+Mathématiques v0.41.145-c++20 
 
 compile-time settings
   MATHQ_DEBUG 0 (production) 
@@ -193,8 +194,8 @@ compile-time settings
 <br>
 
 ### Current Status
-A full refactoring of the debug functionality is planned.
-✏ Currently all debug messages are disabled until the printing code is refactored.
+✏ A full refactoring of the debug functionality is planned.
+Currently all debug messages are disabled.
 
 
 | ⇦ <br />  | [Introduction with Examples](../README.md)<br />Pretty Printing and Debugging<br /><img width=1000/> | ⇨ <br />[Number Systems and Arithmetic](../numbers/README.md)   |
