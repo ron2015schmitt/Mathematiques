@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.143-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.144-c++20</h1>](../../README.md)
 
 <details>
 
@@ -7,7 +7,7 @@
 # [Chapter  Documentation](../README.md)<br>
 Chapter 1. [License](../license/README.md)<br>
 Chapter 2. [About](../about/README.md)<br>
-Chapter 3. _Status, Planned Work & Release Notes_ <br>
+Chapter 3. _Status & Release Notes_ <br>
 Chapter 4. [Introduction with Examples](../intro/README.md)<br>
 Chapter 5. [Installation](../installation/README.md)<br>
 Chapter 6. [Your First Mathématiques Project](../first-project/README.md)<br>
@@ -21,23 +21,11 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../develop
 
 
 
-# Chapter 3. Status, Planned Work & Release Notes
+# Chapter 3. Status & Release Notes
 
 ## Status
 
 As of v0.41, Mathématiques is now sponsorship-ready.  The core functionality has been implemented, demonstrating its feasibility and utility.
-
-## Coming soon
-
-+ Tensor Calculus / Differential Geometry in generalized coordinates for flat or curved space-time
-  + covariant and contravariant tensor fields
-  + differential forms
-  + tensor operations
-
-+ Documenation
-  + Complete the _Usage Guide_, covering all the functionality
-  + Complete the _Developer Guide_
-
 
 ## Release Notes
 
@@ -126,6 +114,6 @@ As of v0.41, Mathématiques is now sponsorship-ready.  The core functionality ha
   + CI/CT using Docker images in progress
 
 
-| ⇦ <br />[About](../about/README.md)  | [Documentation](../README.md)<br />Status, Planned Work & Release Notes<br /><img width=1000/> | ⇨ <br />[Introduction with Examples](../intro/README.md)   |
+| ⇦ <br />[About](../about/README.md)  | [Documentation](../README.md)<br />Status & Release Notes<br /><img width=1000/> | ⇨ <br />[Introduction with Examples](../intro/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

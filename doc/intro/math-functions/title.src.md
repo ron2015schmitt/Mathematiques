@@ -1,1 +1,1 @@
-Mathematical functions
+Common and Special Mathematical Functions

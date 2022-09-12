@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.143-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.144-c++20</h1>](../../README.md)
 
 <details>
 
@@ -7,7 +7,7 @@
 # [Chapter  Documentation](../README.md)<br>
 Chapter 1. [License](../license/README.md)<br>
 Chapter 2. _About_ <br>
-Chapter 3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>
+Chapter 3. [Status & Release Notes](../status-release/README.md)<br>
 Chapter 4. [Introduction with Examples](../intro/README.md)<br>
 Chapter 5. [Installation](../installation/README.md)<br>
 Chapter 6. [Your First Mathématiques Project](../first-project/README.md)<br>
@@ -210,6 +210,6 @@ Other configurations are of course possible with modification.
 /home/rs2015/Mathematiques/doc
 
 
-| ⇦ <br />[License](../license/README.md)  | [Documentation](../README.md)<br />About<br /><img width=1000/> | ⇨ <br />[Status, Planned Work & Release Notes](../status-release/README.md)   |
+| ⇦ <br />[License](../license/README.md)  | [Documentation](../README.md)<br />About<br /><img width=1000/> | ⇨ <br />[Status & Release Notes](../status-release/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

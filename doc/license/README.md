@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.143-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.144-c++20</h1>](../../README.md)
 
 <details>
 
@@ -8,7 +8,7 @@
 
 Chapter 1. _License_ <br>
 Chapter 2. [About](../about/README.md)<br>
-Chapter 3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>
+Chapter 3. [Status & Release Notes](../status-release/README.md)<br>
 Chapter 4. [Introduction with Examples](../intro/README.md)<br>
 Chapter 5. [Installation](../installation/README.md)<br>
 Chapter 6. [Your First Mathématiques Project](../first-project/README.md)<br>

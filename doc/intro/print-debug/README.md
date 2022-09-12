@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.143-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.144-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -7,7 +7,7 @@
 # [Chapter  Documentation](../../README.md)<br>
 Chapter 1. [License](../../license/README.md)<br>
 Chapter 2. [About](../../about/README.md)<br>
-Chapter 3. [Status, Planned Work & Release Notes](../../status-release/README.md)<br>
+Chapter 3. [Status & Release Notes](../../status-release/README.md)<br>
 Chapter 4. _Introduction with Examples_ <br>
 Chapter 5. [Installation](../../installation/README.md)<br>
 Chapter 6. [Your First Mathématiques Project](../../first-project/README.md)<br>
@@ -35,7 +35,7 @@ Chapter 10. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 4.6. [MultiArray Arithmetic](../multiarray-arithmetic/README.md)<br>
 4.7. [Linear Algebra](../linear-algebra/README.md)<br>
 4.8. [Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)<br>
-4.9. [Mathematical functions](../math-functions/README.md)<br>
+4.9. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
 4.10. [Mutlivariate Calculus](../multi-var-calculus/README.md)<br>
 4.11. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
 4.12. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
@@ -120,8 +120,6 @@ A full refactoring of the printing functionality is underway.
 Mathématiques supports various compilations modes to aid in debugging using the tab `MATHQ_DEBUG`.
 
 
-<br>
-
 ### Setting the compilation mode
 To compile in DEBUG mode, include `MATHQ_DEBUG=n` with your make command, where `n` is the DEBUG level. 
 Using `MATHQ_DEBUG=0` is equivalent to not specifying a value, ie the production compilation mode is used.
@@ -136,21 +134,58 @@ That is, it will be as if the line `#define MATHQ_DEBUG n` is include at the top
 <br>
 
 ### .compiler files
+When a C++ source file is compiled, a file with the extension `.compiler` is generated.
 
+This file contains the following information:
+* a timestamp
+* the linux distro and version
+* the compiler and version
+* the full compile command with options
+
+An example is shown below.
+```bash
+EXAMPLE (not current)
+Mathématiques v0.41.143-c++20
+Sun Sep 11 15:07:24 EDT 2022
+Distributor ID: Ubuntu
+Description:    Ubuntu 22.04.1 LTS
+Release:        22.04
+Codename:       jammy
+g++ (Ubuntu 11.2.0-19ubuntu1) 11.2.0
+g++ -pipe -std=c++20 -O3 -finline-limit=750 -Wfatal-errors -I /home/rs2015/Mathematiques/include
+```
 
 <br>
 
-### Printing information about the compilation mode from C++
+### Compiler and Build Information in C++ code
+The following information is available in C++
 
+| variable | type | description |
+| --- | --- | --- |
+| `__cplusplus` | pre-processor symbol | C++ version number |
+| `MATHQ_DEBUG` | pre-processor symbol | Mathématiques debug mode value |
+| `mathq::version`  | `char[]` | Mathématiques version string |
+
+```C++
+ETV(__cplusplus);
+ETV(MATHQ_DEBUG);
+ETV(std::string(mathq::version));
+```
+```make
+☀ __cplusplus ➜ long 202002;
+☀ MATHQ_DEBUG ➜ int 0;
+☀ std::string(mathq::version) ➜ std::string v0.41.144-c++20;
+```
+This information can also be printed using the function `display::print_mathq_info()`
 ```C++
 display::print_mathq_info();
 ```
-```make
+```C++
                                                                                
-Mathématiques v0.41.143-c++20 
+Mathématiques v0.41.144-c++20 
 
 compile-time settings
-  MATHQ_DEBUG 0 (off/fast) 
+  MATHQ_DEBUG 0 (production) 
   C++ version: 202002
                                                                                
 ```
@@ -159,7 +194,7 @@ compile-time settings
 
 ### Current Status
 A full refactoring of the debug functionality is planned.
-Currently all debug messages are disabled until the printing code is refactored.
+✏ Currently all debug messages are disabled until the printing code is refactored.
 
 
 | ⇦ <br />  | [Introduction with Examples](../README.md)<br />Pretty Printing and Debugging<br /><img width=1000/> | ⇨ <br />[Number Systems and Arithmetic](../numbers/README.md)   |

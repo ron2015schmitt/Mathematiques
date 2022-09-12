@@ -36,6 +36,8 @@ FORCE: ;
 
 define generate_compiler_file
 	@\date > $1.compiler
+	@\echo -e "Mathématiques $(TAG_MATHQ)" >> $1.compiler
+	@\lsb_release -a  >> $1.compiler 2>/dev/null
 	@\echo -e `$(CPP) --version | head -1` >> $1.compiler
 	@\echo -e "$(CPP_CMD) $(CFLAGS)" >> $1.compiler
 endef

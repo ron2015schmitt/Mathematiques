@@ -113,7 +113,7 @@ int main() {
   // describe what it does
   OUTPUT("");
 
-  GMD_VSPACE();
+  CR();
   GMD_HEADER3("Setting the compilation mode");
   OUTPUT("To compile in DEBUG mode, include `MATHQ_DEBUG=n` with your make command, where `n` is the DEBUG level. ");
   OUTPUT("Using `MATHQ_DEBUG=0` is equivalent to not specifying a value, ie the production compilation mode is used.");
@@ -131,12 +131,60 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER3(".compiler files");
   // compilation info stored in files. 
-  OUTPUT("");
+  OUTPUT("When a C++ source file is compiled, a file with the extension `.compiler` is generated.");
+  CR();
+  OUTPUT("This file contains the following information:");
+  OUTPUT("* a timestamp");
+  OUTPUT("* the linux distro and version");
+  OUTPUT("* the compiler and version");
+  OUTPUT("* the full compile command with options");
+  CR();
+  OUTPUT("An example is shown below.");
+
+  {
+    GMD_CODE_START("bash");
+    OUTPUT("EXAMPLE (not current)");
+    OUTPUT("Mathématiques v0.41.143-c++20");
+    OUTPUT("Sun Sep 11 15:07:24 EDT 2022");
+    OUTPUT("Distributor ID: Ubuntu");
+    OUTPUT("Description:    Ubuntu 22.04.1 LTS");
+    OUTPUT("Release:        22.04");
+    OUTPUT("Codename:       jammy");
+    OUTPUT("g++ (Ubuntu 11.2.0-19ubuntu1) 11.2.0");
+    OUTPUT("g++ -pipe -std=c++20 -O3 -finline-limit=750 -Wfatal-errors -I /home/rs2015/Mathematiques/include");
+    GMD_CODE_END();
+  }
+
 
   GMD_VSPACE();
-  GMD_HEADER3("Printing information about the compilation mode from C++");
-  // can display
-  OUTPUT("");
+  GMD_HEADER3("Compiler and Build Information in C++ code");
+  OUTPUT("The following information is available in C++");
+
+  CR();
+  OUTPUT("| variable | type | description |");
+  OUTPUT("| --- | --- | --- |");
+  OUTPUT("| `__cplusplus` | pre-processor symbol | C++ version number |");
+  OUTPUT("| `MATHQ_DEBUG` | pre-processor symbol | Mathématiques debug mode value |");
+  OUTPUT("| `mathq::version`  | `char[]` | Mathématiques version string |");
+  CR();
+
+  {
+    GMD_CODE_START("C++");
+    OUTPUT("ETV(__cplusplus);");
+    OUTPUT("ETV(MATHQ_DEBUG);");
+    OUTPUT("ETV(std::string(mathq::version));");
+    GMD_CODE_END();
+  }
+
+  {
+    GMD_CODE_START("make");
+    ETV(__cplusplus);
+    ETV(MATHQ_DEBUG);
+    ETV(std::string(mathq::version));
+    GMD_CODE_END();
+  }
+
+  OUTPUT("This information can also be printed using the function `display::print_mathq_info()`");
 
   {
     GMD_CODE_START("C++");
@@ -145,7 +193,7 @@ int main() {
   }
 
   {
-    GMD_CODE_START("make");
+    GMD_CODE_START("C++");
     display::print_mathq_info();
     GMD_CODE_END();
   }
@@ -154,7 +202,7 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER3("Current Status");
   OUTPUT("A full refactoring of the debug functionality is planned.");
-  OUTPUT("Currently all debug messages are disabled until the printing code is refactored.");
+  OUTPUT("✏ Currently all debug messages are disabled until the printing code is refactored.");
 
   return 0;
 }
