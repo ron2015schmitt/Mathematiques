@@ -1,5 +1,4 @@
 
-## Development Schedule
 
 Upcoming Releases
 
@@ -12,8 +11,11 @@ Upcoming Releases
 ## V0.43
 + Refactoring of Printing Functionality
 
-## V0.44
+## TBD
++ Refactoring of Debug Functionality
+
+## TBD
 + Documentation
-  + Complete the _Usage Guide_
+  + Complete the _Developer Guide_
 
 

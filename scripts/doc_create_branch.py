@@ -311,9 +311,8 @@ for name in CHILDREN:
   title = node["title"]
   print("  child={}".format(name))
   # print("  chapter={}".format(chapter))
-  numandtitle = node["prefix"]+ (len(node["prefix"])>0)*" " + title
   file = "../README.md"
-  link = "[{}]({})".format(numandtitle, file)
+  link = "[{}]({})".format(node_title, file)
   toc = "# " + link + "<br>\n"
   for name2 in CHILDREN:
     chapter2 = CHAPTERS[name2]
