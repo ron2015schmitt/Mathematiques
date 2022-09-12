@@ -1,3 +1,4 @@
+🚧 in progress...
 
 
 ## Vector math benchmarks 
@@ -31,5 +32,5 @@ stop();
 
 
 ## dot product benchmarks
----------------------------------------------------------------------------
-To be written...
+
+🚧✏ refactoring in progress...

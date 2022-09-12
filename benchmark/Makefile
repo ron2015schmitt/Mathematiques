@@ -16,7 +16,7 @@ EXEC = benchmark
 ALL = run gitignore
 
 # overide the default compiler options
-OPTIMIZE = -O3 -finline-limit=750
+OPTIMIZE = -O3 -ffast-math
 
 
 #---------------------------------------------------------------------

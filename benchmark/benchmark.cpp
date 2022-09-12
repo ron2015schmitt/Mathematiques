@@ -81,29 +81,19 @@ int main() {
   tfull.start_timer_verbose();
   CR();
 
-  const int N = 2000000;
-  const double pi = M_PI;
+  constexpr size_t N = 100000;  // 1000000
+  constexpr double pi = M_PI;
 
   MOUT << "" << CREATESTYLE(BOLD).apply("Fill with a constant value") << ", N=" << N << std::endl;
 
-  // In these two cases, storgae is reserved and filled at compile time,
-  // so it doesn;t make sense to test. There is nothing to test.
-  // {
-  //   MOUT << "  " << CREATESTYLE(BLUE2+BOLD).apply("double[N]") <<std::endl;
-  //   double tdata[N];
-  //   t.start_timer_silent();
-  //   for(int i=0; i<N; i++)
-  //     tdata[i] = 3.14;
-  //   t.stop_timer_curt();
-  // }
-  // {
-  //   MOUT << "  " << CREATESTYLE(BLUE2+BOLD).apply("std::array")<<std::endl;
-  //   std::array<double,N> v;
-  //   t.start_timer_silent();
-  //   for(int i=0; i<N; i++)
-  //     v[i] = 3.14;
-  //   t.stop_timer_curt();
-  // }
+  {
+    MOUT << "  " << CREATESTYLE(BLUE2+BOLD).apply("double[N]") <<std::endl;
+    double tdata[N];
+    t.start_timer_silent();
+    for (int i = 0; i<N; i++)
+      tdata[i] = 3.14;
+    t.stop_timer_curt();
+  }
 
   {
     MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("new double[N]") << std::endl;
@@ -142,18 +132,43 @@ int main() {
   MOUT << "" << CREATESTYLE(BOLD).apply("cos(2*pi + pi*sin(2*pi*x + pi/6))") << ", N=" << N << std::endl;
 
   {
+    MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("std::array") << std::endl;
+    std::array<double, N> x;
+    std::array<double, N> f;
+
+    t.start_timer_silent();
+    for (int i = 0; i < N; i++)  x[i] = double(i) / double(N - 1);
+    for (int i = 0; i < N; i++)  f[i] = cos(2 * pi + pi * sin(2 * pi * x[i] + pi / 6));
+    t.stop_timer_curt();
+    // ETV(f);
+  }
+
+  {
     MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("std::valarray") << std::endl;
     std::valarray<double> x(N);
-    for (int i = 0; i < N; i++)
-      x[i] = double(i) / double(N - 1);
     std::valarray<double> f(N);
+
     t.start_timer_silent();
-    for (int i = 0; i < N; i++)
-      f[i] = cos(2 * pi + pi * sin(2 * pi * x[i] + pi / 6));
+    for (int i = 0; i < N; i++)  x[i] = double(i) / double(N - 1);
+    for (int i = 0; i < N; i++)  f[i] = cos(2 * pi + pi * sin(2 * pi * x[i] + pi / 6));
     t.stop_timer_curt();
   }
+
+
   {
-    MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("mathq::Vector") << std::endl;
+    MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("mathq::Vector<double, N>") << std::endl;
+    Vector<double, N> x;
+    Vector<double, N> f;
+    t.start_timer_silent();
+    x = linspace<double>(0, 1, N);
+    f = cos(2 * pi + pi * sin(2 * pi * x + pi / 6));
+    t.stop_timer_curt();
+    // ETV(x);
+    // ETV(f);
+  }
+
+  {
+    MOUT << "  " << CREATESTYLE(BLUE2 + BOLD).apply("mathq::Vector<double>") << std::endl;
     Vector<double> x(N);
     Vector<double> f(N);
     x = linspace<double>(0, 1, N);

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.149-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.150-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -9,7 +9,7 @@ Chapter 1. [License](../../license/README.md)<br>
 Chapter 2. [About](../../about/README.md)<br>
 Chapter 3. [Objectives](../../objectives/README.md)<br>
 Chapter 4. [Status & Release Notes](../../status-release/README.md)<br>
-Chapter 5. [Development Schedule](../../development-schedule/README.md)<br>
+Chapter 5. [Upcoming Development](../../development-schedule/README.md)<br>
 Chapter 6. _Introduction with Examples_ <br>
 Chapter 7. [Installation](../../installation/README.md)<br>
 Chapter 8. [Your First Mathématiques Project](../../first-project/README.md)<br>
@@ -149,11 +149,7 @@ An example is shown below.
 ```bash
 EXAMPLE (not current)
 Mathématiques v0.41.143-c++20
-Sun Sep 11 15:07:24 EDT 2022
-Distributor ID: Ubuntu
 Description:    Ubuntu 22.04.1 LTS
-Release:        22.04
-Codename:       jammy
 g++ (Ubuntu 11.2.0-19ubuntu1) 11.2.0
 g++ -pipe -std=c++20 -O3 -finline-limit=750 -Wfatal-errors -I /home/rs2015/Mathematiques/include
 ```
@@ -177,7 +173,7 @@ ETV(std::string(mathq::version));
 ```C++
 ☀ __cplusplus ➜ long 202002;
 ☀ MATHQ_DEBUG ➜ int 0;
-☀ std::string(mathq::version) ➜ std::string v0.41.149-c++20;
+☀ std::string(mathq::version) ➜ std::string v0.41.150-c++20;
 ```
 This information can also be printed using the function `display::print_mathq_info()`
 ```C++
@@ -185,7 +181,7 @@ display::print_mathq_info();
 ```
 ```C++
                                                                                
-Mathématiques v0.41.149-c++20 
+Mathématiques v0.41.150-c++20 
 
 compile-time settings
   MATHQ_DEBUG 0 (production) 

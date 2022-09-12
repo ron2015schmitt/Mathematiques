@@ -146,11 +146,7 @@ int main() {
     GMD_CODE_START("bash");
     OUTPUT("EXAMPLE (not current)");
     OUTPUT("Mathématiques v0.41.143-c++20");
-    OUTPUT("Sun Sep 11 15:07:24 EDT 2022");
-    OUTPUT("Distributor ID: Ubuntu");
     OUTPUT("Description:    Ubuntu 22.04.1 LTS");
-    OUTPUT("Release:        22.04");
-    OUTPUT("Codename:       jammy");
     OUTPUT("g++ (Ubuntu 11.2.0-19ubuntu1) 11.2.0");
     OUTPUT("g++ -pipe -std=c++20 -O3 -finline-limit=750 -Wfatal-errors -I /home/rs2015/Mathematiques/include");
     GMD_CODE_END();

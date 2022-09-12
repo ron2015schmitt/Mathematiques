@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.149-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.150-c++20</h1>](../../README.md)
 
 <details>
 
@@ -9,7 +9,7 @@ Chapter 1. [License](../license/README.md)<br>
 Chapter 2. _About_ <br>
 Chapter 3. [Objectives](../objectives/README.md)<br>
 Chapter 4. [Status & Release Notes](../status-release/README.md)<br>
-Chapter 5. [Development Schedule](../development-schedule/README.md)<br>
+Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
 Chapter 6. [Introduction with Examples](../intro/README.md)<br>
 Chapter 7. [Installation](../installation/README.md)<br>
 Chapter 8. [Your First Mathématiques Project](../first-project/README.md)<br>
@@ -47,6 +47,8 @@ The code uses a form of C++ [template metaprogramming](https://en.wikipedia.org/
 1. *operator overloading*
 1. using templates for all functions
 1. _Avoid_ use of virtual functions completely to minimize size of instance in memory and run-time cost
+1. avoid use of class hierarchies
+1. use C++ *concepts* introduced in C++ 20 (constraints and requirements)
 
 References
 1. Andrei Alexandrescu, __Modern C++ Design: Generic Programming and Design Patterns Applied__, 2001.

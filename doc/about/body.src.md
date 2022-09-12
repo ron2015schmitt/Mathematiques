@@ -20,6 +20,8 @@ The code uses a form of C++ [template metaprogramming](https://en.wikipedia.org/
 1. *operator overloading*
 1. using templates for all functions
 1. _Avoid_ use of virtual functions completely to minimize size of instance in memory and run-time cost
+1. avoid use of class hierarchies
+1. use C++ *concepts* introduced in C++ 20 (constraints and requirements)
 
 References
 1. Andrei Alexandrescu, __Modern C++ Design: Generic Programming and Design Patterns Applied__, 2001.
