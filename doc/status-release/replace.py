@@ -37,14 +37,14 @@ N = len(sys.argv)
 lines = []
 fn = "template.src.md"
 with open(fn, 'r') as f:
-  print("  FOUND: "+fn)
+  # print("  FOUND: "+fn)
   body = f.read()
 
 # read in version file
 lines = []
 fn = "../../versioning/config.compiler.out.txt"
 with open(fn, 'r') as f:
-  print("  FOUND: "+fn)
+  # print("  FOUND: "+fn)
   info = f.read()
 
 # print(info)
