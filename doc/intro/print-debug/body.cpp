@@ -178,7 +178,7 @@ int main() {
   }
 
   {
-    GMD_CODE_START("make");
+    GMD_CODE_START("C++");
     ETV(__cplusplus);
     ETV(MATHQ_DEBUG);
     ETV(std::string(mathq::version));

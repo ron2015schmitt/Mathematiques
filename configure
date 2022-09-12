@@ -13,8 +13,10 @@ source scripts/style.bash || exit 1
 
 # Create file that contains the installation path
 
-DIR_MATHQ=${pwd}
+export DIR_MATHQ=${pwd}
 MAKEDIR=${DIR_MATHQ}/make-lib
+
+
 
 cat > ${MAKEDIR}/dirmathq.config.mk << EOF 
 # created by configure script

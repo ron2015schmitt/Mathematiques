@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.145-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.146-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -172,10 +172,10 @@ ETV(__cplusplus);
 ETV(MATHQ_DEBUG);
 ETV(std::string(mathq::version));
 ```
-```make
+```C++
 ☀ __cplusplus ➜ long 202002;
 ☀ MATHQ_DEBUG ➜ int 0;
-☀ std::string(mathq::version) ➜ std::string v0.41.145-c++20;
+☀ std::string(mathq::version) ➜ std::string v0.41.146-c++20;
 ```
 This information can also be printed using the function `display::print_mathq_info()`
 ```C++
@@ -183,7 +183,7 @@ display::print_mathq_info();
 ```
 ```C++
                                                                                
-Mathématiques v0.41.145-c++20 
+Mathématiques v0.41.146-c++20 
 
 compile-time settings
   MATHQ_DEBUG 0 (production) 

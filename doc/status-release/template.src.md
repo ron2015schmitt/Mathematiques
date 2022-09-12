@@ -1,6 +1,12 @@
 ## Status
 
-As of v0.41, Mathématiques is now sponsorship-ready.  The core functionality has been implemented, demonstrating its feasibility and utility.
+As of v0.41, Mathématiques is now sponsorship-ready.  The core functionality has been implemented, demonstrating its feasibility, utility, and performance.
+
+## Current Build Information
+
+```
+__BUILD_INFO__
+```
 
 ## Release Notes
 
