@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.150-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.151-c++20</h1>](../../README.md)
 
 <details>
 
@@ -39,3 +39,8 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../develop
 9.12. [Display of Results](display/README.md)<br>
 9.13. [FILE I/O](file-io/README.md)<br>
 9.14. [Debug Modes](debug/README.md)<br>
+<br>
+🚧 in progress...
+
+The Usage Guide does not yet cover all functionality.
+

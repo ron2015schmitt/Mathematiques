@@ -493,7 +493,7 @@ namespace display {
   //------------------------------------------------------------
   //                        num2string
   //
-  // use std library instead
+  // use std library std::to_string(val) instead
   //------------------------------------------------------------
 
   template <class D>

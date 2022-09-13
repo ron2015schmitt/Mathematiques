@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.150-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.151-c++20</h1>](../../README.md)
 
 <details>
 
@@ -25,42 +25,59 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../develop
 
 # Chapter 10. Benchmarks
 
-🚧 in progress...
+_This document was generated from the C++ file_ `benchmarks/body.cpp` _using macros and functions (in namespace `mathq::display`) from the header_ `"mathq.h"`. 
 
 
-## Vector math benchmarks 
 
-Here we compare _Mathematiques_ vs. a handcoded `C` array loops.
+## Memory Usage
 
-### mathq syntax 
+### Vectors
+| Type | Size<sup>1,2</sup> | Min<sup>1,3</sup> | Max<sup>1,4</sup> |
+| :--- | :---: | :---: | :---: | 
+| `char` | 8 bits | -128 | 127 | 
+| `short` | 16 bits | -32768 | 32767 | 
+| `int` | 32 bits | -2147483648 | 2147483647 | 
+| `long` | 64 bits | -9223372036854775808 | 9223372036854775807 | 
+| `long long` | 64 bits | -9223372036854775808 | 9223372036854775807 | 
+
+<br>
+
+## Speed
+### vector function
+$f(x) = 10 x + e^{i \, [  \, 2 \pi  \, +  \, \pi sin( \, 2 \pi x + \pi / 6 \, )  \, ] }$
 ```C++
-Vector<double> x(N);
-x = linspace<double>(0,1,N);
-Vector<double> f(N);
-start();
-f = cos(2*pi + pi*sin(2*pi*x + pi/6));
-stop();
-```
+using namespace std::numbers;
+const std::complex<double> i(0, 1);
+constexpr size_t N = 500000;
 
-### hand-coded `C` loop 
-```C++
 std::valarray<double> x(N);
-for(int i=0; i<N; i++)
-  x[i] = double(i)/double(N-1);
-std::valarray<double> f(N);
-start();
-for(int i=0; i<N; i++)
-     f[i] = cos(2*pi + pi*sin(2*pi*x[i] + pi/6));
-stop();
+std::valarray<std::complex<double>> f(N);
+
+Timer timer;
+timer.start_timer_silent();
+
+for (size_t k = 0; k < N; k++) { x[k] = double(k) / double(N - 1); };
+for (size_t k = 0; k < N; k++) { f[k] = 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6))); };
+
+☀ timer.stop_timer() ➜ 0.013529 sec;
 ```
-### results
+```C++
+using namespace std::numbers;
+const Imaginary<double> i{ 1 };
+constexpr size_t N = 500000;
 
-![benchmarks](../files/benchmark.png)
+Vector<double> x(N);
+Vector<std::complex<double>> f(N);
 
+Timer timer;
+timer.start_timer_silent();
 
-## dot product benchmarks
+x = linspace<double>(0, 1, N);
+f = 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));
 
-🚧✏ refactoring in progress...
+☀ timer.stop_timer() ➜ 0.012878 sec;
+```
+
 
 | ⇦ <br />[Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)  | [Documentation](../README.md)<br />Benchmarks<br /><img width=1000/> | ⇨ <br />[Tests](../test/README.md)   |
 | ------------ | :-------------------------------: | ------------ |

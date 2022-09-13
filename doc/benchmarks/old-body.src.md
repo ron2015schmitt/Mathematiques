@@ -11,7 +11,7 @@ Vector<double> x(N);
 x = linspace<double>(0,1,N);
 Vector<double> f(N);
 start();
-f = cos(2*pi + pi*sin(2*pi*x + pi/6));
+f = exp(2*pi + pi*sin(2*pi*x + pi/6));
 stop();
 ```
 
@@ -23,7 +23,7 @@ for(int i=0; i<N; i++)
 std::valarray<double> f(N);
 start();
 for(int i=0; i<N; i++)
-     f[i] = cos(2*pi + pi*sin(2*pi*x[i] + pi/6));
+     f[i] = exp(2*pi + pi*sin(2*pi*x[i] + pi/6));
 stop();
 ```
 ### results
@@ -32,5 +32,10 @@ stop();
 
 
 ## dot product benchmarks
+
+
+## memory usage
+
+
 
 🚧✏ refactoring in progress...

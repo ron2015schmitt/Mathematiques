@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.150-c++20</h1>](../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.151-c++20</h1>](../README.md)
 
 # Documentation
 
@@ -18,4 +18,5 @@ Chapter 10. [Benchmarks](benchmarks/README.md)<br>
 Chapter 11. [Tests](test/README.md)<br>
 <br>**Modification**<br>
 Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](developer-guide/README.md)<br>
-🚧 in progress...
+
+
