@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.152-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.153-c++20</h1>](../../README.md)
 
 <details>
 
@@ -32,122 +32,96 @@ _This document was generated from the C++ file_ `benchmarks/body.cpp` _using mac
 ## Memory Usage
 
 ### Vectors
-| Type | Size<sup>1,2</sup> | Min<sup>1,3</sup> | Max<sup>1,4</sup> |
-| :--- | :---: | :---: | :---: | 
-| `char` | 8 bits | -128 | 127 | 
-| `short` | 16 bits | -32768 | 32767 | 
-| `int` | 32 bits | -2147483648 | 2147483647 | 
-| `long` | 64 bits | -9223372036854775808 | 9223372036854775807 | 
-| `long long` | 64 bits | -9223372036854775808 | 9223372036854775807 | 
+8
 
 <br>
 
-## Speed
-### Complicated Mathematical function of a Vector
+## Run-Time Performance
+The following tests are run during each build. The Mathématiques code is usually faster than hand-coded C.  The tests are repeated `Nloop` times and then the results are averaged.
+### Test 1. Function of a Vector
 
-$f(x) = 10 x + e^{i  [   2 \pi   +   \pi sin(  2 \pi x + \pi / 6  )   ] }$
+$f(x) = 1 + 10 x + e^{i  [   2 \pi   +   \pi sin(  2 \pi x + \pi / 6  )   ] }$
 
-**Hand-coded C**
 ```C++
-
- using namespace std::numbers;
- const std::complex<double> i(0, 1);
- constexpr size_t N = 500000;
- std::valarray<double> x(N);
- std::valarray<std::complex<double>> f(N);
- Timer timer;
- 
- timer.start_timer_silent();
- for (size_t k = 0; k < N; k++) { 
-   x[k] = double(k) / double(N - 1);
- }
- for (size_t k = 0; k < N; k++) { 
-   f[k] = 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6)));
- }
- double elapsed = timer.stop_timer();
-
-
-☀ elapsed ➜ 0.013355 sec;
+using namespace std::numbers;
+size_t Nloop = 30;
+constexpr size_t N = 10000;
 ```
-
-**Mathématiques**
+#### Results 1A. Hand-Coded C
 ```C++
+const std::complex<double> i(0, 1);
+std::valarray<double> x(N);
+std::valarray<std::complex<double>> f(N);
 
- using namespace std::numbers;
- const Imaginary<double> i{ 1 };
- constexpr size_t N = 500000;
- Vector<double> x(N);
- Vector<std::complex<double>> f(N);
- Timer timer;
- 
- timer.start_timer_silent();
- x = linspace<double>(0, 1, N);
- f = 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));
- double elapsed = timer.stop_timer();
-
-
-☀ elapsed ➜ 0.011987 sec;
+for (size_t k = 0; k < N; k++) {
+  x[k] = double(k) / double(N - 1);
+}
+for (size_t k = 0; k < N; k++) {
+  f[k] = 1 + 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6)));
+}
 ```
+☀ elapsed_time ➜ 264 μsec;
+
+
+#### Results 1B. Mathématiques C
+```C++
+const Imaginary<double> i{ 1 };
+Vector<double> x(N);
+Vector<std::complex<double>> f(N);
+
+x = linspace<double>(0, 1, N);
+f = 1 + 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));
+```
+☀ elapsed_time ➜ 240 μsec;
+
 
 <br>
 
-### Matrix Multiply
+### Test 2. Matrix Multiply
 
 $\mathbf{y} = \mathbf{A} \cdot \mathbf{x}$
-
-**Hand-coded C**
 ```C++
-
- using namespace std::numbers;
- const std::complex<double> i(0, 1);
- constexpr size_t N = 1000;
- std::valarray<double> x(N);
- std::valarray<double> y(N);
- std::valarray<double> A(N*N);
- Timer timer;
- 
- timer.start_timer_silent();
- for (size_t k = 0; k < N; k++) { 
-   x[k] = double(k) / double(N - 1);
- };
- for (size_t k = 0; k < N*N; k++) { 
-   A[k] = sin(double(k)*pi/double(N*N));
- };
- size_t step = 0;
- for (size_t r = 0; r < N; r++) { 
-   y[r] = 0;
-   for (size_t c = 0; c < N; c++) { 
-     y[r] += A[step++] * x[c];
-    }
- }
- double elapsed = timer.stop_timer();
-
-
-☀ elapsed ➜ 0.007691 sec;
+using namespace std::numbers;
+size_t Nloop = 30;
+constexpr size_t N = 500;
 ```
-
-**Mathématiques**
+#### Results 2A. Hand-Coded C
 ```C++
+std::valarray<double> x(N);
+std::valarray<double> y(N);
+std::valarray<double> A(N* N);
 
- using namespace std::numbers;
- const Imaginary<double> i{ 1 };
- constexpr size_t N = 1000;
- Vector<double> x(N);
- Vector<double> y(N);
- Matrix<double> A(N, N);
- Timer timer;
- 
- timer.start_timer_silent();
- x = linspace<double>(0, 1, N);
- for (size_t k = 0; k < N*N; k++) { 
-   A[k] = sin(double(k)*pi/double(N*N));
- }
- y = A | x;
- double elapsed = timer.stop_timer();
-
-
-☀ elapsed ➜ 0.005544 sec;
+for (size_t k = 0; k < N; k++) {
+  x[k] = double(k) / double(N - 1);
+}
+for (size_t k = 0; k < N*N; k++) {
+  A[k] = sin(double(k)*pi/double(N*N));
+}
+size_t step = 0;
+for (size_t r = 0; r < N; r++) {
+  y[r] = 0;
+  for (size_t c = 0; c < N; c++) {
+    y[r] += A[step++] * x[c];
+  }
+}
 ```
+☀ elapsed_time ➜ 1330 μsec;
+
+
+#### Results 2B. Mathématiques C
+```C++
+Vector<double> x(N);
+Vector<double> y(N);
+Matrix<double> A(N, N);
+
+x = linspace<double>(0, 1, N);
+for (size_t k = 0; k < N*N; k++) {
+  A[k] = sin(double(k)*pi/double(N*N));
+}
+y = A | x;
+```
+☀ elapsed_time ➜ 1318 μsec;
+
 
 
 
