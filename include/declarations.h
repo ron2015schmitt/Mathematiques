@@ -43,11 +43,16 @@ extern char COMPILER_OPT_STR[];
 
 namespace display {
 
+  inline std::string replace_all(const std::string& inout, const std::string_view what, const std::string_view with);
+
   template <typename T>
   inline std::string bracketAndStyleTypename(const T& var);
   template <typename T>
   inline void dispval_strm(std::ostream& stream, const T& d);
+
 }; // namespace display
+
+
 
 
 namespace mathq {
@@ -63,6 +68,7 @@ namespace mathq {
   // maximum subcript size for vectors and matrices (since we allow negative indexing)
   const size_t maxsize = std::numeric_limits<size_t>::max();
   const size_t badsize = std::numeric_limits<size_t>::max();
+
 
 
   // ***************************************************************************

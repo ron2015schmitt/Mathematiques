@@ -180,6 +180,19 @@
   MOUT << display::Display::codePrefixStyledString << display::printf2str(stringify(__VA_ARGS__)) << ";" << std::endl; \
   __VA_ARGS__
 
+
+//
+// ECHO_MULTI
+//
+// code enclosed in ECHO_MULTI gets executed en bloc after the printing. 
+// ";'\n';" gets replaced with a carriage retunrn
+// ";'\n';" gets replaced with a carriage retunrn
+
+#define ECHO_MULTI(...)                                                                                        \
+  MOUT << display::Display::codePrefixStyledString << display::replace_all(display::replace_all(stringify(__VA_ARGS__),";'\\n';","\n"),";' ';","  ") << std::endl; \
+  __VA_ARGS__
+
+
 //
 // ECHO_CODE_W_COMMENT
 //
@@ -442,6 +455,19 @@
 
 
 namespace display {
+
+
+
+  std::string replace_all(const std::string& inout, const std::string_view what, const std::string_view with) {
+    std::string result(inout);
+    for (std::string::size_type pos{};
+      result.npos != (pos = result.find(what.data(), pos, what.length()));
+      pos += with.length()) {
+      std::string s = { with.begin(), with.end() };
+      result.replace(pos, what.length(), s);
+    }
+    return result;
+  }
 
   extern const char blankline[];
   //****************************************************************************
@@ -2074,7 +2100,7 @@ namespace display {
 
 
 
-}; // namespace display
+  }; // namespace display
 
 
 

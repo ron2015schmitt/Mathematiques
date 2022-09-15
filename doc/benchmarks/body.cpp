@@ -41,60 +41,162 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER2("Speed");
 
-  GMD_HEADER3("vector function");
+  GMD_HEADER3("Complicated Mathematical function of a Vector");
+  CR();
 
-  OUTPUT("$f(x) = 10 x + e^{i \\, [  \\, 2 \\pi  \\, +  \\, \\pi sin( \\, 2 \\pi x + \\pi / 6 \\, )  \\, ] }$");
+  OUTPUT("$f(x) = 10 x + e^{i  [   2 \\pi   +   \\pi sin(  2 \\pi x + \\pi / 6  )   ] }$");
+  CR();
 
+  OUTPUT("**Hand-coded C**");
   {
+
     GMD_CODE_START("C++");
-    ECHO(using namespace std::numbers);
-    ECHO(const std::complex<double> i(0, 1));
-    ECHO(constexpr size_t N = 500000);
+
+    // code enclosed in ECHO_MULTI gets executed en bloc after the printing. ";'\n';" gets replaced with a carriage retunr
+    ECHO_MULTI(;'\n';
+    using namespace std::numbers;;'\n';
+    const std::complex<double> i(0, 1);;'\n';
+    constexpr size_t N = 500000;;'\n';
+    std::valarray<double> x(N);;'\n';
+    std::valarray<std::complex<double>> f(N);;'\n';
+    Timer timer;;'\n';
+    ;'\n';
+    timer.start_timer_silent();;'\n';
+    for (size_t k = 0; k < N; k++) {
+      ;'\n';
+      ;' ';x[k] = double(k) / double(N - 1);;'\n';
+    };'\n';
+    for (size_t k = 0; k < N; k++) {
+      ;'\n';
+      ;' ';f[k] = 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6)));;'\n';
+    };'\n';
+    double elapsed = timer.stop_timer();;'\n';
+    );
+
     CR();
-    ECHO(std::valarray<double> x(N));
-    ECHO(std::valarray<std::complex<double>> f(N));
+    SRDISP(" sec", elapsed);
+    // ETV(x);
+    // ETV(f);
+    GMD_CODE_END();
+  }
+
+  CR();
+
+
+  OUTPUT("**Mathématiques**");
+  {
+
+    GMD_CODE_START("C++");
+
+    // code enclosed in ECHO_MULTI gets executed en bloc after the printing. ";'\n';" gets replaced with a carriage retunr
+    ECHO_MULTI(;'\n';
+    using namespace std::numbers;;'\n';
+    const Imaginary<double> i{ 1 };;'\n';
+    constexpr size_t N = 500000;;'\n';
+    Vector<double> x(N);;'\n';
+    Vector<std::complex<double>> f(N);;'\n';
+    Timer timer;;'\n';
+    ;'\n';
+    timer.start_timer_silent();;'\n';
+    x = linspace<double>(0, 1, N);;'\n';
+    f = 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));;'\n';
+    double elapsed = timer.stop_timer();;'\n';
+    );
+
     CR();
-    ECHO(Timer timer);
-    ECHO(timer.start_timer_silent());
-    CR();
-    ECHO(for (size_t k = 0; k < N; k++) {
-      x[k] = double(k) / double(N - 1);
-    });
-    ECHO(for (size_t k = 0; k < N; k++) {
-      f[k] = 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6)));
-    });
-    CR();
-    SRDISP(" sec", timer.stop_timer());
+    SRDISP(" sec", elapsed);
     // ETV(x);
     // ETV(f);
     GMD_CODE_END();
   }
 
 
+  GMD_VSPACE();
+  GMD_HEADER3("Matrix Multiply");
+  CR();
 
+  OUTPUT("$\\mathbf{y} = \\mathbf{A} \\cdot \\mathbf{x}$");
+  CR();
+
+  OUTPUT("**Hand-coded C**");
   {
     GMD_CODE_START("C++");
-    ECHO(using namespace std::numbers);
-    ECHO(const Imaginary<double> i{ 1 });
-    ECHO(constexpr size_t N = 500000);
-    CR();
-    ECHO(Vector<double> x(N));
-    ECHO(Vector<std::complex<double>> f(N));
-    CR();
-    ECHO(Timer timer);
-    ECHO(timer.start_timer_silent());
-    CR();
-    ECHO(x = linspace<double>(0, 1, N));
-    ECHO(f = 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6))));
-    CR();
-    SRDISP(" sec", timer.stop_timer());
-    // ETV(x);
-    // ETV(f);
 
+    // code enclosed in ECHO_MULTI gets executed en bloc after the printing. ";'\n';" gets replaced with a carriage retunrn
+    ECHO_MULTI(;'\n';
+    using namespace std::numbers;;'\n';
+    const std::complex<double> i(0, 1);;'\n';
+    constexpr size_t N = 1000;;'\n';
+    std::valarray<double> x(N);;'\n';
+    std::valarray<double> y(N);;'\n';
+    std::valarray<double> A(N*N);;'\n';
+    Timer timer;;'\n';
+    ;'\n';
+    timer.start_timer_silent();;'\n';
+    for (size_t k = 0; k < N; k++) {
+      ;'\n';
+      ;' ';x[k] = double(k) / double(N - 1);;'\n';
+    };;'\n';
+    for (size_t k = 0; k < N*N; k++) {
+      ;'\n';
+      ;' ';A[k] = sin(double(k)*pi/double(N*N));;'\n';
+    };;'\n';
+    size_t step = 0;;'\n';
+    for (size_t r = 0; r < N; r++) {
+      ;'\n';
+      ;' ';y[r] = 0;;'\n';
+      ;' ';for (size_t c = 0; c < N; c++) {
+        ;'\n';
+        ;' ';;' ';y[r] += A[step++] * x[c];;'\n';
+        ;' ';
+      };'\n';
+    };'\n';
+    double elapsed = timer.stop_timer();;'\n';
+    );
+
+    CR();
+    SRDISP(" sec", elapsed);
+    // ETV(x);
+    // ETV(A);
+    // ETV(y);  
     GMD_CODE_END();
   }
 
+  CR();
 
+  OUTPUT("**Mathématiques**");
+  {
+    GMD_CODE_START("C++");
+
+    // code enclosed in ECHO_MULTI gets executed en bloc after the printing. ";'\n';" gets replaced with a carriage retunr
+    ECHO_MULTI(;'\n';
+    using namespace std::numbers;;'\n';
+    const Imaginary<double> i{ 1 };;'\n';
+    constexpr size_t N = 1000;;'\n';
+    Vector<double> x(N);;'\n';
+    Vector<double> y(N);;'\n';
+    Matrix<double> A(N, N);;'\n';
+    Timer timer;;'\n';
+    ;'\n';
+    timer.start_timer_silent();;'\n';
+    x = linspace<double>(0, 1, N);;'\n';
+    for (size_t k = 0; k < N*N; k++) {
+      ;'\n';
+      ;' ';A[k] = sin(double(k)*pi/double(N*N));;'\n';
+    };'\n';
+    y = A | x;;'\n';
+    double elapsed = timer.stop_timer();;'\n';
+    );
+
+    CR();
+    SRDISP(" sec", elapsed);
+    // ETV(x);
+    // ETV(A);
+    // ETV(y);
+    GMD_CODE_END();
+  }
+
+  CR();
 
 
   return 0;

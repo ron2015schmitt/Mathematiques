@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.151-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.152-c++20</h1>](../../README.md)
 
 <details>
 
@@ -43,40 +43,112 @@ _This document was generated from the C++ file_ `benchmarks/body.cpp` _using mac
 <br>
 
 ## Speed
-### vector function
-$f(x) = 10 x + e^{i \, [  \, 2 \pi  \, +  \, \pi sin( \, 2 \pi x + \pi / 6 \, )  \, ] }$
+### Complicated Mathematical function of a Vector
+
+$f(x) = 10 x + e^{i  [   2 \pi   +   \pi sin(  2 \pi x + \pi / 6  )   ] }$
+
+**Hand-coded C**
 ```C++
-using namespace std::numbers;
-const std::complex<double> i(0, 1);
-constexpr size_t N = 500000;
 
-std::valarray<double> x(N);
-std::valarray<std::complex<double>> f(N);
+ using namespace std::numbers;
+ const std::complex<double> i(0, 1);
+ constexpr size_t N = 500000;
+ std::valarray<double> x(N);
+ std::valarray<std::complex<double>> f(N);
+ Timer timer;
+ 
+ timer.start_timer_silent();
+ for (size_t k = 0; k < N; k++) { 
+   x[k] = double(k) / double(N - 1);
+ }
+ for (size_t k = 0; k < N; k++) { 
+   f[k] = 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6)));
+ }
+ double elapsed = timer.stop_timer();
 
-Timer timer;
-timer.start_timer_silent();
 
-for (size_t k = 0; k < N; k++) { x[k] = double(k) / double(N - 1); };
-for (size_t k = 0; k < N; k++) { f[k] = 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6))); };
-
-☀ timer.stop_timer() ➜ 0.013529 sec;
+☀ elapsed ➜ 0.013355 sec;
 ```
+
+**Mathématiques**
 ```C++
-using namespace std::numbers;
-const Imaginary<double> i{ 1 };
-constexpr size_t N = 500000;
 
-Vector<double> x(N);
-Vector<std::complex<double>> f(N);
+ using namespace std::numbers;
+ const Imaginary<double> i{ 1 };
+ constexpr size_t N = 500000;
+ Vector<double> x(N);
+ Vector<std::complex<double>> f(N);
+ Timer timer;
+ 
+ timer.start_timer_silent();
+ x = linspace<double>(0, 1, N);
+ f = 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));
+ double elapsed = timer.stop_timer();
 
-Timer timer;
-timer.start_timer_silent();
 
-x = linspace<double>(0, 1, N);
-f = 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));
-
-☀ timer.stop_timer() ➜ 0.012878 sec;
+☀ elapsed ➜ 0.011987 sec;
 ```
+
+<br>
+
+### Matrix Multiply
+
+$\mathbf{y} = \mathbf{A} \cdot \mathbf{x}$
+
+**Hand-coded C**
+```C++
+
+ using namespace std::numbers;
+ const std::complex<double> i(0, 1);
+ constexpr size_t N = 1000;
+ std::valarray<double> x(N);
+ std::valarray<double> y(N);
+ std::valarray<double> A(N*N);
+ Timer timer;
+ 
+ timer.start_timer_silent();
+ for (size_t k = 0; k < N; k++) { 
+   x[k] = double(k) / double(N - 1);
+ };
+ for (size_t k = 0; k < N*N; k++) { 
+   A[k] = sin(double(k)*pi/double(N*N));
+ };
+ size_t step = 0;
+ for (size_t r = 0; r < N; r++) { 
+   y[r] = 0;
+   for (size_t c = 0; c < N; c++) { 
+     y[r] += A[step++] * x[c];
+    }
+ }
+ double elapsed = timer.stop_timer();
+
+
+☀ elapsed ➜ 0.007691 sec;
+```
+
+**Mathématiques**
+```C++
+
+ using namespace std::numbers;
+ const Imaginary<double> i{ 1 };
+ constexpr size_t N = 1000;
+ Vector<double> x(N);
+ Vector<double> y(N);
+ Matrix<double> A(N, N);
+ Timer timer;
+ 
+ timer.start_timer_silent();
+ x = linspace<double>(0, 1, N);
+ for (size_t k = 0; k < N*N; k++) { 
+   A[k] = sin(double(k)*pi/double(N*N));
+ }
+ y = A | x;
+ double elapsed = timer.stop_timer();
+
+
+☀ elapsed ➜ 0.005544 sec;
+```
+
 
 
 | ⇦ <br />[Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)  | [Documentation](../README.md)<br />Benchmarks<br /><img width=1000/> | ⇨ <br />[Tests](../test/README.md)   |
