@@ -1,11 +1,11 @@
 
 
-# Mathématiques v0.41.157-c++20
+# Mathématiques v0.41.158-c++20
 
 
 ## Phase 1 (in progress): C++ Numerical Library
   
-Create an extensive, open source, numerical C++ library that provieds / supports
+Using modern C++ (C++20), create an extensive, open source, numerical C++ library that provides / supports
 
 * compact **data structures** that represent **mathematical objects** 
 * user **code that looks like mathematical notation**

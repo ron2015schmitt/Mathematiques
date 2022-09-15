@@ -20,6 +20,7 @@ __BUILD_INFO__
     + `Tensor` - contravariant and covariant *algebraic* tensors as subclass of MultiArrays
       + tensor products
       + tensor contraction
+  + Documentation updates, including new Introduction
 
 ### **0.40** MultiArray Refactoring
   + changed numbering system to start with 0. V3.5 is now 0.40.

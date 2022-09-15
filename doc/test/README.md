@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.157-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.158-c++20</h1>](../../README.md)
 
 <details>
 
@@ -27,7 +27,7 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../develop
 
 🚧 in progress...
 
-We currently have over 200 tests that run during the build.  The plan is to have full code coverage and to use python to generate the test code with NumPy to verify results. 
+We currently have over 200 tests that run during the build.  The plan is to have full code coverage and to use python to generate the test code with NumPy and SciPy to verify results. 
 
 
 
