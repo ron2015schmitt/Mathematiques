@@ -1,6 +1,6 @@
 
 
-# Mathématiques v0.41.155-c++20
+# Mathématiques v0.41.156-c++20
 
 
 ## Phase 1 (in progress): C++ Numerical Library
@@ -51,6 +51,32 @@ $\mathbf{E} = \mathbf{\nabla} \cdot \mathbf{\Phi}$
 
 ```C++
 E = nabla | Phi;
+```
+
+<br>
+
+**Number Systems**
+
+```C++
+double x = 23.2;
+Imaginary<double> y = 5*i;
+std::complex<double> z = 3 + 4*i;
+Quaternion<double> q = 16 + 2*i + 3*j + 13*k;
+```
+
+
+<br>
+
+**Special Functions**
+
+$f(x) = \Gamma(x)$ 
+
+$g(x) = J_\nu(x)$ 
+
+```C++
+Vector<double> x = linspace(0., 1., 100);
+Vector<double> f = tgamma(x);
+Vector<double> g = cyl_bessel_j(nu, x);
 ```
 
 

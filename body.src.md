@@ -49,6 +49,32 @@ $\mathbf{E} = \mathbf{\nabla} \cdot \mathbf{\Phi}$
 E = nabla | Phi;
 ```
 
+<br>
+
+**Number Systems**
+
+```C++
+double x = 23.2;
+Imaginary<double> y = 5*i;
+std::complex<double> z = 3 + 4*i;
+Quaternion<double> q = 16 + 2*i + 3*j + 13*k;
+```
+
+
+<br>
+
+**Special Functions**
+
+$f(x) = \Gamma(x)$ 
+
+$g(x) = J_\nu(x)$ 
+
+```C++
+Vector<double> x = linspace(0., 1., 100);
+Vector<double> f = tgamma(x);
+Vector<double> g = cyl_bessel_j(nu, x);
+```
+
 
 <br>
 

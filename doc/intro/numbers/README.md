@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.155-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.156-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -160,8 +160,8 @@ auto q2 = Quaternion<double>(4, 3, -2, -5);
 
 using namespace mathq::unit_imaginary;
 using namespace mathq::unit_quaternion;
-auto q = Quaternion<double>() = 16 + 2*i + 3*j + 13*k;
-auto p = Quaternion<double>() = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k;
+Quaternion<double> q = 16 + 2*i + 3*j + 13*k;
+Quaternion<double> p = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k;
 ☀ q ➜ Quaternion<double> 16 + 2*i + 3*j + 13*k;
 ☀ p ➜ Quaternion<double> 0.53767 + 0.86217*i + -0.43359*j + 2.7694*k;
 

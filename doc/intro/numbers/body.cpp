@@ -137,8 +137,9 @@ int main() {
     CR();
     ECHO(using namespace mathq::unit_imaginary);
     ECHO(using namespace mathq::unit_quaternion);
-    ECHO(auto q = Quaternion<double>() = 16 + 2*i + 3*j + 13*k);
-    ECHO(auto p = Quaternion<double>() = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k);
+    // ECHO(auto q = Quaternion<double>() = 16 + 2*i + 3*j + 13*k);
+    ECHO(Quaternion<double> q = 16 + 2*i + 3*j + 13*k);
+    ECHO(Quaternion<double> p = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k);
     ETV(q);
     ETV(p);
 
@@ -153,6 +154,20 @@ int main() {
     GMD_CODE_END();
   }
   GMD_VSPACE();
+  // {
+  //   ECHO(using namespace mathq::unit_imaginary);
+  //   ECHO(using namespace mathq::unit_quaternion);
+  //   double x = 23.2;
+  //   Imaginary<double> y = 5*i;
+  //   std::complex<double> z = 3 + 4*i;
+  //   Quaternion<double> q = 16 + 2*i + 3*j + 13*k;
 
+  //   double f = std::cyl_bessel_j(1, 5.1);
+  //   ETV(f);
+  //   double f2 = std::tgamma(4);
+  //   ETV(f2);
+  //   Vector<double, 3> v = cyl_bessel_j(1, linspace(0., 1., 5));
+  //   ETV(v);
+  // }
   return 0;
 }
