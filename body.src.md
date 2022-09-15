@@ -13,17 +13,6 @@ Create an extensive, open source, numerical C++ library that provieds / supports
   + **DEBUG mode** checks bounds, vector and matrix sizes, etc and generates clear, pretty printed errors to stderr
   + **PRODUCTION mode** runs as without any checks
 * **i/o in popular formats** for analysis and plotting
-* open-source **github** repo for version control and distribution
-* clear, online, automated **documentation** 
-* **extensive automated testing** and **benchmarking**
-* container-ized **Docker Images** 
-* [**Continuous Integration**](https://en.wikipedia.org/wiki/Continuous_integration) / [**Continuous Texting**](https://en.wikipedia.org/wiki/Continuous_testing)
-
-The above goals are accomplished, in part, by 
-* following the **definitions of modern formal mathematics** and 
-* using the techniques of **modern C++**, ie C++11, C++14, C++17, and C++20.
-
-Of course, Mathématiques can be **combined with standard C++ syntax, techniques, and libraries**.
 
 <br>
 
@@ -41,7 +30,7 @@ w = 1 + 10 * v + exp(i * (2 * pi + pi * sin(2 * pi * v + pi / 6)));
 
 $\mathbf{y} = \mathbf{A} \cdot \mathbf{x}$
 
-$\mathbf{y} = \mathbf{x}^\dag \cdot ( \mathbf{A} \mathbf{A^\dag} + \mathbf{A^\dag} \mathbf{A}) \cdot \mathbf{x}$
+$\mathbf{y} = \mathbf{x}^\dagger \cdot ( \mathbf{A} \mathbf{A^\dagger} + \mathbf{A^\dagger} \mathbf{A}) \cdot \mathbf{x}$
 
 ```C++
 y = A | x;
@@ -69,6 +58,8 @@ E = nabla | Phi;
 
 [Full Documentation](doc/README.md)
 
+<br>
+
 ---------------------------------
 ## Phase 2 (planned): Mathematics Built into a Modern Language
 
@@ -77,7 +68,7 @@ Create a new language that implements the phase 1 library above plus
   + supports greek language characters for variables
   + supports operator definitions for mathematical unicode symbols so that the code really looks like mathematical notation
   + also has multi-character ASCII symbols for each unicode symbol
-* has an http interface for remote computation
+* has an web API for remote computation
 * has a modern, cloud-based package loader
 * has a package repository site, eg [npm for NodeJs](https://www.npmjs.com/) for user-created open-source packages
 
