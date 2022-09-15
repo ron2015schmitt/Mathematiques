@@ -1,6 +1,6 @@
 
 
-# Mathématiques v0.41.153-c++20
+# Mathématiques v0.41.154-c++20
 
 
 ## Phase 1 (in progress): C++ Numerical Library
@@ -29,7 +29,47 @@ The above goals are accomplished, in part, by
 
 Of course, Mathématiques can be **combined with standard C++ syntax, techniques, and libraries**.
 
+<br>
+
+**Function of a vector**
+
+$\mathbf{w} = 1 + 10 \mathbf{v} + e^{i  [   2 \pi   +   \pi sin(  2 \mathbf{v} + \pi / 6  )   ] }$ 
+
+```C++
+w = 1 + 10 * v + exp(i * (2 * pi + pi * sin(2 * pi * v + pi / 6)));
+```
+
+<br>
+
+**Linear Algebra**
+
+$\mathbf{y} = \mathbf{A} \cdot \mathbf{x}$
+
+$\mathbf{y} = \mathbf{x}^\dag \cdot ( \mathbf{A} \mathbf{A^\dag} + \mathbf{A^\dag} \mathbf{A}) \cdot \mathbf{x}$
+
+```C++
+y = A | x;
+y = ~x | (A|~A + ~A|A) | x;
+```
+
+
+<br>
+
+**Vector Calculus**
+
+$\mathbf{E} = \mathbf{\nabla} \cdot \mathbf{\Phi}$
+
+
+```C++
+E = nabla | Phi;
+```
+
+
+<br>
+
 ✳ [Introduction with Examples](doc/intro/README.md) ✳ 
+
+[Benchmarks](doc/benchmarks/README.md)
 
 [Full Documentation](doc/README.md)
 

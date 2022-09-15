@@ -97,6 +97,14 @@ namespace mathq {
     return ExpressionR_Transpose<ExpressionR<X, Element, Num, depth, rank>, Element, Num, depth, rank, FUNCTOR_pos<Element, Element, Num, Num>>(x);
   }
 
+  // adjoint(A) - conjugate transpose - real
+
+  template <class X, typename Element, typename Num, size_t depth, size_t rank> requires (IsSimpleNumber<Num>)
+    auto adjoint(const ExpressionR<X, Element, Num, depth, rank>& x) {
+    return ExpressionR_Transpose<ExpressionR<X, Element, Num, depth, rank>, Element, Num, depth, rank, FUNCTOR_pos<Element, Element, Num, Num>>(x);
+  }
+
+
   // adjoint(A) - conjugate transpose - complex
 
   template <class X, typename Element, typename Num, size_t depth, size_t rank>

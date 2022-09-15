@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.153-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.154-c++20</h1>](../../README.md)
 
 <details>
 
@@ -28,11 +28,25 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../develop
 _This document was generated from the C++ file_ `benchmarks/body.cpp` _using macros and functions (in namespace `mathq::display`) from the header_ `"mathq.h"`. 
 
 
-
 ## Memory Usage
 
-### Vectors
-8
+The multiarrays provided by Mathématiques are a C++ template class that wraps either a `std::array` (for compile-time fixed-size multiarrays) or a `std::valarray` (for dynamic-size multiarrays)
+```C++
+Vector<double, 100> v;
+☀ sizeof(v)/sizeof(double) ➜ 100;
+```
+```C++
+Matrix<double, 10, 10> A;
+☀ sizeof(A)/sizeof(double) ➜ 100;
+```
+```C++
+Vector<std::complex<double>, 100> v;
+☀ sizeof(v)/sizeof(double) ➜ 200;
+```
+```C++
+Vector<Vector<double, 3>, 100> v;
+☀ sizeof(v)/sizeof(double) ➜ 300;
+```
 
 <br>
 
@@ -60,7 +74,7 @@ for (size_t k = 0; k < N; k++) {
   f[k] = 1 + 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6)));
 }
 ```
-☀ elapsed_time ➜ 264 μsec;
+☀ elapsed_time ➜ 265 μsec;
 
 
 #### Results 1B. Mathématiques C
@@ -72,7 +86,7 @@ Vector<std::complex<double>> f(N);
 x = linspace<double>(0, 1, N);
 f = 1 + 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));
 ```
-☀ elapsed_time ➜ 240 μsec;
+☀ elapsed_time ➜ 234 μsec;
 
 
 <br>
@@ -105,7 +119,7 @@ for (size_t r = 0; r < N; r++) {
   }
 }
 ```
-☀ elapsed_time ➜ 1330 μsec;
+☀ elapsed_time ➜ 1342 μsec;
 
 
 #### Results 2B. Mathématiques C
@@ -120,7 +134,7 @@ for (size_t k = 0; k < N*N; k++) {
 }
 y = A | x;
 ```
-☀ elapsed_time ➜ 1318 μsec;
+☀ elapsed_time ➜ 1330 μsec;
 
 
 

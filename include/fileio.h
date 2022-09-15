@@ -9,8 +9,6 @@ namespace mathq {
 
 
 
-
-
   /* "save"
    * works for any objects that overload the << operator
    */

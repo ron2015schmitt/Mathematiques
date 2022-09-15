@@ -43,14 +43,40 @@ int main() {
   CR();
   CR();
 
-  OUTPUT("");
+
   CR();
   GMD_HEADER2("Memory Usage");
   CR();
 
-  GMD_HEADER3("Vectors");
+  OUTPUT("The multiarrays provided by Mathématiques are a C++ template class that wraps either a `std::array` (for compile-time fixed-size multiarrays) or a `std::valarray` (for dynamic-size multiarrays)");
 
-  OUTPUT(CHAR_BIT*sizeof(char));
+  {
+    GMD_CODE_START("C++");
+    ECHO(Vector<double, 100> v);
+    DISP(sizeof(v)/sizeof(double));
+    GMD_CODE_END();
+  }
+
+  {
+    GMD_CODE_START("C++");
+    ECHO(Matrix<double, 10, 10> A);
+    DISP(sizeof(A)/sizeof(double));
+    GMD_CODE_END();
+  }
+
+  {
+    GMD_CODE_START("C++");
+    ECHO(Vector<std::complex<double>, 100> v);
+    DISP(sizeof(v)/sizeof(double));
+    GMD_CODE_END();
+  }
+
+  {
+    GMD_CODE_START("C++");
+    ECHO(Vector<Vector<double, 3>, 100> v);
+    DISP(sizeof(v)/sizeof(double));
+    GMD_CODE_END();
+  }
 
 
 
@@ -186,6 +212,13 @@ int main() {
   }
   CR();
 
+  // {
+  //   ECHO(constexpr size_t N = 2);
+  //   Vector<double> x(N);
+  //   Matrix<double> A(N, N);
+  //   Vector<double> y(N);
+  //   y = ~x | (A|~A + ~A|A) | x;
+  // }
 
   return 0;
 }
