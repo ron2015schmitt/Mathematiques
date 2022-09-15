@@ -1,11 +1,10 @@
 
 
-# Mathématiques v0.41.156-c++20
+# Mathématiques v0.41.157-c++20
 
 
 ## Phase 1 (in progress): C++ Numerical Library
- 
- 
+  
 Create an extensive, open source, numerical C++ library that provieds / supports
 
 * compact **data structures** that represent **mathematical objects** 
@@ -91,16 +90,16 @@ Vector<double> g = cyl_bessel_j(nu, x);
 <br>
 
 ---------------------------------
-## Phase 2 (planned): Mathematics Built into a Modern Language
+## Phase 2 (planned): Symbolic Mathematics Built into a Modern High-Performance Language
 
 Create a new language that implements the phase 1 library above plus
 * supports unicode characters in source code 
   + supports greek language characters for variables
   + supports operator definitions for mathematical unicode symbols so that the code really looks like mathematical notation
   + also has multi-character ASCII symbols for each unicode symbol
-* has an web API for remote computation
-* has a modern, cloud-based package loader
-* has a package repository site, eg [npm for NodeJs](https://www.npmjs.com/) for user-created open-source packages
+* modern, cloud-based module/package loader
+* package repository site, eg [npm for NodeJs](https://www.npmjs.com/) for user-created open-source packages
+* web API for remote computation, likely using [gRPC](https://en.wikipedia.org/wiki/GRPC) and [GraphQL](https://en.wikipedia.org/wiki/GraphQL)
 
 The current language candidates to build upon are [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language)) and [Carbon](https://en.wikipedia.org/wiki/Carbon_(programming_language)).
 

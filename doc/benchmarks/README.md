@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.156-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.157-c++20</h1>](../../README.md)
 
 <details>
 
@@ -86,7 +86,7 @@ Vector<std::complex<double>> f(N);
 x = linspace<double>(0, 1, N);
 f = 1 + 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));
 ```
-☀ elapsed_time ➜ 240 μsec;
+☀ elapsed_time ➜ 233 μsec;
 
 
 <br>
@@ -119,7 +119,7 @@ for (size_t r = 0; r < N; r++) {
   }
 }
 ```
-☀ elapsed_time ➜ 1358 μsec;
+☀ elapsed_time ➜ 1325 μsec;
 
 
 #### Results 2B. Mathématiques C
@@ -134,7 +134,7 @@ for (size_t k = 0; k < N*N; k++) {
 }
 y = A | x;
 ```
-☀ elapsed_time ➜ 1332 μsec;
+☀ elapsed_time ➜ 1337 μsec;
 
 
 
