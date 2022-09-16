@@ -9,11 +9,11 @@ namespace mathq {
     CurvilinearField;
 
   //
-  // MathFunction - multivariable scalar function in Cartesian metric
+  // FormalMathFunction - multivariable scalar function in Cartesian metric
   //
 
   template <typename GridElement, size_t Ndims, bool TimeCoord, typename TargetElement = GridElement>
-  using MathFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims, TimeCoord>>;
+  using FormalMathFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims, TimeCoord>>;
 
   // ***************************************************************************
   // * CurvilinearField

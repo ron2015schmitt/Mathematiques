@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.163-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.164-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -52,182 +52,281 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.
 
-<br>
-
-## Vectors
-Vectors can be fixed length, with length determined at compile-time, or dynamic length.  Fixed-length vectors allow for better optimzation by the compiler.
-### Fixed-length Vectors
-```C++
-Vector<double, 3> v{ 1,2,3 };
-
-☀ v ➜ Vector<double,3> {1, 2, 3};
-```
-### Dynamic-length Vectors
-```C++
-Vector<double> v{ 1,2,3,4,5 };
-
-☀ v ➜ Vector<double> {1, 2, 3, 4, 5};
-v = 100*v;
-☀ v ➜ Vector<double> {100, 200, 300, 400, 500};
-v.resize(10);
-☀ v ➜ Vector<double> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-v = linspace<double>(0, 1, 10);
-☀ v ➜ Vector<double> {0, 0.111111, 0.222222, 0.333333, 0.444444, 0.555556, 0.666667, 0.777778, 0.888889, 1};
-```
-### Vector Element access
-```C++
-Vector<double, 3> v{ 1,2,3 };
-
-☀ v[0] ➜ double 1;
-☀ v[1] ➜ double 2;
-☀ v[2] ➜ double 3;
-v[0] = 200;
-☀ v ➜ Vector<double,3> {200, 2, 3};
-v[2] = v[1] = v[0];
-☀ v ➜ Vector<double,3> {200, 200, 200};
-```
-
-<br>
-
-## Matrices
-Matrices can be fixed dimensions, with dimensions determined at compile-time, or dynamic dimensions.
-### Fixed-dimensions Matrices
-```C++
-Matrix<double, 2, 2> A{ {1,2}, {3,4} };
-
-☀ A ➜ Matrix<double, 2⨯2> 
+CurvilinearField - Complex 1D
+☀ rect ➜ ComplexRectangle<double> ( real: [-1, 1], N=5; imag: [-2, 2], N=5 );
+☀ rect.dims() ➜ Dimensions 5⨯5;
+☀ rect.grid_complex() ➜ Matrix<std::complex<double>> 
 {
-  {1, 2},
-  {3, 4}
+  {(-1,-2), (-1,-1), (-1,0), (-1,1), (-1,2)},
+  {(-0.5,-2), (-0.5,-1), (-0.5,0), (-0.5,1), (-0.5,2)},
+  {(0,-2), (0,-1), (0,0), (0,1), (0,2)},
+  {(0.5,-2), (0.5,-1), (0.5,0), (0.5,1), (0.5,2)},
+  {(1,-2), (1,-1), (1,0), (1,1), (1,2)}
 };
-```
-### Dynamic-dimensions Matrices
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
+☀ rect.grid_real() ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
+☀ rect.grid_imag() ➜ Vector<double> {-2, -1, 0, 1, 2};
+☀ coords ➜ ComplexCoords<double,TimeCoord=0> {
+  vector_index=0, dims=5⨯5
 {
-  {1, 2},
-  {3, 4},
-  {5, 6}
-};
-
-A.resize(1, 2);
-☀ A ➜ Matrix<double> 
+  {-1, -1, -1, -1, -1},
+  {-0.5, -0.5, -0.5, -0.5, -0.5},
+  {0, 0, 0, 0, 0},
+  {0.5, 0.5, 0.5, 0.5, 0.5},
+  {1, 1, 1, 1, 1}
+}; 
+  vector_index=1, dims=5⨯5
 {
-  {0, 0}
-};
-```
-### Matrix Element access
-Elements can be accessed via row and column indices:
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
+  {-2, -1, 0, 1, 2},
+  {-2, -1, 0, 1, 2},
+  {-2, -1, 0, 1, 2},
+  {-2, -1, 0, 1, 2},
+  {-2, -1, 0, 1, 2}
+}
+}};
+☀ coords.grid_dims() ➜ Dimensions 5⨯5;
+☀ IsComplexCoords<decltype(coords)> ➜ bool true;
+☀ coords.x() ➜ MultiArray_RepeatVector<double, rank=2> vector_index=0, dims=5⨯5
 {
-  {1, 2},
-  {3, 4},
-  {5, 6}
+  {-1, -1, -1, -1, -1},
+  {-0.5, -0.5, -0.5, -0.5, -0.5},
+  {0, 0, 0, 0, 0},
+  {0.5, 0.5, 0.5, 0.5, 0.5},
+  {1, 1, 1, 1, 1}
 };
-
-☀ A(0, 0) ➜ double 1;
-☀ A(2, 1) ➜ double 6;
-```
-Elements can also be accessed via a single row-major index:
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
+☀ coords.y() ➜ MultiArray_RepeatVector<double, rank=2> vector_index=1, dims=5⨯5
 {
-  {1, 2},
-  {3, 4},
-  {5, 6}
+  {-2, -1, 0, 1, 2},
+  {-2, -1, 0, 1, 2},
+  {-2, -1, 0, 1, 2},
+  {-2, -1, 0, 1, 2},
+  {-2, -1, 0, 1, 2}
 };
+☀ coords.z() ➜ Matrix<std::complex<double>> 
+{
+  {(-1,-2), (-1,-1), (-1,0), (-1,1), (-1,2)},
+  {(-0.5,-2), (-0.5,-1), (-0.5,0), (-0.5,1), (-0.5,2)},
+  {(0,-2), (0,-1), (0,0), (0,1), (0,2)},
+  {(0.5,-2), (0.5,-1), (0.5,0), (0.5,1), (0.5,2)},
+  {(1,-2), (1,-1), (1,0), (1,1), (1,2)}
+};
+ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords);
+auto& x = coords.x();
+auto& y = coords.y();
+auto& z = coords.z();
+field0() = -3*x + 5*Imaginary<double>(1)*x;
+☀ field0 ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+{
+  {(3,-5), (3,-5), (3,-5), (3,-5), (3,-5)},
+  {(1.5,-2.5), (1.5,-2.5), (1.5,-2.5), (1.5,-2.5), (1.5,-2.5)},
+  {(-0,0), (-0,0), (-0,0), (-0,0), (-0,0)},
+  {(-1.5,2.5), (-1.5,2.5), (-1.5,2.5), (-1.5,2.5), (-1.5,2.5)},
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)}
+};
+☀ real(field0) ➜ Scalar<Matrix<double>> 
+{
 
-☀ A[0] ➜ double 1;
-☀ A[1] ➜ double 2;
-☀ A[2] ➜ double 3;
-```
+};
+☀ imag(field0) ➜ Scalar<Matrix<double>> 
+{
 
-<br>
-
-## General MultiArrays
-MultiArrays can be created of arbitrary rank via the syntax `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.
-In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. 
-A `Matrix` is simply an alias for a `MultiArray` of rank 2.  
-It should be noted, however, that `Vector` and `Matrix` have optimized implementations.
-Multiarrays are sometimes referred to as tensors.  To be accurate, multiarrays are Cartesian algebraic tensors.  Tensor fields are also supported by Mathématiques, but described later in this introduction.
-### Fixed-dimensions MultiArrays
-```C++
-MultiArray<double, 3, 2, 2, 2> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3, 2⨯2⨯2> 
+};
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ pd(field0, 0) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+{
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)}
+};
+☀ IsMultiArray<decltype(field0)> ➜ bool true;
+☀ IsMultiArray<decltype(field0())> ➜ bool true;
+☀ IsComplex<typename NumberTrait<decltype(field0)>::Type>::value ➜ bool true;
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
+☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
+☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
+☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
+☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
+☀ dz(field0) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+{
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
+  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)}
+};
+field0() = -3*x + 5*Imaginary<double>(1)*y;
+☀ dz_star(field0) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+{
+  {(0,5), (0,5), (0,5), (0,5), (0,5)},
+  {(0,5), (0,5), (0,5), (0,5), (0,5)},
+  {(0,5), (0,5), (0,5), (0,5), (0,5)},
+  {(0,5), (0,5), (0,5), (0,5), (0,5)},
+  {(0,5), (0,5), (0,5), (0,5), (0,5)}
+};
+CurvilinearField - Complex 1D with time
+☀ coords.z() ➜ MultiArray<std::complex<double>, rank=3> 
 {
   {
-    {1, 2},
-    {3, 4}
+    {(-1,-2), (-1,-2)},
+    {(-1,0), (-1,0)},
+    {(-1,2), (-1,2)}
   },
   {
-    {5, 6},
-    {7, 8}
-  }
-};
-```
-### Dynamic-dimensions MultiArrays
-```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
+    {(-0.5,-2), (-0.5,-2)},
+    {(-0.5,0), (-0.5,0)},
+    {(-0.5,2), (-0.5,2)}
   },
   {
-    {5, 6},
-    {7, 8}
-  }
-};
-```
-### MultiArray Element access
-Elements can be accessed via multiple indices:
-```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
+    {(0,-2), (0,-2)},
+    {(0,0), (0,0)},
+    {(0,2), (0,2)}
   },
   {
-    {5, 6},
-    {7, 8}
-  }
-};
-
-☀ M(0, 0, 0) ➜ double 1;
-☀ M(1, 1, 1) ➜ double 8;
-```
-Elements can also be accessed via a single row-major index:
-```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
+    {(0.5,-2), (0.5,-2)},
+    {(0.5,0), (0.5,0)},
+    {(0.5,2), (0.5,2)}
   },
   {
-    {5, 6},
-    {7, 8}
+    {(1,-2), (1,-2)},
+    {(1,0), (1,0)},
+    {(1,2), (1,2)}
   }
 };
-
-☀ M[0] ➜ double 1;
-☀ M[1] ➜ double 2;
-☀ M[2] ➜ double 3;
-```
+☀ coords.t() ➜ MultiArray_RepeatVector<double, rank=3> vector_index=2, dims=5⨯3⨯2
+{
+  {
+    {0, 1},
+    {0, 1},
+    {0, 1}
+  },
+  {
+    {0, 1},
+    {0, 1},
+    {0, 1}
+  },
+  {
+    {0, 1},
+    {0, 1},
+    {0, 1}
+  },
+  {
+    {0, 1},
+    {0, 1},
+    {0, 1}
+  },
+  {
+    {0, 1},
+    {0, 1},
+    {0, 1}
+  }
+};
+ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords);
+auto& x = coords.x();
+auto& z = coords.z();
+auto& t = coords.t();
+field0() = exp(2*z) + 5*t;
+☀ field0 ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=1>> 
+{
+  {
+    {(-0.088461,0.102422), (4.91154,0.102422)},
+    {(0.135335,0), (5.13534,0)},
+    {(-0.088461,-0.102422), (4.91154,-0.102422)}
+  },
+  {
+    {(-0.240462,0.278412), (4.75954,0.278412)},
+    {(0.367879,0), (5.36788,0)},
+    {(-0.240462,-0.278412), (4.75954,-0.278412)}
+  },
+  {
+    {(-0.653644,0.756802), (4.34636,0.756802)},
+    {(1,0), (6,0)},
+    {(-0.653644,-0.756802), (4.34636,-0.756802)}
+  },
+  {
+    {(-1.77679,2.0572), (3.22321,2.0572)},
+    {(2.71828,0), (7.71828,0)},
+    {(-1.77679,-2.0572), (3.22321,-2.0572)}
+  },
+  {
+    {(-4.82981,5.59206), (0.170191,5.59206)},
+    {(7.38906,0), (12.3891,0)},
+    {(-4.82981,-5.59206), (0.170191,-5.59206)}
+  }
+};
+☀ pd(field0, 2) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=1>> 
+{
+  {
+    {(5,0), (5,0)},
+    {(5,0), (5,0)},
+    {(5,0), (5,0)}
+  },
+  {
+    {(5,0), (5,0)},
+    {(5,0), (5,0)},
+    {(5,0), (5,0)}
+  },
+  {
+    {(5,0), (5,0)},
+    {(5,0), (5,0)},
+    {(5,0), (5,0)}
+  },
+  {
+    {(5,0), (5,0)},
+    {(5,0), (5,0)},
+    {(5,0), (5,0)}
+  },
+  {
+    {(5,0), (5,0)},
+    {(5,0), (5,0)},
+    {(5,0), (5,0)}
+  }
+};
 
 <br>
 

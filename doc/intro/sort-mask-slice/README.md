@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.163-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.164-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -53,181 +53,402 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.
+### Increasing Sequences
+* The function `range<D>(start,end)` returns a Vector<D> containing the numbers `{start, start+1, start+2, ..., (end)}`
 
-<br>
-
-## Vectors
-Vectors can be fixed length, with length determined at compile-time, or dynamic length.  Fixed-length vectors allow for better optimzation by the compiler.
-### Fixed-length Vectors
+Increasing sequences using `range`
 ```C++
-Vector<double, 3> v{ 1,2,3 };
-
-☀ v ➜ Vector<double,3> {1, 2, 3};
+☀ range<int>(1, 10) ➜ {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+☀ range<double>(-3, 3) ➜ {-3, -2, -1, 0, 1, 2, 3};
 ```
-### Dynamic-length Vectors
-```C++
-Vector<double> v{ 1,2,3,4,5 };
+### Decreasing Sequences
+* Counting down is also supported
 
-☀ v ➜ Vector<double> {1, 2, 3, 4, 5};
-v = 100*v;
-☀ v ➜ Vector<double> {100, 200, 300, 400, 500};
-v.resize(10);
-☀ v ➜ Vector<double> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-v = linspace<double>(0, 1, 10);
-☀ v ➜ Vector<double> {0, 0.111111, 0.222222, 0.333333, 0.444444, 0.555556, 0.666667, 0.777778, 0.888889, 1};
+Decreasing sequence using `range`
+```C++
+☀ range<int>(10, 0) ➜ {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 ```
-### Vector Element access
-```C++
-Vector<double, 3> v{ 1,2,3 };
+### Non-integer Sequences
+* The start and end need not be integers 
 
-☀ v[0] ➜ double 1;
-☀ v[1] ➜ double 2;
-☀ v[2] ➜ double 3;
-v[0] = 200;
-☀ v ➜ Vector<double,3> {200, 2, 3};
-v[2] = v[1] = v[0];
-☀ v ➜ Vector<double,3> {200, 200, 200};
+Floating point sequences using `range`
+```C++
+☀ range<double>(1.5, 5.5) ➜ {1.5, 2.5, 3.5, 4.5, 5.5};
+☀ range<double>(5.5, 1.5) ➜ {5.5, 4.5, 3.5, 2.5, 1.5};
 ```
+### Arbitrary stride
+* The function `range<D>(Nstart,Nend,Nstride)` returns a Vector<D> containing the numbers `{start, start+stride, start+2*stride, ..., (end)}`
 
-<br>
-
-## Matrices
-Matrices can be fixed dimensions, with dimensions determined at compile-time, or dynamic dimensions.
-### Fixed-dimensions Matrices
+Seqeunces of different strides using `range`
 ```C++
-Matrix<double, 2, 2> A{ {1,2}, {3,4} };
-
-☀ A ➜ Matrix<double, 2⨯2> 
-{
-  {1, 2},
-  {3, 4}
-};
+☀ range<int>(2, 10, 2) ➜ {2, 4, 6, 8, 10};
+☀ range<double>(0, 10, 0.5) ➜ {0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10};
 ```
-### Dynamic-dimensions Matrices
+### The end point isn't always included
+* The end point is only included when 
 ```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
-{
-  {1, 2},
-  {3, 4},
-  {5, 6}
-};
-
-A.resize(1, 2);
-☀ A ➜ Matrix<double> 
-{
-  {0, 0}
-};
+end == start + n * stride
 ```
-### Matrix Element access
-Elements can be accessed via row and column indices:
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
-{
-  {1, 2},
-  {3, 4},
-  {5, 6}
-};
+where `n` is an integer.
 
-☀ A(0, 0) ➜ double 1;
-☀ A(2, 1) ➜ double 6;
+
+End point is not included in certain cases
+```C++
+☀ range<int>(0, 5, 2) ➜ {0, 2, 4};
+☀ range<double>(1, 3.5) ➜ {1, 2, 3};
 ```
-Elements can also be accessed via a single row-major index:
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
-{
-  {1, 2},
-  {3, 4},
-  {5, 6}
-};
+### Initializing `Vector`'s using `range`
 
-☀ A[0] ➜ double 1;
-☀ A[1] ➜ double 2;
-☀ A[2] ➜ double 3;
+
+Initialize `Vector`'s of various data types  using the *`range`* function
+```C++
+Vector<unsigned int> v1(range<unsigned int>(0, 3));
+Vector<int> v2(range<int>(0, 3));
+Vector<double> v3(range<double>(0, 3));
 ```
 
-<br>
-
-## General MultiArrays
-MultiArrays can be created of arbitrary rank via the syntax `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.
-In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. 
-A `Matrix` is simply an alias for a `MultiArray` of rank 2.  
-It should be noted, however, that `Vector` and `Matrix` have optimized implementations.
-Multiarrays are sometimes referred to as tensors.  To be accurate, multiarrays are Cartesian algebraic tensors.  Tensor fields are also supported by Mathématiques, but described later in this introduction.
-### Fixed-dimensions MultiArrays
+**The result is**
 ```C++
-MultiArray<double, 3, 2, 2, 2> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3, 2⨯2⨯2> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
+  ☀ v1 ➜ {0, 1, 2, 3};
+  ☀ v2 ➜ {0, 1, 2, 3};
+  ☀ v3 ➜ {0, 1, 2, 3};
 ```
-### Dynamic-dimensions MultiArrays
+
+### Assigning `Vector`'s using `range`
+
+
+Assigning a `Vector`'s to a *`range`*
 ```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
+const size_t N = 10;
+Vector<double> v(N);
+v = range<double>(0, N-1);
 ```
-### MultiArray Element access
-Elements can be accessed via multiple indices:
+
+## Relational operators
+### Relational operators between two Vectors
+
+Vector relations operate element-wise, similar to arithmetic operators. Given two Vectors of the same size, a vector relational expression (eg `(v1>v2)` returns a vector of booleans of the same size
+
+
+relational operators between two vectors`
 ```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
-
-☀ M(0, 0, 0) ➜ double 1;
-☀ M(1, 1, 1) ➜ double 8;
+Vector<double> v1(range<double>(1, 3));
+Vector<double> v2(range<double>(3, 1));
 ```
-Elements can also be accessed via a single row-major index:
+
+**Some expressions with results**
 ```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
-
-☀ M[0] ➜ double 1;
-☀ M[1] ➜ double 2;
-☀ M[2] ➜ double 3;
+  ☀ v1 ➜ {1, 2, 3};
+  ☀ v2 ➜ {3, 2, 1};
+  ☀ v1 > v2 ➜ {false, false, true};
+  ☀ v1 >= v2 ➜ {false, true, true};
+  ☀ v1 < v2 ➜ {true, false, false};
+  ☀ v1 <= v2 ➜ {true, true, false};
+  ☀ v1 == v2 ➜ {false, true, false};
+  ☀ v1 != v2 ➜ {true, false, true};
 ```
+
+### Relational operators between a Vector and scalar
+
+
+relational operators between a vector and a scalar`
+```C++
+Vector<double> v(range<double>(1, 3));
+```
+
+**Some expressions with results**
+```C++
+  ☀ v ➜ {1, 2, 3};
+  ☀ v > 2 ➜ {false, false, true};
+  ☀ v >= 2 ➜ {false, true, true};
+  ☀ v < 2 ➜ {true, false, false};
+  ☀ v <= 2 ➜ {true, true, false};
+  ☀ v == 2 ➜ {false, true, false};
+  ☀ v != 2 ➜ {true, false, true};
+```
+
+## Logical operators
+### The element-wise logical operatora `&&`,`||`,`!`
+
+
+The element-wise logical operators
+```C++
+Vector<double> v(range<double>(1, 5));
+```
+
+**Some expressions with results**
+```C++
+  ☀ v ➜ {1, 2, 3, 4, 5};
+  ☀ (v > 2) ➜ {false, false, true, true, true};
+  ☀ !(v > 2) ➜ {true, true, false, false, false};
+  ☀ (v >= 2) && (v <= 4) ➜ {false, true, true, true, false};
+  ☀ (v <= 2) || (v >= 4) ➜ {true, true, false, true, true};
+```
+
+## Vector mask access
+* A subset of a vector can be extracted using a boolean-valued vector of the same size.
+* For example `v[v>0]` will return a vector containing only the positive values of v.
+* Vector mask access can be used on the left hand side of assigment, allowing you to set values via masks.
+
+
+Using vector masks
+```C++
+Vector<double> v(range<double>(-10, 10));
+```
+
+**Some expressions with results**
+```C++
+  ☀ v ➜ {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  ☀ v > 6 ➜ {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true};
+  ☀ v[(v > 6)] ➜ {7, 8, 9, 10};
+```
+
+
+Now set all elements that are larger than 6 to 6 (clipping)
+```C++
+v[(v > 6)] = 6.;
+```
+**The result is**
+```C++
+  ☀ v ➜ {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6};
+```
+
+
+Now set all negative elements to zero
+```C++
+v[(v < 0)] = 0.;
+```
+**The result is**
+```C++
+  ☀ v ➜ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6};
+```
+
+
+## Logical functions
+### The functions `alltrue`, `anytrue`, `numtrue`, and `findtrue`
+
+* The function `alltrue(v)` returns a `bool`: true if every element of `v` is true, otherwise it returns false
+
+* The function `anytrue(v)` returns a `bool`: true if any element of `v` is true, otherwise it returns false
+
+* The function `numtrue(v)` returns a `size_t` equal to the number of elements of `v` that are true. 
+
+* The function `findtrue(v)` returns a `Vector<size_t>` which contains the indices of the true elements of `v`. 
+
+
+The functions `alltrue`, `anytrue`, `numtrue`, and `findtrue`
+```C++
+Vector<double> v(range<double>(1, 3));
+```
+
+**Some expressions with results**
+```C++
+  ☀ v ➜ {1, 2, 3};
+  ☀ (v > 2) ➜ {false, false, true};
+  ☀ alltrue(v > 2) ➜ false;
+  ☀ alltrue(v > 0) ➜ true;
+  ☀ anytrue(v > 2) ➜ true;
+  ☀ numtrue(v > 2) ➜ 1;
+  ☀ numtrue(v > 0) ➜ 3;
+  ☀ findtrue(v > 2) ➜ {2};
+  ☀ findtrue(v > 0) ➜ {0, 1, 2};
+```
+
+python-like access: negative indices & slices
+## Element access
+### Positive and negative indices
+Similar to python, Mathématiques allows negative indices
+
+`v[-1] == v[N-1]` == end element
+
+`v[-2] == v[N-2]` == penultimate element
+
+`v[-N] == v[0]`   == first element
+
+
+
+Positive and negative indices
+```C++
+Vector<double> v(range<double>(0, 10));
+const int N = v.size();
+```
+
+**Some expressions with results**
+```C++
+  ☀ v ➜ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  ☀ N ➜ 11;
+  ☀ v[0] ➜ 0;
+  ☀ v[1] ➜ 1;
+  ☀ v[N-1] ➜ 10;
+  ☀ v[-1] ➜ 10;
+  ☀ v[-2] ➜ 9;
+  ☀ v[-N] ➜ 0;
+```
+
+
+
+Reverse a vector in place.
+```C++
+Vector<double> v(range<double>(0, 10));
+```
+
+**The result is**
+```C++
+  ☀ v ➜ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+```
+
+```C++
+for (int i = 0; i < v.size()/2; i++) std::swap(v[i], v[-i-1]);
+```
+
+**The result is**
+```C++
+  ☀ v ➜ {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+```
+
+## Slices via the `slc` function
+### The `(start,end)` slice
+* The form `v[slc(start,end)]` returns a `Vector` with every element from index=start to index=end, stepping by +1.
+
+* Negative indices are permitted.
+
+* Examples
+
+  * `v[slc(0,-1)]` returns the entire vector
+
+  * `v[slc(0,1)]` returns the first two elements
+
+  * `v[slc(-2,-1)]` returns the last two elements
+
+  *  if you can't count from the starting element to the ending element by +1, then an empty vector is returned.
+
+
+
+slice `v[slc(start,end)]`
+```C++
+Vector<double> v(range<double>(0, 10));
+```
+
+**Some expressions with results**
+```C++
+  ☀ v[slc(2, 6)] ➜ {2, 3, 4, 5, 6};
+  ☀ v[slc(0, -1)] ➜ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  ☀ v[slc(0, 1)] ➜ {0, 1};
+  ☀ v[slc(-2, -1)] ➜ {9, 10};
+  ☀ v[slc(1, 0)] ➜ {};
+  ☀ v[slc(-1, 0)] ➜ {};
+```
+
+### The `(start,end,step)` slice
+* The form `v[slc(start,end,step)]` returns a `Vector` with every element from index=start to index=end, stepping by step.
+
+* Negative indices are permitted.
+
+* Examples
+
+  * `v[slc(-1,0,-1)]` returns the entire vector in reverse
+
+  * `v[slc(0,-1,2)]` returns the even-index elements
+
+  * `v[slc(1,-1,2)]` returns the odd-index elements
+
+  *  if you can't count from the starting element to the ending element by step, then an empty vector is returned.
+
+
+
+slice `v[slc(start,end,step)]`
+```C++
+Vector<double> v0(0);
+Vector<double> v1(1, 0.);
+Vector<double> v2(range<double>(0, 1));
+Vector<double> v3(range<double>(0, 2));
+Vector<double> v4(range<double>(0, 3));
+Vector<double> v10(range<double>(0, 10));
+```
+
+**Some expressions with results**: reverse vectors of various lengths using the same slice
+```C++
+  ☀ v0[slc(-1, 0, -1)] ➜ {};
+  ☀ v1[slc(-1, 0, -1)] ➜ {};
+  ☀ v2[slc(-1, 0, -1)] ➜ {1, 0};
+  ☀ v3[slc(-1, 0, -1)] ➜ {2, 1, 0};
+  ☀ v4[slc(-1, 0, -1)] ➜ {3, 2, 1, 0};
+  ☀ v10[slc(-1, 0, -1)] ➜ {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+```
+
+**Some expressions with results**: get even-index elements of various vectors using the same slice
+```C++
+  ☀ v0[slc(0, -1, 2)] ➜ {};
+  ☀ v1[slc(0, -1, 2)] ➜ {0};
+  ☀ v2[slc(0, -1, 2)] ➜ {0};
+  ☀ v3[slc(0, -1, 2)] ➜ {0, 2};
+  ☀ v4[slc(0, -1, 2)] ➜ {0, 2};
+  ☀ v10[slc(0, -1, 2)] ➜ {0, 2, 4, 6, 8, 10};
+```
+
+**Some expressions with results**: get odd-index elements of various vectors using the same slice
+```C++
+  ☀ v0[slc(1, -1, 2)] ➜ {};
+  ☀ v1[slc(1, -1, 2)] ➜ {};
+  ☀ v2[slc(1, -1, 2)] ➜ {1};
+  ☀ v3[slc(1, -1, 2)] ➜ {1};
+  ☀ v4[slc(1, -1, 2)] ➜ {1, 3};
+  ☀ v10[slc(1, -1, 2)] ➜ {1, 3, 5, 7, 9};
+```
+
+Access subsets of Vector elements
+You can ccess avector elements using a `Vector` of indices or a C++11 `initializer_list` of indices
+## Access vector elements using a `Vector` of indices
+### Element access `Vector[Vector]`
+
+* The index Vector _can be smaller than or greater than or equal to_ the length to the data Vector!
+* The index Vector _can have repeated indices and indices can be in any order_!
+
+
+Access via a Vector of indices
+```C++
+Vector<double> v(linspace<double>(0, 1, 11));
+Vector<size_t> veven(range<size_t>(0, 10, 2));
+Vector<size_t> vodd(range<size_t>(1, 10, 2));
+Vector<size_t> vconst(15, 1);
+```
+
+**The result is**
+```C++
+  ☀ v ➜ {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
+  ☀ veven ➜ {0, 2, 4, 6, 8, 10};
+  ☀ v[veven] ➜ {0, 0.2, 0.4, 0.6, 0.8, 1};
+  ☀ v[veven[1]] ➜ 0.2;
+  ☀ vodd ➜ {1, 3, 5, 7, 9};
+  ☀ v[vodd] ➜ {0.1, 0.3, 0.5, 0.7, 0.9};
+  ☀ v[vodd[1]] ➜ 0.3;
+  ☀ v[vodd[veven[1]]] ➜ 0.5;
+  ☀ vconst ➜ {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+  ☀ v[vconst] ➜ {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+```
+
+## Access vector elements using an C++11 `initializer_list` of indices
+### Element access `Vector[initializer_list]`
+
+* The list can be smaller than or greater than or equal to the length to the data Vector.
+* The list can have repeated indices and indices can be in any order!
+
+
+Access via a C++11 initializer_list
+```C++
+Vector<double> v(linspace<double>(0, 1, 11));
+☀ v ➜ {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
+```
+
+**The result is**
+```C++
+  ☀ v[{0, 4}] ➜ {0, 0.4};
+  ☀ v[{4, 0, 1, 4}] ➜ {0.4, 0, 0.1, 0.4};
+  ☀ v[{1, 0, 2}] ➜ {0.1, 0, 0.2};
+  ☀ v[{4, 3, 2, 1, 0}] ➜ {0.4, 0.3, 0.2, 0.1, 0};
+  ☀ v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}] ➜ {0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
+```
+
 
 <br>
 

@@ -19,40 +19,23 @@ int main() {
   CR();
   CR();
 
-  // using namespace mathq::unit_quaternion;
-  // using namespace mathq::unit_imaginary;
-  // using std::sqrt;
-
-  GMD_HEADER2("Pretty Printing");
-  OUTPUT("Mathématiques supports the follow number systems:");
-
-  {  GMD_CODE_START("C++");
-  ECHO(bool q = (5 > 3));
-  ETV(q);
-  ETV(!q);
-  CR();
-  ETV(true || false);
-  ETV(true && false);
-  CR();
-  ETV(true + 9);
-  GMD_CODE_END();
-  }
-  GMD_VSPACE();
-
-  GMD_HEADER2("Debugging Modes");
-  OUTPUT("Mathématiques supports mixed math and automatically promotes numbers as needed");
-
   {
-    GMD_CODE_START("C++");
-    ECHO(unsigned int n = 23);
-    ETV(n);
-    ETV(n + 102 - 2*4);
-    ETV(n - 24);
-    ETV(n/2);
-    ETV(n % 2);
-    GMD_CODE_END();
+    OUTPUT("Contraction of of simple (non-field) 3D vectors");
+
+    using namespace mathq::TensorIndex;
+    Vector<double, 3>::Tensor<COVARIANT> covec;
+    covec = { 1,2,3 };
+    // covec = 5.;
+    ETV(covec);
+
+    Vector<double, 3>::Tensor<CONTRAVARIANT> vec;
+    vec = { 3,2,1 };
+    ETV(vec);
+
+    ETV(covec(vec));
+    ETV(vec(covec));
+    // ETV(vec(vec)); // should cause compile-time error
   }
-  GMD_VSPACE();
 
 
   return 0;

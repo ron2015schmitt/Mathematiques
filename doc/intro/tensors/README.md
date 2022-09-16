@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.163-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.164-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -52,34 +52,11 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-## Pretty Printing
-Mathématiques supports the follow number systems:
-```C++
-bool q = (5 > 3);
-☀ q ➜ bool true;
-☀ !q ➜ bool false;
-
-☀ true || false ➜ bool true;
-☀ true && false ➜ bool false;
-
-☀ true + 9 ➜ int 10;
-```
-
-<br>
-
-## Debugging Modes
-Mathématiques supports mixed math and automatically promotes numbers as needed
-```C++
-unsigned int n = 23;
-☀ n ➜ unsigned int 23;
-☀ n + 102 - 2*4 ➜ unsigned int 117;
-☀ n - 24 ➜ unsigned int 4294967295;
-☀ n/2 ➜ unsigned int 11;
-☀ n % 2 ➜ unsigned int 1;
-```
-
-<br>
-
+Contraction of of simple (non-field) 3D vectors
+☀ covec ➜ Vector<double,3>::Tensor<L> {1, 2, 3};
+☀ vec ➜ Vector<double,3>::Tensor<H> {3, 2, 1};
+☀ covec(vec) ➜ double 10;
+☀ vec(covec) ➜ double 10;
 
 
 | ⇦ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)  | [Introduction with Examples](../README.md)<br />Tensors<br /><img width=1000/> | ⇨ <br />[Series and transforms](../series-transforms/README.md)   |
