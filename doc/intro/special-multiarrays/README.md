@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.162-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.163-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -226,6 +226,7 @@ Matrix_RepeatVector<double, 2, 3 > A(1, { 1.1, 2.2, 3.3 });
 
 * Sparse MultiArray
 * Levi-Cevita Symbol MultiArray
+* Pauli matrices and Gamma matrices
 
 
 <br>

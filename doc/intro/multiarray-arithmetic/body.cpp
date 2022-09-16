@@ -23,153 +23,97 @@ int main() {
   // using namespace mathq::unit_imaginary;
   // using std::sqrt;
 
-  OUTPUT("Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.");
+  OUTPUT("Mathématiques supports arithmetic, relational, and logic operators for MultiArrays");
+
+  GMD_HEADER2("Arithmetic Operators");
+  OUTPUT("The operators `+, -, *, /` are the addition, subtraction, multiplication, and division operators respectively.\n");
+  OUTPUT("For details refer to [Arithmetic Operators](https://en.cppreference.com/w/cpp/language/operator_arithmetic).\n");
+
+  CR();
+  OUTPUT("| operator | operation | types | ");
+  OUTPUT("| :---: | :---: | :---: | ");
+  OUTPUT("| `+` | addition | 𝕤, 𝕌 | ");
+  OUTPUT("| `-` | subtraction | 𝕤, 𝕌 | ");
+  OUTPUT("| `*` | multiplication | 𝕤, 𝕌 | ");
+  OUTPUT("| `/` | division | 𝕤, 𝕌 | ");
+  CR();
+
+  OUTPUT("For container types, the following rules apply for `x op y`:\n");
+  OUTPUT("* For two (zero-depth) containers of the same `rank` and `dimensions`, `x op y` yields the element-wise operation a container of the same `rank` and `dimensions\n");
+  OUTPUT("* All other cases are invalid and will produce unpredictable results or a run-time error. Debug modes will send useful error messages to the stderr.\n");
+
+
 
 
   GMD_VSPACE();
-  GMD_HEADER2("Vectors");
-  OUTPUT("Vectors can be fixed length, with length determined at compile-time, or dynamic length.  Fixed-length vectors allow for better optimzation by the compiler.");
+  GMD_HEADER2("Relational Operators");
 
-  GMD_HEADER3("Fixed-length Vectors");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Vector<double, 3> v{ 1,2,3 });
-    CR();
-    ETV(v);
-    GMD_CODE_END();
-  }
+  OUTPUT("For details refer [Comparison Operators](https://en.cppreference.com/w/c/language/operator_comparison).\n");
 
-  GMD_HEADER3("Dynamic-length Vectors");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Vector<double> v{ 1,2,3,4,5 });
-    CR();
-    ETV(v);
-    ECHO(v = 100*v);
-    ETV(v);
-    ECHO(v.resize(10));
-    ETV(v);
-    ECHO(v = linspace<double>(0, 1, 10));
-    ETV(v);
-    GMD_CODE_END();
-  }
+  CR();
+  OUTPUT("| operator | operation | ");
+  OUTPUT("| :---: | :---: | ");
+  OUTPUT("| `==` | equal to | ");
+  OUTPUT("| `!=` | not equal to | ");
+  OUTPUT("| `<` | less than | ");
+  OUTPUT("| `<=` | less than or equal to | ");
+  OUTPUT("| `>` | greater than | ");
+  OUTPUT("| `>=` | greater than or equal to | ");
+  // OUTPUT("| `<=>` | three-way comparison | ");
+  CR();
 
-  GMD_HEADER3("Vector Element access");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Vector<double, 3> v{ 1,2,3 });
-    CR();
-    ETV(v[0]);
-    ETV(v[1]);
-    ETV(v[2]);
-    ECHO(v[0] = 200);
-    ETV(v);
-    ECHO(v[2] = v[1] = v[0]);
-    ETV(v);
-    GMD_CODE_END();
-  }
+  OUTPUT("**CAVEAT**: C++ allows assigment `=` inside `if` statements (eg, `if (a = true) return;`).  Mistyping the equals operator `==` can cause painful bugs. \n");
+
+  CR();
+  OUTPUT("Examples:\n");
+  GMD_CODE_START("C++");
+  ETV((2 == 2));
+  ETV((1 / 2 == 0.5));
+  ETV((1. / 2 == 0.5));
+  ETV((-2 < 34.2));
+  ETV((2 > 0));
+  GMD_CODE_END();
 
 
   GMD_VSPACE();
-  GMD_HEADER2("Matrices");
-  OUTPUT("Matrices can be fixed dimensions, with dimensions determined at compile-time, or dynamic dimensions.");
+  GMD_HEADER2("Logic Operators");
+  OUTPUT("For details refer [Logical Operators](https://en.cppreference.com/w/c/language/operator_logical).\n");
 
-  GMD_HEADER3("Fixed-dimensions Matrices");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Matrix<double, 2, 2> A{ {1,2}, {3,4} });
-    CR();
-    ETV(A);
-    GMD_CODE_END();
-  }
+  CR();
+  OUTPUT("| operator | operation | ");
+  OUTPUT("| :---: | :---: | ");
+  OUTPUT("| `!` | logical NOT | ");
+  OUTPUT("| `\\|\\|` | logical OR | ");
+  OUTPUT("| `&&` | logical AND | ");
+  CR();
 
-  GMD_HEADER3("Dynamic-dimensions Matrices");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Matrix<double> A{ {1,2}, {3,4}, {5,6} });
-    ETV(A);
-    CR();
-    ECHO(A.resize(1, 2));
-    ETV(A);
-    GMD_CODE_END();
-  }
-
-  GMD_HEADER3("Matrix Element access");
-  OUTPUT("Elements can be accessed via row and column indices:");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Matrix<double> A{ {1,2}, {3,4}, {5,6} });
-    ETV(A);
-    CR();
-    ETV(A(0, 0));
-    ETV(A(2, 1));
-    GMD_CODE_END();
-  }
-
-  OUTPUT("Elements can also be accessed via a single row-major index:");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Matrix<double> A{ {1,2}, {3,4}, {5,6} });
-    ETV(A);
-    CR();
-    ETV(A[0]);
-    ETV(A[1]);
-    ETV(A[2]);
-    GMD_CODE_END();
-  }
+  OUTPUT("**CAVEAT**: C++ also has binary bit-wise operators `&` and `|`.  Mistyping the above operators can cause painful bugs. \n");
 
 
-  GMD_VSPACE();
-  GMD_HEADER2("General MultiArrays");
-  OUTPUT("MultiArrays can be created of arbitrary rank via the syntax `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.");
-  OUTPUT("In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. ");
-  OUTPUT("A `Matrix` is simply an alias for a `MultiArray` of rank 2.  ");
-  OUTPUT("It should be noted, however, that `Vector` and `Matrix` have optimized implementations.");
-  OUTPUT("Multiarrays are sometimes referred to as tensors.  To be accurate, multiarrays are Cartesian algebraic tensors.  Tensor fields are also supported by Mathématiques, but described later in this introduction.");
+  GMD_HEADER4("Containers");
+  CR();
+  GMD_CODE_START("C++");
+  GMD_CODE_END();
+  CR();
 
-  GMD_HEADER3("Fixed-dimensions MultiArrays");
-  {
-    GMD_CODE_START("C++");
-    ECHO(MultiArray<double, 3, 2, 2, 2> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } });
-    CR();
-    ETV(M);
-    GMD_CODE_END();
-  }
+  GMD_HEADER4("Nested Containers");
+  CR();
+  GMD_CODE_START("C++");
+  GMD_CODE_END();
+  CR();
 
-  GMD_HEADER3("Dynamic-dimensions MultiArrays");
-  {
-    GMD_CODE_START("C++");
-    ECHO(MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } });
-    CR();
-    ETV(M);
-    GMD_CODE_END();
-  }
+  GMD_HEADER4("Mixed Rank Math");
+  CR();
+  GMD_CODE_START("C++");
+  GMD_CODE_END();
+  CR();
 
-  GMD_HEADER3("MultiArray Element access");
-  OUTPUT("Elements can be accessed via multiple indices:");
-  {
-    GMD_CODE_START("C++");
-    ECHO(MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } });
-    CR();
-    ETV(M);
-    CR();
-    ETV(M(0, 0, 0));
-    ETV(M(1, 1, 1));
-    GMD_CODE_END();
-  }
+  GMD_HEADER4("Mixed depth Math");
+  CR();
+  GMD_CODE_START("C++");
+  GMD_CODE_END();
+  CR();
 
-  OUTPUT("Elements can also be accessed via a single row-major index:");
-  {
-    GMD_CODE_START("C++");
-    ECHO(MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } });
-    CR();
-    ETV(M);
-    CR();
-    ETV(M[0]);
-    ETV(M[1]);
-    ETV(M[2]);
-    GMD_CODE_END();
-  }
 
   GMD_VSPACE();
   return 0;

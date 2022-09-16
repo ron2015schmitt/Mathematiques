@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.162-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.163-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -52,182 +52,89 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.
+Mathématiques supports arithmetic, relational, and logic operators for MultiArrays
+## Arithmetic Operators
+The operators `+, -, *, /` are the addition, subtraction, multiplication, and division operators respectively.
+
+For details refer to [Arithmetic Operators](https://en.cppreference.com/w/cpp/language/operator_arithmetic).
+
+
+| operator | operation | types | 
+| :---: | :---: | :---: | 
+| `+` | addition | 𝕤, 𝕌 | 
+| `-` | subtraction | 𝕤, 𝕌 | 
+| `*` | multiplication | 𝕤, 𝕌 | 
+| `/` | division | 𝕤, 𝕌 | 
+
+For container types, the following rules apply for `x op y`:
+
+* For two (zero-depth) containers of the same `rank` and `dimensions`, `x op y` yields the element-wise operation a container of the same `rank` and `dimensions
+
+* All other cases are invalid and will produce unpredictable results or a run-time error. Debug modes will send useful error messages to the stderr.
+
 
 <br>
 
-## Vectors
-Vectors can be fixed length, with length determined at compile-time, or dynamic length.  Fixed-length vectors allow for better optimzation by the compiler.
-### Fixed-length Vectors
+## Relational Operators
+For details refer [Comparison Operators](https://en.cppreference.com/w/c/language/operator_comparison).
+
+
+| operator | operation | 
+| :---: | :---: | 
+| `==` | equal to | 
+| `!=` | not equal to | 
+| `<` | less than | 
+| `<=` | less than or equal to | 
+| `>` | greater than | 
+| `>=` | greater than or equal to | 
+
+**CAVEAT**: C++ allows assigment `=` inside `if` statements (eg, `if (a = true) return;`).  Mistyping the equals operator `==` can cause painful bugs. 
+
+
+Examples:
+
 ```C++
-Vector<double, 3> v{ 1,2,3 };
-
-☀ v ➜ Vector<double,3> {1, 2, 3};
-```
-### Dynamic-length Vectors
-```C++
-Vector<double> v{ 1,2,3,4,5 };
-
-☀ v ➜ Vector<double> {1, 2, 3, 4, 5};
-v = 100*v;
-☀ v ➜ Vector<double> {100, 200, 300, 400, 500};
-v.resize(10);
-☀ v ➜ Vector<double> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-v = linspace<double>(0, 1, 10);
-☀ v ➜ Vector<double> {0, 0.111111, 0.222222, 0.333333, 0.444444, 0.555556, 0.666667, 0.777778, 0.888889, 1};
-```
-### Vector Element access
-```C++
-Vector<double, 3> v{ 1,2,3 };
-
-☀ v[0] ➜ double 1;
-☀ v[1] ➜ double 2;
-☀ v[2] ➜ double 3;
-v[0] = 200;
-☀ v ➜ Vector<double,3> {200, 2, 3};
-v[2] = v[1] = v[0];
-☀ v ➜ Vector<double,3> {200, 200, 200};
-```
-
-<br>
-
-## Matrices
-Matrices can be fixed dimensions, with dimensions determined at compile-time, or dynamic dimensions.
-### Fixed-dimensions Matrices
-```C++
-Matrix<double, 2, 2> A{ {1,2}, {3,4} };
-
-☀ A ➜ Matrix<double, 2⨯2> 
-{
-  {1, 2},
-  {3, 4}
-};
-```
-### Dynamic-dimensions Matrices
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
-{
-  {1, 2},
-  {3, 4},
-  {5, 6}
-};
-
-A.resize(1, 2);
-☀ A ➜ Matrix<double> 
-{
-  {0, 0}
-};
-```
-### Matrix Element access
-Elements can be accessed via row and column indices:
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
-{
-  {1, 2},
-  {3, 4},
-  {5, 6}
-};
-
-☀ A(0, 0) ➜ double 1;
-☀ A(2, 1) ➜ double 6;
-```
-Elements can also be accessed via a single row-major index:
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
-{
-  {1, 2},
-  {3, 4},
-  {5, 6}
-};
-
-☀ A[0] ➜ double 1;
-☀ A[1] ➜ double 2;
-☀ A[2] ➜ double 3;
+☀ (2 == 2) ➜ bool true;
+☀ (1 / 2 == 0.5) ➜ bool false;
+☀ (1. / 2 == 0.5) ➜ bool true;
+☀ (-2 < 34.2) ➜ bool true;
+☀ (2 > 0) ➜ bool true;
 ```
 
 <br>
 
-## General MultiArrays
-MultiArrays can be created of arbitrary rank via the syntax `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.
-In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. 
-A `Matrix` is simply an alias for a `MultiArray` of rank 2.  
-It should be noted, however, that `Vector` and `Matrix` have optimized implementations.
-Multiarrays are sometimes referred to as tensors.  To be accurate, multiarrays are Cartesian algebraic tensors.  Tensor fields are also supported by Mathématiques, but described later in this introduction.
-### Fixed-dimensions MultiArrays
+## Logic Operators
+For details refer [Logical Operators](https://en.cppreference.com/w/c/language/operator_logical).
+
+
+| operator | operation | 
+| :---: | :---: | 
+| `!` | logical NOT | 
+| `\|\|` | logical OR | 
+| `&&` | logical AND | 
+
+**CAVEAT**: C++ also has binary bit-wise operators `&` and `|`.  Mistyping the above operators can cause painful bugs. 
+
+#### Containers
+
 ```C++
-MultiArray<double, 3, 2, 2, 2> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3, 2⨯2⨯2> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
 ```
-### Dynamic-dimensions MultiArrays
+
+#### Nested Containers
+
 ```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
 ```
-### MultiArray Element access
-Elements can be accessed via multiple indices:
+
+#### Mixed Rank Math
+
 ```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
-
-☀ M(0, 0, 0) ➜ double 1;
-☀ M(1, 1, 1) ➜ double 8;
 ```
-Elements can also be accessed via a single row-major index:
+
+#### Mixed depth Math
+
 ```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
-
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
-
-☀ M[0] ➜ double 1;
-☀ M[1] ➜ double 2;
-☀ M[2] ➜ double 3;
 ```
+
 
 <br>
 

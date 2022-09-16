@@ -194,6 +194,7 @@ int main() {
   GMD_VSPACE();
   OUTPUT("* Sparse MultiArray");
   OUTPUT("* Levi-Cevita Symbol MultiArray");
+  OUTPUT("* Pauli matrices and Gamma matrices");
   CR();
 
 
