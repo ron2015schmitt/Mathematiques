@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.160-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.161-c++20</h1>](../../README.md)
 
 <details>
 
@@ -46,7 +46,7 @@ sudo apt upgrade
 sudo apt-get install build-essential gfortran liblapacke-dev liblapack-doc
 ```
 
-Verify the version for `g++` is `11.2.0` or higher.\
+Verify the version for `g++` is `11.2.0` or higher as follows
 ```bash
 g++ --version 
 ```

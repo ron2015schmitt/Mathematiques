@@ -19,7 +19,7 @@ sudo apt upgrade
 sudo apt-get install build-essential gfortran liblapacke-dev liblapack-doc
 ```
 
-Verify the version for `g++` is `11.2.0` or higher.\
+Verify the version for `g++` is `11.2.0` or higher as follows
 ```bash
 g++ --version 
 ```

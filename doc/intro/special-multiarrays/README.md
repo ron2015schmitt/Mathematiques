@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.160-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.161-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -52,182 +52,181 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.
+Mathématiques 
 
 <br>
 
-## Vectors
-Vectors can be fixed length, with length determined at compile-time, or dynamic length.  Fixed-length vectors allow for better optimzation by the compiler.
-### Fixed-length Vectors
-```C++
-Vector<double, 3> v{ 1,2,3 };
+## Constant MultiArrays
+These multiarrays have the same value for each element, and only take the memory profile a single element (plus dimensions integers for dynamic multiarrays).
 
-☀ v ➜ Vector<double,3> {1, 2, 3};
-```
-### Dynamic-length Vectors
-```C++
-Vector<double> v{ 1,2,3,4,5 };
+<details><summary>Constant MultiArray Examples</summary><blockquote>
 
-☀ v ➜ Vector<double> {1, 2, 3, 4, 5};
-v = 100*v;
-☀ v ➜ Vector<double> {100, 200, 300, 400, 500};
-v.resize(10);
-☀ v ➜ Vector<double> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-v = linspace<double>(0, 1, 10);
-☀ v ➜ Vector<double> {0, 0.111111, 0.222222, 0.333333, 0.444444, 0.555556, 0.666667, 0.777778, 0.888889, 1};
-```
-### Vector Element access
-```C++
-Vector<double, 3> v{ 1,2,3 };
 
-☀ v[0] ➜ double 1;
-☀ v[1] ➜ double 2;
-☀ v[2] ➜ double 3;
-v[0] = 200;
-☀ v ➜ Vector<double,3> {200, 2, 3};
-v[2] = v[1] = v[0];
-☀ v ➜ Vector<double,3> {200, 200, 200};
+### Vector_Constant
+
+```C++
+Vector_Constant<double, 5> v{ 3.14 };
+
+☀ v ➜ Vector_Constant<double,N0=5> {3.14, 3.14, 3.14, 3.14, 3.14};
+
+☀ sizeof(v)/sizeof(double) ➜ unsigned long 1;
 ```
+
+### Dynamic-length Vector_Constant
+
+```C++
+Vector_Constant<double> v{ 5, 3.14 };
+
+☀ v ➜ Vector_Constant<double> {3.14, 3.14, 3.14, 3.14, 3.14};
+
+☀ sizeof(v)/sizeof(double) ➜ unsigned long 2;
+```
+
+### Matrix_Constant
+
+```C++
+Matrix_Constant<double, 2, 3> A{ 3.14 };
+
+☀ A ➜ Matrix_Constant<double, 2⨯3> 
+{
+  {3.14, 3.14, 3.14},
+  {3.14, 3.14, 3.14}
+};
+
+☀ sizeof(A)/sizeof(double) ➜ unsigned long 1;
+```
+
+### Dynamic-length Matrix_Constant
+
+```C++
+Matrix_Constant<double> A(Dimensions{ 2, 3 }, 3.14);
+
+☀ A ➜ Matrix_Constant<double> 
+{
+  {3.14, 3.14, 3.14},
+  {3.14, 3.14, 3.14}
+};
+
+☀ sizeof(A)/sizeof(double) ➜ unsigned long 3;
+```
+
+### MultiArray_Constant
+
+```C++
+MultiArray_Constant<double, 3, 1, 2, 3> A{ 3.14 };
+
+☀ A ➜ MultiArray_Constant<double, rank=3, 1⨯2⨯3> 
+{
+  {
+    {3.14, 3.14, 3.14},
+    {3.14, 3.14, 3.14}
+  }
+};
+
+☀ sizeof(A)/sizeof(double) ➜ unsigned long 1;
+```
+
+### Dynamic-length MultiArray_Constant
+
+```C++
+MultiArray_Constant<double, 3> A(Dimensions{ 1, 2, 3 }, 3.14);
+
+☀ A ➜ MultiArray_Constant<double, rank=3> 
+{
+  {
+    {3.14, 3.14, 3.14},
+    {3.14, 3.14, 3.14}
+  }
+};
+
+☀ sizeof(A)/sizeof(double) ➜ unsigned long 4;
+```
+
+
+</blockquote></details>
+
 
 <br>
 
-## Matrices
-Matrices can be fixed dimensions, with dimensions determined at compile-time, or dynamic dimensions.
-### Fixed-dimensions Matrices
-```C++
-Matrix<double, 2, 2> A{ {1,2}, {3,4} };
+## Repeated Vector MultiArrays
+These multiarrays vary along only one indices, which implies that they can be specified by a single vector.
 
-☀ A ➜ Matrix<double, 2⨯2> 
-{
-  {1, 2},
-  {3, 4}
-};
-```
-### Dynamic-dimensions Matrices
+<details><summary>Repeated Vector MultiArray Examples</summary><blockquote>
+
+
+### Matrix_RepeatVector
+
+#### Repeated Column Matrix
+Set the varying index to zero.
+
 ```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
+Matrix_RepeatVector<double, 2, 3 > A(0, { 1.1, 2.2 });
+
+☀ A ➜ MultiArray_RepeatVector<double, rank=2, 2⨯3> vector_index=0, dims=2⨯3
 {
-  {1, 2},
-  {3, 4},
-  {5, 6}
+  {1.1, 1.1, 1.1},
+  {2.2, 2.2, 2.2}
 };
 
-A.resize(1, 2);
-☀ A ➜ Matrix<double> 
-{
-  {0, 0}
-};
+☀ sizeof(A)/sizeof(double) ➜ unsigned long 3;
 ```
-### Matrix Element access
-Elements can be accessed via row and column indices:
+
+
+#### Repeated Row Matrix
+Set the varying index to one.
+
 ```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
+Matrix_RepeatVector<double, 2, 3 > A(1, { 1.1, 2.2, 3.3 });
+
+☀ A ➜ MultiArray_RepeatVector<double, rank=2, 2⨯3> vector_index=1, dims=2⨯3
 {
-  {1, 2},
-  {3, 4},
-  {5, 6}
+  {1.1, 2.2, 3.3},
+  {1.1, 2.2, 3.3}
 };
 
-☀ A(0, 0) ➜ double 1;
-☀ A(2, 1) ➜ double 6;
+☀ sizeof(A)/sizeof(double) ➜ unsigned long 3;
 ```
-Elements can also be accessed via a single row-major index:
-```C++
-Matrix<double> A{ {1,2}, {3,4}, {5,6} };
-☀ A ➜ Matrix<double> 
-{
-  {1, 2},
-  {3, 4},
-  {5, 6}
-};
 
-☀ A[0] ➜ double 1;
-☀ A[1] ➜ double 2;
-☀ A[2] ➜ double 3;
-```
+
+</blockquote></details>
+
 
 <br>
 
-## General MultiArrays
-MultiArrays can be created of arbitrary rank via the syntax `MultiArray<double,[rank]]>`, where `[rank]` is a whole number.
-In fact a `Vector` is simply an alias for a `MultiArray` of rank 1. 
-A `Matrix` is simply an alias for a `MultiArray` of rank 2.  
-It should be noted, however, that `Vector` and `Matrix` have optimized implementations.
-Multiarrays are sometimes referred to as tensors.  To be accurate, multiarrays are Cartesian algebraic tensors.  Tensor fields are also supported by Mathématiques, but described later in this introduction.
-### Fixed-dimensions MultiArrays
-```C++
-MultiArray<double, 3, 2, 2, 2> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
+## Special MultiArrays In Development
+🚧 in progress...
 
-☀ M ➜ MultiArray<double, rank=3, 2⨯2⨯2> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
-```
-### Dynamic-dimensions MultiArrays
-```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
+<br>
 
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
-```
-### MultiArray Element access
-Elements can be accessed via multiple indices:
-```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
+* Block Matrix
+* Zero Matrix, **`0`**, useful for block matrices
+* Identity Matrix, **`I`**
+* Exchange Matrix, **`J`**
 
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
 
-☀ M(0, 0, 0) ➜ double 1;
-☀ M(1, 1, 1) ➜ double 8;
-```
-Elements can also be accessed via a single row-major index:
-```C++
-MultiArray<double, 3> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
+<br>
 
-☀ M ➜ MultiArray<double, rank=3> 
-{
-  {
-    {1, 2},
-    {3, 4}
-  },
-  {
-    {5, 6},
-    {7, 8}
-  }
-};
+* Diagonal Matrix
+* Cross-Diagonal Matrix
 
-☀ M[0] ➜ double 1;
-☀ M[1] ➜ double 2;
-☀ M[2] ➜ double 3;
-```
+
+<br>
+
+* Upper-Triangle Matrix
+* Lower-Triangle Matrix
+* Symmetric Matrix
+* Skew Symmetric Matrix
+* Hermitian Matrix
+* Skew Hermitian Matrix
+* Toeplitz Matrix
+* Vandermonde Matrix
+
+
+<br>
+
+* Sparse MultiArray
+* Levi-Cevita Symbol MultiArray
+
 
 <br>
 

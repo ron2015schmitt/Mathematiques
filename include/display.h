@@ -350,6 +350,12 @@
 #define GMD_HEADER3(str) MOUT << "### " << str << std::endl
 #define GMD_HEADER4(str) MOUT << "#### " << str << std::endl
 
+// collapsable sections
+
+#define GMD_HIDDEN_START(title) MOUT << std::string("\n<details><summary>") << std::string(title) <<  std::string("</summary><blockquote>\n\n") 
+#define GMD_HIDDEN_END() printf("\n</blockquote></details>\n\n")
+
+
 
 //
 // > _HELPER macros intended only for use by other macros internal to this file <
@@ -2100,7 +2106,7 @@ namespace display {
 
 
 
-  }; // namespace display
+}; // namespace display
 
 
 

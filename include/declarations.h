@@ -236,6 +236,9 @@ namespace mathq {
   template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
     class MultiArray_RepeatVector;
 
+  template <typename Element, size_t... sizes>
+  using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, sizes...>;
+
 
 
 
