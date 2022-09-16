@@ -122,7 +122,7 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER2("Repeated Vector MultiArrays");
 
-  OUTPUT("These multiarrays vary along only one indices, which implies that they can be specified by a single vector.");
+  OUTPUT("These multiarrays vary along only one indices, which implies that they can be specified by a single vector.  For `rank=2`, this results in either a repeated-column matrix (`index=0`) or a repeated-row matrix (`index=1`) .");
 
   GMD_HIDDEN_START("Repeated Vector MultiArray Examples");
 

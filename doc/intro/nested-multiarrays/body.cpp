@@ -26,6 +26,7 @@ int main() {
   OUTPUT("MultiArrays can contain any number type, eg `int`, `double`, `complex<float>`, `Quaternion<extended>`.");
   OUTPUT("Additionally, the elements of a `MultiArray` can be another type of `MultiArray`.");
   OUTPUT("These containers can be nested any number of levels.");
+  OUTPUT("Nesting of multiarrays also allows for the creation of *block matrices*.");
 
 
 

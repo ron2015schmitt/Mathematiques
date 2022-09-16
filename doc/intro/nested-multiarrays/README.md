@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.161-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.162-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -55,6 +55,7 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 MultiArrays can contain any number type, eg `int`, `double`, `complex<float>`, `Quaternion<extended>`.
 Additionally, the elements of a `MultiArray` can be another type of `MultiArray`.
 These containers can be nested any number of levels.
+Nesting of multiarrays also allows for the creation of *block matrices*.
 ### Vector of Matrices
 A Vector of Matrices is useful for storing the values of a vector field on a grid of points
 ```C++

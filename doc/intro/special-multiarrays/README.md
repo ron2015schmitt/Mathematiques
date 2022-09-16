@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.161-c++20</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.162-c++20</h1>](../../../README.md)
 
 <details>
 
@@ -149,7 +149,7 @@ MultiArray_Constant<double, 3> A(Dimensions{ 1, 2, 3 }, 3.14);
 <br>
 
 ## Repeated Vector MultiArrays
-These multiarrays vary along only one indices, which implies that they can be specified by a single vector.
+These multiarrays vary along only one indices, which implies that they can be specified by a single vector.  For `rank=2`, this results in either a repeated-column matrix (`index=0`) or a repeated-row matrix (`index=1`) .
 
 <details><summary>Repeated Vector MultiArray Examples</summary><blockquote>
 
