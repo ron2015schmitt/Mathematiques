@@ -17,7 +17,7 @@ Using modern C++ (C++20), create an extensive, open source, numerical C++ librar
 
 **Function of a vector**
 
-$\mathbf{w} = 1 + 10 \mathbf{v} + e^{i  [   2 \pi   +   \pi sin(  2 \mathbf{v} + \pi / 6  )   ] }$ 
+$\mathbf{w} = 1 + 10 \mathbf{v} + e^{i  [   2 \pi   +   \pi sin(  2 \pi \mathbf{v} + \pi / 6  )   ] }$ 
 
 ```C++
 w = 1 + 10 * v + exp(i * (2 * pi + pi * sin(2 * pi * v + pi / 6)));
@@ -53,6 +53,9 @@ E = nabla | Phi;
 **Number Systems**
 
 ```C++
+using namespace mathq::unit_imaginary;
+using namespace mathq::unit_quaternion;
+
 double x = 23.2;
 Imaginary<double> y = 5*i;
 std::complex<double> z = 3 + 4*i;
