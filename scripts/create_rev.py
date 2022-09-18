@@ -197,18 +197,19 @@ MAIN_TAG = "{}.{}".format(TAG_NEW, REV)
 print(f"{MAIN_TAG=}")
 
 #make full
-FULL_TAG = MAIN_TAG
+SHORT_TAG = MAIN_TAG
 if len(PRERELEASE_NAME) > 0:
-  FULL_TAG += "-"+PRERELEASE_NAME+"."+str(PRERELEASE_NUMBER).rjust(3, '0')
+  SHORT_TAG += "-"+PRERELEASE_NAME+"."+str(PRERELEASE_NUMBER).rjust(3, '0')
+FULL_TAG = SHORT_TAG
 if len(META_DATA) > 0:
   FULL_TAG += "+"+META_DATA
 
 print("\nRESULTS:")
-print("  new tag="+FULL_TAG)
+print("  new tag="+SHORT_TAG)
 print("  writing to: "+TAG_FILE_MATHQ)
 delete(TAG_FILE_MATHQ)
 with open(TAG_FILE_MATHQ, "w") as f:
-  f.write(FULL_TAG)
+  f.write(SHORT_TAG)
 
 print("  reading from: "+FEATURE_VERSION_MATHQ_FILE)
 with open(FEATURE_VERSION_MATHQ_FILE, 'r') as f:
@@ -222,7 +223,7 @@ with open(TAG_ANNOTATION_FILE, "w") as f:
 
 # output to screen
 print("  FEATURE_VERSION_MATHQ" + Style.RESET_ALL + "=" + Style.BRIGHT + Fore.GREEN + FEATURE_VERSION_MATHQ + Style.RESET_ALL)   
-print("  Tag for this commit: " + Style.BRIGHT + Fore.GREEN + FULL_TAG + Style.RESET_ALL)   
+print("  Tag for this commit: " + Style.BRIGHT + Fore.GREEN + SHORT_TAG + Style.RESET_ALL)   
 
 
 
