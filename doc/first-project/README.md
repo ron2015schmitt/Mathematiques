@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.002</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.003</h1>](../../README.md)
 
 <details>
 
@@ -143,22 +143,22 @@ int main(int argc, char* argv[]) {
 
 ## Makefile
 
-```C++
+```Makefile
 ##############################################################################################
-# Mathematiques 0.42.1-alpha.001+cpp20gpp11.2.0 User Code Makefile
+# Mathematiques 0.42.1-alpha.002 User Code Makefile
 #
 # Copy this Makefile to your project directory
 #
-# Sun Sep 18 19:13:35 EDT 2022
+# Sun Sep 18 19:23:15 EDT 2022
 #
-# This Makefile was created by /home/rs2015/Mathematiques/configure from
-#   /home/rs2015/Mathematiques/make-lib/variables.mk
-#   /home/rs2015/Mathematiques/make-lib/example.variables.mk
-#   /home/rs2015/Mathematiques/make-lib/recipes.mk
-#   /home/rs2015/Mathematiques/make-lib/example.recipes.mk
+# This Makefile was created by [BUILD_PARENT_DIR]/Mathematiques/configure from
+#   [BUILD_PARENT_DIR]/Mathematiques/make-lib/variables.mk
+#   [BUILD_PARENT_DIR]/Mathematiques/make-lib/example.variables.mk
+#   [BUILD_PARENT_DIR]/Mathematiques/make-lib/recipes.mk
+#   [BUILD_PARENT_DIR]/Mathematiques/make-lib/example.recipes.mk
 ##############################################################################################
 
-DIR_MATHQ := /home/rs2015/Mathematiques
+DIR_MATHQ := [BUILD_PARENT_DIR]/Mathematiques
 
 ##############################################################################################
 ##############################################################################################

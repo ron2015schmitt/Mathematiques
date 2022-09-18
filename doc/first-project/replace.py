@@ -33,6 +33,8 @@ N = len(sys.argv)
 #     print("\nInvalid number of command line arguments ({}): {}\n".format(n,cmd) + usage)
 #     sys.exit(1)
 
+HOME=os.path.expanduser('~')
+
 # read in template file
 lines = []
 fn = "template.src.md"
@@ -47,7 +49,8 @@ with open(fn, 'r') as f:
   # print("  FOUND: "+fn)
   makefile = f.read()
 
-makefile = "```C++\n" + makefile + "```\n"
+makefile = makefile.replace(HOME,"[BUILD_PARENT_DIR]")
+makefile = "```Makefile\n" + makefile + "```\n"
 
 # print(info)
 body = body.replace("__MAKEFILE__",makefile)
