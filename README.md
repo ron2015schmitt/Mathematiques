@@ -1,6 +1,6 @@
 
 
-# Mathématiques 0.42.0+c++20
+# Mathématiques 0.42.1+cpp20
 
 
 ## Phase 1 (in progress): C++ Numerical Library
@@ -18,6 +18,9 @@ Using modern C++ (C++20), create an extensive, open source, numerical C++ librar
 * **i/o in popular formats** for analysis and plotting
 
 <br>
+
+
+### Code Snippets
 
 **Function of a vector**
 
@@ -94,6 +97,12 @@ Vector<double> g = cyl_bessel_j(nu, x);
 
 ---------------------------------
 ## Phase 2 (planned): Symbolic Mathematics Built into a Modern High-Performance Language
+
+
+From these, it is evident that all we need to use standard mathematical notation in C++ is
+1. unicode support to allow math operator characters and greek letters, chalkboard letters etc.
+2. Ability to define the math symbols as templated operators
+
 
 Create a new language that implements the phase 1 library above plus
 * supports unicode characters in source code 
