@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1+cpp20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.000+cpp20</h1>](../../README.md)
 
 <details>
 
@@ -145,11 +145,11 @@ int main(int argc, char* argv[]) {
 
 ```C++
 ##############################################################################################
-# Mathematiques 0.42.0+c++20 User Code Makefile
+# Mathematiques 0.42.1+cpp20 User Code Makefile
 #
 # Copy this Makefile to your project directory
 #
-# Sun Sep 18 18:30:31 EDT 2022
+# Sun Sep 18 18:36:01 EDT 2022
 #
 # This Makefile was created by /home/rs2015/Mathematiques/configure from
 #   /home/rs2015/Mathematiques/make-lib/variables.mk
