@@ -18,19 +18,20 @@ def delete(fname):
 
 
 usage="""
-USAGE: python3 create_rev.py FEATURE_VERSION_MATHQ_FILE TAG_FILE_MATHQ TAG_ANNOTATION_FILE
+USAGE: python3 create_rev.py   FEATURE_VERSION_MATHQ_FILE  CPP_VERSION_FILE  PRERELEASE_TAG_FILE  TAG_FILE_MATHQ  TAG_ANNOTATION_FILE
 """
 
 n = len(sys.argv)
-if n != 5:
+if n != 6:
     print("Invalid number of command line arguments ({})\n".format(n) + usage)
     sys.exit(1)
 
 
 FEATURE_VERSION_MATHQ_FILE = sys.argv[1]   # input
 CPP_VERSION_FILE = sys.argv[2]   # input
-TAG_FILE_MATHQ = sys.argv[3]       # output
-TAG_ANNOTATION_FILE = sys.argv[4]  # output
+PRERELEASE_TAG_FILE = sys.argv[3]   # input
+TAG_FILE_MATHQ = sys.argv[4]       # output
+TAG_ANNOTATION_FILE = sys.argv[5]  # output
 
 # get DIR_MATHQ, the top-level dir for this repo
 filename = inspect.getframeinfo(inspect.currentframe()).filename
@@ -38,27 +39,38 @@ path     = os.path.dirname(os.path.abspath(filename))
 split = path.split("/")
 split.pop()
 DIR_MATHQ = "/".join(split)
-# print(DIR_MATHQ)
+print(DIR_MATHQ)
 
 
 # get the most recent tag
 print("  reading from: "+FEATURE_VERSION_MATHQ_FILE)
 env = bashutil.source(FEATURE_VERSION_MATHQ_FILE)
 FEATURE_VERSION_MATHQ = env["FEATURE_VERSION_MATHQ"]
-# print(FEATURE_VERSION_MATHQ)
+print(f"{FEATURE_VERSION_MATHQ=}")
 
 # get the C++ version
-print("  reading from: "+CPP_VERSION_FILE)
-file1 = open(CPP_VERSION_FILE, 'r')
-CPP_VERSION_FILE = file1.readline()
-file1.close()
-# print(CPP_VERSION_FILE)
+fn=CPP_VERSION_FILE
+print("  reading from: "+fn)
+with open(fn, 'r') as f:
+  CPP_VERSION = f.readline()
+print(f"{CPP_VERSION=}")
+
+# check for a pre-release tag
+fn=PRERELEASE_TAG_FILE
+print("  reading from: "+fn)
+with open(fn, 'r') as f:
+  PRERELEASE_TAG = f.readline()
+print(f"{PRERELEASE_TAG=}")
 
 
 # create a new tag
-TAG_NEW = "v" + FEATURE_VERSION_MATHQ
+TAG_NEW = FEATURE_VERSION_MATHQ
+split = TAG_NEW.split(".")
+MAJOR = split[0]
+MINOR = split[1]
+print(f"{MAJOR=} {MINOR=}")
 print("  loading git tags for: "+TAG_NEW)
-VERSIONS_STR = bashutil.getstdout('git tag -l "{}.*" | cat'.format(TAG_NEW))
+VERSIONS_STR = bashutil.getstdout('git tag -l "v{}.*" | cat'.format(TAG_NEW))
 VERSIONS = VERSIONS_STR.split("\n")
 REV = 0
 if len(VERSIONS) == 1 and VERSIONS[0] == '':
@@ -67,7 +79,7 @@ else:
     REV = len(VERSIONS)
 #print("REV={}".format(REV))
 
-FULL_TAG = "{}.{}".format(TAG_NEW, REV)+"-"+CPP_VERSION_FILE
+FULL_TAG = "{}.{}".format(TAG_NEW, REV)+"+"+CPP_VERSION
 print("  new tag="+FULL_TAG)
 
 print("  writing to: "+TAG_FILE_MATHQ)

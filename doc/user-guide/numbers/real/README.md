@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.164-c++20</h1>](../../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.0+c++20</h1>](../../../../README.md)
 
 <details>
 
@@ -7,16 +7,18 @@
 # [Documentation](../../../README.md)<br>
 Chapter 1. [License](../../../license/README.md)<br>
 Chapter 2. [About](../../../about/README.md)<br>
-Chapter 3. [Objectives](../../../objectives/README.md)<br>
-Chapter 4. [Status & Release Notes](../../../status-release/README.md)<br>
-Chapter 5. [Upcoming Development](../../../development-schedule/README.md)<br>
-Chapter 6. [Introduction with Examples](../../../intro/README.md)<br>
-Chapter 7. [Installation](../../../installation/README.md)<br>
-Chapter 8. [Your First Mathématiques Project](../../../first-project/README.md)<br>
-Chapter 9. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
-Chapter 10. [Benchmarks](../../../benchmarks/README.md)<br>
-Chapter 11. [Tests](../../../test/README.md)<br>
-Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../../../developer-guide/README.md)<br>
+Chapter 3. [Why?](../../../why/README.md)<br>
+Chapter 4. [Objectives](../../../objectives/README.md)<br>
+Chapter 5. [Versioning](../../../versioning/README.md)<br>
+Chapter 6. [Status & Release Notes](../../../status-release/README.md)<br>
+Chapter 7. [Upcoming Development](../../../development-schedule/README.md)<br>
+Chapter 8. [Introduction with Examples](../../../intro/README.md)<br>
+Chapter 9. [Installation](../../../installation/README.md)<br>
+Chapter 10. [Your First Mathématiques Project](../../../first-project/README.md)<br>
+Chapter 11. _Usage Guide: Syntax, Data Types, Functions, etc_ <br>
+Chapter 12. [Benchmarks](../../../benchmarks/README.md)<br>
+Chapter 13. [Tests](../../../test/README.md)<br>
+Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../../developer-guide/README.md)<br>
 
 
 </details>
@@ -27,21 +29,21 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../../../d
 
 <summary>Usage Guide: Syntax, Data Types, Functions, etc</summary>
 
-# [9. Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
-9.1. [Usage Guide Notation](../../notation/README.md)<br>
-9.2. _Scalar Types (Real, Imaginary, Complex & Quaternion)_ <br>
-9.3. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>
-9.4. [Operators](../../operators/README.md)<br>
-9.5. [Functions](../../functions/README.md)<br>
-9.6. [Linear Algebra](../../linear-algebra/README.md)<br>
-9.7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>
-9.8. [Ranges and Grids](../../ranges-grids/README.md)<br>
-9.9. [Calculus](../../calculus/README.md)<br>
-9.10. [Vector Calculus](../../vector-calculus/README.md)<br>
-9.11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>
-9.12. [Display of Results](../../display/README.md)<br>
-9.13. [FILE I/O](../../file-io/README.md)<br>
-9.14. [Debug Modes](../../debug/README.md)<br>
+# [11. Usage Guide: Syntax, Data Types, Functions, etc](../../README.md)<br>
+11.1. [Usage Guide Notation](../../notation/README.md)<br>
+11.2. _Scalar Types (Real, Imaginary, Complex & Quaternion)_ <br>
+11.3. [Container Types (Vector, Matrix & MultiArray)](../../multiarrays/README.md)<br>
+11.4. [Operators](../../operators/README.md)<br>
+11.5. [Functions](../../functions/README.md)<br>
+11.6. [Linear Algebra](../../linear-algebra/README.md)<br>
+11.7. [Indexing, Masks, and Sorting](../../indexing-sorting/README.md)<br>
+11.8. [Ranges and Grids](../../ranges-grids/README.md)<br>
+11.9. [Calculus](../../calculus/README.md)<br>
+11.10. [Vector Calculus](../../vector-calculus/README.md)<br>
+11.11. [MultiArray Calculus](../../tensor-calculus/README.md)<br>
+11.12. [Display of Results](../../display/README.md)<br>
+11.13. [FILE I/O](../../file-io/README.md)<br>
+11.14. [Debug Modes](../../debug/README.md)<br>
 
 
 </details>
@@ -52,19 +54,19 @@ Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../../../d
 
 <summary>Scalar Types (Real, Imaginary, Complex & Quaternion)</summary>
 
-# [9.2. Scalar Types (Real, Imaginary, Complex & Quaternion)](../README.md)<br>
+# [11.2. Scalar Types (Real, Imaginary, Complex & Quaternion)](../README.md)<br>
 
-9.2.1. _Reals_ <br>
-9.2.2. [Complex numbers](../complex/README.md)<br>
-9.2.3. [Imaginary numbers](../imaginary/README.md)<br>
-9.2.4. [Quaternions](../quaternion/README.md)<br>
+11.2.1. _Reals_ <br>
+11.2.2. [Complex numbers](../complex/README.md)<br>
+11.2.3. [Imaginary numbers](../imaginary/README.md)<br>
+11.2.4. [Quaternions](../quaternion/README.md)<br>
 
 
 </details>
 
 
 
-# 9.2.1. Reals
+# 11.2.1. Reals
 
 _This document was generated from the C++ file_ `real/body.cpp` _using macros and functions (in namespace `mathq::display`) from the header_ `"mathq.h"`. 
 

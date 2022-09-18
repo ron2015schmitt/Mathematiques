@@ -51,6 +51,8 @@ ifdef FEATURE_VERSION_MATHQ_FILE
 endif
 	@$(call echovar,CPP_VERSION_FILE)
 	@$(call echovar,CPP_VERSION_MATHQ)
+	@$(call echovar,PRERELEASE_TAG_FILE)
+	@$(call echovar,PRERELEASE_TAG_MATHQ)
 	@$(call echovar,TAG_MATHQ)
 	@$(call hr)
 	@echo

@@ -12,7 +12,7 @@
 1. Parallel processing
 1. General Differential Operators and Expressions
 1. Integral operators
-  +	function to create bra (of bra-kets) operator for `FormalMathFunction` via `bra` or `~operator`
+  +	function to create bra (of bra-kets) operator for `NumericalFunction` via `bra` or `~operator`
 1. Differential Equation Solvers via libraries
   + [FEM](https://en.wikipedia.org/wiki/Category:Finite_element_software)
   + ODEPACK

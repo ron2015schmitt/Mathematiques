@@ -1,6 +1,6 @@
 
 
-# Mathématiques v0.41.164-c++20
+# Mathématiques 0.42.0+c++20
 
 
 ## Phase 1 (in progress): C++ Numerical Library

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.164-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.0+c++20</h1>](../../README.md)
 
 <details>
 
@@ -7,23 +7,25 @@
 # [Documentation](../README.md)<br>
 Chapter 1. [License](../license/README.md)<br>
 Chapter 2. [About](../about/README.md)<br>
-Chapter 3. [Objectives](../objectives/README.md)<br>
-Chapter 4. [Status & Release Notes](../status-release/README.md)<br>
-Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
-Chapter 6. [Introduction with Examples](../intro/README.md)<br>
-Chapter 7. [Installation](../installation/README.md)<br>
-Chapter 8. [Your First Mathématiques Project](../first-project/README.md)<br>
-Chapter 9. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-Chapter 10. [Benchmarks](../benchmarks/README.md)<br>
-Chapter 11. [Tests](../test/README.md)<br>
-Chapter 12. _Developer Guide: Modifying and Extending Mathématiques_ <br>
+Chapter 3. [Why?](../why/README.md)<br>
+Chapter 4. [Objectives](../objectives/README.md)<br>
+Chapter 5. [Versioning](../versioning/README.md)<br>
+Chapter 6. [Status & Release Notes](../status-release/README.md)<br>
+Chapter 7. [Upcoming Development](../development-schedule/README.md)<br>
+Chapter 8. [Introduction with Examples](../intro/README.md)<br>
+Chapter 9. [Installation](../installation/README.md)<br>
+Chapter 10. [Your First Mathématiques Project](../first-project/README.md)<br>
+Chapter 11. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 12. [Benchmarks](../benchmarks/README.md)<br>
+Chapter 13. [Tests](../test/README.md)<br>
+Chapter 14. _Developer Guide: Modifying and Extending Mathématiques_ <br>
 
 
 </details>
 
 
 
-# Chapter 12. Developer Guide: Modifying and Extending Mathématiques
+# Chapter 14. Developer Guide: Modifying and Extending Mathématiques
 
 
 🚧 *in progress...*

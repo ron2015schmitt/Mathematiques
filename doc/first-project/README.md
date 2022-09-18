@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.41.164-c++20</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.0+c++20</h1>](../../README.md)
 
 <details>
 
@@ -7,23 +7,25 @@
 # [Documentation](../README.md)<br>
 Chapter 1. [License](../license/README.md)<br>
 Chapter 2. [About](../about/README.md)<br>
-Chapter 3. [Objectives](../objectives/README.md)<br>
-Chapter 4. [Status & Release Notes](../status-release/README.md)<br>
-Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
-Chapter 6. [Introduction with Examples](../intro/README.md)<br>
-Chapter 7. [Installation](../installation/README.md)<br>
-Chapter 8. _Your First Mathématiques Project_ <br>
-Chapter 9. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-Chapter 10. [Benchmarks](../benchmarks/README.md)<br>
-Chapter 11. [Tests](../test/README.md)<br>
-Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
+Chapter 3. [Why?](../why/README.md)<br>
+Chapter 4. [Objectives](../objectives/README.md)<br>
+Chapter 5. [Versioning](../versioning/README.md)<br>
+Chapter 6. [Status & Release Notes](../status-release/README.md)<br>
+Chapter 7. [Upcoming Development](../development-schedule/README.md)<br>
+Chapter 8. [Introduction with Examples](../intro/README.md)<br>
+Chapter 9. [Installation](../installation/README.md)<br>
+Chapter 10. _Your First Mathématiques Project_ <br>
+Chapter 11. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 12. [Benchmarks](../benchmarks/README.md)<br>
+Chapter 13. [Tests](../test/README.md)<br>
+Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
 
 
 </details>
 
 
 
-# Chapter 8. Your First Mathématiques Project
+# Chapter 10. Your First Mathématiques Project
 
 
 Now that you have completed installation, to use the Mathématiques library you need to 
@@ -143,11 +145,11 @@ int main(int argc, char* argv[]) {
 
 ```C++
 ##############################################################################################
-# Mathematiques v0.41.163-c++20 User Code Makefile
+# Mathematiques v0.41.164-c++20 User Code Makefile
 #
 # Copy this Makefile to your project directory
 #
-# Fri Sep 16 19:56:24 EDT 2022
+# Sun Sep 18 16:29:02 EDT 2022
 #
 # This Makefile was created by /home/rs2015/Mathematiques/configure from
 #   /home/rs2015/Mathematiques/make-lib/variables.mk
@@ -230,6 +232,7 @@ CREATE_RUN := $(DIR_MATHQ)/scripts/create_run.bash
 # static variables
 TAG_ANNOTATION_FILE := $(DIR_MATHQ)/versioning/tag.annotation.mathq.out.txt
 CPP_VERSION_FILE := $(DIR_MATHQ)/versioning/c++.version.src.txt
+PRERELEASE_TAG_FILE := $(DIR_MATHQ)/versioning/prerelease.tag.src.txt
 VERSION_HEADER_FILE_MATHQ := $(DIR_MATHQ)/include/version_mathq.h
 FEATURE_VERSION_MATHQ_FILE := $(DIR_MATHQ)/versioning/feature.version.master.record.bash
 COMPILER_VERSION_FILE := $(DIR_MATHQ)/versioning/config.compiler.out.txt
@@ -237,6 +240,7 @@ COMPILER_VERSION_FILE := $(DIR_MATHQ)/versioning/config.compiler.out.txt
 # dynamic variables
 FEATURE_VERSION_MATHQ = `. $(FEATURE_VERSION_MATHQ_FILE) && echo "$${FEATURE_VERSION_MATHQ}"`
 CPP_VERSION_MATHQ = `cat $(CPP_VERSION_FILE)`
+PRERELEASE_TAG_MATHQ = `cat $(PRERELEASE_TAG_FILE)`
 
 
 ####################################################################

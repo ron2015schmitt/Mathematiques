@@ -64,6 +64,7 @@ CREATE_RUN := $(DIR_MATHQ)/scripts/create_run.bash
 # static variables
 TAG_ANNOTATION_FILE := $(DIR_MATHQ)/versioning/tag.annotation.mathq.out.txt
 CPP_VERSION_FILE := $(DIR_MATHQ)/versioning/c++.version.src.txt
+PRERELEASE_TAG_FILE := $(DIR_MATHQ)/versioning/prerelease.tag.src.txt
 VERSION_HEADER_FILE_MATHQ := $(DIR_MATHQ)/include/version_mathq.h
 FEATURE_VERSION_MATHQ_FILE := $(DIR_MATHQ)/versioning/feature.version.master.record.bash
 COMPILER_VERSION_FILE := $(DIR_MATHQ)/versioning/config.compiler.out.txt
@@ -71,6 +72,7 @@ COMPILER_VERSION_FILE := $(DIR_MATHQ)/versioning/config.compiler.out.txt
 # dynamic variables
 FEATURE_VERSION_MATHQ = `. $(FEATURE_VERSION_MATHQ_FILE) && echo "$${FEATURE_VERSION_MATHQ}"`
 CPP_VERSION_MATHQ = `cat $(CPP_VERSION_FILE)`
+PRERELEASE_TAG_MATHQ = `cat $(PRERELEASE_TAG_FILE)`
 
 
 ####################################################################
