@@ -103,16 +103,23 @@ env = bashutil.source(FEATURE_VERSION_MATHQ_FILE)
 FEATURE_VERSION_MATHQ = env["FEATURE_VERSION_MATHQ"]
 print(f"{FEATURE_VERSION_MATHQ=}")
 
+
+META_DATA=""
+
 # get the C++ version
 fn=CPP_VERSION_FILE
 print("  reading from: "+fn)
 with open(fn, 'r') as f:
   CPP_VERSION = f.readline()
   CPP_VERSION = CPP_VERSION.replace("+","p")
+  META_DATA += CPP_VERSION
 print(f"{CPP_VERSION=}")
 
+# get compiler version
+CMD="python3 {}/scripts/get_gpp_version.py".format(DIR_MATHQ)
+GPP_VERSION = bashutil.getstdout('{}'.format(CMD)) 
+META_DATA += "gpp" + GPP_VERSION
 
-META_DATA=CPP_VERSION
 
 # check for a pre-release tag
 fn=PRERELEASE_NAME_FILE
@@ -162,7 +169,7 @@ else:
 # if prelease, look for prereleases
 PRERELEASE_NUMBER = -1
 if len(PRERELEASE_NAME) > 0:
-  TAG_PATTERN="{}.*-{}".format(TAG_NEW,PRERELEASE_NAME)
+  TAG_PATTERN="{}.*-{}.*".format(TAG_NEW,PRERELEASE_NAME)
   print('\nloading git tags for pre-release="{}": TAG_PATTERN="{}"'.format(PRERELEASE_NAME,TAG_PATTERN))
   VERSIONS_STR = bashutil.getstdout('git tag -l "{}" | cat'.format(TAG_PATTERN)) 
   VERSIONS = VERSIONS_STR.split("\n")
