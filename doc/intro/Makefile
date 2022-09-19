@@ -4,7 +4,7 @@
 
 CHAPTERS_AND_HEADINGS = basics.src.heading print-debug numbers \
 multiarrays.src.heading multiarrays nested-multiarrays special-multiarrays \
-math.src.heading multiarray-arithmetic mixed-arithmetic nested-arithmetic linear-algebra sort-mask-slice math-functions \
+math.src.heading multiarray-arithmetic arithmetic-mixed-rank arithmetic-mixed-depth linear-algebra sort-mask-slice math-functions \
 calculus.src.heading multi-var-calculus complex-calculus vector-calculus tensors series-transforms
 
 include ../../make-lib/dirmathq.config.mk
@@ -14,7 +14,7 @@ NONEXEC = README.md $(LEAF_READMES)
 
 EXEC += ./print-debug/body ./numbers/body \
 ./multiarrays/body ./nested-multiarrays/body ./special-multiarrays/body \
-./multiarray-arithmetic/body ./mixed-arithmetic/body ./nested-arithmetic/body ./linear-algebra/body  ./sort-mask-slice/body ./math-functions/body \
+./multiarray-arithmetic/body ./arithmetic-mixed-rank/body ./arithmetic-mixed-depth/body ./linear-algebra/body  ./sort-mask-slice/body ./math-functions/body \
 ./multi-var-calculus/body ./complex-calculus/body ./vector-calculus/body  ./tensors/body ./series-transforms/body 
 
 ALL += 

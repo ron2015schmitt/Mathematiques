@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.004</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.005</h1>](../../../README.md)
 
 <details>
 
@@ -36,8 +36,8 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.4. [Nested MultiArrays](../nested-multiarrays/README.md)<br>
 8.5. [Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)<br>
 8.6. [MultiArray Arithmetic](../multiarray-arithmetic/README.md)<br>
-8.7. [Mixed Arithmetic](../mixed-arithmetic/README.md)<br>
-8.8. [Nested Arithmetic](../nested-arithmetic/README.md)<br>
+8.7. [Mixed Depth Arithmetic](../arithmetic-mixed-rank/README.md)<br>
+8.8. [Nested Arithmetic](../arithmetic-mixed-depth/README.md)<br>
 8.9. _Linear Algebra_ <br>
 8.10. [Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)<br>
 8.11. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
@@ -86,6 +86,6 @@ unsigned int n = 23;
 
 
 
-| ⇦ <br />[Nested Arithmetic](../nested-arithmetic/README.md)  | [Introduction with Examples](../README.md)<br />Linear Algebra<br /><img width=1000/> | ⇨ <br />[Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)   |
+| ⇦ <br />[Nested Arithmetic](../arithmetic-mixed-depth/README.md)  | [Introduction with Examples](../README.md)<br />Linear Algebra<br /><img width=1000/> | ⇨ <br />[Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

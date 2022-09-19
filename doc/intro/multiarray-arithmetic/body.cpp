@@ -23,32 +23,51 @@ int main() {
   // using namespace mathq::unit_imaginary;
   // using std::sqrt;
 
-  OUTPUT("Mathématiques supports arithmetic, relational, and logic operators for MultiArrays");
+  OUTPUT("Mathématiques supports arithmetic, relational, and logic operators for MultiArrays.");
+  OUTPUT("All operators perform operations in an element-wise manner.");
+  OUTPUT("The section demonstrates operators on two containers of the same `rank`, `dimensions`, and `depth`.\n");
 
   GMD_HEADER2("Arithmetic Operators");
   OUTPUT("The operators `+, -, *, /` are the addition, subtraction, multiplication, and division operators respectively.\n");
-  OUTPUT("For details refer to [Arithmetic Operators](https://en.cppreference.com/w/cpp/language/operator_arithmetic).\n");
 
-  CR();
-  OUTPUT("| operator | operation | types | ");
-  OUTPUT("| :---: | :---: | :---: | ");
-  OUTPUT("| `+` | addition | 𝕤, 𝕌 | ");
-  OUTPUT("| `-` | subtraction | 𝕤, 𝕌 | ");
-  OUTPUT("| `*` | multiplication | 𝕤, 𝕌 | ");
-  OUTPUT("| `/` | division | 𝕤, 𝕌 | ");
-  CR();
+  {
+    CR();
+    OUTPUT("| operator | operation |");
+    OUTPUT("| :---: | :---: | ");
+    OUTPUT("| `+` | addition | ");
+    OUTPUT("| `-` | subtraction | ");
+    OUTPUT("| `*` | multiplication | ");
+    OUTPUT("| `/` | division | ");
+    CR();
+  }
 
-  OUTPUT("For container types, the following rules apply for `x op y`:\n");
-  OUTPUT("* For two (zero-depth) containers of the same `rank` and `dimensions`, `x op y` yields the element-wise operation a container of the same `rank` and `dimensions\n");
-  OUTPUT("* All other cases are invalid and will produce unpredictable results or a run-time error. Debug modes will send useful error messages to the stderr.\n");
-
-
-
-
+  {
+    CR();
+    OUTPUT("Examples:\n");
+    GMD_CODE_START("C++");
+    ETV((Vector<double>{1, 2, 3} + Vector<double>{1, -2, 10}));
+    CR();
+    ETV((Matrix<double>{ {11, 22}, { 33, 44 }} - Matrix<double>{ {1, 2}, { 3, 4 }}));
+    CR();
+    ETV((MultiArray<double, 3>{ { {1, 2}, { 3, 4 }}, { {5, 6}, { 7, 8 } }} *MultiArray<double, 3>{ { {10, 10}, { 100, 100 }}, { {1000, 1000}, { 10000, 10000 } }}));
+    CR();
+    ETV((Vector<double>{24, 24, 24} / Vector<double>{2, 3, 4}));
+    CR();
+    GMD_CODE_END();
+  }
+  OUTPUT("Operators also work on nested multiarrays, ie multiarrays with depth greatwr then 1.");
+  {
+    CR();
+    OUTPUT("Examples:\n");
+    GMD_CODE_START("C++");
+    ECHO(Vector<Matrix<double>> v{ {{1, 2}, {3, 4}}, {{11, 12}, {13, 14}} });
+    CR();
+    ETV((v*v + 10*v)/(2*v-v));
+    CR();
+    GMD_CODE_END();
+  }
   GMD_VSPACE();
   GMD_HEADER2("Relational Operators");
-
-  OUTPUT("For details refer [Comparison Operators](https://en.cppreference.com/w/c/language/operator_comparison).\n");
 
   CR();
   OUTPUT("| operator | operation | ");
@@ -62,22 +81,17 @@ int main() {
   // OUTPUT("| `<=>` | three-way comparison | ");
   CR();
 
-  OUTPUT("**CAVEAT**: C++ allows assigment `=` inside `if` statements (eg, `if (a = true) return;`).  Mistyping the equals operator `==` can cause painful bugs. \n");
-
-  CR();
-  OUTPUT("Examples:\n");
-  GMD_CODE_START("C++");
-  ETV((2 == 2));
-  ETV((1 / 2 == 0.5));
-  ETV((1. / 2 == 0.5));
-  ETV((-2 < 34.2));
-  ETV((2 > 0));
-  GMD_CODE_END();
-
+  {
+    CR();
+    OUTPUT("Examples:\n");
+    GMD_CODE_START("C++");
+    ETV((Vector<double>{1, 2, 3} == Vector<double>{1, -1, 3}));
+    ETV((Vector<double>{1, 2, 3} < Vector<double>{1, 10, 0}));
+    GMD_CODE_END();
+  }
 
   GMD_VSPACE();
   GMD_HEADER2("Logic Operators");
-  OUTPUT("For details refer [Logical Operators](https://en.cppreference.com/w/c/language/operator_logical).\n");
 
   CR();
   OUTPUT("| operator | operation | ");
@@ -87,34 +101,18 @@ int main() {
   OUTPUT("| `&&` | logical AND | ");
   CR();
 
-  OUTPUT("**CAVEAT**: C++ also has binary bit-wise operators `&` and `|`.  Mistyping the above operators can cause painful bugs. \n");
-
-
-  GMD_HEADER4("Containers");
-  CR();
-  GMD_CODE_START("C++");
-  GMD_CODE_END();
-  CR();
-
-  GMD_HEADER4("Nested Containers");
-  CR();
-  GMD_CODE_START("C++");
-  GMD_CODE_END();
-  CR();
-
-  GMD_HEADER4("Mixed Rank Math");
-  CR();
-  GMD_CODE_START("C++");
-  GMD_CODE_END();
-  CR();
-
-  GMD_HEADER4("Mixed depth Math");
-  CR();
-  GMD_CODE_START("C++");
-  GMD_CODE_END();
-  CR();
-
-
+  {
+    CR();
+    OUTPUT("Examples:\n");
+    GMD_CODE_START("C++");
+    ECHO(Vector<double> v1{ 1, 2, 3 });
+    ECHO(Vector<double> v2{ 11, 22, 33 });
+    ETV(!(v1 < v2));
+    CR();
+    ECHO(Vector<double> v{ 5, 7, 1 });
+    ETV((v1 < v) && (v < v2));
+    GMD_CODE_END();
+  }
   GMD_VSPACE();
   return 0;
 }

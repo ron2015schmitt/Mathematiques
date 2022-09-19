@@ -1,6 +1,6 @@
 
 
-# Mathématiques 0.42.1-alpha.004
+# Mathématiques 0.42.1-alpha.005
 
 
 ## Phase 1 (in progress): C++ Numerical Library

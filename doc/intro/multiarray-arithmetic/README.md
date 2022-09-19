@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.004</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.005</h1>](../../../README.md)
 
 <details>
 
@@ -36,8 +36,8 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.4. [Nested MultiArrays](../nested-multiarrays/README.md)<br>
 8.5. [Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)<br>
 8.6. _MultiArray Arithmetic_ <br>
-8.7. [Mixed Arithmetic](../mixed-arithmetic/README.md)<br>
-8.8. [Nested Arithmetic](../nested-arithmetic/README.md)<br>
+8.7. [Mixed Depth Arithmetic](../arithmetic-mixed-rank/README.md)<br>
+8.8. [Nested Arithmetic](../arithmetic-mixed-depth/README.md)<br>
 8.9. [Linear Algebra](../linear-algebra/README.md)<br>
 8.10. [Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)<br>
 8.11. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
@@ -56,32 +56,70 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-Mathématiques supports arithmetic, relational, and logic operators for MultiArrays
+Mathématiques supports arithmetic, relational, and logic operators for MultiArrays.
+All operators perform operations in an element-wise manner.
+The section demonstrates operators on two containers of the same `rank`, `dimensions`, and `depth`.
+
 ## Arithmetic Operators
 The operators `+, -, *, /` are the addition, subtraction, multiplication, and division operators respectively.
 
-For details refer to [Arithmetic Operators](https://en.cppreference.com/w/cpp/language/operator_arithmetic).
+
+| operator | operation |
+| :---: | :---: | 
+| `+` | addition | 
+| `-` | subtraction | 
+| `*` | multiplication | 
+| `/` | division | 
 
 
-| operator | operation | types | 
-| :---: | :---: | :---: | 
-| `+` | addition | 𝕤, 𝕌 | 
-| `-` | subtraction | 𝕤, 𝕌 | 
-| `*` | multiplication | 𝕤, 𝕌 | 
-| `/` | division | 𝕤, 𝕌 | 
+Examples:
 
-For container types, the following rules apply for `x op y`:
+```C++
+☀ (Vector<double>{1, 2, 3} + Vector<double>{1, -2, 10}) ➜ Vector<double> {2, 0, 13};
 
-* For two (zero-depth) containers of the same `rank` and `dimensions`, `x op y` yields the element-wise operation a container of the same `rank` and `dimensions
+☀ (Matrix<double>{ {11, 22}, { 33, 44 }} - Matrix<double>{ {1, 2}, { 3, 4 }}) ➜ Matrix<double> 
+{
+  {10, 20},
+  {30, 40}
+};
 
-* All other cases are invalid and will produce unpredictable results or a run-time error. Debug modes will send useful error messages to the stderr.
+☀ (MultiArray<double, 3>{ { {1, 2}, { 3, 4 }}, { {5, 6}, { 7, 8 } }} *MultiArray<double, 3>{ { {10, 10}, { 100, 100 }}, { {1000, 1000}, { 10000, 10000 } }}) ➜ MultiArray<double, rank=3> 
+{
+  {
+    {10, 20},
+    {300, 400}
+  },
+  {
+    {5000, 6000},
+    {70000, 80000}
+  }
+};
 
+☀ (Vector<double>{24, 24, 24} / Vector<double>{2, 3, 4}) ➜ Vector<double> {12, 8, 6};
+
+```
+Operators also work on nested multiarrays, ie multiarrays with depth greatwr then 1.
+
+Examples:
+
+```C++
+Vector<Matrix<double>> v{ {{1, 2}, {3, 4}}, {{11, 12}, {13, 14}} };
+
+☀ (v*v + 10*v)/(2*v-v) ➜ Vector<Matrix<double>> {
+{
+  {11, 12},
+  {13, 14}
+}, 
+{
+  {21, 22},
+  {23, 24}
+}};
+
+```
 
 <br>
 
 ## Relational Operators
-For details refer [Comparison Operators](https://en.cppreference.com/w/c/language/operator_comparison).
-
 
 | operator | operation | 
 | :---: | :---: | 
@@ -92,24 +130,17 @@ For details refer [Comparison Operators](https://en.cppreference.com/w/c/languag
 | `>` | greater than | 
 | `>=` | greater than or equal to | 
 
-**CAVEAT**: C++ allows assigment `=` inside `if` statements (eg, `if (a = true) return;`).  Mistyping the equals operator `==` can cause painful bugs. 
-
 
 Examples:
 
 ```C++
-☀ (2 == 2) ➜ bool true;
-☀ (1 / 2 == 0.5) ➜ bool false;
-☀ (1. / 2 == 0.5) ➜ bool true;
-☀ (-2 < 34.2) ➜ bool true;
-☀ (2 > 0) ➜ bool true;
+☀ (Vector<double>{1, 2, 3} == Vector<double>{1, -1, 3}) ➜ Vector<bool> {true, false, true};
+☀ (Vector<double>{1, 2, 3} < Vector<double>{1, 10, 0}) ➜ Vector<bool> {false, true, false};
 ```
 
 <br>
 
 ## Logic Operators
-For details refer [Logical Operators](https://en.cppreference.com/w/c/language/operator_logical).
-
 
 | operator | operation | 
 | :---: | :---: | 
@@ -117,33 +148,22 @@ For details refer [Logical Operators](https://en.cppreference.com/w/c/language/o
 | `\|\|` | logical OR | 
 | `&&` | logical AND | 
 
-**CAVEAT**: C++ also has binary bit-wise operators `&` and `|`.  Mistyping the above operators can cause painful bugs. 
 
-#### Containers
-
-```C++
-```
-
-#### Nested Containers
+Examples:
 
 ```C++
+Vector<double> v1{ 1, 2, 3 };
+Vector<double> v2{ 11, 22, 33 };
+☀ !(v1 < v2) ➜ Vector<bool> {false, false, false};
+
+Vector<double> v{ 5, 7, 1 };
+☀ (v1 < v) && (v < v2) ➜ Vector<bool> {true, true, false};
 ```
-
-#### Mixed Rank Math
-
-```C++
-```
-
-#### Mixed depth Math
-
-```C++
-```
-
 
 <br>
 
 
 
-| ⇦ <br />[Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)  | [Introduction with Examples](../README.md)<br />MultiArray Arithmetic<br /><img width=1000/> | ⇨ <br />[Mixed Arithmetic](../mixed-arithmetic/README.md)   |
+| ⇦ <br />[Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)  | [Introduction with Examples](../README.md)<br />MultiArray Arithmetic<br /><img width=1000/> | ⇨ <br />[Mixed Depth Arithmetic](../arithmetic-mixed-rank/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

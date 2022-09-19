@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.004</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.005</h1>](../../README.md)
 
 <details>
 
@@ -36,8 +36,8 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../develop
 8.5. [Special Vectors, Matrices, and MultiArrays](special-multiarrays/README.md)<br>
 <br>**Mathematics**<br>
 8.6. [MultiArray Arithmetic](multiarray-arithmetic/README.md)<br>
-8.7. [Mixed Arithmetic](mixed-arithmetic/README.md)<br>
-8.8. [Nested Arithmetic](nested-arithmetic/README.md)<br>
+8.7. [Mixed Depth Arithmetic](arithmetic-mixed-rank/README.md)<br>
+8.8. [Nested Arithmetic](arithmetic-mixed-depth/README.md)<br>
 8.9. [Linear Algebra](linear-algebra/README.md)<br>
 8.10. [Sorting, Masks, Slices, etc.](sort-mask-slice/README.md)<br>
 8.11. [Common and Special Mathematical Functions](math-functions/README.md)<br>
@@ -53,10 +53,12 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../develop
 
 
 
-### Algorithms and Solver To be implemented using other libraries
+### Algorithms and Solvers
+
+To be implemented using other libraries:
 
 1. Matrix inverse and matrix decompositions
-1. FFTs via [FFTW](https://en.wikipedia.org/wiki/FFTW)]
+1. FFTs via [FFTW](https://en.wikipedia.org/wiki/FFTW)
 1. Interpolation and smoothing
 1. Differential Equation Solvers via libraries
 
@@ -69,29 +71,29 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../develop
 
 1. Special Matrices / MultiArrays
 1. Finish Algebraic Tensors
-  + Symmetric and AntiSymmetric tensors as child classes of Symmetric and AntiSymmetric multiarrays
-  + Levi-Civita psuedo-tensor
-  + [Exterior algebra](https://en.wikipedia.org/wiki/Exterior_algebra)
-  + [Symmetric algebra](https://en.wikipedia.org/wiki/Symmetric_algebra)
-  + [musical operators](https://en.wikipedia.org/wiki/Musical_isomorphism)
-  + [Hodge Dual](https://en.wikipedia.org/wiki/Hodge_star_operator)
+    + Symmetric and AntiSymmetric tensors as child classes of Symmetric and AntiSymmetric multiarrays
+    + Levi-Civita psuedo-tensor
+    + [Exterior algebra](https://en.wikipedia.org/wiki/Exterior_algebra)
+    + [Symmetric algebra](https://en.wikipedia.org/wiki/Symmetric_algebra)
+    + [musical operators](https://en.wikipedia.org/wiki/Musical_isomorphism)
+    + [Hodge Dual](https://en.wikipedia.org/wiki/Hodge_star_operator)
 1. Tensor Calculus in Generalized Coordinates
-  + `TensorCoordSystem`
-  + `TensorField`
-  + [k-cells](https://en.wikipedia.org/wiki/K-cell_(mathematics))
-  + [exterior derivative](https://en.wikipedia.org/wiki/Exterior_derivative)
-  + [differential forms](https://en.wikipedia.org/wiki/Differential_form)
-  + [k-blades](https://en.wikipedia.org/wiki/Blade_(geometry))
+    + `TensorCoords`
+    + `TensorField`
+    + [k-cells](https://en.wikipedia.org/wiki/K-cell_(mathematics))
+    + [exterior derivative](https://en.wikipedia.org/wiki/Exterior_derivative)
+    + [differential forms](https://en.wikipedia.org/wiki/Differential_form)
+    + [k-blades](https://en.wikipedia.org/wiki/Blade_(geometry))
 1. Differential Geometry in curved space-time
-  + `RiemannianCoordSystem`
+    + `RiemannianCoords`
 1. Graded Algebras and their fields
-  + Grassman/Clifford algebras, Weyl algebras
+    + Grassman/Clifford algebras, Weyl algebras
 1. General Differential Operators and Expressions
-  + Differential Operator from k-blades and graded algebra k-blades
+    + Differential Operator from k-blades and graded algebra k-blades
 1. Integral operators
-  + Integral Operator from k-forms
-  + [k-simplexes](https://en.wikipedia.org/wiki/Simplex)
-  + [k-chains](https://en.wikipedia.org/wiki/Chain_(algebraic_topology))
+    + Integral Operator from k-forms
+    + [k-simplexes](https://en.wikipedia.org/wiki/Simplex)
+    + [k-chains](https://en.wikipedia.org/wiki/Chain_(algebraic_topology))
 1. [dual](https://en.wikipedia.org/wiki/Duality_(mathematics)) function/operator. See also [bra-ket](https://en.wikipedia.org/wiki/Bra%E2%80%93ket_notation)
 1. Lie groups
 1. Spinors
