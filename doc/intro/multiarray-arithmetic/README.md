@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.003</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.004</h1>](../../../README.md)
 
 <details>
 
@@ -36,14 +36,16 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.4. [Nested MultiArrays](../nested-multiarrays/README.md)<br>
 8.5. [Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)<br>
 8.6. _MultiArray Arithmetic_ <br>
-8.7. [Linear Algebra](../linear-algebra/README.md)<br>
-8.8. [Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)<br>
-8.9. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
-8.10. [Mutlivariate Calculus](../multi-var-calculus/README.md)<br>
-8.11. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
-8.12. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
-8.13. [Tensors](../tensors/README.md)<br>
-8.14. [Series and transforms](../series-transforms/README.md)<br>
+8.7. [Mixed Arithmetic](../mixed-arithmetic/README.md)<br>
+8.8. [Nested Arithmetic](../nested-arithmetic/README.md)<br>
+8.9. [Linear Algebra](../linear-algebra/README.md)<br>
+8.10. [Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)<br>
+8.11. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
+8.12. [Mutlivariate Calculus](../multi-var-calculus/README.md)<br>
+8.13. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
+8.14. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
+8.15. [Tensors](../tensors/README.md)<br>
+8.16. [Series and transforms](../series-transforms/README.md)<br>
 
 
 </details>
@@ -142,6 +144,6 @@ For details refer [Logical Operators](https://en.cppreference.com/w/c/language/o
 
 
 
-| ⇦ <br />[Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)  | [Introduction with Examples](../README.md)<br />MultiArray Arithmetic<br /><img width=1000/> | ⇨ <br />[Linear Algebra](../linear-algebra/README.md)   |
+| ⇦ <br />[Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)  | [Introduction with Examples](../README.md)<br />MultiArray Arithmetic<br /><img width=1000/> | ⇨ <br />[Mixed Arithmetic](../mixed-arithmetic/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

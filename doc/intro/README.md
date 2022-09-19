@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.003</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.004</h1>](../../README.md)
 
 <details>
 
@@ -36,36 +36,65 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../develop
 8.5. [Special Vectors, Matrices, and MultiArrays](special-multiarrays/README.md)<br>
 <br>**Mathematics**<br>
 8.6. [MultiArray Arithmetic](multiarray-arithmetic/README.md)<br>
-8.7. [Linear Algebra](linear-algebra/README.md)<br>
-8.8. [Sorting, Masks, Slices, etc.](sort-mask-slice/README.md)<br>
-8.9. [Common and Special Mathematical Functions](math-functions/README.md)<br>
+8.7. [Mixed Arithmetic](mixed-arithmetic/README.md)<br>
+8.8. [Nested Arithmetic](nested-arithmetic/README.md)<br>
+8.9. [Linear Algebra](linear-algebra/README.md)<br>
+8.10. [Sorting, Masks, Slices, etc.](sort-mask-slice/README.md)<br>
+8.11. [Common and Special Mathematical Functions](math-functions/README.md)<br>
 <br>**Calculus**<br>
-8.10. [Mutlivariate Calculus](multi-var-calculus/README.md)<br>
-8.11. [Calculus on Complex Number Domains](complex-calculus/README.md)<br>
-8.12. [Vector Calculus and Curvilinear Coordinates](vector-calculus/README.md)<br>
-8.13. [Tensors](tensors/README.md)<br>
-8.14. [Series and transforms](series-transforms/README.md)<br>
+8.12. [Mutlivariate Calculus](multi-var-calculus/README.md)<br>
+8.13. [Calculus on Complex Number Domains](complex-calculus/README.md)<br>
+8.14. [Vector Calculus and Curvilinear Coordinates](vector-calculus/README.md)<br>
+8.15. [Tensors](tensors/README.md)<br>
+8.16. [Series and transforms](series-transforms/README.md)<br>
 
 
-# Planned Features
+## Planned Features
 
-1. Tensor Calculus in Generalized Coordinates 
-1. Differential Geometry in curved space-time
+
+
+### Algorithms and Solver To be implemented using other libraries
+
 1. Matrix inverse and matrix decompositions
-  + via [BLAS](https://netlib.org/blas/index.html#_documentation) or other available linear algebra libraries [1](https://en.wikipedia.org/wiki/Comparison_of_linear_algebra_libraries), [2](https://en.wikipedia.org/wiki/List_of_numerical_libraries) [3]([GSL](http://www.gnu.org/s/gsl/)
-  + Implement Special Matrices and MultiArrays
 1. FFTs via [FFTW](https://en.wikipedia.org/wiki/FFTW)]
 1. Interpolation and smoothing
-1. Parallel processing
-1. General Differential Operators and Expressions
-1. Integral operators
-  +	function to create bra (of bra-kets) operator for `NumericalFunction` via `bra` or `~operator`
 1. Differential Equation Solvers via libraries
-  + [FEM](https://en.wikipedia.org/wiki/Category:Finite_element_software)
-  + ODEPACK
+
+### Basic Features
+
+1. Parallel processing
 1. File I/O
-1. Finite groups
+
+### Advanced Mathematical Structures
+
+1. Special Matrices / MultiArrays
+1. Finish Algebraic Tensors
+  + Symmetric and AntiSymmetric tensors as child classes of Symmetric and AntiSymmetric multiarrays
+  + Levi-Civita psuedo-tensor
+  + [Exterior algebra](https://en.wikipedia.org/wiki/Exterior_algebra)
+  + [Symmetric algebra](https://en.wikipedia.org/wiki/Symmetric_algebra)
+  + [musical operators](https://en.wikipedia.org/wiki/Musical_isomorphism)
+  + [Hodge Dual](https://en.wikipedia.org/wiki/Hodge_star_operator)
+1. Tensor Calculus in Generalized Coordinates
+  + `TensorCoordSystem`
+  + `TensorField`
+  + [k-cells](https://en.wikipedia.org/wiki/K-cell_(mathematics))
+  + [exterior derivative](https://en.wikipedia.org/wiki/Exterior_derivative)
+  + [differential forms](https://en.wikipedia.org/wiki/Differential_form)
+  + [k-blades](https://en.wikipedia.org/wiki/Blade_(geometry))
+1. Differential Geometry in curved space-time
+  + `RiemannianCoordSystem`
+1. Graded Algebras and their fields
+  + Grassman/Clifford algebras, Weyl algebras
+1. General Differential Operators and Expressions
+  + Differential Operator from k-blades and graded algebra k-blades
+1. Integral operators
+  + Integral Operator from k-forms
+  + [k-simplexes](https://en.wikipedia.org/wiki/Simplex)
+  + [k-chains](https://en.wikipedia.org/wiki/Chain_(algebraic_topology))
+1. [dual](https://en.wikipedia.org/wiki/Duality_(mathematics)) function/operator. See also [bra-ket](https://en.wikipedia.org/wiki/Bra%E2%80%93ket_notation)
 1. Lie groups
-1. Graded algebras: Clifford algebras
-1. Graded algebras: geometric and spacetime algebras
-1. Division algebras: Octonians
+1. Spinors
+1. Finite groups
+1. Division algebras: Octonians, Sedonians
+
