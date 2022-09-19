@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.005</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.006</h1>](../../README.md)
 
 <details>
 
@@ -57,6 +57,27 @@ cd ~/my-first-mathq-project/
 make example
 ./example
 ```
+
+
+## Delaing with Errors
+
+To see verbose error messages for your project, use
+
+```bash
+make example "COPT=--verbose"
+```
+
+For help, use
+
+```bash
+make help
+```
+
+For a list of all Makefile variables and their values, use
+```bash
+make info
+```
+
 
 ## What's in the files?
 
@@ -145,11 +166,11 @@ int main(int argc, char* argv[]) {
 
 ```Makefile
 ##############################################################################################
-# Mathematiques 0.42.1-alpha.004 User Code Makefile
+# Mathematiques 0.42.1-alpha.006 User Code Makefile
 #
 # Copy this Makefile to your project directory
 #
-# Mon Sep 19 13:05:36 EDT 2022
+# Mon Sep 19 18:47:21 EDT 2022
 #
 # This Makefile was created by [BUILD_PARENT_DIR]/Mathematiques/configure from
 #   [BUILD_PARENT_DIR]/Mathematiques/make-lib/variables.mk

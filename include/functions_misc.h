@@ -34,6 +34,54 @@ namespace mathq {
 
 
 
+  //----------------------------------------------
+  // rank 
+  //----------------------------------------------
+
+  template <class X, class Element, typename Num, size_t depth_in, size_t rank_in>
+  size_t rank(const ExpressionR<X, Element, Num, depth_in, rank_in>& x) {
+    return rank_in;
+  }
+
+  template <IsNumber Num>
+  size_t rank(const Num& x) {
+    return  0;
+  }
+
+
+
+  //----------------------------------------------
+  // depth
+  //----------------------------------------------
+
+  template <class X, class Element, typename Num, size_t depth_in, size_t rank_in>
+  size_t depth(const ExpressionR<X, Element, Num, depth_in, rank_in>& x) {
+    return depth_in;
+  }
+
+  template <IsNumber Num>
+  size_t depth(const Num& x) {
+    return  0;
+  }
+
+
+  //----------------------------------------------
+  // dimensions
+  //----------------------------------------------
+
+  template <class X, class Element, typename Num, size_t depth_in, size_t rank_in>
+  RecursiveDimensions& dimensions(const ExpressionR<X, Element, Num, depth_in, rank_in>& x) {
+    return x.recursive_dims();
+  }
+
+  template <IsNumber Num>
+  RecursiveDimensions& dimensions(const Num& x) {
+    return *(new RecursiveDimensions);
+  }
+
+
+
+
   /****************************************************************************
    * casting
    ****************************************************************************

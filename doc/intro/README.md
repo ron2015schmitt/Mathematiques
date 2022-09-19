@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.005</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.006</h1>](../../README.md)
 
 <details>
 
@@ -36,17 +36,16 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../develop
 8.5. [Special Vectors, Matrices, and MultiArrays](special-multiarrays/README.md)<br>
 <br>**Mathematics**<br>
 8.6. [MultiArray Arithmetic](multiarray-arithmetic/README.md)<br>
-8.7. [Mixed Depth Arithmetic](arithmetic-mixed-rank/README.md)<br>
-8.8. [Nested Arithmetic](arithmetic-mixed-depth/README.md)<br>
-8.9. [Linear Algebra](linear-algebra/README.md)<br>
-8.10. [Sorting, Masks, Slices, etc.](sort-mask-slice/README.md)<br>
-8.11. [Common and Special Mathematical Functions](math-functions/README.md)<br>
+8.7. [Mixed-Rank & Mixed-Depth Arithmetic](arithmetic-mixed/README.md)<br>
+8.8. [Linear Algebra](linear-algebra/README.md)<br>
+8.9. [Sorting, Masks, Slices, etc.](sort-mask-slice/README.md)<br>
+8.10. [Common and Special Mathematical Functions](math-functions/README.md)<br>
 <br>**Calculus**<br>
-8.12. [Mutlivariate Calculus](multi-var-calculus/README.md)<br>
-8.13. [Calculus on Complex Number Domains](complex-calculus/README.md)<br>
-8.14. [Vector Calculus and Curvilinear Coordinates](vector-calculus/README.md)<br>
-8.15. [Tensors](tensors/README.md)<br>
-8.16. [Series and transforms](series-transforms/README.md)<br>
+8.11. [Mutlivariate Calculus](multi-var-calculus/README.md)<br>
+8.12. [Calculus on Complex Number Domains](complex-calculus/README.md)<br>
+8.13. [Vector Calculus and Curvilinear Coordinates](vector-calculus/README.md)<br>
+8.14. [Tensors](tensors/README.md)<br>
+8.15. [Series and transforms](series-transforms/README.md)<br>
 
 
 ## Planned Features

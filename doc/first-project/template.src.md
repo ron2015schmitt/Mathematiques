@@ -29,6 +29,27 @@ make example
 ./example
 ```
 
+
+## Delaing with Errors
+
+To see verbose error messages for your project, use
+
+```bash
+make example "COPT=--verbose"
+```
+
+For help, use
+
+```bash
+make help
+```
+
+For a list of all Makefile variables and their values, use
+```bash
+make info
+```
+
+
 ## What's in the files?
 
 The contents `Makefile` and `example.cpp` are listed below for convenience.

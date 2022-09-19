@@ -1,12 +1,3 @@
-#include <iostream>
-#include <string>
-#include <climits>
-#include <limits>
-#include <stdbool.h>
-#include <typeinfo>
-#include <optional>
-
-
 #include "mathq.h"
 
 
@@ -18,10 +9,6 @@ int main() {
 
   CR();
   CR();
-
-  // using namespace mathq::unit_quaternion;
-  // using namespace mathq::unit_imaginary;
-  // using std::sqrt;
 
   OUTPUT("Mathématiques supports arithmetic, relational, and logic operators for MultiArrays.");
   OUTPUT("All operators perform operations in an element-wise manner.");
@@ -55,6 +42,7 @@ int main() {
     CR();
     GMD_CODE_END();
   }
+
   OUTPUT("Operators also work on nested multiarrays, ie multiarrays with depth greatwr then 1.");
   {
     CR();
@@ -66,6 +54,7 @@ int main() {
     CR();
     GMD_CODE_END();
   }
+
   GMD_VSPACE();
   GMD_HEADER2("Relational Operators");
 
