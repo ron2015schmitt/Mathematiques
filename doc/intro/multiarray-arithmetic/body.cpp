@@ -43,7 +43,7 @@ int main() {
     GMD_CODE_END();
   }
 
-  OUTPUT("Operators also work on nested multiarrays, ie multiarrays with depth greatwr then 1.");
+  OUTPUT("Operators also work on nested multiarrays, ie multiarrays with depth greater then 1.");
   {
     CR();
     OUTPUT("Examples:\n");
@@ -102,6 +102,7 @@ int main() {
     ETV((v1 < v) && (v < v2));
     GMD_CODE_END();
   }
+
   GMD_VSPACE();
   return 0;
 }

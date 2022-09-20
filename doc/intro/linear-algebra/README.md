@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.006</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.007</h1>](../../../README.md)
 
 <details>
 
@@ -55,34 +55,79 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-## Pretty Printing
-Mathématiques supports the follow number systems:
-```C++
-bool q = (5 > 3);
-☀ q ➜ bool true;
-☀ !q ➜ bool false;
-
-☀ true || false ➜ bool true;
-☀ true && false ➜ bool false;
-
-☀ true + 9 ➜ int 10;
-```
 
 <br>
 
-## Debugging Modes
-Mathématiques supports mixed math and automatically promotes numbers as needed
+## Products: Inner, Outer, and Wedge
+### `Vector`
+Keep in mind that in Mathématiques, a `Vector<double>` (aka `MultiArray<double,1>`) is neither a column nor a row vector. Instead vectors `Vector<double>` are denoted as vectors are denoted in physics*.
+Of course, if you really want row and column vectors, use `Matrix<double,N,1>` and `Matrix<double,N,1>` respectively, although this is not necessary. (Refer to the linear algebra notation section below.
+
+| operator | operation | standard notation | rules |
+| :---: | :---: | :---: | :---: | 
+| `v \| w` | inner product | $\braket{\mathbf{v},\mathbf{w}} = \left\{ \begin{array}{cc} \mathbf{v} \cdot \mathbf{w}, & \in \mathbb{R}^N  \\ \mathbf{v}^* \cdot \mathbf{w}, & \in \mathbb{C}^N, \mathbb{Q}^N \end{array} \right.$ | both vectors must be of same length | 
+| `v & w` | outer/tensor product | $\mathbf{v} \mathbf{w} = \left\{ \begin{array}{cc} \mathbf{v} \mathbf{w}, & \in \mathbb{R}^N  \\ \mathbf{v}^*  \mathbf{w}, & \in \mathbb{C}^N, \mathbb{Q}^N \end{array} \right.$ | none | 
+| `v ^ w` | wedge product<sup>🚧</sup> | $\mathbf{v} \wedge \mathbf{w} = \left[ \mathbf{v} \mathbf{w} \right] = \mathbf{v} \mathbf{w} - \mathbf{w} \mathbf{v}$ | none | 
+
+<sup>🚧</sup> wedge product is in progress. It requires completion of anti-symmetric (and anti-hermitian for complex numbers) matrices because the output will be of this type.
+
+Examples:
+
 ```C++
-unsigned int n = 23;
-☀ n ➜ unsigned int 23;
-☀ n + 102 - 2*4 ➜ unsigned int 117;
-☀ n - 24 ➜ unsigned int 4294967295;
-☀ n/2 ➜ unsigned int 11;
-☀ n % 2 ➜ unsigned int 1;
+Vector<double> A{ 1, 2, 3 };
+Vector<double> B{ 2, 4, -3 };
+☀ A|B ➜ double 1;
+☀ A&B ➜ Matrix<double> 
+{
+  {2, 4, -3},
+  {4, 8, -6},
+  {6, 12, -9}
+};
 ```
+### Matrices
 
-<br>
+| operator | operation | standard notation | rules |
+| :---: | :---: | :---: | :---: | 
+| `A \| B` | inner product | $\braket{\mathbf{A},\mathbf{B}}$ = $\left\{ \begin{array}{cc} \mathbf{A} \cdot \mathbf{B}, & \in \mathbb{R}^N  \\ \mathbf{A}^* \cdot \mathbf{B}, & \in \mathbb{C}^N, \mathbb{Q}^N \end{array} \right.$ | both vectors must be of same length |
+| `A & B` | outer product (tensor product) | $\mathbf{A} \mathbf{B}$ | none | 
+| `A ^ B` | wedge product<sup>🚧</sup> | $\mathbf{A} \wedge \mathbf{B} = \left[ \mathbf{A} \mathbf{B} \right] = \mathbf{A} \mathbf{B} - \mathbf{B} \mathbf{A}$ | none | 
 
+<sup>🚧</sup> wedge product is in progress. It requires completion of anti-symmetric (and anti-hermitian for complex numbers) matrices because the output will be of this type.
+
+Examples:
+
+```C++
+Matrix<double> A{ {1, 2}, {3, 4} };
+Matrix<double> B{ {11, 22}, {33, 44} };
+☀ A|B ➜ Matrix<double> 
+{
+  {77, 110},
+  {165, 242}
+};
+☀ A&B ➜ MultiArray<double, rank=4> 
+{
+  {
+    {
+      {11, 22},
+      {33, 44}
+    },
+    {
+      {22, 44},
+      {66, 88}
+    }
+  },
+  {
+    {
+      {33, 66},
+      {99, 132}
+    },
+    {
+      {44, 88},
+      {132, 176}
+    }
+  }
+};
+```
 
 
 | ⇦ <br />[Mixed-Rank & Mixed-Depth Arithmetic](../arithmetic-mixed/README.md)  | [Introduction with Examples](../README.md)<br />Linear Algebra<br /><img width=1000/> | ⇨ <br />[Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)   |

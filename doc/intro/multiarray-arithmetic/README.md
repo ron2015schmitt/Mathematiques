@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.006</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.007</h1>](../../../README.md)
 
 <details>
 
@@ -97,7 +97,7 @@ Examples:
 ☀ (Vector<double>{24, 24, 24} / Vector<double>{2, 3, 4}) ➜ Vector<double> {12, 8, 6};
 
 ```
-Operators also work on nested multiarrays, ie multiarrays with depth greatwr then 1.
+Operators also work on nested multiarrays, ie multiarrays with depth greater then 1.
 
 Examples:
 

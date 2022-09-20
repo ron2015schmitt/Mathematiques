@@ -42,51 +42,51 @@ int main() {
 | :---: | :---: | :---: | :---: | :---: |");
 
   // first row
-  OUTPUT_NOCR("| 1 |");
-  OUTPUT_NOCR(1*1);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(1*i);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(1*j);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(1*k);
-  OUTPUT_NOCR(" | ");
+  OUT("| 1 |");
+  OUT(1*1);
+  OUT(" | ");
+  OUT(1*i);
+  OUT(" | ");
+  OUT(1*j);
+  OUT(" | ");
+  OUT(1*k);
+  OUT(" | ");
   CR();
 
   // 2nd row
-  OUTPUT_NOCR("| **i** |");
-  OUTPUT_NOCR(i*1);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(i*i);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(i*j);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(i*k);
-  OUTPUT_NOCR(" | ");
+  OUT("| **i** |");
+  OUT(i*1);
+  OUT(" | ");
+  OUT(i*i);
+  OUT(" | ");
+  OUT(i*j);
+  OUT(" | ");
+  OUT(i*k);
+  OUT(" | ");
   CR();
 
   // third row
-  OUTPUT_NOCR("| **j** |");
-  OUTPUT_NOCR(j*1);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(j*i);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(j*j);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(j*k);
-  OUTPUT_NOCR(" | ");
+  OUT("| **j** |");
+  OUT(j*1);
+  OUT(" | ");
+  OUT(j*i);
+  OUT(" | ");
+  OUT(j*j);
+  OUT(" | ");
+  OUT(j*k);
+  OUT(" | ");
   CR();
 
   // 4th row
-  OUTPUT_NOCR("| **k** |");
-  OUTPUT_NOCR(k*1);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(k*i);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(k*j);
-  OUTPUT_NOCR(" | ");
-  OUTPUT_NOCR(k*k);
-  OUTPUT_NOCR(" | ");
+  OUT("| **k** |");
+  OUT(k*1);
+  OUT(" | ");
+  OUT(k*i);
+  OUT(" | ");
+  OUT(k*j);
+  OUT(" | ");
+  OUT(k*k);
+  OUT(" | ");
   CR();
 
   CR();
