@@ -1,1 +1,1 @@
-Sorting, Masks, Slices, etc.
+Indexing, Slicing, Masks, Sorting, etc.

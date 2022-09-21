@@ -515,28 +515,36 @@ namespace mathq {
     //******* A(i,j,k,...) *********************
     //**********************************************************************
 
-    Element& operator()(const size_t i1, const size_t i2) {
-      size_t k = this->index(i1, i2);
+
+    template <typename... U>
+    Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_unsigned<U>...>::value && (sizeof...(args) == rank_value)) {
+      size_t k = this->index(args...);
       return (*this)[k];
     }
 
-    const Element& operator()(const size_t i1, const size_t i2) const {
-      size_t k = this->index(i1, i2);
+    template <typename... U>
+    const Element& operator()(const U... args) const requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_unsigned<U>...>::value && (sizeof...(args) == rank_value)) {
+      size_t k = this->index(args...);
       return (*this)[k];
     }
+
 
     // negative indexing 
 
     template <typename... U>
     Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
-      Indices inds({ signed_index_to_unsigned_index(args, size())... });
+      Indices inds = Indices::from_signed({ args... }, dims());
+      // OUTPUT("method 2");
+      // ETV({ args... });
+      // ETV(inds);
       return (*this)[inds];
     }
 
     template <typename... U>
-    const Element& operator()(const U... args) const
-      requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
-      Indices inds({ signed_index_to_unsigned_index(args, size())... });
+    const Element& operator()(const U... args) const requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
+      Indices inds = Indices::from_signed({ args... }, dims());
+      OUTPUT("method 3");
+      ETV(inds);
       return (*this)[inds];
     }
 
@@ -1086,8 +1094,8 @@ namespace mathq {
       return (st >> x);
     }
 
-  };
+    };
 
-}; // namespace mathq
+  }; // namespace mathq
 
 #endif

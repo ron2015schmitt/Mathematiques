@@ -543,6 +543,8 @@ namespace mathq {
       return data_[n];
     }
 
+    // negative indices
+
     // NOTE: if you feed literals, the following will be called, unless you use the `u` suffix, eg `10000u`
     // "read/write"
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))

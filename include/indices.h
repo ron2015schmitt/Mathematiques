@@ -56,6 +56,22 @@ namespace mathq {
     }
 
 
+    template<typename S> requires (std::is_integral<S>::value)
+      static mathq::Indices& from_signed(const std::initializer_list<S>& mylist, const Dimensions& dims) {
+
+      const size_t rank = dims.rank();
+      mathq::Indices& indices = *(new mathq::Indices(dims));
+
+
+      size_t c = 0;
+      for (typename std::initializer_list<S>::const_iterator it = mylist.begin(); it != mylist.end(); ++it, c++) {
+        indices[c] = signed_index_to_unsigned_index(*it, dims[c]);
+      }
+
+      return indices;
+    }
+
+
 
     //**********************************************************************
     //                            CONSTRUCTORS 

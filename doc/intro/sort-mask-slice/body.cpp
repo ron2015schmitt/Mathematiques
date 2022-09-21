@@ -1,12 +1,3 @@
-#include <iostream>
-#include <string>
-#include <climits>
-#include <limits>
-#include <stdbool.h>
-#include <typeinfo>
-#include <optional>
-
-
 #include "mathq.h"
 
 
@@ -19,41 +10,22 @@ int main() {
   CR();
   CR();
 
-  // using namespace mathq::unit_quaternion;
-  // using namespace mathq::unit_imaginary;
-  // using std::sqrt;
 
-  OUTPUT("Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.");
+  GMD_HEADER2("Sequences");
 
 
-  GMD_HEADER3("Increasing Sequences");
-
-  OUTPUT("* The function `range<D>(start,end)` returns a Vector<D> containing the numbers `{start, start+1, start+2, ..., (end)}`");
-  CR();
-  OUTPUT("Increasing sequences using `range`");
-  GMD_CODE_START("C++");
-  DISP(range<int>(1, 10));
-  DISP(range<double>(-3, 3));
-  GMD_CODE_END();
-
-  GMD_HEADER3("Decreasing Sequences");
-  OUTPUT("* Counting down is also supported");
-  CR();
-  OUTPUT("Decreasing sequence using `range`");
-  GMD_CODE_START("C++");
-  DISP(range<int>(10, 0));
-  GMD_CODE_END();
-
-
-  GMD_HEADER3("Non-integer Sequences");
-
+  OUTPUT("The function `range<D>(start,end)` returns a Vector<D> containing the numbers `{start, start+1, start+2, ..., (end)}`");
+  OUTPUT("* The sequence can be increasing (stride = +1) or decreasing (stride = -1)");
   OUTPUT("* The start and end need not be integers ");
+
   CR();
-  OUTPUT("Floating point sequences using `range`");
   GMD_CODE_START("C++");
-  DISP(range<double>(1.5, 5.5));
-  DISP(range<double>(5.5, 1.5));
+  ETV(range<int>(1, 10));
+  ETV(range<double>(-3, 3));
+  ETV(range<int>(10, 0));
+  ETV(range<int>(1.5, 3.5));
   GMD_CODE_END();
+
 
   GMD_HEADER3("Arbitrary stride");
 
@@ -63,60 +35,64 @@ int main() {
   CR();
   OUTPUT("Seqeunces of different strides using `range`");
   GMD_CODE_START("C++");
-  DISP(range<int>(2, 10, 2));
-  DISP(range<double>(0, 10, 0.5));
-  GMD_CODE_END();
-
-  GMD_HEADER3("The end point isn't always included");
-
-  OUTPUT("* The end point is only included when ");
-  OUTPUT("```C++");
-  OUTPUT("end == start + n * stride");
-  OUTPUT("```");
-  OUTPUT("where `n` is an integer.\n");
-
-  CR();
-  OUTPUT("End point is not included in certain cases");
-  GMD_CODE_START("C++");
-  DISP(range<int>(0, 5, 2));
-  DISP(range<double>(1, 3.5));
+  ETV(range<int>(2, 10, 2));
+  ETV(range<double>(0, 5, 0.5));
   GMD_CODE_END();
 
 
-  GMD_HEADER3("Initializing `Vector`'s using `range`");
-
+  GMD_HEADER3("Initializing and Assigning a `Vector` using `range`");
   {
     CR();
     CR();
     OUTPUT("Initialize `Vector`'s of various data types  using the *`range`* function");
     GMD_CODE_START("C++");
-    ECHO(Vector<unsigned int> v1(range<unsigned int>(0, 3)));
-    ECHO(Vector<int> v2(range<int>(0, 3)));
-    ECHO(Vector<double> v3(range<double>(0, 3)));
+    ECHO(Vector<unsigned int> v{ range<unsigned int>(0, 3)) };
+    ETV(v);
+    ECHO(v = range<unsigned int>(1, 4));
+    ETV(v);
     GMD_CODE_END();
     CR();
 
-    resultstart();
-    resultmulti(v1);
-    resultmulti(v2);
-    resultmulti(v3);
-    resultend();
   }
 
+  GMD_VSPACE();
+  GMD_HEADER2("Element access");
 
-  GMD_HEADER3("Assigning `Vector`'s using `range`");
-
+  GMD_HEADER3("Positive and negative indices");
+  OUTPUT("Similar to python, Mathématiques allows negative indices");
+  CR();
+  OUTPUT("`v[-1] == v[N-1]` == end element\n");
+  OUTPUT("`v[-2] == v[N-2]` == penultimate element\n");
+  OUTPUT("`v[-N] == v[0]`   == first element\n");
   {
     CR();
     CR();
-    OUTPUT("Assigning a `Vector`'s to a *`range`*");
+    OUTPUT("Positive and negative indices");
     GMD_CODE_START("C++");
-    ECHO(const size_t N = 10);
-    ECHO(Vector<double> v(N));
-    ECHO(v = range<double>(0, N-1));
-    GMD_CODE_END();
+    ECHO(Vector<double> v{ 0,1,2,3 });
+    ECHO(const int N = v.size());
     CR();
+    ETV(v);
+    ETV(N);
+    ETV(v[0]);
+    ETV(v[1]);
+    ETV(v[2]);
+    ETV(v[3]);
+    ETV(v[-1]);
+    ETV(v[-2]);
+    ETV(v[-3]);
+    ETV(v[-4]);
+
+    CR();
+    ECHO(Matrix<double> A{ {1,2,3,4},{5,6,7,8} });
+    ETV(A);
+    ETV(A(0, 1));
+    ETV(A(0, -1));
+    ETV(A(-1, 0));
+    GMD_CODE_END();
   }
+
+
 
   // std::cout<<std::endl << "sort x1 in place, using sort(x1)" << std::endl;
   // sort(x1);
@@ -221,14 +197,14 @@ int main() {
 
 
     resultstart2("");
-    resultmulti(v1);
-    resultmulti(v2);
-    resultmulti(v1 >  v2);
-    resultmulti(v1 >= v2);
-    resultmulti(v1 <  v2);
-    resultmulti(v1 <= v2);
-    resultmulti(v1 == v2);
-    resultmulti(v1 != v2);
+    ETV(v1);
+    ETV(v2);
+    ETV(v1 >  v2);
+    ETV(v1 >= v2);
+    ETV(v1 <  v2);
+    ETV(v1 <= v2);
+    ETV(v1 == v2);
+    ETV(v1 != v2);
     resultend();
   }
 
@@ -244,13 +220,13 @@ int main() {
 
 
     resultstart2("");
-    resultmulti(v);
-    resultmulti(v >  2);
-    resultmulti(v >= 2);
-    resultmulti(v <  2);
-    resultmulti(v <= 2);
-    resultmulti(v == 2);
-    resultmulti(v != 2);
+    ETV(v);
+    ETV(v >  2);
+    ETV(v >= 2);
+    ETV(v <  2);
+    ETV(v <= 2);
+    ETV(v == 2);
+    ETV(v != 2);
     resultend();
   }
 
@@ -267,11 +243,11 @@ int main() {
     CR();
 
     resultstart2("");
-    resultmulti(v);
-    resultmulti((v > 2));
-    resultmulti(!(v > 2));
-    resultmulti((v >= 2) && (v <= 4));
-    resultmulti((v <= 2) || (v >= 4));
+    ETV(v);
+    ETV((v > 2));
+    ETV(!(v > 2));
+    ETV((v >= 2) && (v <= 4));
+    ETV((v <= 2) || (v >= 4));
     resultend();
   }
 
@@ -291,9 +267,9 @@ int main() {
 
 
     resultstart2("");
-    resultmulti(v);
-    resultmulti(v > 6);
-    resultmulti(v[(v > 6)]);
+    ETV(v);
+    ETV(v > 6);
+    ETV(v[(v > 6)]);
     resultend();
     CR();
 
@@ -302,7 +278,7 @@ int main() {
     ECHO(v[(v > 6)] = 6.);
     GMD_CODE_END();
     resultstart();
-    resultmulti(v);
+    ETV(v);
     resultend();
     CR();
 
@@ -311,7 +287,7 @@ int main() {
     ECHO(v[(v < 0)] = 0.);
     GMD_CODE_END();
     resultstart();
-    resultmulti(v);
+    ETV(v);
     resultend();
     CR();
 
@@ -341,16 +317,16 @@ int main() {
 
 
     resultstart2("");
-    resultmulti(v);
-    resultmulti((v > 2));
-    resultmulti(alltrue(v > 2));
-    resultmulti(alltrue(v > 0));
-    resultmulti(anytrue(v > 2));
-    resultmulti(numtrue(v > 2));
-    // resultmulti(numtrue(!(v > 2)));
-    resultmulti(numtrue(v > 0));
-    resultmulti(findtrue(v > 2));
-    resultmulti(findtrue(v > 0));
+    ETV(v);
+    ETV((v > 2));
+    ETV(alltrue(v > 2));
+    ETV(alltrue(v > 0));
+    ETV(anytrue(v > 2));
+    ETV(numtrue(v > 2));
+    // ETV(numtrue(!(v > 2)));
+    ETV(numtrue(v > 0));
+    ETV(findtrue(v > 2));
+    ETV(findtrue(v > 0));
     resultend();
   }
 
@@ -377,16 +353,16 @@ int main() {
 
 
     resultstart2("");
-    resultmulti(v);
-    resultmulti(N);
-    resultmulti(v[0]);
-    resultmulti(v[1]);
-    resultmulti(v[N-1]);
-    resultmulti(v[-1]);
-    resultmulti(v[-2]);
-    resultmulti(v[-N]);
-    // resultmulti(v[{0, -1}]);
-    // resultmulti(v[{2, 2, -2, -2}]);
+    ETV(v);
+    ETV(N);
+    ETV(v[0]);
+    ETV(v[1]);
+    ETV(v[N-1]);
+    ETV(v[-1]);
+    ETV(v[-2]);
+    ETV(v[-N]);
+    // ETV(v[{0, -1}]);
+    // ETV(v[{2, 2, -2, -2}]);
     resultend();
   }
 
@@ -400,14 +376,14 @@ int main() {
     GMD_CODE_END();
     CR();
     resultstart();
-    resultmulti(v);
+    ETV(v);
     resultend();
     GMD_CODE_START("C++");
     ECHO(for (int i = 0; i < v.size()/2; i++) std::swap(v[i], v[-i-1]));
     GMD_CODE_END();
     CR();
     resultstart();
-    resultmulti(v);
+    ETV(v);
     resultend();
   }
 
@@ -435,12 +411,12 @@ int main() {
     CR();
 
     resultstart2("");
-    resultmulti(v[slc(2, 6)]);
-    resultmulti(v[slc(0, -1)]);
-    resultmulti(v[slc(0, 1)]);
-    resultmulti(v[slc(-2, -1)]);
-    resultmulti(v[slc(1, 0)]);
-    resultmulti(v[slc(-1, 0)]);
+    ETV(v[slc(2, 6)]);
+    ETV(v[slc(0, -1)]);
+    ETV(v[slc(0, 1)]);
+    ETV(v[slc(-2, -1)]);
+    ETV(v[slc(1, 0)]);
+    ETV(v[slc(-1, 0)]);
     resultend();
   }
 
@@ -468,30 +444,30 @@ int main() {
     CR();
 
     resultstart2(": reverse vectors of various lengths using the same slice");
-    resultmulti(v0[slc(-1, 0, -1)]);
-    resultmulti(v1[slc(-1, 0, -1)]);
-    resultmulti(v2[slc(-1, 0, -1)]);
-    resultmulti(v3[slc(-1, 0, -1)]);
-    resultmulti(v4[slc(-1, 0, -1)]);
-    resultmulti(v10[slc(-1, 0, -1)]);
+    ETV(v0[slc(-1, 0, -1)]);
+    ETV(v1[slc(-1, 0, -1)]);
+    ETV(v2[slc(-1, 0, -1)]);
+    ETV(v3[slc(-1, 0, -1)]);
+    ETV(v4[slc(-1, 0, -1)]);
+    ETV(v10[slc(-1, 0, -1)]);
     resultend();
 
     resultstart2(": get even-index elements of various vectors using the same slice");
-    resultmulti(v0[slc(0, -1, 2)]);
-    resultmulti(v1[slc(0, -1, 2)]);
-    resultmulti(v2[slc(0, -1, 2)]);
-    resultmulti(v3[slc(0, -1, 2)]);
-    resultmulti(v4[slc(0, -1, 2)]);
-    resultmulti(v10[slc(0, -1, 2)]);
+    ETV(v0[slc(0, -1, 2)]);
+    ETV(v1[slc(0, -1, 2)]);
+    ETV(v2[slc(0, -1, 2)]);
+    ETV(v3[slc(0, -1, 2)]);
+    ETV(v4[slc(0, -1, 2)]);
+    ETV(v10[slc(0, -1, 2)]);
     resultend();
 
     resultstart2(": get odd-index elements of various vectors using the same slice");
-    resultmulti(v0[slc(1, -1, 2)]);
-    resultmulti(v1[slc(1, -1, 2)]);
-    resultmulti(v2[slc(1, -1, 2)]);
-    resultmulti(v3[slc(1, -1, 2)]);
-    resultmulti(v4[slc(1, -1, 2)]);
-    resultmulti(v10[slc(1, -1, 2)]);
+    ETV(v0[slc(1, -1, 2)]);
+    ETV(v1[slc(1, -1, 2)]);
+    ETV(v2[slc(1, -1, 2)]);
+    ETV(v3[slc(1, -1, 2)]);
+    ETV(v4[slc(1, -1, 2)]);
+    ETV(v10[slc(1, -1, 2)]);
     resultend();
   }
 
@@ -518,17 +494,17 @@ int main() {
     GMD_CODE_END();
     CR();
     resultstart();
-    resultmulti(v);
-    resultmulti(veven);
-    resultmulti(v[veven]);
-    resultmulti(v[veven[1]]);
-    resultmulti(vodd);
-    resultmulti(v[vodd]);
-    resultmulti(v[vodd[1]]);
-    // resultmulti(v[veven, vodd]);
-    resultmulti(v[vodd[veven[1]]]);
-    resultmulti(vconst);
-    resultmulti(v[vconst]);
+    ETV(v);
+    ETV(veven);
+    ETV(v[veven]);
+    ETV(v[veven[1]]);
+    ETV(vodd);
+    ETV(v[vodd]);
+    ETV(v[vodd[1]]);
+    // ETV(v[veven, vodd]);
+    ETV(v[vodd[veven[1]]]);
+    ETV(vconst);
+    ETV(v[vconst]);
     resultend();
   }
 
@@ -550,11 +526,11 @@ int main() {
     GMD_CODE_END();
     CR();
     resultstart();
-    resultmulti(v[{0, 4}]);
-    resultmulti(v[{4, 0, 1, 4}]);
-    resultmulti(v[{1, 0, 2}]);
-    resultmulti(v[{4, 3, 2, 1, 0}]);
-    resultmulti(v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}]);
+    ETV(v[{0, 4}]);
+    ETV(v[{4, 0, 1, 4}]);
+    ETV(v[{1, 0, 2}]);
+    ETV(v[{4, 3, 2, 1, 0}]);
+    ETV(v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}]);
     resultend();
   }
 

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.011</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.012</h1>](../../../README.md)
 
 <details>
 
@@ -35,10 +35,10 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.3. [Vectors, Matrices, and MultiArrays](../multiarrays/README.md)<br>
 8.4. [Nested MultiArrays](../nested-multiarrays/README.md)<br>
 8.5. [Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)<br>
-8.6. [MultiArray Arithmetic](../multiarray-arithmetic/README.md)<br>
+8.6. [MultiArray Arithmetic and Operators](../multiarray-arithmetic/README.md)<br>
 8.7. [Mixed-Rank & Mixed-Depth Arithmetic](../arithmetic-mixed/README.md)<br>
 8.8. _Linear Algebra_ <br>
-8.9. [Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)<br>
+8.9. [Indexing, Slicing, Masks, Sorting, etc.](../sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
 8.11. [Mutlivariate Calculus](../multi-var-calculus/README.md)<br>
 8.12. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
@@ -523,9 +523,12 @@ Matrix<double> A{ {1, 2}, {3, 4} };
 
 ### General MultiArrays
 
-The above functions are extended to general MultiArrays of any rank.  The transpose is defined by reverse all the indices. 
+The above functions are extended to general MultiArrays of any rank.  The transpose is defined as the reversal of all the indices. 
+
+<br>
 
 
-| ⇦ <br />[Mixed-Rank & Mixed-Depth Arithmetic](../arithmetic-mixed/README.md)  | [Introduction with Examples](../README.md)<br />Linear Algebra<br /><img width=1000/> | ⇨ <br />[Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)   |
+
+| ⇦ <br />[Mixed-Rank & Mixed-Depth Arithmetic](../arithmetic-mixed/README.md)  | [Introduction with Examples](../README.md)<br />Linear Algebra<br /><img width=1000/> | ⇨ <br />[Indexing, Slicing, Masks, Sorting, etc.](../sort-mask-slice/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

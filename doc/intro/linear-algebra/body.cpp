@@ -108,7 +108,8 @@ int main() {
   GMD_HEADER3("General MultiArrays");
 
   CR();
-  OUTPUT("The above functions are extended to general MultiArrays of any rank.  The transpose is defined by reverse all the indices. ");
+  OUTPUT("The above functions are extended to general MultiArrays of any rank.  The transpose is defined as the reversal of all the indices. ");
+  GMD_VSPACE();
 
 
   return 0;

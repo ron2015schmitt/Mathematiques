@@ -1,1 +1,1 @@
-MultiArray Arithmetic
+MultiArray Arithmetic and Operators

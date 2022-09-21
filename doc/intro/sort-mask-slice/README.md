@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.011</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.012</h1>](../../../README.md)
 
 <details>
 
@@ -35,10 +35,10 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.3. [Vectors, Matrices, and MultiArrays](../multiarrays/README.md)<br>
 8.4. [Nested MultiArrays](../nested-multiarrays/README.md)<br>
 8.5. [Special Vectors, Matrices, and MultiArrays](../special-multiarrays/README.md)<br>
-8.6. [MultiArray Arithmetic](../multiarray-arithmetic/README.md)<br>
+8.6. [MultiArray Arithmetic and Operators](../multiarray-arithmetic/README.md)<br>
 8.7. [Mixed-Rank & Mixed-Depth Arithmetic](../arithmetic-mixed/README.md)<br>
 8.8. [Linear Algebra](../linear-algebra/README.md)<br>
-8.9. _Sorting, Masks, Slices, etc._ <br>
+8.9. _Indexing, Slicing, Masks, Sorting, etc._ <br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
 8.11. [Mutlivariate Calculus](../multi-var-calculus/README.md)<br>
 8.12. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
@@ -51,82 +51,81 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-# 8.9. Sorting, Masks, Slices, etc.
+# 8.9. Indexing, Slicing, Masks, Sorting, etc.
 
 
 
-Mathématiques supports vectors, matrices and arbitrary rank multi-arrays.
-### Increasing Sequences
-* The function `range<D>(start,end)` returns a Vector<D> containing the numbers `{start, start+1, start+2, ..., (end)}`
-
-Increasing sequences using `range`
-```C++
-☀ range<int>(1, 10) ➜ {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-☀ range<double>(-3, 3) ➜ {-3, -2, -1, 0, 1, 2, 3};
-```
-### Decreasing Sequences
-* Counting down is also supported
-
-Decreasing sequence using `range`
-```C++
-☀ range<int>(10, 0) ➜ {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-```
-### Non-integer Sequences
+## Sequences
+The function `range<D>(start,end)` returns a Vector<D> containing the numbers `{start, start+1, start+2, ..., (end)}`
+* The sequence can be increasing (stride = +1) or decreasing (stride = -1)
 * The start and end need not be integers 
 
-Floating point sequences using `range`
 ```C++
-☀ range<double>(1.5, 5.5) ➜ {1.5, 2.5, 3.5, 4.5, 5.5};
-☀ range<double>(5.5, 1.5) ➜ {5.5, 4.5, 3.5, 2.5, 1.5};
+☀ range<int>(1, 10) ➜ Vector<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+☀ range<double>(-3, 3) ➜ Vector<double> {-3, -2, -1, 0, 1, 2, 3};
+☀ range<int>(10, 0) ➜ Vector<int> {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+☀ range<int>(1.5, 3.5) ➜ Vector<int> {1, 2, 3};
 ```
 ### Arbitrary stride
 * The function `range<D>(Nstart,Nend,Nstride)` returns a Vector<D> containing the numbers `{start, start+stride, start+2*stride, ..., (end)}`
 
 Seqeunces of different strides using `range`
 ```C++
-☀ range<int>(2, 10, 2) ➜ {2, 4, 6, 8, 10};
-☀ range<double>(0, 10, 0.5) ➜ {0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10};
+☀ range<int>(2, 10, 2) ➜ Vector<int> {2, 4, 6, 8, 10};
+☀ range<double>(0, 5, 0.5) ➜ Vector<double> {0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5};
 ```
-### The end point isn't always included
-* The end point is only included when 
-```C++
-end == start + n * stride
-```
-where `n` is an integer.
-
-
-End point is not included in certain cases
-```C++
-☀ range<int>(0, 5, 2) ➜ {0, 2, 4};
-☀ range<double>(1, 3.5) ➜ {1, 2, 3};
-```
-### Initializing `Vector`'s using `range`
+### Initializing and Assigning a `Vector` using `range`
 
 
 Initialize `Vector`'s of various data types  using the *`range`* function
 ```C++
-Vector<unsigned int> v1(range<unsigned int>(0, 3));
-Vector<int> v2(range<int>(0, 3));
-Vector<double> v3(range<double>(0, 3));
+Vector<unsigned int> v{ range<unsigned int>(0, 3);
+☀ v ➜ Vector<unsigned int> {0, 1, 2, 3};
+v = range<unsigned int>(1, 4);
+☀ v ➜ Vector<unsigned int> {1, 2, 3, 4};
 ```
 
-**The result is**
+
+<br>
+
+## Element access
+### Positive and negative indices
+Similar to python, Mathématiques allows negative indices
+
+`v[-1] == v[N-1]` == end element
+
+`v[-2] == v[N-2]` == penultimate element
+
+`v[-N] == v[0]`   == first element
+
+
+
+Positive and negative indices
 ```C++
-  ☀ v1 ➜ {0, 1, 2, 3};
-  ☀ v2 ➜ {0, 1, 2, 3};
-  ☀ v3 ➜ {0, 1, 2, 3};
+Vector<double> v{ 0,1,2,3 };
+const int N = v.size();
+
+☀ v ➜ Vector<double> {0, 1, 2, 3};
+☀ N ➜ int 4;
+☀ v[0] ➜ double 0;
+☀ v[1] ➜ double 1;
+☀ v[2] ➜ double 2;
+☀ v[3] ➜ double 3;
+☀ v[-1] ➜ double 3;
+☀ v[-2] ➜ double 2;
+☀ v[-3] ➜ double 1;
+☀ v[-4] ➜ double 0;
+
+Matrix<double> A{ {1,2,3,4},{5,6,7,8} };
+☀ A ➜ Matrix<double> 
+{
+  {1, 2, 3, 4},
+  {5, 6, 7, 8}
+};
+☀ A(0, 1) ➜ double 2;
+☀ A(0, -1) ➜ double 4;
+☀ A(-1, 0) ➜ double 5;
 ```
-
-### Assigning `Vector`'s using `range`
-
-
-Assigning a `Vector`'s to a *`range`*
-```C++
-const size_t N = 10;
-Vector<double> v(N);
-v = range<double>(0, N-1);
-```
-
 ## Relational operators
 ### Relational operators between two Vectors
 
@@ -141,14 +140,14 @@ Vector<double> v2(range<double>(3, 1));
 
 **Some expressions with results**
 ```C++
-  ☀ v1 ➜ {1, 2, 3};
-  ☀ v2 ➜ {3, 2, 1};
-  ☀ v1 > v2 ➜ {false, false, true};
-  ☀ v1 >= v2 ➜ {false, true, true};
-  ☀ v1 < v2 ➜ {true, false, false};
-  ☀ v1 <= v2 ➜ {true, true, false};
-  ☀ v1 == v2 ➜ {false, true, false};
-  ☀ v1 != v2 ➜ {true, false, true};
+☀ v1 ➜ Vector<double> {1, 2, 3};
+☀ v2 ➜ Vector<double> {3, 2, 1};
+☀ v1 > v2 ➜ Vector<bool> {false, false, true};
+☀ v1 >= v2 ➜ Vector<bool> {false, true, true};
+☀ v1 < v2 ➜ Vector<bool> {true, false, false};
+☀ v1 <= v2 ➜ Vector<bool> {true, true, false};
+☀ v1 == v2 ➜ Vector<bool> {false, true, false};
+☀ v1 != v2 ➜ Vector<bool> {true, false, true};
 ```
 
 ### Relational operators between a Vector and scalar
@@ -161,13 +160,13 @@ Vector<double> v(range<double>(1, 3));
 
 **Some expressions with results**
 ```C++
-  ☀ v ➜ {1, 2, 3};
-  ☀ v > 2 ➜ {false, false, true};
-  ☀ v >= 2 ➜ {false, true, true};
-  ☀ v < 2 ➜ {true, false, false};
-  ☀ v <= 2 ➜ {true, true, false};
-  ☀ v == 2 ➜ {false, true, false};
-  ☀ v != 2 ➜ {true, false, true};
+☀ v ➜ Vector<double> {1, 2, 3};
+☀ v > 2 ➜ Vector<bool> {false, false, true};
+☀ v >= 2 ➜ Vector<bool> {false, true, true};
+☀ v < 2 ➜ Vector<bool> {true, false, false};
+☀ v <= 2 ➜ Vector<bool> {true, true, false};
+☀ v == 2 ➜ Vector<bool> {false, true, false};
+☀ v != 2 ➜ Vector<bool> {true, false, true};
 ```
 
 ## Logical operators
@@ -181,11 +180,11 @@ Vector<double> v(range<double>(1, 5));
 
 **Some expressions with results**
 ```C++
-  ☀ v ➜ {1, 2, 3, 4, 5};
-  ☀ (v > 2) ➜ {false, false, true, true, true};
-  ☀ !(v > 2) ➜ {true, true, false, false, false};
-  ☀ (v >= 2) && (v <= 4) ➜ {false, true, true, true, false};
-  ☀ (v <= 2) || (v >= 4) ➜ {true, true, false, true, true};
+☀ v ➜ Vector<double> {1, 2, 3, 4, 5};
+☀ (v > 2) ➜ Vector<bool> {false, false, true, true, true};
+☀ !(v > 2) ➜ Vector<bool> {true, true, false, false, false};
+☀ (v >= 2) && (v <= 4) ➜ Vector<bool> {false, true, true, true, false};
+☀ (v <= 2) || (v >= 4) ➜ Vector<bool> {true, true, false, true, true};
 ```
 
 ## Vector mask access
@@ -201,9 +200,9 @@ Vector<double> v(range<double>(-10, 10));
 
 **Some expressions with results**
 ```C++
-  ☀ v ➜ {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  ☀ v > 6 ➜ {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true};
-  ☀ v[(v > 6)] ➜ {7, 8, 9, 10};
+☀ v ➜ Vector<double> {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+☀ v > 6 ➜ Vector<bool> {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true};
+☀ v[(v > 6)] ➜ Vector<double> {7, 8, 9, 10};
 ```
 
 
@@ -213,7 +212,7 @@ v[(v > 6)] = 6.;
 ```
 **The result is**
 ```C++
-  ☀ v ➜ {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6};
+☀ v ➜ Vector<double> {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6};
 ```
 
 
@@ -223,7 +222,7 @@ v[(v < 0)] = 0.;
 ```
 **The result is**
 ```C++
-  ☀ v ➜ {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6};
+☀ v ➜ Vector<double> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6};
 ```
 
 
@@ -246,15 +245,15 @@ Vector<double> v(range<double>(1, 3));
 
 **Some expressions with results**
 ```C++
-  ☀ v ➜ {1, 2, 3};
-  ☀ (v > 2) ➜ {false, false, true};
-  ☀ alltrue(v > 2) ➜ false;
-  ☀ alltrue(v > 0) ➜ true;
-  ☀ anytrue(v > 2) ➜ true;
-  ☀ numtrue(v > 2) ➜ 1;
-  ☀ numtrue(v > 0) ➜ 3;
-  ☀ findtrue(v > 2) ➜ {2};
-  ☀ findtrue(v > 0) ➜ {0, 1, 2};
+☀ v ➜ Vector<double> {1, 2, 3};
+☀ (v > 2) ➜ Vector<bool> {false, false, true};
+☀ alltrue(v > 2) ➜ bool false;
+☀ alltrue(v > 0) ➜ bool true;
+☀ anytrue(v > 2) ➜ bool true;
+☀ numtrue(v > 2) ➜ unsigned long 1;
+☀ numtrue(v > 0) ➜ unsigned long 3;
+☀ findtrue(v > 2) ➜ Vector<unsigned long> {2};
+☀ findtrue(v > 0) ➜ Vector<unsigned long> {0, 1, 2};
 ```
 
 python-like access: negative indices & slices
@@ -278,14 +277,14 @@ const int N = v.size();
 
 **Some expressions with results**
 ```C++
-  ☀ v ➜ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  ☀ N ➜ 11;
-  ☀ v[0] ➜ 0;
-  ☀ v[1] ➜ 1;
-  ☀ v[N-1] ➜ 10;
-  ☀ v[-1] ➜ 10;
-  ☀ v[-2] ➜ 9;
-  ☀ v[-N] ➜ 0;
+☀ v ➜ Vector<double> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+☀ N ➜ int 11;
+☀ v[0] ➜ double 0;
+☀ v[1] ➜ double 1;
+☀ v[N-1] ➜ double 10;
+☀ v[-1] ➜ double 10;
+☀ v[-2] ➜ double 9;
+☀ v[-N] ➜ double 0;
 ```
 
 
@@ -297,7 +296,7 @@ Vector<double> v(range<double>(0, 10));
 
 **The result is**
 ```C++
-  ☀ v ➜ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+☀ v ➜ Vector<double> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 ```
 
 ```C++
@@ -306,7 +305,7 @@ for (int i = 0; i < v.size()/2; i++) std::swap(v[i], v[-i-1]);
 
 **The result is**
 ```C++
-  ☀ v ➜ {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+☀ v ➜ Vector<double> {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 ```
 
 ## Slices via the `slc` function
@@ -334,12 +333,12 @@ Vector<double> v(range<double>(0, 10));
 
 **Some expressions with results**
 ```C++
-  ☀ v[slc(2, 6)] ➜ {2, 3, 4, 5, 6};
-  ☀ v[slc(0, -1)] ➜ {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  ☀ v[slc(0, 1)] ➜ {0, 1};
-  ☀ v[slc(-2, -1)] ➜ {9, 10};
-  ☀ v[slc(1, 0)] ➜ {};
-  ☀ v[slc(-1, 0)] ➜ {};
+☀ v[slc(2, 6)] ➜ Vector<double> {2, 3, 4, 5, 6};
+☀ v[slc(0, -1)] ➜ Vector<double> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+☀ v[slc(0, 1)] ➜ Vector<double> {0, 1};
+☀ v[slc(-2, -1)] ➜ Vector<double> {9, 10};
+☀ v[slc(1, 0)] ➜ Vector<double> {};
+☀ v[slc(-1, 0)] ➜ Vector<double> {};
 ```
 
 ### The `(start,end,step)` slice
@@ -371,32 +370,32 @@ Vector<double> v10(range<double>(0, 10));
 
 **Some expressions with results**: reverse vectors of various lengths using the same slice
 ```C++
-  ☀ v0[slc(-1, 0, -1)] ➜ {};
-  ☀ v1[slc(-1, 0, -1)] ➜ {};
-  ☀ v2[slc(-1, 0, -1)] ➜ {1, 0};
-  ☀ v3[slc(-1, 0, -1)] ➜ {2, 1, 0};
-  ☀ v4[slc(-1, 0, -1)] ➜ {3, 2, 1, 0};
-  ☀ v10[slc(-1, 0, -1)] ➜ {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+☀ v0[slc(-1, 0, -1)] ➜ Vector<double> {};
+☀ v1[slc(-1, 0, -1)] ➜ Vector<double> {};
+☀ v2[slc(-1, 0, -1)] ➜ Vector<double> {1, 0};
+☀ v3[slc(-1, 0, -1)] ➜ Vector<double> {2, 1, 0};
+☀ v4[slc(-1, 0, -1)] ➜ Vector<double> {3, 2, 1, 0};
+☀ v10[slc(-1, 0, -1)] ➜ Vector<double> {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 ```
 
 **Some expressions with results**: get even-index elements of various vectors using the same slice
 ```C++
-  ☀ v0[slc(0, -1, 2)] ➜ {};
-  ☀ v1[slc(0, -1, 2)] ➜ {0};
-  ☀ v2[slc(0, -1, 2)] ➜ {0};
-  ☀ v3[slc(0, -1, 2)] ➜ {0, 2};
-  ☀ v4[slc(0, -1, 2)] ➜ {0, 2};
-  ☀ v10[slc(0, -1, 2)] ➜ {0, 2, 4, 6, 8, 10};
+☀ v0[slc(0, -1, 2)] ➜ Vector<double> {};
+☀ v1[slc(0, -1, 2)] ➜ Vector<double> {0};
+☀ v2[slc(0, -1, 2)] ➜ Vector<double> {0};
+☀ v3[slc(0, -1, 2)] ➜ Vector<double> {0, 2};
+☀ v4[slc(0, -1, 2)] ➜ Vector<double> {0, 2};
+☀ v10[slc(0, -1, 2)] ➜ Vector<double> {0, 2, 4, 6, 8, 10};
 ```
 
 **Some expressions with results**: get odd-index elements of various vectors using the same slice
 ```C++
-  ☀ v0[slc(1, -1, 2)] ➜ {};
-  ☀ v1[slc(1, -1, 2)] ➜ {};
-  ☀ v2[slc(1, -1, 2)] ➜ {1};
-  ☀ v3[slc(1, -1, 2)] ➜ {1};
-  ☀ v4[slc(1, -1, 2)] ➜ {1, 3};
-  ☀ v10[slc(1, -1, 2)] ➜ {1, 3, 5, 7, 9};
+☀ v0[slc(1, -1, 2)] ➜ Vector<double> {};
+☀ v1[slc(1, -1, 2)] ➜ Vector<double> {};
+☀ v2[slc(1, -1, 2)] ➜ Vector<double> {1};
+☀ v3[slc(1, -1, 2)] ➜ Vector<double> {1};
+☀ v4[slc(1, -1, 2)] ➜ Vector<double> {1, 3};
+☀ v10[slc(1, -1, 2)] ➜ Vector<double> {1, 3, 5, 7, 9};
 ```
 
 Access subsets of Vector elements
@@ -418,16 +417,16 @@ Vector<size_t> vconst(15, 1);
 
 **The result is**
 ```C++
-  ☀ v ➜ {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
-  ☀ veven ➜ {0, 2, 4, 6, 8, 10};
-  ☀ v[veven] ➜ {0, 0.2, 0.4, 0.6, 0.8, 1};
-  ☀ v[veven[1]] ➜ 0.2;
-  ☀ vodd ➜ {1, 3, 5, 7, 9};
-  ☀ v[vodd] ➜ {0.1, 0.3, 0.5, 0.7, 0.9};
-  ☀ v[vodd[1]] ➜ 0.3;
-  ☀ v[vodd[veven[1]]] ➜ 0.5;
-  ☀ vconst ➜ {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-  ☀ v[vconst] ➜ {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+☀ v ➜ Vector<double> {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
+☀ veven ➜ Vector<unsigned long> {0, 2, 4, 6, 8, 10};
+☀ v[veven] ➜ Vector<double> {0, 0.2, 0.4, 0.6, 0.8, 1};
+☀ v[veven[1]] ➜ double 0.2;
+☀ vodd ➜ Vector<unsigned long> {1, 3, 5, 7, 9};
+☀ v[vodd] ➜ Vector<double> {0.1, 0.3, 0.5, 0.7, 0.9};
+☀ v[vodd[1]] ➜ double 0.3;
+☀ v[vodd[veven[1]]] ➜ double 0.5;
+☀ vconst ➜ Vector<unsigned long> {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+☀ v[vconst] ➜ Vector<double> {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
 ```
 
 ## Access vector elements using an C++11 `initializer_list` of indices
@@ -445,11 +444,11 @@ Vector<double> v(linspace<double>(0, 1, 11));
 
 **The result is**
 ```C++
-  ☀ v[{0, 4}] ➜ {0, 0.4};
-  ☀ v[{4, 0, 1, 4}] ➜ {0.4, 0, 0.1, 0.4};
-  ☀ v[{1, 0, 2}] ➜ {0.1, 0, 0.2};
-  ☀ v[{4, 3, 2, 1, 0}] ➜ {0.4, 0.3, 0.2, 0.1, 0};
-  ☀ v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}] ➜ {0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
+☀ v[{0, 4}] ➜ Vector<double> {0, 0.4};
+☀ v[{4, 0, 1, 4}] ➜ Vector<double> {0.4, 0, 0.1, 0.4};
+☀ v[{1, 0, 2}] ➜ Vector<double> {0.1, 0, 0.2};
+☀ v[{4, 3, 2, 1, 0}] ➜ Vector<double> {0.4, 0.3, 0.2, 0.1, 0};
+☀ v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}] ➜ Vector<double> {0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
 ```
 
 
@@ -457,6 +456,6 @@ Vector<double> v(linspace<double>(0, 1, 11));
 
 
 
-| ⇦ <br />[Linear Algebra](../linear-algebra/README.md)  | [Introduction with Examples](../README.md)<br />Sorting, Masks, Slices, etc.<br /><img width=1000/> | ⇨ <br />[Common and Special Mathematical Functions](../math-functions/README.md)   |
+| ⇦ <br />[Linear Algebra](../linear-algebra/README.md)  | [Introduction with Examples](../README.md)<br />Indexing, Slicing, Masks, Sorting, etc.<br /><img width=1000/> | ⇨ <br />[Common and Special Mathematical Functions](../math-functions/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 
