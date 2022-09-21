@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.013</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.014</h1>](../../../README.md)
 
 <details>
 
@@ -38,7 +38,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.6. [MultiArray Arithmetic and Operators](../multiarray-arithmetic/README.md)<br>
 8.7. [Mixed-Rank & Mixed-Depth Arithmetic](../arithmetic-mixed/README.md)<br>
 8.8. [Linear Algebra](../linear-algebra/README.md)<br>
-8.9. _Indexing, Slicing, Masks, Sorting, etc._ <br>
+8.9. _Indexing, Masks, Slicing, Sorting, etc._ <br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
 8.11. [Mutlivariate Calculus](../multi-var-calculus/README.md)<br>
 8.12. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
@@ -51,7 +51,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-# 8.9. Indexing, Slicing, Masks, Sorting, etc.
+# 8.9. Indexing, Masks, Slicing, Sorting, etc.
 
 
 
@@ -126,67 +126,23 @@ Matrix<double> A{ {1,2,3,4},{5,6,7,8} };
 ☀ A(0, -1) ➜ double 4;
 ☀ A(-1, 0) ➜ double 5;
 ```
-## Relational operators
-### Relational operators between two Vectors
+### List of indices
 
-Vector relations operate element-wise, similar to arithmetic operators. Given two Vectors of the same size, a vector relational expression (eg `(v1>v2)` returns a vector of booleans of the same size
+* The list can be smaller than or greater than or equal to the length to the data Vector.
+* The list can have repeated indices and indices can be in any order!
 
 
-relational operators between two vectors`
 ```C++
-Vector<double> v1(range<double>(1, 3));
-Vector<double> v2(range<double>(3, 1));
+Vector<double> v(linspace<double>(0, 1, 11));
+☀ v ➜ Vector<double> {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
+
+☀ v[{0, 4}] ➜ Vector<double> {0, 0.4};
+☀ v[{4, 0, 1, 4}] ➜ Vector<double> {0.4, 0, 0.1, 0.4};
+☀ v[{1, 0, 2}] ➜ Vector<double> {0.1, 0, 0.2};
+☀ v[{4, 3, 2, 1, 0}] ➜ Vector<double> {0.4, 0.3, 0.2, 0.1, 0};
+☀ v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}] ➜ Vector<double> {0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
 ```
-
-**Some expressions with results**
-```C++
-☀ v1 ➜ Vector<double> {1, 2, 3};
-☀ v2 ➜ Vector<double> {3, 2, 1};
-☀ v1 > v2 ➜ Vector<bool> {false, false, true};
-☀ v1 >= v2 ➜ Vector<bool> {false, true, true};
-☀ v1 < v2 ➜ Vector<bool> {true, false, false};
-☀ v1 <= v2 ➜ Vector<bool> {true, true, false};
-☀ v1 == v2 ➜ Vector<bool> {false, true, false};
-☀ v1 != v2 ➜ Vector<bool> {true, false, true};
-```
-
-### Relational operators between a Vector and scalar
-
-
-relational operators between a vector and a scalar`
-```C++
-Vector<double> v(range<double>(1, 3));
-```
-
-**Some expressions with results**
-```C++
-☀ v ➜ Vector<double> {1, 2, 3};
-☀ v > 2 ➜ Vector<bool> {false, false, true};
-☀ v >= 2 ➜ Vector<bool> {false, true, true};
-☀ v < 2 ➜ Vector<bool> {true, false, false};
-☀ v <= 2 ➜ Vector<bool> {true, true, false};
-☀ v == 2 ➜ Vector<bool> {false, true, false};
-☀ v != 2 ➜ Vector<bool> {true, false, true};
-```
-
-## Logical operators
-### The element-wise logical operatora `&&`,`||`,`!`
-
-
-The element-wise logical operators
-```C++
-Vector<double> v(range<double>(1, 5));
-```
-
-**Some expressions with results**
-```C++
-☀ v ➜ Vector<double> {1, 2, 3, 4, 5};
-☀ (v > 2) ➜ Vector<bool> {false, false, true, true, true};
-☀ !(v > 2) ➜ Vector<bool> {true, true, false, false, false};
-☀ (v >= 2) && (v <= 4) ➜ Vector<bool> {false, true, true, true, false};
-☀ (v <= 2) || (v >= 4) ➜ Vector<bool> {true, true, false, true, true};
-```
-
+* This functionality is currently only avaible for vectors.
 ## Vector mask access
 * A subset of a vector can be extracted using a boolean-valued vector of the same size.
 * For example `v[v>0]` will return a vector containing only the positive values of v.
@@ -225,67 +181,6 @@ v[(v < 0)] = 0.;
 ☀ v ➜ Vector<double> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6};
 ```
 
-
-## Logical functions
-### The functions `alltrue`, `anytrue`, `numtrue`, and `findtrue`
-
-* The function `alltrue(v)` returns a `bool`: true if every element of `v` is true, otherwise it returns false
-
-* The function `anytrue(v)` returns a `bool`: true if any element of `v` is true, otherwise it returns false
-
-* The function `numtrue(v)` returns a `size_t` equal to the number of elements of `v` that are true. 
-
-* The function `findtrue(v)` returns a `Vector<size_t>` which contains the indices of the true elements of `v`. 
-
-
-The functions `alltrue`, `anytrue`, `numtrue`, and `findtrue`
-```C++
-Vector<double> v(range<double>(1, 3));
-```
-
-**Some expressions with results**
-```C++
-☀ v ➜ Vector<double> {1, 2, 3};
-☀ (v > 2) ➜ Vector<bool> {false, false, true};
-☀ alltrue(v > 2) ➜ bool false;
-☀ alltrue(v > 0) ➜ bool true;
-☀ anytrue(v > 2) ➜ bool true;
-☀ numtrue(v > 2) ➜ unsigned long 1;
-☀ numtrue(v > 0) ➜ unsigned long 3;
-☀ findtrue(v > 2) ➜ Vector<unsigned long> {2};
-☀ findtrue(v > 0) ➜ Vector<unsigned long> {0, 1, 2};
-```
-
-python-like access: negative indices & slices
-## Element access
-### Positive and negative indices
-Similar to python, Mathématiques allows negative indices
-
-`v[-1] == v[N-1]` == end element
-
-`v[-2] == v[N-2]` == penultimate element
-
-`v[-N] == v[0]`   == first element
-
-
-
-Positive and negative indices
-```C++
-Vector<double> v(range<double>(0, 10));
-const int N = v.size();
-```
-
-**Some expressions with results**
-```C++
-☀ v ➜ Vector<double> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-☀ N ➜ int 11;
-☀ v[0] ➜ double 0;
-☀ v[1] ➜ double 1;
-☀ v[N-1] ➜ double 10;
-☀ v[-1] ➜ double 10;
-☀ v[-2] ➜ double 9;
-☀ v[-N] ➜ double 0;
-```
 
 
 
@@ -398,64 +293,11 @@ Vector<double> v10(range<double>(0, 10));
 ☀ v10[slc(1, -1, 2)] ➜ Vector<double> {1, 3, 5, 7, 9};
 ```
 
-Access subsets of Vector elements
-You can ccess avector elements using a `Vector` of indices or a C++11 `initializer_list` of indices
-## Access vector elements using a `Vector` of indices
-### Element access `Vector[Vector]`
-
-* The index Vector _can be smaller than or greater than or equal to_ the length to the data Vector!
-* The index Vector _can have repeated indices and indices can be in any order_!
-
-
-Access via a Vector of indices
-```C++
-Vector<double> v(linspace<double>(0, 1, 11));
-Vector<size_t> veven(range<size_t>(0, 10, 2));
-Vector<size_t> vodd(range<size_t>(1, 10, 2));
-Vector<size_t> vconst(15, 1);
-```
-
-**The result is**
-```C++
-☀ v ➜ Vector<double> {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
-☀ veven ➜ Vector<unsigned long> {0, 2, 4, 6, 8, 10};
-☀ v[veven] ➜ Vector<double> {0, 0.2, 0.4, 0.6, 0.8, 1};
-☀ v[veven[1]] ➜ double 0.2;
-☀ vodd ➜ Vector<unsigned long> {1, 3, 5, 7, 9};
-☀ v[vodd] ➜ Vector<double> {0.1, 0.3, 0.5, 0.7, 0.9};
-☀ v[vodd[1]] ➜ double 0.3;
-☀ v[vodd[veven[1]]] ➜ double 0.5;
-☀ vconst ➜ Vector<unsigned long> {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-☀ v[vconst] ➜ Vector<double> {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
-```
-
-## Access vector elements using an C++11 `initializer_list` of indices
-### Element access `Vector[initializer_list]`
-
-* The list can be smaller than or greater than or equal to the length to the data Vector.
-* The list can have repeated indices and indices can be in any order!
-
-
-Access via a C++11 initializer_list
-```C++
-Vector<double> v(linspace<double>(0, 1, 11));
-☀ v ➜ {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
-```
-
-**The result is**
-```C++
-☀ v[{0, 4}] ➜ Vector<double> {0, 0.4};
-☀ v[{4, 0, 1, 4}] ➜ Vector<double> {0.4, 0, 0.1, 0.4};
-☀ v[{1, 0, 2}] ➜ Vector<double> {0.1, 0, 0.2};
-☀ v[{4, 3, 2, 1, 0}] ➜ Vector<double> {0.4, 0.3, 0.2, 0.1, 0};
-☀ v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}] ➜ Vector<double> {0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
-```
-
 
 <br>
 
 
 
-| ⇦ <br />[Linear Algebra](../linear-algebra/README.md)  | [Introduction with Examples](../README.md)<br />Indexing, Slicing, Masks, Sorting, etc.<br /><img width=1000/> | ⇨ <br />[Common and Special Mathematical Functions](../math-functions/README.md)   |
+| ⇦ <br />[Linear Algebra](../linear-algebra/README.md)  | [Introduction with Examples](../README.md)<br />Indexing, Masks, Slicing, Sorting, etc.<br /><img width=1000/> | ⇨ <br />[Common and Special Mathematical Functions](../math-functions/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

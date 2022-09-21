@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.013</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.014</h1>](../../../README.md)
 
 <details>
 
@@ -38,7 +38,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.6. _MultiArray Arithmetic and Operators_ <br>
 8.7. [Mixed-Rank & Mixed-Depth Arithmetic](../arithmetic-mixed/README.md)<br>
 8.8. [Linear Algebra](../linear-algebra/README.md)<br>
-8.9. [Indexing, Slicing, Masks, Sorting, etc.](../sort-mask-slice/README.md)<br>
+8.9. [Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
 8.11. [Mutlivariate Calculus](../multi-var-calculus/README.md)<br>
 8.12. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
@@ -158,6 +158,35 @@ Vector<double> v2{ 11, 22, 33 };
 Vector<double> v{ 5, 7, 1 };
 ☀ (v1 < v) && (v < v2) ➜ Vector<bool> {true, true, false};
 ```
+
+<br>
+
+## Logical MutliArray functions: `alltrue`, `anytrue`, `numtrue`, and `findtrue`
+
+* The function `alltrue(v)` returns a `bool`: true if every element of `v` is true, otherwise it returns false
+
+* The function `anytrue(v)` returns a `bool`: true if any element of `v` is true, otherwise it returns false
+
+* The function `numtrue(v)` returns a `size_t` equal to the number of elements of `v` that are true. 
+
+* The function `findtrue(v)` returns a `Vector<size_t>` which contains the indices of the true elements of `v`. 
+
+
+The functions `alltrue`, `anytrue`, `numtrue`, and `findtrue`
+```C++
+Vector<double> v{ 0,1,2,3 };
+
+☀ v ➜ Vector<double> {0, 1, 2, 3};
+☀ (v > 2) ➜ Vector<bool> {false, false, false, true};
+☀ alltrue(v > 2) ➜ bool false;
+☀ alltrue(v > 0) ➜ bool false;
+☀ anytrue(v > 2) ➜ bool true;
+☀ numtrue(v > 2) ➜ unsigned long 1;
+☀ numtrue(v > 0) ➜ unsigned long 3;
+☀ findtrue(v > 2) ➜ Vector<unsigned long> {3};
+☀ findtrue(v > 0) ➜ Vector<unsigned long> {1, 2, 3};
+```
+
 
 <br>
 

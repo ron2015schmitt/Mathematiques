@@ -1,15 +1,8 @@
-## Planned Releases
+## Planned Work
 
-### v0.41 Vector Calculus
-1. `Grid` and `CoordinateGrid` classes
-1. `Interval` and `MultiSet` classes
-1. `CurvilinearCoords` 
-  * 2D Cartesian
-  * 2D Polar
-  * Put grad, and div as static functions inside CurvilinearCoords 
-1. `CurvilinearField` class: inherit from Grid
-1. [2D and 3D Curvilinear Coordinate Systems](topics/coordsystems.md)
 
+### bugs 
+1. `numtrue(!(v > 2))`  does not compile
 
 ### Tensor Fields and Calculus in general coordinates 
 1. contravariant and covariant vectors

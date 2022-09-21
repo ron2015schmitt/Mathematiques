@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.013</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.014</h1>](../../README.md)
 
 <details>
 
@@ -38,7 +38,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../develop
 8.6. [MultiArray Arithmetic and Operators](multiarray-arithmetic/README.md)<br>
 8.7. [Mixed-Rank & Mixed-Depth Arithmetic](arithmetic-mixed/README.md)<br>
 8.8. [Linear Algebra](linear-algebra/README.md)<br>
-8.9. [Indexing, Slicing, Masks, Sorting, etc.](sort-mask-slice/README.md)<br>
+8.9. [Indexing, Masks, Slicing, Sorting, etc.](sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](math-functions/README.md)<br>
 <br>**Calculus**<br>
 8.11. [Mutlivariate Calculus](multi-var-calculus/README.md)<br>

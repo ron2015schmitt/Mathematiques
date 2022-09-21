@@ -103,6 +103,39 @@ int main() {
     GMD_CODE_END();
   }
 
+
+  GMD_VSPACE();
+  GMD_HEADER2("Logical MutliArray functions: `alltrue`, `anytrue`, `numtrue`, and `findtrue`");
+
+  {
+    CR();
+    OUTPUT("* The function `alltrue(v)` returns a `bool`: true if every element of `v` is true, otherwise it returns false");
+    CR();
+    OUTPUT("* The function `anytrue(v)` returns a `bool`: true if any element of `v` is true, otherwise it returns false");
+    CR();
+    OUTPUT("* The function `numtrue(v)` returns a `size_t` equal to the number of elements of `v` that are true. ");
+    CR();
+    OUTPUT("* The function `findtrue(v)` returns a `Vector<size_t>` which contains the indices of the true elements of `v`. ");
+    CR();
+    CR();
+    OUTPUT("The functions `alltrue`, `anytrue`, `numtrue`, and `findtrue`");
+    GMD_CODE_START("C++");
+    ECHO(Vector<double> v{ 0,1,2,3 });
+    CR();
+    ETV(v);
+    ETV((v > 2));
+    ETV(alltrue(v > 2));
+    ETV(alltrue(v > 0));
+    ETV(anytrue(v > 2));
+    ETV(numtrue(v > 2));
+    // ETV(numtrue(!(v > 2)));  // something broken 
+    ETV(numtrue(v > 0));
+    ETV(findtrue(v > 2));
+    ETV(findtrue(v > 0));
+    GMD_CODE_END();
+    CR();
+  }
+
   GMD_VSPACE();
   return 0;
 }
