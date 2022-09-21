@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.008</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.009</h1>](../../../README.md)
 
 <details>
 
@@ -67,7 +67,7 @@ Of course, if you really want row and column vectors, use `Matrix<double,N,1>` a
 | :---: | :---: | :---: | :---: | :---: | 
 | `dot(v, w)` | `v \| w` | inner product | $\mathbf{v} \cdot \mathbf{w} = \displaystyle\sum_{i=1}^{N} v_i w_i$ | both vectors must be of same length | 
 | `tensor_product(v,w)` | `v & w` | outer/tensor product | $\mathbf{v} \mathbf{w} = \left[ v_i w_j \right]$ | none | 
-| `cross(v,w)` | `v ^ w` | cross product | $\mathbf{v} ⨯ \mathbf{w} = \left\{ v_2 w_3 - v_3 w_2, v_3 w_1 - v_1 w_3, v_1 w_2 - v_2 w_1 \right\}$ | N = 3 | 
+| `cross(v,w)` | `v ^ w` | cross product | $\mathbf{v} \times \mathbf{w} = \left(  v_2 w_3 - v_3 w_2, \enspace v_3 w_1 - v_1 w_3, \enspace v_1 w_2 - v_2 w_1 \right)$ | $N = 3$ | 
 | `conj(v)` | `~v` | complex conjugate | $\mathbf{v}^*$ | none | 
 
 Examples:
@@ -92,7 +92,7 @@ Vector<double> w{ 2, 4, -3 };
 | :---: | :---: | :---: | :---: | :---: | 
 | `dot(A, B)` | `A \| B` | inner product | $\mathbf{A} \cdot \mathbf{B} = \displaystyle\sum_{j=1}^{M} A_{ij} B_{jk}$ | $\left. \begin{array}{c} \mathbf{A} = L \!\!\times\!\! M \,\text{matrix} \\ \mathbf{B} = M \!\!\times\!\! N \,\text{matrix} \end{array}  \right.$ | 
 | `tensor_product(A,B)` | `A & B` | outer/tensor product | $\mathbf{A} \mathbf{B} = \left[ A_{ij} B_{kl} \right]$ | none | 
-| `conj(A)` |  | conjugate | $ \left\{ \begin{array}{cc} \mathbf{A} & \mathbf{A} \; \text{real} \\ \mathbf{A}^{*}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
+| `conj(A)` |  | conjugate | $ \left\\{ \begin{array}{cc} \mathbf{A} & \mathbf{A}  \text{real} \\\\ \mathbf{A}^{*}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
 | `transpose(A)` |  | transpose | $ \left\{ \begin{array}{cc} \mathbf{A}^{T} & \mathbf{A} \; \text{real} \\ \mathbf{A}^{T}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
 | `adjoint(A)` | `~A` | adjoint | $ \left\{ \begin{array}{cc} \mathbf{A}^{T} & \mathbf{A} \; \text{real} \\ \mathbf{A}^{\dagger} = \mathbf{A}^{T*}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
 

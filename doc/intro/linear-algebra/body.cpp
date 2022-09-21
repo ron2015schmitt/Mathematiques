@@ -38,8 +38,8 @@ int main() {
   OUT("| `cross(v,w)` ");
   OUT("| `v ^ w` ");
   OUT("| cross product ");
-  OUT("| $\\mathbf{v} ⨯ \\mathbf{w} = \\left\\{ v_2 w_3 - v_3 w_2, v_3 w_1 - v_1 w_3, v_1 w_2 - v_2 w_1 \\right\\}$ ");
-  OUT("| N = 3 | ");
+  OUT("| $\\mathbf{v} \\times \\mathbf{w} = \\left(  v_2 w_3 - v_3 w_2, \\enspace v_3 w_1 - v_1 w_3, \\enspace v_1 w_2 - v_2 w_1 \\right)$ ");
+  OUT("| $N = 3$ | ");
   CR();
 
   OUT("| `conj(v)` ");
@@ -83,7 +83,7 @@ int main() {
   OUT("| `conj(A)` ");
   OUT("|  ");
   OUT("| conjugate ");
-  OUT("| $ \\left\\{ \\begin{array}{cc} \\mathbf{A} & \\mathbf{A} \\; \\text{real} \\\\ \\mathbf{A}^{*}  & \\mathbf{A} \\;  \\text{complex}  \\end{array} \\right. $ ");
+  OUT("| $ \\left\\\\{ \\begin{array}{cc} \\mathbf{A} & \\mathbf{A}  \\text{real} \\\\\\\\ \\mathbf{A}^{*}  & \\mathbf{A} \\;  \\text{complex}  \\end{array} \\right. $ ");
   OUT("| none | ");
   CR();
 
