@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.007</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.008</h1>](../../../README.md)
 
 <details>
 
@@ -58,53 +58,56 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 <br>
 
-## Products: Inner, Outer, and Wedge
+## Inner Product, Outer Product, Transpose
 ### `Vector`
 Keep in mind that in Mathématiques, a `Vector<double>` (aka `MultiArray<double,1>`) is neither a column nor a row vector. Instead vectors `Vector<double>` are denoted as vectors are denoted in physics*.
 Of course, if you really want row and column vectors, use `Matrix<double,N,1>` and `Matrix<double,N,1>` respectively, although this is not necessary. (Refer to the linear algebra notation section below.
 
-| operator | operation | standard notation | rules |
-| :---: | :---: | :---: | :---: | 
-| `v \| w` | inner product | $\braket{\mathbf{v},\mathbf{w}} = \left\{ \begin{array}{cc} \mathbf{v} \cdot \mathbf{w}, & \in \mathbb{R}^N  \\ \mathbf{v}^* \cdot \mathbf{w}, & \in \mathbb{C}^N, \mathbb{Q}^N \end{array} \right.$ | both vectors must be of same length | 
-| `v & w` | outer/tensor product | $\mathbf{v} \mathbf{w} = \left\{ \begin{array}{cc} \mathbf{v} \mathbf{w}, & \in \mathbb{R}^N  \\ \mathbf{v}^*  \mathbf{w}, & \in \mathbb{C}^N, \mathbb{Q}^N \end{array} \right.$ | none | 
-| `v ^ w` | wedge product<sup>🚧</sup> | $\mathbf{v} \wedge \mathbf{w} = \left[ \mathbf{v} \mathbf{w} \right] = \mathbf{v} \mathbf{w} - \mathbf{w} \mathbf{v}$ | none | 
-
-<sup>🚧</sup> wedge product is in progress. It requires completion of anti-symmetric (and anti-hermitian for complex numbers) matrices because the output will be of this type.
+| function | operator form | operation | standard notation | rules |
+| :---: | :---: | :---: | :---: | :---: | 
+| `dot(v, w)` | `v \| w` | inner product | $\mathbf{v} \cdot \mathbf{w} = \displaystyle\sum_{i=1}^{N} v_i w_i$ | both vectors must be of same length | 
+| `tensor_product(v,w)` | `v & w` | outer/tensor product | $\mathbf{v} \mathbf{w} = \left[ v_i w_j \right]$ | none | 
+| `cross(v,w)` | `v ^ w` | cross product | $\mathbf{v} ⨯ \mathbf{w} = \left\{ v_2 w_3 - v_3 w_2, v_3 w_1 - v_1 w_3, v_1 w_2 - v_2 w_1 \right\}$ | N = 3 | 
+| `conj(v)` | `~v` | complex conjugate | $\mathbf{v}^*$ | none | 
 
 Examples:
 
 ```C++
-Vector<double> A{ 1, 2, 3 };
-Vector<double> B{ 2, 4, -3 };
-☀ A|B ➜ double 1;
-☀ A&B ➜ Matrix<double> 
+Vector<double> v{ 1, 2, 3 };
+Vector<double> w{ 2, 4, -3 };
+☀ v | w ➜ double 1;
+☀ v & w ➜ Matrix<double> 
 {
   {2, 4, -3},
   {4, 8, -6},
   {6, 12, -9}
 };
 ```
-### Matrices
 
-| operator | operation | standard notation | rules |
-| :---: | :---: | :---: | :---: | 
-| `A \| B` | inner product | $\braket{\mathbf{A},\mathbf{B}}$ = $\left\{ \begin{array}{cc} \mathbf{A} \cdot \mathbf{B}, & \in \mathbb{R}^N  \\ \mathbf{A}^* \cdot \mathbf{B}, & \in \mathbb{C}^N, \mathbb{Q}^N \end{array} \right.$ | both vectors must be of same length |
-| `A & B` | outer product (tensor product) | $\mathbf{A} \mathbf{B}$ | none | 
-| `A ^ B` | wedge product<sup>🚧</sup> | $\mathbf{A} \wedge \mathbf{B} = \left[ \mathbf{A} \mathbf{B} \right] = \mathbf{A} \mathbf{B} - \mathbf{B} \mathbf{A}$ | none | 
+<br>
 
-<sup>🚧</sup> wedge product is in progress. It requires completion of anti-symmetric (and anti-hermitian for complex numbers) matrices because the output will be of this type.
+### Matrix
+
+| function | operator form | operation | standard notation | rules |
+| :---: | :---: | :---: | :---: | :---: | 
+| `dot(A, B)` | `A \| B` | inner product | $\mathbf{A} \cdot \mathbf{B} = \displaystyle\sum_{j=1}^{M} A_{ij} B_{jk}$ | $\left. \begin{array}{c} \mathbf{A} = L \!\!\times\!\! M \,\text{matrix} \\ \mathbf{B} = M \!\!\times\!\! N \,\text{matrix} \end{array}  \right.$ | 
+| `tensor_product(A,B)` | `A & B` | outer/tensor product | $\mathbf{A} \mathbf{B} = \left[ A_{ij} B_{kl} \right]$ | none | 
+| `conj(A)` |  | conjugate | $ \left\{ \begin{array}{cc} \mathbf{A} & \mathbf{A} \; \text{real} \\ \mathbf{A}^{*}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
+| `transpose(A)` |  | transpose | $ \left\{ \begin{array}{cc} \mathbf{A}^{T} & \mathbf{A} \; \text{real} \\ \mathbf{A}^{T}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
+| `adjoint(A)` | `~A` | adjoint | $ \left\{ \begin{array}{cc} \mathbf{A}^{T} & \mathbf{A} \; \text{real} \\ \mathbf{A}^{\dagger} = \mathbf{A}^{T*}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
+
 
 Examples:
 
 ```C++
 Matrix<double> A{ {1, 2}, {3, 4} };
 Matrix<double> B{ {11, 22}, {33, 44} };
-☀ A|B ➜ Matrix<double> 
+☀ A | B ➜ Matrix<double> 
 {
   {77, 110},
   {165, 242}
 };
-☀ A&B ➜ MultiArray<double, rank=4> 
+☀ A & B ➜ MultiArray<double, rank=4> 
 {
   {
     {
@@ -127,7 +130,97 @@ Matrix<double> B{ {11, 22}, {33, 44} };
     }
   }
 };
+
+☀ conj(A) ➜ Matrix<double> 
+{
+  {1, 2},
+  {3, 4}
+};
+☀ transpose(A) ➜ Matrix<double> 
+{
+  {1, 3},
+  {2, 4}
+};
+☀ ~A ➜ Matrix<double> 
+{
+  {1, 3},
+  {2, 4}
+};
+
+Matrix<std::complex<double>> D{ { 1 + 10i, 2 + 20i }, { 3 + 30i, 4 + 40i } };
+☀ D ➜ Matrix<std::complex<double>> 
+{
+  {(1,10), (2,20)},
+  {(3,30), (4,40)}
+};
+☀ conj(D) ➜ Matrix<std::complex<double>> 
+{
+  {(1,-10), (2,-20)},
+  {(3,-30), (4,-40)}
+};
+☀ transpose(D) ➜ Matrix<std::complex<double>> 
+{
+  {(1,10), (3,30)},
+  {(2,20), (4,40)}
+};
+☀ ~D ➜ Matrix<std::complex<double>> 
+{
+  {(1,-10), (3,-30)},
+  {(2,-20), (4,-40)}
+};
 ```
+
+<br>
+
+### Matrix and Vector
+
+| function | operator form | operation | standard notation | rules |
+| :---: | :---: | :---: | :---: | :---: | 
+| `dot(v, A)` | `v \| A` | inner product | $\mathbf{v} \cdot \mathbf{A} = \displaystyle\sum_{i=1}^{M} v_{i} A_{ij}$ | $\left. \begin{array}{c} \mathbf{v} = \text{length}\, M \,\text{vector} \\ \mathbf{A} = M \!\!\times\!\! N \,\text{matrix} \end{array}  \right.$ | 
+| `dot(A, v)`| `A \| v`| inner product | $\mathbf{A} \cdot \mathbf{v} = \displaystyle\sum_{j=1}^{N}  A_{ij} v_{j}$ | $\left. \begin{array}{c} \mathbf{A} = M \!\!\times\!\! N \,\text{matrix} \\ \mathbf{v} = \text{length}\, N \,\text{vector} \end{array}  \right.$ | 
+| `tensor_product(v, A)` | `v & A` | outer/tensor product | $\mathbf{v} \mathbf{A} = \left[ v_{i} A_{jk} \right]$ | none | 
+| `tensor_product(A, v)` | `A & v` | outer/tensor product | $\mathbf{A} \mathbf{v}  = \left[ A_{jk} v_{l} \right]$ | none | 
+
+
+Examples:
+
+```C++
+Vector<double> v{ 1, 2 };
+Matrix<double> A{ {1, 2}, {3, 4} };
+
+☀ v | A ➜ Vector<double> {7, 10};
+☀ A | v ➜ Vector<double> {5, 11};
+
+☀ v & A ➜ MultiArray<double, rank=3> 
+{
+  {
+    {1, 2},
+    {3, 4}
+  },
+  {
+    {2, 4},
+    {6, 8}
+  }
+};
+☀ A & v ➜ MultiArray<double, rank=3> 
+{
+  {
+    {1, 2},
+    {2, 4}
+  },
+  {
+    {3, 6},
+    {4, 8}
+  }
+};
+
+```
+
+<br>
+
+### General MultiArrays
+
+The above functions are extended to general MultiArrays of any rank.  The transpose is defined by reverse all the indices. 
 
 
 | ⇦ <br />[Mixed-Rank & Mixed-Depth Arithmetic](../arithmetic-mixed/README.md)  | [Introduction with Examples](../README.md)<br />Linear Algebra<br /><img width=1000/> | ⇨ <br />[Sorting, Masks, Slices, etc.](../sort-mask-slice/README.md)   |

@@ -208,3 +208,5 @@ The following attempt at a work-around also doesn't work because the parameters 
       constexpr static int value = 100;
   };
 ```
+
+1. You can in fact overload `operator^` to return `pow`.  However `operator^` has the same precidence as `*`, instead havign higher priority, which will cause errors that are very confusing.  Do NOT do this.

@@ -23,12 +23,13 @@ int main() {
   // using namespace mathq::unit_imaginary;
   // using std::sqrt;
 
-  OUTPUT("C++ supports a wide variety of mathematical functions.");
+  OUTPUT("C++ supports a wide variety of mathematical functions including trig functions, exponentials and logarithms, as well as Bessel functions, Legendre polynomials, the Gamma function and many more.");
   CR();
   OUTPUT("Mathématiques supplements C++ functionality with several more functions.");
 
   CR();
-  OUTPUT("Mathématiques extends many of these functions to complex numbers, imaginary numbers, and quaterions, as well as extending to vectors, matrices, and tensors in a element-wise fashion.");
+  OUTPUT("Mathématiques extends these functions to vectors, matrices, and multiarrays in a element-wise fashion.");
+  OUTPUT("Mathématiques also extends many of these functions to complex numbers, imaginary numbers, and quaterions.");
 
 
   CR();

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.007</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.008</h1>](../../../README.md)
 
 <details>
 
@@ -55,11 +55,12 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-C++ supports a wide variety of mathematical functions.
+C++ supports a wide variety of mathematical functions including trig functions, exponentials and logarithms, as well as Bessel functions, Legendre polynomials, the Gamma function and many more.
 
 Mathématiques supplements C++ functionality with several more functions.
 
-Mathématiques extends many of these functions to complex numbers, imaginary numbers, and quaterions, as well as extending to vectors, matrices, and tensors in a element-wise fashion.
+Mathématiques extends these functions to vectors, matrices, and multiarrays in a element-wise fashion.
+Mathématiques also extends many of these functions to complex numbers, imaginary numbers, and quaterions.
 
 The following are basic mathematical functions for manipulating numbers.
 

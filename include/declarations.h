@@ -407,6 +407,26 @@ namespace mathq {
     Vector<size_t>& findtrue(const ExpressionR<X, Element, Num, depth, rank>& x);
 
 
+
+  namespace exponent_symbols {
+    class Transpose {
+    public:
+    };
+    class Conjugate {
+    public:
+    };
+    class Hermitian {
+    public:
+    };
+
+    constexpr Transpose T;
+    constexpr Conjugate C;
+    constexpr Hermitian H;
+
+  };
+
+
+
 }; // namespace mathq
 
 
