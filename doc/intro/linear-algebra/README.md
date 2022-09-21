@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.010</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.011</h1>](../../../README.md)
 
 <details>
 
@@ -59,9 +59,18 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 <br>
 
 ## Inner Product, Outer Product, Transpose
-### `Vector`
 Keep in mind that in Mathématiques, a `Vector<double>` (aka `MultiArray<double,1>`) is neither a column nor a row vector. Instead vectors `Vector<double>` are denoted as vectors are denoted in physics*.
 Of course, if you really want row and column vectors, use `Matrix<double,N,1>` and `Matrix<double,N,1>` respectively, although this is not necessary. (Refer to the linear algebra notation section below.
+
+<br>
+
+### `Vector`
+| function | operator form | operation | standard notation | requirements |
+| :---: | :---: | :---: | :---: | :---: | 
+| `dot(v, w)` | `v \| w` | inner product | $\mathbf{v} \cdot \mathbf{w} = \displaystyle\sum_{i=1}^{N} v_i w_i$ | vectors must be of same length | 
+| `tensor_product(v,w)` | `v & w` | outer/tensor product | $\mathbf{v} \mathbf{w} = \left[ v_i w_j \right]$ | none | 
+| `cross(v,w)` | `v ^ w` | cross product | $\mathbf{v} \times \mathbf{w} = \left(  v_2 w_3 - v_3 w_2, \enspace v_3 w_1 - v_1 w_3, \enspace v_1 w_2 - v_2 w_1 \right)$ | vectors must be of length $N = 3$ | 
+| `conj(v)` | `~v` | complex conjugate | $\mathbf{v}^*$ | none | 
 
 Examples:
 
@@ -75,7 +84,179 @@ Vector<double> w{ 2, 4, -3 };
   {4, 8, -6},
   {6, 12, -9}
 };
+
+☀ conj(v) ➜ Vector<double> {1, 2, 3};
+☀ transpose(v) ➜ Vector<double> {1, 2, 3};
+☀ ~v ➜ Vector<double> {1, 2, 3};
 ```
+
+<br>
+
+### `Matrix`
+<table>
+<thead>
+<tr>
+<td align="center"><b>function</b></td>
+<td align="center"><b>operator form</b></td>
+<td align="center"><b>operation</b></td>
+<td align="center"><b>standard notation</b></td>
+<td align="center"><b>requirements</b></td>
+</tr>
+</thead>
+<tbody>
+
+<!-- dot product  -->
+<tr>
+<td align="center"> 
+
+```C++
+dot(A, B)
+```
+  
+</td>
+<td align="center"> 
+  
+```C++
+A | B
+```
+  
+</td>
+<td align="center">inner product</td>
+<td align="center">
+   
+$$
+\mathbf{A} \cdot \mathbf{B} = \displaystyle\sum_{j=1}^{M} A_{ij} B_{jk}
+$$
+
+</td>
+<td align="center">
+      
+$$
+\left. \begin{array}{c} \mathbf{A} = L \negmedspace \times  \negmedspace M \text{matrix} \\\\ 
+\mathbf{B} = M  \negmedspace \times  \negmedspace  N \text{matrix} \end{array}  \right.
+$$
+
+</td>
+</tr>
+
+<!-- outer product  -->
+
+<tr>
+<td align="center"> 
+
+```C++
+tensor_product(A,B)
+```
+
+</td>
+<td align="center"> 
+  
+```C++
+A & B
+```
+
+</td>
+<td align="center">outer/tensor product</td>
+<td align="center">
+   
+$$
+\mathbf{A} \mathbf{B} = \left[ A_{ij} B_{kl} \right]
+$$
+
+</td>
+<td align="center">
+none
+</td>
+</tr>
+
+<!-- conjugate  -->
+<tr>
+<td align="center"> 
+
+```C++
+conj(A,B)
+```
+
+</td>
+<td align="center"> 
+  
+
+</td>
+<td align="center">conjugate</td>
+<td align="center">
+   
+$$
+\left\{ \begin{array}{ll} \mathbf{A} & \mathbf{A} \enspace \text{real} \\\\ \mathbf{A}^{*}  & \mathbf{A} \enspace \text{complex}  \end{array} \right. 
+$$
+
+</td>
+<td align="center">
+none
+</td>
+</tr>
+
+<!-- transpose  -->
+<tr>
+<td align="center"> 
+
+```C++
+transpose(A,B)
+```
+
+</td>
+<td align="center"> 
+  
+```C++
+
+```
+
+</td>
+<td align="center">transpose</td>
+<td align="center">
+   
+$$
+\mathbf{A}^T
+$$
+
+</td>
+<td align="center">
+none
+</td>
+</tr>
+
+
+<!-- adjoint  -->
+<tr>
+<td align="center"> 
+
+```C++
+adjoint(A,B)
+```
+
+</td>
+<td align="center"> 
+  
+```C++
+~A
+```
+
+</td>
+<td align="center">adjoint</td>
+<td align="center">
+   
+$$
+\left\{ \begin{array}{ll} \mathbf{A}^T & \mathbf{A} \enspace \text{real} \\\\ \mathbf{A}^{*T}  & \mathbf{A} \enspace \text{complex}  \end{array} \right. 
+$$
+
+</td>
+<td align="center">
+none
+</td>
+</tr>
+
+</tbody>
+</table>
+
 
 Examples:
 
@@ -153,6 +334,155 @@ Matrix<std::complex<double>> D{ { 1 + 10i, 2 + 20i }, { 3 + 30i, 4 + 40i } };
 <br>
 
 ### Matrix and Vector
+<table>
+<thead>
+<tr>
+<td align="center"><b>function</b></td>
+<td align="center"><b>operator form</b></td>
+<td align="center"><b>operation</b></td>
+<td align="center"><b>standard notation</b></td>
+<td align="center"><b>requirements</b></td>
+</tr>
+</thead>
+<tbody>
+
+<!-- dot product  -->
+<tr>
+<td align="center"> 
+
+```C++
+dot(v, A)
+```
+  
+</td>
+<td align="center"> 
+  
+```C++
+v | A
+```
+  
+</td>
+<td align="center">inner product</td>
+<td align="center">
+   
+$$
+\mathbf{v} \cdot \mathbf{A} = \displaystyle\sum_{i=1}^{M} v_{i} A_{ij}
+$$
+
+</td>
+<td align="center">
+      
+$$
+\left. \begin{array}{l} \mathbf{v} \text{ has length}=M   \\
+\mathbf{A} \text{ has dimensions}=M \times N   \end{array} \right. 
+$$
+
+</td>
+</tr>
+
+
+<!-- dot product 2  -->
+<tr>
+<td align="center"> 
+
+```C++
+dot(A, v)
+```
+  
+</td>
+<td align="center"> 
+  
+```C++
+A | v
+```
+  
+</td>
+<td align="center">inner product</td>
+<td align="center">
+   
+$$
+\mathbf{A} \cdot \mathbf{v} = \displaystyle\sum_{j=1}^{N}  A_{ij} v_{j}
+$$
+
+</td>
+<td align="center">
+      
+$$
+\left. \begin{array}{l} \mathbf{A} \text{ has dimensions}=M \times N   \\
+\mathbf{v} \text{ has length}=N \end{array} \right. 
+$$
+
+</td>
+</tr>
+
+
+
+<!-- outer product  -->
+
+<tr>
+<td align="center"> 
+
+```C++
+tensor_product(v, A)
+```
+
+</td>
+<td align="center"> 
+  
+```C++
+v & A
+```
+
+</td>
+<td align="center">outer/tensor product</td>
+<td align="center">
+   
+$$
+\mathbf{v} \mathbf{A} = \left[ v_{i} A_{jk} \right]
+$$
+
+</td>
+<td align="center">
+none
+</td>
+</tr>
+
+
+
+<!-- outer product  -->
+
+<tr>
+<td align="center"> 
+
+```C++
+tensor_product(A,v)
+```
+
+</td>
+<td align="center"> 
+  
+```C++
+A & v
+```
+
+</td>
+<td align="center">outer/tensor product</td>
+<td align="center">
+   
+$$
+\mathbf{A} \mathbf{v} = \left[ A_{ij} v_{k} \right]
+$$
+
+</td>
+<td align="center">
+none
+</td>
+</tr>
+
+
+</tbody>
+</table>
+
 
 
 Examples:

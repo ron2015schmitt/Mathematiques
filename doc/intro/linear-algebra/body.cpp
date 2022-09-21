@@ -1,6 +1,22 @@
 #include "mathq.h"
 
 
+std::string load(std::string fname) {
+  std::ifstream in(fname.data(), std::ios::in);
+  if (!in) {
+    std::cerr << "CANNOT OPEN FILE\n";
+    return std::string("");
+  }
+
+  std::stringstream buffer;
+  buffer << in.rdbuf();
+  in.close();
+
+  // std::cerr << buffer.str();
+  return buffer.str();
+}
+
+
 int main() {
   using namespace mathq;
   using namespace std;
@@ -12,11 +28,14 @@ int main() {
 
   GMD_VSPACE();
   GMD_HEADER2("Inner Product, Outer Product, Transpose");
-  GMD_HEADER3("`Vector`");
 
   OUTPUT("Keep in mind that in Mathématiques, a `Vector<double>` (aka `MultiArray<double,1>`) is neither a column nor a row vector. Instead vectors `Vector<double>` are denoted as vectors are denoted in physics*.");
   OUTPUT("Of course, if you really want row and column vectors, use `Matrix<double,N,1>` and `Matrix<double,N,1>` respectively, although this is not necessary. (Refer to the linear algebra notation section below.");
 
+  GMD_VSPACE();
+  GMD_HEADER3("`Vector`");
+
+  OUTPUT(load("linear-algebra/vector-table.md"));
 
   {
     CR();
@@ -26,11 +45,18 @@ int main() {
     ECHO(Vector<double> w{ 2, 4, -3 });
     ETV(v | w);
     ETV(v & w);
+    CR();
+    ETV(conj(v));
+    ETV(transpose(v));
+    ETV(~v);
     GMD_CODE_END();
   }
 
 
 
+  GMD_VSPACE();
+  GMD_HEADER3("`Matrix`");
+  OUTPUT(load("linear-algebra/matrix-table.md"));
 
   {
     CR();
@@ -56,6 +82,7 @@ int main() {
 
   GMD_VSPACE();
   GMD_HEADER3("Matrix and Vector");
+  OUTPUT(load("linear-algebra/matrix-vector-table.md"));
 
   CR();
 
