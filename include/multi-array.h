@@ -441,6 +441,7 @@ namespace mathq {
       //**********************************************************************
 
 
+
       template <typename... U>
       Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_unsigned<U>...>::value && (sizeof...(args) == rank_value)) {
         size_t k = this->index(args...);
@@ -454,19 +455,24 @@ namespace mathq {
       }
 
 
-
       // negative indexing 
+
       template <typename... U>
       Element& operator()(const U... args) requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
-        Indices inds({ signed_index_to_unsigned_index(args, size())... });
+        Indices inds = Indices::from_signed({ args... }, dims());
+        // OUTPUT("method 2");
+        // ETV({ args... });
+        // ETV(inds);
         return (*this)[inds];
       }
 
       template <typename... U>
       const Element& operator()(const U... args) const requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
-        Indices inds({ signed_index_to_unsigned_index(args, size())... });
+        Indices inds = Indices::from_signed({ args... }, dims());
         return (*this)[inds];
       }
+
+
 
 
       //**********************************************************************
@@ -819,7 +825,7 @@ namespace mathq {
         }
         s += StyledString::get(ANGLE2).get();
         return s;
-      }
+        }
 
 #if MATHQ_DEBUG >= 1
       std::string expression(void) const {
@@ -894,8 +900,8 @@ namespace mathq {
         return (st >> x);
       }
 
-  };
+      };
 
-}; // namespace mathq
+  }; // namespace mathq
 
 #endif

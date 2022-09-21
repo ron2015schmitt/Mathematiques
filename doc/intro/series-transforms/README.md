@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.012</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.013</h1>](../../../README.md)
 
 <details>
 
@@ -83,7 +83,7 @@ FormatDataVector::string_delimeter = ", ";
 FormatDataVector::max_elements_per_line = 5;
 FormatDataVector::string_endofline = "\n    ";
 FormatDataVector::string_closing = "\n}";
-setFormatString<double>(" 6.95319143e-310");
+setFormatString<double>(" 6.95326721e-310");
 FormatData<double>::tens = true;
 ```
 
@@ -281,7 +281,7 @@ FormatDataVector::string_delimeter = ", ";
 FormatDataVector::max_elements_per_line = 5;
 FormatDataVector::string_endofline = " ...\n    ";
 FormatDataVector::string_closing = " ...\n]";
-setFormatString<double>(" 6.95319143e-310");
+setFormatString<double>(" 6.95326721e-310");
 FormatData<double>::tens = false;
 ```
 

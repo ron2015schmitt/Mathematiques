@@ -543,8 +543,6 @@ namespace mathq {
     template <typename... U>
     const Element& operator()(const U... args) const requires (std::conjunction< std::is_integral<U>...>::value&& std::conjunction<std::is_signed<U>...>::value && (sizeof...(args) == rank_value)) {
       Indices inds = Indices::from_signed({ args... }, dims());
-      OUTPUT("method 3");
-      ETV(inds);
       return (*this)[inds];
     }
 
@@ -1024,7 +1022,7 @@ namespace mathq {
 #if MATHQ_DEBUG >= 1
     std::string expression(void) const {
       return "";
-    }
+  }
 #endif
 
     // this is recursive 
@@ -1094,7 +1092,7 @@ namespace mathq {
       return (st >> x);
     }
 
-    };
+};
 
   }; // namespace mathq
 
