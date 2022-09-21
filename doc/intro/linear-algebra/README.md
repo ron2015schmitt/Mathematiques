@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.009</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.010</h1>](../../../README.md)
 
 <details>
 
@@ -63,13 +63,6 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 Keep in mind that in Mathématiques, a `Vector<double>` (aka `MultiArray<double,1>`) is neither a column nor a row vector. Instead vectors `Vector<double>` are denoted as vectors are denoted in physics*.
 Of course, if you really want row and column vectors, use `Matrix<double,N,1>` and `Matrix<double,N,1>` respectively, although this is not necessary. (Refer to the linear algebra notation section below.
 
-| function | operator form | operation | standard notation | rules |
-| :---: | :---: | :---: | :---: | :---: | 
-| `dot(v, w)` | `v \| w` | inner product | $\mathbf{v} \cdot \mathbf{w} = \displaystyle\sum_{i=1}^{N} v_i w_i$ | both vectors must be of same length | 
-| `tensor_product(v,w)` | `v & w` | outer/tensor product | $\mathbf{v} \mathbf{w} = \left[ v_i w_j \right]$ | none | 
-| `cross(v,w)` | `v ^ w` | cross product | $\mathbf{v} \times \mathbf{w} = \left(  v_2 w_3 - v_3 w_2, \enspace v_3 w_1 - v_1 w_3, \enspace v_1 w_2 - v_2 w_1 \right)$ | $N = 3$ | 
-| `conj(v)` | `~v` | complex conjugate | $\mathbf{v}^*$ | none | 
-
 Examples:
 
 ```C++
@@ -83,19 +76,6 @@ Vector<double> w{ 2, 4, -3 };
   {6, 12, -9}
 };
 ```
-
-<br>
-
-### Matrix
-
-| function | operator form | operation | standard notation | rules |
-| :---: | :---: | :---: | :---: | :---: | 
-| `dot(A, B)` | `A \| B` | inner product | $\mathbf{A} \cdot \mathbf{B} = \displaystyle\sum_{j=1}^{M} A_{ij} B_{jk}$ | $\left. \begin{array}{c} \mathbf{A} = L \!\!\times\!\! M \,\text{matrix} \\ \mathbf{B} = M \!\!\times\!\! N \,\text{matrix} \end{array}  \right.$ | 
-| `tensor_product(A,B)` | `A & B` | outer/tensor product | $\mathbf{A} \mathbf{B} = \left[ A_{ij} B_{kl} \right]$ | none | 
-| `conj(A)` |  | conjugate | $ \left\\{ \begin{array}{cc} \mathbf{A} & \mathbf{A}  \text{real} \\\\ \mathbf{A}^{*}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
-| `transpose(A)` |  | transpose | $ \left\{ \begin{array}{cc} \mathbf{A}^{T} & \mathbf{A} \; \text{real} \\ \mathbf{A}^{T}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
-| `adjoint(A)` | `~A` | adjoint | $ \left\{ \begin{array}{cc} \mathbf{A}^{T} & \mathbf{A} \; \text{real} \\ \mathbf{A}^{\dagger} = \mathbf{A}^{T*}  & \mathbf{A} \;  \text{complex}  \end{array} \right. $ | none | 
-
 
 Examples:
 
@@ -173,13 +153,6 @@ Matrix<std::complex<double>> D{ { 1 + 10i, 2 + 20i }, { 3 + 30i, 4 + 40i } };
 <br>
 
 ### Matrix and Vector
-
-| function | operator form | operation | standard notation | rules |
-| :---: | :---: | :---: | :---: | :---: | 
-| `dot(v, A)` | `v \| A` | inner product | $\mathbf{v} \cdot \mathbf{A} = \displaystyle\sum_{i=1}^{M} v_{i} A_{ij}$ | $\left. \begin{array}{c} \mathbf{v} = \text{length}\, M \,\text{vector} \\ \mathbf{A} = M \!\!\times\!\! N \,\text{matrix} \end{array}  \right.$ | 
-| `dot(A, v)`| `A \| v`| inner product | $\mathbf{A} \cdot \mathbf{v} = \displaystyle\sum_{j=1}^{N}  A_{ij} v_{j}$ | $\left. \begin{array}{c} \mathbf{A} = M \!\!\times\!\! N \,\text{matrix} \\ \mathbf{v} = \text{length}\, N \,\text{vector} \end{array}  \right.$ | 
-| `tensor_product(v, A)` | `v & A` | outer/tensor product | $\mathbf{v} \mathbf{A} = \left[ v_{i} A_{jk} \right]$ | none | 
-| `tensor_product(A, v)` | `A & v` | outer/tensor product | $\mathbf{A} \mathbf{v}  = \left[ A_{jk} v_{l} \right]$ | none | 
 
 
 Examples:
