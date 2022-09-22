@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.014</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.015</h1>](../../../README.md)
 
 <details>
 
@@ -55,6 +55,8 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
+Mathématiques currently supports Taylor Series, Maclaurin Series, and Fourier Series.
+
 ## Taylor Series for the Bessel Function J<sub>0</sub>(r)
 We can easily calculate a [Taylor Series](http://mathworld.wolfram.com/TaylorSeries.html) in mathq. As an example, let's calculate the Taylor series for the [Bessel Function of the first kind](http://mathworld.wolfram.com/BesselFunctionoftheFirstKind.html) of order 0, J<sub>0</sub>(r). 
 The first 20 (n=0,1,...19) coefficients for  J<sub>0</sub>(r), are:
@@ -83,7 +85,7 @@ FormatDataVector::string_delimeter = ", ";
 FormatDataVector::max_elements_per_line = 5;
 FormatDataVector::string_endofline = "\n    ";
 FormatDataVector::string_closing = "\n}";
-setFormatString<double>(" 6.95319873e-310");
+setFormatString<double>(" 6.95294805e-310");
 FormatData<double>::tens = true;
 ```
 
@@ -276,13 +278,7 @@ As our example, we'll use the [Clausen functions](http://mathworld.wolfram.com/C
 Set up the output format so that we can copy and paste into Matlab
 ```C++
 using namespace display;
-FormatDataVector::string_opening = "[ ...\n    ";
-FormatDataVector::string_delimeter = ", ";
-FormatDataVector::max_elements_per_line = 5;
-FormatDataVector::string_endofline = " ...\n    ";
-FormatDataVector::string_closing = " ...\n]";
-setFormatString<double>(" 6.95319873e-310");
-FormatData<double>::tens = false;
+set_matlab_var_format();
 ```
 
 Define the coefficient vectors: 

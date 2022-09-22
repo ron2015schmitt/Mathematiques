@@ -1,12 +1,3 @@
-#include <iostream>
-#include <string>
-#include <climits>
-#include <limits>
-#include <stdbool.h>
-#include <typeinfo>
-#include <optional>
-
-
 #include "mathq.h"
 
 inline double fradius2(double x, double y) { return  std::sqrt(x*x + y*y); }

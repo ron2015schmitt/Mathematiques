@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.014</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.015</h1>](../../../README.md)
 
 <details>
 
@@ -126,7 +126,7 @@ Matrix<double> A{ {1,2,3,4},{5,6,7,8} };
 ☀ A(0, -1) ➜ double 4;
 ☀ A(-1, 0) ➜ double 5;
 ```
-### List of indices
+### Lists of indices
 
 * The list can be smaller than or greater than or equal to the length to the data Vector.
 * The list can have repeated indices and indices can be in any order!
@@ -142,7 +142,10 @@ Vector<double> v(linspace<double>(0, 1, 11));
 ☀ v[{4, 3, 2, 1, 0}] ➜ Vector<double> {0.4, 0.3, 0.2, 0.1, 0};
 ☀ v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}] ➜ Vector<double> {0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
 ```
-* This functionality is currently only avaible for vectors.
+🚧 This functionality is currently only available for vectors.
+
+<br>
+
 ## Vector mask access
 * A subset of a vector can be extracted using a boolean-valued vector of the same size.
 * For example `v[v>0]` will return a vector containing only the positive values of v.
@@ -152,58 +155,32 @@ Vector<double> v(linspace<double>(0, 1, 11));
 Using vector masks
 ```C++
 Vector<double> v(range<double>(-10, 10));
-```
 
-**Some expressions with results**
-```C++
 ☀ v ➜ Vector<double> {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 ☀ v > 6 ➜ Vector<bool> {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true};
 ☀ v[(v > 6)] ➜ Vector<double> {7, 8, 9, 10};
 ```
 
-
 Now set all elements that are larger than 6 to 6 (clipping)
 ```C++
 v[(v > 6)] = 6.;
-```
-**The result is**
-```C++
+
 ☀ v ➜ Vector<double> {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6};
 ```
-
 
 Now set all negative elements to zero
 ```C++
 v[(v < 0)] = 0.;
-```
-**The result is**
-```C++
+
 ☀ v ➜ Vector<double> {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6};
 ```
 
+🚧 This functionality is currently only available for vectors.
 
-
-
-Reverse a vector in place.
-```C++
-Vector<double> v(range<double>(0, 10));
-```
-
-**The result is**
-```C++
-☀ v ➜ Vector<double> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-```
-
-```C++
-for (int i = 0; i < v.size()/2; i++) std::swap(v[i], v[-i-1]);
-```
-
-**The result is**
-```C++
-☀ v ➜ Vector<double> {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-```
+<br>
 
 ## Slices via the `slc` function
+Slicing is very useful for numerical code and is a part of Fortran, python, and matlab.
 ### The `(start,end)` slice
 * The form `v[slc(start,end)]` returns a `Vector` with every element from index=start to index=end, stepping by +1.
 
@@ -224,10 +201,7 @@ for (int i = 0; i < v.size()/2; i++) std::swap(v[i], v[-i-1]);
 slice `v[slc(start,end)]`
 ```C++
 Vector<double> v(range<double>(0, 10));
-```
 
-**Some expressions with results**
-```C++
 ☀ v[slc(2, 6)] ➜ Vector<double> {2, 3, 4, 5, 6};
 ☀ v[slc(0, -1)] ➜ Vector<double> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 ☀ v[slc(0, 1)] ➜ Vector<double> {0, 1};
@@ -235,7 +209,6 @@ Vector<double> v(range<double>(0, 10));
 ☀ v[slc(1, 0)] ➜ Vector<double> {};
 ☀ v[slc(-1, 0)] ➜ Vector<double> {};
 ```
-
 ### The `(start,end,step)` slice
 * The form `v[slc(start,end,step)]` returns a `Vector` with every element from index=start to index=end, stepping by step.
 
@@ -256,41 +229,53 @@ Vector<double> v(range<double>(0, 10));
 slice `v[slc(start,end,step)]`
 ```C++
 Vector<double> v0(0);
-Vector<double> v1(1, 0.);
-Vector<double> v2(range<double>(0, 1));
-Vector<double> v3(range<double>(0, 2));
-Vector<double> v4(range<double>(0, 3));
-Vector<double> v10(range<double>(0, 10));
+Vector<double> v4{ 0, 1, 2, 3 };
+Vector<double> v5{ 0, 1, 2, 3, 4 };
 ```
 
-**Some expressions with results**: reverse vectors of various lengths using the same slice
+Reverse vectors of various lengths using the same slice
 ```C++
 ☀ v0[slc(-1, 0, -1)] ➜ Vector<double> {};
-☀ v1[slc(-1, 0, -1)] ➜ Vector<double> {};
-☀ v2[slc(-1, 0, -1)] ➜ Vector<double> {1, 0};
-☀ v3[slc(-1, 0, -1)] ➜ Vector<double> {2, 1, 0};
 ☀ v4[slc(-1, 0, -1)] ➜ Vector<double> {3, 2, 1, 0};
-☀ v10[slc(-1, 0, -1)] ➜ Vector<double> {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+☀ v5[slc(-1, 0, -1)] ➜ Vector<double> {4, 3, 2, 1, 0};
 ```
 
-**Some expressions with results**: get even-index elements of various vectors using the same slice
+Get even-index elements of various vectors using the same slice
 ```C++
 ☀ v0[slc(0, -1, 2)] ➜ Vector<double> {};
-☀ v1[slc(0, -1, 2)] ➜ Vector<double> {0};
-☀ v2[slc(0, -1, 2)] ➜ Vector<double> {0};
-☀ v3[slc(0, -1, 2)] ➜ Vector<double> {0, 2};
 ☀ v4[slc(0, -1, 2)] ➜ Vector<double> {0, 2};
-☀ v10[slc(0, -1, 2)] ➜ Vector<double> {0, 2, 4, 6, 8, 10};
+☀ v5[slc(0, -1, 2)] ➜ Vector<double> {0, 2, 4};
 ```
 
-**Some expressions with results**: get odd-index elements of various vectors using the same slice
+Get odd-index elements of various vectors using the same slice
 ```C++
 ☀ v0[slc(1, -1, 2)] ➜ Vector<double> {};
-☀ v1[slc(1, -1, 2)] ➜ Vector<double> {};
-☀ v2[slc(1, -1, 2)] ➜ Vector<double> {1};
-☀ v3[slc(1, -1, 2)] ➜ Vector<double> {1};
 ☀ v4[slc(1, -1, 2)] ➜ Vector<double> {1, 3};
-☀ v10[slc(1, -1, 2)] ➜ Vector<double> {1, 3, 5, 7, 9};
+☀ v5[slc(1, -1, 2)] ➜ Vector<double> {1, 3};
+```
+
+
+<br>
+
+## Sorting
+### The `sort` method sorts the vector in-place returns a vector with the indices.
+
+
+```C++
+Vector<double> v{ 22, -1, 3, 1, 200, 3, 17, 0 };
+☀ v.sort() ➜ Vector<unsigned long> {1, 7, 3, 2, 5, 6, 0, 4};
+☀ v ➜ Vector<double> {-1, 0, 1, 3, 3, 17, 22, 200};
+```
+
+### the `uniq` function
+* Examples
+
+
+
+```C++
+Vector<double> v{ 22, -1, 3, 1, 200, 3, 17, 0 };
+☀ v.uniq() ➜ Vector<unsigned long> {0, 1, 2, 3, 4, 6, 7};
+☀ v ➜ Vector<double> {22, -1, 3, 1, 200, 17, 0};
 ```
 
 

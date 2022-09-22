@@ -94,7 +94,7 @@ int main() {
 
 
 
-  GMD_HEADER3("List of indices");
+  GMD_HEADER3("Lists of indices");
 
   CR();
   OUTPUT("* The list can be smaller than or greater than or equal to the length to the data Vector.");
@@ -114,12 +114,12 @@ int main() {
     GMD_CODE_END();
   }
 
-  OUTPUT("* This functionality is currently only avaible for vectors.");
+  OUTPUT("🚧 This functionality is currently only available for vectors.");
 
 
 
 
-
+  GMD_VSPACE();
   GMD_HEADER2("Vector mask access");
   OUTPUT("* A subset of a vector can be extracted using a boolean-valued vector of the same size.");
   OUTPUT("* For example `v[v>0]` will return a vector containing only the positive values of v.");
@@ -130,66 +130,37 @@ int main() {
     OUTPUT("Using vector masks");
     GMD_CODE_START("C++");
     ECHO(Vector<double> v(range<double>(-10, 10)));
-    GMD_CODE_END();
     CR();
-
-
-    resultstart2("");
     ETV(v);
     ETV(v > 6);
     ETV(v[(v > 6)]);
-    resultend();
+    GMD_CODE_END();
     CR();
 
     OUTPUT("Now set all elements that are larger than 6 to 6 (clipping)");
     GMD_CODE_START("C++");
     ECHO(v[(v > 6)] = 6.);
-    GMD_CODE_END();
-    resultstart();
+    CR();
     ETV(v);
-    resultend();
+    GMD_CODE_END();
     CR();
 
     OUTPUT("Now set all negative elements to zero");
     GMD_CODE_START("C++");
     ECHO(v[(v < 0)] = 0.);
-    GMD_CODE_END();
-    resultstart();
-    ETV(v);
-    resultend();
     CR();
-
+    ETV(v);
+    GMD_CODE_END();
+    CR();
 
   }
 
+  OUTPUT("🚧 This functionality is currently only available for vectors.");
 
 
-  {
-    CR();
-    CR();
-    OUTPUT("Reverse a vector in place.");
-    GMD_CODE_START("C++");
-    ECHO(Vector<double> v(range<double>(0, 10)));
-    GMD_CODE_END();
-    CR();
-    resultstart();
-    ETV(v);
-    resultend();
-    GMD_CODE_START("C++");
-    ECHO(for (int i = 0; i < v.size()/2; i++) std::swap(v[i], v[-i-1]));
-    GMD_CODE_END();
-    CR();
-    resultstart();
-    ETV(v);
-    resultend();
-  }
-
-
-
-
-
+  GMD_VSPACE();
   GMD_HEADER2("Slices via the `slc` function");
-
+  OUTPUT("Slicing is very useful for numerical code and is a part of Fortran, python, and matlab.");
   GMD_HEADER3("The `(start,end)` slice");
   OUTPUT("* The form `v[slc(start,end)]` returns a `Vector` with every element from index=start to index=end, stepping by +1.\n");
   OUTPUT("* Negative indices are permitted.\n");
@@ -204,17 +175,15 @@ int main() {
     OUTPUT("slice `v[slc(start,end)]`");
     GMD_CODE_START("C++");
     ECHO(Vector<double> v(range<double>(0, 10)));
-    GMD_CODE_END();
     CR();
 
-    resultstart2("");
     ETV(v[slc(2, 6)]);
     ETV(v[slc(0, -1)]);
     ETV(v[slc(0, 1)]);
     ETV(v[slc(-2, -1)]);
     ETV(v[slc(1, 0)]);
     ETV(v[slc(-1, 0)]);
-    resultend();
+    GMD_CODE_END();
   }
 
 
@@ -232,128 +201,62 @@ int main() {
     OUTPUT("slice `v[slc(start,end,step)]`");
     GMD_CODE_START("C++");
     ECHO(Vector<double> v0(0));
-    ECHO(Vector<double> v1(1, 0.));
-    ECHO(Vector<double> v2(range<double>(0, 1)));
-    ECHO(Vector<double> v3(range<double>(0, 2)));
-    ECHO(Vector<double> v4(range<double>(0, 3)));
-    ECHO(Vector<double> v10(range<double>(0, 10)));
+    ECHO(Vector<double> v4{ 0, 1, 2, 3 });
+    ECHO(Vector<double> v5{ 0, 1, 2, 3, 4 });
     GMD_CODE_END();
     CR();
 
-    resultstart2(": reverse vectors of various lengths using the same slice");
+    OUTPUT("Reverse vectors of various lengths using the same slice");
+    GMD_CODE_START("C++");
     ETV(v0[slc(-1, 0, -1)]);
-    ETV(v1[slc(-1, 0, -1)]);
-    ETV(v2[slc(-1, 0, -1)]);
-    ETV(v3[slc(-1, 0, -1)]);
     ETV(v4[slc(-1, 0, -1)]);
-    ETV(v10[slc(-1, 0, -1)]);
-    resultend();
+    ETV(v5[slc(-1, 0, -1)]);
+    GMD_CODE_END();
+    CR();
 
-    resultstart2(": get even-index elements of various vectors using the same slice");
+    OUTPUT("Get even-index elements of various vectors using the same slice");
+    GMD_CODE_START("C++");
     ETV(v0[slc(0, -1, 2)]);
-    ETV(v1[slc(0, -1, 2)]);
-    ETV(v2[slc(0, -1, 2)]);
-    ETV(v3[slc(0, -1, 2)]);
     ETV(v4[slc(0, -1, 2)]);
-    ETV(v10[slc(0, -1, 2)]);
-    resultend();
+    ETV(v5[slc(0, -1, 2)]);
+    GMD_CODE_END();
+    CR();
 
-    resultstart2(": get odd-index elements of various vectors using the same slice");
+    OUTPUT("Get odd-index elements of various vectors using the same slice");
+    GMD_CODE_START("C++");
     ETV(v0[slc(1, -1, 2)]);
-    ETV(v1[slc(1, -1, 2)]);
-    ETV(v2[slc(1, -1, 2)]);
-    ETV(v3[slc(1, -1, 2)]);
     ETV(v4[slc(1, -1, 2)]);
-    ETV(v10[slc(1, -1, 2)]);
-    resultend();
+    ETV(v5[slc(1, -1, 2)]);
+    GMD_CODE_END();
+    CR();
   }
 
+  GMD_VSPACE();
+  GMD_HEADER2("Sorting");
+  GMD_HEADER3("The `sort` method sorts the vector in-place returns a vector with the indices.");
+  {
+    CR();
+    CR();
+    GMD_CODE_START("C++");
+    ECHO(Vector<double> v{ 22, -1, 3, 1, 200, 3, 17, 0 });
+    ETV(v.sort());
+    ETV(v);
+    GMD_CODE_END();
+    CR();
+  }
 
-  // std::cout<<std::endl << "sort x1 in place, using sort(x1)" << std::endl;
-  // sort(x1);
-  // std::cout<<"x1=" << x1<< std::endl;
-
-
-  // x1 = v1;
-  // std::cout<<std::endl<<"x1=" << x1<< std::endl;
-  // std::cout<< "sort x1 in place and store the indices" << std::endl;
-  // Vector<unsigned int> ii(N);
-  // ii = sortwind(x1);
-  // std::cout<<"ii=sortwind(x1)=" << ii<< std::endl;
-  // std::cout<<"x1=" << x1<< std::endl;
-
-
-  // Vector<double> v1(4, "v1");
-
-  // std::cout << "initialize v1" << std::endl;
-  // v1 = range<double>(1, 4);
-  // std::cout << v1 << std::endl<<std::endl;
-
-  // std::cout << "test v1==1 and store in q1" << std::endl;
-  // Vector<bool> q1(4, "q1");
-  // q1 = (v1==1);
-  // std::cout <<"q1="<< q1;
-  // // the "boolalpha" flag allows display of boolean value as true/false
-  // std::cout <<boolalpha;
-  // // redisplay q1
-  // std::cout <<"="<< q1 << std::endl<<std::endl;
-
-  // std::cout << "test v1>=3 and store in q1" << std::endl;
-  // q1 = (v1>=3);
-  // std::cout <<"q1="<< q1<<std::endl<<std::endl;
-
-  // std::cout << "initialize v2" << std::endl;
-  // Vector<double> v2(4, "v2");
-  // double data[4] = { -3.0, 0, 3.0, 10 };
-  // v2 = vcast<double>(data, 4);
-  // std::cout << v2 << std::endl<<std::endl;
-
-  // std::cout << "test v1==v2 and store in q2" << std::endl;
-  // Vector<bool> q2(4, "q2");
-  // q2 = (v1==v2);
-  // std::cout <<"q2="<< q2<<std::endl<<std::endl;
-
-  // std::cout << "logical OR: q3 = q1 || q2" << std::endl;
-  // Vector<bool> q3(4, "q3");
-  // q3 = (q1||q2);
-  // std::cout <<"q3="<< q3<<std::endl<<std::endl;
-
-  // std::cout << "logical AND: q3 = q1 && q2" << std::endl;
-  // q3 = (q1&&q2);
-  // std::cout <<"q3="<< q3<<std::endl<<std::endl;
-
-  // std::cout << "logical NOT: q3 = !q1" << std::endl;
-  // q3 = !q1;
-  // std::cout <<"q3="<< q3<<std::endl<<std::endl;
-
-
-  // std::cout << "count the number of true results in a boolean vector: n=numtrue(q1)" << std::endl;
-  // int n = numtrue(q3);
-  // std::cout <<"n="<< n<<std::endl<<std::endl;
-
-  // std::cout << "find the indices of the true results: j1=findtrue(q1)" << std::endl;
-  // Vector<uint> j1 = findtrue(q1);
-  // std::cout <<"j1="<< j1 <<std::endl<<std::endl;
-
-  // std::cout << "determine if ANY values in a vector are zero: " << std::endl;
-  // bool Q = anytrue(v1==0);
-  // std::cout <<"Q=anytrue(v1==0) = "<< Q <<std::endl<<std::endl;
-  // Q = anytrue(v2==0);
-  // std::cout <<"Q=anytrue(v2==0) = "<< Q <<std::endl<<std::endl;
-
-  // std::cout << "determine if ALL values in a vector are positive: " << std::endl;
-  // Q = alltrue(v1>0);
-  // std::cout <<"Q=alltrue(v1>0) = "<< Q <<std::endl<<std::endl;
-  // Q = alltrue(v2>0);
-  // std::cout <<"Q=alltrue(v2>0) = "<< Q <<std::endl<<std::endl;
-
-  // std::cout << "collect all the negative values in a vector: " << std::endl;
-  // Vector<double> v4(0);
-  // v4.resize() = v1[v1<0];
-  // std::cout <<"v4.resize() = v1[v1<0] = "<< v4 <<std::endl<<std::endl;
-  // v4.resize() = v2[v2<0];
-  // std::cout <<"v4.resize() = v2[v2<0] = "<< v4 <<std::endl<<std::endl;
-
+  GMD_HEADER3("the `uniq` function");
+  OUTPUT("* Examples\n");
+  {
+    CR();
+    CR();
+    GMD_CODE_START("C++");
+    ECHO(Vector<double> v{ 22, -1, 3, 1, 200, 3, 17, 0 });
+    ETV(v.uniq());
+    ETV(v);
+    GMD_CODE_END();
+    CR();
+  }
 
 
 

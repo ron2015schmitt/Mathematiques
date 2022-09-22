@@ -1,12 +1,3 @@
-#include <iostream>
-#include <string>
-#include <climits>
-#include <limits>
-#include <stdbool.h>
-#include <typeinfo>
-#include <optional>
-
-
 #include "mathq.h"
 
 
@@ -19,9 +10,8 @@ int main() {
   CR();
   CR();
 
-  // using namespace mathq::unit_quaternion;
-  // using namespace mathq::unit_imaginary;
-  // using std::sqrt;
+  OUTPUT("Mathématiques currently supports Taylor Series, Maclaurin Series, and Fourier Series.");
+  CR();
 
   GMD_HEADER2("Taylor Series for the Bessel Function J<sub>0</sub>(r)");
   OUTPUT("We can easily calculate a [Taylor Series](http://mathworld.wolfram.com/TaylorSeries.html) in mathq. As an example, let's calculate the Taylor series for the [Bessel Function of the first kind](http://mathworld.wolfram.com/BesselFunctionoftheFirstKind.html) of order 0, J<sub>0</sub>(r). ");
@@ -207,13 +197,7 @@ int main() {
     OUTPUT("Set up the output format so that we can copy and paste into Matlab");
     GMD_CODE_START("C++");
     ECHO(using namespace display);
-    ECHO(FormatDataVector::string_opening = "[ ...\n    ");
-    ECHO(FormatDataVector::string_delimeter = ", ");
-    ECHO(FormatDataVector::max_elements_per_line = 5);
-    ECHO(FormatDataVector::string_endofline = " ...\n    ");
-    ECHO(FormatDataVector::string_closing = " ...\n]");
-    ECHO(setFormatString<double>("% 10.8e"));
-    ECHO(FormatData<double>::tens = false);
+    ECHO(set_matlab_var_format());
     GMD_CODE_END();
     CR();
 
