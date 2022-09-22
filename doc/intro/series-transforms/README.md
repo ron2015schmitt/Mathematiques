@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.016</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.017</h1>](../../../README.md)
 
 <details>
 
@@ -265,7 +265,9 @@ This yields the following plot comparing the Maclaurin series [red dots] to the 
 Calculating a function via Fourier series and plotting the results in Matlab
 ## Fourier Series for the Clausen Functions
 As our example, we'll use the [Clausen functions](http://mathworld.wolfram.com/ClausenFunction.html). The Clausen function of order _n_ has Fourier series: 
-![Clausen Functions](ClausenDefinition.png)
+
+$${\text{Cl}}\_2 (x) \equiv \left\{ \begin{array}{ll}   S_n(x) = \Sigma_{k=1}^{\infty} {\frac{\sin(k x)}{k^n} }   & n \enspace \text{even} \\\\  C_n(x) = \Sigma_{k=1}^{\infty} \frac{\cos(k x)}{k^n}  & n \enspace \text{odd} \end{array} \right.$$
+
 ### Clausen function of order _n=1_
 
 
@@ -342,7 +344,7 @@ plot(t,CL1,'r.',tt,y1)
 The above matlab code calculates the first Clausen function using the equation
 
 
-![Closed form for CL1(t)](ClausenFormula_n1.png)
+$$\text{Cl}_1(x) = -\ln \left| 2 \sin \left(\frac{1}{2} x\right) \right| $$
 
 
 We exclude the end points, 0 and pi, because the function is infinite at these points.
@@ -423,7 +425,7 @@ plot(t,CL2,'r.',tt,y2)
 The above matlab code calculates the second Clausen function using the following integral
 
 
-![Closed form for CL2(t)](ClausenFormula_n2.png)
+$${\text{Cl}}\_2 \left(x\right) = -\int_{0}^{x} {\ln \left| 2 \sin \left(\frac{1}{2} x\right) \right|} dt$$
 
 
 We exclude the end points, 0 and pi, because the integrand is infinite at these points.

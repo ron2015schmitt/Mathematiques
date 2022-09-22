@@ -180,7 +180,9 @@ int main() {
 
   GMD_HEADER2("Fourier Series for the Clausen Functions");
   OUTPUT("As our example, we'll use the [Clausen functions](http://mathworld.wolfram.com/ClausenFunction.html). The Clausen function of order _n_ has Fourier series: ");
-  OUTPUT("![Clausen Functions](ClausenDefinition.png)");
+  CR();
+  OUTPUT("$${\\text{Cl}}\\_2 (x) \\equiv \\left\\{ \\begin{array}{ll}   S_n(x) = \\Sigma_{k=1}^{\\infty} {\\frac{\\sin(k x)}{k^n} }   & n \\enspace \\text{even} \\\\\\\\  C_n(x) = \\Sigma_{k=1}^{\\infty} \\frac{\\cos(k x)}{k^n}  & n \\enspace \\text{odd} \\end{array} \\right.$$");
+  CR();
 
 
   GMD_HEADER3("Clausen function of order _n=1_");
@@ -250,7 +252,7 @@ int main() {
     OUTPUT("The above matlab code calculates the first Clausen function using the equation");
     CR();
     CR();
-    OUTPUT("![Closed form for CL1(t)](ClausenFormula_n1.png)");
+    OUTPUT("$$\\text{Cl}_1(x) = -\\ln \\left| 2 \\sin \\left(\\frac{1}{2} x\\right) \\right| $$");
     CR();
     CR();
 
@@ -328,12 +330,13 @@ int main() {
     OUTPUT("The above matlab code calculates the second Clausen function using the following integral");
     CR();
     CR();
-    OUTPUT("![Closed form for CL2(t)](ClausenFormula_n2.png)");
+    OUTPUT("$${\\text{Cl}}\\_2 \\left(x\\right) = -\\int_{0}^{x} {\\ln \\left| 2 \\sin \\left(\\frac{1}{2} x\\right) \\right|} dt$$");
     CR();
     CR();
 
     OUTPUT("We exclude the end points, 0 and pi, because the integrand is infinite at these points.");
     OUTPUT("This yields the following plot comparing the Fourier series [red dots] to the exact function [solid blue].");
+
 
     OUTPUT("![Fourier Series for CL2(t)](ClausenFourierSeries_n2.png)");
 
