@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.015</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.016</h1>](../../../README.md)
 
 <details>
 
@@ -80,13 +80,7 @@ N[Table[SeriesCoefficient[BesselJ[0,r],{r,0,n}],{n,0,19}]]
 Set up the output format so that we can copy and paste into Mathematica
 ```C++
 using namespace display;
-FormatDataVector::string_opening = "{\n    ";
-FormatDataVector::string_delimeter = ", ";
-FormatDataVector::max_elements_per_line = 5;
-FormatDataVector::string_endofline = "\n    ";
-FormatDataVector::string_closing = "\n}";
-setFormatString<double>(" 6.95294805e-310");
-FormatData<double>::tens = true;
+set_mathematica_var_format();;
 ```
 
 Define the Vector of coefficients: 

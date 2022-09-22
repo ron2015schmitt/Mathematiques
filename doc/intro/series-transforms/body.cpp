@@ -42,13 +42,7 @@ int main() {
     OUTPUT("Set up the output format so that we can copy and paste into Mathematica");
     GMD_CODE_START("C++");
     ECHO(using namespace display);
-    ECHO(FormatDataVector::string_opening = "{\n    ");
-    ECHO(FormatDataVector::string_delimeter = ", ");
-    ECHO(FormatDataVector::max_elements_per_line = 5);
-    ECHO(FormatDataVector::string_endofline = "\n    ");
-    ECHO(FormatDataVector::string_closing = "\n}");
-    ECHO(setFormatString<double>("% 10.8e"));
-    ECHO(FormatData<double>::tens = true);
+    ECHO(set_mathematica_var_format(););
     GMD_CODE_END();
     CR();
 
