@@ -181,7 +181,7 @@ int main() {
   GMD_HEADER2("Fourier Series for the Clausen Functions");
   OUTPUT("As our example, we'll use the [Clausen functions](http://mathworld.wolfram.com/ClausenFunction.html). The Clausen function of order _n_ has Fourier series: ");
   CR();
-  OUTPUT("$${\\text{Cl}}\\_2 (x) \\equiv \\left\\{ \\begin{array}{ll}   S_n(x) = \\Sigma_{k=1}^{\\infty} {\\frac{\\sin(k x)}{k^n} }   & n \\enspace \\text{even} \\\\\\\\  C_n(x) = \\Sigma_{k=1}^{\\infty} \\frac{\\cos(k x)}{k^n}  & n \\enspace \\text{odd} \\end{array} \\right.$$");
+  OUTPUT("$${\\text{Cl}}\\_2 (x) \\equiv \\left\\\\{ \\begin{array}{ll}   S_n(x) = \\Sigma_{k=1}^{\\infty} {\\frac{\\sin(k x)}{k^n} }   & n \\enspace \\text{even} \\\\\\\\  C_n(x) = \\Sigma_{k=1}^{\\infty} \\frac{\\cos(k x)}{k^n}  & n \\enspace \\text{odd} \\end{array} \\right.$$");
   CR();
 
 
