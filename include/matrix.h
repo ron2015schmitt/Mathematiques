@@ -94,8 +94,8 @@ namespace mathq {
     // not explicit: allows use of nested init lists when depth_value > 1
     MultiArray(const InitializerType& var) {
       if constexpr (is_dynamic_value) {
-        auto mysizes = InitializerTrait< InitializerType >::get_size_array(var);
-        resize(Dimensions(mysizes));
+        auto mydim_ints = InitializerTrait< InitializerType >::get_size_array(var);
+        resize(Dimensions(mydim_ints));
       }
       *this = var;
     }
@@ -172,8 +172,8 @@ namespace mathq {
 
     // --------------------- dynamic MultiArray --------------------
 
-    template<bool enable = is_dynamic_value, size_t... mysizes> requires (enable)
-      explicit MultiArray(const MultiArray<Element, rank_value, mysizes...> var) {
+    template<bool enable = is_dynamic_value, size_t... mydim_ints> requires (enable)
+      explicit MultiArray(const MultiArray<Element, rank_value, mydim_ints...> var) {
       this->resize(var.dims());
       *this = var;
     }
@@ -268,7 +268,7 @@ namespace mathq {
     }
 
     //**********************************************************************
-    //                         Rank,Depth,Sizes
+    //                         Rank,Depth,dim_ints
     //**********************************************************************
 
     size_t rank(void) const {
@@ -431,8 +431,8 @@ namespace mathq {
 
 
     Type& resize(const InitializerType& var) {
-      auto mysizes = InitializerTrait< InitializerType >::get_size_array(var);
-      resize(Dimensions(mysizes));
+      auto mydim_ints = InitializerTrait< InitializerType >::get_size_array(var);
+      resize(Dimensions(mydim_ints));
       return *this;
     }
 
@@ -680,9 +680,28 @@ namespace mathq {
     // For this reason, in most cases, its preferred to overload the function vcast()
     // equals functions are included so that derived classes can call these functions
 
+
+
+    template<typename T>
+    Type& operator=(const T& t) {
+      return set_equal_to(t);
+    }
+
+    // template<template<typename> typename T>
+    // Type& operator=(const T<Element>& t) {
+    //   return set_equal_to(t);
+    // }
+
+
+    Type& operator=(const std::initializer_list<Element>& mylist) {
+      return set_equal_to(mylist);
+    }
+
+
+
     // Assign all elements to the same constant value
     template<typename T> requires (std::is_convertible<T, Element>::value)
-      Type& operator=(const T& e) {
+      Type& set_equal_to(const T& e) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = e;
       }
@@ -692,7 +711,7 @@ namespace mathq {
     // set bottom elements to same value
     template <class T = Element>
     typename std::enable_if<!std::is_same<T, NumberType>::value, Type& >::type
-      operator=(const NumberType& d) {
+      set_equal_to(const NumberType& d) {
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
@@ -704,8 +723,8 @@ namespace mathq {
 
     // ------------------------ MultiArray = MultiArray<Element,NE2,NumberType,depth_value> ----------------
 
-    template <size_t... sizes> requires (multi_array_compatibility<rank_value, rank_value, dim_ints..., sizes...>())
-      Type& operator=(const MultiArray<Element, rank_value, sizes...>& v) {
+    template <size_t... dim_ints2> requires (multi_array_compatibility<rank_value, rank_value, dim_ints..., dim_ints2...>())
+      Type& set_equal_to(const MultiArray<Element, rank_value, dim_ints2...>& v) {
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = v[i];
       }
@@ -716,7 +735,7 @@ namespace mathq {
     // ------------------------ MultiArray = ExpressionR ----------------
 
     template <class X>
-    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+    Type& set_equal_to(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
           if (this->size() != x.size()) {
@@ -740,7 +759,7 @@ namespace mathq {
 
     // ------------------------ MultiArray = array[] ----------------
 
-    Type& operator=(const Element array[]) {
+    Type& set_equal_to(const Element array[]) {
       for (size_t i = 0; i < size(); i++) {
         (*this)(i) = array[i];
       }
@@ -750,7 +769,7 @@ namespace mathq {
 
     // ------------------------ MultiArray = list ----------------
 
-    Type& operator=(const std::list<Element>& mylist) {
+    Type& set_equal_to(const std::list<Element>& mylist) {
       size_t i = 0;
       for (typename std::list<Element>::const_iterator it = mylist.begin(); it != mylist.end(); it++) {
         (*this)(i++) = *it;
@@ -761,7 +780,8 @@ namespace mathq {
 
     // ------------------------ MultiArray = initializer_list ----------------
 
-    Type& operator=(const std::initializer_list<Element>& mylist) {
+    Type& set_equal_to(const std::initializer_list<Element>& mylist) {
+      // OUTPUT("set_equal_to(const std::initializer_list<Element>& mylist)");
       size_t k = 0;
       typename std::initializer_list<Element>::iterator it;
       for (it = mylist.begin(); it != mylist.end(); it++, k++) {
@@ -772,7 +792,8 @@ namespace mathq {
 
     // // ------------------------ MultiArray = initializer_list ----------------
 
-    Type& operator=(const typename MakeInitializer<Element, rank_value>::Type& mylist) {
+    Type& set_equal_to(const typename MakeInitializer<Element, rank_value>::Type& mylist) {
+      // OUTPUT("set_equal_to(const typename MakeInitializer<Element, rank_value>::Type& mylist)");
       Indices& inds = *(new Indices(rank_value));
       list_helper<rank_value>(mylist, inds);
       return *this;
@@ -800,7 +821,7 @@ namespace mathq {
 
     // ------------------------ MultiArray = std::vector ----------------
 
-    Type& operator=(const std::vector<Element>& vstd) {
+    Type& set_equal_to(const std::vector<Element>& vstd) {
       for (size_t i = 0; i < size(); i++)
         (*this)(i) = vstd[i];
       return *this;
@@ -810,7 +831,7 @@ namespace mathq {
     // ------------------------ MultiArray = std::array ----------------
 
     template <size_t N>
-    Type& operator=(const std::array<NumberType, N>& varray) {
+    Type& set_equal_to(const std::array<NumberType, N>& varray) {
       for (size_t i = 0; i < size(); i++)
         (*this)(i) = varray[i];
 
@@ -820,7 +841,7 @@ namespace mathq {
 
     // ------------------------ MultiArray = std::valarray ----------------
 
-    Type& operator=(const std::valarray<Element>& varray) {
+    Type& set_equal_to(const std::valarray<Element>& varray) {
       for (size_t i = 0; i < size(); i++)
         (*this)(i) = varray[i];
 
@@ -1022,7 +1043,7 @@ namespace mathq {
 #if MATHQ_DEBUG >= 1
     std::string expression(void) const {
       return "";
-  }
+    }
 #endif
 
     // this is recursive 
@@ -1092,8 +1113,150 @@ namespace mathq {
       return (st >> x);
     }
 
-};
 
-  }; // namespace mathq
+    //**********************************************************************
+    //                      Tensor subclass
+    //**********************************************************************
+
+    template <TensorIndexEnum... enums> requires (sizeof...(enums) == 2)
+      class Tensor;
+
+
+
+  };
+
+
+  template <typename Element, size_t... dim_ints>
+  template <TensorIndexEnum... enums> requires (sizeof...(enums) == 2)
+    class Matrix<Element, dim_ints...>::Tensor : public Matrix<Element, dim_ints...> {
+    public:
+      using Type = Matrix<Element, dim_ints...>::Tensor<enums...>;
+      using ParentType = Matrix<Element, dim_ints...>;
+      constexpr static std::array<TensorIndexEnum, ParentType::rank_value> static_enums_array = { enums... };
+
+
+      //**********************************************************************
+      //                            CONSTRUCTORS 
+      //**********************************************************************
+
+      // Note the following allows user to set L/H Tensor to each other as well as operating on each other
+      // using ParentType::ParentType;
+
+      Tensor(const ParentType& var) {
+        OUTPUT("ParentType copy constr");
+        *this = var;
+      }
+
+      // -------------------  default  --------------------
+      Tensor() {
+      }
+
+      // // --------------------- copy constructor --------------------
+      // template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::L)
+      //   Tensor(const Vector<Element, dim_ints...>::Tensor<TensorIndex::L>& var) {
+      //   // OUTPUT("Tensor copy constr-L");
+      //   *this = var;
+      // }
+      // template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::H)
+      //   Tensor(const Vector<Element, dim_ints...>::Tensor<TensorIndex::H>& var) {
+      //   // OUTPUT("Tensor copy constr-H");
+      //   *this = var;
+      // }
+
+      // ----------------------- initializer_list ---------------------
+      // not explicit: allows use of nested init lists when depth_value > 1
+      Tensor(const InitializerType& var) {
+        if constexpr (is_dynamic_value) {
+          auto mydim_ints = InitializerTrait< InitializerType >::get_size_array(var);
+          resize(Dimensions(mydim_ints));
+        }
+        *this = var;
+      }
+
+
+      //**********************************************************************
+      //                             DESTRUCTOR 
+      //**********************************************************************
+
+      ~Tensor() {
+      }
+
+
+
+      // template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::L)
+      //   inline Element operator()(const Vector<Element, dim_ints...>::Tensor<TensorIndex::H>& vec) {
+      //   return dot(*this, vec);
+      // }
+
+      // template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::H)
+      //   inline Element operator()(const Vector<Element, dim_ints...>::Tensor<TensorIndex::L>& covec) {
+      //   return dot(*this, covec);
+      // }
+
+      //**********************************************************************
+      //                             ASSIGNMENT
+      //**********************************************************************
+
+      template<typename T>
+      inline Type& operator=(const T& rhs) {
+        // ETV(ParentType());
+        ParentType::set_equal_to(rhs);
+        return *this;
+      }
+
+      inline Type& operator=(const Type& rhs) {
+        // OUTPUT("operator= of field");
+        ParentType::set_equal_to(rhs);
+        return *this;
+      }
+
+
+      //**********************************************************************
+      //************************** Text and debugging ************************
+      //**********************************************************************
+
+      // instance classname() method 
+
+      inline std::string classname() const {
+        return ClassName();
+      }
+
+      // static ClassName() method 
+
+      static inline std::string ClassName() {
+        using namespace display;
+        std::stringstream strm;
+        std::string s = ParentType::ClassName();
+        s += "::Tensor";
+        s += StyledString::get(ANGLE1).get();
+        dispval_strm(strm, static_enums_array[0]);
+        s += strm.str();
+        strm.str(std::string());
+        strm.clear();
+        s += StyledString::get(COMMA).get() + " ";
+        dispval_strm(strm, static_enums_array[1]);
+        s += strm.str();
+        s += StyledString::get(ANGLE2).get();
+        return s;
+      }
+
+#if MATHQ_DEBUG>=1
+      std::string expression(void) const {
+        return "";
+      }
+#endif
+
+
+      // stream << operator
+
+      friend std::ostream& operator<<(std::ostream& stream, const Type& v) {
+        using namespace display;
+        return operator<<(stream, static_cast<ParentType>(v));
+      }
+  };
+
+
+
+}; // namespace mathq
 
 #endif

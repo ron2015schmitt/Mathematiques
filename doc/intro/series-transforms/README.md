@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.018</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.019</h1>](../../../README.md)
 
 <details>
 
@@ -266,7 +266,7 @@ Calculating a function via Fourier series and plotting the results in Matlab
 ## Fourier Series for the Clausen Functions
 As our example, we'll use the [Clausen functions](http://mathworld.wolfram.com/ClausenFunction.html). The Clausen function of order _n_ has Fourier series: 
 
-$${\text{Cl}}\_2 (x) \equiv \left\\{ \begin{array}{ll}   S_n(x) = \Sigma_{k=1}^{\infty} {\frac{\sin(k x)}{k^n} }   & n \enspace \text{even} \\\\  C_n(x) = \Sigma_{k=1}^{\infty} \frac{\cos(k x)}{k^n}  & n \enspace \text{odd} \end{array} \right.$$
+$${\text{Cl}}\_n (x) \equiv \left\\{ \begin{array}{ll}   S_n(x) = \Sigma_{k=1}^{\infty} {\frac{\sin(k x)}{k^n} }   & n \enspace \text{even} \\\\  C_n(x) = \Sigma_{k=1}^{\infty} \frac{\cos(k x)}{k^n}  & n \enspace \text{odd} \end{array} \right.$$
 
 ### Clausen function of order _n=1_
 

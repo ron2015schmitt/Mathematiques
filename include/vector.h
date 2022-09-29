@@ -1758,15 +1758,7 @@ namespace mathq {
       static inline std::string ClassName() {
         using namespace display;
         std::stringstream strm;
-        std::string s = "Vector";
-        s += StyledString::get(ANGLE1).get();
-        Element d;
-        s += getTypeName(d);
-        if constexpr (!is_dynamic_value) {
-          s += StyledString::get(COMMA).get();
-          s += std::to_string(N0);
-        }
-        s += StyledString::get(ANGLE2).get();
+        std::string s = ParentType::ClassName();
         s += "::Tensor";
         s += StyledString::get(ANGLE1).get();
         dispval_strm(strm, static_enums_array[0]);
@@ -1787,8 +1779,8 @@ namespace mathq {
       friend std::ostream& operator<<(std::ostream& stream, const Type& v) {
         using namespace display;
         return operator<<(stream, static_cast<ParentType>(v));
-      }
-  };
+  }
+};
 
 
 

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.018</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.019</h1>](../../../README.md)
 
 <details>
 
@@ -53,13 +53,52 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 # 8.14. Tensors
 
+Mathématiques
 
+<br>
 
+## Examples
 Contraction of of simple (non-field) 3D vectors
+### Rank 1: Vectors and Covectors
+```C++
+using namespace mathq::TensorIndex;
+Vector<double, 3>::Tensor<COVARIANT> covec;
+covec = { 1,2,3 };
 ☀ covec ➜ Vector<double,3>::Tensor<L> {1, 2, 3};
+
+Vector<double, 3>::Tensor<CONTRAVARIANT> vec;
+vec = { 3,2,1 };
 ☀ vec ➜ Vector<double,3>::Tensor<H> {3, 2, 1};
+
 ☀ covec(vec) ➜ double 10;
 ☀ vec(covec) ➜ double 10;
+```
+
+<br>
+
+### Rank 2 Tensors and the metric tensor
+```C++
+using namespace mathq::TensorIndex;
+using namespace std::numbers;
+double r = 5;
+double theta = pi/2;
+Matrix<double, 3, 3>::Tensor<L, L> g{ {1, 0, 0}, {0, pow(r,2), 0}, {0, 0 , pow(r*sin(theta),2)} };
+☀ g ➜ Matrix<double, 3⨯3>::Tensor<L, L> 
+{
+  {1, 0, 0},
+  {0, 25, 0},
+  {0, 0, 25}
+};
+
+Matrix<double, 3, 3>::Tensor<H, H> ginv{ {1, 0, 0}, {0, pow(r,-2), 0}, {0, 0 , pow(r*sin(theta),-2)} };
+☀ ginv ➜ Matrix<double, 3⨯3>::Tensor<H, H> 
+{
+  {1, 0, 0},
+  {0, 0.04, 0},
+  {0, 0, 0.04}
+};
+
+```
 
 
 | ⇦ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)  | [Introduction with Examples](../README.md)<br />Tensors<br /><img width=1000/> | ⇨ <br />[Series and transforms](../series-transforms/README.md)   |
