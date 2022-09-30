@@ -1126,6 +1126,9 @@ namespace mathq {
   };
 
 
+
+
+
   template <typename Element, size_t... dim_ints>
   template <TensorIndexEnum... enums> requires (sizeof...(enums) == 2)
     class Matrix<Element, dim_ints...>::Tensor : public Matrix<Element, dim_ints...> {
@@ -1151,17 +1154,11 @@ namespace mathq {
       Tensor() {
       }
 
-      // // --------------------- copy constructor --------------------
-      // template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::L)
-      //   Tensor(const Vector<Element, dim_ints...>::Tensor<TensorIndex::L>& var) {
-      //   // OUTPUT("Tensor copy constr-L");
-      //   *this = var;
-      // }
-      // template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::H)
-      //   Tensor(const Vector<Element, dim_ints...>::Tensor<TensorIndex::H>& var) {
-      //   // OUTPUT("Tensor copy constr-H");
-      //   *this = var;
-      // }
+      // --------------------- copy constructor --------------------
+      Tensor(const Type& var) {
+        // OUTPUT("Tensor copy constr-L");
+        *this = var;
+      }
 
       // ----------------------- initializer_list ---------------------
       // not explicit: allows use of nested init lists when depth_value > 1
@@ -1183,9 +1180,10 @@ namespace mathq {
 
 
 
-      // template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::L)
-      //   inline Element operator()(const Vector<Element, dim_ints...>::Tensor<TensorIndex::H>& vec) {
-      //   return dot(*this, vec);
+      // template <TensorIndexEnum... enums2> requires (val == TensorIndex::L)
+      // inline Element operator()(const typename Vector<Element, static_dims_array[0]>::Tensor<TensorIndex::H>& vec) {
+      //   // return dot(*this, vec);
+      //   return Element();
       // }
 
       // template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::H)
@@ -1253,10 +1251,10 @@ namespace mathq {
         using namespace display;
         return operator<<(stream, static_cast<ParentType>(v));
       }
-  };
+      };
 
 
 
-}; // namespace mathq
+  }; // namespace mathq
 
 #endif

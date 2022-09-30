@@ -219,6 +219,7 @@ namespace mathq {
 
 
 
+
   // Constant
 
   template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())

@@ -687,8 +687,6 @@ namespace mathq {
   // *****************************************************************************************
   // DimensionsTrait
   //
-  // This operates recursively to find the simple number type for type T
-  // We define simple number: as integers, rationals, reals, or subsets thereof.
   // ****************************************************************************************
 
   template <typename T, size_t level = 0>
@@ -712,6 +710,8 @@ namespace mathq {
     using Type = typename std::conditional< level == 0, DimensionsType, DimensionsTrait<Element, level-1> >::type;
 
   };
+
+
 
 
 

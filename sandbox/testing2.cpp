@@ -1,7 +1,3 @@
-#include <vector>
-#include <array>
-
-#define MATHQ_DEBUG 0
 #include "mathq.h"
 
 
@@ -79,7 +75,7 @@ public:
 
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   const double pi = M_PI;
   std::string myname = argv[0];
   using namespace mathq;
@@ -102,7 +98,8 @@ int main(int argc, char *argv[]) {
   if constexpr (3 > 1) {
     int x = 5;
     DISP(x);
-  } else {
+  }
+  else {
     int y = 7;
     DISP(y);
   }
@@ -153,6 +150,13 @@ int main(int argc, char *argv[]) {
   }
 
 
+  {
+    ETV(typename VectorFrom<MultiArray<double, 2, 4, 3>, 0>::Type());
+    ETV(typename VectorFrom<MultiArray<double, 2, 4, 3>, 1>::Type());
+    ETV(typename VectorFrom<MultiArray<double, 2>, 1>::Type());
+    ETV(Matrix<double>::Tensor<TensorIndex::H, TensorIndex::H>());
+    ETV(TensorFrom< Matrix<double>::Tensor<TensorIndex::L, TensorIndex::H>, 0>::Type());
+  }
 
   CR();
   MOUT << "done: " << CREATESTYLE(BOLD).apply(myname) << std::endl;
