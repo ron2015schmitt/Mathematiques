@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.020</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.021</h1>](../../../README.md)
 
 <details>
 
@@ -98,6 +98,11 @@ Matrix<double, 3, 3>::Tensor<H, H> ginv{ {1, 0, 0}, {0, pow(r,-2), 0}, {0, 0 , p
   {0, 0, 0.04}
 };
 
+Vector<double, 3>::Tensor<CONTRAVARIANT> A{ 1,2,3 };
+Vector<double, 3>::Tensor<CONTRAVARIANT> B{ 1,1,1 };
+☀ g(A, B) ➜ double 126;
+☀ g(A, NullType{}) ➜ Vector<double,3>::Tensor<L> {1, 50, 75};
+☀ g(NullType{}, A) ➜ Vector<double,3>::Tensor<L> {1, 50, 75};
 ```
 
 

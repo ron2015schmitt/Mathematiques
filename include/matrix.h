@@ -1137,6 +1137,11 @@ namespace mathq {
       using ParentType = Matrix<Element, dim_ints...>;
       constexpr static std::array<TensorIndexEnum, ParentType::rank_value> static_enums_array = { enums... };
 
+      using Vector1Type = MultiArrayHelper<Element, std::array<size_t, 1>{static_dims_array[0]}>;
+      using Vector2Type = MultiArrayHelper<Element, std::array<size_t, 1>{static_dims_array[1]}>;
+
+      using Slot1Type = typename Vector1Type::Tensor<!static_enums_array[0]>;
+      using Slot2Type = typename Vector2Type::Tensor<!static_enums_array[1]>;
 
       //**********************************************************************
       //                            CONSTRUCTORS 
@@ -1179,17 +1184,33 @@ namespace mathq {
       }
 
 
+      std::array<size_t, 1> test() const {
+        return std::array<size_t, 1>{static_dims_array[0]};
+      }
 
-      // template <TensorIndexEnum... enums2> requires (val == TensorIndex::L)
-      // inline Element operator()(const typename Vector<Element, static_dims_array[0]>::Tensor<TensorIndex::H>& vec) {
-      //   // return dot(*this, vec);
-      //   return Element();
-      // }
+      //TensorFrom< Matrix<double>::Tensor<TensorIndex::L, TensorIndex::H>, 0>::Type
 
-      // template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::H)
-      //   inline Element operator()(const Vector<Element, dim_ints...>::Tensor<TensorIndex::L>& covec) {
-      //   return dot(*this, covec);
-      // }
+      // MultiArrayHelper<Element, std::array<size_t, 1>{static_dims_array[0]}>
+
+      inline Element operator()(const Slot1Type& x1, const Slot2Type& x2) const {
+        return x1 | *this | x2;
+      }
+
+
+      inline auto& operator()(const Slot1Type& x1, const NullType& x2) const {
+        using T = typename Vector1Type::Tensor<static_enums_array[1]>;
+        T& x3 = *(new T);
+        x3 = x1 | *this;
+        return x3;
+      }
+
+      inline auto& operator()(const NullType& x1, const Slot2Type& x2) const {
+        using T = typename Vector2Type::Tensor<static_enums_array[0]>;
+        T& x3 = *(new T);
+        x3 = *this | x2;
+        return x3;
+      }
+
 
       //**********************************************************************
       //                             ASSIGNMENT
@@ -1251,10 +1272,10 @@ namespace mathq {
         using namespace display;
         return operator<<(stream, static_cast<ParentType>(v));
       }
-      };
+  };
 
 
 
-  }; // namespace mathq
+}; // namespace mathq
 
 #endif

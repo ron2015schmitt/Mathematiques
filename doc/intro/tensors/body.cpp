@@ -52,8 +52,15 @@ int main() {
     ETV(ginv);
     CR();
 
+
+    ECHO(Vector<double, 3>::Tensor<CONTRAVARIANT> A{ 1,2,3 });
+    ECHO(Vector<double, 3>::Tensor<CONTRAVARIANT> B{ 1,1,1 });
+    ETV(g(A, B));
+    ETV(g(A, NullType{}));
+    ETV(g(NullType{}, A));
+
     // ETV(covec(vec));
-    // ETV(vec(covec));
+// ETV(vec(covec));
     GMD_CODE_END();
   }
 
