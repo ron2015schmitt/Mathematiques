@@ -154,8 +154,8 @@ int main(int argc, char* argv[]) {
     ETV(typename VectorFrom<MultiArray<double, 2, 4, 3>, 0>::Type());
     ETV(typename VectorFrom<MultiArray<double, 2, 4, 3>, 1>::Type());
     ETV(typename VectorFrom<MultiArray<double, 2>, 1>::Type());
-    ETV(Matrix<double>::Tensor<TensorIndex::H, TensorIndex::H>());
-    ETV(TensorFrom< Matrix<double>::Tensor<TensorIndex::L, TensorIndex::H>, 0>::Type());
+    ETV(Matrix<double>::Tensor<TensorIndex::LH::H, TensorIndex::LH::H>());
+    ETV(TensorFrom< Matrix<double>::Tensor<TensorIndex::LH::L, TensorIndex::LH::H>, 0>::Type());
   }
 
   CR();

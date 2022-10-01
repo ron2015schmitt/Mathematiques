@@ -1188,7 +1188,7 @@ namespace mathq {
         return std::array<size_t, 1>{static_dims_array[0]};
       }
 
-      //TensorFrom< Matrix<double>::Tensor<TensorIndex::L, TensorIndex::H>, 0>::Type
+      //TensorFrom< Matrix<double>::Tensor<TensorIndex::LH::L, TensorIndex::LH::H>, 0>::Type
 
       // MultiArrayHelper<Element, std::array<size_t, 1>{static_dims_array[0]}>
 

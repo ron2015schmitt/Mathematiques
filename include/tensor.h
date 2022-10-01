@@ -19,19 +19,21 @@ namespace mathq {
   // put in a namespace so that the enums don't clash
   namespace TensorIndex {
     enum Type { COVARIANT = false, CONTRAVARIANT = true };
-    constexpr Type L = Type::COVARIANT;
-    constexpr Type H = Type::CONTRAVARIANT;
+    namespace LH {
+      constexpr Type L = Type::COVARIANT;
+      constexpr Type H = Type::CONTRAVARIANT;
+    }
   };
 
   using TensorIndexEnum = TensorIndex::Type;
 
 
   constexpr TensorIndexEnum operator!(TensorIndexEnum x) {
-    if (x == TensorIndex::L) {
-      return TensorIndex::H;
+    if (x == TensorIndex::LH::L) {
+      return TensorIndex::LH::H;
     }
     else {
-      return TensorIndex::L;
+      return TensorIndex::LH::L;
     }
   }
 
@@ -83,10 +85,10 @@ namespace mathq {
 
 
   template <typename Element>
-  using AAA = typename Matrix<Element>::Tensor<TensorIndex::H, TensorIndex::H>;
+  using AAA = typename Matrix<Element>::Tensor<TensorIndex::LH::H, TensorIndex::LH::H>;
 
   template <typename Element>
-  void aaa(const typename Matrix<Element>::Tensor<TensorIndex::H, TensorIndex::H>& x) {
+  void aaa(const typename Matrix<Element>::Tensor<TensorIndex::LH::H, TensorIndex::LH::H>& x) {
 
   }
 
@@ -95,7 +97,7 @@ namespace mathq {
   // public:
   //   // constexpr static std::array<TensorIndexEnum, 2> enum_array = { enums... };
   //   // constexpr static TensorIndexEnum ti = std::get<index>(enum_array);
-  //   using Type = typename Vector<Element>::Tensor<TensorIndex::L>;
+  //   using Type = typename Vector<Element>::Tensor<TensorIndex::LH::L>;
   // };
 
 

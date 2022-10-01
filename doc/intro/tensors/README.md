@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.021</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.022</h1>](../../../README.md)
 
 <details>
 
@@ -53,32 +53,74 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 # 8.14. Tensors
 
-Mathématiques
+## Background
+Mathématiques supports tensors and generalized coordinates. 
+Let $\vec{x}=(x_1,x_2,x_3)$ be Cartesian coordinates for 3D (flat) space.  
+and let $(q_1,q_2,q_3)$ be a set of generalized coordinates.  
+Then the *basis* is given by the vectors.
+$$ \vec{e}_1 \doteq \frac{\partial \vec{x}}{\partial q^1} , \enspace \vec{e}_2 \doteq \frac{\partial \vec{x}}{\partial q^2} , \enspace \vec{e}_3 \doteq \frac{\partial \vec{x}}{\partial q^3} $$
+And the *reciprocal basis* is given by the vectors.
+$$ \vec{e}^1 \doteq \nabla q^1 , \enspace \vec{e}^2 \doteq \nabla q^2 , \enspace \vec{e}^3 \doteq \nabla q^3 $$
+The vectors of the basis and reciprocal basis are mutually orthonormal
+$$ \vec{e}_i \cdot \vec{e}^j = \delta_{ij}$$
+where $\delta_{ij}$ is the [Kroencker delta](https://en.wikipedia.org/wiki/Kronecker_delta) 
 
 <br>
 
-## Examples
-Contraction of of simple (non-field) 3D vectors
-### Rank 1: Vectors and Covectors
+## Rank 1: Contravariant and Covariant Vectors
+### Contravariant Vectors
+A vector written in terms of the basis
+$$ \vec{A} = \sum_{i=1}^{3}  A^i \vec{e}_i $$
+is referred to as contravariant form.  Note that the indices are superscripted or 'high'.
+In Mathématiques a contravariant vector can be declared as follows
 ```C++
-using namespace mathq::TensorIndex;
-Vector<double, 3>::Tensor<COVARIANT> covec;
-covec = { 1,2,3 };
-☀ covec ➜ Vector<double,3>::Tensor<L> {1, 2, 3};
+Vector<double, 3>::Tensor<CONTRAVARIANT> A;
+```
+or
+```C++
+Vector<double, 3>::Tensor<H> A;
+```
+### Covariant Vectors
+A vector written in terms of the basis
+$$ \vec{A} = \sum_{i=1}^{3}  A_i \vec{e}^i $$
+is referred to as covariant form.  Note that the indices are subscripted or 'low'.
+In Mathématiques a covariant vector can be declared as follows
+```C++
+Vector<double, 3>::Tensor<COVARIANT> A;
+```
+or
+```C++
+Vector<double, 3>::Tensor<L> A;
+```
+## Inner product of rank 1 tensors
+From the mutual othonormality of the bases, the inner product of two vectors can be written
+$$ \vec{A} \cdot \vec{B} = A_i B^i$$
+where we have used the [Einstein summation convention](https://en.wikipedia.org/wiki/Einstein_notation).
+Mathématiques uses modern tensor notation, and we write the inner product as either $A(B)$ or $B(A)$.
+```C++
+using namespace mathq::TensorIndex::LH;
+Vector<double, 3>::Tensor<L> A{ 1,2,3 };
+☀ A ➜ Vector<double,3>::Tensor<L> {1, 2, 3};
 
-Vector<double, 3>::Tensor<CONTRAVARIANT> vec;
-vec = { 3,2,1 };
-☀ vec ➜ Vector<double,3>::Tensor<H> {3, 2, 1};
+Vector<double, 3>::Tensor<H> B{ 1,25,25 };
+☀ B ➜ Vector<double,3>::Tensor<H> {1, 25, 25};
 
-☀ covec(vec) ➜ double 10;
-☀ vec(covec) ➜ double 10;
+☀ A(B) ➜ double 126;
+☀ B(A) ➜ double 126;
 ```
 
 <br>
 
 ### Rank 2 Tensors and the metric tensor
+A rank 2 tensor has the same number of elements as a matrix, but now there are four forms: $A_{ij}$, $A_i^{\medspace j}$, $A^i_{\medspace j}$, and $A^{ij}$
+The most important rank 2 tensor is the [metric tensor](https://en.wikipedia.org/wiki/Metric_tensor), $g_{ij}$, which determined by the generalized coordinates used.
+The metric tensor allows the conversion of a contravariant vector into a covariant vector.
+$$ g(V,\cdot) =  g_{ij} V^i  = V_j$$
+It also then allows us to take the inner product of two contravariant vectors
+$$ g(V,W) =  g_{ij} V^i W^j  = V_i W^i$$
+The code for these operations are given below
 ```C++
-using namespace mathq::TensorIndex;
+using namespace mathq::TensorIndex::LH;
 using namespace std::numbers;
 double r = 5;
 double theta = pi/2;
@@ -90,20 +132,22 @@ Matrix<double, 3, 3>::Tensor<L, L> g{ {1, 0, 0}, {0, pow(r,2), 0}, {0, 0 , pow(r
   {0, 0, 25}
 };
 
-Matrix<double, 3, 3>::Tensor<H, H> ginv{ {1, 0, 0}, {0, pow(r,-2), 0}, {0, 0 , pow(r*sin(theta),-2)} };
-☀ ginv ➜ Matrix<double, 3⨯3>::Tensor<H, H> 
-{
-  {1, 0, 0},
-  {0, 0.04, 0},
-  {0, 0, 0.04}
-};
+Vector<double, 3>::Tensor<H> V{ 1,2,3 };
+Vector<double, 3>::Tensor<H> W{ 1,1,1 };
+const NullType o;
 
-Vector<double, 3>::Tensor<CONTRAVARIANT> A{ 1,2,3 };
-Vector<double, 3>::Tensor<CONTRAVARIANT> B{ 1,1,1 };
-☀ g(A, B) ➜ double 126;
-☀ g(A, NullType{}) ➜ Vector<double,3>::Tensor<L> {1, 50, 75};
-☀ g(NullType{}, A) ➜ Vector<double,3>::Tensor<L> {1, 50, 75};
+☀ g(V, o) ➜ Vector<double,3>::Tensor<L> {1, 50, 75};
+☀ g(V, W) ➜ double 126;
+☀ g(o, W) ➜ Vector<double,3>::Tensor<L> {1, 25, 25};
+
+☀ g(V, V) ➜ double 326;
+☀ g(V, o)(V) ➜ double 326;
 ```
+
+<br>
+
+## Tensor Fields and Calculus
+Full support for generalized coordinates (`TensorCoords`) and tensor fields (`TensorField`) is under way.
 
 
 | ⇦ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)  | [Introduction with Examples](../README.md)<br />Tensors<br /><img width=1000/> | ⇨ <br />[Series and transforms](../series-transforms/README.md)   |

@@ -1685,13 +1685,13 @@ namespace mathq {
       }
 
       // --------------------- copy constructor --------------------
-      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::L)
-        Tensor(const Vector<Element, sizes...>::Tensor<TensorIndex::L>& var) {
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::LH::L)
+        Tensor(const Vector<Element, sizes...>::Tensor<TensorIndex::LH::L>& var) {
         // OUTPUT("Tensor copy constr-L");
         *this = var;
       }
-      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::H)
-        Tensor(const Vector<Element, sizes...>::Tensor<TensorIndex::H>& var) {
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::LH::H)
+        Tensor(const Vector<Element, sizes...>::Tensor<TensorIndex::LH::H>& var) {
         // OUTPUT("Tensor copy constr-H");
         *this = var;
       }
@@ -1715,13 +1715,13 @@ namespace mathq {
 
 
 
-      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::L)
-        inline Element operator()(const Vector<Element, sizes...>::Tensor<TensorIndex::H>& vec) {
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::LH::L)
+        inline Element operator()(const Vector<Element, sizes...>::Tensor<TensorIndex::LH::H>& vec) {
         return dot(*this, vec);
       }
 
-      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::H)
-        inline Element operator()(const Vector<Element, sizes...>::Tensor<TensorIndex::L>& covec) {
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::LH::H)
+        inline Element operator()(const Vector<Element, sizes...>::Tensor<TensorIndex::LH::L>& covec) {
         return dot(*this, covec);
       }
 
@@ -1779,8 +1779,8 @@ namespace mathq {
       friend std::ostream& operator<<(std::ostream& stream, const Type& v) {
         using namespace display;
         return operator<<(stream, static_cast<ParentType>(v));
-  }
-};
+      }
+  };
 
 
 
