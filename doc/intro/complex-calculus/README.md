@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.025</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.026</h1>](../../../README.md)
 
 <details>
 
@@ -70,7 +70,7 @@ CurvilinearField - Complex 1D
 ☀ rect.grid_real() ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
 ☀ rect.grid_imag() ➜ Vector<double> {-2, -1, 0, 1, 2};
 ☀ coords ➜ ComplexCoords<double,TimeCoord=0> {
-  vector_index=0, dims=5⨯5
+  
 {
   {-1, -1, -1, -1, -1},
   {-0.5, -0.5, -0.5, -0.5, -0.5},
@@ -78,7 +78,7 @@ CurvilinearField - Complex 1D
   {0.5, 0.5, 0.5, 0.5, 0.5},
   {1, 1, 1, 1, 1}
 }; 
-  vector_index=1, dims=5⨯5
+  
 {
   {-2, -1, 0, 1, 2},
   {-2, -1, 0, 1, 2},
@@ -89,7 +89,7 @@ CurvilinearField - Complex 1D
 }};
 ☀ coords.grid_dims() ➜ Dimensions 5⨯5;
 ☀ IsComplexCoords<decltype(coords)> ➜ bool true;
-☀ coords.x() ➜ MultiArray_RepeatVector<double, rank=2> vector_index=0, dims=5⨯5
+☀ coords.x() ➜ MultiArray_RepeatVector<double, rank=2> 
 {
   {-1, -1, -1, -1, -1},
   {-0.5, -0.5, -0.5, -0.5, -0.5},
@@ -97,7 +97,7 @@ CurvilinearField - Complex 1D
   {0.5, 0.5, 0.5, 0.5, 0.5},
   {1, 1, 1, 1, 1}
 };
-☀ coords.y() ➜ MultiArray_RepeatVector<double, rank=2> vector_index=1, dims=5⨯5
+☀ coords.y() ➜ MultiArray_RepeatVector<double, rank=2> 
 {
   {-2, -1, 0, 1, 2},
   {-2, -1, 0, 1, 2},
@@ -241,7 +241,7 @@ CurvilinearField - Complex 1D with time
     {(1,2), (1,2)}
   }
 };
-☀ coords.t() ➜ MultiArray_RepeatVector<double, rank=3> vector_index=2, dims=5⨯3⨯2
+☀ coords.t() ➜ MultiArray_RepeatVector<double, rank=3> 
 {
   {
     {0, 1},

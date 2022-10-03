@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.025</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.026</h1>](../../../README.md)
 
 <details>
 
@@ -165,7 +165,7 @@ Set the varying index to zero.
 ```C++
 Matrix_RepeatVector<double, 2, 3 > A(0, { 1.1, 2.2 });
 
-☀ A ➜ MultiArray_RepeatVector<double, rank=2, 2⨯3> vector_index=0, dims=2⨯3
+☀ A ➜ MultiArray_RepeatVector<double, rank=2, 2⨯3> 
 {
   {1.1, 1.1, 1.1},
   {2.2, 2.2, 2.2}
@@ -181,7 +181,7 @@ Set the varying index to one.
 ```C++
 Matrix_RepeatVector<double, 2, 3 > A(1, { 1.1, 2.2, 3.3 });
 
-☀ A ➜ MultiArray_RepeatVector<double, rank=2, 2⨯3> vector_index=1, dims=2⨯3
+☀ A ➜ MultiArray_RepeatVector<double, rank=2, 2⨯3> 
 {
   {1.1, 2.2, 3.3},
   {1.1, 2.2, 3.3}

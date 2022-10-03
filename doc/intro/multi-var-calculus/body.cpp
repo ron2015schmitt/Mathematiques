@@ -30,10 +30,10 @@ int main() {
 
     CR();
     ECHO(auto x = f.coordinates[0]);
-    ETV(x);
+    EV(x);
     CR();
     ECHO(f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24);
-    ETV(f);
+    EV(f);
     CR();
     GMD_CODE_END();
     CR();
@@ -56,13 +56,14 @@ int main() {
     ECHO(NumericalFunction<double> g);
     CR();
     ECHO(g = x + 2*f - 4*d(f));
-    ETV(g);
+    EV(g);
     GMD_CODE_END();
     CR();
   }
 
 
 
+  GMD_VSPACE();
   GMD_VSPACE();
   GMD_HEADER2("Specifying the function domain");
 
@@ -78,10 +79,10 @@ int main() {
 
     CR();
     ECHO(auto x = f.coordinates[0]);
-    ETV(x);
+    EV(x);
     CR();
     ECHO(f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24);
-    ETV(f);
+    EV(f);
     CR();
     GMD_CODE_END();
     CR();
@@ -96,10 +97,10 @@ int main() {
 
     CR();
     ECHO(auto x = f.coordinates[0]);
-    ETV(x);
+    EV(x);
     CR();
     ECHO(f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24);
-    ETV(f);
+    EV(f);
     CR();
     GMD_CODE_END();
     CR();
@@ -114,10 +115,10 @@ int main() {
 
     CR();
     ECHO(auto x = f.coordinates[0]);
-    ETV(x);
+    EV(x);
     CR();
     ECHO(f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24);
-    ETV(f);
+    EV(f);
     CR();
     GMD_CODE_END();
     CR();
@@ -127,25 +128,10 @@ int main() {
 
 
   GMD_VSPACE();
-  GMD_HEADER2("Specifying the function target set");
-
-  OUTPUT("The syntax `NumericalFunction<NumberType>` can be used to represent a function of one real variable of type `NumberType`.  This default syntax uses the interval $[0,1]$ for the function domain. ");
-  OUTPUT("With this defintion, we can create a function, e.g. $f(x) = 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6} + \\frac{x^4}{24}$ ");
-
-
-  GMD_VSPACE();
-  GMD_HEADER2("Specifying the function boundary conditions");
-
-  OUTPUT("The syntax `NumericalFunction<NumberType>` can be used to represent a function of one real variable of type `NumberType`.  This default syntax uses the interval $[0,1]$ for the function domain. ");
-  OUTPUT("With this defintion, we can create a function, e.g. $f(x) = 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6} + \\frac{x^4}{24}$ ");
-
-
-
   GMD_VSPACE();
   GMD_HEADER2("Multivariate functions");
 
-  OUTPUT("The syntax `NumericalFunction<NumberType>` can be used to represent a function of one real variable of type `NumberType`.  This default syntax uses the interval $[0,1]$ for the function domain. ");
-  OUTPUT("With this defintion, we can create a function, e.g. $f(x) = 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6} + \\frac{x^4}{24}$ ");
+  OUTPUT("Using the syntax `NumericalFunction<NumberType, N>` can create a function of `N` variables., e.g. $H(p,x) = \\frac{p^2}{2 m} + \\frac{1}{2} k x^2 $ ");
 
 
   {
@@ -154,21 +140,20 @@ int main() {
         Interval<double>::interval(-1,1,5),
         Interval<double>::interval(-10,10,5)
       });
-
+    // Written explciitly in text below so that it is formatted nicely.
     OUTPUT(
       R"TEXT(NumericalFunction<double, 2> H({
   Interval<double>::interval(-1, 1, 5),
   Interval<double>::interval(-10, 10, 5)
 }))TEXT");
     CR();
-    ETV(H);
     ECHO(auto x = H.coordinates[0]);
     ECHO(auto p = H.coordinates[1]);
     ECHO(double m = 2);
     ECHO(double k = 25);
     CR();
-    ETV(x);
-    ETV(p);
+    EV(x);
+    EV(p);
     CR();
 
     // ECHO(H = x);
@@ -181,11 +166,12 @@ int main() {
     // ETV(H);
     // CR();
     ECHO(H = 1/(2*m) * pow(p, 2) + 0.5*k * pow(x, 2));
-    ETV(H);
+    EV(H);
     GMD_CODE_END();
   }
 
 
+  GMD_VSPACE();
   GMD_VSPACE();
   GMD_HEADER2("Time-varying functions");
 
@@ -194,11 +180,36 @@ int main() {
 
 
 
+  GMD_VSPACE();
+  GMD_VSPACE();
+  GMD_HEADER2("Specifying the function target set");
 
+  OUTPUT("In all of the previous examples we used real-valued functions. That is, the function values come from the set of real numbers, $\\mathbb{R}$. ");
+  OUTPUT("The set that a function's values come from is called the *target set* or *codomain*.");
+
+  OUTPUT("The modern definition of a [function](https://en.wikipedia.org/wiki/Function_(mathematics)) is a mapping from a [domain set](https://en.wikipedia.org/wiki/Domain_of_a_function) to a [target/codomain set](https://en.wikipedia.org/wiki/Codomain).");
+  OUTPUT("This definition is written symbolically as");
+  CR();
+  OUTPUT("$$ f\\colon \\text{Domain}\\rightarrow\\text{Target} $$");
+
+
+  GMD_VSPACE();
+  GMD_VSPACE();
+  GMD_HEADER2("Specifying the function boundary conditions");
+
+  OUTPUT("The syntax `NumericalFunction<NumberType>` can be used to represent a function of one real variable of type `NumberType`.  This default syntax uses the interval $[0,1]$ for the function domain. ");
+  OUTPUT("With this defintion, we can create a function, e.g. $f(x) = 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6} + \\frac{x^4}{24}$ ");
+
+
+
+
+
+  GMD_VSPACE();
   GMD_VSPACE();
   GMD_HEADER2("Other functionality");
 
   OUTPUT("Integrals");
+  OUTPUT("2D and 3D meshes. finite elements.");
   OUTPUT("Support for units via [user-defined literals](https://en.cppreference.com/w/cpp/language/user_literal)");
 
 

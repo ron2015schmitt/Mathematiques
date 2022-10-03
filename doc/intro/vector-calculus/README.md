@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.025</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.026</h1>](../../../README.md)
 
 <details>
 
@@ -81,7 +81,7 @@ field0() = -3*x + 2*y;
   {2.5, 3.5, 4.5},
   {1, 2, 3}
 };
-☀ x ➜ MultiArray_RepeatVector<double, rank=2> vector_index=0, dims=5⨯3
+☀ x ➜ MultiArray_RepeatVector<double, rank=2> 
 {
   {-1, -1, -1},
   {-0.5, -0.5, -0.5},
@@ -89,7 +89,7 @@ field0() = -3*x + 2*y;
   {0.5, 0.5, 0.5},
   {1, 1, 1}
 };
-☀ y ➜ MultiArray_RepeatVector<double, rank=2> vector_index=1, dims=5⨯3
+☀ y ➜ MultiArray_RepeatVector<double, rank=2> 
 {
   {2, 2.5, 3},
   {2, 2.5, 3},
@@ -238,7 +238,7 @@ CartesianCoords<double, 2, true> coords({ Interval<double>::interval(-1,1,3), In
 ☀ coords ➜ CartesianCoords<double,Ndims=2,TimeCoord=true> (x=[-1, 1], N=3; y=[-1, 1], N=3; t=[0, 2], N=3);
 ☀ HasTimeCoord<decltype(coords)> ➜ bool true;
 ☀ HasNotTimeCoord<decltype(coords)> ➜ bool false;
-☀ coords[0] ➜ MultiArray_RepeatVector<double, rank=3> vector_index=0, dims=3⨯3⨯3
+☀ coords[0] ➜ MultiArray_RepeatVector<double, rank=3> 
 {
   {
     {-1, -1, -1},
@@ -256,7 +256,7 @@ CartesianCoords<double, 2, true> coords({ Interval<double>::interval(-1,1,3), In
     {1, 1, 1}
   }
 };
-☀ coords.x() ➜ MultiArray_RepeatVector<double, rank=3> vector_index=0, dims=3⨯3⨯3
+☀ coords.x() ➜ MultiArray_RepeatVector<double, rank=3> 
 {
   {
     {-1, -1, -1},
@@ -274,7 +274,7 @@ CartesianCoords<double, 2, true> coords({ Interval<double>::interval(-1,1,3), In
     {1, 1, 1}
   }
 };
-☀ coords[1] ➜ MultiArray_RepeatVector<double, rank=3> vector_index=1, dims=3⨯3⨯3
+☀ coords[1] ➜ MultiArray_RepeatVector<double, rank=3> 
 {
   {
     {-1, -1, -1},
@@ -292,7 +292,7 @@ CartesianCoords<double, 2, true> coords({ Interval<double>::interval(-1,1,3), In
     {1, 1, 1}
   }
 };
-☀ coords.y() ➜ MultiArray_RepeatVector<double, rank=3> vector_index=1, dims=3⨯3⨯3
+☀ coords.y() ➜ MultiArray_RepeatVector<double, rank=3> 
 {
   {
     {-1, -1, -1},
@@ -310,7 +310,7 @@ CartesianCoords<double, 2, true> coords({ Interval<double>::interval(-1,1,3), In
     {1, 1, 1}
   }
 };
-☀ coords[2] ➜ MultiArray_RepeatVector<double, rank=3> vector_index=2, dims=3⨯3⨯3
+☀ coords[2] ➜ MultiArray_RepeatVector<double, rank=3> 
 {
   {
     {0, 1, 2},
@@ -328,7 +328,7 @@ CartesianCoords<double, 2, true> coords({ Interval<double>::interval(-1,1,3), In
     {0, 1, 2}
   }
 };
-☀ coords.t() ➜ MultiArray_RepeatVector<double, rank=3> vector_index=2, dims=3⨯3⨯3
+☀ coords.t() ➜ MultiArray_RepeatVector<double, rank=3> 
 {
   {
     {0, 1, 2},
@@ -588,20 +588,20 @@ PolarCoords<double, false> coords({ Interval<double>::o_interval_c(0,1,3), Inter
 ☀ coords ➜ PolarCoords<double,Ndims=2,TimeCoord=false> (r=(0, 1), N=3; 𝜑=[0, 6.28319], N=5);
 ☀ HasTimeCoord<decltype(coords)> ➜ bool false;
 ☀ HasNotTimeCoord<decltype(coords)> ➜ bool true;
-☀ coords.r() ➜ MultiArray_RepeatVector<double, rank=2> vector_index=0, dims=3⨯5
+☀ coords.r() ➜ MultiArray_RepeatVector<double, rank=2> 
 {
   {0.333333, 0.333333, 0.333333, 0.333333, 0.333333},
   {0.666667, 0.666667, 0.666667, 0.666667, 0.666667},
   {1, 1, 1, 1, 1}
 };
-☀ coords.phi() ➜ MultiArray_RepeatVector<double, rank=2> vector_index=1, dims=3⨯5
+☀ coords.phi() ➜ MultiArray_RepeatVector<double, rank=2> 
 {
   {0, 1.25664, 2.51327, 3.76991, 5.02655},
   {0, 1.25664, 2.51327, 3.76991, 5.02655},
   {0, 1.25664, 2.51327, 3.76991, 5.02655}
 };
 ☀ coords.dims() ➜ Dimensions 2;
-☀ coords.J() ➜ MultiArray_RepeatVector<double, rank=2> vector_index=0, dims=3⨯5
+☀ coords.J() ➜ MultiArray_RepeatVector<double, rank=2> 
 {
   {0.333333, 0.333333, 0.333333, 0.333333, 0.333333},
   {0.666667, 0.666667, 0.666667, 0.666667, 0.666667},
