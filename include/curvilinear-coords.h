@@ -157,6 +157,12 @@ namespace mathq {
       *this = mylist;
     }
 
+    CurvilinearCoords(const std::list<RealDomainWrapper<GridElement>>& mylist) : ParentType() {
+      // OUTPUT("initializer_list<RealDomainWrapper");
+      setup_vector_indices();
+      *this = mylist;
+    }
+
     CurvilinearCoords(const CurvilinearCoords& coords) : ParentType() {
       setup_vector_indices();
       *this = coords;
@@ -369,12 +375,19 @@ namespace mathq {
     // }
 
 
-
-    CartesianCoords() : ParentType() {
+    CartesianCoords() : ParentType(
+      list_of_one_value(
+        mathq::RealDomainWrapper<GridElement>(Interval<GridElement>::interval(0, 1, 5)),
+        total_num_dims
+      )
+    ) {
     }
+
 
     CartesianCoords(const std::initializer_list<mathq::RealDomainWrapper<GridElement>>& mylist) : ParentType(mylist) {
+      std::array a = { mylist };
     }
+
 
     CartesianCoords(const Type& obj) : ParentType(obj) {
     }

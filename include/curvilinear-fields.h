@@ -12,7 +12,7 @@ namespace mathq {
   // NumericalFunction - multivariable scalar function in Cartesian metric
   //
 
-  template <typename GridElement, size_t Ndims, bool TimeCoord, typename TargetElement = GridElement>
+  template <typename GridElement, size_t Ndims = 1, bool TimeCoord = false, typename TargetElement = GridElement>
   using NumericalFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims, TimeCoord>>;
 
   // ***************************************************************************
@@ -41,6 +41,15 @@ namespace mathq {
     using ParentType::set_equal_to;  // needed to find overloaded funcs
 
     const Coords& coordinates;
+
+    CurvilinearField() : CurvilinearField(*(new Coords())) {
+    }
+
+    CurvilinearField(const std::initializer_list<RealDomainWrapper<CoordGridType>>& mylist) : CurvilinearField(*(new Coords(mylist))) {
+    }
+
+
+
 
     CurvilinearField(const Coords& coords) : coordinates(coords) {
       Dimensions d(rank_value);
@@ -210,6 +219,16 @@ namespace mathq {
       return curl(f, nabla);
     }
   };
+
+
+  //
+  // d(f,c) - for scalar f
+  //
+
+  template <typename TargetElement, IsCurvilinear Coords> requires (Coords::total_num_dims == 1)
+    CurvilinearField<TargetElement, 0, Coords> d(const CurvilinearField<TargetElement, 0, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
+    return pd(f, 0, nabla);
+  }
 
   //
   // pd(f,c) - for scalar f

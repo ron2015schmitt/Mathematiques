@@ -136,6 +136,8 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER2("Tensor Fields and Calculus");
   OUTPUT("Full support for generalized coordinates (`TensorCoords`) and tensor fields (`TensorField`) is under way.");
+  OUTPUT("* command to print tensors as 2.35 ∇r + 3.43 ∇θ,  or  ∂x/∂r  etc in Euclidean space or dr and ∂/∂r in riemannian space");
+
 
 
   return 0;

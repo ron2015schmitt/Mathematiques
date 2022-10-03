@@ -3,6 +3,18 @@
 
 ### bugs 
 1. `numtrue(!(v > 2))`  does not compile
+1. `ETV(sin(f));` does not work. f is NumericalFunction
+1. `g = d(sqrt(f))` does nto work for f and g are NumericalFunction
+
+```C++
+    // these compile and work
+    g = x + 2*f - d(f);
+    g = d(f);
+    g = sqrt(f);
+    g = sqrt(d(f));
+
+    g = d(sqrt(f)); // <-- does NOT compile
+```
 
 ### Tensor Fields and Calculus in general coordinates 
 1. contravariant and covariant vectors
@@ -87,6 +99,7 @@
 * each MultiArray should have a dynamic cast to a list
 * need function in display that converts (nested) lists to a string
 * use [std::source_location](https://en.cppreference.com/w/cpp/utility/source_location) in `log` functions
+* optional command to print tensors as 2.35 ∇r + 3.43 ∇θ,  or  ∂x/∂r  etc
 
 
 ### Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary
@@ -213,6 +226,7 @@
     * MArray4Rep
 *  `class` -> `typename` usage in templates?
 
+* units for numbers using [std::chrono](https://en.cppreference.com/w/cpp/chrono/duration) and [user-defined literals](https://en.cppreference.com/w/cpp/language/user_literal). See also Boost.
 * formalize template notation for the following: types with ordering (ints and reals), division algebras, Multiarrays, Tensors
 * refactor `NumberTrait` replacement functionality into a separate class `ReplaceNumber`
 * use https://github.com/cheshirekow/kwargs for named arguments?

@@ -194,6 +194,16 @@
 
 
 //
+// ECHO_W_REPLACE
+//
+// code enclosed in ECHO_W_REPLACE gets executed en bloc after the printing. 
+
+#define ECHO_PREINSERT_CR(s1,...)                                                                                        \
+  MOUT << display::Display::codePrefixStyledString << display::replace_all(stringify(__VA_ARGS__),s1,std::string("\n")+s1) << std::endl; \
+  __VA_ARGS__
+
+
+//
 // ECHO_CODE_W_COMMENT
 //
 // line of code is both executed and printted to MOUT

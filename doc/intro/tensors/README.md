@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.022</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.023</h1>](../../../README.md)
 
 <details>
 
@@ -40,7 +40,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.8. [Linear Algebra](../linear-algebra/README.md)<br>
 8.9. [Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
-8.11. [Mutlivariate Calculus](../multi-var-calculus/README.md)<br>
+8.11. [NumericalFunction](../multi-var-calculus/README.md)<br>
 8.12. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
 8.13. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
 8.14. _Tensors_ <br>
@@ -125,6 +125,7 @@ using namespace std::numbers;
 double r = 5;
 double theta = pi/2;
 Matrix<double, 3, 3>::Tensor<L, L> g{ {1, 0, 0}, {0, pow(r,2), 0}, {0, 0 , pow(r*sin(theta),2)} };
+
 ☀ g ➜ Matrix<double, 3⨯3>::Tensor<L, L> 
 {
   {1, 0, 0},
@@ -148,6 +149,7 @@ const NullType o;
 
 ## Tensor Fields and Calculus
 Full support for generalized coordinates (`TensorCoords`) and tensor fields (`TensorField`) is under way.
+* command to print tensors as 2.35 ∇r + 3.43 ∇θ,  or  ∂x/∂r  etc in Euclidean space or dr and ∂/∂r in riemannian space
 
 
 | ⇦ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)  | [Introduction with Examples](../README.md)<br />Tensors<br /><img width=1000/> | ⇨ <br />[Series and transforms](../series-transforms/README.md)   |

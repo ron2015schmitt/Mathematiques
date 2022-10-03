@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.022</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.023</h1>](../../../README.md)
 
 <details>
 
@@ -40,7 +40,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.8. [Linear Algebra](../linear-algebra/README.md)<br>
 8.9. [Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)<br>
 8.10. _Common and Special Mathematical Functions_ <br>
-8.11. [Mutlivariate Calculus](../multi-var-calculus/README.md)<br>
+8.11. [NumericalFunction](../multi-var-calculus/README.md)<br>
 8.12. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
 8.13. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
 8.14. [Tensors](../tensors/README.md)<br>
@@ -337,6 +337,6 @@ C++ does not have an exponentiation operator.  Instead it provides the [`std::po
 ```
 
 
-| ⇦ <br />[Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)  | [Introduction with Examples](../README.md)<br />Common and Special Mathematical Functions<br /><img width=1000/> | ⇨ <br />[Mutlivariate Calculus](../multi-var-calculus/README.md)   |
+| ⇦ <br />[Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)  | [Introduction with Examples](../README.md)<br />Common and Special Mathematical Functions<br /><img width=1000/> | ⇨ <br />[NumericalFunction](../multi-var-calculus/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

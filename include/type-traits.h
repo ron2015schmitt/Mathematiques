@@ -29,7 +29,6 @@ namespace mathq {
   }
 
 
-  // TODO: change to template<typename T, size_t N, T val>
   template<typename T, size_t N, T val>
   constexpr auto array_of_one_value() {
     std::array<T, N> A;
@@ -39,6 +38,14 @@ namespace mathq {
     return A;
   }
 
+  template<typename T>
+  auto list_of_one_value(const T&& val, const size_t N) {
+    std::list<T> A;
+    for (size_t i = 0; i < N; ++i) {
+      A.push_back(val);
+    }
+    return A;
+  }
 
 
   template<typename T, size_t N>

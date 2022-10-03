@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.022</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.023</h1>](../../README.md)
 
 <details>
 
@@ -41,7 +41,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../develop
 8.9. [Indexing, Masks, Slicing, Sorting, etc.](sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](math-functions/README.md)<br>
 <br>**Calculus**<br>
-8.11. [Mutlivariate Calculus](multi-var-calculus/README.md)<br>
+8.11. [NumericalFunction](multi-var-calculus/README.md)<br>
 8.12. [Calculus on Complex Number Domains](complex-calculus/README.md)<br>
 8.13. [Vector Calculus and Curvilinear Coordinates](vector-calculus/README.md)<br>
 8.14. [Tensors](tensors/README.md)<br>
