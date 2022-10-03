@@ -55,36 +55,36 @@ int main(int argc, char* argv[]) {
 
   CR();
   Vector<double> u = { 2, -1 };
-  DISP(u);
+  EV(u);
   Vector<double> v = { 5, -5 };
-  DISP(v);
+  EV(v);
   Matrix<double> A = { {1, 2}, {3, 4}, {5, 6} };
-  DISP(A);
+  EV(A);
   Vector<double> w = { 2, 1, -2 };
-  DISP(w);
+  EV(w);
   Matrix<double, 2, 2> B = { {10, 20}, {30, 40} };
-  DISP(B);
+  EV(B);
   // when the size is specified, you can also initialize using a flat list
   Matrix<double, 2, 2> C = { -1, -2, -3, -4 };
-  DISP(C);
+  EV(C);
 
   CR();
-  DISP(u + v);
-  DISP(u | v);
+  EV(u + v);
+  EV(u | v);
 
 
   CR();
-  DISP((A | u));
-  DISP((w | A));
+  EV((A | u));
+  EV((w | A));
 
   CR();
-  DISP(B + C);
-  DISP(B | C);
-  DISP(A | B);
-  DISP(C | A.transpose());
+  EV(B + C);
+  EV(B | C);
+  EV(A | B);
+  EV(C | A.transpose());
 
-  DISP(u | (B+C) | v);
-  DISP(u | (2 * A - 1) | (10 * sin(pi / 2 * v) + 5));
+  EV(u | (B+C) | v);
+  EV(u | (2 * A - 1) | (10 * sin(pi / 2 * v) + 5));
 
 
   CR();

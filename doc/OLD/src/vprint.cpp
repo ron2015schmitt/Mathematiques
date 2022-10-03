@@ -33,15 +33,15 @@ int main() {
   OUTPUT("* Practically speaking, this functionality is one of the most useful aspects of Mathématiques.");
 
 
-  // DISP()
+  // EV()
 
-  GMD_HEADER2("The function `DISP(x)`");
+  GMD_HEADER2("The function `EV(x)`");
   CR();CR();
 
-  OUTPUT("The function `DISP(x)` displays both the variable name (or expression) as well as its value, formatted according to the user.   This is an incredibly useful function.");
+  OUTPUT("The function `EV(x)` displays both the variable name (or expression) as well as its value, formatted according to the user.   This is an incredibly useful function.");
   CR();CR();
 
-  EXAMPLE(Nex++, "simple examples of `DISP(x)` usage");
+  EXAMPLE(Nex++, "simple examples of `EV(x)` usage");
   CR();CR();
   OUTPUT("Define and initialize some variables:");
   CR();CR();
@@ -61,15 +61,15 @@ int main() {
   CR();CR();
 
   GMD_CODE_START("C++");
-  OUTPUT("DISP(n);");
-  OUTPUT("DISP(m);");
-  OUTPUT("DISP(x);");
-  OUTPUT("DISP(vals);");
-  OUTPUT("DISP(done);");
-  OUTPUT("DISP(v);");
-  OUTPUT("DISP(str);");
-  OUTPUT("DISP(s);");
-  OUTPUT("DISP(z);");
+  OUTPUT("EV(n);");
+  OUTPUT("EV(m);");
+  OUTPUT("EV(x);");
+  OUTPUT("EV(vals);");
+  OUTPUT("EV(done);");
+  OUTPUT("EV(v);");
+  OUTPUT("EV(str);");
+  OUTPUT("EV(s);");
+  OUTPUT("EV(z);");
   GMD_CODE_END();
 
   CR();CR();
@@ -173,11 +173,11 @@ int main() {
   CR();CR();
 
   GMD_CODE_START("C++");
-  OUTPUT("DISP(n+3);");
-  OUTPUT("DISP(10*x-1);");
-  OUTPUT("DISP(!done);");
-  OUTPUT("DISP( round(10*sin(pi/10*v) + 10) );");
-  OUTPUT("DISP(s+\" tour\");");
+  OUTPUT("EV(n+3);");
+  OUTPUT("EV(10*x-1);");
+  OUTPUT("EV(!done);");
+  OUTPUT("EV( round(10*sin(pi/10*v) + 10) );");
+  OUTPUT("EV(s+\" tour\");");
   GMD_CODE_END();
 
   CR();CR();
@@ -223,7 +223,7 @@ int main() {
   OUTPUT("| `MOUT`  | `ostream` |");
   OUTPUT("| ------------- | ------------- |");
   OUTPUT("| `DISPVAL(x)`  | `dispval_strm(ostream,x)`  |");
-  OUTPUT("| `DISP(x)`  | `DISP_STRM(ostream,x)`  |");
+  OUTPUT("| `EV(x)`  | `DISP_STRM(ostream,x)`  |");
   OUTPUT("| `TLDISP(x)`  | `TDISP_STRM(ostream,x)`  |");
   OUTPUT("| `MDISP(x,y,...)`  | `MDISP_STRM(ostream,x,y,...)`  |");
   CR();CR();
@@ -443,28 +443,28 @@ int main() {
     CR();CR();
     OUTPUT("Default format: `\"(%s, %s)\"`\n");
     GMD_CODE_START("C++");
-    DISP(z);
+    EV(z);
     GMD_CODE_END();
 
     CR();CR();
     OUTPUT("Matlab input format `\"%s + i*%s\"`\n");
     setFormatStringComplex("%s + i*%s");
     GMD_CODE_START("C++");
-    DISP(z);
+    EV(z);
     GMD_CODE_END();
 
     CR();CR();
     OUTPUT("Mathematica input format `\"%s + I*%s\"`\n");
     setFormatStringComplex("%s + I*%s");
     GMD_CODE_START("C++");
-    DISP(z);
+    EV(z);
     GMD_CODE_END();
 
     CR();CR();
     OUTPUT("Matlab output format / C++14 format `\"%s + %si\"`\n");
     setFormatStringComplex("%s + %si");
     GMD_CODE_START("C++");
-    DISP(z);
+    EV(z);
     GMD_CODE_END();
 
     CR();CR();
@@ -474,7 +474,7 @@ int main() {
     GMD_CODE_END();
     OUTPUT("The above statement changes the display of `z` to\n");
     GMD_CODE_START("C++");
-    DISP(z);
+    EV(z);
     GMD_CODE_END();
 
 
@@ -503,7 +503,7 @@ int main() {
     GMD_CODE_END();
     OUTPUT("The default format yields\n");
     GMD_CODE_START("C++");
-    DISP(v);
+    EV(v);
     GMD_CODE_END();
   }
 
@@ -538,7 +538,7 @@ int main() {
     GMD_CODE_END();
     OUTPUT("The Mathematica format yields\n");
     GMD_CODE_START("C++");
-    DISP(v);
+    EV(v);
     GMD_CODE_END();
   }
 
@@ -573,7 +573,7 @@ int main() {
     GMD_CODE_END();
     OUTPUT("The Matlab format yields\n");
     GMD_CODE_START("C++");
-    DISP(v);
+    EV(v);
     GMD_CODE_END();
   }
 

@@ -1,5 +1,5 @@
-Mon Oct  3 14:02:42 EDT 2022
-Mathématiques 0.42.1-alpha.024
+Mon Oct  3 14:04:44 EDT 2022
+Mathématiques 0.42.1-alpha.025
 Description:	Ubuntu 22.04.1 LTS
 g++ (Ubuntu 11.2.0-19ubuntu1) 11.2.0
 g++ -pipe -std=c++20 -O3 -finline-limit=750 -Wfatal-errors -I /home/rs2015/Mathematiques/include 

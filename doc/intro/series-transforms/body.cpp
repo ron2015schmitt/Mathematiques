@@ -24,7 +24,7 @@ int main() {
     Vector<double> J0Coeffs = Vector<double>({ 1.,0.,-0.25,0.,0.015625,0.,-0.000434028,0.,6.78168e-6,0.,-6.78168e-8,0.,4.7095e-10,0.,-2.40281e-12,0.,9.38597e-15,0.,-2.8969e-17,0. });
 
     GMD_CODE_START("C++");
-    DISP(J0Coeffs);
+    EV(J0Coeffs);
     GMD_CODE_END();
 
   }
@@ -76,8 +76,8 @@ int main() {
     OUTPUT("The results `r` and `y` are:");
     CR();
     GMD_CODE_START("Mathematica");
-    DISP(r);
-    DISP(y);
+    EV(r);
+    EV(y);
     GMD_CODE_END();
 
     OUTPUT("Cut and paste the above data for r and y into Mathematica as well as the following commands");
@@ -106,7 +106,7 @@ int main() {
     Vector<double> J0Coeffs = Vector<double>({ -0.177597,0.327579,0.0560405,-0.0561487,-0.00170739,0.00252021,0.0000112022,-0.000053795,2.1333e-7,6.7811e-7,-4.88572e-9,-5.6642e-9,4.80096e-11,3.37094e-11,-2.99711e-13,-1.50298e-13,1.33856e-15,5.20979e-16,-4.54744e-18,-1.44449e-18 });
 
     GMD_CODE_START("C++");
-    DISP(J0Coeffs);
+    EV(J0Coeffs);
     GMD_CODE_END();
 
   }
@@ -157,8 +157,8 @@ int main() {
     OUTPUT("The results `r` and `y` are:");
     CR();
     GMD_CODE_START("Mathematica");
-    DISP(r);
-    DISP(y);
+    EV(r);
+    EV(y);
     GMD_CODE_END();
 
     OUTPUT("Cut and paste the above data for r and y into Mathematica as well as the following commands");
@@ -235,8 +235,8 @@ int main() {
     OUTPUT("The results `t` and `CL1` are:");
     CR();
     GMD_CODE_START("Matlab");
-    DISP(t);
-    DISP(CL1);
+    EV(t);
+    EV(CL1);
     GMD_CODE_END();
 
     OUTPUT("Cut and paste the above data for `t` and `CL1` into Matlab as well as the following commands");
@@ -313,8 +313,8 @@ int main() {
     OUTPUT("The results `t` and `CL2` are:");
     CR();
     GMD_CODE_START("Matlab");
-    DISP(t);
-    DISP(CL2);
+    EV(t);
+    EV(CL2);
     GMD_CODE_END();
 
     OUTPUT("Cut and paste the above data for t and CL2 into Matlab as well as the following commands.");

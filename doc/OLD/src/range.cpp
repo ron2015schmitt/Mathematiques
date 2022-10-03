@@ -33,8 +33,8 @@ int main() {
   CR();
   EXAMPLE(Nex++, "Increasing sequences using `range`");
   GMD_CODE_START("C++");
-  DISP(range<int>(1, 10));
-  DISP(range<double>(-3, 3));
+  EV(range<int>(1, 10));
+  EV(range<double>(-3, 3));
   GMD_CODE_END();
 
   GMD_HEADER3("Decreasing Sequences");
@@ -42,7 +42,7 @@ int main() {
   CR();
   EXAMPLE(Nex++, "Decreasing sequence using `range`");
   GMD_CODE_START("C++");
-  DISP(range<int>(10, 0));
+  EV(range<int>(10, 0));
   GMD_CODE_END();
 
 
@@ -52,8 +52,8 @@ int main() {
   CR();
   EXAMPLE(Nex++, "Floating point sequences using `range`");
   GMD_CODE_START("C++");
-  DISP(range<double>(1.5, 5.5));
-  DISP(range<double>(5.5, 1.5));
+  EV(range<double>(1.5, 5.5));
+  EV(range<double>(5.5, 1.5));
   GMD_CODE_END();
 
   GMD_HEADER3("Arbitrary stride");
@@ -64,8 +64,8 @@ int main() {
   CR();
   EXAMPLE(Nex++, "Seqeunces of different strides using `range`");
   GMD_CODE_START("C++");
-  DISP(range<int>(2, 10, 2));
-  DISP(range<double>(0, 10, 0.5));
+  EV(range<int>(2, 10, 2));
+  EV(range<double>(0, 10, 0.5));
   GMD_CODE_END();
 
   GMD_HEADER3("The end point isn't always included");
@@ -79,8 +79,8 @@ int main() {
   CR();
   EXAMPLE(Nex++, "End point is not included in certain cases");
   GMD_CODE_START("C++");
-  DISP(range<int>(0, 5, 2));
-  DISP(range<double>(1, 3.5));
+  EV(range<int>(0, 5, 2));
+  EV(range<double>(1, 3.5));
   GMD_CODE_END();
 
 

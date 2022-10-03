@@ -69,10 +69,10 @@ int main() {
 
 
   GMD_CODE_START("C++");
-  DISP(complex(1.0, 1.0) + complex(2.0, 4.0));
-  DISP(complex(1.0, 1.0) - complex(2.0, 4.0));
-  DISP(complex(1.0, 1.0) * complex(2.0, 4.0));
-  DISP(complex(1.0, 1.0) / complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) + complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) - complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) * complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) / complex(2.0, 4.0));
   GMD_CODE_END();
 
 
@@ -82,7 +82,7 @@ int main() {
   OUTPUT("C++ does not have an exponentiation operator.  Instead it provides the [```std::pow```](https://en.cppreference.com/w/cpp/numeric/complex/div) function");
 
   GMD_CODE_START("C++");
-  DISP(pow(complex(1.0, 1.0), complex(2.0, 4.0)));
+  EV(pow(complex(1.0, 1.0), complex(2.0, 4.0)));
   GMD_CODE_END();
 
   OUTPUT("\n<br>\n");
@@ -101,11 +101,11 @@ int main() {
   OUTPUT("Examples:\n");
   GMD_CODE_START("C++");
   CR();
-  DISP(complex(1.0, 1.0) == complex(1.0, 1.0));
-  DISP(complex(1.0, 1.0) != complex(1.0, 1.0));
+  EV(complex(1.0, 1.0) == complex(1.0, 1.0));
+  EV(complex(1.0, 1.0) != complex(1.0, 1.0));
   CR();
-  DISP(complex(1.0, 1.0) == complex(2.0, 4.0));
-  DISP(complex(1.0, 1.0) != complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) == complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) != complex(2.0, 4.0));
   GMD_CODE_END();
 
 

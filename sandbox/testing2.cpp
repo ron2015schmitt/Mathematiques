@@ -97,11 +97,11 @@ int main(int argc, char* argv[]) {
 
   if constexpr (3 > 1) {
     int x = 5;
-    DISP(x);
+    EV(x);
   }
   else {
     int y = 7;
-    DISP(y);
+    EV(y);
   }
 
 
@@ -113,8 +113,8 @@ int main(int argc, char* argv[]) {
   TLDISP(x);
   TLDISP(y);
 
-  DISP(has_helloworld<Hello>::value);
-  DISP(has_helloworld<Generic>::value);
+  EV(has_helloworld<Hello>::value);
+  EV(has_helloworld<Generic>::value);
 
   {
     Vector<double, 3> v;

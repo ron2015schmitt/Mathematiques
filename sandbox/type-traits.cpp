@@ -78,14 +78,14 @@ int main(int argc, char* argv[]) {
 
   cout << "NumberTrait" << std::endl;
   // ETV(NumberTrait<NullType>::depth());    // causes compile error
-  DISP(NumberTrait<int>::depth());
-  DISP(NumberTrait<double>::depth());
-  DISP(NumberTrait<std::complex<double>>::depth());
-  // DISP(NumberTrait<std::complex<Vector<bool>>>::depth());
-  DISP(NumberTrait<Vector<double>>::depth());
-  DISP(NumberTrait<Vector<std::complex<double>>>::depth());
-  DISP(NumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::depth());
-  DISP(NumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::depth());
+  EV(NumberTrait<int>::depth());
+  EV(NumberTrait<double>::depth());
+  EV(NumberTrait<std::complex<double>>::depth());
+  // EV(NumberTrait<std::complex<Vector<bool>>>::depth());
+  EV(NumberTrait<Vector<double>>::depth());
+  EV(NumberTrait<Vector<std::complex<double>>>::depth());
+  EV(NumberTrait<ExpressionR<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::depth());
+  EV(NumberTrait<ExpressionRW<Vector<std::complex<double>>, std::complex<double>, double, 1, 1>>::depth());
   cout << std::endl;
 
 

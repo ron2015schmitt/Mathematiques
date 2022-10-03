@@ -44,28 +44,28 @@ int main() {
   {
     GMD_CODE_START("C++");
     ECHO(Vector<double, 100> v);
-    DISP(sizeof(v)/sizeof(double));
+    EV(sizeof(v)/sizeof(double));
     GMD_CODE_END();
   }
 
   {
     GMD_CODE_START("C++");
     ECHO(Matrix<double, 10, 10> A);
-    DISP(sizeof(A)/sizeof(double));
+    EV(sizeof(A)/sizeof(double));
     GMD_CODE_END();
   }
 
   {
     GMD_CODE_START("C++");
     ECHO(Vector<std::complex<double>, 100> v);
-    DISP(sizeof(v)/sizeof(double));
+    EV(sizeof(v)/sizeof(double));
     GMD_CODE_END();
   }
 
   {
     GMD_CODE_START("C++");
     ECHO(Vector<Vector<double, 3>, 100> v);
-    DISP(sizeof(v)/sizeof(double));
+    EV(sizeof(v)/sizeof(double));
     GMD_CODE_END();
   }
 

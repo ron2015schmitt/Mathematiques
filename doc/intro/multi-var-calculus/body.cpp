@@ -292,8 +292,8 @@ int main() {
   //   OUTPUT("The results _x_ and _erf_(_x_) are:");
   //   CR();
   //   GMD_CODE_START("Mathematica");
-  //   DISP(x);
-  //   DISP(erf);
+  //   EV(x);
+  //   EV(erf);
   //   GMD_CODE_END();
 
   //   OUTPUT("Cut and paste the above data for `x` and `erf` into Mathematica as well as the following commands");
@@ -403,11 +403,11 @@ int main() {
   //   CR();
 
   //   GMD_CODE_START("Mathematica");
-  //   DISP(x);
-  //   DISP(f2);
-  //   DISP(f3);
-  //   DISP(f5);
-  //   DISP(f7);
+  //   EV(x);
+  //   EV(f2);
+  //   EV(f3);
+  //   EV(f5);
+  //   EV(f7);
   //   GMD_CODE_END();
 
   //   OUTPUT("Cut and paste the above data for `x`, `f2`, `f3`,...  into Mathematica as well as the following commands");

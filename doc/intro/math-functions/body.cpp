@@ -50,9 +50,9 @@ int main() {
   OUTPUT("The default values were chosen so that the typical numerical error encountered with trig functions will produce exactly zero when appropriate.");
   CR();
   GMD_CODE_START("C++");
-  DISP(Functions<float>::tolerance);
-  DISP(Functions<double>::tolerance);
-  DISP(Functions<long double>::tolerance);
+  EV(Functions<float>::tolerance);
+  EV(Functions<double>::tolerance);
+  EV(Functions<long double>::tolerance);
   GMD_CODE_END();
   CR();
 

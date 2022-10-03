@@ -75,7 +75,7 @@ int main() {
     EXAMPLE(Nex++, "Access via a C++11 initializer_list");
     GMD_CODE_START("C++");
     ECHO(Vector<double> v(linspace<double>(0, 1, 11)));
-    DISP(v);
+    EV(v);
     GMD_CODE_END();
     CR();
     resultstart();

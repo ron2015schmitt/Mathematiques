@@ -88,8 +88,8 @@ int main() {
     OUTPUT("The results `t` and `CL1` are:");
     CR();
     GMD_CODE_START("Matlab");
-    DISP(t);
-    DISP(CL1);
+    EV(t);
+    EV(CL1);
     GMD_CODE_END();
 
     OUTPUT("Cut and paste the above data for `t` and `CL1` into Matlab as well as the following commands");
@@ -166,8 +166,8 @@ int main() {
     OUTPUT("The results `t` and `CL2` are:");
     CR();
     GMD_CODE_START("Matlab");
-    DISP(t);
-    DISP(CL2);
+    EV(t);
+    EV(CL2);
     GMD_CODE_END();
 
     OUTPUT("Cut and paste the above data for t and CL2 into Matlab as well as the following commands.");

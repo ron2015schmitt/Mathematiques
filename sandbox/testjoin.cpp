@@ -85,13 +85,13 @@ int main(int argc, char* argv[]) {
     MOUT << blue.apply("(Vd1,Vd2) = Vd4") << endl;
     (Vd1, Vd2) = Vd4;
     MOUT << " ";
-    DISP(Vd4);
+    EV(Vd4);
     MOUT << " ";
     MDISP(Vd1, Vd2);
     MOUT << blue.apply("(Vd1,Vd2,Vd3) = Vd5") << endl;
     (Vd1, Vd2, Vd3) = Vd5;
     MOUT << " ";
-    DISP(Vd5);
+    EV(Vd5);
     MOUT << " ";
     MDISP(Vd1, Vd2, Vd3);
 

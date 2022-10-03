@@ -41,13 +41,13 @@ int main(int argc, char* argv[]) {
   printoptsfile();
 
   Vector<double> v1(linspace<double>(-1, 1, 21));
-  DISP(v1);
+  EV(v1);
   v1 = 10 * sin(pi / 2 * v1) + 10;
-  DISP(v1);
+  EV(v1);
 
 
   // dot product
-  DISP(v1 | v1);
+  EV(v1 | v1);
 
   const double N = double(v1.size());
   // mean

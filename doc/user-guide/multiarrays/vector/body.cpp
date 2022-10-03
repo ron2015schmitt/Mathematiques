@@ -109,15 +109,15 @@ int main() {
   GMD_CODE_START("C++");
 
   CR();
-  DISP(sizeof(array<double, 2>)/sizeof(double));
-  DISP(sizeof(Vector<double, 2>)/sizeof(double));
+  EV(sizeof(array<double, 2>)/sizeof(double));
+  EV(sizeof(Vector<double, 2>)/sizeof(double));
 
   CR();
-  DISP(sizeof(array<double, 100>)/sizeof(double));
-  DISP(sizeof(Vector<double, 100>)/sizeof(double));
+  EV(sizeof(array<double, 100>)/sizeof(double));
+  EV(sizeof(Vector<double, 100>)/sizeof(double));
   CR();
-  DISP(sizeof(array<array<double, 2>, 100>)/sizeof(double));
-  DISP(sizeof(Vector<Vector<double, 2>, 100>)/sizeof(double));
+  EV(sizeof(array<array<double, 2>, 100>)/sizeof(double));
+  EV(sizeof(Vector<Vector<double, 2>, 100>)/sizeof(double));
 
   GMD_CODE_END();
 

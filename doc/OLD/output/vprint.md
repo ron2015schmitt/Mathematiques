@@ -9,13 +9,13 @@ _This document was automatically generated from file_ **`vprint.cpp`** (Mathéma
 
 * All of the functions decribed in this section are in the namespace `display`
 * Practically speaking, this functionality is one of the most useful aspects of Mathématiques.
-## The function `DISP(x)`
+## The function `EV(x)`
 
 
-The function `DISP(x)` displays both the variable name (or expression) as well as its value, formatted according to the user.   This is an incredibly useful function.
+The function `EV(x)` displays both the variable name (or expression) as well as its value, formatted according to the user.   This is an incredibly useful function.
 
 
-**EXAMPLE 1**: simple examples of `DISP(x)` usage
+**EXAMPLE 1**: simple examples of `EV(x)` usage
 
 
 Define and initialize some variables:
@@ -36,15 +36,15 @@ display each variable using `disp`:
 
 
 ```C++
-DISP(n);
-DISP(m);
-DISP(x);
-DISP(vals);
-DISP(done);
-DISP(v);
-DISP(str);
-DISP(s);
-DISP(z);
+EV(n);
+EV(m);
+EV(x);
+EV(vals);
+EV(done);
+EV(v);
+EV(str);
+EV(s);
+EV(z);
 ```
 
 
@@ -129,11 +129,11 @@ The actual screen-shot of the output is shown below:
 
 
 ```C++
-DISP(n+3);
-DISP(10*x-1);
-DISP(!done);
-DISP( round(10*sin(pi/10*v) + 10) );
-DISP(s+" tour");
+EV(n+3);
+EV(10*x-1);
+EV(!done);
+EV( round(10*sin(pi/10*v) + 10) );
+EV(s+" tour");
 ```
 
 
@@ -172,7 +172,7 @@ The following types are currently supported by the display commands
 | `MOUT`  | `ostream` |
 | ------------- | ------------- |
 | `DISPVAL(x)`  | `dispval_strm(ostream,x)`  |
-| `DISP(x)`  | `DISP_STRM(ostream,x)`  |
+| `EV(x)`  | `DISP_STRM(ostream,x)`  |
 | `TLDISP(x)`  | `TDISP_STRM(ostream,x)`  |
 | `MDISP(x,y,...)`  | `MDISP_STRM(ostream,x,y,...)`  |
 

@@ -4,7 +4,7 @@
 #include "mathq.h"
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   const double pi = M_PI;
   std::string myname = argv[0];
   using namespace mathq;
@@ -28,10 +28,10 @@ int main(int argc, char *argv[]) {
   int n = 45;
   unsigned int m = 256;
   double x = 3.14;
-  double vals[] = {1.1, 2.2, 3.3};
+  double vals[] = { 1.1, 2.2, 3.3 };
   bool done = true;
   Vector<double> v = range<double>(1, 10);
-  Matrix<double> A(2, 2, {1, 2, 3, 4});
+  Matrix<double> A(2, 2, { 1, 2, 3, 4 });
   char str[] = "hello";
   std::string s = "world";
   ComplexDouble z(1, -1);
@@ -39,16 +39,16 @@ int main(int argc, char *argv[]) {
 
   CR();
   CR();
-  DISP(n);
-  DISP(m);
-  DISP(x);
-  DISP(vals);
-  DISP(done);
-  DISP(v);
-  DISP(A);
-  DISP(str);
-  DISP(s);
-  DISP(z);
+  EV(n);
+  EV(m);
+  EV(x);
+  EV(vals);
+  EV(done);
+  EV(v);
+  EV(A);
+  EV(str);
+  EV(s);
+  EV(z);
 
   CR();
   CR();
@@ -75,11 +75,11 @@ int main(int argc, char *argv[]) {
 
   CR();
   CR();
-  DISP(n + 3);
-  DISP(10 * x - 1);
-  DISP(!done);
-  DISP(round(10 * sin(pi / 10 * v) + 10));
-  DISP(s + " tour");
+  EV(n + 3);
+  EV(10 * x - 1);
+  EV(!done);
+  EV(round(10 * sin(pi / 10 * v) + 10));
+  EV(s + " tour");
   MOUT << std::endl;
 
   MOUT << CREATESTYLE(GRAY1) << "  ";

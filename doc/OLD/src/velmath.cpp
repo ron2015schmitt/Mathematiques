@@ -39,10 +39,10 @@ int main() {
     codemultiNoteC11Array(v2 = { 1,2,3,4 });
     GMD_CODE_END();
     CR();
-    DISP(v1);
-    DISP(v1+v2);
+    EV(v1);
+    EV(v1+v2);
     //(cout << "here")<<std::end;
-    DISP(v1);
+    EV(v1);
 
     resultstart2("");
     resultmulti(v1 + v2);

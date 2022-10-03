@@ -83,7 +83,7 @@
 
 
 //
-// DISP(x)
+// EV(x)
 //
 // displays variable x as follows to MOUT
 //    MOUT << Display::expressionStyle[stringify(x)]
@@ -94,9 +94,9 @@
 //   x -> variable or expression that has >> operator defined
 //
 // EXAMPLES:
-//   DISP(1+3); // "1+3  ➜  4"
+//   EV(1+3); // "1+3  ➜  4"
 
-#define DISP(...) display::Display::mydispcr(MOUT, __VA_ARGS__, #__VA_ARGS__)
+#define EV(...) display::Display::mydispcr(MOUT, __VA_ARGS__, #__VA_ARGS__)
 
 //
 // DISP_NOCR(x)
@@ -118,7 +118,7 @@
 // SRDISP(str,x)
 //
 //
-// same as DISP(x) but prints str on the right before the terminator
+// same as EV(x) but prints str on the right before the terminator
 //
 //   x -> variable or expression that has >> operator defined
 //
@@ -131,7 +131,7 @@
 //
 // TLDISP(x)
 //
-// same as DISP(x) but prints the typename on the LHS
+// same as EV(x) but prints the typename on the LHS
 //
 // EXAMPLES:
 //   TLDISP(1+3); // "int 1+3  ➜  4"
@@ -142,7 +142,7 @@
 //
 // ETV(x)
 //
-// same as DISP(x) but prints the typename on the RHS
+// same as EV(x) but prints the typename on the RHS
 //
 // EXAMPLES:
 //   ETV(1+3); // "1+3  ➜  int 4"
@@ -153,7 +153,7 @@
 //
 // MDISP(x)
 //
-// same as DISP(x) but can print up to 10 expressions on the same line
+// same as EV(x) but can print up to 10 expressions on the same line
 //
 // EXAMPLES:
 //   MDISP(1+3, 22/7); // "1 + 3 ➜  4; 22 / 7 ➜  3; "
@@ -241,7 +241,7 @@
 #if MATHQ_DEBUG >= 1
 #define PRINTF1(...) MOUT << display::printf2str(__VA_ARGS__)
 #define MDISP1(...) MDISP(__VA_ARGS__)
-#define DISP1(...) DISP(__VA_ARGS__)
+#define DISP1(...) EV(__VA_ARGS__)
 #define TLDISP1(...) TLDISP(__VA_ARGS__)
 #define TRDISP1(...) ETV(__VA_ARGS__)
 #else
@@ -260,7 +260,7 @@
 #if MATHQ_DEBUG >= 2
 #define PRINTF2(...) MOUT << display::printf2str(__VA_ARGS__)
 #define MDISP2(...) MDISP(__VA_ARGS__)
-#define DISP2(...) DISP(__VA_ARGS__)
+#define DISP2(...) EV(__VA_ARGS__)
 #define TLDISP2(...) TLDISP(__VA_ARGS__)
 #define TRDISP2(...) ETV(__VA_ARGS__)
 #else
@@ -279,7 +279,7 @@
 #if MATHQ_DEBUG >= 3
 #define PRINTF3(...) MOUT << display::printf2str(__VA_ARGS__)
 #define MDISP3(...) MDISP(__VA_ARGS__)
-#define DISP3(...) DISP(__VA_ARGS__)
+#define DISP3(...) EV(__VA_ARGS__)
 #define TLDISP3(...) TLDISP(__VA_ARGS__)
 #define TRDISP3(...) ETV(__VA_ARGS__)
 #else
@@ -307,7 +307,7 @@
 #define resultstart3(str) printf("**Results**%s\n```C++\n", str)
 #define resultmulti(...) \
   printf("  ");          \
-  DISP(__VA_ARGS__)
+  EV(__VA_ARGS__)
 #define resultend() printf("```\n\n")
 #define RESULT(...)         \
   resultstart();            \

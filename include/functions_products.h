@@ -139,7 +139,7 @@ namespace mathq
     typedef typename AddType<NT1, NT2>::Type NT3;
     typedef typename ReplaceNumberTrait<E1, NT3>::Type E3; // see TODO note above
 
-    // DISP(m1);
+    // EV(m1);
     size_t Nrows = m1.dims()[0];
     size_t Ncols = m1.dims()[1];
     size_t i = 0;

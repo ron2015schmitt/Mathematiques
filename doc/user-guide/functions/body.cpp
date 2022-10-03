@@ -46,9 +46,9 @@ int main() {
   OUTPUT("The default values were chosen so that the typical numerical error encountered with trig functions will produce exactly zero when appropriate.");
   CR();
   GMD_CODE_START("C++");
-  DISP(Functions<float>::tolerance);
-  DISP(Functions<double>::tolerance);
-  DISP(Functions<long double>::tolerance);
+  EV(Functions<float>::tolerance);
+  EV(Functions<double>::tolerance);
+  EV(Functions<long double>::tolerance);
   GMD_CODE_END();
   CR();
 
@@ -325,10 +325,10 @@ int main() {
     OUTPUT("Examples:\n");
     GMD_CODE_START("C++");
     ECHO(int n = 3);
-    DISP(typeid(n).name());
+    EV(typeid(n).name());
     // OUTPUT("typeid(n).name() -> \"i\"");
     ECHO(string s = "hello");
-    DISP(typeid(s).name());
+    EV(typeid(s).name());
     // OUTPUT("typeid(s).name() -> \"NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE\"");
     GMD_CODE_END();
   }
@@ -340,10 +340,10 @@ int main() {
     OUTPUT("Examples:\n");
     GMD_CODE_START("C++");
     ECHO(int n = 3);
-    DISP(getTypeName(n));
+    EV(getTypeName(n));
     // OUTPUT("getTypeName(n) -> \"int\"");
     ECHO(string s = "hello");
-    DISP(getTypeName(s));
+    EV(getTypeName(s));
     // OUTPUT("getTypeName(s) -> \"std::string\"");
     GMD_CODE_END();
   }

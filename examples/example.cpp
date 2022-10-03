@@ -44,12 +44,12 @@ int main(int argc, char* argv[]) {
   Vector<double> v2;
   v2 = 10 * sin(pi / 2 * v1) + 10;
 
-  DISP(v1);
-  DISP(v2);
-  DISP(v1 + v2);
+  EV(v1);
+  EV(v2);
+  EV(v1 + v2);
 
   // dot product
-  DISP(v1 | v2);
+  EV(v1 | v2);
 
   const double N = double(v2.size());
   // mean
