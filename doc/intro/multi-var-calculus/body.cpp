@@ -30,26 +30,35 @@ int main() {
 
     CR();
     ECHO(auto x = f.coordinates[0]);
+    ETV(x);
     CR();
     ECHO(f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24);
     ETV(f);
     CR();
     GMD_CODE_END();
+    CR();
+
+    OUTPUT("To access the data as a Vector, use paretheses, `f()`.  The `NumericalFunction` type is actually a rank 0 (ie. scalar) `CurvilinearField`, which will be discussed in a later section.");
+
+    CR();
+    GMD_CODE_START("C++");
+    ETV(f());
+    ETV(f()[0]);
+    ETV(f()[{1, 3}]);
+    GMD_CODE_END();
+    CR();
 
 
     OUTPUT("We can easily create a second function, e.g. $g(x) = x + 2 f(x) - 4 \\frac{df}{dx}$ ");
 
+    CR();
     GMD_CODE_START("C++");
     ECHO(NumericalFunction<double> g);
     CR();
     ECHO(g = x + 2*f - 4*d(f));
-    // ECHO(g = d(f));
-    // ECHO(g = sqrt(f));
-    // ECHO(g = sqrt(d(f)));
-    // ECHO(g = d(sqrt(f)));
     ETV(g);
-    CR();
     GMD_CODE_END();
+    CR();
   }
 
 
@@ -57,8 +66,64 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER2("Specifying the function domain");
 
-  OUTPUT("The syntax `NumericalFunction<NumberType>` can be used to represent a function of one real variable of type `NumberType`.  This default syntax uses the interval $[0,1]$ for the function domain. ");
-  OUTPUT("With this defintion, we can create a function, e.g. $f(x) = 1 + x + \\frac{x^2}{2} + \\frac{x^3}{6} + \\frac{x^4}{24}$ ");
+  OUTPUT("As mentioned above, the default syntax uses the interval $[0,1]$ for the domain. ");
+  OUTPUT("Other domains can be explicitly given as shown below.");
+
+
+  CR();
+  GMD_HEADER3("Linear equispaced interval");
+  {
+    GMD_CODE_START("C++");
+    ECHO(NumericalFunction<double> f({ Interval<double>::interval(-2, 2, 5) }));
+
+    CR();
+    ECHO(auto x = f.coordinates[0]);
+    ETV(x);
+    CR();
+    ECHO(f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24);
+    ETV(f);
+    CR();
+    GMD_CODE_END();
+    CR();
+  }
+  CR();
+
+  CR();
+  GMD_HEADER3("Log-spaced interval");
+  {
+    GMD_CODE_START("C++");
+    ECHO(NumericalFunction<double> f({ PointSequence<double>::log10(1, 10, 11) }));
+
+    CR();
+    ECHO(auto x = f.coordinates[0]);
+    ETV(x);
+    CR();
+    ECHO(f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24);
+    ETV(f);
+    CR();
+    GMD_CODE_END();
+    CR();
+  }
+  CR();
+
+  CR();
+  GMD_HEADER3("Arbitrary sequence of points");
+  {
+    GMD_CODE_START("C++");
+    ECHO(NumericalFunction<double> f({ PointSequence<double>({1,10}) }));
+
+    CR();
+    ECHO(auto x = f.coordinates[0]);
+    ETV(x);
+    CR();
+    ECHO(f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24);
+    ETV(f);
+    CR();
+    GMD_CODE_END();
+    CR();
+  }
+  CR();
+
 
 
   GMD_VSPACE();

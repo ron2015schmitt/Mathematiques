@@ -4,7 +4,7 @@
   "is-heading": false,
   "index": 1,
   "title": "License",
-  "version": "0.42.1-alpha.023",
+  "version": "0.42.1-alpha.024",
   "prefix": "Chapter 1.",
   "src": "license/template.md",
   "dest": "license/README.md",
@@ -13,10 +13,10 @@
     "title": "Documentation",
     "prefix": "Chapter ",
     "level": 1,
-    "header": "[<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques 0.42.1-alpha.023</h1>](../README.md)"
+    "header": "[<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques 0.42.1-alpha.024</h1>](../README.md)"
   },
   "prev": null,
   "next": "about",
-  "header": "[<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques 0.42.1-alpha.023</h1>](../../README.md)\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../README.md)<br>\n\nChapter 1. _License_ <br>\nChapter 2. [About](../about/README.md)<br>\nChapter 3. [Why?](../why/README.md)<br>\nChapter 4. [Objectives](../objectives/README.md)<br>\nChapter 5. [Versioning](../versioning/README.md)<br>\nChapter 6. [Status & Release Notes](../status-release/README.md)<br>\nChapter 7. [Upcoming Development](../development-schedule/README.md)<br>\nChapter 8. [Introduction with Examples](../intro/README.md)<br>\nChapter 9. [Installation](../installation/README.md)<br>\nChapter 10. [Your First Math\u00e9matiques Project](../first-project/README.md)<br>\nChapter 11. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>\nChapter 12. [Benchmarks](../benchmarks/README.md)<br>\nChapter 13. [Tests](../test/README.md)<br>\nChapter 14. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
+  "header": "[<h1 style='border: 2px solid; text-align: center'>Math\u00e9matiques 0.42.1-alpha.024</h1>](../../README.md)\n\n<details>\n\n<summary>Documentation</summary>\n\n# [Documentation](../README.md)<br>\n\nChapter 1. _License_ <br>\nChapter 2. [About](../about/README.md)<br>\nChapter 3. [Why?](../why/README.md)<br>\nChapter 4. [Objectives](../objectives/README.md)<br>\nChapter 5. [Versioning](../versioning/README.md)<br>\nChapter 6. [Status & Release Notes](../status-release/README.md)<br>\nChapter 7. [Upcoming Development](../development-schedule/README.md)<br>\nChapter 8. [Introduction with Examples](../intro/README.md)<br>\nChapter 9. [Installation](../installation/README.md)<br>\nChapter 10. [Your First Math\u00e9matiques Project](../first-project/README.md)<br>\nChapter 11. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>\nChapter 12. [Benchmarks](../benchmarks/README.md)<br>\nChapter 13. [Tests](../test/README.md)<br>\nChapter 14. [Developer Guide: Modifying and Extending Math\u00e9matiques](../developer-guide/README.md)<br>\n\n\n</details>\n\n",
   "footer": "\n\n| \u21e6 <br />  | [Documentation](../README.md)<br />License<br /><img width=1000/> | \u21e8 <br />[About](../about/README.md)   |\n| ------------ | :-------------------------------: | ------------ |\n\n"
 }

@@ -458,7 +458,6 @@ namespace mathq {
       }
 
 
-      // TODO: need to use non-euiqspaced derivative
 
       template <typename TargetElement, size_t... sizes>
       Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const GridElement period = 0) const {

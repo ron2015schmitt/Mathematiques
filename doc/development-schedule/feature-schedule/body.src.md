@@ -3,8 +3,8 @@
 
 ### bugs 
 1. `numtrue(!(v > 2))`  does not compile
-1. `ETV(sin(f));` does not work. f is NumericalFunction
-1. `g = d(sqrt(f))` does nto work for f and g are NumericalFunction
+1. `ETV(sin(f));` does not work. f is NumericalFunction. see `doc/intro/multi-var-calculus/body.cpp`
+1. `g = d(sqrt(f))` does nto work for f and g are NumericalFunction. see `doc/intro/multi-var-calculus/body.cpp`
 
 ```C++
     // these compile and work
@@ -45,9 +45,8 @@
 ## Future work
 
 ### Documentation Refactoring
-2. Complete _User Manual_
-2. Complete _Usage Guide_ covering all the functionality
-3. New in-depth _Developer Guide_
+1. Complete _Usage Guide_ covering all the functionality
+1. New in-depth _Developer Guide_
 
 ### Display Refactoring
 1. This is includes files:
@@ -225,6 +224,8 @@
     * create MultiArray4 for xyzt: (rows,columns, floors, moments)
     * MArray4Rep
 *  `class` -> `typename` usage in templates?
+
+* constants in `namespace mathq::unit_imaginary`, `namespace mathq::unit_quaternion` should be template<SimpleNumber> constexpr variables
 
 * units for numbers using [std::chrono](https://en.cppreference.com/w/cpp/chrono/duration) and [user-defined literals](https://en.cppreference.com/w/cpp/language/user_literal). See also Boost.
 * formalize template notation for the following: types with ordering (ints and reals), division algebras, Multiarrays, Tensors
