@@ -243,7 +243,8 @@ int main() {
   GMD_HEADER3("Complex-valued functions");
   OUTPUT("As an example consider the complex-valued function:");
   CR();
-  OUTPUT("$$ f\\colon [0,1]\\rightarrow\\mathbb{C}, \\medspace \\medspace f(x) = e^{i \\pi x} $$");
+  OUTPUT("$$ f\\colon [0,1]\\rightarrow\\mathbb{C}$$");
+  OUTPUT("$$f(x) = e^{i \\pi x} $$");
   CR();
 
   {
@@ -266,7 +267,8 @@ int main() {
   GMD_HEADER3("Quaternion-valued functions");
   OUTPUT("As an example consider the complex-valued function:");
   CR();
-  OUTPUT("$$ f\\colon [0,1]\\rightarrow\\mathbb{H}, \\medspace \\medspace f(x) = e^{i \\frac{\\pi}{2} + j \\pi x + k \\pi y} $$");
+  OUTPUT("$$ f\\colon [0,1] \\times [0,1]\\rightarrow\\mathbb{H}$$");
+  OUTPUT("$$ f(x,y) = e^{i \\frac{\\pi}{2} + j \\pi x + k \\pi y} $$");
   CR();
 
   {
@@ -294,11 +296,11 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER2("Other functionality");
   CR();
-  OUTPUT("Further functionality is in development.");
+  OUTPUT("🚧 Further functionality is in development.");
   OUTPUT("* function boundary conditions: constant, periodic, etc");
   OUTPUT("* integration");
   OUTPUT("* non-uniform 2D and 3D grids and multi-grid");
-  OUTPUT("* 2D and 3D meshes for [Finite Element Method](https://en.wikipedia.org/wiki/Finite_element_method) (`triangulation`)");
+  OUTPUT("* 2D and 3D meshes for [Finite Element Method](https://en.wikipedia.org/wiki/Finite_element_method) (triangulation)");
   OUTPUT("* Support for units via [user-defined literals](https://en.cppreference.com/w/cpp/language/user_literal)");
   CR();
 

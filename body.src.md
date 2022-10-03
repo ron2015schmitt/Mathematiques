@@ -16,65 +16,144 @@ Using modern C++ (C++20), create an extensive, open source, numerical C++ librar
 <br>
 
 
-### Code Snippets
+## Code Snippets
 
 **Function of a vector**
 
-$\mathbf{w} = 1 + 10 \mathbf{v} + e^{i  [   2 \pi   +   \pi sin(  2 \pi \mathbf{v} + \pi / 6  )   ] }$ 
+
+<table>
+<thead>
+<tr>
+<td align="center">
+
+$\mathbf{w} = 1 + 10 \mathbf{v} + e^{i  [   2 \pi   +   \pi sin(  2 \pi \mathbf{v} + \pi / 6  )   ] }$
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
 
 ```C++
 w = 1 + 10 * v + exp(i * (2 * pi + pi * sin(2 * pi * v + pi / 6)));
 ```
 
+</td>
+</tr>
+</tbody>
+</table>
 <br>
 
+
+
 **Linear Algebra**
+
+
+<table>
+<thead>
+<tr>
+<td align="center">
 
 $\mathbf{y} = \mathbf{A} \cdot \mathbf{x}$
 
 $\mathbf{y} = \mathbf{x}^\dagger \cdot ( \mathbf{A} \mathbf{A^\dagger} + \mathbf{A^\dagger} \mathbf{A}) \cdot \mathbf{x}$
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
 
 ```C++
 y = A | x;
 y = ~x | (A|~A + ~A|A) | x;
 ```
 
-
+</td>
+</tr>
+</tbody>
+</table>
 <br>
+
 
 **Vector Calculus**
 
+<table>
+<thead>
+<tr>
+<td align="center">
+
 $\mathbf{E} = \mathbf{\nabla} \cdot \mathbf{\Phi}$
 
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
 
 ```C++
 E = nabla | Phi;
 ```
 
+</td>
+</tr>
+</tbody>
+</table>
 <br>
+
 
 **Number Systems**
 
-$$ \\mathbb{R}, \\mathbb{I} \\equiv i\\mathbb{R}, \\mathbb{C}, \\mathbb{H}$$
+<table>
+<thead>
+<tr>
+<td align="center">
+
+$\mathbb{R}, \mathbb{I}, \mathbb{C}, \mathbb{H}$
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
 
 ```C++
-using namespace mathq::unit_imaginary;
-using namespace mathq::unit_quaternion;
-
 double x = 23.2;
 Imaginary<double> y = 5*i;
 std::complex<double> z = 3 + 4*i;
 Quaternion<double> q = 16 + 2*i + 3*j + 13*k;
 ```
 
-
+</td>
+</tr>
+</tbody>
+</table>
 <br>
 
 **Special Functions**
 
+
+<table>
+<thead>
+<tr>
+<td align="center">
+
+$x \in [0,1]$ 
+
 $f(x) = \Gamma(x)$ 
 
 $g(x) = J_\nu(x)$ 
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
 
 ```C++
 Vector<double> x = linspace(0., 1., 100);
@@ -82,8 +161,13 @@ Vector<double> f = tgamma(x);
 Vector<double> g = cyl_bessel_j(nu, x);
 ```
 
-
+</td>
+</tr>
+</tbody>
+</table>
 <br>
+
+
 
 ✳ [Introduction with Examples](doc/intro/README.md) ✳ 
 
@@ -94,7 +178,7 @@ Vector<double> g = cyl_bessel_j(nu, x);
 <br>
 
 ---------------------------------
-## Phase 2 (planned): Symbolic Mathematics Built into a Modern High-Performance Language
+## Phase 2 (planned): Mathematics Built into a Modern High-Performance Language
 
 
 From these, it is evident that all we need to use standard mathematical notation in C++ is

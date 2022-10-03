@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.027</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.028</h1>](../../../README.md)
 
 <details>
 
@@ -40,7 +40,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.8. [Linear Algebra](../linear-algebra/README.md)<br>
 8.9. [Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
-8.11. _NumericalFunction_ <br>
+8.11. _Numerical / Discretized Mathematical Function Objects_ <br>
 8.12. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
 8.13. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
 8.14. [Tensors](../tensors/README.md)<br>
@@ -51,7 +51,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-# 8.11. NumericalFunction
+# 8.11. Numerical / Discretized Mathematical Function Objects
 
 
 
@@ -278,7 +278,8 @@ For example, we can define complex-valued functions and quaternion-valued functi
 ### Complex-valued functions
 As an example consider the complex-valued function:
 
-$$ f\colon [0,1]\rightarrow\mathbb{C}, \medspace \medspace f(x) = e^{i \pi x} $$
+$$ f\colon [0,1]\rightarrow\mathbb{C}$$
+$$f(x) = e^{i \pi x} $$
 
 ```C++
 using namespace mathq::unit_imaginary;
@@ -296,7 +297,8 @@ f = roundzero(exp(i*pi*x));
 ### Quaternion-valued functions
 As an example consider the complex-valued function:
 
-$$ f\colon [0,1]\rightarrow\mathbb{H}, \medspace \medspace f(x) = e^{i \frac{\pi}{2} + j \pi x + k \pi y} $$
+$$ f\colon [0,1] \times [0,1]\rightarrow\mathbb{H}$$
+$$ f(x,y) = e^{i \frac{\pi}{2} + j \pi x + k \pi y} $$
 
 ```C++
 using namespace mathq::unit_imaginary;
@@ -327,11 +329,11 @@ f = roundzero(exp(i*pi/2 + j*pi*x + k*pi*y));
 
 ## Other functionality
 
-Further functionality is in development.
+🚧 Further functionality is in development.
 * function boundary conditions: constant, periodic, etc
 * integration
 * non-uniform 2D and 3D grids and multi-grid
-* 2D and 3D meshes for [Finite Element Method](https://en.wikipedia.org/wiki/Finite_element_method) (`triangulation`)
+* 2D and 3D meshes for [Finite Element Method](https://en.wikipedia.org/wiki/Finite_element_method) (triangulation)
 * Support for units via [user-defined literals](https://en.cppreference.com/w/cpp/language/user_literal)
 
 
@@ -339,6 +341,6 @@ Further functionality is in development.
 
 
 
-| ⇦ <br />[Common and Special Mathematical Functions](../math-functions/README.md)  | [Introduction with Examples](../README.md)<br />NumericalFunction<br /><img width=1000/> | ⇨ <br />[Calculus on Complex Number Domains](../complex-calculus/README.md)   |
+| ⇦ <br />[Common and Special Mathematical Functions](../math-functions/README.md)  | [Introduction with Examples](../README.md)<br />Numerical / Discretized Mathematical Function Objects<br /><img width=1000/> | ⇨ <br />[Calculus on Complex Number Domains](../complex-calculus/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.027</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.028</h1>](../../../README.md)
 
 <details>
 
@@ -40,7 +40,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.8. [Linear Algebra](../linear-algebra/README.md)<br>
 8.9. [Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
-8.11. [NumericalFunction](../multi-var-calculus/README.md)<br>
+8.11. [Numerical / Discretized Mathematical Function Objects](../multi-var-calculus/README.md)<br>
 8.12. _Calculus on Complex Number Domains_ <br>
 8.13. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
 8.14. [Tensors](../tensors/README.md)<br>
@@ -53,8 +53,38 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 # 8.12. Calculus on Complex Number Domains
 
+Mathématiques provides classes and extensive functionality for single- and multi-variate numerical functions, ie formal mathematical functions over a discretized domain.
+## Introduction
+The syntax `NumericalFunction<NumberType>` can be used to represent a function of one real variable of type `NumberType`.  This default syntax uses the interval $[0,1]$ for the function domain. 
+With this defintion, we can create a function, e.g. $f(x) = 1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \frac{x^4}{24}$ 
+```C++
+NumericalFunction<double> f;
 
+auto x = f.coordinates[0];
+☀ x ➜ 
+{0, 0.25, 0.5, 0.75, 1};
 
+f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24;
+☀ f ➜ {1, 1.28402, 1.64844, 2.11475, 2.70833};
+
+```
+
+To access the data as a Vector, use paretheses, `f()`.  The `NumericalFunction` type is actually a rank 0 (ie. scalar) `CurvilinearField`, which will be discussed in a later section.
+
+```C++
+☀ f() ➜ Vector<double> {1, 1.28402, 1.64844, 2.11475, 2.70833};
+☀ f()[0] ➜ double 1;
+☀ f()[{1, 3}] ➜ Vector<double> {1.28402, 2.11475};
+```
+
+We can easily create a second function, e.g. $g(x) = x + 2 f(x) - 4 \frac{df}{dx}$ 
+
+```C++
+NumericalFunction<double> g;
+
+g = x + 2*f - 4*d(f);
+☀ g ➜ {-2, -2.31738, -2.78646, -3.42676, -4.25};
+```
 
 CurvilinearField - Complex 1D
 ☀ rect ➜ ComplexRectangle<double> ( real: [-1, 1], N=5; imag: [-2, 2], N=5 );
@@ -335,6 +365,6 @@ field0() = exp(2*z) + 5*t;
 
 
 
-| ⇦ <br />[NumericalFunction](../multi-var-calculus/README.md)  | [Introduction with Examples](../README.md)<br />Calculus on Complex Number Domains<br /><img width=1000/> | ⇨ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)   |
+| ⇦ <br />[Numerical / Discretized Mathematical Function Objects](../multi-var-calculus/README.md)  | [Introduction with Examples](../README.md)<br />Calculus on Complex Number Domains<br /><img width=1000/> | ⇨ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

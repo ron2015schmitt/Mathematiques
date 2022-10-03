@@ -1,1 +1,1 @@
-NumericalFunction
+Numerical / Discretized Mathematical Function Objects
