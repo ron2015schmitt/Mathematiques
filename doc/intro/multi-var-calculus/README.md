@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.028</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.029</h1>](../../../README.md)
 
 <details>
 
@@ -331,6 +331,7 @@ f = roundzero(exp(i*pi/2 + j*pi*x + k*pi*y));
 
 🚧 Further functionality is in development.
 * function boundary conditions: constant, periodic, etc
+* Time-varying function object that is a time-series, $f_t(x) = f(x;t)$
 * integration
 * non-uniform 2D and 3D grids and multi-grid
 * 2D and 3D meshes for [Finite Element Method](https://en.wikipedia.org/wiki/Finite_element_method) (triangulation)

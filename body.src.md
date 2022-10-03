@@ -168,6 +168,9 @@ Vector<double> g = cyl_bessel_j(nu, x);
 <br>
 
 
+## Documentation
+
+[Why?](doc/why/README.md)
 
 ✳ [Introduction with Examples](doc/intro/README.md) ✳ 
 

@@ -1,6 +1,6 @@
 
 
-# Mathématiques 0.42.1-alpha.028
+# Mathématiques 0.42.1-alpha.029
 
 
 ## Phase 1 (in progress): C++ Numerical Library
@@ -172,6 +172,9 @@ Vector<double> g = cyl_bessel_j(nu, x);
 <br>
 
 
+## Documentation
+
+[Why?](doc/why/README.md)
 
 ✳ [Introduction with Examples](doc/intro/README.md) ✳ 
 

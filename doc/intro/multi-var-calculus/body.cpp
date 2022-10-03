@@ -298,10 +298,12 @@ int main() {
   CR();
   OUTPUT("🚧 Further functionality is in development.");
   OUTPUT("* function boundary conditions: constant, periodic, etc");
+  OUTPUT("* Time-varying function object that is a time-series, $f_t(x) = f(x;t)$");
   OUTPUT("* integration");
   OUTPUT("* non-uniform 2D and 3D grids and multi-grid");
   OUTPUT("* 2D and 3D meshes for [Finite Element Method](https://en.wikipedia.org/wiki/Finite_element_method) (triangulation)");
   OUTPUT("* Support for units via [user-defined literals](https://en.cppreference.com/w/cpp/language/user_literal)");
+
   CR();
 
   // OUTPUT("Calculus");
