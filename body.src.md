@@ -55,6 +55,8 @@ E = nabla | Phi;
 
 **Number Systems**
 
+$$ \\mathbb{R}, \\mathbb{I} \\equiv i\\mathbb{R}, \\mathbb{C}, \\mathbb{H}$$
+
 ```C++
 using namespace mathq::unit_imaginary;
 using namespace mathq::unit_quaternion;

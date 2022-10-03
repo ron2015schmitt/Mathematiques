@@ -925,6 +925,9 @@ namespace mathq {
     using std::cos;
     using std::exp;
     using std::sin;
+    // ETV(q.scalar());
+    // ETV(q.vabs());
+    // ETV(q.vnormsqr());
     const Num k = exp(q.scalar());
     const Num vabs = q.vabs();
     return Quaternion<Num>(
@@ -1214,11 +1217,15 @@ namespace mathq {
 
 
 
-  // // Quaternion - roundzero
-  // template <typename Num>
-  // Quaternion<Num> roundzero(const Quaternion<Num> &z, const Num tolerance = Functions<Num>::tolerance) {
-  //   return Quaternion<Num>(roundzero(z.value(), tolerance));
-  // }
+  // Quaternion - roundzero
+  template <typename Num>
+  Quaternion<Num> roundzero(const Quaternion<Num>& z, const Num tolerance = Functions<Num>::tolerance) {
+    return Quaternion<Num>(
+      roundzero(z.real(), tolerance),
+      roundzero(z.imag(), tolerance),
+      roundzero(z.jmag(), tolerance),
+      roundzero(z.kmag(), tolerance));
+  }
 
   // // Quaternion - approx
 

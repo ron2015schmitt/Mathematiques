@@ -1,6 +1,6 @@
 
 
-# Mathématiques 0.42.1-alpha.026
+# Mathématiques 0.42.1-alpha.027
 
 
 ## Phase 1 (in progress): C++ Numerical Library
@@ -58,6 +58,8 @@ E = nabla | Phi;
 <br>
 
 **Number Systems**
+
+$$ \\mathbb{R}, \\mathbb{I} \\equiv i\\mathbb{R}, \\mathbb{C}, \\mathbb{H}$$
 
 ```C++
 using namespace mathq::unit_imaginary;
