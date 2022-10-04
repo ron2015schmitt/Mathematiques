@@ -107,7 +107,9 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER3("Rank 2 Tensors and the metric tensor");
 
-  OUTPUT("A rank 2 tensor has the same number of elements as a matrix, but now there are four forms: $A_{ij}$, ${A_i}^{j}$, ${A^i}_{j}$, and $A^{ij}$");
+  // sometimes inside math you need to use \\_ instead of _
+
+  OUTPUT("A rank 2 tensor has the same number of elements as a matrix, but now there are four forms: $A_{ij}$, ${A_i}^{j}$, ${A^i}\\_{j}$, and $A^{ij}$");
   OUTPUT("The most important rank 2 tensor is the [metric tensor](https://en.wikipedia.org/wiki/Metric_tensor), $g_{ij}$, which determined by the generalized coordinates used.");
   OUTPUT("The metric tensor allows the conversion of a contravariant vector into a covariant vector.");
   CR();

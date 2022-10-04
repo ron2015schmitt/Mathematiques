@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.032</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.033</h1>](../../../README.md)
 
 <details>
 
@@ -56,6 +56,19 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 Mathématiques provides classes and extensive functionality for single- and multi-variate numerical functions, ie formal mathematical functions over a discretized domain.
+
+### TEST
+```C++
+Quaternion<double> q{ 1,2,3,4 };
+☀ q ➜ Quaternion<double> 1 + 2*i + 3*j + 4*k;
+☀ q.abs() ➜ double 5.47723;
+☀ q.polar() ➜ std::tuple<double,double,Vector<double,3>> {5.47723,1.38719,{0.371391, 0.557086, 0.742781}};
+auto [x, y, z] = q.polar();
+☀ x ➜ double 5.47723;
+☀ y ➜ double 1.38719;
+☀ z ➜ Vector<double,3> {0.371391, 0.557086, 0.742781};
+```
+
 ## Introduction
 The syntax `NumericalFunction<NumberType>` can be used to represent a function of one real variable of type `NumberType`.  This default syntax uses the interval $[0,1]$ for the function domain. 
 With this defintion, we can create a function, e.g. $f(x) = 1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \frac{x^4}{24}$ 
@@ -150,7 +163,7 @@ f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24;
 
 ## Multivariate functions
 Using the syntax `NumericalFunction<NumberType, N>` can create a function of `N` variables., e.g. 
-$$H(p,x) = \frac{p^2}{2 m} + \frac{1}{2} k x^2 $$ 
+$$H(x,p) = \frac{p^2}{2 m} + \frac{1}{2} k x^2 $$ 
 ```C++
 NumericalFunction<double, 2> H({
   Interval<double>::interval(-1, 1, 5),
@@ -199,12 +212,13 @@ H = 1/(2*m) * pow(p, 2) + 0.5*k * pow(x, 2);
 ## Time-varying functions
 The syntax `NumericalFunction<NumberType, N, true>` can be used to include time as an independent variable.
 As an example, consider 
-$$H(p,x,t) = \frac{p^2}{2 m} + (1 + \frac{1}{2} \cos t)^2 x^2 $$ 
+$$H(x,p,t) = \frac{p^2}{2 m} + (1 + \frac{1}{2} \cos t)^2 x^2 $$ 
 ```C++
-NumericalFunction<double, 2> H({
-  Interval<double>::interval(-1, 1, 5),
-  Interval<double>::interval(-10, 10, 5)
-})
+NumericalFunction<double, 2, true> H({
+        Interval<double>::interval(-1,1,5),
+        Interval<double>::interval(-10,10,5),
+        Interval<double>::interval(0,10,5)
+      }); 
 
 auto x = H.coordinates[0];
 auto p = H.coordinates[1];

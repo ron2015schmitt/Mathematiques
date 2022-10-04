@@ -1,6 +1,6 @@
 
 
-# Mathématiques 0.42.1-alpha.032
+# Mathématiques 0.42.1-alpha.033
 
 
 ## Phase 1 (in progress): C++ Numerical Library
@@ -21,92 +21,6 @@ Using modern C++ (C++20), create an extensive, open source, numerical C++ librar
 
 
 ## Code Snippets
-
-**Function of a vector**
-
-
-<table>
-<thead>
-<tr>
-<td align="center">
-
-$\mathbf{w} = 1 + 10 \mathbf{v} + e^{i  [   2 \pi   +   \pi sin(  2 \pi \mathbf{v} + \pi / 6  )   ] }$
-
-</td>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-```C++
-w = 1 + 10 * v + exp(i * (2 * pi + pi * sin(2 * pi * v + pi / 6)));
-```
-
-</td>
-</tr>
-</tbody>
-</table>
-<br>
-
-
-
-**Linear Algebra**
-
-
-<table>
-<thead>
-<tr>
-<td align="center">
-
-$\mathbf{y} = \mathbf{A} \cdot \mathbf{x}$
-
-$\mathbf{y} = \mathbf{x}^\dagger \cdot ( \mathbf{A} \mathbf{A^\dagger} + \mathbf{A^\dagger} \mathbf{A}) \cdot \mathbf{x}$
-
-</td>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-```C++
-y = A | x;
-y = ~x | (A|~A + ~A|A) | x;
-```
-
-</td>
-</tr>
-</tbody>
-</table>
-<br>
-
-
-**Vector Calculus**
-
-<table>
-<thead>
-<tr>
-<td align="center">
-
-$\mathbf{E} = \mathbf{\nabla} \cdot \mathbf{\Phi}$
-
-</td>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-
-```C++
-E = nabla | Phi;
-```
-
-</td>
-</tr>
-</tbody>
-</table>
-<br>
 
 
 **Number Systems**
@@ -138,8 +52,10 @@ Quaternion<double> q = 16 + 2*i + 3*j + 13*k;
 </table>
 <br>
 
-**Special Functions**
 
+
+
+**Special Functions**
 
 <table>
 <thead>
@@ -170,6 +86,191 @@ Vector<double> g = cyl_bessel_j(nu, x);
 </tbody>
 </table>
 <br>
+
+
+
+
+**Function of a vector**
+
+<table>
+<thead>
+<tr>
+<td align="center">
+
+$\mathbf{w} = 1 + 10 \mathbf{v} + e^{i  [   2 \pi   +   \pi sin(  2 \pi \mathbf{v} + \pi / 6  )   ] }$
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+```C++
+w = 1 + 10 * v + exp(i * (2 * pi + pi * sin(2 * pi * v + pi / 6)));
+```
+
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+
+
+
+
+**Linear Algebra**
+
+<table>
+<thead>
+<tr>
+<td align="center">
+
+$\mathbf{y} = \mathbf{A} \cdot \mathbf{x}$
+
+$\mathbf{y} = \mathbf{x}^\dagger \cdot ( \mathbf{A} \mathbf{A^\dagger} + \mathbf{A^\dagger} \mathbf{A}) \cdot \mathbf{x}$
+
+$\mathbf{A} \overset {SVD}{\rightarrow} (\mathbf{U},\mathbf{S},\mathbf{V})$
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+```C++
+y = A | x;
+y = ~x | (A|~A + ~A|A) | x;
+auto [U, S, V] = svd(A);
+```
+
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+
+
+
+**Discretized Matehmatical Functions**
+
+<table>
+<thead>
+<tr>
+<td align="center">
+
+$$H(x,p,t) = \frac{p^2}{2 m} + (1 + \frac{1}{2} \cos t)^2 x^2 $$ 
+
+$$x \in [-1,1], p \in [-10,10], t \in [0,10]$$
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+```C++
+NumericalFunction<double, 2, true> H({
+        Interval<double>::interval(-1,1,100),
+        Interval<double>::interval(-10,10,100),
+        Interval<double>::interval(0,10,100)
+      });
+
+auto x = H.coordinates[0];
+auto p = H.coordinates[1];
+auto t = H.coordinates[2];
+double m = 2;
+
+H = 1/(2*m) * pow(p, 2) + pow(1 + 0.5*cos(t)*x, 2);
+```
+
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+
+
+
+**Vector Calculus**
+
+<table>
+<thead>
+<tr>
+<td align="center">
+
+$\mathbf{E} = \mathbf{\nabla} \cdot \mathbf{\Phi}$
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+```C++
+E = nabla | Phi;
+```
+
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+
+
+
+
+
+**Tensors**
+
+Utilizes index-free tensor notation.  Refer to e.g. [Misner, Thorne, Wheeler, _Gravitation_, 1973](https://en.wikipedia.org/wiki/Gravitation_(book)).
+
+
+<table>
+<thead>
+<tr>
+<td align="center">
+
+$$ \omega(V) = V(\omega) = V^i \omega\\_j $$
+
+$$ g(V,U) =  g_{ij} V^i U^j  = V_i U^i$$
+
+$$ g(V,\cdot) =  g_{ij} V^i  = V_j$$
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+```C++
+Vector<double, 3>::Tensor<L> omega{ 1,25,25 };
+Vector<double, 3>::Tensor<H> V{ 1,2,3 };
+Vector<double, 3>::Tensor<H> U{ 1,1,1 };
+const NullType o;
+Matrix<double, 3, 3>::Tensor<L, L> g{ {1, 0, 0}, {0, pow(r,2), 0}, {0, 0 , pow(r*sin(theta),2)} };
+
+☀ omega(V) ➜ double 126;
+☀ V(omega) ➜ double 126;
+
+☀ g(V, U) ➜ double 126;
+☀ g(V, o) ➜ Vector<double,3>::Tensor<L> {1, 50, 75};
+```
+
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+
+
+
+
+
 
 
 ## Documentation

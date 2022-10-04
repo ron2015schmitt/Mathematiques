@@ -16,6 +16,23 @@ int main() {
   OUTPUT("Mathématiques provides classes and extensive functionality for single- and multi-variate numerical functions, ie formal mathematical functions over a discretized domain.");
 
 
+  CR();
+  GMD_HEADER3("TEST");
+  {
+    GMD_CODE_START("C++");
+    ECHO(Quaternion<double> q{ 1,2,3,4 });
+    ETV(q);
+    ETV(q.abs());
+    ETV(q.polar());
+    ECHO(auto [x, y, z] = q.polar());
+    ETV(x);
+    ETV(y);
+    ETV(z);
+    GMD_CODE_END();
+  }
+  CR();
+
+
   // template <typename GridElement, size_t Ndims, bool TimeCoord, typename TargetElement = GridElement>
   // using NumericalFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims, TimeCoord>>;  {
 
@@ -131,7 +148,7 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER2("Multivariate functions");
 
-  OUTPUT("Using the syntax `NumericalFunction<NumberType, N>` can create a function of `N` variables., e.g. \n$$H(p,x) = \\frac{p^2}{2 m} + \\frac{1}{2} k x^2 $$ ");
+  OUTPUT("Using the syntax `NumericalFunction<NumberType, N>` can create a function of `N` variables., e.g. \n$$H(x,p) = \\frac{p^2}{2 m} + \\frac{1}{2} k x^2 $$ ");
 
 
   {
@@ -177,7 +194,7 @@ int main() {
   GMD_HEADER2("Time-varying functions");
 
   OUTPUT("The syntax `NumericalFunction<NumberType, N, true>` can be used to include time as an independent variable.");
-  OUTPUT("As an example, consider \n$$H(p,x,t) = \\frac{p^2}{2 m} + (1 + \\frac{1}{2} \\cos t)^2 x^2 $$ ");
+  OUTPUT("As an example, consider \n$$H(x,p,t) = \\frac{p^2}{2 m} + (1 + \\frac{1}{2} \\cos t)^2 x^2 $$ ");
 
 
   {
@@ -189,10 +206,11 @@ int main() {
       });
     // Written explciitly in text below so that it is formatted nicely.
     OUTPUT(
-      R"TEXT(NumericalFunction<double, 2> H({
-  Interval<double>::interval(-1, 1, 5),
-  Interval<double>::interval(-10, 10, 5)
-}))TEXT");
+      R"TEXT(NumericalFunction<double, 2, true> H({
+        Interval<double>::interval(-1,1,5),
+        Interval<double>::interval(-10,10,5),
+        Interval<double>::interval(0,10,5)
+      }); )TEXT");
     CR();
     ECHO(auto x = H.coordinates[0]);
     ECHO(auto p = H.coordinates[1]);
