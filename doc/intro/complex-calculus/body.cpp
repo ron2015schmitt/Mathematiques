@@ -20,29 +20,38 @@ int main() {
   CR();
   OUTPUT("$$ f\\colon [-2,2] \\times i[-2,2] \\rightarrow\\mathbb{C}$$");
   CR();
-  OUTPUT("$$ f(z) = e^{10*z} $$");
+  OUTPUT("$$ f(z) = e^{10 z} $$");
   CR();
   OUTPUT("$$ \\frac{df}{dz} $$");
   CR();
   OUTPUT("$$ \\frac{df}{dz^*} $$");
   CR();
 
+  OUTPUT("Code");
+  CR();
 
   {
     GMD_CODE_START("C++");
-    CR();
     ECHO(ComplexCoords<double, false> coords({
       Interval<double>::interval(-2, 2, 5),
       Interval<double>::interval(-2, 2, 5)
       }));
     ECHO(ComplexMathFunction<std::complex<double>, decltype(coords)> f(coords));
 
+    CR();
     ECHO(auto& z = coords.z());
-    ETV(z);
+    ECHO(f() = exp(10*z));
+    GMD_CODE_END();
+
+    CR();
+    OUTPUT("Results");
     CR();
 
-    ECHO(f() = exp(10*z));
+    GMD_CODE_START("C++");
+    ETV(z);
+    CR();
     ETV(f);
+    CR();
     ETV(dz(f));
     ETV(dz_star(f));
     CR();
@@ -61,6 +70,8 @@ int main() {
   CR();
   OUTPUT("$$ \\frac{df}{dz^*} $$");
   CR();
+  OUTPUT("Code");
+  CR();
 
   {
     GMD_CODE_START("C++");
@@ -69,14 +80,18 @@ int main() {
       Interval<double>::interval(-1, 1, 5),
       Interval<double>::interval(-2, 2, 5)
       }));
-
-    // ECHO(auto& cc = f.coords());
     ECHO(auto& z = f.coords().z());
     ECHO(f() = (z + 1)/(z - 1));
+    GMD_CODE_END();
+    CR();
+    OUTPUT("Results");
+    CR();
+    GMD_CODE_START("C++");
     ETV(f);
     ETV(dz(f));
     ETV(dz_star(f));
     GMD_CODE_END();
+    CR();
   }
 
   CR();

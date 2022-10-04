@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.035</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.036</h1>](../../../README.md)
 
 <details>
 
@@ -60,17 +60,25 @@ As an example consider the function:
 
 $$ f\colon [-2,2] \times i[-2,2] \rightarrow\mathbb{C}$$
 
-$$ f(z) = e^{10*z} $$
+$$ f(z) = e^{10 z} $$
 
 $$ \frac{df}{dz} $$
 
 $$ \frac{df}{dz^*} $$
 
-```C++
+Code
 
+```C++
 ComplexCoords<double, false> coords({ Interval<double>::interval(-2, 2, 5), Interval<double>::interval(-2, 2, 5) });
 ComplexMathFunction<std::complex<double>, decltype(coords)> f(coords);
+
 auto& z = coords.z();
+f() = exp(10*z);
+```
+
+Results
+
+```C++
 ☀ z ➜ Matrix<std::complex<double>> 
 {
   {(-2,-2), (-2,-1), (-2,0), (-2,1), (-2,2)},
@@ -80,7 +88,6 @@ auto& z = coords.z();
   {(2,-2), (2,-1), (2,0), (2,1), (2,2)}
 };
 
-f() = exp(10*z);
 ☀ f ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
   {(8.4112e-10,-1.88172e-09), (-1.72946e-09,1.12131e-09), (2.06115e-09,0), (-1.72946e-09,-1.12131e-09), (8.4112e-10,1.88172e-09)},
@@ -89,6 +96,7 @@ f() = exp(10*z);
   {(8988.61,-20109), (-18481.8,11982.9), (22026.5,0), (-18481.8,-11982.9), (8988.61,20109)},
   {(1.97987e+08,-4.42929e+08), (-4.07088e+08,2.6394e+08), (4.85165e+08,0), (-4.07088e+08,-2.6394e+08), (1.97987e+08,4.42929e+08)}
 };
+
 ☀ dz(f) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
   {(-4.94848e+07,1.10706e+08), (1.01747e+08,-6.59691e+07), (-1.21262e+08,0), (1.01747e+08,6.59691e+07), (-4.94848e+07,-1.10706e+08)},
@@ -121,11 +129,18 @@ $$ \frac{df}{dz} $$
 
 $$ \frac{df}{dz^*} $$
 
+Code
+
 ```C++
 
 ComplexMathFunction<std::complex<double>, ComplexCoords<double, false>> f({ Interval<double>::interval(-1, 1, 5), Interval<double>::interval(-2, 2, 5) });
 auto& z = f.coords().z();
 f() = (z + 1)/(z - 1);
+```
+
+Results
+
+```C++
 ☀ f ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
   {(0.5,0.5), (0.2,0.4), (-0,-0), (0.2,-0.4), (0.5,-0.5)},
@@ -151,6 +166,7 @@ f() = (z + 1)/(z - 1);
   {(-inf,-nan), (inf,-nan), (0,-2.5), (-inf,-nan), (inf,-nan)}
 };
 ```
+
 
 
 
