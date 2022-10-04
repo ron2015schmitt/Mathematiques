@@ -34,6 +34,15 @@ namespace mathq {
 
     const Coords& coordinates;
 
+    ComplexMathFunction() : ComplexMathFunction(*(new Coords())) {
+    }
+
+    ComplexMathFunction(const ComplexRectangle<typename Coords::NumberType>& dom) : ComplexMathFunction(*(new Coords(dom))) {
+    }
+
+
+
+
     ComplexMathFunction(const Coords& coords) : coordinates(coords) {
       Dimensions d(rank_value);
       d = Coords::total_num_dims;

@@ -15,6 +15,28 @@
 
     g = d(sqrt(f)); // <-- does NOT compile
 ```
+1. `real` and `imag` of ComplexFunction doesn't work
+
+```C++
+    ComplexCoords<double, false> coords({
+      Interval<double>::interval(-1, 1, 5),
+      Interval<double>::interval(-2, 2, 5)
+      });
+    ETV(coords);
+    // ComplexMathFunction<std::complex<double>> field0(coords);
+    ComplexMathFunction<std::complex<double>, decltype(coords)> field(coords);
+    ComplexMathFunction<std::complex<double>, ComplexCoords<double, false>> field2({
+      Interval<double>::interval(-1, 1, 5),
+      Interval<double>::interval(-2, 2, 5)
+      });
+
+    ECHO(auto& z = coords.z());
+    ECHO(field() = exp(z));
+    ETV(field);
+    ETV(real(field));
+    ETV(imag(field));
+```
+
 
 ### Tensor Fields and Calculus in general coordinates 
 1. contravariant and covariant vectors

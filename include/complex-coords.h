@@ -71,8 +71,9 @@ namespace mathq {
     Interval<GridElement> time_domain;
 
 
-    ComplexCoords() : ParentType() {
-      setup_vector_indices();
+
+
+    ComplexCoords() : ComplexCoords(*(new ComplexRectangle<GridElement>())) {
     }
 
     ComplexCoords(const ComplexRectangle<GridElement>& dom) : ParentType() {
@@ -203,7 +204,7 @@ namespace mathq {
     GridType& y() {
       return coord(1);
     }
-    auto& z() {
+    auto& z() const {
       const Imaginary<SimpleNumberType> i(1);
       // ETV(i*coord(1));
       // ETV(coord(0)+i*coord(1));

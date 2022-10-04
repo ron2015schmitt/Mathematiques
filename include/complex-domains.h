@@ -32,6 +32,7 @@ namespace mathq {
       IntervalType real_interval;
       IntervalType imag_interval;
 
+
       ComplexRectangle() : real_interval(IntervalType()), imag_interval(IntervalType()) {
         verify();
       }
@@ -110,14 +111,14 @@ namespace mathq {
         using SimpleNumberType = typename SimpleNumberTrait<TargetElement>::Type;
         Vector<SimpleNumberType, sizes...> fr = real(f);
         Vector<SimpleNumberType, sizes...> fi = imag(f);
-        ETV(fr);
-        ETV(fi);
+        // ETV(fr);
+        // ETV(fi);
         fr.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
         fi.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
-        ETV(fr);
-        ETV(fi);
+        // ETV(fr);
+        // ETV(fi);
         f = fr + Imaginary<SimpleNumberType>(1)*fi;
-        ETV(f);
+        // ETV(f);
         return f;
       }
       template <typename TargetElement, size_t... sizes> requires (IsComplex<TargetElement>::value)

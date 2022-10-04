@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.033</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.034</h1>](../../../README.md)
 
 <details>
 
@@ -40,7 +40,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.8. [Linear Algebra](../linear-algebra/README.md)<br>
 8.9. [Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
-8.11. [Numerical / Discretized Mathematical Function Objects](../multi-var-calculus/README.md)<br>
+8.11. [Numerical / Discretized Mathematical Function Objects](../numerical-functions/README.md)<br>
 8.12. _Calculus on Complex Number Domains_ <br>
 8.13. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
 8.14. [Tensors](../tensors/README.md)<br>
@@ -53,318 +53,103 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 # 8.12. Calculus on Complex Number Domains
 
-Mathématiques provides classes and extensive functionality for single- and multi-variate numerical functions, ie formal mathematical functions over a discretized domain.
-## Introduction
-The syntax `NumericalFunction<NumberType>` can be used to represent a function of one real variable of type `NumberType`.  This default syntax uses the interval $[0,1]$ for the function domain. 
-With this defintion, we can create a function, e.g. $f(x) = 1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \frac{x^4}{24}$ 
+Mathématiques supports complex domains, ie functions of a complex variable.
+
+### Example 1
+As an example consider the function:
+
+$$ f\colon [-2,2] \times i[-2,2] \rightarrow\mathbb{C}$$
+$$ f(z) = e^{10*z} $$
+$$ \frac{df}{dz} $$
+$$ \frac{df}{dz^*} $$
 ```C++
-NumericalFunction<double> f;
 
-auto x = f.coordinates[0];
-☀ x ➜ 
-{0, 0.25, 0.5, 0.75, 1};
-
-f = 1 + x + pow(x, 2)/2 + pow(x, 3)/6 + pow(x, 4)/24;
-☀ f ➜ {1, 1.28402, 1.64844, 2.11475, 2.70833};
-
-```
-
-To access the data as a Vector, use paretheses, `f()`.  The `NumericalFunction` type is actually a rank 0 (ie. scalar) `CurvilinearField`, which will be discussed in a later section.
-
-```C++
-☀ f() ➜ Vector<double> {1, 1.28402, 1.64844, 2.11475, 2.70833};
-☀ f()[0] ➜ double 1;
-☀ f()[{1, 3}] ➜ Vector<double> {1.28402, 2.11475};
-```
-
-We can easily create a second function, e.g. $g(x) = x + 2 f(x) - 4 \frac{df}{dx}$ 
-
-```C++
-NumericalFunction<double> g;
-
-g = x + 2*f - 4*d(f);
-☀ g ➜ {-2, -2.31738, -2.78646, -3.42676, -4.25};
-```
-
-CurvilinearField - Complex 1D
-☀ rect ➜ ComplexRectangle<double> ( real: [-1, 1], N=5; imag: [-2, 2], N=5 );
-☀ rect.dims() ➜ Dimensions 5⨯5;
-☀ rect.grid_complex() ➜ Matrix<std::complex<double>> 
-{
-  {(-1,-2), (-1,-1), (-1,0), (-1,1), (-1,2)},
-  {(-0.5,-2), (-0.5,-1), (-0.5,0), (-0.5,1), (-0.5,2)},
-  {(0,-2), (0,-1), (0,0), (0,1), (0,2)},
-  {(0.5,-2), (0.5,-1), (0.5,0), (0.5,1), (0.5,2)},
-  {(1,-2), (1,-1), (1,0), (1,1), (1,2)}
-};
-☀ rect.grid_real() ➜ Vector<double> {-1, -0.5, 0, 0.5, 1};
-☀ rect.grid_imag() ➜ Vector<double> {-2, -1, 0, 1, 2};
-☀ coords ➜ ComplexCoords<double,TimeCoord=0> {
-  
-{
-  {-1, -1, -1, -1, -1},
-  {-0.5, -0.5, -0.5, -0.5, -0.5},
-  {0, 0, 0, 0, 0},
-  {0.5, 0.5, 0.5, 0.5, 0.5},
-  {1, 1, 1, 1, 1}
-}; 
-  
-{
-  {-2, -1, 0, 1, 2},
-  {-2, -1, 0, 1, 2},
-  {-2, -1, 0, 1, 2},
-  {-2, -1, 0, 1, 2},
-  {-2, -1, 0, 1, 2}
-}
-}};
-☀ coords.grid_dims() ➜ Dimensions 5⨯5;
-☀ IsComplexCoords<decltype(coords)> ➜ bool true;
-☀ coords.x() ➜ MultiArray_RepeatVector<double, rank=2> 
-{
-  {-1, -1, -1, -1, -1},
-  {-0.5, -0.5, -0.5, -0.5, -0.5},
-  {0, 0, 0, 0, 0},
-  {0.5, 0.5, 0.5, 0.5, 0.5},
-  {1, 1, 1, 1, 1}
-};
-☀ coords.y() ➜ MultiArray_RepeatVector<double, rank=2> 
-{
-  {-2, -1, 0, 1, 2},
-  {-2, -1, 0, 1, 2},
-  {-2, -1, 0, 1, 2},
-  {-2, -1, 0, 1, 2},
-  {-2, -1, 0, 1, 2}
-};
-☀ coords.z() ➜ Matrix<std::complex<double>> 
-{
-  {(-1,-2), (-1,-1), (-1,0), (-1,1), (-1,2)},
-  {(-0.5,-2), (-0.5,-1), (-0.5,0), (-0.5,1), (-0.5,2)},
-  {(0,-2), (0,-1), (0,0), (0,1), (0,2)},
-  {(0.5,-2), (0.5,-1), (0.5,0), (0.5,1), (0.5,2)},
-  {(1,-2), (1,-1), (1,0), (1,1), (1,2)}
-};
-ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords);
-auto& x = coords.x();
-auto& y = coords.y();
+ComplexCoords<double, false> coords({ Interval<double>::interval(-2, 2, 5), Interval<double>::interval(-2, 2, 5) });
+ComplexMathFunction<std::complex<double>, decltype(coords)> f(coords);
 auto& z = coords.z();
-field0() = -3*x + 5*Imaginary<double>(1)*x;
-☀ field0 ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+☀ z ➜ Matrix<std::complex<double>> 
 {
-  {(3,-5), (3,-5), (3,-5), (3,-5), (3,-5)},
-  {(1.5,-2.5), (1.5,-2.5), (1.5,-2.5), (1.5,-2.5), (1.5,-2.5)},
-  {(-0,0), (-0,0), (-0,0), (-0,0), (-0,0)},
-  {(-1.5,2.5), (-1.5,2.5), (-1.5,2.5), (-1.5,2.5), (-1.5,2.5)},
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)}
+  {(-2,-2), (-2,-1), (-2,0), (-2,1), (-2,2)},
+  {(-1,-2), (-1,-1), (-1,0), (-1,1), (-1,2)},
+  {(0,-2), (0,-1), (0,0), (0,1), (0,2)},
+  {(1,-2), (1,-1), (1,0), (1,1), (1,2)},
+  {(2,-2), (2,-1), (2,0), (2,1), (2,2)}
 };
-☀ real(field0) ➜ Scalar<Matrix<double>> 
-{
 
-};
-☀ imag(field0) ➜ Scalar<Matrix<double>> 
+f() = exp(10*z);
+☀ f ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
+  {(8.4112e-10,-1.88172e-09), (-1.72946e-09,1.12131e-09), (2.06115e-09,0), (-1.72946e-09,-1.12131e-09), (8.4112e-10,1.88172e-09)},
+  {(1.85269e-05,-4.14477e-05), (-3.80938e-05,2.46985e-05), (4.53999e-05,0), (-3.80938e-05,-2.46985e-05), (1.85269e-05,4.14477e-05)},
+  {(0.408082,-0.912945), (-0.839072,0.544021), (1,0), (-0.839072,-0.544021), (0.408082,0.912945)},
+  {(8988.61,-20109), (-18481.8,11982.9), (22026.5,0), (-18481.8,-11982.9), (8988.61,20109)},
+  {(1.97987e+08,-4.42929e+08), (-4.07088e+08,2.6394e+08), (4.85165e+08,0), (-4.07088e+08,-2.6394e+08), (1.97987e+08,4.42929e+08)}
+};
+☀ dz(f) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+{
+  {(-4.94848e+07,1.10706e+08), (1.01747e+08,-6.59691e+07), (-1.21262e+08,0), (1.01747e+08,6.59691e+07), (-4.94848e+07,-1.10706e+08)},
+  {(1.64944e+07,-3.69007e+07), (-3.39148e+07,2.1989e+07), (4.04194e+07,0), (-3.39148e+07,-2.1989e+07), (1.64944e+07,3.69007e+07)},
+  {(-1.64929e+07,3.68974e+07), (3.39117e+07,-2.1987e+07), (-4.04157e+07,0), (3.39117e+07,2.1987e+07), (-1.64929e+07,-3.68974e+07)},
+  {(4.95043e+07,-1.10749e+08), (-1.01787e+08,6.5995e+07), (1.2131e+08,0), (-1.01787e+08,-6.5995e+07), (4.95043e+07,1.10749e+08)},
+  {(4.12437e+08,-9.22689e+08), (-8.48027e+08,5.49827e+08), (1.01067e+09,0), (-8.48027e+08,-5.49827e+08), (4.12437e+08,9.22689e+08)}
+};
+☀ dz_star(f) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+{
+  {(-1.73698e-08,6.43998e-09), (5.25748e-09,2.5347e-10), (-1.72329e-26,-1.8087e-09), (-5.25748e-09,2.5347e-10), (1.73698e-08,6.43998e-09)},
+  {(-0.000382596,0.00014185), (0.000115804,5.58304e-06), (1.12938e-21,-3.98393e-05), (-0.000115804,5.58304e-06), (0.000382596,0.00014185)},
+  {(-8.42724,3.12446), (2.55075,0.122975), (4.62593e-18,-0.877519), (-2.55075,0.122975), (8.42724,3.12446)},
+  {(-185622,68820.7), (56184,2708.7), (-7.57912e-13,-19328.6), (-56184,2708.7), (185622,68820.7)},
+  {(-4.0886e+09,1.51588e+09), (1.23753e+09,5.96631e+07), (-1.98682e-08,-4.25742e+08), (-1.23753e+09,5.96631e+07), (4.0886e+09,1.51588e+09)}
+};
 
-};
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ pd(field0, 0) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+```
+
+<br>
+
+### Example 2
+Consider the function:
+
+$$ f\colon [-2,2] \times i[-2,2] \rightarrow\mathbb{C}$$
+$$ f(z) = \frac{z + 1}{z - 1} $$
+$$ \frac{df}{dz} $$
+$$ \frac{df}{dz^*} $$
+```C++
+
+ComplexMathFunction<std::complex<double>, ComplexCoords<double, false>> f({ Interval<double>::interval(-1, 1, 5), Interval<double>::interval(-2, 2, 5) });
+auto& z = f.coords().z();
+f() = (z + 1)/(z - 1);
+☀ f ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)}
+  {(0.5,0.5), (0.2,0.4), (-0,-0), (0.2,-0.4), (0.5,-0.5)},
+  {(0.52,0.64), (0.0769231,0.615385), (-0.333333,-0), (0.0769231,-0.615385), (0.52,-0.64)},
+  {(0.6,0.8), (-0,1), (-1,-0), (-0,-1), (0.6,-0.8)},
+  {(0.764706,0.941176), (0.2,1.6), (-3,-0), (0.2,-1.6), (0.764706,-0.941176)},
+  {(1,1), (1,2), (inf,-nan), (1,-2), (1,-1)}
 };
-☀ IsMultiArray<decltype(field0)> ➜ bool true;
-☀ IsMultiArray<decltype(field0())> ➜ bool true;
-☀ IsComplex<typename NumberTrait<decltype(field0)>::Type>::value ➜ bool true;
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ fr ➜ Vector<double> {3, 1.5, -0, -1.5, -3};
-☀ fi ➜ Vector<double> {-5, -2.5, 0, 2.5, 5};
-☀ fr ➜ Vector<double> {-3, -3, -3, -3, -3};
-☀ fi ➜ Vector<double> {5, 5, 5, 5, 5};
-☀ f ➜ Vector<std::complex<double>> {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)};
-☀ dz(field0) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+☀ dz(f) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)},
-  {(-3,5), (-3,5), (-3,5), (-3,5), (-3,5)}
+  {(0.0158824,0.246471), (-0.184615,0.523077), (-inf,-nan), (-0.184615,-0.523077), (0.0158824,-0.246471)},
+  {(0.0852941,0.308824), (-0.261538,0.507692), (inf,-nan), (-0.261538,-0.507692), (0.0852941,-0.308824)},
+  {(0.242941,0.318235), (0.0307692,1.04615), (-inf,-nan), (0.0307692,-1.04615), (0.242941,-0.318235)},
+  {(0.411176,0.225294), (0.876923,1.21538), (inf,-nan), (0.876923,-1.21538), (0.411176,-0.225294)},
+  {(0.512353,-0.0194118), (2.46154,0.0923077), (inf,-nan), (2.46154,-0.0923077), (0.512353,0.0194118)}
 };
-field0() = -3*x + 5*Imaginary<double>(1)*y;
-☀ dz_star(field0) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
+☀ dz_star(f) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
-  {(0,5), (0,5), (0,5), (0,5), (0,5)},
-  {(0,5), (0,5), (0,5), (0,5), (0,5)},
-  {(0,5), (0,5), (0,5), (0,5), (0,5)},
-  {(0,5), (0,5), (0,5), (0,5), (0,5)},
-  {(0,5), (0,5), (0,5), (0,5), (0,5)}
+  {(-0.1,0.15), (-0.35,-0.3), (0,-0.45), (0.35,-0.3), (0.1,0.15)},
+  {(0.196923,0.467692), (-0.689231,-0.418462), (0,-0.713846), (0.689231,-0.418462), (-0.196923,0.467692)},
+  {(1.6,1.2), (-1.6,-0.6), (0,-1.2), (1.6,-0.6), (-1.6,1.2)},
+  {(8.28235,2.54118), (-4.89412,-0.847059), (0,-1.97647), (4.89412,-0.847059), (-8.28235,2.54118)},
+  {(-inf,-nan), (inf,-nan), (0,-2.5), (-inf,-nan), (inf,-nan)}
 };
-CurvilinearField - Complex 1D with time
-☀ coords.z() ➜ MultiArray<std::complex<double>, rank=3> 
-{
-  {
-    {(-1,-2), (-1,-2)},
-    {(-1,0), (-1,0)},
-    {(-1,2), (-1,2)}
-  },
-  {
-    {(-0.5,-2), (-0.5,-2)},
-    {(-0.5,0), (-0.5,0)},
-    {(-0.5,2), (-0.5,2)}
-  },
-  {
-    {(0,-2), (0,-2)},
-    {(0,0), (0,0)},
-    {(0,2), (0,2)}
-  },
-  {
-    {(0.5,-2), (0.5,-2)},
-    {(0.5,0), (0.5,0)},
-    {(0.5,2), (0.5,2)}
-  },
-  {
-    {(1,-2), (1,-2)},
-    {(1,0), (1,0)},
-    {(1,2), (1,2)}
-  }
-};
-☀ coords.t() ➜ MultiArray_RepeatVector<double, rank=3> 
-{
-  {
-    {0, 1},
-    {0, 1},
-    {0, 1}
-  },
-  {
-    {0, 1},
-    {0, 1},
-    {0, 1}
-  },
-  {
-    {0, 1},
-    {0, 1},
-    {0, 1}
-  },
-  {
-    {0, 1},
-    {0, 1},
-    {0, 1}
-  },
-  {
-    {0, 1},
-    {0, 1},
-    {0, 1}
-  }
-};
-ComplexMathFunction<std::complex<double>, decltype(coords)> field0(coords);
-auto& x = coords.x();
-auto& z = coords.z();
-auto& t = coords.t();
-field0() = exp(2*z) + 5*t;
-☀ field0 ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=1>> 
-{
-  {
-    {(-0.088461,0.102422), (4.91154,0.102422)},
-    {(0.135335,0), (5.13534,0)},
-    {(-0.088461,-0.102422), (4.91154,-0.102422)}
-  },
-  {
-    {(-0.240462,0.278412), (4.75954,0.278412)},
-    {(0.367879,0), (5.36788,0)},
-    {(-0.240462,-0.278412), (4.75954,-0.278412)}
-  },
-  {
-    {(-0.653644,0.756802), (4.34636,0.756802)},
-    {(1,0), (6,0)},
-    {(-0.653644,-0.756802), (4.34636,-0.756802)}
-  },
-  {
-    {(-1.77679,2.0572), (3.22321,2.0572)},
-    {(2.71828,0), (7.71828,0)},
-    {(-1.77679,-2.0572), (3.22321,-2.0572)}
-  },
-  {
-    {(-4.82981,5.59206), (0.170191,5.59206)},
-    {(7.38906,0), (12.3891,0)},
-    {(-4.82981,-5.59206), (0.170191,-5.59206)}
-  }
-};
-☀ pd(field0, 2) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=1>> 
-{
-  {
-    {(5,0), (5,0)},
-    {(5,0), (5,0)},
-    {(5,0), (5,0)}
-  },
-  {
-    {(5,0), (5,0)},
-    {(5,0), (5,0)},
-    {(5,0), (5,0)}
-  },
-  {
-    {(5,0), (5,0)},
-    {(5,0), (5,0)},
-    {(5,0), (5,0)}
-  },
-  {
-    {(5,0), (5,0)},
-    {(5,0), (5,0)},
-    {(5,0), (5,0)}
-  },
-  {
-    {(5,0), (5,0)},
-    {(5,0), (5,0)},
-    {(5,0), (5,0)}
-  }
-};
+```
+
+
 
 <br>
 
 
 
-| ⇦ <br />[Numerical / Discretized Mathematical Function Objects](../multi-var-calculus/README.md)  | [Introduction with Examples](../README.md)<br />Calculus on Complex Number Domains<br /><img width=1000/> | ⇨ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)   |
+| ⇦ <br />[Numerical / Discretized Mathematical Function Objects](../numerical-functions/README.md)  | [Introduction with Examples](../README.md)<br />Calculus on Complex Number Domains<br /><img width=1000/> | ⇨ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

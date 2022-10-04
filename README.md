@@ -1,6 +1,6 @@
 
 
-# Mathématiques 0.42.1-alpha.033
+# Mathématiques 0.42.1-alpha.034
 
 
 ## Phase 1 (in progress): C++ Numerical Library
@@ -153,7 +153,7 @@ auto [U, S, V] = svd(A);
 
 
 
-**Discretized Matehmatical Functions**
+**Discretized Mathematical Functions**
 
 <table>
 <thead>
@@ -162,7 +162,7 @@ auto [U, S, V] = svd(A);
 
 $$H(x,p,t) = \frac{p^2}{2 m} + (1 + \frac{1}{2} \cos t)^2 x^2 $$ 
 
-$$x \in [-1,1], p \in [-10,10], t \in [0,10]$$
+$$x \in [-1,1], \hspace2ex p \in [-10,10], \hspace2ex t \in [0,10]$$
 
 </td>
 </tr>
@@ -234,7 +234,7 @@ Utilizes index-free tensor notation.  Refer to e.g. [Misner, Thorne, Wheeler, _G
 <tr>
 <td align="center">
 
-$$ \omega(V) = V(\omega) = V^i \omega\\_j $$
+$$ \omega(V) = V(\omega) = V^i \omega\_j $$
 
 $$ g(V,U) =  g_{ij} V^i U^j  = V_i U^i$$
 
