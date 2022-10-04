@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.034</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.035</h1>](../../../README.md)
 
 <details>
 
@@ -42,7 +42,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.9. [Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
 8.11. [Numerical / Discretized Mathematical Function Objects](../numerical-functions/README.md)<br>
-8.12. [Calculus on Complex Number Domains](../complex-calculus/README.md)<br>
+8.12. [Functions of Complex Variables](../complex-calculus/README.md)<br>
 8.13. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
 8.14. [Tensors](../tensors/README.md)<br>
 8.15. [Series and transforms](../series-transforms/README.md)<br>
@@ -176,7 +176,7 @@ ETV(std::string(mathq::version));
 ```C++
 ☀ __cplusplus ➜ long 202002;
 ☀ MATHQ_DEBUG ➜ int 0;
-☀ std::string(mathq::version) ➜ std::string 0.42.1-alpha.034;
+☀ std::string(mathq::version) ➜ std::string 0.42.1-alpha.035;
 ```
 This information can also be printed using the function `display::print_mathq_info()`
 ```C++
@@ -184,7 +184,7 @@ display::print_mathq_info();
 ```
 ```C++
                                                                                
-Mathématiques 0.42.1-alpha.034 
+Mathématiques 0.42.1-alpha.035 
 
 compile-time settings
   MATHQ_DEBUG 0 (production) 

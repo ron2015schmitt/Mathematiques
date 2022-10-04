@@ -19,9 +19,13 @@ int main() {
   OUTPUT("As an example consider the function:");
   CR();
   OUTPUT("$$ f\\colon [-2,2] \\times i[-2,2] \\rightarrow\\mathbb{C}$$");
+  CR();
   OUTPUT("$$ f(z) = e^{10*z} $$");
+  CR();
   OUTPUT("$$ \\frac{df}{dz} $$");
+  CR();
   OUTPUT("$$ \\frac{df}{dz^*} $$");
+  CR();
 
 
   {
@@ -50,9 +54,13 @@ int main() {
   OUTPUT("Consider the function:");
   CR();
   OUTPUT("$$ f\\colon [-2,2] \\times i[-2,2] \\rightarrow\\mathbb{C}$$");
+  CR();
   OUTPUT("$$ f(z) = \\frac{z + 1}{z - 1} $$");
+  CR();
   OUTPUT("$$ \\frac{df}{dz} $$");
+  CR();
   OUTPUT("$$ \\frac{df}{dz^*} $$");
+  CR();
 
   {
     GMD_CODE_START("C++");

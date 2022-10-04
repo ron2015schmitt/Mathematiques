@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.034</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.035</h1>](../../../README.md)
 
 <details>
 
@@ -41,7 +41,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 8.9. [Indexing, Masks, Slicing, Sorting, etc.](../sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](../math-functions/README.md)<br>
 8.11. [Numerical / Discretized Mathematical Function Objects](../numerical-functions/README.md)<br>
-8.12. _Calculus on Complex Number Domains_ <br>
+8.12. _Functions of Complex Variables_ <br>
 8.13. [Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)<br>
 8.14. [Tensors](../tensors/README.md)<br>
 8.15. [Series and transforms](../series-transforms/README.md)<br>
@@ -51,7 +51,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-# 8.12. Calculus on Complex Number Domains
+# 8.12. Functions of Complex Variables
 
 Mathématiques supports complex domains, ie functions of a complex variable.
 
@@ -59,9 +59,13 @@ Mathématiques supports complex domains, ie functions of a complex variable.
 As an example consider the function:
 
 $$ f\colon [-2,2] \times i[-2,2] \rightarrow\mathbb{C}$$
+
 $$ f(z) = e^{10*z} $$
+
 $$ \frac{df}{dz} $$
+
 $$ \frac{df}{dz^*} $$
+
 ```C++
 
 ComplexCoords<double, false> coords({ Interval<double>::interval(-2, 2, 5), Interval<double>::interval(-2, 2, 5) });
@@ -110,9 +114,13 @@ f() = exp(10*z);
 Consider the function:
 
 $$ f\colon [-2,2] \times i[-2,2] \rightarrow\mathbb{C}$$
+
 $$ f(z) = \frac{z + 1}{z - 1} $$
+
 $$ \frac{df}{dz} $$
+
 $$ \frac{df}{dz^*} $$
+
 ```C++
 
 ComplexMathFunction<std::complex<double>, ComplexCoords<double, false>> f({ Interval<double>::interval(-1, 1, 5), Interval<double>::interval(-2, 2, 5) });
@@ -150,6 +158,6 @@ f() = (z + 1)/(z - 1);
 
 
 
-| ⇦ <br />[Numerical / Discretized Mathematical Function Objects](../numerical-functions/README.md)  | [Introduction with Examples](../README.md)<br />Calculus on Complex Number Domains<br /><img width=1000/> | ⇨ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)   |
+| ⇦ <br />[Numerical / Discretized Mathematical Function Objects](../numerical-functions/README.md)  | [Introduction with Examples](../README.md)<br />Functions of Complex Variables<br /><img width=1000/> | ⇨ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 
