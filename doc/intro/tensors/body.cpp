@@ -19,7 +19,7 @@ int main() {
   CR();
   OUTPUT("And the *reciprocal basis* is given by the vectors.");
   CR();
-  OUTPUT("$$ \\vec{e}^1 \\doteq \\nabla q^1 , \\enspace \\vec{e}^2 \\doteq \\nabla q^2 , \\enspace \\vec{e}^3 \\doteq \\nabla q^3 $$");
+  OUTPUT("$$ \\vec{e}^1 \\doteq \\vec{\\nabla} q^1 , \\enspace \\vec{e}^2 \\doteq \\vec{\\nabla} q^2 , \\enspace \\vec{e}^3 \\doteq \\vec{\\nabla} q^3 $$");
   CR();
   OUTPUT("The vectors of the basis and reciprocal basis are mutually orthonormal");
   CR();
@@ -107,7 +107,7 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER3("Rank 2 Tensors and the metric tensor");
 
-  OUTPUT("A rank 2 tensor has the same number of elements as a matrix, but now there are four forms: $A_{ij}$, ${A_i}^{j}$, ${A^i}_{\\medspace j}$, and $A^{ij}$");
+  OUTPUT("A rank 2 tensor has the same number of elements as a matrix, but now there are four forms: $A_{ij}$, ${A_i}^{j}$, ${A^i}_{j}$, and $A^{ij}$");
   OUTPUT("The most important rank 2 tensor is the [metric tensor](https://en.wikipedia.org/wiki/Metric_tensor), $g_{ij}$, which determined by the generalized coordinates used.");
   OUTPUT("The metric tensor allows the conversion of a contravariant vector into a covariant vector.");
   CR();

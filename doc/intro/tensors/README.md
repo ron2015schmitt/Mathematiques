@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.031</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.032</h1>](../../../README.md)
 
 <details>
 
@@ -63,7 +63,7 @@ $$ \vec{e}_1 \doteq \frac{\partial \vec{x}}{\partial q^1} , \enspace \vec{e}_2 \
 
 And the *reciprocal basis* is given by the vectors.
 
-$$ \vec{e}^1 \doteq \nabla q^1 , \enspace \vec{e}^2 \doteq \nabla q^2 , \enspace \vec{e}^3 \doteq \nabla q^3 $$
+$$ \vec{e}^1 \doteq \vec{\nabla} q^1 , \enspace \vec{e}^2 \doteq \vec{\nabla} q^2 , \enspace \vec{e}^3 \doteq \vec{\nabla} q^3 $$
 
 The vectors of the basis and reciprocal basis are mutually orthonormal
 
@@ -124,7 +124,7 @@ Vector<double, 3>::Tensor<H> B{ 1,25,25 };
 <br>
 
 ### Rank 2 Tensors and the metric tensor
-A rank 2 tensor has the same number of elements as a matrix, but now there are four forms: $A_{ij}$, ${A_i}^{j}$, ${A^i}_{\medspace j}$, and $A^{ij}$
+A rank 2 tensor has the same number of elements as a matrix, but now there are four forms: $A_{ij}$, ${A_i}^{j}$, ${A^i}_{j}$, and $A^{ij}$
 The most important rank 2 tensor is the [metric tensor](https://en.wikipedia.org/wiki/Metric_tensor), $g_{ij}$, which determined by the generalized coordinates used.
 The metric tensor allows the conversion of a contravariant vector into a covariant vector.
 
