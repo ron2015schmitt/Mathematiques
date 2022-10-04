@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.029</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.030</h1>](../../../README.md)
 
 <details>
 
@@ -58,11 +58,17 @@ Mathématiques supports tensors and generalized coordinates.
 Let $\vec{x}=(x_1,x_2,x_3)$ be Cartesian coordinates for 3D (flat) space.  
 and let $(q_1,q_2,q_3)$ be a set of generalized coordinates.  
 Then the *basis* is given by the vectors.
+
 $$ \vec{e}_1 \doteq \frac{\partial \vec{x}}{\partial q^1} , \enspace \vec{e}_2 \doteq \frac{\partial \vec{x}}{\partial q^2} , \enspace \vec{e}_3 \doteq \frac{\partial \vec{x}}{\partial q^3} $$
+
 And the *reciprocal basis* is given by the vectors.
+
 $$ \vec{e}^1 \doteq \nabla q^1 , \enspace \vec{e}^2 \doteq \nabla q^2 , \enspace \vec{e}^3 \doteq \nabla q^3 $$
+
 The vectors of the basis and reciprocal basis are mutually orthonormal
+
 $$ \vec{e}_i \cdot \vec{e}^j = \delta_{ij}$$
+
 where $\delta_{ij}$ is the [Kroencker delta](https://en.wikipedia.org/wiki/Kronecker_delta) 
 
 <br>
@@ -70,7 +76,9 @@ where $\delta_{ij}$ is the [Kroencker delta](https://en.wikipedia.org/wiki/Krone
 ## Rank 1: Contravariant and Covariant Vectors
 ### Contravariant Vectors
 A vector written in terms of the basis
+
 $$ \vec{A} = \sum_{i=1}^{3}  A^i \vec{e}_i $$
+
 is referred to as contravariant form.  Note that the indices are superscripted or 'high'.
 In Mathématiques a contravariant vector can be declared as follows
 ```C++
@@ -82,7 +90,9 @@ Vector<double, 3>::Tensor<H> A;
 ```
 ### Covariant Vectors
 A vector written in terms of the basis
+
 $$ \vec{A} = \sum_{i=1}^{3}  A_i \vec{e}^i $$
+
 is referred to as covariant form.  Note that the indices are subscripted or 'low'.
 In Mathématiques a covariant vector can be declared as follows
 ```C++
@@ -94,7 +104,9 @@ Vector<double, 3>::Tensor<L> A;
 ```
 ## Inner product of rank 1 tensors
 From the mutual othonormality of the bases, the inner product of two vectors can be written
+
 $$ \vec{A} \cdot \vec{B} = A_i B^i$$
+
 where we have used the [Einstein summation convention](https://en.wikipedia.org/wiki/Einstein_notation).
 Mathématiques uses modern tensor notation, and we write the inner product as either $A(B)$ or $B(A)$.
 ```C++
@@ -115,9 +127,13 @@ Vector<double, 3>::Tensor<H> B{ 1,25,25 };
 A rank 2 tensor has the same number of elements as a matrix, but now there are four forms: $A_{ij}$, $A_i^{\medspace j}$, $A^i_{\medspace j}$, and $A^{ij}$
 The most important rank 2 tensor is the [metric tensor](https://en.wikipedia.org/wiki/Metric_tensor), $g_{ij}$, which determined by the generalized coordinates used.
 The metric tensor allows the conversion of a contravariant vector into a covariant vector.
+
 $$ g(V,\cdot) =  g_{ij} V^i  = V_j$$
+
 It also then allows us to take the inner product of two contravariant vectors
+
 $$ g(V,W) =  g_{ij} V^i W^j  = V_i W^i$$
+
 The code for these operations are given below
 ```C++
 using namespace mathq::TensorIndex::LH;
@@ -148,8 +164,16 @@ const NullType o;
 <br>
 
 ## Tensor Fields and Calculus
-Full support for generalized coordinates (`TensorCoords`) and tensor fields (`TensorField`) is under way.
-* command to print tensors as 2.35 ∇r + 3.43 ∇θ,  or  ∂x/∂r  etc in Euclidean space or dr and ∂/∂r in riemannian space
+* full support for generalized coordinates (`TensorCoords`) and tensor fields (`TensorField`) is under way.
+
+* method to pretty-print tensors, eg
+
+  * contravariant: 2.35 ∇r + 3.43 ∇θ
+
+  * covariant:  5.0 ∂**x**/∂r + 4.32 ∂**x**/∂θ
+
+* Support for tensors in Riemannian geometry, differential forms etc
+
 
 
 | ⇦ <br />[Vector Calculus and Curvilinear Coordinates](../vector-calculus/README.md)  | [Introduction with Examples](../README.md)<br />Tensors<br /><img width=1000/> | ⇨ <br />[Series and transforms](../series-transforms/README.md)   |

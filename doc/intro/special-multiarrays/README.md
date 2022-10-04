@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.029</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.030</h1>](../../../README.md)
 
 <details>
 
@@ -55,7 +55,6 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-Mathématiques 
 
 <br>
 

@@ -10,11 +10,6 @@ int main() {
   CR();
   CR();
 
-  // using namespace mathq::unit_quaternion;
-  // using namespace mathq::unit_imaginary;
-  // using std::sqrt;
-
-  OUTPUT("Mathématiques ");
 
 
   GMD_VSPACE();

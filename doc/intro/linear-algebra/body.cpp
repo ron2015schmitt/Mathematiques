@@ -29,7 +29,7 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER2("Inner Product, Outer Product, Transpose");
 
-  OUTPUT("Keep in mind that in Mathématiques, a `Vector<double>` (aka `MultiArray<double,1>`) is neither a column nor a row vector. Instead vectors `Vector<double>` are denoted as vectors are denoted in physics*.");
+  OUTPUT("Keep in mind that in Mathématiques, a `Vector<double>` (aka `MultiArray<double,1>`) is neither a column nor a row vector. Instead vectors `Vector<double>` are denoted as vectors are denoted in physics.");
   OUTPUT("Of course, if you really want row and column vectors, use `Matrix<double,N,1>` and `Matrix<double,N,1>` respectively, although this is not necessary. (Refer to the linear algebra notation section below.");
 
   GMD_VSPACE();

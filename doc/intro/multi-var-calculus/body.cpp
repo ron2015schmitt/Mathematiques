@@ -265,7 +265,7 @@ int main() {
 
   CR();
   GMD_HEADER3("Quaternion-valued functions");
-  OUTPUT("As an example consider the complex-valued function:");
+  OUTPUT("As an example consider the quaternion-valued function:");
   CR();
   OUTPUT("$$ f\\colon [0,1] \\times [0,1]\\rightarrow\\mathbb{H}$$");
   OUTPUT("$$ f(x,y) = e^{i \\frac{\\pi}{2} + j \\pi x + k \\pi y} $$");

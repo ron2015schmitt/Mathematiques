@@ -19,7 +19,7 @@ int main() {
   OUTPUT("Mathématiques supplements C++ functionality with several more functions.");
 
   CR();
-  OUTPUT("Mathématiques extends these functions to vectors, matrices, and multiarrays in a element-wise fashion.");
+  OUTPUT("Mathématiques extends these functions to **vectors**, **matrices**, **multiarrays**, and **numerical functions** (introduced in a later section) in a element-wise fashion.");
   OUTPUT("Mathématiques also extends many of these functions to complex numbers, imaginary numbers, and quaterions.");
 
 

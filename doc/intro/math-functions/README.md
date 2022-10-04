@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.029</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.030</h1>](../../../README.md)
 
 <details>
 
@@ -59,7 +59,7 @@ C++ supports a wide variety of mathematical functions including trig functions, 
 
 Mathématiques supplements C++ functionality with several more functions.
 
-Mathématiques extends these functions to vectors, matrices, and multiarrays in a element-wise fashion.
+Mathématiques extends these functions to **vectors**, **matrices**, **multiarrays**, and **numerical functions** (introduced in a later section) in a element-wise fashion.
 Mathématiques also extends many of these functions to complex numbers, imaginary numbers, and quaterions.
 
 The following are basic mathematical functions for manipulating numbers.
