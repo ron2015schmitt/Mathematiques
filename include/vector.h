@@ -431,12 +431,13 @@ namespace mathq {
     Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
       size_t depth_index = di;
       size_t resize_depth = parent_rdims.size();
-      const size_t newSize = parent_rdims[depth_index++][0];
+      ETV(parent_rdims);
+      const size_t newSize = parent_rdims[depth_index][0];
       if constexpr (is_dynamic_value) {
         resize(newSize);
       }
       if constexpr (depth_value > 1) {
-        if (depth_index < resize_depth) {
+        if (++depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {
             data_[ii].recurse_resize(parent_rdims, depth_index);
           }
@@ -678,6 +679,11 @@ namespace mathq {
     Type& operator=(const T& t) {
       return set_equal_to(t);
     }
+
+    Type& operator=(const Type& rhs) {
+      return set_equal_to(rhs);
+    }
+
 
 
     // Assign all elements to the same constant value
@@ -1362,7 +1368,7 @@ namespace mathq {
       }
       s += StyledString::get(ANGLE2).get();
       return s;
-    }
+      }
 
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
@@ -1650,7 +1656,7 @@ namespace mathq {
       class Tensor;
 
 
-  };
+    };
 
 
   // template <typename Element, size_t... sizes>
@@ -1786,7 +1792,7 @@ namespace mathq {
 
 
 
-};
+  };
 
 
 #endif 

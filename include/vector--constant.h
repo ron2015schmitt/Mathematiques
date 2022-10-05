@@ -347,12 +347,12 @@ namespace mathq {
     Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
       size_t depth_index = di;
       size_t resize_depth = parent_rdims.size();
-      const size_t newSize = parent_rdims[depth_index++][0];
+      const size_t newSize = parent_rdims[depth_index][0];
       if constexpr (is_dynamic_value) {
         resize(newSize);
       }
       if constexpr (depth_value > 1) {
-        if (depth_index < resize_depth) {
+        if (++depth_index < resize_depth) {
           value.recurse_resize(parent_rdims, depth_index);
         }
       }

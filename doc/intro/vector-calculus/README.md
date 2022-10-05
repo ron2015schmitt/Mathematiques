@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
 
 <details>
 
@@ -54,19 +54,102 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 # 8.13. Vector Calculus and Curvilinear Coordinates
 
 
-
 Mathématiques provides classes and extensive functionality for curvilinear coordinate systems as well as scalar, vector, and rank >=2 functions using these coordinates.
+
+<br>
+
+## Curvilinear Coordinates
+
+### Cartesian Coordinates
+```C++
+CartesianCoords<double, 2> coords({ Interval<double>::interval(-1,1,5), Interval<double>::interval(2,3,3), });
+CurvilinearField<double, 0, decltype(coords)> field0(coords);
+auto& x = coords.x();
+auto& y = coords.y();
+field0 = -3*x + 2*y;
+☀ field0 ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
+{
+  {7, 8, 9},
+  {5.5, 6.5, 7.5},
+  {4, 5, 6},
+  {2.5, 3.5, 4.5},
+  {1, 2, 3}
+};
+```
+
+
+### Polar Coordinates
+```C++
+PolarCoords<double> coords({ Interval<double>::interval(-1,1,5), Interval<double>::interval(2,3,3), });
+```
+
+
+### Polar Coordinates
+```C++
+PolarCoords<double, true> coords({ Interval<double>::interval(-1,1,5), Interval<double>::interval(2,3,3), Interval<double>::interval(0,1,3), });
+```
+
+
+<br>
+
+## Vector fields
 
 ### TEST
 ```C++
-Quaternion<double> q{ 1,2,3,4 };
-☀ q ➜ Quaternion<double> 1 + 2*i + 3*j + 4*k;
-☀ q.abs() ➜ double 5.47723;
-☀ q.polar() ➜ std::tuple<double,double,Vector<double,3>> {5.47723,1.38719,{0.371391, 0.557086, 0.742781}};
-auto [x, y, z] = q.polar();
-☀ x ➜ double 5.47723;
-☀ y ➜ double 1.38719;
-☀ z ➜ Vector<double,3> {0.371391, 0.557086, 0.742781};
+CartesianCoords<double, 2, false> coords({ Interval<double>::interval(-1,1,5), Interval<double>::interval(2,3,3), });
+CurvilinearField<double, 0, decltype(coords)> v(coords);
+auto& x = coords.x();
+auto& y = coords.y();
+v = -3*x + 2*y;
+☀ v ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
+{
+  {7, 8, 9},
+  {5.5, 6.5, 7.5},
+  {4, 5, 6},
+  {2.5, 3.5, 4.5},
+  {1, 2, 3}
+};
+```
+
+
+<br>
+
+## Fields of any rank
+
+### TEST
+```C++
+CartesianCoords<double, 2, false> coords({ Interval<double>::interval(-1,1,5), Interval<double>::interval(2,3,3), });
+CurvilinearField<double, 0, decltype(coords)> field0(coords);
+auto& x = coords.x();
+auto& y = coords.y();
+field0 = -3*x + 2*y;
+☀ field0 ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
+{
+  {7, 8, 9},
+  {5.5, 6.5, 7.5},
+  {4, 5, 6},
+  {2.5, 3.5, 4.5},
+  {1, 2, 3}
+};
+```
+
+
+<br>
+
+## Maxwell's Equations
+
+### TEST
+```C++
+CartesianCoords<double, 3, true> coords({ Interval<double>::interval(-1,1,5), Interval<double>::interval(-1,1,5), Interval<double>::interval(-1,1,5), Interval<double>::interval(0,1,5), });
+auto& x = coords.x();
+auto& y = coords.y();
+auto& z = coords.z();
+auto& t = coords.t();
+CurvilinearField<double, 0, decltype(coords)> Phi(coords);
+Phi = -3*x + 2*y;
+CurvilinearField<double, 0, decltype(coords)> Phi2(coords);
+Phi2 = -3*x + 2*y;
+☀ alltrue(approx(Phi(), Phi2())) ➜ bool true;
 ```
 
 
@@ -89,7 +172,7 @@ CurvilinearField - Scalar 2D
 CurvilinearField<double, 0, decltype(coords)> field0(coords);
 auto& x = coords.x();
 auto& y = coords.y();
-field0() = -3*x + 2*y;
+field0 = -3*x + 2*y;
 ☀ field0 ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {7, 8, 9},
@@ -136,6 +219,35 @@ partials of a 2D grid
   {0, 0, 0}
 };
 partials of a 2D Scalar CurvilinearField
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Matrix<double>> 
+{
+
+};
+☀ x ➜ Scalar<Matrix<double>> 
+{
+  {-3, -3, -3},
+  {-3, -3, -3},
+  {-3, -3, -3},
+  {-3, -3, -3},
+  {-3, -3, -3}
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 5⨯3};
+☀ data_ ➜ Matrix<double> 
+{
+
+};
+DONE
+☀ x() ➜ Matrix<double> 
+{
+  {-3, -3, -3},
+  {-3, -3, -3},
+  {-3, -3, -3},
+  {-3, -3, -3},
+  {-3, -3, -3}
+};
 ☀ pd(field0, 0) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {-3, -3, -3},
@@ -143,6 +255,35 @@ partials of a 2D Scalar CurvilinearField
   {-3, -3, -3},
   {-3, -3, -3},
   {-3, -3, -3}
+};
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Matrix<double>> 
+{
+
+};
+☀ x ➜ Scalar<Matrix<double>> 
+{
+  {2, 2, 2},
+  {2, 2, 2},
+  {2, 2, 2},
+  {2, 2, 2},
+  {2, 2, 2}
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 5⨯3};
+☀ data_ ➜ Matrix<double> 
+{
+
+};
+DONE
+☀ x() ➜ Matrix<double> 
+{
+  {2, 2, 2},
+  {2, 2, 2},
+  {2, 2, 2},
+  {2, 2, 2},
+  {2, 2, 2}
 };
 ☀ pd(field0, 1) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
 {
@@ -184,6 +325,7 @@ Gradient of a 2D grid
   {1, 1, 1}
 }};
 Gradient of a 2D CurvilinearField
+☀ parent_rdims ➜ RecursiveDimensions {2, 5⨯3};
 ☀ grad(field0) ➜ CurvilinearField<double,1,CartesianCoords<double,Ndims=2,TimeCoord=false>> {
 {
   {-3, -3, -3},
@@ -201,6 +343,8 @@ Gradient of a 2D CurvilinearField
 }};
 Divergence of a 2D CurvilinearField - ex 1
 auto A = grad(field0);
+☀ parent_rdims ➜ RecursiveDimensions {2, 5⨯3};
+☀ parent_rdims ➜ RecursiveDimensions {2, 5⨯3};
 ☀ A ➜ CurvilinearField<double,1,CartesianCoords<double,Ndims=2,TimeCoord=false>> {
 {
   {-3, -3, -3},
@@ -216,6 +360,35 @@ auto A = grad(field0);
   {2, 2, 2},
   {2, 2, 2}
 }};
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Matrix<double>> 
+{
+
+};
+☀ x ➜ Scalar<Matrix<double>> 
+{
+  {0, 0, 0},
+  {0, 0, 0},
+  {0, 0, 0},
+  {0, 0, 0},
+  {0, 0, 0}
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 5⨯3};
+☀ data_ ➜ Matrix<double> 
+{
+
+};
+DONE
+☀ x() ➜ Matrix<double> 
+{
+  {0, 0, 0},
+  {0, 0, 0},
+  {0, 0, 0},
+  {0, 0, 0},
+  {0, 0, 0}
+};
 ☀ div(A) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {0, 0, 0},
@@ -225,7 +398,46 @@ auto A = grad(field0);
   {0, 0, 0}
 };
 Divergence of a 2D CurvilinearField - ex 2
-field0() = sqrt(x*x+y*y);
+field0 = sqrt(x*x+y*y);
+☀ x ➜ Matrix<double> 
+{
+  {5, 7.25, 10},
+  {4.25, 6.5, 9.25},
+  {4, 6.25, 9},
+  {4.25, 6.5, 9.25},
+  {5, 7.25, 10}
+};
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.25;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 4.25;
+inside []
+☀ x_[i] ➜ double 6.5;
+inside []
+☀ x_[i] ➜ double 9.25;
+inside []
+☀ x_[i] ➜ double 4;
+inside []
+☀ x_[i] ➜ double 6.25;
+inside []
+☀ x_[i] ➜ double 9;
+inside []
+☀ x_[i] ➜ double 4.25;
+inside []
+☀ x_[i] ➜ double 6.5;
+inside []
+☀ x_[i] ➜ double 9.25;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.25;
+inside []
+☀ x_[i] ➜ double 10;
+☀ parent_rdims ➜ RecursiveDimensions {2, 5⨯3};
 ☀ grad(field0) ➜ CurvilinearField<double,1,CartesianCoords<double,Ndims=2,TimeCoord=false>> {
 {
   {-0.445087, -0.370614, -0.315896},
@@ -241,6 +453,36 @@ field0() = sqrt(x*x+y*y);
   {0.971999, 0.979828, 0.987658},
   {0.899848, 0.92621, 0.952571}
 }};
+☀ parent_rdims ➜ RecursiveDimensions {2, 5⨯3};
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Matrix<double>> 
+{
+
+};
+☀ x ➜ Scalar<Matrix<double>> 
+{
+  {0.389616, 0.365133, 0.33398},
+  {0.47427, 0.393548, 0.335884},
+  {0.499185, 0.399716, 0.333215},
+  {0.47427, 0.393548, 0.335884},
+  {0.389616, 0.365133, 0.33398}
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 5⨯3};
+☀ data_ ➜ Matrix<double> 
+{
+
+};
+DONE
+☀ x() ➜ Matrix<double> 
+{
+  {0.389616, 0.365133, 0.33398},
+  {0.47427, 0.393548, 0.335884},
+  {0.499185, 0.399716, 0.333215},
+  {0.47427, 0.393548, 0.335884},
+  {0.389616, 0.365133, 0.33398}
+};
 ☀ div(grad(field0)) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {0.389616, 0.365133, 0.33398},
@@ -374,12 +616,13 @@ CartesianCoords<double, 2, true> coords({ Interval<double>::interval(-1,1,3), In
 ☀ coords.basis() ➜ Vector<Vector<double,2>,2> {{1, 0}, {0, 1}};
 ☀ coords.at(0, 0, 0) ➜ CartesianCoords<double,Ndims=2,TimeCoord=true>::Point (x=-1, y=-1, t=0);
 ☀ coords.at(1, 2, 2) ➜ CartesianCoords<double,Ndims=2,TimeCoord=true>::Point (x=0, y=1, t=2);
-☀ coords.at(0, 0, 0)+coords.at(1, 2, 2) ➜ Vector<double> {-1, 0, 2};
+☀ coords.at(0, 0, 0)+coords.at(1, 2, 2) ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{-1, 0, 2};
 2+1D Scalar CurvilinearField
 CurvilinearField<double, 0, decltype(coords)> field(coords);
 auto& x = coords.x();
 auto& y = coords.y();
-field() = -4*x + 5*y;
+field = -4*x + 5*y;
 ☀ field ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -399,6 +642,55 @@ field() = -4*x + 5*y;
   }
 };
 2+1D Partials of Scalar CurvilinearField
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<MultiArray<double, rank=3>> 
+{
+
+};
+☀ x ➜ Scalar<MultiArray<double, rank=3>> 
+{
+  {
+    {-4, -4, -4},
+    {-4, -4, -4},
+    {-4, -4, -4}
+  },
+  {
+    {-4, -4, -4},
+    {-4, -4, -4},
+    {-4, -4, -4}
+  },
+  {
+    {-4, -4, -4},
+    {-4, -4, -4},
+    {-4, -4, -4}
+  }
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯3⨯3};
+☀ data_ ➜ MultiArray<double, rank=3> 
+{
+
+};
+DONE
+☀ x() ➜ MultiArray<double, rank=3> 
+{
+  {
+    {-4, -4, -4},
+    {-4, -4, -4},
+    {-4, -4, -4}
+  },
+  {
+    {-4, -4, -4},
+    {-4, -4, -4},
+    {-4, -4, -4}
+  },
+  {
+    {-4, -4, -4},
+    {-4, -4, -4},
+    {-4, -4, -4}
+  }
+};
 ☀ pd(field, 0) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -417,6 +709,55 @@ field() = -4*x + 5*y;
     {-4, -4, -4}
   }
 };
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<MultiArray<double, rank=3>> 
+{
+
+};
+☀ x ➜ Scalar<MultiArray<double, rank=3>> 
+{
+  {
+    {5, 5, 5},
+    {5, 5, 5},
+    {5, 5, 5}
+  },
+  {
+    {5, 5, 5},
+    {5, 5, 5},
+    {5, 5, 5}
+  },
+  {
+    {5, 5, 5},
+    {5, 5, 5},
+    {5, 5, 5}
+  }
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯3⨯3};
+☀ data_ ➜ MultiArray<double, rank=3> 
+{
+
+};
+DONE
+☀ x() ➜ MultiArray<double, rank=3> 
+{
+  {
+    {5, 5, 5},
+    {5, 5, 5},
+    {5, 5, 5}
+  },
+  {
+    {5, 5, 5},
+    {5, 5, 5},
+    {5, 5, 5}
+  },
+  {
+    {5, 5, 5},
+    {5, 5, 5},
+    {5, 5, 5}
+  }
+};
 ☀ pd(field, 1) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -433,6 +774,55 @@ field() = -4*x + 5*y;
     {5, 5, 5},
     {5, 5, 5},
     {5, 5, 5}
+  }
+};
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<MultiArray<double, rank=3>> 
+{
+
+};
+☀ x ➜ Scalar<MultiArray<double, rank=3>> 
+{
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  },
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  },
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  }
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯3⨯3};
+☀ data_ ➜ MultiArray<double, rank=3> 
+{
+
+};
+DONE
+☀ x() ➜ MultiArray<double, rank=3> 
+{
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  },
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  },
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
   }
 };
 ☀ pd(field, 2) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
@@ -454,6 +844,7 @@ field() = -4*x + 5*y;
   }
 };
 2+1D Gradient of Scalar CurvilinearField
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯3⨯3};
 ☀ grad(field) ➜ CurvilinearField<double,1,CartesianCoords<double,Ndims=2,TimeCoord=true>> {
 {
   {
@@ -491,6 +882,8 @@ field() = -4*x + 5*y;
 }};
 Divergence of a 2D+1 CurvilinearField - ex 1
 auto A = grad(field);
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯3⨯3};
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯3⨯3};
 ☀ A ➜ CurvilinearField<double,1,CartesianCoords<double,Ndims=2,TimeCoord=true>> {
 {
   {
@@ -526,6 +919,55 @@ auto A = grad(field);
     {5, 5, 5}
   }
 }};
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<MultiArray<double, rank=3>> 
+{
+
+};
+☀ x ➜ Scalar<MultiArray<double, rank=3>> 
+{
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  },
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  },
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  }
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯3⨯3};
+☀ data_ ➜ MultiArray<double, rank=3> 
+{
+
+};
+DONE
+☀ x() ➜ MultiArray<double, rank=3> 
+{
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  },
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  },
+  {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  }
+};
 ☀ div(A) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -545,7 +987,80 @@ auto A = grad(field);
   }
 };
 Divergence of a 2D+1 CurvilinearField - ex 2
-field() = sqrt(x*x+y*y);
+field = sqrt(x*x+y*y);
+☀ x ➜ MultiArray<double, rank=3> 
+{
+  {
+    {2, 2, 2},
+    {1, 1, 1},
+    {2, 2, 2}
+  },
+  {
+    {1, 1, 1},
+    {0, 0, 0},
+    {1, 1, 1}
+  },
+  {
+    {2, 2, 2},
+    {1, 1, 1},
+    {2, 2, 2}
+  }
+};
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 2;
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯3⨯3};
 ☀ grad(field) ➜ CurvilinearField<double,1,CartesianCoords<double,Ndims=2,TimeCoord=true>> {
 {
   {
@@ -581,6 +1096,56 @@ field() = sqrt(x*x+y*y);
     {0.828427, 0.828427, 0.828427}
   }
 }};
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯3⨯3};
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<MultiArray<double, rank=3>> 
+{
+
+};
+☀ x ➜ Scalar<MultiArray<double, rank=3>> 
+{
+  {
+    {1.65685, 1.65685, 1.65685},
+    {2.82843, 2.82843, 2.82843},
+    {1.65685, 1.65685, 1.65685}
+  },
+  {
+    {2.82843, 2.82843, 2.82843},
+    {4, 4, 4},
+    {2.82843, 2.82843, 2.82843}
+  },
+  {
+    {1.65685, 1.65685, 1.65685},
+    {2.82843, 2.82843, 2.82843},
+    {1.65685, 1.65685, 1.65685}
+  }
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯3⨯3};
+☀ data_ ➜ MultiArray<double, rank=3> 
+{
+
+};
+DONE
+☀ x() ➜ MultiArray<double, rank=3> 
+{
+  {
+    {1.65685, 1.65685, 1.65685},
+    {2.82843, 2.82843, 2.82843},
+    {1.65685, 1.65685, 1.65685}
+  },
+  {
+    {2.82843, 2.82843, 2.82843},
+    {4, 4, 4},
+    {2.82843, 2.82843, 2.82843}
+  },
+  {
+    {1.65685, 1.65685, 1.65685},
+    {2.82843, 2.82843, 2.82843},
+    {1.65685, 1.65685, 1.65685}
+  }
+};
 ☀ div(grad(field)) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -649,6 +1214,78 @@ PolarCoords<double, false> coords({ Interval<double>::o_interval_c(0,1,3), Inter
   {1, 1, 1, 1, 1}
 }}
 };
+☀ x ➜ Matrix<double> 
+{
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655}
+};
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x ➜ Matrix<double> 
+{
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655}
+};
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
 ☀ coords.basis_vec(0) ➜ Vector<Matrix<double>,2> {
 {
   {1, 0.309017, -0.809017, -0.809017, 0.309017},
@@ -660,6 +1297,174 @@ PolarCoords<double, false> coords({ Interval<double>::o_interval_c(0,1,3), Inter
   {0, 0.951057, 0.587785, -0.587785, -0.951057},
   {0, 0.951057, 0.587785, -0.587785, -0.951057}
 }};
+☀ x ➜ Matrix<double> 
+{
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655}
+};
+☀ x ➜ Matrix<double> inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+
+{
+  {0, 0.951057, 0.587785, -0.587785, -0.951057},
+  {0, 0.951057, 0.587785, -0.587785, -0.951057},
+  {0, 0.951057, 0.587785, -0.587785, -0.951057}
+};
+inside []
+inside []
+☀ x_[i] ➜ double 0;
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+inside []
+☀ x_[i] ➜ double 1.25664;
+☀ x_[i] ➜ double 0.951057;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+inside []
+☀ x_[i] ➜ double 2.51327;
+☀ x_[i] ➜ double 0.587785;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+inside []
+☀ x_[i] ➜ double 3.76991;
+☀ x_[i] ➜ double -0.587785;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x_[i] ➜ double -0.951057;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+inside []
+☀ x_[i] ➜ double 0;
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+inside []
+☀ x_[i] ➜ double 1.25664;
+☀ x_[i] ➜ double 0.951057;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+inside []
+☀ x_[i] ➜ double 2.51327;
+☀ x_[i] ➜ double 0.587785;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+inside []
+☀ x_[i] ➜ double 3.76991;
+☀ x_[i] ➜ double -0.587785;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x_[i] ➜ double -0.951057;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+inside []
+☀ x_[i] ➜ double 0;
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+inside []
+☀ x_[i] ➜ double 1.25664;
+☀ x_[i] ➜ double 0.951057;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+inside []
+☀ x_[i] ➜ double 2.51327;
+☀ x_[i] ➜ double 0.587785;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+inside []
+☀ x_[i] ➜ double 3.76991;
+☀ x_[i] ➜ double -0.587785;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x_[i] ➜ double -0.951057;
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x ➜ Matrix<double> 
+{
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655}
+};
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
 ☀ coords.basis_vec(1) ➜ Vector<Matrix<double>,2> {
 {
   {-0, -0.951057, -0.587785, 0.587785, 0.951057},
@@ -671,6 +1476,248 @@ PolarCoords<double, false> coords({ Interval<double>::o_interval_c(0,1,3), Inter
   {1, 0.309017, -0.809017, -0.809017, 0.309017},
   {1, 0.309017, -0.809017, -0.809017, 0.309017}
 }};
+☀ x ➜ Matrix<double> 
+{
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655}
+};
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x ➜ Matrix<double> 
+{
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655}
+};
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯5};
+☀ x ➜ Matrix<double> 
+{
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655}
+};
+☀ x ➜ Matrix<double> inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+
+{
+  {0, 0.951057, 0.587785, -0.587785, -0.951057},
+  {0, 0.951057, 0.587785, -0.587785, -0.951057},
+  {0, 0.951057, 0.587785, -0.587785, -0.951057}
+};
+inside []
+inside []
+☀ x_[i] ➜ double 0;
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+inside []
+☀ x_[i] ➜ double 1.25664;
+☀ x_[i] ➜ double 0.951057;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+inside []
+☀ x_[i] ➜ double 2.51327;
+☀ x_[i] ➜ double 0.587785;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+inside []
+☀ x_[i] ➜ double 3.76991;
+☀ x_[i] ➜ double -0.587785;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x_[i] ➜ double -0.951057;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+inside []
+☀ x_[i] ➜ double 0;
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+inside []
+☀ x_[i] ➜ double 1.25664;
+☀ x_[i] ➜ double 0.951057;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+inside []
+☀ x_[i] ➜ double 2.51327;
+☀ x_[i] ➜ double 0.587785;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+inside []
+☀ x_[i] ➜ double 3.76991;
+☀ x_[i] ➜ double -0.587785;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x_[i] ➜ double -0.951057;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+inside []
+☀ x_[i] ➜ double 0;
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+inside []
+☀ x_[i] ➜ double 1.25664;
+☀ x_[i] ➜ double 0.951057;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+inside []
+☀ x_[i] ➜ double 2.51327;
+☀ x_[i] ➜ double 0.587785;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+inside []
+☀ x_[i] ➜ double 3.76991;
+☀ x_[i] ➜ double -0.587785;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x_[i] ➜ double -0.951057;
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ x ➜ Matrix<double> 
+{
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655},
+  {0, 1.25664, 2.51327, 3.76991, 5.02655}
+};
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 1.25664;
+inside []
+☀ x_[i] ➜ double 2.51327;
+inside []
+☀ x_[i] ➜ double 3.76991;
+inside []
+☀ x_[i] ➜ double 5.02655;
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯5};
 ☀ coords.basis() ➜ Vector<Vector<Matrix<double>,2>,2> {{
 {
   {1, 0.309017, -0.809017, -0.809017, 0.309017},
@@ -694,12 +1741,13 @@ PolarCoords<double, false> coords({ Interval<double>::o_interval_c(0,1,3), Inter
 }}};
 ☀ coords.at(0, 0) ➜ PolarCoords<double,Ndims=2,TimeCoord=false>::Point (r=0.333333, 𝜑=0);
 ☀ coords.at(1, 2) ➜ PolarCoords<double,Ndims=2,TimeCoord=false>::Point (r=0.666667, 𝜑=2.51327);
-☀ coords.at(0, 0)+coords.at(1, 2) ➜ Vector<double> {1, 2.51327};
+☀ coords.at(0, 0)+coords.at(1, 2) ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {2};
+{1, 2.51327};
 2D PolarCoords Scalar CurvilinearField
 CurvilinearField<double, 0, decltype(coords)> field(coords);
 auto& r = coords.r();
 auto& phi = coords.phi();
-field() = -4*r + 5*phi;
+field = -4*r + 5*phi;
 ☀ field ➜ CurvilinearField<double,0,PolarCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {-1.33333, 4.94985, 11.233, 17.5162, 23.7994},
@@ -707,13 +1755,88 @@ field() = -4*r + 5*phi;
   {-4, 2.28319, 8.56637, 14.8496, 21.1327}
 };
 2D  PolarCoords Partials of Scalar CurvilinearField
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Matrix<double>> 
+{
+
+};
+☀ x ➜ Scalar<Matrix<double>> 
+{
+  {-4, -4, -4, -4, -4},
+  {-4, -4, -4, -4, -4},
+  {-4, -4, -4, -4, -4}
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯5};
+☀ data_ ➜ Matrix<double> 
+{
+
+};
+DONE
+☀ x() ➜ Matrix<double> 
+{
+  {-4, -4, -4, -4, -4},
+  {-4, -4, -4, -4, -4},
+  {-4, -4, -4, -4, -4}
+};
 ☀ pd(field, 0) ➜ CurvilinearField<double,0,PolarCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {-4, -4, -4, -4, -4},
   {-4, -4, -4, -4, -4},
   {-4, -4, -4, -4, -4}
 };
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Matrix<double>> 
+{
+
+};
+☀ x ➜ Scalar<Matrix<double>> 
+{
+  {5, 5, 5, 5, 5},
+  {5, 5, 5, 5, 5},
+  {5, 5, 5, 5, 5}
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯5};
+☀ data_ ➜ Matrix<double> 
+{
+
+};
+DONE
+☀ x() ➜ Matrix<double> 
+{
+  {5, 5, 5, 5, 5},
+  {5, 5, 5, 5, 5},
+  {5, 5, 5, 5, 5}
+};
 ☀ pd(field, 1) ➜ CurvilinearField<double,0,PolarCoords<double,Ndims=2,TimeCoord=false>> 
+{
+  {5, 5, 5, 5, 5},
+  {5, 5, 5, 5, 5},
+  {5, 5, 5, 5, 5}
+};
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Matrix<double>> 
+{
+
+};
+☀ x ➜ Scalar<Matrix<double>> 
+{
+  {5, 5, 5, 5, 5},
+  {5, 5, 5, 5, 5},
+  {5, 5, 5, 5, 5}
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯5};
+☀ data_ ➜ Matrix<double> 
+{
+
+};
+DONE
+☀ x() ➜ Matrix<double> 
 {
   {5, 5, 5, 5, 5},
   {5, 5, 5, 5, 5},
@@ -726,6 +1849,7 @@ field() = -4*r + 5*phi;
   {5, 5, 5, 5, 5}
 };
 2D PolarCoords Gradient of Scalar CurvilinearField
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯5};
 ☀ grad(field) ➜ CurvilinearField<double,1,PolarCoords<double,Ndims=2,TimeCoord=false>> {
 {
   {-4, -4, -4, -4, -4},
@@ -739,6 +1863,8 @@ field() = -4*r + 5*phi;
 }};
 Divergence of a 2D PolarCoords CurvilinearField - ex 1
 auto A = grad(field);
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯5};
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯5};
 ☀ A ➜ CurvilinearField<double,1,PolarCoords<double,Ndims=2,TimeCoord=false>> {
 {
   {-4, -4, -4, -4, -4},
@@ -750,6 +1876,31 @@ auto A = grad(field);
   {7.5, 7.5, 7.5, 7.5, 7.5},
   {5, 5, 5, 5, 5}
 }};
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Matrix<double>> 
+{
+
+};
+☀ x ➜ Scalar<Matrix<double>> 
+{
+  {-12, -12, -12, -12, -12},
+  {-6, -6, -6, -6, -6},
+  {-4, -4, -4, -4, -4}
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯5};
+☀ data_ ➜ Matrix<double> 
+{
+
+};
+DONE
+☀ x() ➜ Matrix<double> 
+{
+  {-12, -12, -12, -12, -12},
+  {-6, -6, -6, -6, -6},
+  {-4, -4, -4, -4, -4}
+};
 ☀ div(A) ➜ CurvilinearField<double,0,PolarCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {-12, -12, -12, -12, -12},
@@ -757,7 +1908,8 @@ auto A = grad(field);
   {-4, -4, -4, -4, -4}
 };
 Divergence of a 2D+1 CurvilinearField - ex 2
-field() = r*r;
+field = r*r;
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯5};
 ☀ grad(field) ➜ CurvilinearField<double,1,PolarCoords<double,Ndims=2,TimeCoord=false>> {
 {
   {0.666667, 0.666667, 0.666667, 0.666667, 0.666667},
@@ -769,6 +1921,32 @@ field() = r*r;
   {0, -2.20872e-17, 2.20872e-17, 2.20872e-17, 0},
   {0, 0, 0, 0, 0}
 }};
+☀ parent_rdims ➜ RecursiveDimensions {2, 3⨯5};
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Matrix<double>> 
+{
+
+};
+☀ x ➜ Scalar<Matrix<double>> 
+{
+  {4, 4, 4, 4, 4},
+  {4, 4, 4, 4, 4},
+  {4, 4, 4, 4, 4}
+};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 3⨯5};
+☀ data_ ➜ Matrix<double> 
+{
+
+};
+DONE
+☀ x() ➜ Matrix<double> 
+{
+  {4, 4, 4, 4, 4},
+  {4, 4, 4, 4, 4},
+  {4, 4, 4, 4, 4}
+};
 ☀ div(grad(field)) ➜ CurvilinearField<double,0,PolarCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {4, 4, 4, 4, 4},
@@ -780,6 +1958,8 @@ field() = r*r;
 CurvilinearField<double, 1, CartesianCoords<double, 3, false>> A(coords);
 A[0] = coords.z();
 auto B = curl(A);
+☀ parent_rdims ➜ RecursiveDimensions {3, 5⨯5⨯5};
+☀ parent_rdims ➜ RecursiveDimensions {3, 5⨯5⨯5};
 ☀ B ➜ CurvilinearField<double,1,CartesianCoords<double,Ndims=3,TimeCoord=false>> {
 {
   {

@@ -338,7 +338,7 @@ namespace mathq {
   // ***************************************************************************
 
 
-  template <class GridElement, size_t Ndims, bool TimeCoord>
+  template <class GridElement, size_t Ndims, bool TimeCoord = false>
   class CartesianCoords : public CurvilinearCoords<GridElement, Ndims, TimeCoord, CartesianCoords<GridElement, Ndims, TimeCoord>> {
   public:
     using Type = CartesianCoords<GridElement, Ndims, TimeCoord>;
@@ -843,7 +843,7 @@ namespace mathq {
   // TODO: allows 2 (Polar) or 3 Dims (Cylindrical)
   // ***************************************************************************
 
-  template <class GridElement, bool TimeCoord>
+  template <class GridElement, bool TimeCoord = false>
   class PolarCoords : public CurvilinearCoords<GridElement, 2, TimeCoord, PolarCoords<GridElement, TimeCoord>> {
   public:
 

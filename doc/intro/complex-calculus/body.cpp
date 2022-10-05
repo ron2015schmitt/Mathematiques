@@ -40,7 +40,7 @@ int main() {
 
     CR();
     ECHO(auto& z = coords.z());
-    ECHO(f() = exp(10*z));
+    ECHO(f = exp(10*z));
     GMD_CODE_END();
 
     CR();
@@ -81,7 +81,7 @@ int main() {
       Interval<double>::interval(-2, 2, 5)
       }));
     ECHO(auto& z = f.coords().z());
-    ECHO(f() = (z + 1)/(z - 1));
+    ECHO(f = (z + 1)/(z - 1));
     GMD_CODE_END();
     CR();
     OUTPUT("Results");

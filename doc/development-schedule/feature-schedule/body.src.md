@@ -31,7 +31,7 @@
       });
 
     ECHO(auto& z = coords.z());
-    ECHO(field() = exp(z));
+    ECHO(field = exp(z));  // shoudl be field = 
     ETV(field);
     ETV(real(field));
     ETV(imag(field));

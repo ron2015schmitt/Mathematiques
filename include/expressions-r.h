@@ -59,6 +59,7 @@ namespace mathq {
     ExpressionR_Unary(const Derived& x) : x_(x) {
       vptrs = new VectorofPtrs();
       vptrs->add(x_.getAddresses());
+      ETV(x);
       // DISP3(x);
     }
 
@@ -140,6 +141,8 @@ namespace mathq {
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
     const NumberType dat(const size_t i) const {
+      OUTPUT("inside dat");
+      ETV(x_.dat(i));
       return FUNC::apply(x_.dat(i));
     }
 
@@ -148,6 +151,8 @@ namespace mathq {
     //**********************************************************************
 
     const Element operator[](const size_t i) const {
+      OUTPUT("inside []");
+      ETV(x_[i]);
       return FUNC::apply(x_[i]);
     }
 

@@ -17,9 +17,10 @@ namespace mathq {
     ****************************************************************************
     */
 
-  template <typename Num> struct Functions {
+  template <typename T> struct Functions {
   public:
-    static Num tolerance = Num(0);
+    using SimpleNumberType = typename SimpleNumberTrait<T>::Type;
+    constexpr static decltype(Functions<SimpleNumberType>::tolerance) tolerance = Functions<SimpleNumberType>::tolerance;
   };
   template <> struct Functions<long double> {
   public:
@@ -75,6 +76,7 @@ namespace mathq {
   public:
     constexpr static unsigned long long tolerance = 0;
   };
+
 
 
   //****************************************************************************
@@ -170,11 +172,11 @@ namespace mathq {
 
   // TODO: use std::frexp() instead ?
 
-  template <typename NT1, typename NT2>
-  bool approx(const NT1& x, const NT2& y, typename AddType<NT1, NT2>::Type tol = Functions<typename AddType<NT1, NT2>::Type>::tolerance) {
+  template <typename NT1, typename NT2> requires (IsSimpleNumber<NT1>&& IsSimpleNumber<NT2>)
+    bool approx(const NT1& x, const NT2& y, const decltype(Functions<typename AddType<NT1, NT2>::Type>::tolerance)& tol = Functions<typename AddType<NT1, NT2>::Type>::tolerance) {
     typename AddType<NT1, NT2>::Type d = std::max(x, y);
-    tol *= d;
-    return (roundzero(std::abs(x-y), tol) == 0);
+    decltype(Functions<typename AddType<NT1, NT2>::Type>::tolerance) tolerance = d * tol;
+    return (roundzero(std::abs(x-y), tolerance) == 0);
   }
 
   // numbercast

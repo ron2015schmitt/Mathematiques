@@ -8,27 +8,120 @@ int main() {
 
 
   CR();
-  CR();
-
-  // using namespace mathq::unit_quaternion;
-  // using namespace mathq::unit_imaginary;
-  // using std::sqrt;
 
   OUTPUT("Mathématiques provides classes and extensive functionality for curvilinear coordinate systems as well as scalar, vector, and rank >=2 functions using these coordinates.");
 
+
+  GMD_VSPACE();
+  GMD_HEADER2("Curvilinear Coordinates");
+
+  CR();
+  GMD_HEADER3("Cartesian Coordinates");
+  {
+    GMD_CODE_START("C++");
+    ECHO(CartesianCoords<double, 2> coords({
+    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(2,3,3),
+      }));
+    ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
+    ECHO(auto& x = coords.x());
+    ECHO(auto& y = coords.y());
+    ECHO(field0 = -3*x + 2*y);
+    ETV(field0);
+    GMD_CODE_END();
+  }
+  CR();
+
+  CR();
+  GMD_HEADER3("Polar Coordinates");
+  {
+    GMD_CODE_START("C++");
+    ECHO(PolarCoords<double> coords({
+    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(2,3,3),
+      }));
+    GMD_CODE_END();
+  }
+  CR();
+
+  CR();
+  GMD_HEADER3("Polar Coordinates");
+  {
+    GMD_CODE_START("C++");
+    ECHO(PolarCoords<double, true> coords({
+    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(2,3,3),
+    Interval<double>::interval(0,1,3),
+      }));
+    GMD_CODE_END();
+  }
+  CR();
+
+
+  GMD_VSPACE();
+  GMD_HEADER2("Vector fields");
 
   CR();
   GMD_HEADER3("TEST");
   {
     GMD_CODE_START("C++");
-    ECHO(Quaternion<double> q{ 1,2,3,4 });
-    ETV(q);
-    ETV(q.abs());
-    ETV(q.polar());
-    ECHO(auto [x, y, z] = q.polar());
-    ETV(x);
-    ETV(y);
-    ETV(z);
+    ECHO(CartesianCoords<double, 2, false> coords({
+    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(2,3,3),
+      }));
+    ECHO(CurvilinearField<double, 0, decltype(coords)> v(coords));
+    ECHO(auto& x = coords.x());
+    ECHO(auto& y = coords.y());
+    ECHO(v = -3*x + 2*y);
+    ETV(v);
+    GMD_CODE_END();
+  }
+  CR();
+
+
+  GMD_VSPACE();
+  GMD_HEADER2("Fields of any rank");
+
+  CR();
+  GMD_HEADER3("TEST");
+  {
+    GMD_CODE_START("C++");
+    ECHO(CartesianCoords<double, 2, false> coords({
+    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(2,3,3),
+      }));
+    ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
+    ECHO(auto& x = coords.x());
+    ECHO(auto& y = coords.y());
+    ECHO(field0 = -3*x + 2*y);
+    ETV(field0);
+    GMD_CODE_END();
+  }
+  CR();
+
+
+  GMD_VSPACE();
+  GMD_HEADER2("Maxwell's Equations");
+
+  CR();
+  GMD_HEADER3("TEST");
+  {
+    GMD_CODE_START("C++");
+    ECHO(CartesianCoords<double, 3, true> coords({
+    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(0,1,5),
+      }));
+    ECHO(auto& x = coords.x());
+    ECHO(auto& y = coords.y());
+    ECHO(auto& z = coords.z());
+    ECHO(auto& t = coords.t());
+    ECHO(CurvilinearField<double, 0, decltype(coords)> Phi(coords));
+    ECHO(Phi = -3*x + 2*y);
+    ECHO(CurvilinearField<double, 0, decltype(coords)> Phi2(coords));
+    ECHO(Phi2 = -3*x + 2*y);
+    ETV(alltrue(approx(Phi(), Phi2())));
     GMD_CODE_END();
   }
   CR();
@@ -85,7 +178,7 @@ int main() {
     ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
     ECHO(auto& x = coords.x());
     ECHO(auto& y = coords.y());
-    ECHO(field0() = -3*x + 2*y);
+    ECHO(field0 = -3*x + 2*y);
     ETV(field0);
 
     ETV(x);
@@ -127,7 +220,7 @@ int main() {
 
 
     OUTPUT("Divergence of a 2D CurvilinearField - ex 2");
-    ECHO(field0() = sqrt(x*x+y*y));
+    ECHO(field0 = sqrt(x*x+y*y));
     ETV(grad(field0));
     ETV(div(grad(field0)));
 
@@ -169,7 +262,7 @@ int main() {
 
     ECHO(auto& x = coords.x());
     ECHO(auto& y = coords.y());
-    ECHO(field() = -4*x + 5*y);
+    ECHO(field = -4*x + 5*y);
     ETV(field);
 
 
@@ -191,7 +284,7 @@ int main() {
 
 
     OUTPUT("Divergence of a 2D+1 CurvilinearField - ex 2");
-    ECHO(field() = sqrt(x*x+y*y));
+    ECHO(field = sqrt(x*x+y*y));
     ETV(grad(field));
     ETV(div(grad(field)));
 
@@ -231,7 +324,7 @@ int main() {
 
     ECHO(auto& r = coords.r());
     ECHO(auto& phi = coords.phi());
-    ECHO(field() = -4*r + 5*phi);
+    ECHO(field = -4*r + 5*phi);
     ETV(field);
 
 
@@ -253,7 +346,7 @@ int main() {
 
 
     OUTPUT("Divergence of a 2D+1 CurvilinearField - ex 2");
-    ECHO(field() = r*r);
+    ECHO(field = r*r);
     ETV(grad(field));
     ETV(div(grad(field)));
   }

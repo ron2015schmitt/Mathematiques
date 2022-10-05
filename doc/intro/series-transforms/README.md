@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
 
 <details>
 
@@ -365,6 +365,55 @@ const size_t N = 20;
 Vector<double> k = range<double>(0, N-1);
 Vector<double> An = Vector<double>(N, 0.);
 Vector<double> Bn = 1./sqr(k);
+☀ x ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions [ ...
+    20 ...
+];
+[ ...
+     0.00000000e+00,  1.00000000e+00,  2.00000000e+00,  3.00000000e+00,  4.00000000e+00,  ...
+     5.00000000e+00,  6.00000000e+00,  7.00000000e+00,  8.00000000e+00,  9.00000000e+00,  ...
+     1.00000000e+01,  1.10000000e+01,  1.20000000e+01,  1.30000000e+01,  1.40000000e+01,  ...
+     1.50000000e+01,  1.60000000e+01,  1.70000000e+01,  1.80000000e+01,  1.90000000e+01 ...
+];
+inside []
+☀ x_[i] ➜ double  0.00000000e+00;
+inside []
+☀ x_[i] ➜ double  1.00000000e+00;
+inside []
+☀ x_[i] ➜ double  2.00000000e+00;
+inside []
+☀ x_[i] ➜ double  3.00000000e+00;
+inside []
+☀ x_[i] ➜ double  4.00000000e+00;
+inside []
+☀ x_[i] ➜ double  5.00000000e+00;
+inside []
+☀ x_[i] ➜ double  6.00000000e+00;
+inside []
+☀ x_[i] ➜ double  7.00000000e+00;
+inside []
+☀ x_[i] ➜ double  8.00000000e+00;
+inside []
+☀ x_[i] ➜ double  9.00000000e+00;
+inside []
+☀ x_[i] ➜ double  1.00000000e+01;
+inside []
+☀ x_[i] ➜ double  1.10000000e+01;
+inside []
+☀ x_[i] ➜ double  1.20000000e+01;
+inside []
+☀ x_[i] ➜ double  1.30000000e+01;
+inside []
+☀ x_[i] ➜ double  1.40000000e+01;
+inside []
+☀ x_[i] ➜ double  1.50000000e+01;
+inside []
+☀ x_[i] ➜ double  1.60000000e+01;
+inside []
+☀ x_[i] ➜ double  1.70000000e+01;
+inside []
+☀ x_[i] ➜ double  1.80000000e+01;
+inside []
+☀ x_[i] ➜ double  1.90000000e+01;
 Bn[0] = 0.;
 ```
 

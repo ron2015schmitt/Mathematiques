@@ -19,7 +19,7 @@ namespace mathq {
   // * CurvilinearField
   // ***************************************************************************
 
-  template <typename TargetElement, size_t target_rank, IsCurvilinear Coords>
+  template <typename TargetElement, size_t target_rank, IsCurvilinear Coords = CartesianCoords<double, 2, false>>
   class
     CurvilinearField : public MultiArray< MultiArray<TargetElement, Coords::total_num_dims>, target_rank > {
   public:

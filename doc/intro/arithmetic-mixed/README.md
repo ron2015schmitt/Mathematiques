@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
 
 <details>
 
@@ -68,6 +68,7 @@ Examples:
 ```C++
 ☀ mathq::rank(2) ➜ unsigned long 0;
 
+Type& operator=(const T& t)
 ☀ mathq::rank(Scalar<double>{42}) ➜ unsigned long 0;
 ☀ mathq::rank(Vector<double>{1, 2}) ➜ unsigned long 1;
 ☀ mathq::rank(Matrix<double>{ {1, 2}, { 3,4 }}) ➜ unsigned long 2;
@@ -85,6 +86,7 @@ Examples:
 ```C++
 ☀ mathq::depth(2) ➜ unsigned long 0;
 
+Type& operator=(const T& t)
 ☀ mathq::depth(Scalar<double>{42}) ➜ unsigned long 1;
 ☀ mathq::depth(Vector<double>{1, 2}) ➜ unsigned long 1;
 ☀ mathq::depth(Matrix<double>{ {1, 2}, { 3,4 }}) ➜ unsigned long 1;
@@ -102,6 +104,7 @@ Examples:
 ```C++
 ☀ mathq::dimensions(2) ➜ RecursiveDimensions {};
 
+Type& operator=(const T& t)
 ☀ mathq::dimensions(Scalar<double>{42}) ➜ RecursiveDimensions {{}};
 ☀ mathq::dimensions(Vector<double>{1, 2}) ➜ RecursiveDimensions {2};
 ☀ mathq::dimensions(Matrix<double>{ {1, 2}, { 3,4 }}) ➜ RecursiveDimensions {2⨯2};
@@ -118,10 +121,16 @@ As in matlab, a MultiArray can be paired with a Number or `Scalar` with any oper
 Examples:
 
 ```C++
-☀ Vector<double>{1, 2}+10 ➜ Vector<double> {11, 12};
+☀ Vector<double>{1, 2}+10 ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {2};
+{11, 12};
 
-☀ 2*Scalar<double>{42} ➜ Scalar<double> 84;
-☀ Vector<double>{1, 2} == 1 ➜ Vector<bool> {true, false};
+Type& operator=(const T& t)
+☀ 2*Scalar<double>{42} ➜ Scalar<double> Type& operator=(const T& t)
+Scalar.set_equal_to
+☀ x.classname() ➜ std::string Scalar<double>;
+84;
+☀ Vector<double>{1, 2} == 1 ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {2};
+{true, false};
 ☀ Matrix<double>{ {1, 2}, { 3,4 }} - 1 ➜ Matrix<double> 
 {
   {0, 1},
@@ -139,7 +148,9 @@ Examples:
   }
 };
 
-☀ Vector<Matrix<double>>{ { {1, 2}, { 3, 4 }}, { {11, 12}, {13, 14} } } > 5 ➜ Vector<Matrix<bool>> {
+☀ Vector<Matrix<double>>{ { {1, 2}, { 3, 4 }}, { {11, 12}, {13, 14} } } > 5 ➜ Vector<Matrix<bool>> ☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
+☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
+{
 {
   {false, false},
   {false, false}
@@ -163,7 +174,9 @@ Examples:
 Matrix<double> A{ {100, 200}, { 300,400 } };
 Vector<Matrix<double>> v{ { {1, 2}, { 3, 4 }}, { {11, 12}, {13, 14} } };
 
-☀ A+v ➜ Vector<Matrix<double>> {
+☀ A+v ➜ Vector<Matrix<double>> ☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
+☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
+{
 {
   {101, 202},
   {303, 404}
@@ -174,7 +187,9 @@ Vector<Matrix<double>> v{ { {1, 2}, { 3, 4 }}, { {11, 12}, {13, 14} } };
 }};
 
 Vector<double> w{ -1, 2 };
-☀ v*w ➜ Vector<Matrix<double>> {
+☀ v*w ➜ Vector<Matrix<double>> ☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
+☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
+{
 {
   {-1, -2},
   {-3, -4}

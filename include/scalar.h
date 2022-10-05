@@ -84,6 +84,7 @@ namespace mathq {
 
     // --------------------- copy constructor --------------------
     MultiArray(const Type& var) {
+      OUTPUT("copy contrcutor");
       *this = var;
     }
 
@@ -122,7 +123,6 @@ namespace mathq {
       this->recurse_dims(x.recursive_dims());
       *this = x;
     }
-
 
     //**********************************************************************
     //                             DESTRUCTOR 
@@ -163,7 +163,7 @@ namespace mathq {
         return 1;
       }
       else {
-        return this->el_total_size();
+        return el_total_size();
       }
     }
 
@@ -240,7 +240,8 @@ namespace mathq {
       size_t depth_index = di;
       size_t resize_depth = parent_rdims.size();
       if constexpr (depth_value > 1) {
-        if (depth_index < resize_depth) {
+        if (++depth_index < resize_depth) {
+          ETV(data_);
           data_.recurse_resize(parent_rdims, depth_index);
         }
       }
@@ -377,6 +378,12 @@ namespace mathq {
 
     template<typename T>
     Type& operator=(const T& t) {
+      OUTPUT("Type& operator=(const T& t)");
+      return set_equal_to(t);
+    }
+
+    Type& operator=(const Type& t) {
+      OUTPUT("Type& operator=(const Type& rhs)");
       return set_equal_to(t);
     }
 
@@ -404,6 +411,13 @@ namespace mathq {
     // ------------------------  Scalar----------------
 
     Type& set_equal_to(const Type& x) {
+      OUTPUT("Type& set_equal_to(const Type& x)");
+      ETV(*this);
+      ETV(x);
+      ETV(x.recursive_dims());
+      resize(x.recursive_dims());
+      OUTPUT("DONE");
+      ETV(x());
       data_ = x();
       return *this;
     }
@@ -413,13 +427,20 @@ namespace mathq {
 
     template <class X>
     Type& set_equal_to(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
-      // ETV(x[0]);
+      OUTPUT("Scalar.set_equal_to");
+      ETV(x.classname());
       if constexpr (depth_value <= 1) {
         data_ = x[0];
       }
       else {
+        resize(x.recursive_dims());
+        OUTPUT("Scalar.set_equal_to: for loop");
+        ETV(size());
+        ETV(element_size());
+        ETV(el_total_size());
+        ETV(total_size());
         for (size_t i = 0; i < total_size(); i++) {
-          this->dat(i) = x.dat(i);
+          dat(i) = x.dat(i);
         }
       }
       return *this;

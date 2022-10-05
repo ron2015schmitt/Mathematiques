@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
 
 <details>
 
@@ -117,12 +117,21 @@ Vector<Matrix<double, 2, 2>, 3> E{ { {1, 2}, {3, 4} }, { {-1, -2}, {-3, -4} }, {
   {13, 14}
 }};
 
+☀ parent_rdims ➜ RecursiveDimensions {2⨯2, 3};
+☀ parent_rdims ➜ RecursiveDimensions {2⨯2, 3};
+☀ parent_rdims ➜ RecursiveDimensions {2⨯2, 3};
+☀ parent_rdims ➜ RecursiveDimensions {2⨯2, 3};
 ☀ evert(E) ➜ Matrix<Vector<double,3>, 2⨯2> 
 {
   {{1, -1, 11}, {2, -2, 12}},
   {{3, -3, 13}, {4, -4, 14}}
 };
 
+☀ parent_rdims ➜ RecursiveDimensions {2⨯2, 3};
+☀ parent_rdims ➜ RecursiveDimensions {2⨯2, 3};
+☀ parent_rdims ➜ RecursiveDimensions {2⨯2, 3};
+☀ parent_rdims ➜ RecursiveDimensions {2⨯2, 3};
+☀ parent_rdims ➜ RecursiveDimensions {3, 2⨯2};
 ☀ evert(evert(E)) ➜ Vector<Matrix<double, 2⨯2>,3> {
 {
   {1, 2},

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
 
 <details>
 
@@ -74,7 +74,8 @@ The operators `+, -, *, /` are the addition, subtraction, multiplication, and di
 Examples:
 
 ```C++
-☀ (Vector<double>{1, 2, 3} + Vector<double>{1, -2, 10}) ➜ Vector<double> {2, 0, 13};
+☀ (Vector<double>{1, 2, 3} + Vector<double>{1, -2, 10}) ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{2, 0, 13};
 
 ☀ (Matrix<double>{ {11, 22}, { 33, 44 }} - Matrix<double>{ {1, 2}, { 3, 4 }}) ➜ Matrix<double> 
 {
@@ -94,7 +95,8 @@ Examples:
   }
 };
 
-☀ (Vector<double>{24, 24, 24} / Vector<double>{2, 3, 4}) ➜ Vector<double> {12, 8, 6};
+☀ (Vector<double>{24, 24, 24} / Vector<double>{2, 3, 4}) ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{12, 8, 6};
 
 ```
 Operators also work on nested multiarrays, ie multiarrays with depth greater then 1.
@@ -104,7 +106,9 @@ Examples:
 ```C++
 Vector<Matrix<double>> v{ {{1, 2}, {3, 4}}, {{11, 12}, {13, 14}} };
 
-☀ (v*v + 10*v)/(2*v-v) ➜ Vector<Matrix<double>> {
+☀ (v*v + 10*v)/(2*v-v) ➜ Vector<Matrix<double>> ☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
+☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
+{
 {
   {11, 12},
   {13, 14}
@@ -133,8 +137,10 @@ Vector<Matrix<double>> v{ {{1, 2}, {3, 4}}, {{11, 12}, {13, 14}} };
 Examples:
 
 ```C++
-☀ (Vector<double>{1, 2, 3} == Vector<double>{1, -1, 3}) ➜ Vector<bool> {true, false, true};
-☀ (Vector<double>{1, 2, 3} < Vector<double>{1, 10, 0}) ➜ Vector<bool> {false, true, false};
+☀ (Vector<double>{1, 2, 3} == Vector<double>{1, -1, 3}) ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{true, false, true};
+☀ (Vector<double>{1, 2, 3} < Vector<double>{1, 10, 0}) ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{false, true, false};
 ```
 
 <br>
@@ -153,10 +159,20 @@ Examples:
 ```C++
 Vector<double> v1{ 1, 2, 3 };
 Vector<double> v2{ 11, 22, 33 };
-☀ !(v1 < v2) ➜ Vector<bool> {false, false, false};
+☀ x ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{true, true, true};
+☀ !(v1 < v2) ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {3};
+inside []
+☀ x_[i] ➜ bool true;
+inside []
+☀ x_[i] ➜ bool true;
+inside []
+☀ x_[i] ➜ bool true;
+{false, false, false};
 
 Vector<double> v{ 5, 7, 1 };
-☀ (v1 < v) && (v < v2) ➜ Vector<bool> {true, true, false};
+☀ (v1 < v) && (v < v2) ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{true, true, false};
 ```
 
 <br>
@@ -177,7 +193,8 @@ The functions `alltrue`, `anytrue`, `numtrue`, and `findtrue`
 Vector<double> v{ 0,1,2,3 };
 
 ☀ v ➜ Vector<double> {0, 1, 2, 3};
-☀ (v > 2) ➜ Vector<bool> {false, false, false, true};
+☀ (v > 2) ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {4};
+{false, false, false, true};
 ☀ alltrue(v > 2) ➜ bool false;
 ☀ alltrue(v > 0) ➜ bool false;
 ☀ anytrue(v > 2) ➜ bool true;

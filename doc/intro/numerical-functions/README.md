@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
 
 <details>
 
@@ -88,6 +88,25 @@ We can easily create a second function, e.g. $g(x) = x + 2 f(x) - 4 \frac{df}{dx
 NumericalFunction<double> g;
 
 g = x + 2*f - 4*d(f);
+copy contrcutor
+Type& operator=(const Type& rhs)
+Type& set_equal_to(const Type& x)
+☀ *this ➜ Scalar<Vector<double>> {};
+☀ x ➜ Scalar<Vector<double>> {1, 1.28385, 1.64583, 2.10156, 2.66667};
+☀ x.recursive_dims() ➜ RecursiveDimensions {{}, 5};
+☀ data_ ➜ Vector<double> {};
+☀ parent_rdims ➜ RecursiveDimensions {{}, 5};
+DONE
+☀ x() ➜ Vector<double> {1, 1.28385, 1.64583, 2.10156, 2.66667};
+Scalar.set_equal_to
+☀ x.classname() ➜ std::string Scalar<Vector<double>>;
+☀ data_ ➜ Vector<double> {0, 0, 0, 0, 0};
+☀ parent_rdims ➜ RecursiveDimensions {{}, 5};
+Scalar.set_equal_to: for loop
+☀ size() ➜ unsigned long 1;
+☀ element_size() ➜ unsigned long 5;
+☀ el_total_size() ➜ unsigned long 5;
+☀ total_size() ➜ unsigned long 5;
 ☀ g ➜ {-2, -2.31738, -2.78646, -3.42676, -4.25};
 ```
 
@@ -216,6 +235,294 @@ auto t = H.coordinates[2];
 double m = 2;
 
 H = 1/(2*m) * pow(p, 2) + pow(1 + 0.5*cos(t)*x, 2);
+☀ x ➜ MultiArray<double, rank=3> 
+{
+  {
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10}
+  },
+  {
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10}
+  },
+  {
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10}
+  },
+  {
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10}
+  },
+  {
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10},
+    {0, 2.5, 5, 7.5, 10}
+  }
+};
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
+inside []
+☀ x_[i] ➜ double 0;
+inside []
+☀ x_[i] ➜ double 2.5;
+inside []
+☀ x_[i] ➜ double 5;
+inside []
+☀ x_[i] ➜ double 7.5;
+inside []
+☀ x_[i] ➜ double 10;
 ☀ H ➜ 
 {
   {
@@ -293,6 +600,18 @@ NumericalFunction<double, 1, false, std::complex<double>> f;
 auto x = f.coordinates[0];
 
 f = roundzero(exp(i*pi*x));
+☀ x ➜ Vector<Imaginary<double>> ☀ parent_rdims ➜ RecursiveDimensions {5};
+{0i, 0.785398i, 1.5708i, 2.35619i, 3.14159i};
+inside []
+☀ x_[i] ➜ Imaginary<double> 0i;
+inside []
+☀ x_[i] ➜ Imaginary<double> 0.785398i;
+inside []
+☀ x_[i] ➜ Imaginary<double> 1.5708i;
+inside []
+☀ x_[i] ➜ Imaginary<double> 2.35619i;
+inside []
+☀ x_[i] ➜ Imaginary<double> 3.14159i;
 ☀ f ➜ {(1,0), (0.707107,0.707107), (0,1), (-0.707107,0.707107), (-1,0)};
 
 ```
@@ -314,6 +633,64 @@ auto x = f.coordinates[0];
 auto y = f.coordinates[1];
 
 f = roundzero(exp(i*pi/2 + j*pi*x + k*pi*y));
+☀ x ➜ Matrix<Quaternion<double>> 
+{
+  {1.5708*i, 1.5708*i + 0.785398*k, 1.5708*i + 1.5708*k, 1.5708*i + 2.35619*k, 1.5708*i + 3.14159*k},
+  {1.5708*i + 0.785398*j, 1.5708*i + 0.785398*j + 0.785398*k, 1.5708*i + 0.785398*j + 1.5708*k, 1.5708*i + 0.785398*j + 2.35619*k, 1.5708*i + 0.785398*j + 3.14159*k},
+  {1.5708*i + 1.5708*j, 1.5708*i + 1.5708*j + 0.785398*k, 1.5708*i + 1.5708*j + 1.5708*k, 1.5708*i + 1.5708*j + 2.35619*k, 1.5708*i + 1.5708*j + 3.14159*k},
+  {1.5708*i + 2.35619*j, 1.5708*i + 2.35619*j + 0.785398*k, 1.5708*i + 2.35619*j + 1.5708*k, 1.5708*i + 2.35619*j + 2.35619*k, 1.5708*i + 2.35619*j + 3.14159*k},
+  {1.5708*i + 3.14159*j, 1.5708*i + 3.14159*j + 0.785398*k, 1.5708*i + 3.14159*j + 1.5708*k, 1.5708*i + 3.14159*j + 2.35619*k, 1.5708*i + 3.14159*j + 3.14159*k}
+};
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 0.785398*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 1.5708*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 2.35619*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 3.14159*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 0.785398*j;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 0.785398*j + 0.785398*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 0.785398*j + 1.5708*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 0.785398*j + 2.35619*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 0.785398*j + 3.14159*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 1.5708*j;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 1.5708*j + 0.785398*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 1.5708*j + 1.5708*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 1.5708*j + 2.35619*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 1.5708*j + 3.14159*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 2.35619*j;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 2.35619*j + 0.785398*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 2.35619*j + 1.5708*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 2.35619*j + 2.35619*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 2.35619*j + 3.14159*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 3.14159*j;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 3.14159*j + 0.785398*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 3.14159*j + 1.5708*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 3.14159*j + 2.35619*k;
+inside []
+☀ x_[i] ➜ Quaternion<double> 1.5708*i + 3.14159*j + 3.14159*k;
 ☀ f ➜ 
 {
   {i, -0.184347 + 0.879098*i + 0.439549*k, -0.6057 + 0.56264*i + 0.56264*k, -0.952395 + 0.16911*i + 0.253665*k, -0.932032 + -0.162059*i + -0.324118*k},

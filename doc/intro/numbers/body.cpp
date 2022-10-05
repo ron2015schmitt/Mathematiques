@@ -128,7 +128,6 @@ int main() {
     CR();
     ECHO(using namespace mathq::unit_imaginary);
     ECHO(using namespace mathq::unit_quaternion);
-    // ECHO(auto q = Quaternion<double>() = 16 + 2*i + 3*j + 13*k);
     ECHO(Quaternion<double> q = 16 + 2*i + 3*j + 13*k);
     ECHO(Quaternion<double> p = 0.53767 + 0.86217*i - 0.43359*j + 2.7694*k);
     ETV(q);

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
 
 <details>
 
@@ -157,7 +157,8 @@ Using vector masks
 Vector<double> v(range<double>(-10, 10));
 
 ☀ v ➜ Vector<double> {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-☀ v > 6 ➜ Vector<bool> {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true};
+☀ v > 6 ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {21};
+{false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true};
 ☀ v[(v > 6)] ➜ Vector<double> {7, 8, 9, 10};
 ```
 

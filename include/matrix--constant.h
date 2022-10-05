@@ -392,7 +392,7 @@ namespace mathq {
         resize(new_dims);
       }
       if constexpr (depth_value > 1) {
-        if (depth_index < resize_depth) {
+        if (++depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {
             ParentDataType::data_[ii].recurse_resize(parent_rdims, depth_index);
           }

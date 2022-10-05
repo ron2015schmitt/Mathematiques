@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
 
 <details>
 
@@ -85,9 +85,20 @@ Vector<double> w{ 2, 4, -3 };
   {6, 12, -9}
 };
 
-☀ conj(v) ➜ Vector<double> {1, 2, 3};
-☀ transpose(v) ➜ Vector<double> {1, 2, 3};
-☀ ~v ➜ Vector<double> {1, 2, 3};
+☀ x ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{1, 2, 3};
+☀ conj(v) ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {3};
+inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 3;
+{1, 2, 3};
+☀ transpose(v) ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{1, 2, 3};
+☀ ~v ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {3};
+{1, 2, 3};
 ```
 
 <br>
@@ -292,7 +303,20 @@ Matrix<double> B{ {11, 22}, {33, 44} };
   }
 };
 
-☀ conj(A) ➜ Matrix<double> 
+☀ x ➜ Matrix<double> 
+{
+  {1, 2},
+  {3, 4}
+};
+☀ conj(A) ➜ Matrix<double> inside []
+☀ x_[i] ➜ double 1;
+inside []
+☀ x_[i] ➜ double 2;
+inside []
+☀ x_[i] ➜ double 3;
+inside []
+☀ x_[i] ➜ double 4;
+
 {
   {1, 2},
   {3, 4}
@@ -314,7 +338,20 @@ Matrix<std::complex<double>> D{ { 1 + 10i, 2 + 20i }, { 3 + 30i, 4 + 40i } };
   {(1,10), (2,20)},
   {(3,30), (4,40)}
 };
-☀ conj(D) ➜ Matrix<std::complex<double>> 
+☀ x ➜ Matrix<std::complex<double>> 
+{
+  {(1,10), (2,20)},
+  {(3,30), (4,40)}
+};
+☀ conj(D) ➜ Matrix<std::complex<double>> inside []
+☀ x_[i] ➜ std::complex<double> (1,10);
+inside []
+☀ x_[i] ➜ std::complex<double> (2,20);
+inside []
+☀ x_[i] ➜ std::complex<double> (3,30);
+inside []
+☀ x_[i] ➜ std::complex<double> (4,40);
+
 {
   {(1,-10), (2,-20)},
   {(3,-30), (4,-40)}
