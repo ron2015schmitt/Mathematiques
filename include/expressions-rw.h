@@ -311,6 +311,8 @@ namespace mathq {
       return x_.recursive_dims();
     }
 
+
+
     //**********************************************************************
     //******************** DEEP ACCESS: x.dat(n) ***************************
     //**********************************************************************
@@ -474,15 +476,17 @@ namespace mathq {
     //                        Dimensions
     //**********************************************************************
     DimensionsType& dims(void) const {
-      DimensionsType d(x_.size()+y_.size());
+      DimensionsType& d = *(new DimensionsType(x_.size()+y_.size()));
       return d;
     }
     DimensionsType& element_dims(void) const {
       return x_.element_dims();
     }
     RecursiveDimensions& recursive_dims(void) const {
-      RecursiveDimensions& ddims = *(new RecursiveDimensions);
-      return recursive_dims(ddims);
+      RecursiveDimensions& rdims = *(new RecursiveDimensions);
+      rdims = x_.recursive_dims();
+      rdims[0] = dims();
+      return rdims;
     }
 
 

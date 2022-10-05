@@ -212,6 +212,7 @@ namespace mathq {
 
     friend std::ostream& operator<<(std::ostream& stream, const ExpressionRW<Derived, Element, Num, depth_value, rank_value>& expression) {
       ConcreteType temp;
+      temp.resize(expression.recursive_dims());
       temp = expression;
       stream << temp;
       return stream;

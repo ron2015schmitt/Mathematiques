@@ -422,6 +422,7 @@ namespace mathq {
       *this = var;
     }
 
+
     explicit RecursiveDimensions(const size_t depth) {
       this->resize(depth);
     }

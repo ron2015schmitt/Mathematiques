@@ -107,6 +107,7 @@ int main() {
   GMD_HEADER3("TEST");
   {
     GMD_CODE_START("C++");
+    ECHO(using namespace std::numbers);
     ECHO(CartesianCoords<double, 3, true> coords({
     Interval<double>::interval(-1,1,5),
     Interval<double>::interval(-1,1,5),

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.039</h1>](../../../README.md)
 
 <details>
 
@@ -140,6 +140,7 @@ field0 = -3*x + 2*y;
 
 ### TEST
 ```C++
+using namespace std::numbers;
 CartesianCoords<double, 3, true> coords({ Interval<double>::interval(-1,1,5), Interval<double>::interval(-1,1,5), Interval<double>::interval(-1,1,5), Interval<double>::interval(0,1,5), });
 auto& x = coords.x();
 auto& y = coords.y();

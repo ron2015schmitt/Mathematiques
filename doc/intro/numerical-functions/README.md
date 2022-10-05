@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.038</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.039</h1>](../../../README.md)
 
 <details>
 
@@ -79,7 +79,8 @@ To access the data as a Vector, use paretheses, `f()`.  The `NumericalFunction` 
 ```C++
 ☀ f() ➜ Vector<double> {1, 1.28402, 1.64844, 2.11475, 2.70833};
 ☀ f()[0] ➜ double 1;
-☀ f()[{1, 3}] ➜ Vector<double> {1.28402, 2.11475};
+☀ f()[{1, 3}] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {5};
+{1.28402, 2.11475};
 ```
 
 We can easily create a second function, e.g. $g(x) = x + 2 f(x) - 4 \frac{df}{dx}$ 
