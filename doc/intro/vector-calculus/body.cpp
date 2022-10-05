@@ -14,7 +14,30 @@ int main() {
   // using namespace mathq::unit_imaginary;
   // using std::sqrt;
 
-  OUTPUT("Mathématiques supports ");
+  OUTPUT("Mathématiques provides classes and extensive functionality for curvilinear coordinate systems as well as scalar, vector, and rank >=2 functions using these coordinates.");
+
+
+  CR();
+  GMD_HEADER3("TEST");
+  {
+    GMD_CODE_START("C++");
+    ECHO(Quaternion<double> q{ 1,2,3,4 });
+    ETV(q);
+    ETV(q.abs());
+    ETV(q.polar());
+    ECHO(auto [x, y, z] = q.polar());
+    ETV(x);
+    ETV(y);
+    ETV(z);
+    GMD_CODE_END();
+  }
+  CR();
+
+
+  // template <typename GridElement, size_t Ndims, bool TimeCoord, typename TargetElement = GridElement>
+  // using NumericalFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims, TimeCoord>>;  {
+  GMD_VSPACE();
+  GMD_HEADER2("Raw code");
 
 
   {

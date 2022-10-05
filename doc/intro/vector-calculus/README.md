@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.036</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
 
 <details>
 
@@ -55,7 +55,24 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 
 
-Mathématiques supports 
+Mathématiques provides classes and extensive functionality for curvilinear coordinate systems as well as scalar, vector, and rank >=2 functions using these coordinates.
+
+### TEST
+```C++
+Quaternion<double> q{ 1,2,3,4 };
+☀ q ➜ Quaternion<double> 1 + 2*i + 3*j + 4*k;
+☀ q.abs() ➜ double 5.47723;
+☀ q.polar() ➜ std::tuple<double,double,Vector<double,3>> {5.47723,1.38719,{0.371391, 0.557086, 0.742781}};
+auto [x, y, z] = q.polar();
+☀ x ➜ double 5.47723;
+☀ y ➜ double 1.38719;
+☀ z ➜ Vector<double,3> {0.371391, 0.557086, 0.742781};
+```
+
+
+<br>
+
+## Raw code
 CartesianCoords - default constructor
 CartesianCoords<double, 2, false> coords;
 ☀ HasTimeCoord<decltype(coords)> ➜ bool false;

@@ -9,33 +9,10 @@ int main() {
   CR();
   CR();
 
-  // using namespace mathq::unit_quaternion;
-  // using namespace mathq::unit_imaginary;
-  // using std::sqrt;
 
   OUTPUT("Mathématiques provides classes and extensive functionality for single- and multi-variate numerical functions, ie formal mathematical functions over a discretized domain.");
 
-
-  CR();
-  GMD_HEADER3("TEST");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Quaternion<double> q{ 1,2,3,4 });
-    ETV(q);
-    ETV(q.abs());
-    ETV(q.polar());
-    ECHO(auto [x, y, z] = q.polar());
-    ETV(x);
-    ETV(y);
-    ETV(z);
-    GMD_CODE_END();
-  }
-  CR();
-
-
-  // template <typename GridElement, size_t Ndims, bool TimeCoord, typename TargetElement = GridElement>
-  // using NumericalFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims, TimeCoord>>;  {
-
+  GMD_VSPACE();
   GMD_HEADER2("Introduction");
 
   OUTPUT("The syntax `NumericalFunction<NumberType>` can be used to represent a function of one real variable of type `NumberType`.  This default syntax uses the interval $[0,1]$ for the function domain. ");

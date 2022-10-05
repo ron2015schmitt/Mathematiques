@@ -117,7 +117,7 @@ int main() {
   CR();
   OUTPUT("It also then allows us to take the inner product of two contravariant vectors");
   CR();
-  OUTPUT("$$ g(V,W) =  g_{ij} V^i W^j  = V_i W^i$$");
+  OUTPUT("$$ g(V,W) =  g_{ij} V^i W^j  = V_j W^j$$");
   CR();
   OUTPUT("The code for these operations are given below");
   {

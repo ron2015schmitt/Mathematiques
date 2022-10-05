@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.036</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.037</h1>](../../../README.md)
 
 <details>
 
@@ -132,7 +132,7 @@ $$ g(V,\cdot) =  g_{ij} V^i  = V_j$$
 
 It also then allows us to take the inner product of two contravariant vectors
 
-$$ g(V,W) =  g_{ij} V^i W^j  = V_i W^i$$
+$$ g(V,W) =  g_{ij} V^i W^j  = V_j W^j$$
 
 The code for these operations are given below
 ```C++
