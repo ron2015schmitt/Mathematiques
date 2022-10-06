@@ -107,7 +107,7 @@ int main() {
   GMD_HEADER3("TEST");
   {
     GMD_CODE_START("C++");
-    ECHO(using namespace std::numbers);
+
     ECHO(CartesianCoords<double, 3, true> coords({
     Interval<double>::interval(-1,1,5),
     Interval<double>::interval(-1,1,5),
@@ -118,11 +118,24 @@ int main() {
     ECHO(auto& y = coords.y());
     ECHO(auto& z = coords.z());
     ECHO(auto& t = coords.t());
-    ECHO(CurvilinearField<double, 0, decltype(coords)> Phi(coords));
-    ECHO(Phi = -3*x + 2*y);
-    ECHO(CurvilinearField<double, 0, decltype(coords)> Phi2(coords));
-    ECHO(Phi2 = -3*x + 2*y);
-    ETV(alltrue(approx(Phi(), Phi2())));
+
+    ECHO(using namespace std::numbers);
+    ECHO(using namespace mathq::unit_imaginary);
+    ECHO(const double A0 = 1);
+    ECHO(const double omega = 1);
+    ECHO(const double c = 1);
+    ECHO(const double kx = 0);
+    ECHO(const double ky = 1);
+    ECHO(const double kz = 1);
+    ECHO(const Vector<double, 3> k{ kx, ky, kz });
+
+    ECHO(CurvilinearField<std::complex<double>, 0, decltype(coords)> Phi(coords));
+    ECHO(Phi = exp(i*(ky*y - omega*t)));
+    ECHO(CurvilinearField<std::complex<double>, 1, decltype(coords)> A(coords));
+    // ECHO(A = { exp(i*(kz*z - omega*t)), exp(i*(ky*y - omega*t)), exp(i*(ky*y - omega*t)) });
+    // ETV(alltrue(approx(Phi(), Phi2())));
+    // ETV(A);
+    // ETV(k | A);
     GMD_CODE_END();
   }
   CR();

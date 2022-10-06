@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.039</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.040</h1>](../../../README.md)
 
 <details>
 
@@ -110,8 +110,7 @@ The above C++ code generates text for the following markdown code box:
 ```C++
 int x = 5;
 mathq::Vector<double> v{ 1, 2, 3 };
-☀ 10*v + 100*x ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {3};
-{510, 520, 530};
+☀ 10*v + 100*x ➜ Vector<double> {510, 520, 530};
 ```
 
 <br>
@@ -177,7 +176,7 @@ ETV(std::string(mathq::version));
 ```C++
 ☀ __cplusplus ➜ long 202002;
 ☀ MATHQ_DEBUG ➜ int 0;
-☀ std::string(mathq::version) ➜ std::string 0.42.1-alpha.039;
+☀ std::string(mathq::version) ➜ std::string 0.42.1-alpha.040;
 ```
 This information can also be printed using the function `display::print_mathq_info()`
 ```C++
@@ -185,7 +184,7 @@ display::print_mathq_info();
 ```
 ```C++
                                                                                
-Mathématiques 0.42.1-alpha.039 
+Mathématiques 0.42.1-alpha.040 
 
 compile-time settings
   MATHQ_DEBUG 0 (production) 

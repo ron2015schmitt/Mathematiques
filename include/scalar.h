@@ -119,7 +119,6 @@ namespace mathq {
     //--------------------- EXPRESSION CONSTRUCTOR --------------------
     template <class Derived>
     MultiArray(const ExpressionR<Derived, Element, NumberType, depth_value, rank_value>& x) {
-      ETV(x.recursive_dims());
       this->recurse_dims(x.recursive_dims());
       *this = x;
     }
@@ -241,7 +240,6 @@ namespace mathq {
       size_t resize_depth = parent_rdims.size();
       if constexpr (depth_value > 1) {
         if (++depth_index < resize_depth) {
-          ETV(data_);
           data_.recurse_resize(parent_rdims, depth_index);
         }
       }
@@ -412,12 +410,7 @@ namespace mathq {
 
     Type& set_equal_to(const Type& x) {
       OUTPUT("Type& set_equal_to(const Type& x)");
-      ETV(*this);
-      ETV(x);
-      ETV(x.recursive_dims());
       resize(x.recursive_dims());
-      OUTPUT("DONE");
-      ETV(x());
       data_ = x();
       return *this;
     }
@@ -427,18 +420,11 @@ namespace mathq {
 
     template <class X>
     Type& set_equal_to(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
-      OUTPUT("Scalar.set_equal_to");
-      ETV(x.classname());
       if constexpr (depth_value <= 1) {
         data_ = x[0];
       }
       else {
         resize(x.recursive_dims());
-        OUTPUT("Scalar.set_equal_to: for loop");
-        ETV(size());
-        ETV(element_size());
-        ETV(el_total_size());
-        ETV(total_size());
         for (size_t i = 0; i < total_size(); i++) {
           dat(i) = x.dat(i);
         }
@@ -582,7 +568,7 @@ namespace mathq {
     friend inline std::istream& operator>>(const std::string s, Type& x) {
       std::istringstream st(s);
       return (st >> x);
-    }
+  }
 
 
     //**********************************************************************
@@ -596,12 +582,12 @@ namespace mathq {
     }
 
 
-  };
-
-
-
-
 };
+
+
+
+
+  };
 
 
 #endif 

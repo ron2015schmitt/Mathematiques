@@ -136,6 +136,14 @@ namespace mathq {
       *this = x;
     }
 
+    // template <class X>
+    // MultiArray(const std::initializer_list<ExpressionR<X, Element, NumberType, depth_value, rank_value>>& x) {
+    //   if constexpr (is_dynamic_value) {
+    //     this->resize(x.size());
+    //   }
+    //   *this = x;
+    // }
+
 
     //**********************************************************************
     //                    CONSTRUCTORS: FIXED size  
@@ -431,7 +439,7 @@ namespace mathq {
     Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
       size_t depth_index = di;
       size_t resize_depth = parent_rdims.size();
-      ETV(parent_rdims);
+      // ETV(parent_rdims);
       const size_t newSize = parent_rdims[depth_index][0];
       if constexpr (is_dynamic_value) {
         resize(newSize);
@@ -810,6 +818,25 @@ namespace mathq {
       return *this;
     }
 
+
+
+    // ------------------------ Vector = initializer_list<Expression> ----------------
+    // template <class X>
+    // Type& set_equal_to(const std::initializer_list<ExpressionR<X, Element, NumberType, depth_value, rank_value>>& mylist) {
+    //   // OUTPUT("initializer_list");
+
+    //   if constexpr (is_dynamic_value) {
+    //     resize(mylist.size());
+    //   }
+
+    //   size_t k = 0;
+    //   typename std::initializer_list<ExpressionR<X, Element, NumberType, depth_value, rank_value>>::iterator it;
+    //   for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+    //     data_[k] = *it;
+    //   }
+
+    //   return *this;
+    // }
 
     // ------------------------ Vector = std::vector ----------------
 
@@ -1368,7 +1395,7 @@ namespace mathq {
       }
       s += StyledString::get(ANGLE2).get();
       return s;
-      }
+    }
 
 #if MATHQ_DEBUG>=1
     std::string expression(void) const {
@@ -1656,7 +1683,7 @@ namespace mathq {
       class Tensor;
 
 
-    };
+  };
 
 
   // template <typename Element, size_t... sizes>
@@ -1792,7 +1819,7 @@ namespace mathq {
 
 
 
-  };
+};
 
 
 #endif 

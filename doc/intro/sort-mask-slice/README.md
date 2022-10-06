@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.039</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.040</h1>](../../../README.md)
 
 <details>
 
@@ -136,16 +136,11 @@ Matrix<double> A{ {1,2,3,4},{5,6,7,8} };
 Vector<double> v(linspace<double>(0, 1, 11));
 ☀ v ➜ Vector<double> {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
 
-☀ v[{0, 4}] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{0, 0.4};
-☀ v[{4, 0, 1, 4}] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{0.4, 0, 0.1, 0.4};
-☀ v[{1, 0, 2}] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{0.1, 0, 0.2};
-☀ v[{4, 3, 2, 1, 0}] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{0.4, 0.3, 0.2, 0.1, 0};
-☀ v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
+☀ v[{0, 4}] ➜ Vector<double> {0, 0.4};
+☀ v[{4, 0, 1, 4}] ➜ Vector<double> {0.4, 0, 0.1, 0.4};
+☀ v[{1, 0, 2}] ➜ Vector<double> {0.1, 0, 0.2};
+☀ v[{4, 3, 2, 1, 0}] ➜ Vector<double> {0.4, 0.3, 0.2, 0.1, 0};
+☀ v[{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}] ➜ Vector<double> {0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2};
 ```
 🚧 This functionality is currently only available for vectors.
 
@@ -162,10 +157,8 @@ Using vector masks
 Vector<double> v(range<double>(-10, 10));
 
 ☀ v ➜ Vector<double> {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-☀ v > 6 ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {21};
-{false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true};
-☀ v[(v > 6)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {21};
-{7, 8, 9, 10};
+☀ v > 6 ➜ Vector<bool> {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true};
+☀ v[(v > 6)] ➜ Vector<double> {7, 8, 9, 10};
 ```
 
 Now set all elements that are larger than 6 to 6 (clipping)
@@ -209,18 +202,12 @@ slice `v[slc(start,end)]`
 ```C++
 Vector<double> v(range<double>(0, 10));
 
-☀ v[slc(2, 6)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{2, 3, 4, 5, 6};
-☀ v[slc(0, -1)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-☀ v[slc(0, 1)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{0, 1};
-☀ v[slc(-2, -1)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{9, 10};
-☀ v[slc(1, 0)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{};
-☀ v[slc(-1, 0)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {11};
-{};
+☀ v[slc(2, 6)] ➜ Vector<double> {2, 3, 4, 5, 6};
+☀ v[slc(0, -1)] ➜ Vector<double> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+☀ v[slc(0, 1)] ➜ Vector<double> {0, 1};
+☀ v[slc(-2, -1)] ➜ Vector<double> {9, 10};
+☀ v[slc(1, 0)] ➜ Vector<double> {};
+☀ v[slc(-1, 0)] ➜ Vector<double> {};
 ```
 ### The `(start,end,step)` slice
 * The form `v[slc(start,end,step)]` returns a `Vector` with every element from index=start to index=end, stepping by step.
@@ -248,32 +235,23 @@ Vector<double> v5{ 0, 1, 2, 3, 4 };
 
 Reverse vectors of various lengths using the same slice
 ```C++
-☀ v0[slc(-1, 0, -1)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {0};
-{};
-☀ v4[slc(-1, 0, -1)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{3, 2, 1, 0};
-☀ v5[slc(-1, 0, -1)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {5};
-{4, 3, 2, 1, 0};
+☀ v0[slc(-1, 0, -1)] ➜ Vector<double> {};
+☀ v4[slc(-1, 0, -1)] ➜ Vector<double> {3, 2, 1, 0};
+☀ v5[slc(-1, 0, -1)] ➜ Vector<double> {4, 3, 2, 1, 0};
 ```
 
 Get even-index elements of various vectors using the same slice
 ```C++
-☀ v0[slc(0, -1, 2)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {0};
-{};
-☀ v4[slc(0, -1, 2)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{0, 2};
-☀ v5[slc(0, -1, 2)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {5};
-{0, 2, 4};
+☀ v0[slc(0, -1, 2)] ➜ Vector<double> {};
+☀ v4[slc(0, -1, 2)] ➜ Vector<double> {0, 2};
+☀ v5[slc(0, -1, 2)] ➜ Vector<double> {0, 2, 4};
 ```
 
 Get odd-index elements of various vectors using the same slice
 ```C++
-☀ v0[slc(1, -1, 2)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {0};
-{};
-☀ v4[slc(1, -1, 2)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{1, 3};
-☀ v5[slc(1, -1, 2)] ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {5};
-{1, 3};
+☀ v0[slc(1, -1, 2)] ➜ Vector<double> {};
+☀ v4[slc(1, -1, 2)] ➜ Vector<double> {1, 3};
+☀ v5[slc(1, -1, 2)] ➜ Vector<double> {1, 3};
 ```
 
 

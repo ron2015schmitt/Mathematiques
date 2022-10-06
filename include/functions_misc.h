@@ -132,6 +132,18 @@ namespace mathq {
     return  ExpressionR_Unary<ExpressionR<X, Element, Num, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Num, NT2>>(x);
   }
 
+  //----------------------------------------------
+  // constant
+  //----------------------------------------------
+
+  template <class T> requires (IsReadableExpressionOrArray<T>)
+    auto constant(const typename T::ElementType& x) {
+    return x;
+  }
+
+
+
+
 
   /****************************************************************************
  * Equality related

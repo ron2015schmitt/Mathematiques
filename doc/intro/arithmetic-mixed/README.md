@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.039</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.040</h1>](../../../README.md)
 
 <details>
 
@@ -121,16 +121,12 @@ As in matlab, a MultiArray can be paired with a Number or `Scalar` with any oper
 Examples:
 
 ```C++
-☀ Vector<double>{1, 2}+10 ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {2};
-{11, 12};
+☀ Vector<double>{1, 2}+10 ➜ Vector<double> {11, 12};
 
 Type& operator=(const T& t)
 ☀ 2*Scalar<double>{42} ➜ Scalar<double> Type& operator=(const T& t)
-Scalar.set_equal_to
-☀ x.classname() ➜ std::string Scalar<double>;
 84;
-☀ Vector<double>{1, 2} == 1 ➜ Vector<bool> ☀ parent_rdims ➜ RecursiveDimensions {2};
-{true, false};
+☀ Vector<double>{1, 2} == 1 ➜ Vector<bool> {true, false};
 ☀ Matrix<double>{ {1, 2}, { 3,4 }} - 1 ➜ Matrix<double> 
 {
   {0, 1},
@@ -148,9 +144,7 @@ Scalar.set_equal_to
   }
 };
 
-☀ Vector<Matrix<double>>{ { {1, 2}, { 3, 4 }}, { {11, 12}, {13, 14} } } > 5 ➜ Vector<Matrix<bool>> ☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
-☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
-{
+☀ Vector<Matrix<double>>{ { {1, 2}, { 3, 4 }}, { {11, 12}, {13, 14} } } > 5 ➜ Vector<Matrix<bool>> {
 {
   {false, false},
   {false, false}
@@ -174,9 +168,7 @@ Examples:
 Matrix<double> A{ {100, 200}, { 300,400 } };
 Vector<Matrix<double>> v{ { {1, 2}, { 3, 4 }}, { {11, 12}, {13, 14} } };
 
-☀ A+v ➜ Vector<Matrix<double>> ☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
-☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
-{
+☀ A+v ➜ Vector<Matrix<double>> {
 {
   {101, 202},
   {303, 404}
@@ -187,9 +179,7 @@ Vector<Matrix<double>> v{ { {1, 2}, { 3, 4 }}, { {11, 12}, {13, 14} } };
 }};
 
 Vector<double> w{ -1, 2 };
-☀ v*w ➜ Vector<Matrix<double>> ☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
-☀ parent_rdims ➜ RecursiveDimensions {2, 2⨯2};
-{
+☀ v*w ➜ Vector<Matrix<double>> {
 {
   {-1, -2},
   {-3, -4}

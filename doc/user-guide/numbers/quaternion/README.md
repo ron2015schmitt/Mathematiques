@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.039</h1>](../../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.040</h1>](../../../../README.md)
 
 <details>
 
@@ -245,32 +245,13 @@ auto v = Vector<Quaternion<double>>({ 16 + 2*i + 3*j + 13*k, 5 + 11*i + 10*j + 8
 9 + 7*i + 6*j + 12*k, 
 4 + 14*i + 15*j + k};
 
-☀ v + q ➜ Vector<Quaternion<double>> ☀ parent_rdims ➜ RecursiveDimensions {
-4};
-{
+☀ v + q ➜ Vector<Quaternion<double>> {
 32 + 4*i + 6*j + 26*k, 
 21 + 13*i + 13*j + 21*k, 
 25 + 9*i + 9*j + 25*k, 
 20 + 16*i + 18*j + 14*k};
 
-☀ x ➜ Vector<Quaternion<double>> ☀ parent_rdims ➜ RecursiveDimensions {
-4};
-{
-16 + 2*i + 3*j + 13*k, 
-5 + 11*i + 10*j + 8*k, 
-9 + 7*i + 6*j + 12*k, 
-4 + 14*i + 15*j + k};
-☀ exp(v) ➜ Vector<Quaternion<double>> ☀ parent_rdims ➜ RecursiveDimensions {
-4};
-inside []
-☀ x_[i] ➜ Quaternion<double> 16 + 2*i + 3*j + 13*k;
-inside []
-☀ x_[i] ➜ Quaternion<double> 5 + 11*i + 10*j + 8*k;
-inside []
-☀ x_[i] ➜ Quaternion<double> 9 + 7*i + 6*j + 12*k;
-inside []
-☀ x_[i] ➜ Quaternion<double> 4 + 14*i + 15*j + k;
-{
+☀ exp(v) ➜ Vector<Quaternion<double>> {
 5.35246e+06 + 1.05157e+06*i + 1.57736e+06*j + 6.83522e+06*k, 
 -57.3593 + -89.1893*i + -81.0812*j + -64.865*k, 
 -6799.09 + 2039.12*i + 1747.82*j + 3495.64*k, 

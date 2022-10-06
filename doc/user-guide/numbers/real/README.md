@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.039</h1>](../../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.040</h1>](../../../../README.md)
 
 <details>
 
@@ -208,36 +208,9 @@ Below are examples of container math with imaginary numbers.  Mixed math is allo
 ```C++
 auto v = Vector<double>() = { 0, 1, 2, 3, 4 };
 ☀ v ➜ Vector<double> {0, 1, 2, 3, 4};
-☀ pi*v/4 ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {5};
-{0, 0.785398, 1.5708, 2.35619, 3.14159};
-☀ x ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {5};
-{0, 0.785398, 1.5708, 2.35619, 3.14159};
-☀ 10*sin(pi*v/4) ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {5};
-inside []
-☀ x_[i] ➜ double 0;
-inside []
-☀ x_[i] ➜ double 0.785398;
-inside []
-☀ x_[i] ➜ double 1.5708;
-inside []
-☀ x_[i] ➜ double 2.35619;
-inside []
-☀ x_[i] ➜ double 3.14159;
-{0, 7.07107, 10, 7.07107, 1.22465e-15};
-☀ x ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {5};
-{0, 0.785398, 1.5708, 2.35619, 3.14159};
-☀ 10*sin(pi*v/4) + 100*v + 1 + v*v ➜ Vector<double> ☀ parent_rdims ➜ RecursiveDimensions {5};
-inside []
-☀ x_[i] ➜ double 0;
-inside []
-☀ x_[i] ➜ double 0.785398;
-inside []
-☀ x_[i] ➜ double 1.5708;
-inside []
-☀ x_[i] ➜ double 2.35619;
-inside []
-☀ x_[i] ➜ double 3.14159;
-{1, 109.071, 215, 317.071, 417};
+☀ pi*v/4 ➜ Vector<double> {0, 0.785398, 1.5708, 2.35619, 3.14159};
+☀ 10*sin(pi*v/4) ➜ Vector<double> {0, 7.07107, 10, 7.07107, 1.22465e-15};
+☀ 10*sin(pi*v/4) + 100*v + 1 + v*v ➜ Vector<double> {1, 109.071, 215, 317.071, 417};
 ```
 
 

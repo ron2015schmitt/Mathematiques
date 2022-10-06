@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.039</h1>](../../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.040</h1>](../../../../README.md)
 
 <details>
 
@@ -198,70 +198,13 @@ Vector<complex<double>> v = Vector<complex<double>>({ 1, 1i, 1 + 1i, 1 - 1i });
 ☀ z ➜ std::complex<double> (1.5,3.5);
 ☀ v ➜ Vector<std::complex<double>> {(1,0), (0,1), (1,1), (1,-1)};
 
-☀ v + z ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{(2.5,3.5), (1.5,4.5), (2.5,4.5), (2.5,2.5)};
-☀ v*1i ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{(0,1), (-1,0), (-1,1), (1,1)};
-☀ x ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{(1,0), (0,1), (1,1), (1,-1)};
-☀ exp(v) ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-inside []
-☀ x_[i] ➜ std::complex<double> (1,0);
-inside []
-☀ x_[i] ➜ std::complex<double> (0,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,-1);
-{(2.71828,0), (0.540302,0.841471), (1.46869,2.28736), (1.46869,-2.28736)};
-☀ x ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{(1,0), (0,1), (1,1), (1,-1)};
-☀ exp(v) + 1 ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-inside []
-☀ x_[i] ➜ std::complex<double> (1,0);
-inside []
-☀ x_[i] ➜ std::complex<double> (0,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,-1);
-{(3.71828,0), (1.5403,0.841471), (2.46869,2.28736), (2.46869,-2.28736)};
-☀ x ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{(1,0), (0,1), (1,1), (1,-1)};
-☀ exp(v) + complex(1, 2) ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-inside []
-☀ x_[i] ➜ std::complex<double> (1,0);
-inside []
-☀ x_[i] ➜ std::complex<double> (0,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,-1);
-{(3.71828,2), (1.5403,2.84147), (2.46869,4.28736), (2.46869,-0.287355)};
-☀ x ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{(1,0), (0,1), (1,1), (1,-1)};
-☀ exp(v) + v ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-inside []
-☀ x_[i] ➜ std::complex<double> (1,0);
-inside []
-☀ x_[i] ➜ std::complex<double> (0,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,-1);
-{(3.71828,0), (0.540302,1.84147), (2.46869,3.28736), (2.46869,-3.28736)};
-☀ x ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-{(1,0), (0,1), (1,1), (1,-1)};
-☀ exp(v)/v + v ➜ Vector<std::complex<double>> ☀ parent_rdims ➜ RecursiveDimensions {4};
-inside []
-☀ x_[i] ➜ std::complex<double> (1,0);
-inside []
-☀ x_[i] ➜ std::complex<double> (0,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,1);
-inside []
-☀ x_[i] ➜ std::complex<double> (1,-1);
-{(3.71828,0), (0.841471,0.459698), (2.87802,1.40933), (2.87802,-1.40933)};
+☀ v + z ➜ Vector<std::complex<double>> {(2.5,3.5), (1.5,4.5), (2.5,4.5), (2.5,2.5)};
+☀ v*1i ➜ Vector<std::complex<double>> {(0,1), (-1,0), (-1,1), (1,1)};
+☀ exp(v) ➜ Vector<std::complex<double>> {(2.71828,0), (0.540302,0.841471), (1.46869,2.28736), (1.46869,-2.28736)};
+☀ exp(v) + 1 ➜ Vector<std::complex<double>> {(3.71828,0), (1.5403,0.841471), (2.46869,2.28736), (2.46869,-2.28736)};
+☀ exp(v) + complex(1, 2) ➜ Vector<std::complex<double>> {(3.71828,2), (1.5403,2.84147), (2.46869,4.28736), (2.46869,-0.287355)};
+☀ exp(v) + v ➜ Vector<std::complex<double>> {(3.71828,0), (0.540302,1.84147), (2.46869,3.28736), (2.46869,-3.28736)};
+☀ exp(v)/v + v ➜ Vector<std::complex<double>> {(3.71828,0), (0.841471,0.459698), (2.87802,1.40933), (2.87802,-1.40933)};
 ```
 
 
