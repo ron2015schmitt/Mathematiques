@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.040</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.041</h1>](../../../README.md)
 
 <details>
 
@@ -157,6 +157,10 @@ const Vector<double, 3> k{ kx, ky, kz };
 CurvilinearField<std::complex<double>, 0, decltype(coords)> Phi(coords);
 Phi = exp(i*(ky*y - omega*t));
 CurvilinearField<std::complex<double>, 1, decltype(coords)> A(coords);
+A[0] = exp(i*(kz*z - omega*t));
+A[1] = exp(i*(ky*y - omega*t));
+A[2] = 0;
+☀ alltrue(approx(k|A, A|k)) ➜ bool true;
 ```
 
 

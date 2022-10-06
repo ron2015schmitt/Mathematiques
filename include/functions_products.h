@@ -218,69 +218,69 @@ namespace mathq
   //                 Different Depths
   // ----------------------------------------------------
 
-  // (4A) MultiArray<NT1,rank,depth> + MultiArray<NT2,rank,1>
 
-  // Depending on rank and dimensions, this may be top-level or element wise Addition
-  // Note: D2==1 -> E2==NT2
+  // TODO: implement for depth >2?
 
-  // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
-  // TODO: if element-wise: run-timecheck dimesions of E1  equal dimensions of x2
 
-  // TODO: implement
-  // template <class A, class B, class E1, class NT1, class NT2, size_t D1, size_t D2, size_t rank,
-  //           EnableIf<(D1 >= 2) && (D2 == 1) && (IsReadableExpressionOrArray<E1>::value)> = 0>
-  // auto dot(const ExpressionR<A, E1, NT1, D1, rank> &x1, const ExpressionR<B, NT2, NT2, D2, rank> &x2)
-  // {
+  // (4A) MultiArray<NT2,rank,2> + MultiArray<NT1,rank,1> 
 
-  //   // NOT SURE WHICH OF THE THREE IS BEST
-  //   //    typedef typename B::ConcreteType E2;
-  //   //    typedef B E2;
-  //   typedef ExpressionR<B, NT2, NT2, D2, rank> E2;
+  //  every element of x1 gets dotted with x2.  Return type = (element of x2)
 
-  //   typedef typename AddType<NT1, NT2>::Type NT3;
-  //   typedef typename NumberTrait<E1, NT3>::Type E3; // see TODO note above
-  //   constexpr size_t D3 = D1;
-  //   //    MOUT << "C" <<std::endl;
-  //   return ExpressionR_Binary<ExpressionR<A, E1, NT1, D1, rank>,
-  //                     ExpressionR<B, NT2, NT2, D2, rank>,
-  //                     E1, NT2, E3, NT1, NT2, NT3, D1, D2, D3, rank, rank, rank,
-  //                     FUNCTOR_add<E1, E2, E3, NT1, NT2, NT3>>(x1, x2);
-  // }
+  // TODO: check size and rank
+
+  template <class A, class B, class E1, class NT1, class NT2, size_t rank>
+  auto& dot(const ExpressionR<A, E1, NT1, 2, rank>& x1, const ExpressionR<B, NT2, NT2, 1, rank>& x2) {
+    using NT3 = typename AddType<NT1, NT2>::Type;
+    using E3 = typename ReplaceNumberTrait<E1, NT3>::Type;
+
+    MultiArray<NT2, rank>& y2 = *(new MultiArray<NT2, rank>);
+    y2 = x2;
+
+    E3& x3 = *(new E3);
+    x3.resize(x1.element_dims());
+
+    const size_t N1 = x1.element_size();
+    const size_t N2 = x2.size();
+    MultiArray<NT3, rank> temp;
+    temp.resize(N2);
+    for (size_t ii = 0; ii < N1; ii++) {
+      for (size_t jj = 0; jj < N2; jj++) {
+        temp[jj] = x1[jj][ii];
+      }
+      x3[ii] = dot(y2, temp);
+    }
+    return x3;
+  }
 
 
   // (4B) MultiArray<NT1,rank,1> + MultiArray<NT2,rank,2>
 
   //  x1 gets dotted with every element of x2.  Return type = (element of x2)
 
-  // Depending on rank and dimensions, this may be top-level or element wise Addition
-  // Note: D1==1 -> E1==NT1
-
   // TODO: if top-level: run-timecheck dimesions of x1  equal dimensions of x2
   // TODO: if element-wise: run-timecheck dimesions of x1  equal dimensions of E2
 
-  // TODO: implement
 
   template <class A, class B, class E2, class NT1, class NT2, size_t rank>
   auto& dot(const ExpressionR<A, NT1, NT1, 1, rank>& x1, const ExpressionR<B, E2, NT2, 2, rank>& x2) {
-    typedef typename AddType<NT1, NT2>::Type NT3;
-    typedef typename ReplaceNumberTrait<E2, NT3>::Type E3; // see TODO note above
+    using NT3 = typename AddType<NT1, NT2>::Type;
+    using E3 = typename ReplaceNumberTrait<E2, NT3>::Type;
+
     MultiArray<NT1, rank>& y1 = *(new MultiArray<NT1, rank>);
     y1 = x1;
-    ETV(y1);
+
     E3& x3 = *(new E3);
-    ETV(x3);
-    ETV(x2.recursive_dims());
     x3.resize(x2.element_dims());
+
     const size_t N1 = x1.size();
     const size_t N2 = x2.element_size();
-    ETV(N2);
     MultiArray<NT3, rank> temp;
     temp.resize(N1);
     for (size_t ii = 0; ii < N2; ii++) {
       for (size_t jj = 0; jj < N1; jj++) {
-        // temp[jj] = x2[ii][jj];
+        temp[jj] = x2[jj][ii];
       }
-      // x3[ii] = dot(y1, temp);
+      x3[ii] = dot(y1, temp);
     }
     return x3;
   }

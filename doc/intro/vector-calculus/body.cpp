@@ -133,9 +133,16 @@ int main() {
     ECHO(Phi = exp(i*(ky*y - omega*t)));
     ECHO(CurvilinearField<std::complex<double>, 1, decltype(coords)> A(coords));
     // ECHO(A = { exp(i*(kz*z - omega*t)), exp(i*(ky*y - omega*t)), exp(i*(ky*y - omega*t)) });
+    ECHO(A[0] = exp(i*(kz*z - omega*t)));
+    ECHO(A[1] = exp(i*(ky*y - omega*t)));
+    // ECHO(A[0] = 0);
+    // ECHO(A[1] = 1);
+    ECHO(A[2] = 0);
     // ETV(alltrue(approx(Phi(), Phi2())));
     // ETV(A);
     // ETV(k | A);
+    // ETV(A | k);
+    ETV(alltrue(approx(k|A, A|k)));
     GMD_CODE_END();
   }
   CR();
