@@ -41,6 +41,7 @@ namespace mathq {
     using ParentType::set_equal_to;  // needed to find overloaded funcs
 
     const Coords& coordinates;
+    const size_t time = Coords::Ndims_value;
 
     CurvilinearField() : CurvilinearField(*(new Coords())) {
     }
@@ -226,20 +227,22 @@ namespace mathq {
   //
 
   template <typename TargetElement, IsCurvilinear Coords> requires (Coords::total_num_dims == 1)
-    CurvilinearField<TargetElement, 0, Coords> d(const CurvilinearField<TargetElement, 0, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
+    auto& d(const CurvilinearField<TargetElement, 0, Coords>& f, const Nabla<>& nabla = Nabla<>()) {
     return pd(f, 0, nabla);
   }
 
   //
-  // pd(f,c) - for scalar f
+  // pd(f,c) - for  f
   //
 
-  template <typename TargetElement, IsCurvilinear Coords>
-  CurvilinearField<TargetElement, 0, Coords> pd(const CurvilinearField<TargetElement, 0, Coords>& f, const size_t c, const Nabla<>& nabla = Nabla<>()) {
+  template <typename TargetElement, IsCurvilinear Coords, size_t rank>
+  auto& pd(const CurvilinearField<TargetElement, rank, Coords>& f, const size_t c, const Nabla<>& nabla = Nabla<>()) {
 
     Coords const& coords = f.coords();
-    auto& g = *(new CurvilinearField<TargetElement, 0, Coords>(coords));
-    g = coords.pd(f(), c, nabla);
+    auto& g = *(new CurvilinearField<TargetElement, rank, Coords>(coords));
+    for (size_t i = 0; i < g.size(); i++) {
+      g[i] = coords.pd(f[i], c, nabla);
+    }
     return g;
   }
 

@@ -152,32 +152,34 @@ int main() {
     ECHO(const Vector<double, 3> k{ kx, ky, kz });
     ECHO(const double Phi0 = A0 * pow(c, 2) * ky / omega);
 
+    CR();
     ECHO(using MyScalarField = CurvilinearField<std::complex<double>, 0, decltype(coords)>);
+    ECHO(using MyVectorField = CurvilinearField<std::complex<double>, 1, decltype(coords)>);
+
+    CR();
     ECHO(MyScalarField Phi(coords));
     ECHO(Phi = Phi0 * exp(i*(ky*y - omega*t)));
-    ECHO(CurvilinearField<std::complex<double>, 1, decltype(coords)> A(coords));
-    // ECHO(A = { exp(i*(kz*z - omega*t)), exp(i*(ky*y - omega*t)), exp(i*(ky*y - omega*t)) });
-    // ECHO(A[0] = 0);
-    // ECHO(A[1] = 1); 
-    // ECHO(A[2] = 0);    
 
-    // ECHO(A[0] = A0 * exp(i*(kz*z - omega*t)));
-    // ECHO(A[1] = A0 * exp(i*(ky*y - omega*t)));
-    // ECHO(A[2] = 0);  
-
-
-    // ECHO(A = expr{ 0, 0 , 0 }.data);
+    CR();
+    ECHO(MyVectorField A(coords));
     ECHO(A = expr{ A0 * exp(i*(kz*z - omega*t)), A0 * exp(i*(ky*y - omega*t)), 0 });
-    // ETV(alltrue(approx(Phi(), Phi2()))); 
-    // ETV(A);
-    // ETV(k | A);   
-    // ETV(A | k);
-    // ETV(alltrue(approx(k|A, A|k)));
+    CR();
+
+    ECHO(MyVectorField B(coords));
+    ECHO(B = curl(A));
+    CR();
+
+    ECHO(MyVectorField E(coords));
+    ECHO(E = -grad(Phi) - pd(A, A.time));
+    CR();
+
+
+
     ECHO(auto result1 = i*k|A);
     ECHO(MyScalarField result2 = div(A));
 
     ECHO(MyScalarField dPhi_dt);
-    ECHO(dPhi_dt = pd(Phi, 3));
+    ECHO(dPhi_dt = pd(Phi, Phi.time));
     ECHO(MyScalarField result3);
     ECHO(result3 = -1./(c*c) * dPhi_dt);
 
@@ -196,6 +198,9 @@ int main() {
     ETV(numtrue(approx(result1, result2(), 0.015)));
     ETV(alltrue(approx(result1, result3(), 0.015)));
     ETV(numtrue(approx(result1, result3(), 0.015)));
+
+
+
     GMD_CODE_END();
   }
   CR();

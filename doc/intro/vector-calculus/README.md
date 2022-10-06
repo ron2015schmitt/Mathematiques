@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.044</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.045</h1>](../../../README.md)
 
 <details>
 
@@ -171,15 +171,26 @@ const double ky = 2;
 const double kz = 1;
 const Vector<double, 3> k{ kx, ky, kz };
 const double Phi0 = A0 * pow(c, 2) * ky / omega;
+
 using MyScalarField = CurvilinearField<std::complex<double>, 0, decltype(coords)>;
+using MyVectorField = CurvilinearField<std::complex<double>, 1, decltype(coords)>;
+
 MyScalarField Phi(coords);
 Phi = Phi0 * exp(i*(ky*y - omega*t));
-CurvilinearField<std::complex<double>, 1, decltype(coords)> A(coords);
+
+MyVectorField A(coords);
 A = expr{ A0 * exp(i*(kz*z - omega*t)), A0 * exp(i*(ky*y - omega*t)), 0 };
+
+MyVectorField B(coords);
+B = curl(A);
+
+MyVectorField E(coords);
+E = -grad(Phi) - pd(A, A.time);
+
 auto result1 = i*k|A;
 MyScalarField result2 = div(A);
 MyScalarField dPhi_dt;
-dPhi_dt = pd(Phi, 3);
+dPhi_dt = pd(Phi, Phi.time);
 MyScalarField result3;
 result3 = -1./(c*c) * dPhi_dt;
 ☀ result1(0, 0, 0, 2) ➜ std::complex<double> (1.28407,-1.53335);
