@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.043</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.044</h1>](../../../README.md)
 
 <details>
 
@@ -61,24 +61,6 @@ Vector<double, 3> v{ 1,2,3 };
 
 ☀ v ➜ Vector<double,3> {1, 2, 3};
 v = tuple{ 12, 1, x };
-☀ I ➜ unsigned long 0;
-☀ display::getTypeName(val) ➜ int;
-☀ display::getTypeName((*this)[I]) ➜ double;
-done with assignment
-recurse
-☀ I ➜ unsigned long 1;
-☀ display::getTypeName(val) ➜ int;
-☀ display::getTypeName((*this)[I]) ➜ double;
-done with assignment
-recurse
-☀ I ➜ unsigned long 2;
-☀ display::getTypeName(val) ➜ double;
-☀ display::getTypeName((*this)[I]) ➜ double;
-done with assignment
-done
-done
-done
-returned
 ☀ v ➜ Vector<double,3> {12, 1, 3.4};
 ☀ expr(1, 2, v) ➜ expr<> {1,2,{12, 1, 3.4}};
 ☀ realize(1) ➜ int 1;
@@ -194,27 +176,6 @@ MyScalarField Phi(coords);
 Phi = Phi0 * exp(i*(ky*y - omega*t));
 CurvilinearField<std::complex<double>, 1, decltype(coords)> A(coords);
 A = expr{ A0 * exp(i*(kz*z - omega*t)), A0 * exp(i*(ky*y - omega*t)), 0 };
-hello
-☀ I ➜ unsigned long 0;
-☀ display::getTypeName(val) ➜ MultiArray<std::complex<double>, rank=4>;
-☀ display::getTypeName((*this)[I]) ➜ MultiArray<std::complex<double>, rank=4>;
-done with assignment
-recurse
-☀ I ➜ unsigned long 1;
-☀ display::getTypeName(val) ➜ MultiArray<std::complex<double>, rank=4>;
-☀ display::getTypeName((*this)[I]) ➜ MultiArray<std::complex<double>, rank=4>;
-done with assignment
-recurse
-☀ I ➜ unsigned long 2;
-☀ display::getTypeName(val) ➜ int;
-☀ display::getTypeName((*this)[I]) ➜ MultiArray<std::complex<double>, rank=4>;
-done with assignment
-done
-done
-done
-returned
-goodbye
-OK
 auto result1 = i*k|A;
 MyScalarField result2 = div(A);
 MyScalarField dPhi_dt;

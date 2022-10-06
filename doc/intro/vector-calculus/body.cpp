@@ -163,12 +163,11 @@ int main() {
 
     // ECHO(A[0] = A0 * exp(i*(kz*z - omega*t)));
     // ECHO(A[1] = A0 * exp(i*(ky*y - omega*t)));
-    // ECHO(A[2] = 0); 
+    // ECHO(A[2] = 0);  
 
 
     // ECHO(A = expr{ 0, 0 , 0 }.data);
     ECHO(A = expr{ A0 * exp(i*(kz*z - omega*t)), A0 * exp(i*(ky*y - omega*t)), 0 });
-    OUTPUT("OK");
     // ETV(alltrue(approx(Phi(), Phi2()))); 
     // ETV(A);
     // ETV(k | A);   

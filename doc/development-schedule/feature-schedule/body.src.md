@@ -123,6 +123,7 @@
 * need function in display that converts (nested) lists to a string
 * use [std::source_location](https://en.cppreference.com/w/cpp/utility/source_location) in `log` functions
 * optional command to print tensors as 2.35 ∇r + 3.43 ∇θ,  or  ∂x/∂r  etc
+1. print expression classname preluded by the concrete type
 
 
 ### Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary
@@ -204,6 +205,7 @@
 
 
 ### Miscellaneous Small Features
+* look into && and forwarding
 * add `static inline std::string ClassName()` to each class. see `Vector` for how to set up
 * change replaceable strings in include-templates files from ##NAME## to __NAME__ so as to make syntax highlighting work properly
 * create template versions of all C++ functions so that there is never overload ambiguity. Put inside namespace
