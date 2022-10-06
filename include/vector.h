@@ -818,6 +818,55 @@ namespace mathq {
       return *this;
     }
 
+    template<typename... T>
+    void test(const T&... x) {
+      // ETV({ x... });
+      std::tuple<T...> X(x...);
+      ETV(X);
+    }
+
+
+    template<typename... T>
+    void test2(const std::tuple<T...>& x) {
+      // ETV({ x... });
+      ETV(x);
+    }
+
+
+    // ------------------------ Vector = tuple ----------------
+
+
+
+
+    template<typename... Ts>
+    Type& operator=(const expr<Ts...>& x) {
+      OUTPUT("hello");
+      set_equal_to(x.data);
+      OUTPUT("goodbye");
+      return *this;
+    }
+
+    template<typename... Ts>
+    Type& set_equal_to(const std::tuple<Ts...>& x) {
+      tuple_helper(x);
+      OUTPUT("returned");
+      return *this;
+    }
+
+    template <size_t I = 0, typename... Ts>
+    void tuple_helper(const std::tuple<Ts...>& x) {
+      auto val = std::get<I>(x);
+      ETV(I);
+      EV(display::getTypeName(val));
+      EV(display::getTypeName((*this)[I]));
+      (*this)[I] = val;
+      OUTPUT("done with assignment");
+      if constexpr (I+1 < sizeof...(Ts)) {
+        OUTPUT("recurse");
+        tuple_helper<I + 1, Ts...>(x);
+      }
+      OUTPUT("done");
+    }
 
 
     // ------------------------ Vector = initializer_list<Expression> ----------------

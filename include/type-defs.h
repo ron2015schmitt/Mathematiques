@@ -6,6 +6,83 @@
 namespace mathq {
 
 
+
+  template <typename T>
+  class Realize_Type {
+  public:
+    using Type = T;
+  };
+
+  template <IsReadableExpression T>
+  class Realize_Type<T> {
+  public:
+    using Type = T::ConcreteType;
+  };
+
+
+  template <typename T>
+  T& realize(T&& x) {
+    return x;
+  }
+
+  template <IsReadableExpression T>
+  auto& realize(const T& expression) {
+    using ConcreteType = typename T::ConcreteType;
+    ConcreteType& temp = *(new ConcreteType);
+    temp.resize(expression.recursive_dims());
+    temp = expression;
+    return temp;
+  }
+
+  template <typename... Ts> requires (sizeof...(Ts) > 1)
+    auto& realize(Ts&&... args) {
+    auto& data = *(new std::tuple<typename Realize_Type<Ts>::Type...>{ args... });
+    return data;
+  }
+
+
+
+
+  // ***************************************************************************
+  // * expr
+  // ***************************************************************************
+
+  template <typename... Ts>
+  class expr {
+  public:
+    using Type = std::tuple<typename Realize_Type<Ts>::Type...>;
+    const Type data;
+  public:
+    expr(const Ts&... args) : data({ args... }) {
+    }
+    ~expr() {
+    }
+
+
+
+    inline std::string classname() const {
+      return ClassName();
+    }
+
+    static inline std::string ClassName() {
+      using namespace display;
+      std::string s = "expr";
+      s += StyledString::get(ANGLE1).get();
+      s += StyledString::get(ANGLE2).get();
+      return s;
+    }
+
+    inline friend std::ostream& operator<<(std::ostream& stream, const expr<Ts...>& var) {
+      using namespace display;
+      dispval_strm(stream, var.data);
+      return stream;
+    }
+
+
+  };
+
+
+
   // **************************************************************************
   // * std::vector related functions
   // ************************************************************************** 

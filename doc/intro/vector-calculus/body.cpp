@@ -1,6 +1,7 @@
 #include "mathq.h"
 
 
+
 int main() {
   using namespace mathq;
   using namespace std;
@@ -11,6 +12,26 @@ int main() {
 
   OUTPUT("Mathématiques provides classes and extensive functionality for curvilinear coordinate systems as well as scalar, vector, and rank >=2 functions using these coordinates.");
 
+  GMD_HEADER3("Fixed-length Vectors");
+  {
+    GMD_CODE_START("C++");
+    ECHO(Vector<double, 3> v{ 1,2,3 });
+    CR();
+    ETV(v);
+    double x = 3.4;
+    // v.test(12, 1, std::string("hello"));
+    // v.test2(std::tuple(12, 1, std::string("hello")));
+    // v.test2(std::tuple{ 12, 1, std::string("hello") });
+    ECHO(v = tuple{ 12, 1, x });
+    ETV(v);
+    ETV(expr(1, 2, v));
+    ETV(realize(1));
+    ETV(realize(v));
+    ETV(realize(2*v));
+    ETV(Realize_Type<decltype(2*v)>::Type());
+    ETV(expr{ 1, 2, 2*v });
+    GMD_CODE_END();
+  }
 
   GMD_VSPACE();
   GMD_HEADER2("Curvilinear Coordinates");
@@ -138,13 +159,19 @@ int main() {
     // ECHO(A = { exp(i*(kz*z - omega*t)), exp(i*(ky*y - omega*t)), exp(i*(ky*y - omega*t)) });
     // ECHO(A[0] = 0);
     // ECHO(A[1] = 1); 
-    // ECHO(A[2] = 0);
-    ECHO(A[0] = A0 * exp(i*(kz*z - omega*t)));
-    ECHO(A[1] = A0 * exp(i*(ky*y - omega*t)));
-    ECHO(A[2] = 0);
+    // ECHO(A[2] = 0);    
+
+    // ECHO(A[0] = A0 * exp(i*(kz*z - omega*t)));
+    // ECHO(A[1] = A0 * exp(i*(ky*y - omega*t)));
+    // ECHO(A[2] = 0); 
+
+
+    // ECHO(A = expr{ 0, 0 , 0 }.data);
+    ECHO(A = expr{ A0 * exp(i*(kz*z - omega*t)), A0 * exp(i*(ky*y - omega*t)), 0 });
+    OUTPUT("OK");
     // ETV(alltrue(approx(Phi(), Phi2()))); 
     // ETV(A);
-    // ETV(k | A);  
+    // ETV(k | A);   
     // ETV(A | k);
     // ETV(alltrue(approx(k|A, A|k)));
     ECHO(auto result1 = i*k|A);
@@ -174,6 +201,9 @@ int main() {
   }
   CR();
 
+
+
+  exit(0);
 
   // template <typename GridElement, size_t Ndims, bool TimeCoord, typename TargetElement = GridElement>
   // using NumericalFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims, TimeCoord>>;  {

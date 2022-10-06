@@ -957,6 +957,9 @@ namespace display {
   inline void dispval_strm<mathq::TensorIndexEnum>(std::ostream& stream, const mathq::TensorIndexEnum& e);
 
 
+
+
+
   //------------------------------------------------------------------
   //       getTypeName
   //------------------------------------------------------------------
