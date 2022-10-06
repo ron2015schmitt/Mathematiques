@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.041</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.042</h1>](../../../README.md)
 
 <details>
 
@@ -97,9 +97,6 @@ Results
   {(1.97987e+08,-4.42929e+08), (-4.07088e+08,2.6394e+08), (4.85165e+08,0), (-4.07088e+08,-2.6394e+08), (1.97987e+08,4.42929e+08)}
 };
 
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ dz(f) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
   {(-4.94848e+07,1.10706e+08), (1.01747e+08,-6.59691e+07), (-1.21262e+08,0), (1.01747e+08,6.59691e+07), (-4.94848e+07,-1.10706e+08)},
@@ -108,9 +105,6 @@ Type& set_equal_to(const Type& x)
   {(4.95043e+07,-1.10749e+08), (-1.01787e+08,6.5995e+07), (1.2131e+08,0), (-1.01787e+08,-6.5995e+07), (4.95043e+07,1.10749e+08)},
   {(4.12437e+08,-9.22689e+08), (-8.48027e+08,5.49827e+08), (1.01067e+09,0), (-8.48027e+08,-5.49827e+08), (4.12437e+08,9.22689e+08)}
 };
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ dz_star(f) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
   {(-1.73698e-08,6.43998e-09), (5.25748e-09,2.5347e-10), (-1.72329e-26,-1.8087e-09), (-5.25748e-09,2.5347e-10), (1.73698e-08,6.43998e-09)},
@@ -155,9 +149,6 @@ Results
   {(0.764706,0.941176), (0.2,1.6), (-3,-0), (0.2,-1.6), (0.764706,-0.941176)},
   {(1,1), (1,2), (inf,-nan), (1,-2), (1,-1)}
 };
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ dz(f) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
   {(0.0158824,0.246471), (-0.184615,0.523077), (-inf,-nan), (-0.184615,-0.523077), (0.0158824,-0.246471)},
@@ -166,9 +157,6 @@ Type& set_equal_to(const Type& x)
   {(0.411176,0.225294), (0.876923,1.21538), (inf,-nan), (0.876923,-1.21538), (0.411176,-0.225294)},
   {(0.512353,-0.0194118), (2.46154,0.0923077), (inf,-nan), (2.46154,-0.0923077), (0.512353,0.0194118)}
 };
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ dz_star(f) ➜ ComplexMathFunction<std::complex<double>,ComplexCoords<double,TimeCoord=0>> 
 {
   {(-0.1,0.15), (-0.35,-0.3), (0,-0.45), (0.35,-0.3), (0.1,0.15)},

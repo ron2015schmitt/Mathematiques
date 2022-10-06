@@ -84,7 +84,6 @@ namespace mathq {
 
     // --------------------- copy constructor --------------------
     MultiArray(const Type& var) {
-      OUTPUT("copy contrcutor");
       *this = var;
     }
 
@@ -376,12 +375,10 @@ namespace mathq {
 
     template<typename T>
     Type& operator=(const T& t) {
-      OUTPUT("Type& operator=(const T& t)");
       return set_equal_to(t);
     }
 
     Type& operator=(const Type& t) {
-      OUTPUT("Type& operator=(const Type& rhs)");
       return set_equal_to(t);
     }
 
@@ -409,7 +406,6 @@ namespace mathq {
     // ------------------------  Scalar----------------
 
     Type& set_equal_to(const Type& x) {
-      OUTPUT("Type& set_equal_to(const Type& x)");
       resize(x.recursive_dims());
       data_ = x();
       return *this;
@@ -568,7 +564,7 @@ namespace mathq {
     friend inline std::istream& operator>>(const std::string s, Type& x) {
       std::istringstream st(s);
       return (st >> x);
-  }
+    }
 
 
     //**********************************************************************
@@ -582,12 +578,12 @@ namespace mathq {
     }
 
 
-};
-
-
-
-
   };
+
+
+
+
+};
 
 
 #endif 

@@ -107,12 +107,12 @@ int main() {
   GMD_HEADER3("TEST");
   {
     GMD_CODE_START("C++");
-
+    ECHO(size_t Npts = 10);
     ECHO(CartesianCoords<double, 3, true> coords({
-    Interval<double>::interval(-1,1,5),
-    Interval<double>::interval(-1,1,5),
-    Interval<double>::interval(-1,1,5),
-    Interval<double>::interval(0,1,5),
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(0,1,Npts),
       }));
     ECHO(auto& x = coords.x());
     ECHO(auto& y = coords.y());
@@ -121,28 +121,55 @@ int main() {
 
     ECHO(using namespace std::numbers);
     ECHO(using namespace mathq::unit_imaginary);
+    ECHO(Nabla nabla);
     ECHO(const double A0 = 1);
-    ECHO(const double omega = 1);
-    ECHO(const double c = 1);
+    ECHO(const double omega = 2);
+    ECHO(const double c = 299792458);
     ECHO(const double kx = 0);
-    ECHO(const double ky = 1);
+    ECHO(const double ky = 2);
     ECHO(const double kz = 1);
     ECHO(const Vector<double, 3> k{ kx, ky, kz });
+    ECHO(const double Phi0 = A0 * pow(c, 2) * ky / omega);
 
-    ECHO(CurvilinearField<std::complex<double>, 0, decltype(coords)> Phi(coords));
-    ECHO(Phi = exp(i*(ky*y - omega*t)));
+    ECHO(using MyScalarField = CurvilinearField<std::complex<double>, 0, decltype(coords)>);
+    ECHO(MyScalarField Phi(coords));
+    ECHO(Phi = Phi0 * exp(i*(ky*y - omega*t)));
     ECHO(CurvilinearField<std::complex<double>, 1, decltype(coords)> A(coords));
     // ECHO(A = { exp(i*(kz*z - omega*t)), exp(i*(ky*y - omega*t)), exp(i*(ky*y - omega*t)) });
-    ECHO(A[0] = exp(i*(kz*z - omega*t)));
-    ECHO(A[1] = exp(i*(ky*y - omega*t)));
     // ECHO(A[0] = 0);
-    // ECHO(A[1] = 1);
+    // ECHO(A[1] = 1); 
+    // ECHO(A[2] = 0);
+    ECHO(A[0] = A0 * exp(i*(kz*z - omega*t)));
+    ECHO(A[1] = A0 * exp(i*(ky*y - omega*t)));
     ECHO(A[2] = 0);
-    // ETV(alltrue(approx(Phi(), Phi2())));
+    // ETV(alltrue(approx(Phi(), Phi2()))); 
     // ETV(A);
-    // ETV(k | A);
+    // ETV(k | A);  
     // ETV(A | k);
-    ETV(alltrue(approx(k|A, A|k)));
+    // ETV(alltrue(approx(k|A, A|k)));
+    ECHO(auto result1 = i*k|A);
+    ECHO(MyScalarField result2 = div(A));
+
+    ECHO(MyScalarField dPhi_dt);
+    ECHO(dPhi_dt = pd(Phi, 3));
+    ECHO(MyScalarField result3);
+    ECHO(result3 = -1./(c*c) * dPhi_dt);
+
+    // ETV(approx(result1(0, 0, 0, 2), result2(0, 0, 0, 2), 0.1));
+
+    // MultiArray<complex<double>, 4, 5, 5, 5, 5> delta = result1 - result2;
+    // MultiArray<double, 4, 5, 5, 5, 5> err = abs(result1-result2);
+    // MultiArray<bool, 4, 5, 5, 5, 5> match = approx(result1, result2, 0.1);
+    ETV(result1(0, 0, 0, 2));
+    ETV(result2()(0, 0, 0, 2));
+    ETV(result3()(0, 0, 0, 2));
+    // ETV(delta(0, 0, 0, 2));
+    // ETV(err(0, 0, 0, 2));
+    // ETV(match(0, 0, 0, 2));
+    ETV(alltrue(approx(result1, result2(), 0.015)));
+    ETV(numtrue(approx(result1, result2(), 0.015)));
+    ETV(alltrue(approx(result1, result3(), 0.015)));
+    ETV(numtrue(approx(result1, result3(), 0.015)));
     GMD_CODE_END();
   }
   CR();

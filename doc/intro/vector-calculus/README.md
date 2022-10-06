@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.041</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.042</h1>](../../../README.md)
 
 <details>
 
@@ -140,27 +140,43 @@ field0 = -3*x + 2*y;
 
 ### TEST
 ```C++
-CartesianCoords<double, 3, true> coords({ Interval<double>::interval(-1,1,5), Interval<double>::interval(-1,1,5), Interval<double>::interval(-1,1,5), Interval<double>::interval(0,1,5), });
+size_t Npts = 10;
+CartesianCoords<double, 3, true> coords({ Interval<double>::interval(-1,1,Npts), Interval<double>::interval(-1,1,Npts), Interval<double>::interval(-1,1,Npts), Interval<double>::interval(0,1,Npts), });
 auto& x = coords.x();
 auto& y = coords.y();
 auto& z = coords.z();
 auto& t = coords.t();
 using namespace std::numbers;
 using namespace mathq::unit_imaginary;
+Nabla nabla;
 const double A0 = 1;
-const double omega = 1;
-const double c = 1;
+const double omega = 2;
+const double c = 299792458;
 const double kx = 0;
-const double ky = 1;
+const double ky = 2;
 const double kz = 1;
 const Vector<double, 3> k{ kx, ky, kz };
-CurvilinearField<std::complex<double>, 0, decltype(coords)> Phi(coords);
-Phi = exp(i*(ky*y - omega*t));
+const double Phi0 = A0 * pow(c, 2) * ky / omega;
+using MyScalarField = CurvilinearField<std::complex<double>, 0, decltype(coords)>;
+MyScalarField Phi(coords);
+Phi = Phi0 * exp(i*(ky*y - omega*t));
 CurvilinearField<std::complex<double>, 1, decltype(coords)> A(coords);
-A[0] = exp(i*(kz*z - omega*t));
-A[1] = exp(i*(ky*y - omega*t));
+A[0] = A0 * exp(i*(kz*z - omega*t));
+A[1] = A0 * exp(i*(ky*y - omega*t));
 A[2] = 0;
-☀ alltrue(approx(k|A, A|k)) ➜ bool true;
+auto result1 = i*k|A;
+MyScalarField result2 = div(A);
+MyScalarField dPhi_dt;
+dPhi_dt = pd(Phi, 3);
+MyScalarField result3;
+result3 = -1./(c*c) * dPhi_dt;
+☀ result1(0, 0, 0, 2) ➜ std::complex<double> (1.28407,-1.53335);
+☀ result2()(0, 0, 0, 2) ➜ std::complex<double> (1.28607,-1.53275);
+☀ result3()(0, 0, 0, 2) ➜ std::complex<double> (1.28407,-1.53335);
+☀ alltrue(approx(result1, result2(), 0.015)) ➜ bool true;
+☀ numtrue(approx(result1, result2(), 0.015)) ➜ unsigned long 10000;
+☀ alltrue(approx(result1, result3(), 0.015)) ➜ bool true;
+☀ numtrue(approx(result1, result3(), 0.015)) ➜ unsigned long 10000;
 ```
 
 
@@ -230,9 +246,6 @@ partials of a 2D grid
   {0, 0, 0}
 };
 partials of a 2D Scalar CurvilinearField
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ pd(field0, 0) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {-3, -3, -3},
@@ -241,9 +254,6 @@ Type& set_equal_to(const Type& x)
   {-3, -3, -3},
   {-3, -3, -3}
 };
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ pd(field0, 1) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {2, 2, 2},
@@ -316,9 +326,6 @@ auto A = grad(field0);
   {2, 2, 2},
   {2, 2, 2}
 }};
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ div(A) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {0, 0, 0},
@@ -344,9 +351,6 @@ field0 = sqrt(x*x+y*y);
   {0.971999, 0.979828, 0.987658},
   {0.899848, 0.92621, 0.952571}
 }};
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ div(grad(field0)) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {0.389616, 0.365133, 0.33398},
@@ -505,9 +509,6 @@ field = -4*x + 5*y;
   }
 };
 2+1D Partials of Scalar CurvilinearField
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ pd(field, 0) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -526,9 +527,6 @@ Type& set_equal_to(const Type& x)
     {-4, -4, -4}
   }
 };
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ pd(field, 1) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -547,9 +545,6 @@ Type& set_equal_to(const Type& x)
     {5, 5, 5}
   }
 };
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ pd(field, 2) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -641,9 +636,6 @@ auto A = grad(field);
     {5, 5, 5}
   }
 }};
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ div(A) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -699,9 +691,6 @@ field = sqrt(x*x+y*y);
     {0.828427, 0.828427, 0.828427}
   }
 }};
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ div(grad(field)) ➜ CurvilinearField<double,0,CartesianCoords<double,Ndims=2,TimeCoord=true>> 
 {
   {
@@ -828,27 +817,18 @@ field = -4*r + 5*phi;
   {-4, 2.28319, 8.56637, 14.8496, 21.1327}
 };
 2D  PolarCoords Partials of Scalar CurvilinearField
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ pd(field, 0) ➜ CurvilinearField<double,0,PolarCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {-4, -4, -4, -4, -4},
   {-4, -4, -4, -4, -4},
   {-4, -4, -4, -4, -4}
 };
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ pd(field, 1) ➜ CurvilinearField<double,0,PolarCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {5, 5, 5, 5, 5},
   {5, 5, 5, 5, 5},
   {5, 5, 5, 5, 5}
 };
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ pd(field, 1)()/r ➜ Matrix<double> 
 {
   {15, 15, 15, 15, 15},
@@ -880,9 +860,6 @@ auto A = grad(field);
   {7.5, 7.5, 7.5, 7.5, 7.5},
   {5, 5, 5, 5, 5}
 }};
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ div(A) ➜ CurvilinearField<double,0,PolarCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {-12, -12, -12, -12, -12},
@@ -902,9 +879,6 @@ field = r*r;
   {0, -2.20872e-17, 2.20872e-17, 2.20872e-17, 0},
   {0, 0, 0, 0, 0}
 }};
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ div(grad(field)) ➜ CurvilinearField<double,0,PolarCoords<double,Ndims=2,TimeCoord=false>> 
 {
   {4, 4, 4, 4, 4},

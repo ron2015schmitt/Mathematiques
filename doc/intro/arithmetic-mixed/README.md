@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.041</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.042</h1>](../../../README.md)
 
 <details>
 
@@ -68,7 +68,6 @@ Examples:
 ```C++
 ☀ mathq::rank(2) ➜ unsigned long 0;
 
-Type& operator=(const T& t)
 ☀ mathq::rank(Scalar<double>{42}) ➜ unsigned long 0;
 ☀ mathq::rank(Vector<double>{1, 2}) ➜ unsigned long 1;
 ☀ mathq::rank(Matrix<double>{ {1, 2}, { 3,4 }}) ➜ unsigned long 2;
@@ -86,7 +85,6 @@ Examples:
 ```C++
 ☀ mathq::depth(2) ➜ unsigned long 0;
 
-Type& operator=(const T& t)
 ☀ mathq::depth(Scalar<double>{42}) ➜ unsigned long 1;
 ☀ mathq::depth(Vector<double>{1, 2}) ➜ unsigned long 1;
 ☀ mathq::depth(Matrix<double>{ {1, 2}, { 3,4 }}) ➜ unsigned long 1;
@@ -104,7 +102,6 @@ Examples:
 ```C++
 ☀ mathq::dimensions(2) ➜ RecursiveDimensions {};
 
-Type& operator=(const T& t)
 ☀ mathq::dimensions(Scalar<double>{42}) ➜ RecursiveDimensions {{}};
 ☀ mathq::dimensions(Vector<double>{1, 2}) ➜ RecursiveDimensions {2};
 ☀ mathq::dimensions(Matrix<double>{ {1, 2}, { 3,4 }}) ➜ RecursiveDimensions {2⨯2};
@@ -123,9 +120,7 @@ Examples:
 ```C++
 ☀ Vector<double>{1, 2}+10 ➜ Vector<double> {11, 12};
 
-Type& operator=(const T& t)
-☀ 2*Scalar<double>{42} ➜ Scalar<double> Type& operator=(const T& t)
-84;
+☀ 2*Scalar<double>{42} ➜ Scalar<double> 84;
 ☀ Vector<double>{1, 2} == 1 ➜ Vector<bool> {true, false};
 ☀ Matrix<double>{ {1, 2}, { 3,4 }} - 1 ➜ Matrix<double> 
 {

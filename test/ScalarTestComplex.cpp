@@ -206,7 +206,7 @@ int main(int argc, char* argv[]) {
     Scalar<ComplexDouble> s2 = ComplexDouble(14.01, 71.);
     Scalar<bool> expected = false;
     Scalar<bool> result;
-    testcode(result = (approx(s1, s2, 0.0005)));
+    testcode(result = (approx(s1, s2, 0.00005)));
     bool pass = (result() == expected());
     printEnd(pass, result, expected);
     allpass = allpass && pass;
@@ -262,7 +262,7 @@ int main(int argc, char* argv[]) {
     Scalar<ComplexDouble> s2 = ComplexDouble(1.001, -25);
     bool expected = false;
     bool result;
-    testcode(result = equal_approx(s1, s2, 0.0005));
+    testcode(result = equal_approx(s1, s2, 0.000005));
     bool pass = (result == expected);
     printEnd(pass, result, expected);
     allpass = allpass && pass;

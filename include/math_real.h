@@ -174,7 +174,7 @@ namespace mathq {
 
   template <typename NT1, typename NT2> requires (IsSimpleNumber<NT1>&& IsSimpleNumber<NT2>)
     bool approx(const NT1& x, const NT2& y, const decltype(Functions<typename AddType<NT1, NT2>::Type>::tolerance)& tol = Functions<typename AddType<NT1, NT2>::Type>::tolerance) {
-    typename AddType<NT1, NT2>::Type d = std::max(x, y);
+    typename AddType<NT1, NT2>::Type d = std::max(std::abs(x), std::abs(y));
     decltype(Functions<typename AddType<NT1, NT2>::Type>::tolerance) tolerance = d * tol;
     return (roundzero(std::abs(x-y), tolerance) == 0);
   }

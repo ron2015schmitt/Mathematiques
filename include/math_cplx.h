@@ -180,7 +180,10 @@ namespace mathq {
 
   template <typename NT1, typename NT2>
   bool approx(const std::complex<NT1>& x, const std::complex<NT2>& y, const typename AddType<NT1, NT2>::Type tol = Functions<typename AddType<NT1, NT2>::Type>::tolerance) {
-    return (mathq::approx(real(x), real(y), tol) && mathq::approx(imag(x), imag(y), tol));
+    typename AddType<NT1, NT2>::Type d = std::max(std::abs(x), std::abs(y));
+    decltype(Functions<typename AddType<NT1, NT2>::Type>::tolerance) tolerance = d * tol;
+    return (roundzero(std::abs(x-y), tolerance) == 0);
+    // return (mathq::approx(real(x), real(y), tolerance) && mathq::approx(imag(x), imag(y), tolerance));
   }
 
   // complex log2

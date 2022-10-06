@@ -609,6 +609,7 @@ namespace mathq {
 
       using MyCoordGridType = MultiArray<typename T::NumberType, total_num_dims>;
       MyCoordGridType& result = *(new MyCoordGridType);
+
       if constexpr (result.is_dynamic_value) {
         Dimensions grid_dims = ParentType::grid_dims();
         result.resize(grid_dims);
@@ -616,6 +617,7 @@ namespace mathq {
       result = 0;
 
       for (size_t c = 0; c < Ndims; c++) {
+        // ETV(f[c]);
         result = result + pd(f[c], c, nabla);
       }
       return result;

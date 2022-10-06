@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.041</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.042</h1>](../../../README.md)
 
 <details>
 
@@ -88,9 +88,6 @@ We can easily create a second function, e.g. $g(x) = x + 2 f(x) - 4 \frac{df}{dx
 NumericalFunction<double> g;
 
 g = x + 2*f - 4*d(f);
-copy contrcutor
-Type& operator=(const Type& rhs)
-Type& set_equal_to(const Type& x)
 ☀ g ➜ {-2, -2.31738, -2.78646, -3.42676, -4.25};
 ```
 

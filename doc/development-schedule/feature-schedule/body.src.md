@@ -3,6 +3,7 @@
 
 ### bugs 
 1. `numtrue(!(v > 2))`  does not compile
+1. `auto err = abs(result1-result2)`  err becomes an expression not a MultiArray, see `doc/intro/vector-calculus/body.cpp`
 1. `ETV(sin(f));` does not work. f is NumericalFunction. see `doc/intro/multi-var-calculus/body.cpp`
 1. `g = d(sqrt(f))` does nto work for f and g are NumericalFunction. see `doc/intro/multi-var-calculus/body.cpp`
 
