@@ -31,3 +31,20 @@ function redoc {
   rm -f ${dirname}/body{,.o,.compiler} README.md && make ${dirname}/README.md
 }
 
+
+function countlines() {
+opts=""
+first=0
+for var in "$@"
+do
+  echo "${var}"
+  [ ${first} -gt 0  ] && opts+="-o"
+  first=1
+  opts+=" -name ${var} "
+done
+echo "find . ${opts} | xargs wc -l"
+find . ${opts} | xargs wc -l
+}
+
+alias mcount='cd ~/Mathematiques  &&  countlines *.cpp *.h *.py *.bash Makefile *.mk   &&  cd -'
+

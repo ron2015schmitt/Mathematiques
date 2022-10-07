@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.045</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.046</h1>](../../../README.md)
 
 <details>
 
@@ -152,17 +152,23 @@ field0 = -3*x + 2*y;
 
 ## Maxwell's Equations
 
-### TEST
+The code below calculates, in 3D, the time-dependent, complex-valued potentials
+
+$$\Phi(\vec{x},t) \hspace1ex \dot{=} \hspace1ex A_0 \frac{c^2 k_y}{\omega} \hspace0.5ex e^{i(k_y y - \omega t)}$$
+$$\vec{A}(\vec{x},t) \hspace1ex \dot{=} \hspace1ex A_0 \hspace0.5ex e^{i(k_z z - \omega t)} \hspace0.5ex \hat{x} \hspace1ex + \hspace1ex A_0 \hspace0.5ex e^{i(k_y y - \omega t)} \hspace0.5ex \hat{y}$$
+
+From the potentials, it calculates the electric and magnetic fields using
+
+$$\vec{E}(\vec{x},t) \hspace1ex = - \vec{\nabla}\Phi - \frac{\partial \vec{A}}{\partial t} $$
+$$\vec{B}(\vec{x},t) \hspace1ex = \vec{\nabla} \times  \vec{A}$$
+
+
+Constant definitions
 ```C++
-size_t Npts = 10;
-CartesianCoords<double, 3, true> coords({ Interval<double>::interval(-1,1,Npts), Interval<double>::interval(-1,1,Npts), Interval<double>::interval(-1,1,Npts), Interval<double>::interval(0,1,Npts), });
-auto& x = coords.x();
-auto& y = coords.y();
-auto& z = coords.z();
-auto& t = coords.t();
 using namespace std::numbers;
 using namespace mathq::unit_imaginary;
-Nabla nabla;
+const size_t Npts = 10;
+const Nabla nabla;
 const double A0 = 1;
 const double omega = 2;
 const double c = 299792458;
@@ -171,36 +177,62 @@ const double ky = 2;
 const double kz = 1;
 const Vector<double, 3> k{ kx, ky, kz };
 const double Phi0 = A0 * pow(c, 2) * ky / omega;
+```
 
+
+3D+Time Cartesian Coordinates
+```C++
+CartesianCoords<double, 3, true> coords({
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(0,1,Npts),
+}) 
+auto& x = coords.x();
+auto& y = coords.y();
+auto& z = coords.z();
+auto& t = coords.t();
+```
+
+
+Type Definitons for convenience
+```C++
 using MyScalarField = CurvilinearField<std::complex<double>, 0, decltype(coords)>;
 using MyVectorField = CurvilinearField<std::complex<double>, 1, decltype(coords)>;
+```
 
+
+Potentials
+```C++
 MyScalarField Phi(coords);
 Phi = Phi0 * exp(i*(ky*y - omega*t));
 
 MyVectorField A(coords);
 A = expr{ A0 * exp(i*(kz*z - omega*t)), A0 * exp(i*(ky*y - omega*t)), 0 };
+```
 
+
+E and B fields
+```C++
 MyVectorField B(coords);
 B = curl(A);
 
 MyVectorField E(coords);
 E = -grad(Phi) - pd(A, A.time);
-
-auto result1 = i*k|A;
-MyScalarField result2 = div(A);
-MyScalarField dPhi_dt;
-dPhi_dt = pd(Phi, Phi.time);
-MyScalarField result3;
-result3 = -1./(c*c) * dPhi_dt;
-☀ result1(0, 0, 0, 2) ➜ std::complex<double> (1.28407,-1.53335);
-☀ result2()(0, 0, 0, 2) ➜ std::complex<double> (1.28607,-1.53275);
-☀ result3()(0, 0, 0, 2) ➜ std::complex<double> (1.28407,-1.53335);
-☀ alltrue(approx(result1, result2(), 0.015)) ➜ bool true;
-☀ numtrue(approx(result1, result2(), 0.015)) ➜ unsigned long 10000;
-☀ alltrue(approx(result1, result3(), 0.015)) ➜ bool true;
-☀ numtrue(approx(result1, result3(), 0.015)) ➜ unsigned long 10000;
 ```
+
+
+Verify the Lorenz Gauge Condition, $\frac{1}{c^2} \frac{\partial \Phi}{\partial t} + \vec{\nabla} \cdot \vec{A} = 0$, to 0.2% accuracy
+```C++
+MyScalarField result1(coords);
+result1 = div(A);
+
+MyScalarField result2;
+result2 = -1./(c*c) * pd(Phi, Phi.time);
+
+☀ alltrue(approx(result1(), result2(), 0.002)) ➜ bool true;
+```
+
 
 
 

@@ -125,24 +125,24 @@ int main() {
   GMD_HEADER2("Maxwell's Equations");
 
   CR();
-  GMD_HEADER3("TEST");
+  OUTPUT("The code below calculates, in 3D, the time-dependent, complex-valued potentials");
+  CR();
+  OUTPUT("$$\\Phi(\\vec{x},t) \\hspace1ex \\dot{=} \\hspace1ex A_0 \\frac{c^2 k_y}{\\omega} \\hspace0.5ex e^{i(k_y y - \\omega t)}$$");
+  OUTPUT("$$\\vec{A}(\\vec{x},t) \\hspace1ex \\dot{=} \\hspace1ex A_0 \\hspace0.5ex e^{i(k_z z - \\omega t)} \\hspace0.5ex \\hat{x} \\hspace1ex + \\hspace1ex A_0 \\hspace0.5ex e^{i(k_y y - \\omega t)} \\hspace0.5ex \\hat{y}$$");
+  CR();
+  OUTPUT("From the potentials, it calculates the electric and magnetic fields using");
+  CR();
+  OUTPUT("$$\\vec{E}(\\vec{x},t) \\hspace1ex = - \\vec{\\nabla}\\Phi - \\frac{\\partial \\vec{A}}{\\partial t} $$");
+  OUTPUT("$$\\vec{B}(\\vec{x},t) \\hspace1ex = \\vec{\\nabla} \\times  \\vec{A}$$");
+  CR();
   {
+    CR();
+    OUTPUT("Constant definitions");
     GMD_CODE_START("C++");
-    ECHO(size_t Npts = 10);
-    ECHO(CartesianCoords<double, 3, true> coords({
-    Interval<double>::interval(-1,1,Npts),
-    Interval<double>::interval(-1,1,Npts),
-    Interval<double>::interval(-1,1,Npts),
-    Interval<double>::interval(0,1,Npts),
-      }));
-    ECHO(auto& x = coords.x());
-    ECHO(auto& y = coords.y());
-    ECHO(auto& z = coords.z());
-    ECHO(auto& t = coords.t());
-
     ECHO(using namespace std::numbers);
     ECHO(using namespace mathq::unit_imaginary);
-    ECHO(Nabla nabla);
+    ECHO(const size_t Npts = 10);
+    ECHO(const Nabla nabla);
     ECHO(const double A0 = 1);
     ECHO(const double omega = 2);
     ECHO(const double c = 299792458);
@@ -151,57 +151,92 @@ int main() {
     ECHO(const double kz = 1);
     ECHO(const Vector<double, 3> k{ kx, ky, kz });
     ECHO(const double Phi0 = A0 * pow(c, 2) * ky / omega);
+    GMD_CODE_END();
+    CR();
 
     CR();
+    OUTPUT("3D+Time Cartesian Coordinates");
+    GMD_CODE_START("C++");
+    CartesianCoords<double, 3, true> coords({
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(0,1,Npts),
+      });
+    OUTPUT(R"TEXT(CartesianCoords<double, 3, true> coords({
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(-1,1,Npts),
+    Interval<double>::interval(0,1,Npts),
+}) )TEXT");
+    ECHO(auto& x = coords.x());
+    ECHO(auto& y = coords.y());
+    ECHO(auto& z = coords.z());
+    ECHO(auto& t = coords.t());
+    GMD_CODE_END();
+    CR();
+
+    CR();
+    OUTPUT("Type Definitons for convenience");
+    GMD_CODE_START("C++");
     ECHO(using MyScalarField = CurvilinearField<std::complex<double>, 0, decltype(coords)>);
     ECHO(using MyVectorField = CurvilinearField<std::complex<double>, 1, decltype(coords)>);
+    GMD_CODE_END();
+    CR();
 
     CR();
+    OUTPUT("Potentials");
+    GMD_CODE_START("C++");
     ECHO(MyScalarField Phi(coords));
     ECHO(Phi = Phi0 * exp(i*(ky*y - omega*t)));
 
     CR();
     ECHO(MyVectorField A(coords));
     ECHO(A = expr{ A0 * exp(i*(kz*z - omega*t)), A0 * exp(i*(ky*y - omega*t)), 0 });
+    GMD_CODE_END();
     CR();
 
+    CR();
+    OUTPUT("E and B fields");
+    GMD_CODE_START("C++");
     ECHO(MyVectorField B(coords));
     ECHO(B = curl(A));
     CR();
 
     ECHO(MyVectorField E(coords));
     ECHO(E = -grad(Phi) - pd(A, A.time));
+    GMD_CODE_END();
     CR();
 
 
 
-    ECHO(auto result1 = i*k|A);
-    ECHO(MyScalarField result2 = div(A));
+    CR();
+    OUTPUT("Verify the Lorenz Gauge Condition, $\\frac{1}{c^2} \\frac{\\partial \\Phi}{\\partial t} + \\vec{\\nabla} \\cdot \\vec{A} = 0$, to 0.2\% accuracy");
+    GMD_CODE_START("C++");
+    // ECHO(auto result0 = i*k|A);
+    ECHO(MyScalarField result1(coords));
+    ECHO(result1 = div(A));
+    CR();
 
-    ECHO(MyScalarField dPhi_dt);
-    ECHO(dPhi_dt = pd(Phi, Phi.time));
-    ECHO(MyScalarField result3);
-    ECHO(result3 = -1./(c*c) * dPhi_dt);
+    ECHO(MyScalarField result2);
+    ECHO(result2 = -1./(c*c) * pd(Phi, Phi.time));
+    CR();
 
     // ETV(approx(result1(0, 0, 0, 2), result2(0, 0, 0, 2), 0.1));
 
     // MultiArray<complex<double>, 4, 5, 5, 5, 5> delta = result1 - result2;
     // MultiArray<double, 4, 5, 5, 5, 5> err = abs(result1-result2);
     // MultiArray<bool, 4, 5, 5, 5, 5> match = approx(result1, result2, 0.1);
-    ETV(result1(0, 0, 0, 2));
-    ETV(result2()(0, 0, 0, 2));
-    ETV(result3()(0, 0, 0, 2));
+    // ETV(result1(0, 0, 0, 2));
+    // ETV(result2()(0, 0, 0, 2));
+    // ETV(result3()(0, 0, 0, 2));
     // ETV(delta(0, 0, 0, 2));
     // ETV(err(0, 0, 0, 2));
     // ETV(match(0, 0, 0, 2));
-    ETV(alltrue(approx(result1, result2(), 0.015)));
-    ETV(numtrue(approx(result1, result2(), 0.015)));
-    ETV(alltrue(approx(result1, result3(), 0.015)));
-    ETV(numtrue(approx(result1, result3(), 0.015)));
-
-
-
+    ETV(alltrue(approx(result1(), result2(), 0.002)));
+    // ETV(numtrue(approx(result1, result2(), 0.015)));
     GMD_CODE_END();
+    CR();
   }
   CR();
 
