@@ -42,7 +42,7 @@ To be implemented using other libraries:
 1. Differentiation
   * support any derivative stencil size for both uniform and and non-uniform grids
   * support causal (backward stencil), anti-causal (forward stencil), and non-causal (centered stencil) functions
-  * support periodic Neumann [boundary conditions](https://en.wikipedia.org/wiki/Boundary_value_problem)
+  * support periodic and Neumann [boundary conditions](https://en.wikipedia.org/wiki/Boundary_value_problem)
 1. General Differential Operators and Expressions
     + Differential Operator from k-blades and graded algebra k-blades
 1. Integration

@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.047</h1>](../../README.md)
+<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.1-alpha.048</a></h1>
 
 <details>
 
@@ -90,7 +90,7 @@ To be implemented using other libraries:
 1. Differentiation
   * support any derivative stencil size for both uniform and and non-uniform grids
   * support causal (backward stencil), anti-causal (forward stencil), and non-causal (centered stencil) functions
-  * support periodic Neumann [boundary conditions](https://en.wikipedia.org/wiki/Boundary_value_problem)
+  * support periodic and Neumann [boundary conditions](https://en.wikipedia.org/wiki/Boundary_value_problem)
 1. General Differential Operators and Expressions
     + Differential Operator from k-blades and graded algebra k-blades
 1. Integration

@@ -1,21 +1,34 @@
 
 
-# Mathématiques 0.42.1-alpha.047
+# Mathématiques 0.42.1-alpha.048
+
+Mathématiques is a novel mathematical library with 
+* object classes based on **formal mathematical objects** and their operators
+* _state of the art_ performance (both speed and memory usage)
+* extensive printing and debugging tools
+
+
+Mathématiques defines object classes for mathematical objects that are typically left to the user, greatly reducing development time:
+  * nested multiarrays
+  * discretized functions / mappings with definitions for domain, target
+  * curvilinear and generalized coordinate systems
+  * vector fields and vector calculus
+  * tensor fields and tensor calculus
+  * number systems / division algebras
+
+Most importantly, Mathématiques fosters application code that is **compact** and **looks more like math** than code.
 
 
 ## Phase 1 (in progress): C++ Numerical Library
   
-Using modern C++ (C++20), create an extensive, open source, numerical C++ library that provides / supports
+Starting in the late 1990s and early 2000s, several C++ numerical libraries (such as [Armadillo](https://en.wikipedia.org/wiki/Armadillo_(C%2B%2B_library)), [Blitz++](https://en.wikipedia.org/wiki/Blitz%2B%2B), [boost uBLAS](https://www.boost.org/doc/libs/1_59_0/libs/numeric/ublas/doc/index.html), [Dlib](https://en.wikipedia.org/wiki/Dlib), [Eigen](https://en.wikipedia.org/wiki/Eigen_(C%2B%2B_library)), [MTL](https://en.wikipedia.org/wiki/Matrix_Template_Library), [Trilinos](https://en.wikipedia.org/wiki/Trilinos), [xtensor](https://xtensor.readthedocs.io/en/latest/index.html)) were created using the novel technique of [expression templating](https://en.wikipedia.org/wiki/Expression_templates) and mostly focus on linear algebra.  Expression templating is a technique independently developed by Todd Veldhuizen and David Vandevoorde that performs operations at compile time to produce C++ numerical code without the problem of intermediate objects and intermediate loops.
 
-* compact **data structures** that represent **mathematical objects** 
-* user **code that looks like mathematical notation**
-* **state of the art performance** (both speed and memory usage)
-* **multithreading**
-* convenient **pretty printing of results** including **data type information**
-* several **compilation modes** (DEBUG, PRODUCTION) via command line flags and the C++ macro preprocessor
-  + **DEBUG mode** checks bounds, vector and matrix sizes, etc and generates clear, pretty printed errors to stderr
-  + **PRODUCTION mode** runs as without any checks
-* **i/o in popular formats** for analysis and plotting
+In the intervening years since the advent of expression templating, C++ has been greatly extended with five new versions (C++03, C++11, C++14, C++17, and C++20) and a sixth in progress (C++23).   It is these adavances that Mathématiques has built upon.   Most importantly is the introduction of [C++ concepts](https://en.wikipedia.org/wiki/Concepts_(C%2B%2B)).  Concepts are similar to [Java interfaces](https://en.wikipedia.org/wiki/Interface_(Java)) and allow for the definition of types according to properties instead of class hierarchies.  In other words, concepts are _compile-time_ [duck typing](https://en.wikipedia.org/wiki/Duck_typing): 
+
+> If it walks like a duck and it quacks like a duck, then it must be a duck"
+
+Not only do concepts avoid the problems associated with class hierarchies, they align with modern formal mathematics where objects and systems are defined via their properties.  An example is the definition of a [vector space](https://mathworld.wolfram.com/VectorSpace.html).
+
 
 <br>
 
@@ -79,6 +92,57 @@ $g(x) = J_\nu(x)$
 Vector<double> x = linspace(0., 1., 100);
 Vector<double> f = tgamma(x);
 Vector<double> g = cyl_bessel_j(nu, x);
+```
+
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+
+
+**Vectors, Matrices, and MultiArrays**
+
+<table>
+<thead>
+<tr>
+<td align="center">
+
+$\mathbf{v} =  \left[
+\begin{matrix}
+1 \cr
+2 \cr
+3 
+\end{matrix} \right]$
+
+$\mathbf{A} =  \left[
+\begin{matrix}
+1 & 2\cr
+3 & 4
+\end{matrix} \right]$
+
+$\mathbf{M} =  \left[
+\left[ \begin{matrix}
+1 & 2\cr
+3 & 4
+\end{matrix} \right], 
+\left[ \begin{matrix}
+5 & 6\cr
+7 & 8
+\end{matrix} \right]
+\right]$
+
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+```C++
+Vector<double, 3> v{ 1, 2, 3 };
+Matrix<double, 2, 2> A{ {1 , 2}, {3, 4} };
+MultiArray<double, 3, 2, 2, 2> M{ { {1,2}, {3,4} }, { {5,6}, {7,8} } };
 ```
 
 </td>
@@ -196,12 +260,116 @@ H = 1/(2*m) * pow(p, 2) + pow(1 + 0.5*cos(t)*x, 2);
 
 **Vector Calculus**
 
+
+<table>
+<thead>
+<tr>
+<td align="center"><b>function</b></td>
+<td align="center"><b>operator form</b></td>
+<td align="center"><b>operation</b></td>
+<td align="center"><b>standard notation</b></td>
+</tr>
+</thead>
+<tbody>
+
+<!-- grad -->
+<tr>
+<td align="center"> 
+
+```C++
+grad(f)
+```
+  
+</td>
+<td align="center"> 
+  
+```C++
+nabla & f
+```
+  
+</td>
+<td align="center">gradient</td>
+<td align="center">
+   
+$$
+\vec \nabla f
+$$
+
+</td>
+</tr>
+
+<!-- div  -->
+
+<tr>
+<td align="center"> 
+
+```C++
+div(A)
+```
+
+</td>
+<td align="center"> 
+  
+```C++
+nabla | A 
+```
+
+</td>
+<td align="center">divergence</td>
+<td align="center">
+   
+$$
+\vec{\nabla} \cdot \vec{A}
+$$
+
+</td>
+</tr>
+
+<!-- curl  -->
+<tr>
+<td align="center"> 
+
+```C++
+curl(A)
+```
+
+</td>
+<td align="center"> 
+
+```C++
+nabla ^ A 
+```
+  
+
+</td>
+<td align="center">curl</td>
+<td align="center">
+   
+$$
+\vec \nabla \times \vec A
+$$
+
+</td>
+
+</tr>
+
+
+</tbody>
+</table>
+
+<br>
 <table>
 <thead>
 <tr>
 <td align="center">
 
-$\mathbf{E} = \mathbf{\nabla} \cdot \mathbf{\Phi}$
+$$\Phi(\vec{x},t) \hspace1ex \dot{=} \hspace1ex A_0 \frac{c^2 k_y}{\omega} \hspace0.5ex e^{i(k_y y - \omega t)}$$
+
+$$\vec{A}(\vec{x},t) \hspace1ex \dot{=} \hspace1ex A_0 \hspace0.5ex e^{i(k_z z - \omega t)} \hspace0.5ex \hat{x} \hspace1ex + \hspace1ex A_0 \hspace0.5ex e^{i(k_y y - \omega t)} \hspace0.5ex \hat{y}$$
+
+$$\vec{E}(\vec{x},t) \hspace1ex = - \vec{\nabla}\Phi - \frac{\partial \vec{A}}{\partial t} $$
+
+$$\vec{B}(\vec{x},t) \hspace1ex = \vec{\nabla} \times  \vec{A}$$
 
 </td>
 </tr>
@@ -211,7 +379,10 @@ $\mathbf{E} = \mathbf{\nabla} \cdot \mathbf{\Phi}$
 <td>
 
 ```C++
-E = nabla | Phi;
+Phi = A0 * c*c * ky / omega exp(i*(ky*y - omega*t));
+A = expr{ A0 * exp(i*(kz*z - omega*t)), A0 * exp(i*(ky*y - omega*t)), 0 };
+E = -nabla & Phi - pd(A, A.time);
+B = nabla ^ A;
 ```
 
 </td>
@@ -234,9 +405,9 @@ Utilizes index-free tensor notation.  Refer to e.g. [Misner, Thorne, Wheeler, _G
 <tr>
 <td align="center">
 
-$$ \omega(V) = V(\omega) = V^i \omega\_j $$
+$$ \omega(V) = V(\omega) = \omega_i V^i $$
 
-$$ g(V,U) =  g_{ij} V^i U^j  = V_i U^i$$
+$$ g(V,U) =  g_{ij} V^i U^j  = V_j U^j$$
 
 $$ g(V,\cdot) =  g_{ij} V^i  = V_j$$
 
@@ -270,12 +441,7 @@ Matrix<double, 3, 3>::Tensor<L, L> g{ {1, 0, 0}, {0, pow(r,2), 0}, {0, 0 , pow(r
 
 
 
-
-
-
 ## Documentation
-
-[Why?](doc/why/README.md)
 
 ✳ [Introduction with Examples](doc/intro/README.md) ✳ 
 
@@ -286,22 +452,23 @@ Matrix<double, 3, 3>::Tensor<L, L> g{ {1, 0, 0}, {0, pow(r,2), 0}, {0, 0 , pow(r
 <br>
 
 ---------------------------------
-## Phase 2 (planned): Mathematics Built into a Modern High-Performance Language
+## Phase 2 (planned): Mathematics Built into High-Performance Language(s)
 
+From the code examples above, it is evident that all we need to use standard mathematical notation in *C++* is
+1. unicode support to allow math operator characters and greek letters (e.g. α β δ ε θ λ), chalkboard letters (e.g. ℕ ℤ ℚ ℝ ℂ) etc (ℵ ℑ ℌ ℜ ℨ ℓ ℱ ℒ ℛ)
+2. ability to define the unicode math symbols (e.g. ✕, ∇, ∂, ∑, ∫, ⨂, ∧) as operators
 
-From these, it is evident that all we need to use standard mathematical notation in C++ is
-1. unicode support to allow math operator characters and greek letters, chalkboard letters etc.
-2. Ability to define the math symbols as templated operators
+Other language candidates to build upon are [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language)) and [Carbon](https://en.wikipedia.org/wiki/Carbon_(programming_language)).
 
+### Goals for Phase 2
 
-Create a new language that implements the phase 1 library above plus
+Extend an existing high-performance language that internally implements the phase 1 library above plus
 * supports unicode characters in source code 
   + supports greek language characters for variables
   + supports operator definitions for mathematical unicode symbols so that the code really looks like mathematical notation
-  + also has multi-character ASCII symbols for each unicode symbol
+  + also has multi-character ASCII alternatives for each unicode symbol
 * modern, cloud-based module/package loader
-* package repository site, eg [npm for NodeJs](https://www.npmjs.com/) for user-created open-source packages
+* package repository site, eg [PyPi](https://pypi.org/) and [npm for NodeJs](https://www.npmjs.com/),for **user-created** open-source packages
 * web API for remote computation, likely using [gRPC](https://en.wikipedia.org/wiki/GRPC) and [GraphQL](https://en.wikipedia.org/wiki/GraphQL)
-
-The current language candidates to build upon are [Rust](https://en.wikipedia.org/wiki/Rust_(programming_language)) and [Carbon](https://en.wikipedia.org/wiki/Carbon_(programming_language)).
+* support for Latex generation and interaction with Jupyter notebooks
 
