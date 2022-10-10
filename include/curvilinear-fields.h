@@ -209,17 +209,15 @@ namespace mathq {
   }
 
 
-  namespace cross_product {
 
-    //
-    // nabla ^ f - for vector f
-    //
+  //
+  // nabla ^ f - for vector f
+  //
 
-    template <typename TargetElement, IsCurvilinear Coords>
-    CurvilinearField<TargetElement, 1, Coords> operator^(const Nabla<>& nabla, const CurvilinearField<TargetElement, 1, Coords>& f) {
-      return curl(f, nabla);
-    }
-  };
+  template <typename TargetElement, IsCurvilinear Coords>
+  CurvilinearField<TargetElement, 1, Coords> operator^(const Nabla<>& nabla, const CurvilinearField<TargetElement, 1, Coords>& f) {
+    return curl(f, nabla);
+  }
 
 
   //

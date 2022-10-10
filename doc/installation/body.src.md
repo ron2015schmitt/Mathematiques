@@ -1,18 +1,18 @@
 
 
-## Install Prerequisites
+## Overview of Prerequisites
 
 The following commands are required on your operating system: `bash`, `python3`, `make`, `g++`, and `gfortran`.
 
 The version of `g++` must be `11.2.0` or higher.
 
-The following library is required: `lapack`.
+The following library is currently required: `lapack`.
 
-## Installation in Ubuntu 22.04
+## Installing Prerequisites in Ubuntu 22.04
 
 Download and install [Ubuntu 22.04 LTS](https://releases.ubuntu.com/22.04/).
 
-In Ubuntu, you can install these as follows
+In Ubuntu, you can install the prerequisites as follows
 ```bash
 sudo apt update
 sudo apt upgrade

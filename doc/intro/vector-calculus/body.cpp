@@ -1,6 +1,21 @@
 #include "mathq.h"
 
 
+std::string load(std::string fname) {
+  std::ifstream in(fname.data(), std::ios::in);
+  if (!in) {
+    std::cerr << "CANNOT OPEN FILE\n";
+    return std::string("");
+  }
+
+  std::stringstream buffer;
+  buffer << in.rdbuf();
+  in.close();
+
+  // std::cerr << buffer.str();
+  return buffer.str();
+}
+
 
 int main() {
   using namespace mathq;
@@ -12,43 +27,27 @@ int main() {
 
   OUTPUT("Mathématiques provides classes and extensive functionality for curvilinear coordinate systems as well as scalar, vector, and rank >=2 functions using these coordinates.");
 
-  GMD_HEADER3("Fixed-length Vectors");
-  {
-    GMD_CODE_START("C++");
-    ECHO(Vector<double, 3> v{ 1,2,3 });
-    CR();
-    ETV(v);
-    double x = 3.4;
-    // v.test(12, 1, std::string("hello"));
-    // v.test2(std::tuple(12, 1, std::string("hello")));
-    // v.test2(std::tuple{ 12, 1, std::string("hello") });
-    ECHO(v = tuple{ 12, 1, x });
-    ETV(v);
-    ETV(expr(1, 2, v));
-    ETV(realize(1));
-    ETV(realize(v));
-    ETV(realize(2*v));
-    ETV(Realize_Type<decltype(2*v)>::Type());
-    ETV(expr{ 1, 2, 2*v });
-    GMD_CODE_END();
-  }
-
   GMD_VSPACE();
   GMD_HEADER2("Curvilinear Coordinates");
+
+  OUTPUT("Currently Cartesian and polar coordinates are supported.");
+  OUTPUT("To save memory, the coordinate grids are stored in a special type of multiarray that only contains a vector, which is then repeated.");
+  OUTPUT("In 3D+Time, this reduces the storage from $N^4$ to $N$. For 1000 points this is a reduction from $10^{12}$ data points to $1000$ data points for each coordinate.");
 
   CR();
   GMD_HEADER3("Cartesian Coordinates");
   {
     GMD_CODE_START("C++");
-    ECHO(CartesianCoords<double, 2> coords({
-    Interval<double>::interval(-1,1,5),
-    Interval<double>::interval(2,3,3),
-      }));
-    ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
-    ECHO(auto& x = coords.x());
-    ECHO(auto& y = coords.y());
-    ECHO(field0 = -3*x + 2*y);
-    ETV(field0);
+    CartesianCoords<double, 2> coords({
+        Interval<double>::interval(-2,2,5),  // x domain
+        Interval<double>::interval(2,3,3)
+      });
+    OUTPUT(R"TEXT(CartesianCoords<double, 2> coords({
+  Interval<double>::interval(-2,2,5),  // x domain
+  Interval<double>::interval(2,3,3)    // y domain
+}))TEXT");
+    ETV(coords.x());
+    ETV(coords.y());
     GMD_CODE_END();
   }
   CR();
@@ -57,43 +56,46 @@ int main() {
   GMD_HEADER3("Polar Coordinates");
   {
     GMD_CODE_START("C++");
-    ECHO(PolarCoords<double> coords({
-    Interval<double>::interval(-1,1,5),
-    Interval<double>::interval(2,3,3),
-      }));
+    ECHO(using namespace std::numbers);
+    PolarCoords<double> coords({
+    Interval<double>::interval(0,1,5),
+    Interval<double>::c_interval_o(0,2*pi,4)
+      });
+    OUTPUT(R"TEXT(PolarCoords<double> coords({
+  Interval<double>::interval(0,1,5),  // r domain
+  Interval<double>::c_interval_o(0,2*pi,4)    // phi domain
+}))TEXT");
+
+    ETV(coords.r());
+    ETV(coords.phi());
     GMD_CODE_END();
   }
   CR();
 
-  CR();
-  GMD_HEADER3("Polar Coordinates");
-  {
-    GMD_CODE_START("C++");
-    ECHO(PolarCoords<double, true> coords({
-    Interval<double>::interval(-1,1,5),
-    Interval<double>::interval(2,3,3),
-    Interval<double>::interval(0,1,3),
-      }));
-    GMD_CODE_END();
-  }
-  CR();
-
+  OUTPUT("NOTE: The above syntax `Interval<double>::c_interval_o` specifies the interval $[0,2\\pi)$, so that the point $\\phi = 2 \\pi$ is not included (since it is the same point in space as $\\phi = 0$).");
 
   GMD_VSPACE();
   GMD_HEADER2("Vector fields");
 
+  OUTPUT("Now that we have coordinate systems, we can create vector fields using the `CurvilinearField` class. ");
+
   CR();
-  GMD_HEADER3("TEST");
+  OUTPUT("$$\\vec{v}(x,y) \\hspace1ex = -3x \\hspace0.5ex \\hat{x} + 2y \\hspace0.5ex \\hat{y} $$");
+  CR();
+
+  CR();
   {
     GMD_CODE_START("C++");
     ECHO(CartesianCoords<double, 2, false> coords({
-    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(-2,2,5),
     Interval<double>::interval(2,3,3),
       }));
-    ECHO(CurvilinearField<double, 0, decltype(coords)> v(coords));
+    CR();
     ECHO(auto& x = coords.x());
     ECHO(auto& y = coords.y());
-    ECHO(v = -3*x + 2*y);
+    CR();
+    ECHO(CurvilinearField<double, 1, decltype(coords)> v(coords));
+    ECHO(v = expr{ -3*x,  2*y });
     ETV(v);
     GMD_CODE_END();
   }
@@ -103,22 +105,62 @@ int main() {
   GMD_VSPACE();
   GMD_HEADER2("Fields of any rank");
 
+  OUTPUT("In fact, the `CurvilinearField` class supports fields of any rank: scalar=0, vector=1, matrix=2, etc. ");
+
   CR();
-  GMD_HEADER3("TEST");
   {
+    CR();
+    OUTPUT("Define 2D Cartesian Coordinates");
+    CR();
     GMD_CODE_START("C++");
     ECHO(CartesianCoords<double, 2, false> coords({
-    Interval<double>::interval(-1,1,5),
+    Interval<double>::interval(-2,2,5),
     Interval<double>::interval(2,3,3),
       }));
-    ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
     ECHO(auto& x = coords.x());
     ECHO(auto& y = coords.y());
-    ECHO(field0 = -3*x + 2*y);
-    ETV(field0);
+    GMD_CODE_END();
+    CR();
+
+    GMD_VSPACE();
+    OUTPUT("Scalar field: $$f(x,y) \\hspace1ex = 2 x^2 + y^2 $$");
+    CR();
+    GMD_CODE_START("C++");
+    ECHO(CurvilinearField<double, 0, decltype(coords)> scalar_field(coords));
+    ECHO(scalar_field = 2*pow(x, 2) + pow(y, 2));
+    ETV(scalar_field);
+    GMD_CODE_END();
+    CR();
+
+    GMD_VSPACE();
+    OUTPUT("Vector field: $$\\vec{v}(x,y) \\hspace1ex = -3x \\hspace0.5ex \\hat{x} + 2y \\hspace0.5ex \\hat{y} $$");
+    CR();
+    GMD_CODE_START("C++");
+    ECHO(CurvilinearField<double, 1, decltype(coords)> vector_field(coords));
+    ECHO(vector_field = expr{ -3*x,  2*y });
+    ETV(vector_field);
+    GMD_CODE_END();
+    CR();
+
+    GMD_VSPACE();
+    OUTPUT("\"Matrix\" (rank 2 tensor) field: $$\\stackrel{\\leftrightarrow}{T}(x,y) \\hspace1ex = \\vec{v} \\vec{v} $$");
+    CR();
+    GMD_CODE_START("C++");
+    ECHO(CurvilinearField<double, 2, decltype(coords)> tensor_field(coords));
+    ECHO(tensor_field = vector_field & vector_field);
+    ETV(tensor_field);
     GMD_CODE_END();
   }
   CR();
+
+
+  OUTPUT("Note: the class `NumericalFunction` from the previous section is actually just a type alias for `CurvilinearField<double, 0>`");
+
+
+  GMD_VSPACE();
+  GMD_HEADER2("Grad, Div, Curl");
+
+  OUTPUT(load("vector-calculus/grad-div-curl.md"));
 
 
   GMD_VSPACE();
@@ -128,21 +170,22 @@ int main() {
   OUTPUT("The code below calculates, in 3D, the time-dependent, complex-valued potentials");
   CR();
   OUTPUT("$$\\Phi(\\vec{x},t) \\hspace1ex \\dot{=} \\hspace1ex A_0 \\frac{c^2 k_y}{\\omega} \\hspace0.5ex e^{i(k_y y - \\omega t)}$$");
+  CR();
   OUTPUT("$$\\vec{A}(\\vec{x},t) \\hspace1ex \\dot{=} \\hspace1ex A_0 \\hspace0.5ex e^{i(k_z z - \\omega t)} \\hspace0.5ex \\hat{x} \\hspace1ex + \\hspace1ex A_0 \\hspace0.5ex e^{i(k_y y - \\omega t)} \\hspace0.5ex \\hat{y}$$");
   CR();
-  OUTPUT("From the potentials, it calculates the electric and magnetic fields using");
+  OUTPUT("Then from these potentials, it calculates the electric and magnetic fields using");
   CR();
   OUTPUT("$$\\vec{E}(\\vec{x},t) \\hspace1ex = - \\vec{\\nabla}\\Phi - \\frac{\\partial \\vec{A}}{\\partial t} $$");
+  CR();
   OUTPUT("$$\\vec{B}(\\vec{x},t) \\hspace1ex = \\vec{\\nabla} \\times  \\vec{A}$$");
   CR();
   {
-    CR();
+    GMD_VSPACE();
     OUTPUT("Constant definitions");
     GMD_CODE_START("C++");
     ECHO(using namespace std::numbers);
     ECHO(using namespace mathq::unit_imaginary);
     ECHO(const size_t Npts = 10);
-    ECHO(const Nabla nabla);
     ECHO(const double A0 = 1);
     ECHO(const double omega = 2);
     ECHO(const double c = 299792458);
@@ -154,7 +197,7 @@ int main() {
     GMD_CODE_END();
     CR();
 
-    CR();
+    GMD_VSPACE();
     OUTPUT("3D+Time Cartesian Coordinates");
     GMD_CODE_START("C++");
     CartesianCoords<double, 3, true> coords({
@@ -176,7 +219,7 @@ int main() {
     GMD_CODE_END();
     CR();
 
-    CR();
+    GMD_VSPACE();
     OUTPUT("Type Definitons for convenience");
     GMD_CODE_START("C++");
     ECHO(using MyScalarField = CurvilinearField<std::complex<double>, 0, decltype(coords)>);
@@ -184,7 +227,7 @@ int main() {
     GMD_CODE_END();
     CR();
 
-    CR();
+    GMD_VSPACE();
     OUTPUT("Potentials");
     GMD_CODE_START("C++");
     ECHO(MyScalarField Phi(coords));
@@ -196,7 +239,7 @@ int main() {
     GMD_CODE_END();
     CR();
 
-    CR();
+    GMD_VSPACE();
     OUTPUT("E and B fields");
     GMD_CODE_START("C++");
     ECHO(MyVectorField B(coords));
@@ -210,8 +253,8 @@ int main() {
 
 
 
-    CR();
-    OUTPUT("Verify the Lorenz Gauge Condition, $\\frac{1}{c^2} \\frac{\\partial \\Phi}{\\partial t} + \\vec{\\nabla} \\cdot \\vec{A} = 0$, to 0.2\% accuracy");
+    GMD_VSPACE();
+    OUTPUT("Verify the Lorenz Gauge Condition, $\\frac{1}{c^2} \\frac{\\partial \\Phi}{\\partial t} + \\vec{\\nabla} \\cdot \\vec{A} = 0$, to 0.2\% accuracy at every point!");
     GMD_CODE_START("C++");
     // ECHO(auto result0 = i*k|A);
     ECHO(MyScalarField result1(coords));
@@ -221,6 +264,7 @@ int main() {
     ECHO(MyScalarField result2);
     ECHO(result2 = -1./(c*c) * pd(Phi, Phi.time));
     CR();
+    ETV(alltrue(approx(result1(), result2(), 0.002)));
 
     // ETV(approx(result1(0, 0, 0, 2), result2(0, 0, 0, 2), 0.1));
 
@@ -233,259 +277,76 @@ int main() {
     // ETV(delta(0, 0, 0, 2));
     // ETV(err(0, 0, 0, 2));
     // ETV(match(0, 0, 0, 2));
-    ETV(alltrue(approx(result1(), result2(), 0.002)));
     // ETV(numtrue(approx(result1, result2(), 0.015)));
+
+    // ECHO(Nabla nabla(5));
+    // ECHO(B = nabla ^ A);
+    // ECHO(B = curl(A, nabla));
+    // CR();
+
     GMD_CODE_END();
     CR();
   }
   CR();
 
 
-
-  exit(0);
-
-  // template <typename GridElement, size_t Ndims, bool TimeCoord, typename TargetElement = GridElement>
-  // using NumericalFunction = CurvilinearField<TargetElement, 0, CartesianCoords<GridElement, Ndims, TimeCoord>>;  {
   GMD_VSPACE();
-  GMD_HEADER2("Raw code");
+  GMD_HEADER2("Derivative parameters");
 
+  OUTPUT("The default [stencil size](https://en.wikipedia.org/wiki/Stencil_(numerical_analysis)) for the derivative on uniform grids is set to 7 points for high accuracy.  Stencil size of 2, 3, 5, and 7 points are supported for uniform grids.    ");
+  CR();
+  OUTPUT("For non-uniform grids, a stencil size of 3 points is currently supported.");
+  CR();
 
-  {
-    OUTPUT("CartesianCoords - default constructor");
-    ECHO(CartesianCoords<double, 2, false> coords);
-    // ETV(coords);
-    ETV(HasTimeCoord<decltype(coords)>);
-    ETV(HasNotTimeCoord<decltype(coords)>);
-  }
+  OUTPUT("The stencil size is set via the Nabla operator as shown in the example below.");
 
-  {
-    OUTPUT("2D CartesianCoords & CurvilinearField");
-    OUTPUT("2D CartesianCoords from Intervals");
-    ECHO(CartesianCoords<double, 2, false> coords1({
-        Interval<double>::interval(-1,1,5),
-        Interval<double>::interval(2,3,3),
-      }));
-    // ETV(coords1);
-    // ETV(coords1.grid_dims());
-    // ETV(coords1[0]);
-    // ETV(coords1[1]);
+  CR();
+  GMD_CODE_START("C++");
+  OUTPUT("Nabla nabla(3);  // 3pt stencil instead of default 7 pt");
+  Nabla nabla(3);
+  ETV(nabla);
+  CR();
+  OUTPUT("B = curl(A, nabla);  // 1. curl using function");
+  OUTPUT("B = nabla ^ A; // 2. curl using Nabla operator");
+  GMD_CODE_END();
+  CR();
 
-    OUTPUT("2D CartesianCoords copy constructor");
-    ECHO(CartesianCoords<double, 2, false> coords(coords1));
-    ETV(coords);
-    ETV(HasTimeCoord<decltype(coords)>);
-    ETV(HasNotTimeCoord<decltype(coords)>);
+  GMD_VSPACE();
+  GMD_HEADER2("Integration");
+  OUTPUT("Numerical integration is in development.");
 
-    // ETV(coords[0]);
-    // ETV(coords[1]);
-    // ETV(coords.J());
-    // ETV(coords.g());
-    // ETV(coords.basis_vec(0));
-    // ETV(coords.basis_vec(1));
-    // ETV(coords.basis());
-    // ETV(coords.at(0, 0));
-    // ETV(coords.at(3, 2));
-    // ETV(coords.at(0, 0)+coords.at(3, 2));
-    // ETV(coords.x());
-    // ETV(coords.y());
-
-    // ETV(curvilinear_coords_test(coords));
-
-    OUTPUT("CurvilinearField - Scalar 2D");
-    ECHO(CurvilinearField<double, 0, decltype(coords)> field0(coords));
-    ECHO(auto& x = coords.x());
-    ECHO(auto& y = coords.y());
-    ECHO(field0 = -3*x + 2*y);
-    ETV(field0);
-
-    ETV(x);
-    ETV(y);
-
-    ETV(IsGridlike<decltype(x)>);
-    ETV(IsMultiArray<decltype(x)>);
-    ETV(IsWritableExpressionOrArray<decltype(x)>);
-    ETV(x.isNotExpression);
-
-
-    OUTPUT("partials of a 2D grid");
-    ETV(coords.pd(x, 0));
-    ETV(coords.pd(x, 1));
-
-    OUTPUT("partials of a 2D Scalar CurvilinearField");
-    ETV(pd(field0, 0));
-    ETV(pd(field0, 1));
-
-
-    OUTPUT("Gradient of a 2D grid");
-    ETV(coords.grad(x));
-    ETV(coords.grad(y));
-
-    OUTPUT("Gradient of a 2D CurvilinearField");
-    ETV(grad(field0));
-    Nabla<> nabla;
-    // ETV(nabla & field0);
-
-
-
-    OUTPUT("Divergence of a 2D CurvilinearField - ex 1");
-    // div
-    ECHO(auto A = grad(field0));
-    ETV(A);
-    // ETV(coords.div(A));
-    ETV(div(A));
-    // ETV(nabla | A);
-
-
-    OUTPUT("Divergence of a 2D CurvilinearField - ex 2");
-    ECHO(field0 = sqrt(x*x+y*y));
-    ETV(grad(field0));
-    ETV(div(grad(field0)));
-
-  }
+  GMD_HEADER3("Definite integral example");
 
   {
-    OUTPUT("2+1D CartesianCoords & CurvilinearField");
-
-    OUTPUT("2+1D CartesianCoords Properties");
-
-    ECHO(CartesianCoords<double, 2, true> coords({
-        Interval<double>::interval(-1,1,3),
-        Interval<double>::interval(-1,1,3),
-        Interval<double>::interval(0,2,3),
-      }));
-    ETV(coords);
-    ETV(HasTimeCoord<decltype(coords)>);
-    ETV(HasNotTimeCoord<decltype(coords)>);
-
-    ETV(coords[0]);
-    ETV(coords.x());
-    ETV(coords[1]);
-    ETV(coords.y());
-    ETV(coords[2]);
-    ETV(coords.t());
-
-    ETV(coords.J());
-    ETV(coords.g());
-    ETV(coords.basis_vec(0));
-    ETV(coords.basis_vec(1));
-    ETV(coords.basis());
-    ETV(coords.at(0, 0, 0));
-    ETV(coords.at(1, 2, 2));
-    ETV(coords.at(0, 0, 0)+coords.at(1, 2, 2));
-
-
-    OUTPUT("2+1D Scalar CurvilinearField");
-    ECHO(CurvilinearField<double, 0, decltype(coords)> field(coords));
-
-    ECHO(auto& x = coords.x());
-    ECHO(auto& y = coords.y());
-    ECHO(field = -4*x + 5*y);
-    ETV(field);
-
-
-    OUTPUT("2+1D Partials of Scalar CurvilinearField");
-    ETV(pd(field, 0));
-    ETV(pd(field, 1));
-    ETV(pd(field, 2));
-
-    OUTPUT("2+1D Gradient of Scalar CurvilinearField");
-    ETV(grad(field));
-
-    OUTPUT("Divergence of a 2D+1 CurvilinearField - ex 1");
-    // div
-    ECHO(auto A = grad(field));
-    ETV(A);
-    // ETV(coords.div(A));
-    ETV(div(A));
-    // ETV(nabla | A);
-
-
-    OUTPUT("Divergence of a 2D+1 CurvilinearField - ex 2");
-    ECHO(field = sqrt(x*x+y*y));
-    ETV(grad(field));
-    ETV(div(grad(field)));
-
-
+    CR();
+    GMD_CODE_START("C++");
+    ECHO(const size_t N = 100000);
+    ECHO(const double a = 0);
+    ECHO(const double b = 1);
+    ECHO(Vector<double> x(linspace_ab<double>(a, b, N)));
+    ECHO(Vector<double> f);
+    ECHO(f = -log(log(1/x)));
+    ETV(integrate_a2b(f, a, b, 0));
+    GMD_CODE_END();
+    CR();
   }
 
 
+  GMD_HEADER3("Semi-Definite Integral example");
   {
-    OUTPUT("2D PolarCoords & CurvilinearField");
-
-    OUTPUT("2D PolarCoords Properties");
-
-    ECHO(PolarCoords<double, false> coords({
-        Interval<double>::o_interval_c(0,1,3),
-        Interval<double>::c_interval_o(0,2*3.14159265,5),
-      }));
-    ETV(coords);
-    ETV(HasTimeCoord<decltype(coords)>);
-    ETV(HasNotTimeCoord<decltype(coords)>);
-
-    ETV(coords.r());
-    ETV(coords.phi());
-    ETV(coords.dims());
-
-    ETV(coords.J());
-    ETV(coords.g());
-    ETV(coords.basis_vec(0));
-    ETV(coords.basis_vec(1));
-    ETV(coords.basis());
-    ETV(coords.at(0, 0));
-    ETV(coords.at(1, 2));
-    ETV(coords.at(0, 0)+coords.at(1, 2));
-
-
-    OUTPUT("2D PolarCoords Scalar CurvilinearField");
-    ECHO(CurvilinearField<double, 0, decltype(coords)> field(coords));
-
-    ECHO(auto& r = coords.r());
-    ECHO(auto& phi = coords.phi());
-    ECHO(field = -4*r + 5*phi);
-    ETV(field);
-
-
-    OUTPUT("2D  PolarCoords Partials of Scalar CurvilinearField");
-    ETV(pd(field, 0));
-    ETV(pd(field, 1));
-    ETV(pd(field, 1)()/r);
-
-    OUTPUT("2D PolarCoords Gradient of Scalar CurvilinearField");
-    ETV(grad(field));
-
-    OUTPUT("Divergence of a 2D PolarCoords CurvilinearField - ex 1");
-    // div
-    ECHO(auto A = grad(field));
-    ETV(A);
-    // ETV(coords.div(A));
-    ETV(div(A));
-    // ETV(nabla | A);
-
-
-    OUTPUT("Divergence of a 2D+1 CurvilinearField - ex 2");
-    ECHO(field = r*r);
-    ETV(grad(field));
-    ETV(div(grad(field)));
-  }
-  {
-    OUTPUT("3D curl of a CurvilinearField - ex1: output is curlA = {0,1,0}");
-
-    using namespace cross_product;
-    CartesianCoords<double, 3, false> coords({
-        Interval<double>::interval(-1,1,5),
-        Interval<double>::interval(-1,1,5),
-        Interval<double>::interval(-1,1,5),
-      });
-    ETV(coords);
-    ECHO(CurvilinearField<double, 1, CartesianCoords<double, 3, false>> A(coords));
-    A = 0.;
-    ECHO(A[0] = coords.z());
-    ECHO(auto B = curl(A));
-    ETV(B);
-    // OUTPUT("=========================");
-    // Nabla<> nabla;
-    // ECHO(B = nabla ^ A);
-    // OUTPUT("=========================");
+    CR();
+    GMD_CODE_START("C++");
+    ECHO(using namespace std::numbers);
+    ECHO(const size_t N = 21);
+    ECHO(const double a = 0);
+    ECHO(const double b = 4);
+    ECHO(Vector<double> x(linspace<double>(a, b, N)));
+    ECHO(Vector<double> gaussian);
+    ECHO(gaussian = 2/sqrt(pi)*exp(-sqr(x)));
+    ECHO(Vector<double> erf);
+    ETV(erf = integrate_a2x(gaussian, a, b));
+    GMD_CODE_END();
+    CR();
   }
 
   GMD_VSPACE();

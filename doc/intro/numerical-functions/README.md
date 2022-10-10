@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.046</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.047</h1>](../../../README.md)
 
 <details>
 
@@ -299,7 +299,7 @@ f = roundzero(exp(i*pi*x));
 
 
 ### Quaternion-valued functions
-As an example consider the quaternion-valued function:
+As an example consider the quaternion-valued function over 2D:
 
 $$ f\colon [0,1] \times [0,1]\rightarrow\mathbb{H}$$
 $$ f(x,y) = e^{i \frac{\pi}{2} + j \pi x + k \pi y} $$
@@ -335,6 +335,7 @@ f = roundzero(exp(i*pi/2 + j*pi*x + k*pi*y));
 
 🚧 Further functionality is in development.
 * function boundary conditions: constant, periodic, etc
+* function causality (needed for differentiation): non-causal (centered derivative stencil), causal (backward derivative stencil), anti-causal (forward derivative stencil)
 * Time-varying function object that is a time-series, $f_t(x) = f(x;t)$
 * integration
 * non-uniform 2D and 3D grids and multi-grid

@@ -242,7 +242,7 @@ namespace mathq {
         GridElement start = (include_a) ? a : a + step;
         GridElement end = (include_b) ? b : b - step;
 
-        f.deriv(start, end, n, nabla.Nwindow, (period != 0));
+        f.deriv(start, end, n, nabla.Nstencil, (period != 0));
         return f;
       }
 
@@ -462,7 +462,7 @@ namespace mathq {
       template <typename TargetElement, size_t... sizes>
       Vector<TargetElement, sizes...>& deriv(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>(), const GridElement period = 0) const {
         const size_t N = f.size();
-        size_t Dpts = nabla.Nwindow;
+        size_t Dpts = nabla.Nstencil;
 
         if (N<=1) return f;
 

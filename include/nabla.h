@@ -11,10 +11,10 @@ namespace mathq {
   template <class T>
   class Nabla {
   public:
-    const unsigned int Nwindow;
+    const unsigned int Nstencil;
   public:
-    Nabla(const unsigned int Nwindow = 7) :
-      Nwindow(Nwindow) {
+    Nabla(const unsigned int Nstencil = 7) :
+      Nstencil(Nstencil) {
     }
     ~Nabla() {
     }
@@ -36,8 +36,8 @@ namespace mathq {
 
     inline friend std::ostream& operator<<(std::ostream& stream, const Nabla<T>& var) {
       using namespace display;
-      stream << "(Nwindow=";
-      dispval_strm(stream, var.Nwindow);
+      stream << "(Nstencil=";
+      dispval_strm(stream, var.Nstencil);
       stream << ")";
       return stream;
     }

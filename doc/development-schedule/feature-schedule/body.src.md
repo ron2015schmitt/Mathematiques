@@ -205,6 +205,10 @@
 
 
 ### Miscellaneous Small Features
+* differentiation
+  * support any derivative stencil size for both uniform and and non-uniform grids
+  * support causal (backward stencil), anti-causal (forward stencil), and non-causal (centered stencil) functions
+  * support periodic Neumann [boundary conditions](https://en.wikipedia.org/wiki/Boundary_value_problem)
 * look into && and forwarding
 * add `static inline std::string ClassName()` to each class. see `Vector` for how to set up
 * change replaceable strings in include-templates files from ##NAME## to __NAME__ so as to make syntax highlighting work properly

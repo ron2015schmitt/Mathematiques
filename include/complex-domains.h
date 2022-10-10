@@ -97,12 +97,12 @@ namespace mathq {
 
       template <typename TargetElement, size_t... sizes> requires (IsSimpleNumber<TargetElement>)
         Vector<TargetElement, sizes...>& dx(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
-        f.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
+        f.deriv(real_interval.a, real_interval.b, n, nabla.Nstencil, false);
         return f;
       }
       template <typename TargetElement, size_t... sizes> requires (IsSimpleNumber<TargetElement>)
         Vector<TargetElement, sizes...>& dy(Vector<TargetElement, sizes...>& f, const size_t n = 1, const Nabla<void>& nabla = Nabla<>()) const {
-        f.deriv(imag_interval.a, imag_interval.b, n, nabla.Nwindow, false);
+        f.deriv(imag_interval.a, imag_interval.b, n, nabla.Nstencil, false);
         return f;
       }
 
@@ -113,8 +113,8 @@ namespace mathq {
         Vector<SimpleNumberType, sizes...> fi = imag(f);
         // ETV(fr);
         // ETV(fi);
-        fr.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
-        fi.deriv(real_interval.a, real_interval.b, n, nabla.Nwindow, false);
+        fr.deriv(real_interval.a, real_interval.b, n, nabla.Nstencil, false);
+        fi.deriv(real_interval.a, real_interval.b, n, nabla.Nstencil, false);
         // ETV(fr);
         // ETV(fi);
         f = fr + Imaginary<SimpleNumberType>(1)*fi;
@@ -126,8 +126,8 @@ namespace mathq {
         using SimpleNumberType = typename SimpleNumberTrait<TargetElement>::Type;
         Vector<SimpleNumberType, sizes...> fr = real(f);
         Vector<SimpleNumberType, sizes...> fi = imag(f);
-        fr.deriv(imag_interval.a, imag_interval.b, n, nabla.Nwindow, false);
-        fi.deriv(imag_interval.a, imag_interval.b, n, nabla.Nwindow, false);
+        fr.deriv(imag_interval.a, imag_interval.b, n, nabla.Nstencil, false);
+        fi.deriv(imag_interval.a, imag_interval.b, n, nabla.Nstencil, false);
         f = fr + Imaginary<SimpleNumberType>(1)*fi;
         return f;
       }
@@ -137,8 +137,8 @@ namespace mathq {
         using SimpleNumberType = typename SimpleNumberTrait<TargetElement>::Type;
         Vector<SimpleNumberType, sizes...> fr = real(f);
         Vector<SimpleNumberType, sizes...> fi = imag(f);
-        fr.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nwindow, false);
-        fi.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nwindow, false);
+        fr.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nstencil, false);
+        fi.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nstencil, false);
         f = fr + Imaginary<SimpleNumberType>(1)*fi;
         return f;
       }
@@ -147,8 +147,8 @@ namespace mathq {
         using SimpleNumberType = typename SimpleNumberTrait<TargetElement>::Type;
         Vector<SimpleNumberType, sizes...> fr = real(f);
         Vector<SimpleNumberType, sizes...> fi = imag(f);
-        fr.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nwindow, false);
-        fi.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nwindow, false);
+        fr.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nstencil, false);
+        fi.deriv(real_interval.a, real_interval.b, real_interval.N, nabla.Nstencil, false);
         f = fr - Imaginary<SimpleNumberType>(1)*fi;
         return f;
       }

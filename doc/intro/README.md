@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.046</h1>](../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.047</h1>](../../README.md)
 
 <details>
 
@@ -40,7 +40,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../develop
 8.8. [Linear Algebra](linear-algebra/README.md)<br>
 8.9. [Indexing, Masks, Slicing, Sorting, etc.](sort-mask-slice/README.md)<br>
 8.10. [Common and Special Mathematical Functions](math-functions/README.md)<br>
-<br>**Discretized Functions and Calculus**<br>
+<br>**Discretized Functions, Tensors, and Calculus**<br>
 8.11. [Numerical / Discretized Mathematical Function Objects](numerical-functions/README.md)<br>
 8.12. [Functions of Complex Variables](complex-calculus/README.md)<br>
 8.13. [Vector Calculus and Curvilinear Coordinates](vector-calculus/README.md)<br>
@@ -87,15 +87,22 @@ To be implemented using other libraries:
     + `RiemannianCoords`
 1. Graded Algebras and their fields
     + Grassman/Clifford algebras, Weyl algebras
+1. Differentiation
+  * support any derivative stencil size for both uniform and and non-uniform grids
+  * support causal (backward stencil), anti-causal (forward stencil), and non-causal (centered stencil) functions
+  * support periodic Neumann [boundary conditions](https://en.wikipedia.org/wiki/Boundary_value_problem)
 1. General Differential Operators and Expressions
     + Differential Operator from k-blades and graded algebra k-blades
+1. Integration
+  * support an assortment of [integration techniques](https://en.wikipedia.org/wiki/Numerical_integration)
 1. Integral operators
     + Integral Operator from k-forms
     + [k-simplexes](https://en.wikipedia.org/wiki/Simplex)
     + [k-chains](https://en.wikipedia.org/wiki/Chain_(algebraic_topology))
 1. [dual](https://en.wikipedia.org/wiki/Duality_(mathematics)) function/operator. See also [bra-ket](https://en.wikipedia.org/wiki/Bra%E2%80%93ket_notation)
+1. [Ordinary Differential equation solvers](https://en.wikipedia.org/wiki/Numerical_methods_for_ordinary_differential_equations)
+1. [Partial Differential equation solvers](https://en.wikipedia.org/wiki/Numerical_methods_for_partial_differential_equations)
 1. Lie groups
 1. Spinors
 1. Finite groups
 1. Division algebras: Octonians, Sedonians
-

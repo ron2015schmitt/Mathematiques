@@ -1,4 +1,4 @@
-[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.046</h1>](../../../README.md)
+[<h1 style='border: 2px solid; text-align: center'>Mathématiques 0.42.1-alpha.047</h1>](../../../README.md)
 
 <details>
 
@@ -65,7 +65,7 @@ Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../../deve
 
 ```C++
 
-☀ d1 ➜ Nabla<> (Nwindow=7);
+☀ d1 ➜ Nabla<> (Nstencil=7);
 ```
 
 
