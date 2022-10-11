@@ -1,6 +1,6 @@
 
 
-# Mathématiques 0.42.4
+# Mathématiques 0.42.5
 
 Mathématiques is a novel mathematical library with 
 * object classes based on **formal mathematical objects** and their operators
