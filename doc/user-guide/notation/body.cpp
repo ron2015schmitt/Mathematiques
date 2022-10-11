@@ -1,12 +1,3 @@
-#include <iostream>
-#include <string>
-#include <climits>
-#include <limits>
-#include <stdbool.h>
-#include <typeinfo>
-#include <optional>
-
-
 #include "mathq.h"
 
 int main() {
@@ -25,9 +16,9 @@ int main() {
   CR();
   CR();
   GMD_CODE_START("C++");
-  ECHO_CODE(double pi = 3.14);
-  ECHO_CODE(double r = 2.5);
-  ECHO_CODE(double area = pi * pow(r, 2));
+  ECHO(double pi = 3.14);
+  ECHO(double r = 2.5);
+  ECHO(double area = pi * pow(r, 2));
   GMD_CODE_END();
 
   MOUT << "Results are also shown in code blocks but with each line preceded by the symbol `" << Display::prefixStyledString << "`";
@@ -36,9 +27,9 @@ int main() {
   CR();
   CR();
   GMD_CODE_START("C++");
-  TRDISP(pi);
-  TRDISP(r);
-  TRDISP(area);
+  ETV(pi);
+  ETV(r);
+  ETV(area);
   GMD_CODE_END();
 
   OUTPUT("This is also how the results are output in a linux terminal, albeit with slightly different coloring.  A screen shot of the same results are shown below\n");
@@ -49,9 +40,9 @@ int main() {
   CR();
   CR();
   GMD_CODE_START("C++");
-  OUTPUT("TRDISP(pi);");
-  OUTPUT("TRDISP(r);");
-  OUTPUT("TRDISP(area);");
+  OUTPUT("ETV(pi);");
+  OUTPUT("ETV(r);");
+  OUTPUT("ETV(area);");
   GMD_CODE_END();
 
   OUTPUT("This topic is covered in detail in the Display section of this guide.\n");
@@ -62,8 +53,8 @@ int main() {
   CR();
   CR();
   GMD_CODE_START("C++");
-  ECHO_CODE(double x = 1.52);
-  TRDISP(x);
+  ECHO(double x = 1.52);
+  ETV(x);
   GMD_CODE_END();
 
 

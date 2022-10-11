@@ -1,19 +1,10 @@
-#include <iostream>
-#include <string>
-#include <climits>
-#include <limits>
-#include <stdbool.h>
-#include <typeinfo>
-#include <optional>
-
-
 #include "mathq.h"
 
 int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   GMD_PREAMBLE();
 
@@ -43,8 +34,8 @@ int main() {
   GMD_HEADER2("Exponentiation and the `pow` function");
   OUTPUT("C++ does not have an exponentiation operator.  Instead it provides the [`std::pow`](https://en.cppreference.com/w/cpp/numeric/math/div) function");
   GMD_CODE_START("C++");
-  TRDISP(pow(2, 8));
-  TRDISP(pow(25, 1 / 2));
+  ETV(pow(2, 8));
+  ETV(pow(25, 1 / 2));
   GMD_CODE_END();
 
   GMD_VSPACE();
@@ -53,35 +44,35 @@ int main() {
   GMD_HEADER4("Reals");
   CR();
   GMD_CODE_START("C++");
-  TRDISP(1 + 2);
-  TRDISP(7.5 + 2);
-  TRDISP(7.5 - 0.5);
+  ETV(1 + 2);
+  ETV(7.5 + 2);
+  ETV(7.5 - 0.5);
   GMD_CODE_END();
   CR();
 
   GMD_HEADER4("Complex, Imaginary and Mixed");
   CR();
   GMD_CODE_START("C++");
-  TRDISP(complex<double>(1.5, 0) + complex<double>(0.5, 4));
+  ETV(complex<double>(1.5, 0) + complex<double>(0.5, 4));
   GMD_CODE_END();
   CR();
 
   GMD_HEADER4("Imaginary");
   CR();
   GMD_CODE_START("C++");
-  TRDISP(complex<double>(1.5, 0) + complex<double>(0.5, 4));
-  TRDISP(Imaginary<double>(1) + Imaginary<double>(33.12));
-  TRDISP(-10 + Imaginary<double>(5.25));
-  TRDISP(100 + complex<double>(1.5, 2) + Imaginary<double>(5.25));
+  ETV(complex<double>(1.5, 0) + complex<double>(0.5, 4));
+  ETV(Imaginary<double>(1) + Imaginary<double>(33.12));
+  ETV(-10 + Imaginary<double>(5.25));
+  ETV(100 + complex<double>(1.5, 2) + Imaginary<double>(5.25));
   GMD_CODE_END();
   CR();
 
 
   GMD_CODE_START("C++");
-  DISP(complex(1.0, 1.0) + complex(2.0, 4.0));
-  DISP(complex(1.0, 1.0) - complex(2.0, 4.0));
-  DISP(complex(1.0, 1.0) * complex(2.0, 4.0));
-  DISP(complex(1.0, 1.0) / complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) + complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) - complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) * complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) / complex(2.0, 4.0));
   GMD_CODE_END();
 
 
@@ -91,7 +82,7 @@ int main() {
   OUTPUT("C++ does not have an exponentiation operator.  Instead it provides the [```std::pow```](https://en.cppreference.com/w/cpp/numeric/complex/div) function");
 
   GMD_CODE_START("C++");
-  DISP(pow(complex(1.0, 1.0), complex(2.0, 4.0)));
+  EV(pow(complex(1.0, 1.0), complex(2.0, 4.0)));
   GMD_CODE_END();
 
   OUTPUT("\n<br>\n");
@@ -110,21 +101,21 @@ int main() {
   OUTPUT("Examples:\n");
   GMD_CODE_START("C++");
   CR();
-  DISP(complex(1.0, 1.0) == complex(1.0, 1.0));
-  DISP(complex(1.0, 1.0) != complex(1.0, 1.0));
+  EV(complex(1.0, 1.0) == complex(1.0, 1.0));
+  EV(complex(1.0, 1.0) != complex(1.0, 1.0));
   CR();
-  DISP(complex(1.0, 1.0) == complex(2.0, 4.0));
-  DISP(complex(1.0, 1.0) != complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) == complex(2.0, 4.0));
+  EV(complex(1.0, 1.0) != complex(2.0, 4.0));
   GMD_CODE_END();
 
 
   GMD_HEADER4("Mixed Type");
   CR();
   GMD_CODE_START("C++");
-  TRDISP(complex<double>(1.5, 0) + complex<double>(0.5, 4));
-  TRDISP(Imaginary<double>(1) + Imaginary<double>(33.12));
-  TRDISP(-10 + Imaginary<double>(5.25));
-  TRDISP(100 + complex<double>(1.5, 2) + Imaginary<double>(5.25));
+  ETV(complex<double>(1.5, 0) + complex<double>(0.5, 4));
+  ETV(Imaginary<double>(1) + Imaginary<double>(33.12));
+  ETV(-10 + Imaginary<double>(5.25));
+  ETV(100 + complex<double>(1.5, 2) + Imaginary<double>(5.25));
   GMD_CODE_END();
   CR();
 

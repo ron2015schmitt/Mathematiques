@@ -3,7 +3,7 @@ The code that makes up this library is copyrighted under the *MIT license*.
 
 MIT License
 
-Copyright (c) [2003-2019] [Ronald Frederick Schmitt]
+Copyright (c) [2003-2023] [Ronald Frederick Schmitt]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

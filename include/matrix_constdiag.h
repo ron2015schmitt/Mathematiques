@@ -8,15 +8,15 @@ namespace mathq {
 
 
   template <typename Element, size_t... dim_ints>
-  class MatrixConstDiag<Element, 2, dim_ints...> : 
-    public SpecialData<Element, 2, dim_ints...>, 
+  class MatrixConstDiag<Element, 2, dim_ints...> :
+    public SpecialData<Element, 2, dim_ints...>,
     public ExpressionRW<
-      Matrix<Element, dim_ints...>,  // Derived
-      Element,  // Element
-      typename NumberTrait<Element>::Type, // Number
-      1 + NumberTrait<Element>::depth(),  // depth
-      2  // rank
-    > {  
+    Matrix<Element, dim_ints...>,  // Derived
+    Element,  // Element
+    typename NumberTrait<Element>::Type, // Num
+    1 + NumberTrait<Element>::depth(),  // depth
+    2  // rank
+    > {
   public:
 
 
@@ -29,7 +29,7 @@ namespace mathq {
     constexpr static size_t N0 = std::get<0>(static_dims_array);
     constexpr static size_t N1 = std::get<1>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = ( sizeof...(dim_ints) == 0 );
+    constexpr static bool is_dynamic_value = (sizeof...(dim_ints) == 0);
     constexpr static size_t compile_time_size = calc_size<rank_value, N0, N1>();
 
     //**********************************************************************
@@ -41,13 +41,13 @@ namespace mathq {
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using ParentDataType = MultiArrayData<Element, rank_value, dim_ints...>;
     using ParentType = ExpressionRW<
       ConcreteType,  // Derived
       Element,  // Element
-      NumberType, // Number
+      NumberType, // Num
       depth_value,  // depth
       rank_value  // rank
     >;
@@ -67,10 +67,10 @@ namespace mathq {
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    constexpr static Number zero_ = 0;
-    Number value_ = 1;
+    constexpr static Num zero_ = 0;
+    Num value_ = 1;
 
-    static_assert(NumberTrait<Number>::value,
+    static_assert(NumberTrait<Num>::value,
       "class MatrixConstDiag can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -88,8 +88,8 @@ namespace mathq {
       value_ = 1;
     }
 
-    // -------------------  Number value --------------------
-    explicit Type(const Number& value) {
+    // -------------------  Num value --------------------
+    explicit Type(const Num& value) {
       size_t NN = NR*NC;
       resize(NR, NC);
       value_ = value;
@@ -106,7 +106,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit Type(const size_t Nr, const size_t Nc, const Number& value) {
+    explicit Type(const size_t Nr, const size_t Nc, const Num& value) {
       resize(Nr, Nc);
       value_ = value;
     }
@@ -146,9 +146,6 @@ namespace mathq {
     }
 
 
-    bool isExpression(void) const {
-      return false;
-    }
     MultiArrays getEnum() const {
       return T_MATRIX;
     }
@@ -261,16 +258,16 @@ namespace mathq {
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = Number >
+    template< typename T = Num >
     typename std::enable_if<is_complex<T>::value, Type& >::type adjoint() {
       return *this;
     }
 
 
-    Number getValue() const {
+    Num getValue() const {
       return value_;
     }
-    Type& setValue(const Number& value) {
+    Type& setValue(const Num& value) {
       value_ = value;
       return *this;
     }
@@ -282,7 +279,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [total_size()] and note return type
 
     // read
-    const Number dat(const size_t n)  const {
+    const Num dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -291,7 +288,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const Number dat(const Indices& inds)  const {
+    const Num dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -303,7 +300,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const Number dat(const DeepIndices& dinds)  const {
+    const Num dat(const DeepIndices& dinds)  const {
       const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth - depth_value];
       size_t r = inds[0];
@@ -317,7 +314,7 @@ namespace mathq {
     //**********************************************************************
 
     // read
-    const Number operator[](const size_t n)  const {
+    const Num operator[](const size_t n)  const {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -355,7 +352,7 @@ namespace mathq {
     //**********************************************************************
 
 
-    const Number operator()(const size_t r, const size_t c) const {
+    const Num operator()(const size_t r, const size_t c) const {
       if (r==c) {
         return value_;
       }
@@ -375,7 +372,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Type& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 
@@ -383,7 +380,7 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = Number >
+    template< typename T = Num >
     typename std::enable_if<is_complex<T>::value, Type& >::type conj() {
       return *this;
     }
@@ -398,7 +395,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixConstDiag";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(Number());
+      s += getTypeName(Num());
       if (NR!=0) {
         s += StyledString::get(COMMA).get();
         s += "NR=";
@@ -466,7 +463,7 @@ namespace mathq {
     }
 
 
-    //template <typename Number>	
+    //template <typename Num>	
     friend inline std::istream& operator>>(const std::string s, Type& m2) {
       std::istringstream st(s);
       return (st >> m2);

@@ -8,18 +8,18 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixToeplitz<Number        -- variable size matrix (valarray)
-   *                        Number  = type for elements
-   * MatrixToeplitz<Number,NR>    -- fixed number of rows (valarray)
+   * MatrixToeplitz<Num        -- variable size matrix (valarray)
+   *                        Num  = type for elements
+   * MatrixToeplitz<Num,NR>    -- fixed number of rows (valarray)
    *                        NR = number of rows
-   * MatrixToeplitz<Number,NR,NC> -- fixed number of rows and cols (array)
+   * MatrixToeplitz<Num,NR,NC> -- fixed number of rows and cols (array)
    *                        NC = number of cols
    ********************************************************************
    */
 
-   //, typename = EnableIf<NumberTrait<Number>::value>
-  template <typename Number, int NR, int NC >
-  class MatrixToeplitz : public ExpressionRW<MatrixToeplitz<Number, NR, NC>, Number, Number, 1, 2> {
+   //, typename = EnableIf<NumberTrait<Num>::value>
+  template <typename Num, int NR, int NC >
+  class MatrixToeplitz : public ExpressionRW<MatrixToeplitz<Num, NR, NC>, Num, Num, 1, 2> {
 
   public:
     constexpr static int rank = 2;
@@ -28,28 +28,28 @@ namespace mathq {
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
-    typedef MatrixToeplitz<Number, NR, NC> ConcreteType;
-    typedef Number ElementType;
-    typedef Number NumberType;
-    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
+    typedef MatrixToeplitz<Num, NR, NC> ConcreteType;
+    typedef Num ElementType;
+    typedef Num NumberType;
+    typedef typename SimpleNumberTrait<Num>::Type SimpleNumberType;
 
 
     // if either NR or NC is 0, then we use valarray
-    typedef typename ArrayTypeTrait<Number, ((NR+NC-1)* (NR>0)* (NC>0))>::Type MyArrayType;
+    typedef typename ArrayTypeTrait<Num, ((NR+NC-1)* (NR>0)* (NC>0))>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const Number zero_ = 0;
-    Number dummy_ = 0;
+    const Num zero_ = 0;
+    Num dummy_ = 0;
     MyArrayType data_;
 
     size_t Nrows_;
     size_t Ncols_;
 
-    static_assert(NumberTrait<Number>::value,
+    static_assert(NumberTrait<Num>::value,
       "class MatrixToeplitz can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -61,14 +61,14 @@ namespace mathq {
   public:
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    explicit MatrixToeplitz<Number, NR, NC>() {
+    explicit MatrixToeplitz<Num, NR, NC>() {
       size_t NN = NR*NC;
       resize(NR, NC);
       *this = 0;
     }
 
-    // -------------------  Number value --------------------
-    explicit MatrixToeplitz<Number, NR, NC>(const Number& value) {
+    // -------------------  Num value --------------------
+    explicit MatrixToeplitz<Num, NR, NC>(const Num& value) {
       size_t NN = NR*NC;
       resize(NR, NC);
       *this = value;
@@ -77,7 +77,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = NR*NC, EnableIf<(NN > 0)> = 0>
 
-    explicit MatrixToeplitz<Number, NR, NC>(const Vector<Number>& v) {
+      explicit MatrixToeplitz<Num, NR, NC>(const Vector<Num>& v) {
       const size_t size = v.size();
       // TODO: chekc that size = NR + NC -1
       resize(NR, NC);
@@ -88,7 +88,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixToeplitz<Number, NR, NC>(const Vector<Number>& v, const size_t Nr, const size_t Nc) {
+    explicit MatrixToeplitz<Num, NR, NC>(const Vector<Num>& v, const size_t Nr, const size_t Nc) {
       const size_t size = v.size();
       // TODO: chekc that size = NR + NC -1
       resize(Nr, Nc);  // this a *request* to resize
@@ -98,7 +98,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixToeplitz<Number, NR, NC>(const size_t Nr, const size_t Nc) {
+    explicit MatrixToeplitz<Num, NR, NC>(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
       *this = 0;
     }
@@ -106,7 +106,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixToeplitz<Number, NR, NC>(const size_t Nr, const size_t Nc, const Number& value) {
+    explicit MatrixToeplitz<Num, NR, NC>(const size_t Nr, const size_t Nc, const Num& value) {
       resize(Nr, Nc);
       *this = value;
     }
@@ -118,7 +118,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixToeplitz<Number, NR, NC>() {
+    ~MatrixToeplitz<Num, NR, NC>() {
       //remove from directory
     }
 
@@ -147,9 +147,6 @@ namespace mathq {
     }
 
 
-    bool isExpression(void) const {
-      return false;
-    }
     MultiArrays getEnum() const {
       return T_MATRIX;
     }
@@ -204,7 +201,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixToeplitz<Number, NR, NC>& resize(const int Nr, const int Nc) {
+    MatrixToeplitz<Num, NR, NC>& resize(const int Nr, const int Nc) {
       Nrows_ = NR;
       Ncols_ = NC;
       if constexpr (resizableRows) {
@@ -224,14 +221,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixToeplitz<Number, NR, NC>& resize(const Dimensions dims) {
+    MatrixToeplitz<Num, NR, NC>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixToeplitz<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixToeplitz<Num, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> recursive_dims(deepdims_new);
       Dimensions newdims = recursive_dims[0];
       resize(newdims);
@@ -244,7 +241,7 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    MatrixToeplitz<Number, NR, NC>& reshape(const size_t nr, const size_t nc) {
+    MatrixToeplitz<Num, NR, NC>& reshape(const size_t nr, const size_t nc) {
       const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
@@ -261,14 +258,14 @@ namespace mathq {
     }
 
 
-    MatrixToeplitz<Number, NR, NC>& transpose(void) {
+    MatrixToeplitz<Num, NR, NC>& transpose(void) {
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixToeplitz<Number, NR, NC>& >::type adjoint() {
+    template< typename T = Num >
+    typename std::enable_if<is_complex<T>::value, MatrixToeplitz<Num, NR, NC>& >::type adjoint() {
       return *this;
     }
 
@@ -280,7 +277,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [total_size()] and note return type
 
     // read
-    const Number dat(const size_t n)  const {
+    const Num dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -289,7 +286,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const Number dat(const Indices& inds)  const {
+    const Num dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -301,7 +298,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const Number dat(const DeepIndices& dinds)  const {
+    const Num dat(const DeepIndices& dinds)  const {
       const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth -depth_value];
       size_t r = inds[0];
@@ -315,7 +312,7 @@ namespace mathq {
     //**********************************************************************
 
     // read / write
-    Number& operator[](const size_t n) {
+    Num& operator[](const size_t n) {
       const Indices& inds = indices(n);
       size_t r = inds[0];
       size_t c = inds[1];
@@ -323,7 +320,7 @@ namespace mathq {
     }
 
     // read
-    const Number operator[](const size_t n)  const {
+    const Num operator[](const size_t n)  const {
       const Indices& inds = indices(n);
       size_t r = inds[0];
       size_t c = inds[1];
@@ -360,13 +357,13 @@ namespace mathq {
     //***************MultiArray-style Element Access: A(r,c) *********************
     //**********************************************************************
 
-    Number& operator()(const size_t r, const size_t c) {
+    Num& operator()(const size_t r, const size_t c) {
       const size_t k = r-c+Ncols()-1;
       //      MDISP(r,c,k);
       return data_[k];
     }
 
-    const Number operator()(const size_t r, const size_t c) const {
+    const Num operator()(const size_t r, const size_t c) const {
       const size_t k = r-c+Ncols()-1;
       //      MDISP(r,c,k);
       return data_[k];
@@ -379,13 +376,13 @@ namespace mathq {
     //**********************************************************************
 
 
-    MatrixToeplitz<Number, NR, NC>& set(const Vector<Number>& v) {
+    MatrixToeplitz<Num, NR, NC>& set(const Vector<Num>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return *this;
     }
-    MatrixToeplitz<Number, NR, NC>& operator=(const Vector<Number>& v) {
+    MatrixToeplitz<Num, NR, NC>& operator=(const Vector<Num>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -393,7 +390,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixToeplitz<Number, NR, NC>& operator=(const ExpressionR<X, Number, Number, 1, 1>& v) {
+    MatrixToeplitz<Num, NR, NC>& operator=(const ExpressionR<X, Num, Num, 1, 1>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -401,22 +398,22 @@ namespace mathq {
     }
 
 
-    Vector<Number>& get() const {
-      Vector<Number>& v = *(new Vector<Number>(data_.size()));
+    Vector<Num>& get() const {
+      Vector<Num>& v = *(new Vector<Num>(data_.size()));
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return v;
     }
 
-    MatrixToeplitz<Number, NR, NC>& operator=(const Number& value) {
+    MatrixToeplitz<Num, NR, NC>& operator=(const Num& value) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = value;
       }
       return *this;
     }
 
-    MatrixToeplitz<Number, NR, NC>& operator=(const MatrixToeplitz<Number, NR, NC>& b) {
+    MatrixToeplitz<Num, NR, NC>& operator=(const MatrixToeplitz<Num, NR, NC>& b) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = b[k];
       }
@@ -431,7 +428,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixToeplitz<Number, NR, NC>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    MatrixToeplitz<Num, NR, NC>& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 
@@ -439,8 +436,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixToeplitz<Number, NR, NC>& >::type conj() {
+    template< typename T = Num >
+    typename std::enable_if<is_complex<T>::value, MatrixToeplitz<Num, NR, NC>& >::type conj() {
       return *this;
     }
 
@@ -454,7 +451,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixToeplitz";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(Number());
+      s += getTypeName(Num());
       if (NR!=0) {
         s += StyledString::get(COMMA).get();
         s += "NR=";
@@ -487,7 +484,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixToeplitz<Number, NR, NC>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixToeplitz<Num, NR, NC>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -522,8 +519,8 @@ namespace mathq {
     }
 
 
-    //template <typename Number>	
-    friend inline std::istream& operator>>(const std::string s, MatrixToeplitz<Number, NR, NC>& m2) {
+    //template <typename Num>	
+    friend inline std::istream& operator>>(const std::string s, MatrixToeplitz<Num, NR, NC>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -531,7 +528,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixToeplitz<Number, NR, NC>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixToeplitz<Num, NR, NC>& m2) {
       return stream;
     }
 

@@ -7,16 +7,16 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixSkewHermitian<Number>    -- variable size matrix (valarray)
-   *                              Number  = type for elements
-   * MatrixSkewHermitian<Number,N>  -- fixed number of rows (valarray)
+   * MatrixSkewHermitian<Num>    -- variable size matrix (valarray)
+   *                              Num  = type for elements
+   * MatrixSkewHermitian<Num,N>  -- fixed number of rows (valarray)
    *                              N = number of rows
    *                                = number of cols
    ********************************************************************
    */
 
-  template <typename Number, int N>
-  class MatrixSkewHermitian : public ExpressionRW<MatrixSkewHermitian<Number, N>, Number, Number, 1, 2> {
+  template <typename Num, int N>
+  class MatrixSkewHermitian : public ExpressionRW<MatrixSkewHermitian<Num, N>, Num, Num, 1, 2> {
 
   public:
     constexpr static int rank = 2;
@@ -25,27 +25,27 @@ namespace mathq {
     constexpr static int NR = N;
     constexpr static int NC = N;
     static constexpr bool resizable = (N==0) ? true : false;
-    typedef MatrixSkewHermitian<Number, N> ConcreteType;
-    typedef Number ElementType;
-    typedef Number NumberType;
-    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
+    typedef MatrixSkewHermitian<Num, N> ConcreteType;
+    typedef Num ElementType;
+    typedef Num NumberType;
+    typedef typename SimpleNumberTrait<Num>::Type SimpleNumberType;
 
 
     // if N is 0, then we use valarray
-    typedef typename ArrayTypeTrait<Number, ((N* N+N)/2)>::Type MyArrayType;
+    typedef typename ArrayTypeTrait<Num, ((N* N+N)/2)>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const Number zero_ = 0;
-    Number dummy_ = 0;
+    const Num zero_ = 0;
+    Num dummy_ = 0;
     MyArrayType data_;
 
     size_t N_;
 
-    static_assert(NumberTrait<Number>::value,
+    static_assert(NumberTrait<Num>::value,
       "class MatrixSkewHermitian can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -59,13 +59,13 @@ namespace mathq {
     // ********************* FIXED SIZE CONSTRUCTORS ***********************
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    explicit MatrixSkewHermitian<Number, N>() {
+    explicit MatrixSkewHermitian<Num, N>() {
       resize(N);
       *this = 0;
     }
 
-    // -------------------  Number value --------------------
-    explicit MatrixSkewHermitian<Number, N>(const Number& value) {
+    // -------------------  Num value --------------------
+    explicit MatrixSkewHermitian<Num, N>(const Num& value) {
       resize(N);
       *this = value;
     }
@@ -73,7 +73,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = N, EnableIf<(NN > 0)> = 0>
 
-    explicit MatrixSkewHermitian<Number, N>(const Vector<Number>& v) {
+      explicit MatrixSkewHermitian<Num, N>(const Vector<Num>& v) {
       const size_t size = v.size();
       // TODO: chekc that size = N(N+1)/2
       resize(N);
@@ -83,7 +83,7 @@ namespace mathq {
     // --------------------- Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<(NN>0)> = 0>
 
-    explicit MatrixSkewHermitian<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
+      explicit MatrixSkewHermitian<Num, N>(const ExpressionR<X, Num, Num, 1, 2> A) {
       // TODO: chekc that A is N x N
       resize(N);
       *this = A;
@@ -96,7 +96,7 @@ namespace mathq {
     // ------------------- variable size (Column) Vector --------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSkewHermitian<Number, N>(const Vector<Number>& v) {
+    explicit MatrixSkewHermitian<Num, N>(const Vector<Num>& v) {
       const size_t len = v.size();
       const size_t depth = (std::sqrt(1+8*len) - 1)/2;
       resize(depth);
@@ -106,7 +106,7 @@ namespace mathq {
     // --------------------- variable-size zero-CONSTRUCTOR---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSkewHermitian<Number, N>(const size_t depth) {
+    explicit MatrixSkewHermitian<Num, N>(const size_t depth) {
       resize(depth);
       *this = 0;
     }
@@ -114,7 +114,7 @@ namespace mathq {
     // --------------------- variable-size value CONSTRUCTOR ---------------------
     template<size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSkewHermitian<Number, N>(const size_t depth, const Number& value) {
+    explicit MatrixSkewHermitian<Num, N>(const size_t depth, const Num& value) {
       resize(depth);
       *this = value;
     }
@@ -123,7 +123,7 @@ namespace mathq {
     // --------------------- variable-size Matrix CONSTRUCTOR ---------------------
     template<class X, size_t NN = N, EnableIf<NN == 0> = 0>
 
-    explicit MatrixSkewHermitian<Number, N>(const ExpressionR<X, Number, Number, 1, 2> A) {
+    explicit MatrixSkewHermitian<Num, N>(const ExpressionR<X, Num, Num, 1, 2> A) {
       const size_t depth = A.Nrows();
       // TODO: chekc that A is square
       resize(depth);
@@ -136,7 +136,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixSkewHermitian<Number, N>() {
+    ~MatrixSkewHermitian<Num, N>() {
       //remove from directory
     }
 
@@ -165,9 +165,6 @@ namespace mathq {
     }
 
 
-    bool isExpression(void) const {
-      return false;
-    }
     MultiArrays getEnum() const {
       return T_MATRIX;
     }
@@ -222,7 +219,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixSkewHermitian<Number, N>& resize(const int depth) {
+    MatrixSkewHermitian<Num, N>& resize(const int depth) {
       N_ = N;
       if constexpr (resizable) {
         N_ = depth;
@@ -236,14 +233,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixSkewHermitian<Number, N>& resize(const Dimensions dims) {
+    MatrixSkewHermitian<Num, N>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixSkewHermitian<Number, N>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixSkewHermitian<Num, N>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> recursive_dims(deepdims_new);
       Dimensions newdims = recursive_dims[0];
       resize(newdims);
@@ -253,15 +250,15 @@ namespace mathq {
 
 
 
-    MatrixSkewHermitian<Number, N>& transpose(void) {
+    MatrixSkewHermitian<Num, N>& transpose(void) {
       // TODO: implement
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixSkewHermitian<Number, N>& >::type adjoint() {
+    template< typename T = Num >
+    typename std::enable_if<is_complex<T>::value, MatrixSkewHermitian<Num, N>& >::type adjoint() {
       return *this;
     }
 
@@ -273,7 +270,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [total_size()] and note return type
 
     // read
-    const Number dat(const size_t n)  const {
+    const Num dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -282,7 +279,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const Number dat(const Indices& inds)  const {
+    const Num dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -294,7 +291,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const Number dat(const DeepIndices& dinds)  const {
+    const Num dat(const DeepIndices& dinds)  const {
       const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth -depth_value];
       size_t r = inds[0];
@@ -308,7 +305,7 @@ namespace mathq {
     //**********************************************************************
 
     // read / write
-    Number& operator[](const size_t n) {
+    Num& operator[](const size_t n) {
       const Indices& inds = indices(n);
       size_t r = inds[0];
       size_t c = inds[1];
@@ -316,7 +313,7 @@ namespace mathq {
     }
 
     // read
-    const Number operator[](const size_t n)  const {
+    const Num operator[](const size_t n)  const {
       const Indices& inds = indices(n);
       size_t r = inds[0];
       size_t c = inds[1];
@@ -352,7 +349,7 @@ namespace mathq {
       return c + N_*r - (r*r+r)/2;
     }
 
-    Number& operator()(const size_t r, const size_t c) {
+    Num& operator()(const size_t r, const size_t c) {
       if (r <= c) {
         return data_[dataIndex(r, c)];
       }
@@ -361,7 +358,7 @@ namespace mathq {
       }
     }
 
-    const Number operator()(const size_t r, const size_t c) const {
+    const Num operator()(const size_t r, const size_t c) const {
       if (r <= c) {
         return data_[dataIndex(r, c)];
       }
@@ -383,21 +380,13 @@ namespace mathq {
     //**********************************************************************
 
 
-    MatrixSkewHermitian<Number, N>& set(const Vector<Number>& v) {
+    MatrixSkewHermitian<Num, N>& set(const Vector<Num>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return *this;
     }
-    MatrixSkewHermitian<Number, N>& operator=(const Vector<Number>& v) {
-      for (size_t k = 0; k < data_.size(); k++) {
-        data_[k] = v[k];
-      }
-      return *this;
-    }
-
-    template <class X>
-    MatrixSkewHermitian<Number, N>& operator=(const ExpressionR<X, Number, Number, 1, 1>& v) {
+    MatrixSkewHermitian<Num, N>& operator=(const Vector<Num>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -405,7 +394,15 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixSkewHermitian<Number, N>& operator=(const ExpressionR<X, Number, Number, 1, 2>& A) {
+    MatrixSkewHermitian<Num, N>& operator=(const ExpressionR<X, Num, Num, 1, 1>& v) {
+      for (size_t k = 0; k < data_.size(); k++) {
+        data_[k] = v[k];
+      }
+      return *this;
+    }
+
+    template <class X>
+    MatrixSkewHermitian<Num, N>& operator=(const ExpressionR<X, Num, Num, 1, 2>& A) {
       const size_t depth = A.Nrows();
       // TODO: check that A is square
       resize(depth);
@@ -418,22 +415,22 @@ namespace mathq {
     }
 
 
-    Vector<Number>& get() const {
-      Vector<Number>& v = *(new Vector<Number>(data_.size()));
+    Vector<Num>& get() const {
+      Vector<Num>& v = *(new Vector<Num>(data_.size()));
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return v;
     }
 
-    MatrixSkewHermitian<Number, N>& operator=(const Number& value) {
+    MatrixSkewHermitian<Num, N>& operator=(const Num& value) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = value;
       }
       return *this;
     }
 
-    MatrixSkewHermitian<Number, N>& operator=(const MatrixSkewHermitian<Number, N>& b) {
+    MatrixSkewHermitian<Num, N>& operator=(const MatrixSkewHermitian<Num, N>& b) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = b[k];
       }
@@ -448,7 +445,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixSkewHermitian<Number, N>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    MatrixSkewHermitian<Num, N>& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 
@@ -456,8 +453,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixSkewHermitian<Number, N>& >::type conj() {
+    template< typename T = Num >
+    typename std::enable_if<is_complex<T>::value, MatrixSkewHermitian<Num, N>& >::type conj() {
       return *this;
     }
 
@@ -471,7 +468,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixSkewHermitian";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(Number());
+      s += getTypeName(Num());
       if (N!=0) {
         s += StyledString::get(COMMA).get();
         s += "N=";
@@ -499,7 +496,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixSkewHermitian<Number, N>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixSkewHermitian<Num, N>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -534,8 +531,8 @@ namespace mathq {
     }
 
 
-    //template <typename Number>	
-    friend inline std::istream& operator>>(const std::string s, MatrixSkewHermitian<Number, N>& m2) {
+    //template <typename Num>	
+    friend inline std::istream& operator>>(const std::string s, MatrixSkewHermitian<Num, N>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -543,7 +540,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixSkewHermitian<Number, N>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixSkewHermitian<Num, N>& m2) {
       return stream;
     }
 

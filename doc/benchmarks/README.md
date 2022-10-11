@@ -1,63 +1,142 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.262-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.3</a></h1>
 
 <details>
 
 <summary>Documentation</summary>
 
 # [Documentation](../README.md)<br>
-1. [License](../license/README.md)<br>
-2. [About](../about/README.md)<br>
-3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>
-4. [Description and Example Usage](../overview/README.md)<br>
-5. [Installation](../installation/README.md)<br>
-6. [Your First Mathématiques Project](../first-project/README.md)<br>
-7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-8. _Benchmarks_ <br>
-9. [Tests](../test/README.md)<br>
-10. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
+Chapter 1. [License](../license/README.md)<br>
+Chapter 2. [About](../about/README.md)<br>
+Chapter 3. [Versioning](../versioning/README.md)<br>
+Chapter 4. [Status & Release Notes](../status-release/README.md)<br>
+Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
+Chapter 6. [Introduction with Examples](../intro/README.md)<br>
+Chapter 7. [Installation](../installation/README.md)<br>
+Chapter 8. [Your First Mathématiques Project](../first-project/README.md)<br>
+Chapter 9. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 10. _Benchmarks_ <br>
+Chapter 11. [Tests](../test/README.md)<br>
+Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
 
 
 </details>
 
 
 
-# 8. Benchmarks
+# Chapter 10. Benchmarks
+
+_This document was generated from the C++ file_ `benchmarks/body.cpp` _using macros and functions (in namespace `mathq::display`) from the header_ `"mathq.h"`. 
 
 
+## Memory Usage
 
-## Vector math benchmarks 
-
-Here we compare _Mathematiques_ vs. a handcoded `C` array loops.
-
-### mathq syntax 
+The multiarrays provided by Mathématiques are a C++ template class that wraps either a `std::array` (for compile-time fixed-size multiarrays) or a `std::valarray` (for dynamic-size multiarrays)
 ```C++
-Vector<double> x(N);
-x = linspace<double>(0,1,N);
-Vector<double> f(N);
-start();
-f = cos(2*pi + pi*sin(2*pi*x + pi/6));
-stop();
+Vector<double, 100> v;
+☀ sizeof(v)/sizeof(double) ➜ 100;
+```
+```C++
+Matrix<double, 10, 10> A;
+☀ sizeof(A)/sizeof(double) ➜ 100;
+```
+```C++
+Vector<std::complex<double>, 100> v;
+☀ sizeof(v)/sizeof(double) ➜ 200;
+```
+```C++
+Vector<Vector<double, 3>, 100> v;
+☀ sizeof(v)/sizeof(double) ➜ 300;
 ```
 
-### hand-coded `C` loop 
+<br>
+
+## Run-Time Performance
+The following tests are run during each build. The Mathématiques code is usually faster than hand-coded C.  The tests are repeated `Nloop` times and then the results are averaged.
+### Test 1. Function of a Vector
+
+$f(x) = 1 + 10 x + e^{i  [   2 \pi   +   \pi sin(  2 \pi x + \pi / 6  )   ] }$
+
+```C++
+using namespace std::numbers;
+size_t Nloop = 30;
+constexpr size_t N = 10000;
+```
+#### Results 1A. Hand-Coded C
+```C++
+const std::complex<double> i(0, 1);
+std::valarray<double> x(N);
+std::valarray<std::complex<double>> f(N);
+
+for (size_t k = 0; k < N; k++) {
+  x[k] = double(k) / double(N - 1);
+}
+for (size_t k = 0; k < N; k++) {
+  f[k] = 1 + 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6)));
+}
+```
+☀ elapsed_time ➜ 269 μsec;
+
+
+#### Results 1B. Mathématiques C
+```C++
+const Imaginary<double> i{ 1 };
+Vector<double> x(N);
+Vector<std::complex<double>> f(N);
+
+x = linspace<double>(0, 1, N);
+f = 1 + 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));
+```
+☀ elapsed_time ➜ 232 μsec;
+
+
+<br>
+
+### Test 2. Matrix Multiply
+
+$\mathbf{y} = \mathbf{A} \cdot \mathbf{x}$
+```C++
+using namespace std::numbers;
+size_t Nloop = 30;
+constexpr size_t N = 500;
+```
+#### Results 2A. Hand-Coded C
 ```C++
 std::valarray<double> x(N);
-for(int i=0; i<N; i++)
-  x[i] = double(i)/double(N-1);
-std::valarray<double> f(N);
-start();
-for(int i=0; i<N; i++)
-     f[i] = cos(2*pi + pi*sin(2*pi*x[i] + pi/6));
-stop();
+std::valarray<double> y(N);
+std::valarray<double> A(N* N);
+
+for (size_t k = 0; k < N; k++) {
+  x[k] = double(k) / double(N - 1);
+}
+for (size_t k = 0; k < N*N; k++) {
+  A[k] = sin(double(k)*pi/double(N*N));
+}
+size_t step = 0;
+for (size_t r = 0; r < N; r++) {
+  y[r] = 0;
+  for (size_t c = 0; c < N; c++) {
+    y[r] += A[step++] * x[c];
+  }
+}
 ```
-### results
-
-![benchmarks](../files/benchmark.png)
+☀ elapsed_time ➜ 1357 μsec;
 
 
-## dot product benchmarks
----------------------------------------------------------------------------
-To be written...
+#### Results 2B. Mathématiques C
+```C++
+Vector<double> x(N);
+Vector<double> y(N);
+Matrix<double> A(N, N);
+
+x = linspace<double>(0, 1, N);
+for (size_t k = 0; k < N*N; k++) {
+  A[k] = sin(double(k)*pi/double(N*N));
+}
+y = A | x;
+```
+☀ elapsed_time ➜ 1335 μsec;
+
+
 
 
 | ⇦ <br />[Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)  | [Documentation](../README.md)<br />Benchmarks<br /><img width=1000/> | ⇨ <br />[Tests](../test/README.md)   |

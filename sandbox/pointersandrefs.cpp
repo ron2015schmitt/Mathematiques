@@ -37,29 +37,29 @@ int main(int argc, char* argv[]) {
 
 
   int ii = 3;
-  TRDISP(ii);
+  ETV(ii);
   int* ip = &ii;
-  TRDISP(ip);
+  ETV(ip);
   const int ii2 = 2;
-  TRDISP(ii2);
+  ETV(ii2);
 
   const int jj = 3;
-  TRDISP(jj);
+  ETV(jj);
 
   int const kk = 3;
-  TRDISP(kk);
+  ETV(kk);
 
   const int& jjj = ii;
-  TRDISP(jjj);
+  ETV(jjj);
   // jjj = ii2;
 
 
   int variable_int;
   const int const_int = 0;
 
-  TRDISP(is_const<decltype(variable_int)>::value);
-  TRDISP(is_const<decltype(const_int)>::value);
-  TRDISP(std::is_const<std::remove_pointer_t<decltype(const_int)>>::value);
+  ETV(is_const<decltype(variable_int)>::value);
+  ETV(is_const<decltype(const_int)>::value);
+  ETV(std::is_const<std::remove_pointer_t<decltype(const_int)>>::value);
 
 
   int* variable_pointer;
@@ -70,19 +70,19 @@ int main(int argc, char* argv[]) {
 
   //  pointer with right const (pointer cannot be changed)
   CR();
-  TRDISP(is_pointer_const<decltype(const_int)>);
-  TRDISP(is_pointer_const<decltype(variable_pointer)>);
-  TRDISP(is_pointer_const<decltype(const_pointer)>);
-  TRDISP(is_pointer_const<decltype(pointer_const)>);
-  TRDISP(is_pointer_const<decltype(const_pointer_const)>);
+  ETV(is_pointer_const<decltype(const_int)>);
+  ETV(is_pointer_const<decltype(variable_pointer)>);
+  ETV(is_pointer_const<decltype(const_pointer)>);
+  ETV(is_pointer_const<decltype(pointer_const)>);
+  ETV(is_pointer_const<decltype(const_pointer_const)>);
 
   //  pointer with left const (value pointed to cannot be changed))
   CR();
-  TRDISP(is_const_pointer<decltype(const_int)>);
-  TRDISP(is_const_pointer<decltype(variable_pointer)>);
-  TRDISP(is_const_pointer<decltype(const_pointer)>);
-  TRDISP(is_const_pointer<decltype(pointer_const)>);
-  TRDISP(is_const_pointer<decltype(const_pointer_const)>);
+  ETV(is_const_pointer<decltype(const_int)>);
+  ETV(is_const_pointer<decltype(variable_pointer)>);
+  ETV(is_const_pointer<decltype(const_pointer)>);
+  ETV(is_const_pointer<decltype(pointer_const)>);
+  ETV(is_const_pointer<decltype(const_pointer_const)>);
 
 
   // left

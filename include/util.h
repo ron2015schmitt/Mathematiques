@@ -28,6 +28,12 @@ namespace mathq {
       MOUT << "  The start time is: " << ctime(&tm1_);
       ckstart_ = clock();
     }
+    double stop_timer(void) {
+      ckstop_ = clock();
+      tm2_ = time(0);
+      cputime_ = double(ckstop_-ckstart_)/double(CLOCKS_PER_SEC);
+      return cputime_;
+    }
     void stop_timer_silent(void) {
       ckstop_ = clock();
       tm2_ = time(0);

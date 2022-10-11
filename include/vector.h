@@ -18,7 +18,7 @@ namespace mathq {
   class MultiArray<Element, 1, sizes...> : public ExpressionRW<
     Vector<Element, sizes...>,  // Derived
     Element,  // Element
-    typename NumberTrait<Element>::Type, // Number
+    typename NumberTrait<Element>::Type, // Num
     1 + NumberTrait<Element>::depth(),  // depth
     1  // rank
   > {
@@ -28,12 +28,12 @@ namespace mathq {
     //**********************************************************************
     //                  Compile Time Constant
     //**********************************************************************
-
+    constexpr static bool isNotExpression = true;
     constexpr static size_t rank_value = 1;
     constexpr static std::array<size_t, rank_value> static_dims_array = { sizes... };
     constexpr static size_t N0 = std::get<0>(static_dims_array);
     constexpr static size_t depth_value = 1 + NumberTrait<Element>::depth();    // constexpr static size_t static_dims_array = DimensionsType;
-    constexpr static bool is_dynamic_value = ( sizeof...(sizes) == 0 );
+    constexpr static bool is_dynamic_value = (sizeof...(sizes) == 0);
     constexpr static size_t compile_time_size = calc_size<rank_value, N0>();
 
     //**********************************************************************
@@ -45,12 +45,12 @@ namespace mathq {
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using ParentType = ExpressionRW<
       ConcreteType,  // Derived
       Element,  // Element
-      NumberType, // Number
+      NumberType, // Num
       depth_value,  // depth
       rank_value  // rank
     >;
@@ -58,6 +58,9 @@ namespace mathq {
     using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
     using MyArrayType = typename ArrayTypeTrait<Element, N0>::Type;
+
+    template <typename NewElement>
+    using Type_ReplaceElement = Vector<NewElement, sizes...>;
 
 
     //**********************************************************************
@@ -97,7 +100,7 @@ namespace mathq {
       *this = var;
     }
 
-   
+
 
     // ----------------------- std::vector ---------------------
     explicit MultiArray(const std::vector<Element>& var) {
@@ -133,6 +136,14 @@ namespace mathq {
       *this = x;
     }
 
+    // template <class X>
+    // MultiArray(const std::initializer_list<ExpressionR<X, Element, NumberType, depth_value, rank_value>>& x) {
+    //   if constexpr (is_dynamic_value) {
+    //     this->resize(x.size());
+    //   }
+    //   *this = x;
+    // }
+
 
     //**********************************************************************
     //                    CONSTRUCTORS: FIXED size  
@@ -140,20 +151,20 @@ namespace mathq {
 
     // --------------------- FIXED SIZE: from dynamic size --------------------
     template<bool enabled = !is_dynamic_value> requires (enabled)
-    explicit MultiArray(const Vector<Element>& var) {
+      explicit MultiArray(const Vector<Element>& var) {
       *this = var;
     }
 
     // --------------------- FIXED SIZE: set all elements to same value   ---------------------
 
     template<bool enabled = !is_dynamic_value> requires (enabled)
-    explicit MultiArray(const Element val) {
+      explicit MultiArray(const Element val) {
       *this = val;
     }
 
     // --------------------- FIXED SIZE: set all bottom elements to same value   ---------------------
 
-    template<bool enabled = !is_dynamic_value> requires (enabled && (depth_value > 1) && (!std::is_same<Element, NumberType>::value) )
+    template<bool enabled = !is_dynamic_value> requires (enabled && (depth_value > 1) && (!std::is_same<Element, NumberType>::value))
       explicit MultiArray(const NumberType val) {
       *this = val;
     }
@@ -164,7 +175,7 @@ namespace mathq {
 
     // --------------------- copy constructor --------------------
     template<size_t NE2, bool enabled = is_dynamic_value> requires (enabled)
-    MultiArray(const Vector<Element, NE2>& var) {
+      MultiArray(const Vector<Element, NE2>& var) {
       resize(var.size());
       *this = var;
     }
@@ -173,23 +184,23 @@ namespace mathq {
     // need condition otherwise floats can be converted
     // can't have is_unsigned because 0 and positive ints are of type `int` by default.
     template<typename T> requires (is_dynamic_value && (std::is_integral<T>::value))
-    explicit MultiArray(const T N) {
+      explicit MultiArray(const T N) {
       resize(N);
     }
 
     // --------------------- DYNAMIC SIZE: set size from Dimensions  ---------------------
 
     template<bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const Dimensions& dims) {
-      // TRDISP(dims);
+      explicit MultiArray(const Dimensions& dims) {
+      // ETV(dims);
       this->resize(dims);
     }
 
     // --------------------- DYNAMIC SIZE: set size from RecursiveDimensions  ---------------------
 
-    template<size_t dim_depth> requires ( is_dynamic_value && (dim_depth <= depth_value) )
-    explicit MultiArray(const RecursiveDimensions& recursive_dims) {
-      // TRDISP(recursive_dims);
+    template<size_t dim_depth> requires (is_dynamic_value && (dim_depth <= depth_value))
+      explicit MultiArray(const RecursiveDimensions& recursive_dims) {
+      // ETV(recursive_dims);
       this->resize(recursive_dims);
     }
 
@@ -198,7 +209,7 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size = N and set all to same value  ---------------------
 
     template<bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const size_t N, const Element val) {
+      explicit MultiArray(const size_t N, const Element val) {
       resize(N);
       *this = val;
     }
@@ -206,8 +217,8 @@ namespace mathq {
     // --------------------- DYNAMIC SIZE: set size from Dimensions  and set value---------------------
 
     template<bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const Dimensions& dims, const Element val) {
-      // TRDISP(dims);
+      explicit MultiArray(const Dimensions& dims, const Element val) {
+      // ETV(dims);
       this->resize(dims);
       *this = val;
     }
@@ -216,7 +227,7 @@ namespace mathq {
     // --------------------- array[]  CONSTRUCTOR ---------------------
 
     template<bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const size_t N, const Element(vals)[]) {
+      explicit MultiArray(const size_t N, const Element(vals)[]) {
       resize(N);
       *this = vals;
     }
@@ -227,7 +238,7 @@ namespace mathq {
     // The Vector will have size of the slice referenced to N
 
     template<typename T, bool enabled = is_dynamic_value> requires (enabled)
-    explicit MultiArray(const size_t N, const slc<T>& s) {
+      explicit MultiArray(const size_t N, const slc<T>& s) {
       T mystart = s.start();
       if (mystart < 0) {
         mystart += N;
@@ -282,9 +293,7 @@ namespace mathq {
     //                         Basic characteristics
     //**********************************************************************
 
-    bool isExpression(void) const {
-      return false;
-    }
+
     VectorofPtrs getAddresses(void) const {
       VectorofPtrs myaddr((void*)this);
       return myaddr;
@@ -360,7 +369,8 @@ namespace mathq {
     inline std::array<size_t, rank_value> dims_array(void) const {
       if constexpr (is_dynamic_value) {
         return *(new std::array<size_t, rank_value>{ this->size() });
-      } else {
+      }
+      else {
         return static_dims_array;
       }
     }
@@ -415,6 +425,7 @@ namespace mathq {
       return *this;
     }
 
+
     Type& resize(const Dimensions& new_dims) {
       return resize(new_dims[0]);
     }
@@ -428,12 +439,13 @@ namespace mathq {
     Type& recurse_resize(const RecursiveDimensions& parent_rdims, size_t di = 0) {
       size_t depth_index = di;
       size_t resize_depth = parent_rdims.size();
-      const size_t newSize = parent_rdims[depth_index++][0];
+      // ETV(parent_rdims);
+      const size_t newSize = parent_rdims[depth_index][0];
       if constexpr (is_dynamic_value) {
         resize(newSize);
       }
       if constexpr (depth_value > 1) {
-        if (depth_index < resize_depth) {
+        if (++depth_index < resize_depth) {
           for (size_t ii = 0; ii < size(); ii++) {
             data_[ii].recurse_resize(parent_rdims, depth_index);
           }
@@ -530,28 +542,30 @@ namespace mathq {
 
     // "read/write"
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
-    Element& operator[](const T n) {
+      Element& operator[](const T n) {
       return data_[n];
     }
 
     // read
     template <typename T> requires ((std::is_unsigned<T>::value) && (std::is_integral<T>::value))
-    const Element& operator[](const T n)  const {
+      const Element& operator[](const T n)  const {
       return data_[n];
     }
+
+    // negative indices
 
     // NOTE: if you feed literals, the following will be called, unless you use the `u` suffix, eg `10000u`
     // "read/write"
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    Element& operator[](const T n) {
+      Element& operator[](const T n) {
       T m = signed_index_to_unsigned_index(n, size());
       return data_[m];
     }
 
     // read
     template <typename T> requires ((std::is_signed<T>::value) && (std::is_integral<T>::value))
-    const Element& operator[](const T n)  const {
-      
+      const Element& operator[](const T n)  const {
+
       T m = signed_index_to_unsigned_index(n, size());
       return data_[m];
     }
@@ -667,11 +681,23 @@ namespace mathq {
 
     // Any new assignment operators should also be addedc to ExpressionRW for consistency.
     // For this reason, in most cases, its preferred to overload the function vcast()
-    // equals functions are included so that derived classes can call these functions
+    // set_equal_to functions are included so that derived classes can call these functions
+
+    template<typename T>
+    Type& operator=(const T& t) {
+      return set_equal_to(t);
+    }
+
+    Type& operator=(const Type& rhs) {
+      return set_equal_to(rhs);
+    }
+
+
 
     // Assign all elements to the same constant value
-    template<typename T> requires ( std::is_convertible<T, Element>::value )
-    Type& operator=(const T& e) {
+    template<typename T> requires (std::is_convertible<T, Element>::value)
+      Type& set_equal_to(const T& e) {
+      // OUTPUT("Element");
       for (size_t i = 0; i < size(); i++) {
         (*this)[i] = e;
       }
@@ -679,8 +705,10 @@ namespace mathq {
     }
 
     // set bottom elements to same value
-    template <class T = Element>
-    typename std::enable_if<!std::is_same<T, NumberType>::value, Vector<T, N0>& >::type operator=(const NumberType& d) {
+
+    template <class T = Element> requires(!std::is_same<T, NumberType>::value)
+      Type& set_equal_to(const NumberType& d) {
+      // OUTPUT("NumberType");
       for (size_t i = 0; i < total_size(); i++) {
         (*this).dat(i) = d;
       }
@@ -691,9 +719,9 @@ namespace mathq {
 
 
     // ------------------------ Vector = Vector----------------
-
     template <int NE2>
-    Type& operator=(const Vector<Element, NE2>& v) {
+    Type& set_equal_to(const Vector<Element, NE2>& v) {
+      // OUTPUT("Vector");
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
           if (this->size() != v.size()) {
@@ -716,10 +744,12 @@ namespace mathq {
     }
 
 
-    // // ------------------------ Vector = ExpressionR ----------------
 
+
+    // // ------------------------ Vector = ExpressionR ----------------
     template <class X>
-    Type& operator=(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+    Type& set_equal_to(const ExpressionR<X, Element, NumberType, depth_value, rank_value>& x) {
+      // OUTPUT("Expression");
 
       if constexpr (depth_value <= 1) {
         if constexpr (is_dynamic_value) {
@@ -742,19 +772,21 @@ namespace mathq {
 
 
 
-    // ------------------------ Vector = array[] ----------------
-
-    Type& operator=(const Element array[]) {
-      for (size_t i = 0; i < size(); i++) {
-        (*this)(i) = array[i];
-      }
-      return *this;
-    }
+    // // ------------------------ Vector = array[] ----------------
+    // this gets called for  A = 0; and causes segmentation fault
+    // Type& operator=(const Element array[]) {
+    //   OUTPUT("array");
+    //   for (size_t i = 0; i < size(); i++) {
+    //     (*this)(i) = array[i];
+    //   }
+    //   return *this;
+    // }
 
 
     // ------------------------ Vector = list ----------------
 
-    Type& operator=(const std::list<Element>& mylist) {
+    Type& set_equal_to(const std::list<Element>& mylist) {
+      // OUTPUT("list");
       if constexpr (is_dynamic_value) {
         if (this->size() != mylist.size()) {
           resize(mylist.size());
@@ -770,7 +802,9 @@ namespace mathq {
 
     // ------------------------ Vector = initializer_list ----------------
 
-    Type& operator=(const std::initializer_list<Element>& mylist) {
+    Type& set_equal_to(const std::initializer_list<Element>& mylist) {
+      // OUTPUT("initializer_list");
+
       if constexpr (is_dynamic_value) {
         resize(mylist.size());
       }
@@ -784,10 +818,70 @@ namespace mathq {
       return *this;
     }
 
+    template<typename... T>
+    void test(const T&... x) {
+      // ETV({ x... });
+      std::tuple<T...> X(x...);
+      ETV(X);
+    }
+
+
+    template<typename... T>
+    void test2(const std::tuple<T...>& x) {
+      // ETV({ x... });
+      ETV(x);
+    }
+
+
+    // ------------------------ Vector = tuple ----------------
+
+
+
+
+    template<typename... Ts>
+    Type& operator=(const expr<Ts...>& x) {
+      set_equal_to(x.data);
+      return *this;
+    }
+
+    template<typename... Ts>
+    Type& set_equal_to(const std::tuple<Ts...>& x) {
+      tuple_helper(x);
+      return *this;
+    }
+
+    template <size_t I = 0, typename... Ts>
+    void tuple_helper(const std::tuple<Ts...>& x) {
+      auto val = std::get<I>(x);
+      (*this)[I] = val;
+      if constexpr (I+1 < sizeof...(Ts)) {
+        tuple_helper<I + 1, Ts...>(x);
+      }
+    }
+
+
+    // ------------------------ Vector = initializer_list<Expression> ----------------
+    // template <class X>
+    // Type& set_equal_to(const std::initializer_list<ExpressionR<X, Element, NumberType, depth_value, rank_value>>& mylist) {
+    //   // OUTPUT("initializer_list");
+
+    //   if constexpr (is_dynamic_value) {
+    //     resize(mylist.size());
+    //   }
+
+    //   size_t k = 0;
+    //   typename std::initializer_list<ExpressionR<X, Element, NumberType, depth_value, rank_value>>::iterator it;
+    //   for (it = mylist.begin(); it != mylist.end(); ++it, k++) {
+    //     data_[k] = *it;
+    //   }
+
+    //   return *this;
+    // }
 
     // ------------------------ Vector = std::vector ----------------
 
-    Type& operator=(const std::vector<Element>& vstd) {
+    Type& set_equal_to(const std::vector<Element>& vstd) {
+      // OUTPUT("vector");
       if constexpr (is_dynamic_value) {
         if (this->size() != vstd.size()) {
           resize(vstd.size());
@@ -802,7 +896,8 @@ namespace mathq {
     // ------------------------ Vector = std::array ----------------
 
     template <size_t N>
-    Type& operator=(const std::array<NumberType, N>& varray) {
+    Type& set_equal_to(const std::array<NumberType, N>& varray) {
+      // OUTPUT("std::array");
       if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
           resize(varray.size());
@@ -818,7 +913,8 @@ namespace mathq {
 
     // ------------------------ Vector = std::valarray ----------------
 
-    Type& operator=(const std::valarray<Element>& varray) {
+    Type& set_equal_to(const std::valarray<Element>& varray) {
+      // OUTPUT("valarray");
 
       if constexpr (is_dynamic_value) {
         if (this->size() != varray.size()) {
@@ -845,7 +941,7 @@ namespace mathq {
 
     //----------------- .roundzero(tol) ---------------------------
 
-    Type& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    Type& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       for (size_t i = 0; i < size(); i++) {
         data_[i] = mathq::roundzero(data_[i], tolerance);
       }
@@ -1335,7 +1431,6 @@ namespace mathq {
       s += getTypeName(d);
       if constexpr (!is_dynamic_value) {
         s += StyledString::get(COMMA).get();
-        s += "N0=";
         s += std::to_string(N0);
       }
       s += StyledString::get(ANGLE2).get();
@@ -1618,7 +1713,148 @@ namespace mathq {
       return y;
     }
 
+
+
+    //**********************************************************************
+    //                      Tensor subclass
+    //**********************************************************************
+
+    template <TensorIndexEnum... enums> requires (sizeof...(enums) == 1)
+      class Tensor;
+
+
   };
+
+
+  // template <typename Element, size_t... sizes>
+  // class MultiArray<Element, 1, sizes...> : public ExpressionRW<
+  //   Vector<Element, sizes...>
+
+  template <typename Element, size_t... sizes>
+  template <TensorIndexEnum... enums> requires (sizeof...(enums) == 1)
+    class Vector<Element, sizes...>::Tensor : public Vector<Element, sizes...> {
+    public:
+      using Type = Vector<Element, sizes...>::Tensor<enums...>;
+      using ParentType = Vector<Element, sizes...>;
+      constexpr static std::array<TensorIndexEnum, ParentType::rank_value> static_enums_array = { enums... };
+
+
+      //**********************************************************************
+      //                            CONSTRUCTORS 
+      //**********************************************************************
+
+      // Note the following allows user to set L/H Tensor to each other as well as operating on each other
+      // using ParentType::ParentType;
+
+
+      // Note the following allows user to set L/H Tensor to each other as well as operating on each other
+      // Tensor(const ParentType& var) {
+      //   OUTPUT("ParentType copy constr");
+      //   *this = var;
+      // }
+
+      // -------------------  default  --------------------
+      Tensor() {
+      }
+
+      // --------------------- copy constructor --------------------
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::LH::L)
+        Tensor(const Vector<Element, sizes...>::Tensor<TensorIndex::LH::L>& var) {
+        // OUTPUT("Tensor copy constr-L");
+        *this = var;
+      }
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::LH::H)
+        Tensor(const Vector<Element, sizes...>::Tensor<TensorIndex::LH::H>& var) {
+        // OUTPUT("Tensor copy constr-H");
+        *this = var;
+      }
+
+      // ----------------------- initializer_list ---------------------
+      // not explicit: allows use of nested init lists when depth_value > 1
+      Tensor(const std::initializer_list<Element>& var) {
+        if (is_dynamic_value) {
+          resize(var.size());
+        }
+        *this = var;
+      }
+
+
+      //**********************************************************************
+      //                             DESTRUCTOR 
+      //**********************************************************************
+
+      ~Tensor() {
+      }
+
+
+
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::LH::L)
+        inline Element operator()(const Vector<Element, sizes...>::Tensor<TensorIndex::LH::H>& vec) {
+        return dot(*this, vec);
+      }
+
+      template <TensorIndexEnum val = static_enums_array[0]> requires (val == TensorIndex::LH::H)
+        inline Element operator()(const Vector<Element, sizes...>::Tensor<TensorIndex::LH::L>& covec) {
+        return dot(*this, covec);
+      }
+
+      //**********************************************************************
+      //                             ASSIGNMENT
+      //**********************************************************************
+
+      template<typename T>
+      inline Type& operator=(const T& rhs) {
+        // ETV(ParentType());
+        ParentType::set_equal_to(rhs);
+        return *this;
+      }
+
+      inline Type& operator=(const Type& rhs) {
+        // OUTPUT("operator= of field");
+        ParentType::set_equal_to(rhs);
+        return *this;
+      }
+
+
+      //**********************************************************************
+      //************************** Text and debugging ************************
+      //**********************************************************************
+
+      // instance classname() method 
+
+      inline std::string classname() const {
+        return ClassName();
+      }
+
+      // static ClassName() method 
+
+      static inline std::string ClassName() {
+        using namespace display;
+        std::stringstream strm;
+        std::string s = ParentType::ClassName();
+        s += "::Tensor";
+        s += StyledString::get(ANGLE1).get();
+        dispval_strm(strm, static_enums_array[0]);
+        s += strm.str();
+        s += StyledString::get(ANGLE2).get();
+        return s;
+      }
+
+#if MATHQ_DEBUG>=1
+      std::string expression(void) const {
+        return "";
+      }
+#endif
+
+
+      // stream << operator
+
+      friend std::ostream& operator<<(std::ostream& stream, const Type& v) {
+        using namespace display;
+        return operator<<(stream, static_cast<ParentType>(v));
+      }
+  };
+
 
 
 

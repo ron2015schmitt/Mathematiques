@@ -58,13 +58,13 @@
 #define OUTPUT(x) MOUT << x << std::endl
 
 //
-// OUTPUT_NOCR(x)
+// OUT(x)
 //
 // sends x to MOUT
 //
 //   x -> variable or expression that has >> operator defined
 
-#define OUTPUT_NOCR(x) MOUT << x;
+#define OUT(x) MOUT << x;
 
 
 //
@@ -83,7 +83,7 @@
 
 
 //
-// DISP(x)
+// EV(x)
 //
 // displays variable x as follows to MOUT
 //    MOUT << Display::expressionStyle[stringify(x)]
@@ -94,9 +94,9 @@
 //   x -> variable or expression that has >> operator defined
 //
 // EXAMPLES:
-//   DISP(1+3); // "1+3  ➜  4"
+//   EV(1+3); // "1+3  ➜  4"
 
-#define DISP(...) display::Display::mydispcr(MOUT, __VA_ARGS__, #__VA_ARGS__)
+#define EV(...) display::Display::mydispcr(MOUT, __VA_ARGS__, #__VA_ARGS__)
 
 //
 // DISP_NOCR(x)
@@ -118,7 +118,7 @@
 // SRDISP(str,x)
 //
 //
-// same as DISP(x) but prints str on the right before the terminator
+// same as EV(x) but prints str on the right before the terminator
 //
 //   x -> variable or expression that has >> operator defined
 //
@@ -131,7 +131,7 @@
 //
 // TLDISP(x)
 //
-// same as DISP(x) but prints the typename on the LHS
+// same as EV(x) but prints the typename on the LHS
 //
 // EXAMPLES:
 //   TLDISP(1+3); // "int 1+3  ➜  4"
@@ -140,20 +140,20 @@
 
 
 //
-// TRDISP(x)
+// ETV(x)
 //
-// same as DISP(x) but prints the typename on the RHS
+// same as EV(x) but prints the typename on the RHS
 //
 // EXAMPLES:
-//   TRDISP(1+3); // "1+3  ➜  int 4"
+//   ETV(1+3); // "1+3  ➜  int 4"
 
-#define TRDISP(...) display::Display::trmydispcr(MOUT, __VA_ARGS__, #__VA_ARGS__)
+#define ETV(...) display::Display::trmydispcr(MOUT, __VA_ARGS__, #__VA_ARGS__)
 
 
 //
 // MDISP(x)
 //
-// same as DISP(x) but can print up to 10 expressions on the same line
+// same as EV(x) but can print up to 10 expressions on the same line
 //
 // EXAMPLES:
 //   MDISP(1+3, 22/7); // "1 + 3 ➜  4; 22 / 7 ➜  3; "
@@ -172,13 +172,36 @@
 
 
 //
-// ECHO_CODE
+// ECHO
 //
 // line of code is both executed and printted to MOUT
 
-#define ECHO_CODE(...)                                                                                        \
+#define ECHO(...)                                                                                        \
   MOUT << display::Display::codePrefixStyledString << display::printf2str(stringify(__VA_ARGS__)) << ";" << std::endl; \
   __VA_ARGS__
+
+
+//
+// ECHO_MULTI
+//
+// code enclosed in ECHO_MULTI gets executed en bloc after the printing. 
+// ";'\n';" gets replaced with a carriage retunrn
+// ";'\n';" gets replaced with a carriage retunrn
+
+#define ECHO_MULTI(...)                                                                                        \
+  MOUT << display::Display::codePrefixStyledString << display::replace_all(display::replace_all(stringify(__VA_ARGS__),";'\\n';","\n"),";' ';","  ") << std::endl; \
+  __VA_ARGS__
+
+
+//
+// ECHO_W_REPLACE
+//
+// code enclosed in ECHO_W_REPLACE gets executed en bloc after the printing. 
+
+#define ECHO_PREINSERT_CR(s1,...)                                                                                        \
+  MOUT << display::Display::codePrefixStyledString << display::replace_all(stringify(__VA_ARGS__),s1,std::string("\n")+s1) << std::endl; \
+  __VA_ARGS__
+
 
 //
 // ECHO_CODE_W_COMMENT
@@ -218,9 +241,9 @@
 #if MATHQ_DEBUG >= 1
 #define PRINTF1(...) MOUT << display::printf2str(__VA_ARGS__)
 #define MDISP1(...) MDISP(__VA_ARGS__)
-#define DISP1(...) DISP(__VA_ARGS__)
+#define DISP1(...) EV(__VA_ARGS__)
 #define TLDISP1(...) TLDISP(__VA_ARGS__)
-#define TRDISP1(...) TRDISP(__VA_ARGS__)
+#define TRDISP1(...) ETV(__VA_ARGS__)
 #else
 #define PRINTF1(...) \
   {}
@@ -237,9 +260,9 @@
 #if MATHQ_DEBUG >= 2
 #define PRINTF2(...) MOUT << display::printf2str(__VA_ARGS__)
 #define MDISP2(...) MDISP(__VA_ARGS__)
-#define DISP2(...) DISP(__VA_ARGS__)
+#define DISP2(...) EV(__VA_ARGS__)
 #define TLDISP2(...) TLDISP(__VA_ARGS__)
-#define TRDISP2(...) TRDISP(__VA_ARGS__)
+#define TRDISP2(...) ETV(__VA_ARGS__)
 #else
 #define PRINTF2(...) \
   {}
@@ -256,9 +279,9 @@
 #if MATHQ_DEBUG >= 3
 #define PRINTF3(...) MOUT << display::printf2str(__VA_ARGS__)
 #define MDISP3(...) MDISP(__VA_ARGS__)
-#define DISP3(...) DISP(__VA_ARGS__)
+#define DISP3(...) EV(__VA_ARGS__)
 #define TLDISP3(...) TLDISP(__VA_ARGS__)
-#define TRDISP3(...) TRDISP(__VA_ARGS__)
+#define TRDISP3(...) ETV(__VA_ARGS__)
 #else
 #define PRINTF3(...) \
   {}
@@ -284,7 +307,7 @@
 #define resultstart3(str) printf("**Results**%s\n```C++\n", str)
 #define resultmulti(...) \
   printf("  ");          \
-  DISP(__VA_ARGS__)
+  EV(__VA_ARGS__)
 #define resultend() printf("```\n\n")
 #define RESULT(...)         \
   resultstart();            \
@@ -310,7 +333,7 @@
 // EXAMPLE:
 //  GMD_CODE_START();
 //  x = 0;  // line of code is executed
-//  ECHO_CODE( x = (43.2 - 1)/2 );  // line of code is both executed and also put in the Markdown code block
+//  ECHO( x = (43.2 - 1)/2 );  // line of code is both executed and also put in the Markdown code block
 //  GMD_CODE_END()
 //
 
@@ -322,7 +345,7 @@
 
 #define GMD_CODE_BLOCK(...) \
   GMD_CODE_START();         \
-  ECHO_CODE(__VA_ARGS__);   \
+  ECHO(__VA_ARGS__);   \
   GMD_CODE_END()
 
 // for providing some vertical space
@@ -336,6 +359,12 @@
 #define GMD_HEADER2(str) MOUT << "## " << str << std::endl
 #define GMD_HEADER3(str) MOUT << "### " << str << std::endl
 #define GMD_HEADER4(str) MOUT << "#### " << str << std::endl
+
+// collapsable sections
+
+#define GMD_HIDDEN_START(title) MOUT << std::string("\n<details><summary>") << std::string(title) <<  std::string("</summary><blockquote>\n\n") 
+#define GMD_HIDDEN_END() printf("\n</blockquote></details>\n\n")
+
 
 
 //
@@ -443,6 +472,19 @@
 
 namespace display {
 
+
+
+  std::string replace_all(const std::string& inout, const std::string_view what, const std::string_view with) {
+    std::string result(inout);
+    for (std::string::size_type pos{};
+      result.npos != (pos = result.find(what.data(), pos, what.length()));
+      pos += with.length()) {
+      std::string s = { with.begin(), with.end() };
+      result.replace(pos, what.length(), s);
+    }
+    return result;
+  }
+
   extern const char blankline[];
   //****************************************************************************
   //                          Some declarations. Definitions below
@@ -493,7 +535,7 @@ namespace display {
   //------------------------------------------------------------
   //                        num2string
   //
-  // use std library instead
+  // use std library std::to_string(val) instead
   //------------------------------------------------------------
 
   template <class D>
@@ -826,6 +868,7 @@ namespace display {
   SPECIALIZE_getTypeStyle(wchar_t);
   SPECIALIZE_getTypeStyle(bool);
   SPECIALIZE_getTypeStyle(mathq::GridScaleEnum);
+  SPECIALIZE_getTypeStyle(mathq::TensorIndexEnum);
 
   // container type
   template <typename D, template <typename> typename C>
@@ -851,7 +894,7 @@ namespace display {
 
 
   template <class D>
-  Style getTypeStyle(const mathq::RealSet<D>& var) {
+  Style getTypeStyle(const mathq::Interval<D>& var) {
     Style style = CREATESTYLE(CYAN);
     return style;
   }
@@ -910,6 +953,11 @@ namespace display {
   template <>
   inline void dispval_strm<mathq::GridScaleEnum>(std::ostream& stream, const mathq::GridScaleEnum& e);
 
+  template <>
+  inline void dispval_strm<mathq::TensorIndexEnum>(std::ostream& stream, const mathq::TensorIndexEnum& e);
+
+
+
 
 
   //------------------------------------------------------------------
@@ -942,7 +990,7 @@ namespace display {
   }
 
   template <class T>
-  typename std::enable_if<!std::is_pointer<T>::value && std::is_const<T>::value, std::string>::type
+  typename std::enable_if<!std::is_pointer<T>::value&& std::is_const<T>::value, std::string>::type
     getTypeName(const T var) {
     std::string s = "const ";
     if constexpr (Has_classname<T>::value) {
@@ -964,7 +1012,7 @@ namespace display {
     return getTypeStyle(var).apply(std::string("")+#TYPE+std::string("*"));          \
   }                                                 \
 
-  
+
   SPECIALIZE_getTypeName(float);
   SPECIALIZE_getTypeName(double);
   SPECIALIZE_getTypeName(long double);
@@ -998,6 +1046,7 @@ namespace display {
   }
 
   SPECIALIZE_getTypeName_mathq(GridScaleEnum);
+  SPECIALIZE_getTypeName_mathq(TensorIndexEnum);
 
 
   // std::complex
@@ -1061,7 +1110,6 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER(std::list);
   SPECIALIZE_getTypeName_CONTAINER(std::queue);
   SPECIALIZE_getTypeName_CONTAINER(std::initializer_list);
-  SPECIALIZE_getTypeName_CONTAINER(mathq::RealMultiSet);
 
 
 #define SPECIALIZE_getTypeName_CONTAINER2(TYPE)             \
@@ -1081,15 +1129,6 @@ namespace display {
   SPECIALIZE_getTypeName_CONTAINER2(std::map);
 
 
-
-  template <typename T>
-  inline std::string getTypeName(const mathq::Nabla<T>& var) {
-    std::string s = getTypeStyle(var).apply("mathq::Nabla");
-    return s;
-  }
-
-
-
   template <typename D, unsigned long int N>
   inline std::string getTypeName(const std::array<D, N>& var) {
     std::string s = getTypeStyle(var).apply("std::array");
@@ -1098,31 +1137,6 @@ namespace display {
     s += getTypeName(d);
     s += StyledString::get(COMMA).get();
     s += num2string(N);
-    s += StyledString::get(ANGLE2).get();
-    return s;
-  }
-
-
-  template <typename D>
-  inline std::string getTypeName(const mathq::RealSet<D>& var) {
-    std::string s = getTypeStyle(var).apply("mathq::RealSet");
-    D d;
-    s += StyledString::get(ANGLE1).get();
-    s += getTypeName(d);
-    s += StyledString::get(ANGLE2).get();
-    return s;
-  }
-
-
-
-  template <typename D, size_t NDIMS, typename CHILD>
-  inline std::string getTypeName(const mathq::CurvilinearCoordinateSystem<D, NDIMS, CHILD>& var) {
-    std::string s = getTypeStyle(var).apply("mathq::RealSet");
-    D d;
-    s += StyledString::get(ANGLE1).get();
-    s += getTypeName(d);
-    s += StyledString::get(COMMA).get();
-    s += num2string(NDIMS);
     s += StyledString::get(ANGLE2).get();
     return s;
   }
@@ -1177,9 +1191,9 @@ namespace display {
 
 
 
-//---------------------------------------------------------------------------------
-//       bracketAndStyleTypename
-//-------------------------------------------------------------------------------
+  //---------------------------------------------------------------------------------
+  //       bracketAndStyleTypename
+  //-------------------------------------------------------------------------------
 
   template <typename T>
   inline std::string bracketAndStyleTypename(const T& var) {
@@ -1447,7 +1461,7 @@ namespace display {
   }
 
 
-  // GridScale 
+  // GridScale - enumns can't have members, but could use a class instead of a namespace to enclose them
   template <>
   inline void dispval_strm<mathq::GridScaleEnum>(std::ostream& stream, const mathq::GridScaleEnum& e) {
     using namespace std;
@@ -1467,45 +1481,25 @@ namespace display {
     stream << style.apply(s);
   }
 
-  // mathq::RealSet
-  template <typename D>
-  inline void dispval_strm(std::ostream& stream, const mathq::RealSet<D>& var) {
-    if (var.a == var.b) {
-      // point
-      stream << "{point=";
-      dispval_strm(stream, var.a);
-      stream << ", gridState=";
-      dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-      stream << "}";
-    }
-    else {
-      stream << "{";
-      stream << "interval=";
-      if (var.include_a) {
-        stream << "[";
-      }
-      else {
-        stream << "(";
-      }
-      dispval_strm(stream, var.a);
-      stream << ", ";
-      dispval_strm(stream, var.b);
-      if (var.include_a) {
-        stream << "]";
-      }
-      else {
-        stream << ")";
-      }
-      stream << ", N=";
-      dispval_strm(stream, var.N);
 
-      stream << ", scale=";
-      dispval_strm(stream, var.scale);
-
-      stream << ", gridState=";
-      dispval_strm(stream, (var.grid.size() == 0) ? "deflated" : "inflated");
-      stream << "}";
+  // TensorIndex - enumns can't have members, but could use a class instead of a namespace to enclose them
+  template <>
+  inline void dispval_strm<mathq::TensorIndexEnum>(std::ostream& stream, const mathq::TensorIndexEnum& e) {
+    using namespace std;
+    Style style = FormatData<double>::style_for_value;
+    std::string s;
+    switch (e) {
+    case mathq::TensorIndex::COVARIANT:
+      s = "L";
+      break;
+    case mathq::TensorIndex::CONTRAVARIANT:
+      s = "H";
+      break;
+    default:
+      s = "[unknown TensorIndex]" + std::to_string(int(e));
+      break;
     }
+    stream << style.apply(s);
   }
 
 
@@ -1537,20 +1531,6 @@ namespace display {
       dispval_strm(stream, var[ii]);
     }
     stream << "}";
-  }
-
-
-  // RealMultiSet
-  template <typename D>
-  inline void dispval_strm(std::ostream& stream, const mathq::RealMultiSet<D>& var) {
-    stream << var;
-  }
-
-
-  // CurvilinearCoordinateSystem
-  template <typename D, size_t NDIMS, typename CHILD>
-  inline void dispval_strm(std::ostream& stream, const mathq::CurvilinearCoordinateSystem<D, NDIMS, CHILD>& var) {
-    stream << var;
   }
 
 
@@ -1672,19 +1652,6 @@ namespace display {
 
 
 
-
-
-
-
-
-
-  // mathq::Nabla
-  template <typename D>
-  inline void dispval_strm(std::ostream& stream, const mathq::Nabla<D>& var) {
-    stream << "(Nwindow=";
-    dispval_strm(stream, var.Nwindow);
-    stream << ")";
-  }
 
 
   // std::cout << "index " << I << " has type: ";
@@ -1865,7 +1832,7 @@ namespace display {
   //****************************************************************************
 
   // TODO:
-  //       add method that supports ECHO_CODE?
+  //       add method that supports ECHO?
   //       add class variable that if defined overrides the default, taken from the Format class
 
   class Display {

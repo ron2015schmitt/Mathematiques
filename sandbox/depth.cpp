@@ -31,7 +31,7 @@ public:
 };
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 
 
   typedef typename mathq::Vector<double> VectorDouble;
@@ -111,18 +111,18 @@ int main(int argc, char *argv[]) {
     CR();
     MOUT << bold.apply("Vector<double> testing") << std::endl;
     TLDISP(NumberTrait<double>::depth());
-    Vector<double> vd{1, 2, 3, 4};
+    Vector<double> vd{ 1, 2, 3, 4 };
     TLDISP(vd);
 
-    TLDISP(SimpleNumberTrait<double>::depth());
+    TLDISP(SimpleNumberTrait<double>::Type());
     SimpleNumberTrait<double>::Type d1 = 0.1;
     TLDISP(d1);
 
-    TLDISP(SimpleNumberTrait<ComplexDouble>::depth());
+    TLDISP(SimpleNumberTrait<ComplexDouble>::Type());
     SimpleNumberTrait<ComplexDouble>::Type d2 = 0.1;
     TLDISP(d2);
 
-    TLDISP(SimpleNumberTrait<decltype(vd)>::depth());
+    TLDISP(SimpleNumberTrait<decltype(vd)>::Type());
     SimpleNumberTrait<decltype(vd)>::Type d3 = 0.1;
     TLDISP(d3);
 
@@ -134,9 +134,9 @@ int main(int argc, char *argv[]) {
     CR();
     MOUT << bold.apply("Vector<ComplexDouble> testing") << std::endl;
     TLDISP(NumberTrait<ComplexDouble>::depth());
-    Vector<ComplexDouble> vd{ComplexDouble(0.1, 1), ComplexDouble(0.2, 2), ComplexDouble(3, 0.3)};
+    Vector<ComplexDouble> vd{ ComplexDouble(0.1, 1), ComplexDouble(0.2, 2), ComplexDouble(3, 0.3) };
     TLDISP(vd);
-    TLDISP(SimpleNumberTrait<decltype(vd)>::depth());
+    TLDISP(SimpleNumberTrait<decltype(vd)>::Type());
     SimpleNumberTrait<decltype(vd)>::Type d = 3.14;
     TLDISP(d);
     TLDISP(NumberTrait<decltype(vd)>::depth());
@@ -146,9 +146,9 @@ int main(int argc, char *argv[]) {
   {
     CR();
     MOUT << bold.apply("Vector<Vector<double> > testing") << std::endl;
-    Vector<Vector<double>> vd{{1.1, 1.2}, {2.1, 2.2}, {3.1, 3.2}};
+    Vector<Vector<double>> vd{ {1.1, 1.2}, {2.1, 2.2}, {3.1, 3.2} };
     TLDISP(vd);
-    TLDISP(SimpleNumberTrait<decltype(vd)>::depth());
+    TLDISP(SimpleNumberTrait<decltype(vd)>::Type());
     SimpleNumberTrait<decltype(vd)>::Type d = 0.1;
     TLDISP(d);
     TLDISP(NumberTrait<decltype(vd)>::depth());
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
 
     CR();
     MOUT << bold.apply("Vector<double> class testing") << std::endl;
-    Vector<double> v{1, 2, 3, 4};
+    Vector<double> v{ 1, 2, 3, 4 };
     TLDISP(v);
     TLDISP(NumberTrait<decltype(v)>::depth());
     TLDISP(v.size());
@@ -228,7 +228,7 @@ int main(int argc, char *argv[]) {
     TLDISP(v.total_size());
 
     MOUT << bold.apply("Scalar<Scalar<double>> class testing") << std::endl;
-    Scalar<Scalar<double>> t2{{2.2}};
+    Scalar<Scalar<double>> t2{ {2.2} };
     TLDISP(t2);
     TLDISP(NumberTrait<decltype(t2)>::depth());
     TLDISP(t2.size());
@@ -238,7 +238,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t2.total_size());
 
     MOUT << bold.apply("Scalar<Vector<double>> class testing") << std::endl;
-    Scalar<Vector<double>> t3{{1, 2}};
+    Scalar<Vector<double>> t3{ {1, 2} };
     TLDISP(t3);
     TLDISP(NumberTrait<decltype(t3)>::depth());
     TLDISP(t3.size());
@@ -271,7 +271,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t5.el_total_size());
     TLDISP(t5.total_size());
 
-    Vector<Scalar<double>> t6{{1}, {2}};
+    Vector<Scalar<double>> t6{ {1}, {2} };
     TLDISP(t6);
     TLDISP(NumberTrait<decltype(t6)>::depth());
     TLDISP(t6.size());
@@ -281,7 +281,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t6.total_size());
 
 
-    Vector<Vector<double>> t7{{1, 2, 3}, {4, 5, 6}};
+    Vector<Vector<double>> t7{ {1, 2, 3}, {4, 5, 6} };
     TLDISP(t7);
     TLDISP(NumberTrait<decltype(t7)>::depth());
     TLDISP(t7.size());
@@ -309,9 +309,9 @@ int main(int argc, char *argv[]) {
   }
 
   {
-    Vector<double> t1{4, 5, 6};
+    Vector<double> t1{ 4, 5, 6 };
     TLDISP(t1);
-    Vector<Vector<double>> t2{{1, 2, 3}, {4, 5, 6}};
+    Vector<Vector<double>> t2{ {1, 2, 3}, {4, 5, 6} };
     TLDISP(t2);
 
     typename DeeperType<decltype(t1), decltype(t2)>::Type x;
@@ -320,7 +320,7 @@ int main(int argc, char *argv[]) {
     TLDISP(y);
     typename DeeperType<double, decltype(t1)>::Type z;
     TLDISP(z);
-    typename ReplacedNumberTrait<decltype(t1), float>::Type w;
+    typename ReplaceNumberTrait<decltype(t1), float>::Type w;
     TLDISP(w);
   }
 

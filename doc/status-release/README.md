@@ -1,62 +1,62 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.262-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.3</a></h1>
 
 <details>
 
 <summary>Documentation</summary>
 
 # [Documentation](../README.md)<br>
-1. [License](../license/README.md)<br>
-2. [About](../about/README.md)<br>
-3. _Status, Planned Work & Release Notes_ <br>
-4. [Description and Example Usage](../overview/README.md)<br>
-5. [Installation](../installation/README.md)<br>
-6. [Your First Mathématiques Project](../first-project/README.md)<br>
-7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-8. [Benchmarks](../benchmarks/README.md)<br>
-9. [Tests](../test/README.md)<br>
-10. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
+Chapter 1. [License](../license/README.md)<br>
+Chapter 2. [About](../about/README.md)<br>
+Chapter 3. [Versioning](../versioning/README.md)<br>
+Chapter 4. _Status & Release Notes_ <br>
+Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
+Chapter 6. [Introduction with Examples](../intro/README.md)<br>
+Chapter 7. [Installation](../installation/README.md)<br>
+Chapter 8. [Your First Mathématiques Project](../first-project/README.md)<br>
+Chapter 9. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 10. [Benchmarks](../benchmarks/README.md)<br>
+Chapter 11. [Tests](../test/README.md)<br>
+Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
 
 
 </details>
 
 
 
-# 3. Status, Planned Work & Release Notes
+# Chapter 4. Status & Release Notes
 
 ## Status
 
-Currently, in 2022, Mathématiques is undergoing the final changes to make it sponsorship-ready.  This process includes full documentation in markdown, finalizing the syntax, and code refactoring.
+As of v0.42, Mathématiques is now sponsorship-ready.  The core functionality has been implemented, demonstrating its feasibility, utility, and performance.
 
-## News 
+## Current Build Information
 
-The first two refactoring projects have been completed.
+```
+Mon Oct 10 21:33:35 EDT 2022
+Mathématiques 0.42.2
+Description:	Ubuntu 22.04.1 LTS
+g++ (Ubuntu 11.2.0-19ubuntu1) 11.2.0
+g++ -pipe -std=c++20 -O3 -finline-limit=750 -Wfatal-errors -I /home/rs2015/Mathematiques/include 
 
-
-## Coming soon
-
-+ Vector Calculus
-  + curvilinear coordinate systems
-
-+ Tensor Calculus in generalized coordinates / Differential Geometry
-  + covariant and contravariant tensors
-
-+ Documenation
-  + Rewritten User Manual
-  + _Usage Guide_, covering all the functionality
-  + New _Developer Guide_
-
-+ Indexing
-  + Refactor of vector/matrix/tensor indexing, including
-  + complete index/iterator types such as slices similar to Fortan and Python
-
-+ Display 
-  + Refactor of Display
-
-+ alpha-3.8 Debugging Modes
-  + Refactor of Debugging Modes
-
+```
 
 ## Release Notes
+
+### **0.42** Introduction Completed
+* Finished introduction and added minor featuers to support it
+* Migration to Semantic 2.0 versioning and optional prelease  (eg alpla, beta, etc)
+
+### **0.41** Vector Calculus
+  + New class hierarchies
+    + `Domain` - define regions on the real line or complex plane
+    + `CurvilinearCoords` - define multivariable coordinate systems in various dimensions
+    + `CurvilinearField` - define functions (ie scalar, vector, tensor fields) for multivariable, vector, and complex-number calculus
+      + partial derivatives
+      + div, grad, curl
+    + `Tensor` - contravariant and covariant *algebraic* tensors as subclass of MultiArrays
+      + tensor products
+      + tensor contraction
+  + Documentation updates, including new Introduction
 
 ### **0.40** MultiArray Refactoring
   + changed numbering system to start with 0. V3.5 is now 0.40.
@@ -66,6 +66,8 @@ The first two refactoring projects have been completed.
   + C++ version is set via file `c++.version.src.txt`
   + `Scalar`, `Vector`, and `Matrix` are now simply type aliases for `MultiArray` type via `C++20` concepts / constraints
   + Removed "hidden" `MultiArray` template parameters for Depth and NumberType: only needed in expressions
+  + Refactored `Dimensions` and `Indices` classes as well as the uses of `Indices`
+  + New `RecursiveDimensions`  and `DeepIndices` classes
 
 ### **alpha-3.4** Documentation Refactoring
   + Full refactoring of the online documentation
@@ -128,8 +130,9 @@ The first two refactoring projects have been completed.
   + 237 unit tests (so far), with a very clear and elegant output.
   + Python unit test generation in progress
   + CI/CT using Docker images in progress
+/home/rs2015/Mathematiques/doc
 
 
-| ⇦ <br />[About](../about/README.md)  | [Documentation](../README.md)<br />Status, Planned Work & Release Notes<br /><img width=1000/> | ⇨ <br />[Description and Example Usage](../overview/README.md)   |
+| ⇦ <br />[Versioning](../versioning/README.md)  | [Documentation](../README.md)<br />Status & Release Notes<br /><img width=1000/> | ⇨ <br />[Upcoming Development](../development-schedule/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

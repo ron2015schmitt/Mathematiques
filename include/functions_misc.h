@@ -34,6 +34,54 @@ namespace mathq {
 
 
 
+  //----------------------------------------------
+  // rank 
+  //----------------------------------------------
+
+  template <class X, class Element, typename Num, size_t depth_in, size_t rank_in>
+  size_t rank(const ExpressionR<X, Element, Num, depth_in, rank_in>& x) {
+    return rank_in;
+  }
+
+  template <IsNumber Num>
+  size_t rank(const Num& x) {
+    return  0;
+  }
+
+
+
+  //----------------------------------------------
+  // depth
+  //----------------------------------------------
+
+  template <class X, class Element, typename Num, size_t depth_in, size_t rank_in>
+  size_t depth(const ExpressionR<X, Element, Num, depth_in, rank_in>& x) {
+    return depth_in;
+  }
+
+  template <IsNumber Num>
+  size_t depth(const Num& x) {
+    return  0;
+  }
+
+
+  //----------------------------------------------
+  // dimensions
+  //----------------------------------------------
+
+  template <class X, class Element, typename Num, size_t depth_in, size_t rank_in>
+  RecursiveDimensions& dimensions(const ExpressionR<X, Element, Num, depth_in, rank_in>& x) {
+    return x.recursive_dims();
+  }
+
+  template <IsNumber Num>
+  RecursiveDimensions& dimensions(const Num& x) {
+    return *(new RecursiveDimensions);
+  }
+
+
+
+
   /****************************************************************************
    * casting
    ****************************************************************************
@@ -78,11 +126,23 @@ namespace mathq {
   // numbercast 
   //----------------------------------------------
 
-  template <class NT2, class X, class Element, typename Number, size_t depth, size_t rank>
-  auto numbercast(const ExpressionR<X, Element, Number, depth, rank>& x) {
-    typedef typename ReplacedNumberTrait<Element, NT2>::Type EOUT;
-    return  ExpressionR_Unary<ExpressionR<X, Element, Number, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Number, NT2>>(x);
+  template <class NT2, class X, class Element, typename Num, size_t depth, size_t rank>
+  auto numbercast(const ExpressionR<X, Element, Num, depth, rank>& x) {
+    typedef typename ReplaceNumberTrait<Element, NT2>::Type EOUT;
+    return  ExpressionR_Unary<ExpressionR<X, Element, Num, depth, rank>, EOUT, NT2, depth, rank, FUNCTOR_numbercast<Element, EOUT, Num, NT2>>(x);
   }
+
+  //----------------------------------------------
+  // constant
+  //----------------------------------------------
+
+  template <class T> requires (IsReadableExpressionOrArray<T>)
+    auto constant(const typename T::ElementType& x) {
+    return x;
+  }
+
+
+
 
 
   /****************************************************************************
@@ -96,14 +156,14 @@ namespace mathq {
  // ----------------------------------------------------------------
 
 
-  template <class Element, typename Number> class FUNCTOR_roundzero {
+  template <class Element, typename Num> class FUNCTOR_roundzero {
   public:
-    typedef typename SimpleNumberTrait<Number>::Type DTOL;
-    static Number apply(const Number d, const DTOL tol) {
+    typedef typename SimpleNumberTrait<Num>::Type DTOL;
+    static Num apply(const Num d, const DTOL tol) {
       return mathq::roundzero(d, tol);
     }
     template <class T = Element>
-    static typename std::enable_if<!std::is_same<T, Number>::value, Element& >::type
+    static typename std::enable_if<!std::is_same<T, Num>::value, Element& >::type
       apply(const Element& e, const DTOL tol) {
       Element* e2 = new Element();
       *e2 = roundzero(e, tol);
@@ -118,7 +178,7 @@ namespace mathq {
     static std::string classname() {
       using namespace display;
       Element e;
-      Number d;
+      Num d;
       std::string comma = StyledString::get(COMMA).get();
       std::string s = functor_namestyle.apply(stringify(FUNCTOR_roundzero));
       s += StyledString::get(BRACKET1).get();
@@ -133,14 +193,14 @@ namespace mathq {
   // roundzero 
   //         
   // -------------------------------------------------------------------
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  auto roundzero(const ExpressionR<X, Element, Number, depth, rank>& x, const typename SimpleNumberTrait<Number>::Type& tol = Functions<typename SimpleNumberTrait<Number>::Type>::tolerance) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  auto roundzero(const ExpressionR<X, Element, Num, depth, rank>& x, const typename SimpleNumberTrait<Num>::Type& tol = Functions<typename SimpleNumberTrait<Num>::Type>::tolerance) {
 
-    typedef typename SimpleNumberTrait<Number>::Type DTOL;
-    return  ExpressionR_Binary<ExpressionR<X, Element, Number, depth, rank>,
+    typedef typename SimpleNumberTrait<Num>::Type DTOL;
+    return  ExpressionR_Binary<ExpressionR<X, Element, Num, depth, rank>,
       DTOL,
-      Element, DTOL, Element, Number, DTOL, Number, depth, 0, depth, rank, 0, rank,
-      FUNCTOR_roundzero<Element, Number>>(x, tol);
+      Element, DTOL, Element, Num, DTOL, Num, depth, 0, depth, rank, 0, rank,
+      FUNCTOR_roundzero<Element, Num>>(x, tol);
   }
 
 
@@ -169,7 +229,7 @@ namespace mathq {
 
   template <class E1, class E2, class E3, class NT1, class NT2, class NT3> class FUNCTOR_approx {
   public:
-    typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
+    using DTOL = typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type;
 
     static NT3 apply(const NT1 d1, const NT2 d2, const DTOL tol) {
       return mathq::approx(d1, d2, tol);
@@ -242,7 +302,7 @@ namespace mathq {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
-    typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;
+    typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;
     return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
       ExpressionR<B, E2, NT2, depth, rank>,
       DTOL,
@@ -252,12 +312,12 @@ namespace mathq {
 
   // (10) MultiArray<E1(NT1)> , NT2 
 
-  template <class A, class E1, class NT1, class NT2, size_t depth, size_t rank>
-  auto approx(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  template <class A, class E1, class NT1, class NT2, size_t depth, size_t rank> requires(IsSimpleNumber<NT2>)
+    auto approx(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
-    typedef typename ReplacedNumberTrait<E1, NT3>::Type E3;
+    typedef typename ReplaceNumberTrait<E1, NT3>::Type E3;
     return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
       NT2,
       DTOL,
@@ -269,12 +329,12 @@ namespace mathq {
 
   // (01) NT1, MultiArray<E2(NT2)> 
 
-  template <class B, class E2, class NT1, class NT2, size_t depth, size_t rank>
-  auto approx(NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
+  template <class B, class E2, class NT1, class NT2, size_t depth, size_t rank>  requires(IsSimpleNumber<NT1>)
+    auto approx(NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type& tol = Functions<typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type>::tolerance) {
 
     typedef typename SimpleNumberTrait<typename AddType<NT1, NT2>::Type>::Type DTOL;
     typedef bool NT3;
-    typedef typename ReplacedNumberTrait<E2, NT3>::Type E3;
+    typedef typename ReplaceNumberTrait<E2, NT3>::Type E3;
     return  ExpressionR_Ternary<NT1,
       ExpressionR<B, E2, NT2, depth, rank>,
       DTOL,
@@ -308,8 +368,8 @@ namespace mathq {
 
    // alltrue(a)
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank, typename = EnableIf<std::is_same<Number, bool>::value> >
-  bool alltrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank, typename = EnableIf<std::is_same<Num, bool>::value> >
+  bool alltrue(const ExpressionR<X, Element, Num, depth, rank>& x) {
 
     for (size_t i = 0; i< x.total_size(); i++) {
       if (!x.dat(i)) {
@@ -323,8 +383,8 @@ namespace mathq {
 
   // anytrue(a)
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank, typename = EnableIf<std::is_same<Number, bool>::value> >
-  bool anytrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank, typename = EnableIf<std::is_same<Num, bool>::value> >
+  bool anytrue(const ExpressionR<X, Element, Num, depth, rank>& x) {
 
     for (size_t i = 0; i< x.total_size(); i++) {
       if (x.dat(i)) {
@@ -338,8 +398,8 @@ namespace mathq {
 
   // numtrue(a)
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank, typename = EnableIf<std::is_same<Number, bool>::value> >
-  size_t numtrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank, typename = EnableIf<std::is_same<Num, bool>::value> >
+  size_t numtrue(const ExpressionR<X, Element, Num, depth, rank>& x) {
 
     size_t result = 0;
 
@@ -357,8 +417,8 @@ namespace mathq {
 
   // NOTE: declaration in declarations.h
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank> requires (std::is_same<Number, bool>::value)
-   Vector<size_t>& findtrue(const ExpressionR<X, Element, Number, depth, rank>& x) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank> requires (std::is_same<Num, bool>::value)
+    Vector<size_t>& findtrue(const ExpressionR<X, Element, Num, depth, rank>& x) {
     size_t N = numtrue(x);
     Vector<size_t>* y = new Vector<size_t>(N);
 
@@ -378,8 +438,8 @@ namespace mathq {
 
    // sum(a)
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank >
-  Element sum(const ExpressionR<X, Element, Number, depth, rank>& v) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank >
+  Element sum(const ExpressionR<X, Element, Num, depth, rank>& v) {
 
 
     const size_t N = v.size();
@@ -400,8 +460,8 @@ namespace mathq {
 
   // prod(a)
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank >
-  Element prod(const ExpressionR<X, Element, Number, depth, rank>& v) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank >
+  Element prod(const ExpressionR<X, Element, Num, depth, rank>& v) {
 
 
     const size_t N = v.size();
@@ -427,15 +487,15 @@ namespace mathq {
 
   // min(a)
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  Number min(const ExpressionR<X, Element, Number, depth, rank>& v) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  Num min(const ExpressionR<X, Element, Num, depth, rank>& v) {
 
     const size_t N = v.total_size();
     if (N==0) {
       return 0;
     }
 
-    Number result = v.dat(0);
+    Num result = v.dat(0);
 
     for (size_t i = 1; i < N; i++) {
       result = std::min(result, v.dat(i));
@@ -449,15 +509,15 @@ namespace mathq {
 
   // max(a)
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  Number max(const ExpressionR<X, Element, Number, depth, rank>& v) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  Num max(const ExpressionR<X, Element, Num, depth, rank>& v) {
 
     const size_t N = v.total_size();
     if (N==0) {
       return 0;
     }
 
-    Number result = v.dat(0);
+    Num result = v.dat(0);
 
     for (size_t i = 1; i < N; i++) {
       result = std::max(result, v.dat(i));
@@ -468,9 +528,9 @@ namespace mathq {
 
   // sumofsqrs(a)
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  Number sumofsqrs(const ExpressionR<X, Element, Number, depth, rank>& v) {
-    Number result = Number();
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  Num sumofsqrs(const ExpressionR<X, Element, Num, depth, rank>& v) {
+    Num result = Num();
     for (size_t i = 0; i < v.size(); i++) {
       result += normsqr(v[i]);
     }
@@ -479,8 +539,8 @@ namespace mathq {
 
   // norm(a)  - L2 norm
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  Number norm(const ExpressionR<X, Element, Number, depth, rank>& v) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  Num norm(const ExpressionR<X, Element, Num, depth, rank>& v) {
     return std::sqrt(sumofsqrs(v));
   }
 
@@ -492,19 +552,19 @@ namespace mathq {
 
   // The Interval generating function (with step given)
 
-  template <typename Number>
-  Vector<Number>& range(Number start, Number end, Number step) {
+  template <typename Num>
+  Vector<Num>& range(Num start, Num end, Num step) {
     // determine size
     size_t N = 0;
     if (step > 0) {
-      for (Number x = start; x<=end; x += step)
+      for (Num x = start; x<=end; x += step)
         N += 1;
     }
     else {
-      for (Number x = start; x>=end; x += step)
+      for (Num x = start; x>=end; x += step)
         N += 1;
     }
-    Vector<Number>* y = new Vector<Number>(N);
+    Vector<Num>* y = new Vector<Num>(N);
 
     (*y)[0] = start;
     for (size_t i = 1; i<N; i++)
@@ -516,12 +576,12 @@ namespace mathq {
 
   // The Interval generating function (step by +/-1)
 
-  template <typename Number>
-  Vector<Number>& range(Number start, Number end) {
+  template <typename Num>
+  Vector<Num>& range(Num start, Num end) {
     if (end >= start)
-      return range<Number>(start, end, static_cast<Number>(1));
+      return range<Num>(start, end, static_cast<Num>(1));
     else
-      return range<Number>(start, end, static_cast<Number>(-1));
+      return range<Num>(start, end, static_cast<Num>(-1));
   }
 
 
@@ -530,16 +590,16 @@ namespace mathq {
 
   // linspace function [a,b]
 
-  template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-  Vector<Number>& linspace(Number start, Number end, size_t N) {
-    Vector<Number>* y = new Vector<Number>(N);
+  template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
+  Vector<Num>& linspace(Num start, Num end, size_t N) {
+    Vector<Num>* y = new Vector<Num>(N);
 
 
-    const Number step = (end-start)/static_cast<Number>(N-1);
+    const Num step = (end-start)/static_cast<Num>(N-1);
 
     (*y)[0] = start;
     for (size_t i = 1; i<(N-1); i++) {
-      (*y)[i] = start + static_cast<Number>(i)*step;
+      (*y)[i] = start + static_cast<Num>(i)*step;
     }
     (*y)[N-1] = end;
     return *y;
@@ -551,12 +611,12 @@ namespace mathq {
   // Returns a vector of N equispaced points,
   // with spacing delta, spanning from a+delta to b
 
-  template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-  Vector<Number>& linspace_a(Number start, Number end, size_t N) {
-    Vector<Number>* y = new Vector<Number>(N);
+  template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
+  Vector<Num>& linspace_a(Num start, Num end, size_t N) {
+    Vector<Num>* y = new Vector<Num>(N);
 
 
-    const Number step = (end-start)/static_cast<Number>(N);
+    const Num step = (end-start)/static_cast<Num>(N);
     return linspace(start+step, end, N);
   }
 
@@ -565,12 +625,12 @@ namespace mathq {
   // Returns a vector of N equispaced points,
   // with spacing delta, spanning from a to b-delta
 
-  template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-  Vector<Number>& linspace_b(Number start, Number end, size_t N) {
-    Vector<Number>* y = new Vector<Number>(N);
+  template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
+  Vector<Num>& linspace_b(Num start, Num end, size_t N) {
+    Vector<Num>* y = new Vector<Num>(N);
 
 
-    const Number step = (end-start)/static_cast<Number>(N);
+    const Num step = (end-start)/static_cast<Num>(N);
     return linspace(start, end-step, N);
   }
 
@@ -578,12 +638,12 @@ namespace mathq {
   // Returns a vector of N equispaced points,
   // with spacing delta, spanning from a+delta to b-delta
 
-  template <typename Number, typename = typename std::enable_if<std::is_arithmetic<Number>::value, Number>::type>
-  Vector<Number>& linspace_ab(Number start, Number end, size_t N) {
-    Vector<Number>* y = new Vector<Number>(N);
+  template <typename Num, typename = typename std::enable_if<std::is_arithmetic<Num>::value, Num>::type>
+  Vector<Num>& linspace_ab(Num start, Num end, size_t N) {
+    Vector<Num>* y = new Vector<Num>(N);
 
 
-    const Number step = (end-start)/static_cast<Number>(N+1);
+    const Num step = (end-start)/static_cast<Num>(N+1);
     return linspace(start+step, end-step, N);
   }
 
@@ -595,8 +655,8 @@ namespace mathq {
 
   // reverse
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&> reverse(const ExpressionR<X, Element, Number, depth, rank>& f) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&> reverse(const ExpressionR<X, Element, Num, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->reverse();
@@ -606,8 +666,8 @@ namespace mathq {
 
   // cumsum() -- cumulative sum
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumsum(const ExpressionR<X, Element, Number, depth, rank>& f) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&> cumsum(const ExpressionR<X, Element, Num, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumsum();
@@ -616,8 +676,8 @@ namespace mathq {
 
   // cumprod()  --  cumulative product
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumprod(const ExpressionR<X, Element, Number, depth, rank>& f) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&> cumprod(const ExpressionR<X, Element, Num, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumprod();
@@ -627,8 +687,8 @@ namespace mathq {
 
   // cumtrapz() -- cumulative trapezoidal summation
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumtrapz(const ExpressionR<X, Element, Number, depth, rank>& f) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&> cumtrapz(const ExpressionR<X, Element, Num, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumtrapz();
@@ -639,8 +699,8 @@ namespace mathq {
   // order  name
   //     0  rectangular
   //     1  trapazoidal
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&> integrate_a2x(const ExpressionR<X, Element, Number, depth, rank>& f, const Number a, const Number b, const size_t order = 1) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&> integrate_a2x(const ExpressionR<X, Element, Num, depth, rank>& f, const Num a, const Num b, const size_t order = 1) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->integrate_a2x(a, b, order);
@@ -650,8 +710,8 @@ namespace mathq {
 
   // cumsumrev() -- cumulative sum -- from last to first
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumsum_rev(const ExpressionR<X, Element, Number, depth, rank>& f) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&> cumsum_rev(const ExpressionR<X, Element, Num, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumsum_rev();
@@ -660,8 +720,8 @@ namespace mathq {
 
   // cumprodrev()  --  cumulative product  -- from last to first
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumprod_rev(const ExpressionR<X, Element, Number, depth, rank>& f) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&> cumprod_rev(const ExpressionR<X, Element, Num, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumprod_rev();
@@ -671,8 +731,8 @@ namespace mathq {
 
   // cumtrapz() -- cumulative trapezoidal summation -- from last to first
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&> cumtrapz_rev(const ExpressionR<X, Element, Number, depth, rank>& f) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&> cumtrapz_rev(const ExpressionR<X, Element, Num, depth, rank>& f) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->cumtrapz_rev();
@@ -685,8 +745,8 @@ namespace mathq {
   // order  name
   //     0  rectangular
   //     1  trapazoidal
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&> integrate_x2b(const ExpressionR<X, Element, Number, depth, rank>& f, const Number a, const Number b, const size_t order = 1) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&> integrate_x2b(const ExpressionR<X, Element, Num, depth, rank>& f, const Num a, const Num b, const size_t order = 1) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->integrate_x2b(a, b, order);
@@ -696,8 +756,8 @@ namespace mathq {
 
 
   // diff   (v[n] = v[n] - v[n-1])
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&>  diff(const ExpressionR<X, Element, Number, depth, rank>& f, const bool periodic = false) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&>  diff(const ExpressionR<X, Element, Num, depth, rank>& f, const bool periodic = false) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->diff(periodic);
@@ -705,8 +765,8 @@ namespace mathq {
   }
 
   // diff_rev   (v[n] = v[n+1] - v[n])
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&>  diff_rev(const ExpressionR<X, Element, Number, depth, rank>& f, const bool periodic = false) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&>  diff_rev(const ExpressionR<X, Element, Num, depth, rank>& f, const bool periodic = false) {
     Vector<Element>* g = new Vector<Element>(f.size());
     *g = f;
     g->diff_rev(periodic);
@@ -717,8 +777,8 @@ namespace mathq {
   // derivative
   // any change in the default parameters must be likewise made in Vector.deriv(...)
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<rank==1, Vector<Element>&>  deriv(const ExpressionR<X, Element, Number, depth, rank>& f, const Number a, const Number b, const size_t n = 1, size_t Dpts = 7, const bool periodic = false) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<rank==1, Vector<Element>&>  deriv(const ExpressionR<X, Element, Num, depth, rank>& f, const Num a, const Num b, const size_t n = 1, size_t Dpts = 7, const bool periodic = false) {
     //    MDISP(a,b,n,Dpts,periodic,f.size());
     Vector<Element>* df = new Vector<Element>(f.size());
     //    TLDISP(*df);
@@ -735,8 +795,8 @@ namespace mathq {
   //     3  simpson 3/8
   //     4  Boole
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank>
-  EnableMethodIf<(depth==1)&&(rank==1), Number> integrate_a2b(const ExpressionR<X, Element, Number, depth, rank>& v, const Number a, const Number b, const size_t order = 1) {
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  EnableMethodIf<(depth==1)&&(rank==1), Num> integrate_a2b(const ExpressionR<X, Element, Num, depth, rank>& v, const Num a, const Num b, const size_t order = 1) {
 
 
     const size_t N = v.size();
@@ -747,29 +807,29 @@ namespace mathq {
       return 0;
     }
 
-    Number result = 0;
+    Num result = 0;
 
     switch (order) {
     case 0:
       for (size_t j = 0; j < N; j++) {
         result += v[j];
       }
-      result = result * (b-a)/Number(N);
+      result = result * (b-a)/Num(N);
       break;
     case 1:
       result += (v[0]+v[N-1])/2;
       for (size_t j = 1; j < N-1; j++) {
         result += v[j];
       }
-      result = result * (b-a)/Number(N-1);
+      result = result * (b-a)/Num(N-1);
       break;
     case 2:
       if (N%2==0) {
-        MOUT << "integrate_a2b: Number of points must be odd N="<<N<<std::endl;
+        MOUT << "integrate_a2b: Num of points must be odd N="<<N<<std::endl;
       }
       {
-        Number sodd = 0;
-        Number seven = 0;
+        Num sodd = 0;
+        Num seven = 0;
         result += v[0]+v[N-1];
         for (size_t j = 1; j < N-1; j++) {
           if (j%2==1) {
@@ -780,7 +840,7 @@ namespace mathq {
           }
         }
         result += 4*sodd + 2*seven;
-        result = result * (b-a)/(3*Number(N-1));
+        result = result * (b-a)/(3*Num(N-1));
       }
       break;
     case 3:
@@ -788,9 +848,9 @@ namespace mathq {
         MOUT << "integrate_a2b: N-1 must be divisible by 3, N="<<N<<std::endl;
       }
       {
-        Number s1 = 0;
-        Number s2 = 0;
-        Number s3 = 0;
+        Num s1 = 0;
+        Num s2 = 0;
+        Num s3 = 0;
 
         result += v[0]+v[N-1];
         for (size_t j = 1; j < N-1; j++) {
@@ -805,18 +865,18 @@ namespace mathq {
           }
         }
         result += 3*s1 + 3*s2 + 2*s3;
-        result = result * 3*(b-a)/(8*Number(N-1));
+        result = result * 3*(b-a)/(8*Num(N-1));
       }
       break;
     case 4:
       if (N%4!=1) {
         MOUT << "integrate_a2b: N-1 must be divisible by 4, N="<<N<<std::endl;
-    }
+      }
       {
-        Number s1 = 0;
-        Number s2 = 0;
-        Number s3 = 0;
-        Number s4 = 0;
+        Num s1 = 0;
+        Num s2 = 0;
+        Num s3 = 0;
+        Num s4 = 0;
 
         result += 7*(v[0]+v[N-1]);
         for (size_t j = 1; j < N-1; j++) {
@@ -834,7 +894,7 @@ namespace mathq {
           }
         }
         result += 32*s1 + 12*s2 + 32*s3 + 14*s4;
-        result = result * 2*(b-a)/(45*Number(N-1));
+        result = result * 2*(b-a)/(45*Num(N-1));
       }
       break;
     default:
@@ -842,10 +902,10 @@ namespace mathq {
       std::cerr << "integrate_a2b: bad order parameter order="<<order<<std::endl;
 #endif
       break;
-  }
+    }
 
     return result;
-}
+  }
 
 
 
@@ -856,24 +916,24 @@ namespace mathq {
 
   // maclaurin(vector coefs, vector vals, max N, x0)
 
-  template <class A, class X, class Element, typename Number, size_t D1, size_t D2, size_t R1, size_t R2, typename = EnableIf<(D1==1)&&(R1==1)>>
-  auto maclaurin(const ExpressionR<A, Number, Number, D1, R1>& a, const ExpressionR<X, Element, Number, D2, R2>& x, const size_t N, const Number x0) {
-    return ExpressionR_Series<ExpressionR<A, Number, Number, D1, R1>, ExpressionR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N, x0);
+  template <class A, class X, class Element, typename Num, size_t D1, size_t D2, size_t R1, size_t R2, typename = EnableIf<(D1==1)&&(R1==1)>>
+  auto maclaurin(const ExpressionR<A, Num, Num, D1, R1>& a, const ExpressionR<X, Element, Num, D2, R2>& x, const size_t N, const Num x0) {
+    return ExpressionR_Series<ExpressionR<A, Num, Num, D1, R1>, ExpressionR<X, Element, Num, D2, R2>, Element, Num, D2, R2>(a, x, N, x0);
   }
 
   // // taylor(vector coefs, vector vals, max N)
 
-  template <class A, class X, class Element, typename Number, size_t D1, size_t D2, size_t R1, size_t R2, typename = EnableIf<(D1==1)&&(R1==1)>>
-  auto taylor(const ExpressionR<A, Number, Number, D1, R1>& a, const ExpressionR<X, Element, Number, D2, R2>& x, const size_t N) {
-    return ExpressionR_Series<ExpressionR<A, Number, Number, D1, R1>, ExpressionR<X, Element, Number, D2, R2>, Element, Number, D2, R2>(a, x, N);
+  template <class A, class X, class Element, typename Num, size_t D1, size_t D2, size_t R1, size_t R2, typename = EnableIf<(D1==1)&&(R1==1)>>
+  auto taylor(const ExpressionR<A, Num, Num, D1, R1>& a, const ExpressionR<X, Element, Num, D2, R2>& x, const size_t N) {
+    return ExpressionR_Series<ExpressionR<A, Num, Num, D1, R1>, ExpressionR<X, Element, Num, D2, R2>, Element, Num, D2, R2>(a, x, N);
   }
 
   // // ifourier(vector cos coefs, vector sin coefs, vector vals, max N, k1=2pi/wavelength or 2pi/period)
   // // sin coefs must include a coef for n=0 even though its irrelevant
 
-  template <class A, class B, class X, typename Number, size_t depth, size_t rank, typename = EnableIf<(depth==1)&&(rank==1)> >
-  auto ifourier(const ExpressionR<A, Number, Number, depth, rank>& Acos, const ExpressionR<B, Number, Number, depth, rank>& Bsin, const ExpressionR<X, Number, Number, depth, rank>& x, const size_t N, const Number k1) {
-    return  ExpressionR_Series2<ExpressionR<A, Number, Number, depth, rank>, ExpressionR<B, Number, Number, depth, rank>, ExpressionR<X, Number, Number, depth, rank>, Number, FUNCTOR_cos<Number, Number, Number, Number>, FUNCTOR_sin<Number, Number, Number, Number> >(Acos, Bsin, x, N, k1);
+  template <class A, class B, class X, typename Num, size_t depth, size_t rank, typename = EnableIf<(depth==1)&&(rank==1)> >
+  auto ifourier(const ExpressionR<A, Num, Num, depth, rank>& Acos, const ExpressionR<B, Num, Num, depth, rank>& Bsin, const ExpressionR<X, Num, Num, depth, rank>& x, const size_t N, const Num k1) {
+    return  ExpressionR_Series2<ExpressionR<A, Num, Num, depth, rank>, ExpressionR<B, Num, Num, depth, rank>, ExpressionR<X, Num, Num, depth, rank>, Num, FUNCTOR_cos<Num, Num, Num, Num>, FUNCTOR_sin<Num, Num, Num, Num> >(Acos, Bsin, x, N, k1);
   }
 
 

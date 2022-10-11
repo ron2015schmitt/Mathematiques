@@ -1,29 +1,33 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.262-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.3</a></h1>
 
 <details>
 
 <summary>Documentation</summary>
 
 # [Documentation](../README.md)<br>
-1. [License](../license/README.md)<br>
-2. [About](../about/README.md)<br>
-3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>
-4. [Description and Example Usage](../overview/README.md)<br>
-5. [Installation](../installation/README.md)<br>
-6. [Your First Mathématiques Project](../first-project/README.md)<br>
-7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-8. [Benchmarks](../benchmarks/README.md)<br>
-9. _Tests_ <br>
-10. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
+Chapter 1. [License](../license/README.md)<br>
+Chapter 2. [About](../about/README.md)<br>
+Chapter 3. [Versioning](../versioning/README.md)<br>
+Chapter 4. [Status & Release Notes](../status-release/README.md)<br>
+Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
+Chapter 6. [Introduction with Examples](../intro/README.md)<br>
+Chapter 7. [Installation](../installation/README.md)<br>
+Chapter 8. [Your First Mathématiques Project](../first-project/README.md)<br>
+Chapter 9. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 10. [Benchmarks](../benchmarks/README.md)<br>
+Chapter 11. _Tests_ <br>
+Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
 
 
 </details>
 
 
 
-# 9. Tests
+# Chapter 11. Tests
 
-*In progress*
+🚧 in progress...
+
+We currently have over 200 tests that run during the build.  The plan is to have full code coverage and to use python to generate the test code with NumPy and SciPy to verify results. 
 
 
 

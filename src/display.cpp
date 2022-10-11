@@ -55,9 +55,9 @@ namespace display {
     StyledString* mathematiques = new StyledString(CREATESTYLE(BOLD + BLUE2), "Mathématiques");
     StyledString::add(SSEnum::MATHEMATIQUES, *mathematiques);
 
-    StyledString* version = new StyledString(CREATESTYLE(BOLD + BLUE2), vers_mathq);
+    StyledString* version = new StyledString(CREATESTYLE(BOLD + BLUE2), mathq::version);
     StyledString::add(SSEnum::VERSION, *version);
-    StyledString* dlevel0 = new StyledString(CREATESTYLE(BOLD + GREENBACK), "MATHQ_DEBUG 0 (off/fast)");
+    StyledString* dlevel0 = new StyledString(CREATESTYLE(BOLD + GREENBACK), "MATHQ_DEBUG 0 (production)");
     StyledString::add(SSEnum::DLEVEL0, *dlevel0);
     StyledString* dlevel1 = new StyledString(CREATESTYLE(BOLD + YELLOWBACK), "MATHQ_DEBUG 1 (errors/warnings)");
     StyledString::add(SSEnum::DLEVEL1, *dlevel1);
@@ -192,8 +192,8 @@ namespace display {
   // bool
   Style FormatData<bool>::style_for_true = CREATESTYLE(GREEN1);
   Style FormatData<bool>::style_for_false = CREATESTYLE(GRAY1);
-  std::string FormatData<bool>::string_for_true = "1";
-  std::string FormatData<bool>::string_for_false = "0";
+  std::string FormatData<bool>::string_for_true = "true";
+  std::string FormatData<bool>::string_for_false = "false";
 
   // Vector
   // TODO: this shoudl be size_t

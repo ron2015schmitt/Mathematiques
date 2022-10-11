@@ -12,15 +12,14 @@
 
 
 
-int main()
-{
+int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   int Nex = 1;
-  
+
   CR();
   GMD_TITLE("Methods `Vector.sort()`, `Vector.uniq()`, `Vector.quniq()`  ");
   mathq_preamble();
@@ -29,17 +28,17 @@ int main()
   CR();
   OUTPUT("* the indices for the sort are returned in a `Vector<size_t>`");
   CR();
-  
+
   {
     CR();
     CR();
-    EXAMPLE(Nex++," `Vector.sort()`");
+    EXAMPLE(Nex++, " `Vector.sort()`");
     GMD_CODE_START("C++");
-    ECHO_CODE( Vector<double> t( {23,-1,100,7}) );
-    ECHO_CODE( Vector<double> y( {30,10,20,40} ) );
-    ECHO_CODE( Vector<size_t> vindex );
-    ECHO_CODE( vindex = t.sort() );
-    ECHO_CODE( y = y[vindex] );
+    ECHO(Vector<double> t({ 23,-1,100,7 }));
+    ECHO(Vector<double> y({ 30,10,20,40 }));
+    ECHO(Vector<size_t> vindex);
+    ECHO(vindex = t.sort());
+    ECHO(y = y[vindex]);
     GMD_CODE_END();
     CR();
 
@@ -56,15 +55,15 @@ int main()
   CR();
   OUTPUT("* The indices for the unique elements are returned in a `Vector<size_t>`");
   CR();
-  
+
   {
     CR();
     CR();
-    EXAMPLE(Nex++,"The `.uniq()` method");
+    EXAMPLE(Nex++, "The `.uniq()` method");
     GMD_CODE_START("C++");
-    ECHO_CODE( Vector<double> t( {23,-1,23,4,4,4,-1,3,3}) );
-    ECHO_CODE( Vector<size_t> vindex );
-    ECHO_CODE( vindex = t.uniq() );
+    ECHO(Vector<double> t({ 23,-1,23,4,4,4,-1,3,3 }));
+    ECHO(Vector<size_t> vindex);
+    ECHO(vindex = t.uniq());
     GMD_CODE_END();
     CR();
 
@@ -79,15 +78,15 @@ int main()
   CR();
   OUTPUT("* The indices for the unique elements are returned in a `Vector<size_t>`");
   CR();
-  
+
   {
     CR();
     CR();
-    EXAMPLE(Nex++,"The `.quniq()` method");
+    EXAMPLE(Nex++, "The `.quniq()` method");
     GMD_CODE_START("C++");
-    ECHO_CODE( Vector<double> t( {23,-1,23,4,4,4,-1,3,3}) );
-    ECHO_CODE( Vector<size_t> vindex );
-    ECHO_CODE( vindex = t.quniq() );
+    ECHO(Vector<double> t({ 23,-1,23,4,4,4,-1,3,3 }));
+    ECHO(Vector<size_t> vindex);
+    ECHO(vindex = t.quniq());
     GMD_CODE_END();
     CR();
 
@@ -97,7 +96,7 @@ int main()
     resultend();
   }
 
-  
+
   mathq_toc();
 
 

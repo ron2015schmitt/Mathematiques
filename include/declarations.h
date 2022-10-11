@@ -43,11 +43,16 @@ extern char COMPILER_OPT_STR[];
 
 namespace display {
 
+  inline std::string replace_all(const std::string& inout, const std::string_view what, const std::string_view with);
+
   template <typename T>
   inline std::string bracketAndStyleTypename(const T& var);
   template <typename T>
   inline void dispval_strm(std::ostream& stream, const T& d);
+
 }; // namespace display
+
+
 
 
 namespace mathq {
@@ -63,6 +68,7 @@ namespace mathq {
   // maximum subcript size for vectors and matrices (since we allow negative indexing)
   const size_t maxsize = std::numeric_limits<size_t>::max();
   const size_t badsize = std::numeric_limits<size_t>::max();
+
 
 
   // ***************************************************************************
@@ -91,7 +97,7 @@ namespace mathq {
   class NumberTrait;
 
   template <typename T, typename NewNumber>
-  class ReplacedNumberTrait;
+  class ReplaceNumberTrait;
 
   template <typename T>
   class SimpleNumberTrait;
@@ -102,10 +108,10 @@ namespace mathq {
   //          number types
   //*******************************************************
 
-  template <typename SimpleNumber>
+  template <typename SimpleNum>
   class Imaginary;
 
-  template <typename SimpleNumber>
+  template <typename SimpleNum>
   class Quaternion;
 
 
@@ -115,9 +121,9 @@ namespace mathq {
   // * MultiArray Expressions
   // ********************************************************************
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
+  template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
   class ExpressionR;
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
+  template <class Derived, typename Element, typename Num, size_t depth, size_t rank>
   class ExpressionRW;
 
 
@@ -172,10 +178,12 @@ namespace mathq {
         if (A[i] != A[i+rank]) return false;
       }
       return true;
-    } else if constexpr ((N == rank)) {
+    }
+    else if constexpr ((N == rank)) {
       // one array is fixed-dimensions. the other array is dynamic
       return true;
-    } else if constexpr (N == 0)  {
+    }
+    else if constexpr (N == 0) {
       // both arrays are dynamic-dimensions
       return true;
     }
@@ -189,7 +197,7 @@ namespace mathq {
   // ********************************************************************
 
   template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
-  class MultiArray;
+    class MultiArray;
 
   // typenames for specializations
 
@@ -206,34 +214,32 @@ namespace mathq {
   using Array3D = MultiArray<Element, 3, sizes...>;
 
   template <typename Element, size_t... sizes>
-  using Array4D= MultiArray<Element, 4, sizes...>;
+  using Array4D = MultiArray<Element, 4, sizes...>;
 
 
 
 
-  // *********************************************************************
-  // * Special MultiArrays
-  // ********************************************************************
 
-// Constant
+  // Constant
 
-template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
-class MultiArray_Constant;
+  template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
+    class MultiArray_Constant;
 
-template <typename Element, size_t... sizes>
-using Vector_Constant = MultiArray_Constant<Element, 1, sizes...>;
+  template <typename Element, size_t... sizes>
+  using Vector_Constant = MultiArray_Constant<Element, 1, sizes...>;
 
-template <typename Element, size_t... sizes>
-using Matrix_Constant = MultiArray_Constant<Element, 2, sizes...>;
+  template <typename Element, size_t... sizes>
+  using Matrix_Constant = MultiArray_Constant<Element, 2, sizes...>;
 
 
-// RepeatVector
+  // RepeatVector
 
-template <typename Element, size_t rank, size_t index, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
-class MultiArray_RepeatVector;
+  template <typename Element, size_t rank, size_t... sizes > requires (validate_multi_array<rank, sizes...>())
+    class MultiArray_RepeatVector;
 
-template <typename Element, size_t index, size_t... sizes>
-using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>;
+  template <typename Element, size_t... sizes>
+  using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, sizes...>;
+
 
 
 
@@ -295,7 +301,7 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
   // ********************************************************************
 
 
-  template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
+  template <class A, typename Element, typename Num, size_t depth, size_t rank, class FUNC>
   class ExpressionR_Unary;
 
   template <class A, class B, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t D1, size_t D2, size_t D3, size_t R1, size_t R2, size_t R3, class OP>
@@ -304,30 +310,29 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
   template <class A, class B, class C, class E1, class E2, class E3, class E4, class NT1, class NT2, class NT3, class D4, size_t D1, size_t D2, size_t D3, size_t M4, size_t R1, size_t R2, size_t R3, size_t R4, class OP>
   class ExpressionR_Ternary;
 
-  template <class A, class X, typename Element, typename Number, size_t depth, size_t rank>
+  template <class A, class X, typename Element, typename Num, size_t depth, size_t rank>
   class ExpressionR_Series;
 
-  template <class A, class B, class X, typename Number, class OP1, class OP2>
+  template <class A, class B, class X, typename Num, class OP1, class OP2>
   class ExpressionR_Series2;
 
-  template <class A, typename Element, typename Number, size_t depth, size_t rank, class FUNC>
+  template <class A, typename Element, typename Num, size_t depth, size_t rank, class FUNC>
   class ExpressionR_Transpose;
 
-  template <class A, typename Number>
+  template <class A, typename Num>
   class ExpressionR_Rep;
 
-  template <class X, class Y, typename Element, typename Number, size_t depth>
+  template <class X, class Y, typename Element, typename Num, size_t depth>
   class ExpressionR_Join;
 
-  template <typename Number>
+  template <typename Num>
   class ExpressionRW_Subset;
 
-  template <typename Number>
+  template <typename Num>
   class ExpressionRW_Submask;
 
-  template <class X, class Y, typename Element, typename Number, size_t depth>
+  template <class X, class Y, typename Element, typename Num, size_t depth>
   class ExpressionRW_Join;
-
 
 
 
@@ -346,56 +351,45 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
 
 
 
+  // ***************************************************************************
+    // * CoordGrid - for coordinates
+    //
+    // ***************************************************************************
+
+  template <typename Element, size_t Ndims, size_t... dim_ints >
+  using CoordGrid = MultiArray_RepeatVector<Element, Ndims, dim_ints...>;
+
+  template <typename Element, size_t Ndims, size_t... dim_ints >
+  bool coord_grid_test(const CoordGrid<Element, Ndims, dim_ints...>& x) {
+    return true;
+  }
+
+  template <class X>
+  concept IsCoordGrid = requires(X x) {
+    coord_grid_test(x);
+  };
+
 
 
   // ***************************************************************************
-  // * Grid
-  //
-  //  multiarray of depth=1 and fixed rank=NDIMS but dynamic size
-  // ***************************************************************************
-
-  template <typename Number, size_t NDIMS>
-  using Grid = MultiArray<Number, NDIMS>;
-
-
-
-
-  // ***************************************************************************
-  // * MultiArrayOfGrids
-  //
-  // This is a nested structure with depth=2:
-  //   top level: A single MultiArray of fixed rank: MultiArray<Number,rank>
-  //              default rank = 1 => vector
-  //   second level: multiarrays of fixed rank=NDIMS but dynamic size
-  //
-  // TODO: use OuterProductMultiArray for 2nd level to save on space
-  // ***************************************************************************
-
-  template <typename Number, size_t NDIMS, size_t rank = 1>
-  using MultiArrayOfGrids = MultiArray< Grid<Number, NDIMS>, rank >;
-
-
-  // ***************************************************************************
-  // * GridOfMultiArrays
-  //
-  // This is a nested structure with depth=2:
-  //   top level: a single multiarray of fixed rank=NDIMS but dynamic size
-  //   second level: multiarrays of fixed rank: MultiArray<Number,rank>
-  //                 default rank = 1 => vector
-  //
-  // This type has the same total number of elements as MultiArrayOfGrids.
-  // The two types can be converted from one to another using the function 'insideout'.
+  // * Grid - for functions
   //
   // ***************************************************************************
 
-  template <typename Number, size_t NDIMS, size_t rank = 1>
-  using GridOfMultiArrays = Grid< MultiArray<Number, rank>, NDIMS>;
+  template <typename Element, size_t Ndims, size_t... dim_ints >
+  using Grid = MultiArray<Element, Ndims, dim_ints...>;
+
+  template <typename Element, size_t Ndims, size_t... dim_ints >
+  bool grid_test(const Grid<Element, Ndims, dim_ints...>& x) {
+    return true;
+  }
+
+  template <class X>
+  concept IsGrid = requires(X x) {
+    grid_test(x);
+  };
 
 
-
-
-  template <typename Number, size_t NDIMS, size_t rank, typename G>
-  class GridTraits;
 
 
 
@@ -409,10 +403,30 @@ using Matrix_RepeatVector = MultiArray_RepeatVector<Element, 2, index, sizes...>
   template <class Element>
   inline auto& ones();
 
-  template <class X, class Element, typename Number, size_t depth, size_t rank> requires (std::is_same<Number, bool>::value)
-     Vector<size_t>& findtrue(const ExpressionR<X, Element, Number, depth, rank>& x); 
+  template <class X, class Element, typename Num, size_t depth, size_t rank> requires (std::is_same<Num, bool>::value)
+    Vector<size_t>& findtrue(const ExpressionR<X, Element, Num, depth, rank>& x);
 
-  
+
+
+  namespace exponent_symbols {
+    class Transpose {
+    public:
+    };
+    class Conjugate {
+    public:
+    };
+    class Hermitian {
+    public:
+    };
+
+    constexpr Transpose T;
+    constexpr Conjugate C;
+    constexpr Hermitian H;
+
+  };
+
+
+
 }; // namespace mathq
 
 

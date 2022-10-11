@@ -23,7 +23,7 @@
 template <class A, class B, class C, class E1, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank>
 auto __FUNCTION__(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename __TYPECLASS__<typename __TYPECLASS__<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -38,7 +38,7 @@ auto __FUNCTION__(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expressi
 template <class A, class B, class E1, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT3>::value>>
 auto __FUNCTION__(const ExpressionR<A, E1, NT1, depth, rank>& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename __TYPECLASS__<typename __TYPECLASS__<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -51,7 +51,7 @@ auto __FUNCTION__(const ExpressionR<A, E1, NT1, depth, rank>& x1, const Expressi
 template <class A, class C, class E1, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value>>
 auto __FUNCTION__(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename __TYPECLASS__<typename __TYPECLASS__<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -64,7 +64,7 @@ auto __FUNCTION__(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2,
 template <class A, class E1, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT2>::value&& NumberTrait<NT3>::value>>
 auto __FUNCTION__(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2, const NT3& x3) {
   typedef typename __TYPECLASS__<typename __TYPECLASS__<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename ReplacedNumberTrait<E1, NT4>::Type E4;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E1, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<ExpressionR<A, E1, NT1, depth, rank>,
     NT2,
     NT3,
@@ -77,7 +77,7 @@ auto __FUNCTION__(const ExpressionR<A, E1, NT1, depth, rank>& x1, const NT2& x2,
 template <class B, class C, class E2, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value>>
 auto __FUNCTION__(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename __TYPECLASS__<typename __TYPECLASS__<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     ExpressionR<C, E3, NT3, depth, rank>,
@@ -91,7 +91,7 @@ auto __FUNCTION__(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2,
 template <class B, class E2, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT3>::value>>
 auto __FUNCTION__(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2, const NT3& x3) {
   typedef typename __TYPECLASS__<typename __TYPECLASS__<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename ReplacedNumberTrait<E2, NT4>::Type E4;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E2, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     ExpressionR<B, E2, NT2, depth, rank>,
     NT3,
@@ -104,7 +104,7 @@ auto __FUNCTION__(const NT1& x1, const ExpressionR<B, E2, NT2, depth, rank>& x2,
 template <class C, class E3, class NT1, class NT2, class NT3, size_t depth, size_t rank, typename = std::enable_if_t<NumberTrait<NT1>::value&& NumberTrait<NT2>::value>>
 auto __FUNCTION__(const NT1& x1, const NT2& x2, const ExpressionR<C, E3, NT3, depth, rank>& x3) {
   typedef typename __TYPECLASS__<typename __TYPECLASS__<NT1, NT2>::Type, NT3>::Type NT4;
-  typedef typename ReplacedNumberTrait<E3, NT4>::Type E4;   // see TODO note above
+  typedef typename ReplaceNumberTrait<E3, NT4>::Type E4;   // see TODO note above
   return  ExpressionR_Ternary<NT1,
     NT2,
     ExpressionR<C, E3, NT3, depth, rank>,

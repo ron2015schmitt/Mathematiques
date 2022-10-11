@@ -1,43 +1,56 @@
-<h1 style='border: 2px solid; text-align: center'>Mathématiques v0.40.262-c++20</h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.3</a></h1>
 
 <details>
 
 <summary>Documentation</summary>
 
 # [Documentation](../README.md)<br>
-1. [License](../license/README.md)<br>
-2. [About](../about/README.md)<br>
-3. [Status, Planned Work & Release Notes](../status-release/README.md)<br>
-4. [Description and Example Usage](../overview/README.md)<br>
-5. _Installation_ <br>
-6. [Your First Mathématiques Project](../first-project/README.md)<br>
-7. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-8. [Benchmarks](../benchmarks/README.md)<br>
-9. [Tests](../test/README.md)<br>
-10. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
+Chapter 1. [License](../license/README.md)<br>
+Chapter 2. [About](../about/README.md)<br>
+Chapter 3. [Versioning](../versioning/README.md)<br>
+Chapter 4. [Status & Release Notes](../status-release/README.md)<br>
+Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
+Chapter 6. [Introduction with Examples](../intro/README.md)<br>
+Chapter 7. _Installation_ <br>
+Chapter 8. [Your First Mathématiques Project](../first-project/README.md)<br>
+Chapter 9. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 10. [Benchmarks](../benchmarks/README.md)<br>
+Chapter 11. [Tests](../test/README.md)<br>
+Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
 
 
 </details>
 
 
 
-# 5. Installation
+# Chapter 7. Installation
 
 
 
-## Install Prerequisites
+## Overview of Prerequisites
 
-The following commands are required: `bash`, `python3`, `make`, `g++`, and `gfortran`.
+The following commands are required on your operating system: `bash`, `python3`, `make`, `g++`, and `gfortran`.
 
-The following library is required: `lapack`.
+The version of `g++` must be `11.2.0` or higher.
 
-In Ubuntu, you can install these as follows
+The following library is currently required: `lapack`.
+
+## Installing Prerequisites in Ubuntu 22.04
+
+Download and install [Ubuntu 22.04 LTS](https://releases.ubuntu.com/22.04/).
+
+In Ubuntu, you can install the prerequisites as follows
 ```bash
 sudo apt update
 sudo apt upgrade
 sudo apt-get install build-essential gfortran liblapacke-dev liblapack-doc
 ```
-The above installation has been verified in [Ubuntu 20.04 LTS](https://releases.ubuntu.com/20.04/)
+
+Verify the version for `g++` is `11.2.0` or higher as follows
+```bash
+g++ --version 
+```
+
 
 <a name="docker-images"></a>
 ### Docker images for the build environment
@@ -46,7 +59,7 @@ Docker build files and images are available with all of the prerequisites instal
 
 | O/S  | Build file | Image |
 | ----------- | ----------- | ----------- |
-| [Ubuntu 20.04 LTS](https://releases.ubuntu.com/20.04/) | [Dockerfile](https://github.com/ron2015schmitt/Mathematiques/tree/master/docker/ubuntu-20.04) | [Image](https://hub.docker.com/repository/docker/electron2015/ubuntu-20.04-mathq-env) |
+| [Ubuntu 22.04 LTS](https://releases.ubuntu.com/22.04/) | [Dockerfile](https://github.com/ron2015schmitt/Mathematiques/tree/master/docker/ubuntu-22.04) | [Image](https://hub.docker.com/repository/docker/electron2015/ubuntu-22.04-mathq-env) |
 
 *The above images do NOT contain the Mathématiques library*
 
@@ -89,6 +102,6 @@ We do not yet have full code coverage testing.
 
 
 
-| ⇦ <br />[Description and Example Usage](../overview/README.md)  | [Documentation](../README.md)<br />Installation<br /><img width=1000/> | ⇨ <br />[Your First Mathématiques Project](../first-project/README.md)   |
+| ⇦ <br />[Introduction with Examples](../intro/README.md)  | [Documentation](../README.md)<br />Installation<br /><img width=1000/> | ⇨ <br />[Your First Mathématiques Project](../first-project/README.md)   |
 | ------------ | :-------------------------------: | ------------ |
 

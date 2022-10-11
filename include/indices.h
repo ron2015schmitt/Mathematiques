@@ -7,7 +7,7 @@ namespace mathq {
 
 
   class Indices {
-      private:
+  private:
     std::vector<size_t> data_;
 
   public:
@@ -15,7 +15,7 @@ namespace mathq {
     using ElementType = size_t;
     using iterator = std::vector<size_t>::iterator;
     using const_iterator = std::vector<size_t>::const_iterator;
-  
+
     //**********************************************************************
     //                         Static methods
     //
@@ -53,6 +53,22 @@ namespace mathq {
       const size_t rank = dims.rank();
       mathq::Indices& myinds = *(new mathq::Indices(k, dims));
       return myinds;
+    }
+
+
+    template<typename S> requires (std::is_integral<S>::value)
+      static mathq::Indices& from_signed(const std::initializer_list<S>& mylist, const Dimensions& dims) {
+
+      const size_t rank = dims.rank();
+      mathq::Indices& indices = *(new mathq::Indices(dims));
+
+
+      size_t c = 0;
+      for (typename std::initializer_list<S>::const_iterator it = mylist.begin(); it != mylist.end(); ++it, c++) {
+        indices[c] = signed_index_to_unsigned_index(*it, dims[c]);
+      }
+
+      return indices;
     }
 
 
@@ -147,11 +163,11 @@ namespace mathq {
       return data_.end();
     }
 
-   //**********************************************************************
-    //************* Array-style Element Access: v[n] ***********************
     //**********************************************************************
+     //************* Array-style Element Access: v[n] ***********************
+     //**********************************************************************
 
-    // "read/write"
+     // "read/write"
     size_t& operator[](const size_t n) {
       return data_[n];
     }
@@ -176,10 +192,27 @@ namespace mathq {
       const size_t rank = size();
       for (size_t n = 0; n < rank; n++) {
         size_t k = rank - 1 - n;
-        if ( (*this)[k] < dims[k] - 1 ) {
+        if ((*this)[k] < dims[k] - 1) {
           (*this)[k] += 1;
           return *this;
-        } else {
+        }
+        else {
+          (*this)[k] = 0;
+        }
+      }
+      return *this;
+    }
+
+    Indices& increment_over(const Dimensions& dims, const size_t skip) {
+      const size_t rank = size();
+      for (size_t n = 0; n < rank; n++) {
+        size_t k = rank - 1 - n;
+        if (k == skip) continue;
+        if ((*this)[k] < dims[k] - 1) {
+          (*this)[k] += 1;
+          return *this;
+        }
+        else {
           (*this)[k] = 0;
         }
       }
@@ -285,7 +318,7 @@ namespace mathq {
       return ClassName();
     }
 
-    static inline std::string ClassName() {      
+    static inline std::string ClassName() {
       return "Indices";
     }
 
@@ -386,7 +419,7 @@ namespace mathq {
       return dd.reverse_each();
     }
 
-  // this used to be called getReverse
+    // this used to be called getReverse
     DeepIndices& evert() {
       // evert = turn inside out
       size_t k = size()-1;
@@ -414,11 +447,11 @@ namespace mathq {
       return *this;
     }
 
-       //**********************************************************************
-    //************* Array-style Element Access: v[n] ***********************
     //**********************************************************************
+ //************* Array-style Element Access: v[n] ***********************
+ //**********************************************************************
 
-    // "read/write"
+ // "read/write"
     Indices& operator[](const size_t n) {
       return data_[n];
     }
@@ -546,7 +579,8 @@ namespace mathq {
       return ClassName();
     }
 
-    static inline std::string ClassName() {      using namespace display;
+    static inline std::string ClassName() {
+      using namespace display;
       std::string s = "DeepIndices";
       return s;
     }

@@ -4,7 +4,7 @@
 #include "mathq.h"
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 
   const double pi = M_PI;
   std::string myname = argv[0];
@@ -58,19 +58,19 @@ int main(int argc, char *argv[]) {
   {
     using namespace mathq::unit_imaginary;
     CR();
-    Vector<short> Vshort{-11, -12, 13};
-    Vector<int> Vint1{11, 12, -13};
-    Vector<int> Vint2{11, 12, -100};
-    Vector<long> vLong{1000, 2000, -3000};
-    Vector<unsigned> Vunsigned{70, 80, 90};
-    Vector<double> Vdouble1{10, 20, 30};
-    Vector<double> Vdouble2{1, 2, 3};
-    Vector<float> Vfloat{0.1, .2, .3};
-    Vector<long double> Vextended{0.01, .02, .03};
-    Vector<Imaginary<double>> vImagDouble{1 * i, 2 * i, 3 * i};
-    Vector<Imaginary<long double>> vImagExtended{10 * iL, 20 * iL, 30 * iL};
-    Vector<complex<double>> VcomplexDouble{complex<double>(0.1, 0.001), complex<double>(0.2, 0.002), complex<double>(0.3, 0.003)};
-    Vector<complex<int>> VcomplexInt{complex<int>(1, -2), complex<int>(1, 0), complex<int>(0, 1)};
+    Vector<short> Vshort{ -11, -12, 13 };
+    Vector<int> Vint1{ 11, 12, -13 };
+    Vector<int> Vint2{ 11, 12, -100 };
+    Vector<long> vLong{ 1000, 2000, -3000 };
+    Vector<unsigned> Vunsigned{ 70, 80, 90 };
+    Vector<double> Vdouble1{ 10, 20, 30 };
+    Vector<double> Vdouble2{ 1, 2, 3 };
+    Vector<float> Vfloat{ 0.1, .2, .3 };
+    Vector<long double> Vextended{ 0.01, .02, .03 };
+    Vector<Imaginary<double>> vImagDouble{ 1 * i, 2 * i, 3 * i };
+    Vector<Imaginary<long double>> vImagExtended{ 10 * iL, 20 * iL, 30 * iL };
+    Vector<complex<double>> VcomplexDouble{ complex<double>(0.1, 0.001), complex<double>(0.2, 0.002), complex<double>(0.3, 0.003) };
+    Vector<complex<int>> VcomplexInt{ complex<int>(1, -2), complex<int>(1, 0), complex<int>(0, 1) };
     MOUT << blue.apply("Given:") << endl;
     MOUT << "  ";
     TLDISP(Vshort);
@@ -244,8 +244,8 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Matrix<Vector<double>> m1{{{1, 2, 3}, {4, 5, 6}}, {{7, 8, 9}, {10, 11, 12}}};
-    Vector<double> v0{100, 200, 300};
+    Matrix<Vector<double>> m1{ {{1, 2, 3}, {4, 5, 6}}, {{7, 8, 9}, {10, 11, 12}} };
+    Vector<double> v0{ 100, 200, 300 };
     MOUT << blue.apply("Given:") << endl;
     MOUT << "  ";
     TLDISP(m1);
@@ -272,12 +272,12 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Vector<Matrix<double>> v1{{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}}};
-    Vector<double> v0{100, 200, 300};
+    Vector<Matrix<double>> v1{ {{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}} };
+    Vector<double> v0{ 100, 200, 300 };
 
-    TRDISP(IsMultiArrayOrExpression<double>::value);
-    TRDISP(IsMultiArrayOrExpression<Vector<double>>::value);
-    TRDISP(IsMultiArrayOrExpression<Vector<Matrix<double>>>::value);
+    ETV(IsReadableExpressionOrArray<double>);
+    ETV(IsReadableExpressionOrArray<Vector<double>>);
+    ETV(IsReadableExpressionOrArray<Vector<Matrix<double>>>);
 
     MOUT << blue.apply("Given:") << endl;
     MOUT << "  ";
@@ -308,8 +308,8 @@ int main(int argc, char *argv[]) {
     CR();
     CR();
 
-    Vector<Vector<double>> v1{{1, 2, 3}, {4, 5, 6}};
-    Vector<double> v0{10, 20, 30};
+    Vector<Vector<double>> v1{ {1, 2, 3}, {4, 5, 6} };
+    Vector<double> v0{ 10, 20, 30 };
     string s;
     MOUT << blue.apply("Given:") << endl;
     MOUT << "  ";
@@ -334,7 +334,7 @@ int main(int argc, char *argv[]) {
 
     CR();
     CR();
-    Vector<double> v00{100, 200};
+    Vector<double> v00{ 100, 200 };
     MOUT << blue.apply("Given:") << endl;
 
     MOUT << "  ";
@@ -364,10 +364,10 @@ int main(int argc, char *argv[]) {
   MOUT << bold.apply("When dimensions and rank are the same, the result depends on order, ie non-commutative") << endl;
   {
     CR();
-    Vector<Vector<double>> v1{{1, 2}, {4, 5}};
+    Vector<Vector<double>> v1{ {1, 2}, {4, 5} };
     MOUT << "  ";
     TLDISP(v1);
-    Vector<double> v0{10, 20};
+    Vector<double> v0{ 10, 20 };
     MOUT << "  ";
     TLDISP(v0);
     CR();

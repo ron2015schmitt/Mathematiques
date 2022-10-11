@@ -8,61 +8,61 @@ namespace mathq {
 
 
   // ***************************************************************************
-  // *                   Imaginary Number
+  // *                   Imaginary Num
   // ***************************************************************************
-  template <typename Number>
+  template <typename Num>
   class Imaginary {
   private:
-    Number d_;
+    Num d_;
 
   public:
     Imaginary() : d_(1) {
     }
-    Imaginary(const Number d) : d_(d) {
+    Imaginary(const Num d) : d_(d) {
     }
     ~Imaginary() {
     }
 
-    Number value() const {
+    Num value() const {
       return d_;
     }
-    Number real() {
-      return Number(0);
+    Num real() {
+      return Num(0);
     }
-    Number imag() {
+    Num imag() {
       return d_;
     }
-    Number abs() {
+    Num abs() {
       return std::abs(d_);
     }
-    Number normsqr() {
+    Num normsqr() {
       return d_*d_;
     }
 
 
-    Imaginary<Number>& negate() {
+    Imaginary<Num>& negate() {
       d_ = -d_;
       return *this;
     }
 
-    Imaginary<Number>& invert() {
+    Imaginary<Num>& invert() {
       d_ = -1/d_;
       return *this;
     }
 
-    Imaginary<Number>& conjugate() {
+    Imaginary<Num>& conjugate() {
       d_ = -d_;
       return *this;
     }
 
 
 
-    Number operator=(const Number& y) {
+    Num operator=(const Num& y) {
       return d_ = y.value();
     }
 
     inline static std::string classname() {
-      Number d;
+      Num d;
       return "Imaginary" + display::bracketAndStyleTypename(d);
     }
 
@@ -70,23 +70,23 @@ namespace mathq {
 
 
     // arithmetic operators
-    Imaginary<Number>& operator+=(const Imaginary<Number>& y) {
+    Imaginary<Num>& operator+=(const Imaginary<Num>& y) {
       *this = *this + y;
       return *this;
     }
 
-    Imaginary<Number>& operator-=(const Imaginary<Number>& y) {
+    Imaginary<Num>& operator-=(const Imaginary<Num>& y) {
       *this = *this - y;
       return *this;
     }
 
 
-    Imaginary<Number>& operator*=(const Number& y) {
+    Imaginary<Num>& operator*=(const Num& y) {
       *this = *this * y;
       return *this;
     }
 
-    Imaginary<Number>& operator/=(const Number& y) {
+    Imaginary<Num>& operator/=(const Num& y) {
       *this = *this / y;
       return *this;
     }
@@ -96,9 +96,9 @@ namespace mathq {
 
     // stream << operator
 
-    friend std::ostream& operator<<(std::ostream& stream, const Imaginary<Number>& w) {
+    friend std::ostream& operator<<(std::ostream& stream, const Imaginary<Num>& w) {
       using namespace display;
-      const Number val = w.value();
+      const Num val = w.value();
       if (val != 1) {
         dispval_strm(stream, val);
       }
@@ -108,8 +108,8 @@ namespace mathq {
     }
 
 
-    // template <typename Number>
-    friend inline std::istream& operator>>(const std::string s, Imaginary<Number>& w) {
+    // template <typename Num>
+    friend inline std::istream& operator>>(const std::string s, Imaginary<Num>& w) {
       std::istringstream st(s);
       return (st >> w);
     }
@@ -118,7 +118,7 @@ namespace mathq {
     // stream >> operator
 
     // TODO: implement this
-    friend std::istream& operator>>(std::istream& stream, Imaginary<Number>& w) {
+    friend std::istream& operator>>(std::istream& stream, Imaginary<Num>& w) {
       return stream;
     }
   };
@@ -146,7 +146,7 @@ namespace mathq {
   template <typename I2, typename F1>
   EnableMethodIf<IsImaginary<I2>::value, I2>
     numbercast(const Imaginary<F1>& y) {
-    typedef typename IsImaginary<I2>::OrderedNumberType F2;
+    typedef typename IsImaginary<I2>::SimpleNumberType F2;
     F2 val = numbercast<F2>(y.value());
     return Imaginary<F2>(val);
   }
@@ -157,31 +157,31 @@ namespace mathq {
   // ***************************************************************************
 
 
-  template <typename Number>
-  inline std::complex<Number>
-    Complex(const Imaginary<Number>& x) {
-    return std::complex<Number>(0, x.value());
+  template <typename Num>
+  inline std::complex<Num>
+    Complex(const Imaginary<Num>& x) {
+    return std::complex<Num>(0, x.value());
   }
 
 
   // ***************************************************************************
-  // * Imaginary arithmetic: Imaginary<Number>
+  // * Imaginary arithmetic: Imaginary<Num>
   // ***************************************************************************
 
-  // +Imaginary<Number>
+  // +Imaginary<Num>
 
-  template <typename Number>
-  inline Imaginary<Number>
-    operator+(const Imaginary<Number>& x) {
+  template <typename Num>
+  inline Imaginary<Num>
+    operator+(const Imaginary<Num>& x) {
     return x;
   }
 
-  // -Imaginary<Number>
+  // -Imaginary<Num>
 
-  template <typename Number>
-  inline Imaginary<Number>
-    operator-(const Imaginary<Number>& x) {
-    Imaginary<Number> y = x;
+  template <typename Num>
+  inline Imaginary<Num>
+    operator-(const Imaginary<Num>& x) {
+    Imaginary<Num> y = x;
     return y.negate();
   }
 
@@ -449,45 +449,45 @@ namespace mathq {
 
   // zero
 
-  template <typename Number, typename T >
-  typename std::enable_if< std::is_same<T, Imaginary<Number>>::value, Imaginary<Number> >
+  template <typename Num, typename T >
+  typename std::enable_if< std::is_same<T, Imaginary<Num>>::value, Imaginary<Num> >
     zero() {
-    return Imaginary<Number>(0);
+    return Imaginary<Num>(0);
   }
 
   // one
 
-  template <typename Number, typename T >
+  template <typename Num, typename T >
   typename std::enable_if<
-    std::is_same<T, Imaginary<Number>>::value,
-    Imaginary<Number>
+    std::is_same<T, Imaginary<Num>>::value,
+    Imaginary<Num>
   >
     one() {
-    return Imaginary<Number>(1);
+    return Imaginary<Num>(1);
   }
 
 
   // real(z)
 
-  template <typename Number>
-  inline Number real(const Imaginary<Number>& z) {
+  template <typename Num>
+  inline Num real(const Imaginary<Num>& z) {
     return 0;
   }
 
   // imag(z)
 
-  template <typename Number>
-  inline Number imag(const Imaginary<Number>& z) {
+  template <typename Num>
+  inline Num imag(const Imaginary<Num>& z) {
     return z.value();
   }
 
   // arg(z)  -  this is pi/2, but let the std library calculate
   //            since we don't know data type
 
-  template <typename Number>
-  inline Number arg(const Imaginary<Number>& z) {
+  template <typename Num>
+  inline Num arg(const Imaginary<Num>& z) {
     using std::arg;
-    std::complex<Number> dummy(0, 1);
+    std::complex<Num> dummy(0, 1);
     return arg(dummy);
   }
 
@@ -500,26 +500,26 @@ namespace mathq {
   //             or (INFINITY, -0). The sign of the imaginary (zero) component
   //             is the sign of std::imag(z).
 
-  template <typename Number>
-  inline std::complex<Number> proj(const Imaginary<Number>& z) {
+  template <typename Num>
+  inline std::complex<Num> proj(const Imaginary<Num>& z) {
     using std::proj;
-    std::complex<Number> c(0, z.value());
+    std::complex<Num> c(0, z.value());
     return proj(c);
   }
 
 
   // abs(z)
 
-  template <typename Number>
-  inline Number abs(const Imaginary<Number>& z) {
+  template <typename Num>
+  inline Num abs(const Imaginary<Num>& z) {
     using std::abs;
     return abs(z.value());
   }
 
   // normsqr(z) -
 
-  template <typename Number>
-  inline Number normsqr(const Imaginary<Number>& z) {
+  template <typename Num>
+  inline Num normsqr(const Imaginary<Num>& z) {
     return z.value() * z.value();
   }
 
@@ -527,9 +527,9 @@ namespace mathq {
   // conj(z)  - we go against C++  convention
   //            Note: C++ std lib returns complex number for conj(real)
 
-  template <typename Number>
-  inline Imaginary<Number>
-    conj(const Imaginary<Number>& z) {
+  template <typename Num>
+  inline Imaginary<Num>
+    conj(const Imaginary<Num>& z) {
     return -z;
   }
 
@@ -537,9 +537,9 @@ namespace mathq {
 
   // complex conjugate OPERTOR ~
 
-  template <typename Number, typename = std::enable_if_t<std::is_floating_point<Number>::value>>
-  Imaginary<Number>
-    operator~(const Imaginary<Number>& z) {
+  template <typename Num, typename = std::enable_if_t<std::is_floating_point<Num>::value>>
+  Imaginary<Num>
+    operator~(const Imaginary<Num>& z) {
     return conj(z);
   }
 
@@ -547,49 +547,49 @@ namespace mathq {
 
   // polar(z)
 
-  template <typename Number>
-  inline std::complex<Number>
-    polar(const Imaginary<Number>& z) {
+  template <typename Num>
+  inline std::complex<Num>
+    polar(const Imaginary<Num>& z) {
     return std::complex(abs(z), arg(z));
   }
 
   // exp(z)
 
-  template <typename Number>
-  inline std::complex<Number>
-    exp(const Imaginary<Number>& z) {
-    const Number& val = z.value();
+  template <typename Num>
+  inline std::complex<Num>
+    exp(const Imaginary<Num>& z) {
+    const Num& val = z.value();
     return std::complex(cos(val), sin(val));
   }
 
   // log(z)
 
-  template <typename Number>
-  inline std::complex<Number>
-    log(const Imaginary<Number>& z) {
+  template <typename Num>
+  inline std::complex<Num>
+    log(const Imaginary<Num>& z) {
     using std::arg;
     using std::log;
-    const Number& val = z.value();
+    const Num& val = z.value();
     return std::complex(log(val), arg(z));
   }
 
 
   // log10
-  template <typename Number>
-  std::complex<Number>
-    log10(const Imaginary<Number>& z) {
+  template <typename Num>
+  std::complex<Num>
+    log10(const Imaginary<Num>& z) {
     using std::log;
-    const Number A0 = 1 / log(Number(10));
+    const Num A0 = 1 / log(Num(10));
     return A0 * log(z);
   }
 
 
   // log2
-  template <typename Number>
-  std::complex<Number>
-    log2(const Imaginary<Number>& z) {
+  template <typename Num>
+  std::complex<Num>
+    log2(const Imaginary<Num>& z) {
     using std::log;
-    const Number A0 = 1 / log(Number(2));
+    const Num A0 = 1 / log(Num(2));
     return A0 * log(z);
   }
 
@@ -653,81 +653,81 @@ namespace mathq {
 
 
   // sqrt
-  template <typename Number>
-  std::complex<Number>
-    sqrt(const Imaginary<Number>& z) {
+  template <typename Num>
+  std::complex<Num>
+    sqrt(const Imaginary<Num>& z) {
     using std::sqrt;
-    const Number A0 = sqrt(z.value() / 2);
-    return A0 * std::complex<Number>(1, 1);
+    const Num A0 = sqrt(z.value() / 2);
+    return A0 * std::complex<Num>(1, 1);
   }
 
 
   // sqr
-  template <typename Number>
-  Number sqr(const Imaginary<Number>& z) {
+  template <typename Num>
+  Num sqr(const Imaginary<Num>& z) {
     return -z.value() * z.value();
   }
 
   // cube
-  template <typename Number>
-  Imaginary<Number> cube(const Imaginary<Number>& z) {
-    return Imaginary<Number>(-z.value() * z.value() * z.value());
+  template <typename Num>
+  Imaginary<Num> cube(const Imaginary<Num>& z) {
+    return Imaginary<Num>(-z.value() * z.value() * z.value());
   }
 
 
 
 
   // sin
-  template <typename Number>
-  Imaginary<Number>
-    sin(const Imaginary<Number>& z) {
+  template <typename Num>
+  Imaginary<Num>
+    sin(const Imaginary<Num>& z) {
     using std::sin;
-    return Imaginary<Number>(sin(z.value()));
+    return Imaginary<Num>(sin(z.value()));
   }
 
   // cos
-  template <typename Number>
-  Number cos(const Imaginary<Number>& z) {
+  template <typename Num>
+  Num cos(const Imaginary<Num>& z) {
     using std::cos;
     return cos(z.value());
   }
 
   // tan
-  template <typename Number>
-  Imaginary<Number>
-    tan(const Imaginary<Number>& z) {
+  template <typename Num>
+  Imaginary<Num>
+    tan(const Imaginary<Num>& z) {
     using std::tan;
-    return Imaginary<Number>(tan(z.value()));
+    return Imaginary<Num>(tan(z.value()));
   }
 
   // asin
-  template <typename Number>
-  Imaginary<Number>
-    asin(const Imaginary<Number>& z) {
+  template <typename Num>
+  Imaginary<Num>
+    asin(const Imaginary<Num>& z) {
     using std::asin;
-    return Imaginary<Number>(asin(z.value()));
+    return Imaginary<Num>(asin(z.value()));
   }
 
   // acos
-  template <typename Number>
-  std::complex<Number>
-    acos(const Imaginary<Number>& z) {
+  template <typename Num>
+  std::complex<Num>
+    acos(const Imaginary<Num>& z) {
     using std::acos;
     return acos(Complex(z));
   }
 
   // atan
-  template <typename Number>
-  std::complex<Number>
-    atan(const Imaginary<Number>& z) {
+  template <typename Num>
+  std::complex<Num>
+    atan(const Imaginary<Num>& z) {
     using std::atan;
     return atan(Complex(z));
   }
 
   // atan2
-  template <typename Number>
-  std::complex<Number>
-    atan2(const Imaginary<Number>& z) {
+  template <typename Num>
+  std::complex<Num>
+    atan2(const Imaginary<Num>& z) {
     using std::atan2;
     return atan2(z.value(), 0);
   }
@@ -735,49 +735,49 @@ namespace mathq {
 
 
   // sinh
-  template <typename Number>
-  Imaginary<Number>
-    sinh(const Imaginary<Number>& z) {
+  template <typename Num>
+  Imaginary<Num>
+    sinh(const Imaginary<Num>& z) {
     using std::sinh;
-    return Imaginary<Number>(sinh(z.value()));
+    return Imaginary<Num>(sinh(z.value()));
   }
 
   // cosh
-  template <typename Number>
-  Number cosh(const Imaginary<Number>& z) {
+  template <typename Num>
+  Num cosh(const Imaginary<Num>& z) {
     using std::cosh;
     return cosh(z.value());
   }
 
   // tanh
-  template <typename Number>
-  Imaginary<Number>
-    tanh(const Imaginary<Number>& z) {
+  template <typename Num>
+  Imaginary<Num>
+    tanh(const Imaginary<Num>& z) {
     using std::tanh;
-    return Imaginary<Number>(tanh(z.value()));
+    return Imaginary<Num>(tanh(z.value()));
   }
 
 
   // asinh
-  template <typename Number>
-  std::complex<Number>
-    asinh(const Imaginary<Number>& z) {
+  template <typename Num>
+  std::complex<Num>
+    asinh(const Imaginary<Num>& z) {
     using std::asinh;
     return asinh(Complex(z));
   }
 
   // acosh
-  template <typename Number>
-  std::complex<Number>
-    acosh(const Imaginary<Number>& z) {
+  template <typename Num>
+  std::complex<Num>
+    acosh(const Imaginary<Num>& z) {
     using std::acosh;
     return acosh(Complex(z));
   }
 
   // atanh
-  template <typename Number>
-  std::complex<Number>
-    atanh(const Imaginary<Number>& z) {
+  template <typename Num>
+  std::complex<Num>
+    atanh(const Imaginary<Num>& z) {
     using std::atanh;
     return atanh(Complex(z));
   }
@@ -787,38 +787,38 @@ namespace mathq {
 
   // imaginary rounding
 
-  template <typename Number>
-  Imaginary<Number> round(const Imaginary<Number>& x) {
+  template <typename Num>
+  Imaginary<Num> round(const Imaginary<Num>& x) {
     using std::round;
-    return Imaginary<Number>(round(x.value()));
+    return Imaginary<Num>(round(x.value()));
   }
 
   // Imaginary - sgn
-  template <typename Number>
-  Imaginary<Number> sgn(const Imaginary<Number>& z) {
-    return Imaginary<Number>(sgn(z.value()));
+  template <typename Num>
+  Imaginary<Num> sgn(const Imaginary<Num>& z) {
+    return Imaginary<Num>(sgn(z.value()));
   }
 
   // Imaginary - floor
-  template <typename Number>
-  Imaginary<Number> floor(const Imaginary<Number>& z) {
+  template <typename Num>
+  Imaginary<Num> floor(const Imaginary<Num>& z) {
     using std::floor;
-    return Imaginary<Number>(floor(z.value()));
+    return Imaginary<Num>(floor(z.value()));
   }
 
   // Imaginary - ceil
-  template <typename Number>
-  Imaginary<Number> ceil(const Imaginary<Number>& z) {
+  template <typename Num>
+  Imaginary<Num> ceil(const Imaginary<Num>& z) {
     using std::ceil;
-    return Imaginary<Number>(ceil(z.value()));
+    return Imaginary<Num>(ceil(z.value()));
   }
 
 
 
   // Imaginary - roundzero
-  template <typename Number>
-  Imaginary<Number> roundzero(const Imaginary<Number>& z, const Number tolerance = Functions<Number>::tolerance) {
-    return Imaginary<Number>(roundzero(z.value(), tolerance));
+  template <typename Num>
+  Imaginary<Num> roundzero(const Imaginary<Num>& z, const Num tolerance = Functions<Num>::tolerance) {
+    return Imaginary<Num>(roundzero(z.value(), tolerance));
   }
 
   // Imaginary - approx

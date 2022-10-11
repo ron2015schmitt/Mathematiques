@@ -6,7 +6,7 @@
 
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 
   const double pi = M_PI;
   std::string myname = argv[0];
@@ -64,11 +64,11 @@ int main(int argc, char *argv[]) {
     TLDISP(s4);
     Scalar<double> s5 = 4.4;
     TLDISP(s5);
-    Scalar<double> s6 = {4.4};
+    Scalar<double> s6 = { 4.4 };
     TLDISP(s6);
-    Scalar<double> s7{4.4};
+    Scalar<double> s7{ 4.4 };
     TLDISP(s7);
-    Scalar<double> s8({4.4});
+    Scalar<double> s8({ 4.4 });
     TLDISP(s8);
   }
 
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
   MOUT << bold.apply("Vector") << endl;
   {
     CR();
-    Vector<double> v{1.1, 2.2};
+    Vector<double> v{ 1.1, 2.2 };
     TLDISP(v);
     TLDISP(v(0));
     TLDISP(v.dims());
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Vector<double, 2> v{1, 2};
+    Vector<double, 2> v{ 1, 2 };
     TLDISP(v);
     Vector<double, 2> v2;
     v2 = -v;
@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
     Matrix<double> m0;
     TLDISP(m0);
 
-    Matrix<double> m{{1, 2}, {3, 4}};
+    Matrix<double> m{ {1, 2}, {3, 4} };
     TLDISP(m);
     TLDISP(m(0, 0));
     TLDISP(m.Nrows());
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
   }
   CR();
   {
-    Matrix<double, 2, 2> m{{1.1, 2.2}, {3.3, 4.4}};
+    Matrix<double, 2, 2> m{ {1.1, 2.2}, {3.3, 4.4} };
     TLDISP(m);
     Matrix<double, 2, 2> m2;
     m2 = -m;
@@ -131,10 +131,10 @@ int main(int argc, char *argv[]) {
   MOUT << bold.apply("MultiArray -- Initializer lists") << endl;
   {
     CR();
-    std::initializer_list<double> x1{1, 2};
+    std::initializer_list<double> x1{ 1, 2 };
     TLDISP(x1);
 
-    std::initializer_list<std::initializer_list<double>> x2{{1, 2}, {3, 4}};
+    std::initializer_list<std::initializer_list<double>> x2{ {1, 2}, {3, 4} };
     TLDISP(x2);
 
     // NestedInitializerList<double, 1> y1{1, 2};
@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
     TLDISP(t1.total_size());
     TLDISP(t1.depth());
     TLDISP(t1);
-    Dimensions dims({3, 2, 5});
+    Dimensions dims({ 3, 2, 5 });
     MultiArray<double, 3> t2(dims);
     TLDISP(t2.dims());
     TLDISP(t2);
@@ -177,20 +177,20 @@ int main(int argc, char *argv[]) {
     }
     TLDISP(t2);
 
-    MultiArray<double, 1> t3{1, 2, 3};
+    MultiArray<double, 1> t3{ 1, 2, 3 };
     TLDISP(t3.dims());
     TLDISP(t3.element_dims());
     TLDISP(t3);
 
 
-    MultiArray<double, 2> t4{{1.1, 2.2}, {3.3, 4.4}};
+    MultiArray<double, 2> t4{ {1.1, 2.2}, {3.3, 4.4} };
     TLDISP(t4.dims());
     TLDISP(t4);
 
     MultiArray<double, 3> t5{
         {{0, 1, 2, 3, 4}, {10, 11, 12, 13, 14}},
         {{100, 101, 102, 103, 104}, {110, 111, 112, 113, 114}},
-        {{200, 201, 202, 203, 204}, {210, 211, 212, 213, 214}}};
+        {{200, 201, 202, 203, 204}, {210, 211, 212, 213, 214}} };
 
     TLDISP(t5.dims());
     TLDISP(t5(2, 1, 3));
@@ -200,7 +200,7 @@ int main(int argc, char *argv[]) {
 
   CR();
   {
-    MultiArray<double, 2> t{{1.1, 2.2}, {3.3, 4.4}};
+    MultiArray<double, 2> t{ {1.1, 2.2}, {3.3, 4.4} };
     TLDISP(t);
     MultiArray<double, 2> t2;
     t2 = -t;
@@ -227,7 +227,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Scalar<Scalar<double>> s{{1.1}};
+    ECHO(Scalar<Scalar<double>> s{ {1.1} });
     TLDISP(s);
     TLDISP(s());
     TLDISP(s()());
@@ -241,7 +241,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Scalar<Vector<double>> s{{1., 2., 3.}};
+    ECHO(Scalar<Vector<double>> s{ {1., 2., 3.} });
     TLDISP(s);
     TLDISP(s());
     TLDISP(s[0]);
@@ -251,13 +251,16 @@ int main(int argc, char *argv[]) {
     TLDISP(s.size());
     TLDISP(s.recursive_dims());
     Scalar<Vector<double>> s2;
-    s2 = -s;
+    OUTPUT("HERE");
+    ECHO(s2 = s);
+    OUTPUT("HERE2");
     TLDISP(s2);
+    OUTPUT("HERE3");
   }
 
   {
     CR();
-    Scalar<Matrix<double>> s{{{1, 2}, {3, 4}}};
+    ECHO(Scalar<Matrix<double>> s{ {{1, 2}, {3, 4}} });
     TLDISP(s);
     TLDISP(s()(0, 1));
     TLDISP(s.dims());
@@ -271,7 +274,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Scalar<MultiArray<double, 2>> s{{{1, 2}, {3, 4}}};
+    ECHO(Scalar<MultiArray<double, 2>> s{ {{1, 2}, {3, 4}} });
     TLDISP(s);
     TLDISP(s());
     TLDISP(s()(0, 1));
@@ -292,7 +295,7 @@ int main(int argc, char *argv[]) {
   MOUT << bold.apply("Two-Level Vector tests") << endl;
   {
     CR();
-    Vector<Scalar<double>> v{{1.}, {2.}};
+    ECHO(Vector<Scalar<double>> v{ {1.}, {2.} });
     TLDISP(v);
     TLDISP(v(0));
     TLDISP(v(0)());
@@ -306,7 +309,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Vector<Vector<double>> v{{1., 2., 3.}, {4., 5., 6.}};
+    ECHO(Vector<Vector<double>> v{ {1., 2., 3.}, {4., 5., 6.} });
     TLDISP(v);
     TLDISP(v(0));
     TLDISP(v(0)(2));
@@ -320,7 +323,7 @@ int main(int argc, char *argv[]) {
   }
   {
     CR();
-    Vector<Matrix<double>> v{{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}}};
+    ECHO(Vector<Matrix<double>> v{ {{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}} });
     TLDISP(v);
     TLDISP(v(0));
     TLDISP(v(1)(0, 1));
@@ -334,7 +337,7 @@ int main(int argc, char *argv[]) {
   }
   {
     CR();
-    Vector<MultiArray<double, 2>> v{{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}}};
+    ECHO(Vector<MultiArray<double, 2>> v{ {{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}, {{9, 10}, {11, 12}} });
     TLDISP(v);
     TLDISP(v(0));
     TLDISP(v(2)(1, 1));
@@ -353,8 +356,7 @@ int main(int argc, char *argv[]) {
   MOUT << bold.apply("Two-Level Matrix tests") << endl;
   {
     CR();
-    Matrix<Scalar<double>> m{{{1}, {2}}, {{3}, {4}}};
-    ;
+    ECHO(Matrix<Scalar<double>> m{ {{1}, {2}}, {{3}, {4}} });
     TLDISP(m);
     TLDISP(m(0, 0));
     TLDISP(m(0, 0)());
@@ -369,7 +371,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Matrix<Vector<double>> m{{{1, 2, 3}, {4, 5, 6}}, {{7, 8, 9}, {10, 11, 12}}};
+    ECHO(Matrix<Vector<double>> m{ {{1, 2, 3}, {4, 5, 6}}, {{7, 8, 9}, {10, 11, 12}} });
     TLDISP(m);
     TLDISP(m(0, 0));
     TLDISP(m(0, 0)(1));
@@ -385,9 +387,9 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Matrix<Matrix<double>> m{
+    ECHO(Matrix<Matrix<double>> m{
         {{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}},
-        {{{9, 10}, {11, 12}}, {{13, 14}, {15, 16}}}};
+        {{{9, 10}, {11, 12}}, {{13, 14}, {15, 16}}} });
     TLDISP(m);
     TLDISP(m(0, 0));
     TLDISP(m(0, 0)(1, 1));
@@ -402,12 +404,12 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Matrix<MultiArray<double, 3>, 2, 2> m1;
+    ECHO(Matrix<MultiArray<double, 3>, 2, 2> m1);
     TLDISP(m1);
     TLDISP(m1.dims());
     TLDISP(m1.size());
     TLDISP(m1.recursive_dims());
-    Dimensions template_dims({2, 3, 2});
+    Dimensions template_dims({ 2, 3, 2 });
 
     for (int i = 0; i < m1.dims()[0]; i++) {
       for (int j = 0; j < m1.dims()[1]; j++) {
@@ -429,7 +431,7 @@ int main(int argc, char *argv[]) {
     TLDISP(m1.recursive_dims());
 
 
-    Matrix<MultiArray<double, 3>> m2;
+    ECHO(Matrix<MultiArray<double, 3>> m2);
     MOUT << "m2 = -m1;" << endl;
     m2 = -m1;
     TLDISP(m2);
@@ -437,7 +439,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    Matrix<MultiArray<double, 3>, 2, 2> m1{{{{{-0, -1},
+    ECHO(Matrix<MultiArray<double, 3>, 2, 2> m1{ {{{{-0, -1},
                                           {-10, -11},
                                           {-20, -21}},
                                          {{-100, -101},
@@ -460,7 +462,7 @@ int main(int argc, char *argv[]) {
                                           {-11020, -11021}},
                                          {{-11100, -11101},
                                           {-11110, -11111},
-                                          {-11120, -11121}}}}};
+                                          {-11120, -11121}}}} });
 
     TLDISP(m1);
     TLDISP(m1.dims());
@@ -478,11 +480,11 @@ int main(int argc, char *argv[]) {
   MOUT << bold.apply("Two-Level MultiArray tests") << endl;
   {
     CR();
-    MultiArray<Scalar<double>, 2> t;
+    ECHO(MultiArray<Scalar<double>, 2> t);
     TLDISP(t);
     TLDISP(t.dims());
     TLDISP(t.recursive_dims());
-    Dimensions template_dims({2, 2});
+    Dimensions template_dims({ 2, 2 });
     t.resize(template_dims);
     t(0, 0) = 1;
     t(0, 1) = 2;
@@ -496,7 +498,7 @@ int main(int argc, char *argv[]) {
   {
 
     CR();
-    MultiArray<Scalar<double>, 2> t{{{1}, {2}}, {{3}, {4}}};
+    ECHO(MultiArray<Scalar<double>, 2> t{ {{1}, {2}}, {{3}, {4}} });
     TLDISP(t);
     TLDISP(t(1, 0));
     TLDISP(t(1, 0)());
@@ -525,7 +527,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    MultiArray<Vector<double>, 2> t{{{1, 2, 3}, {4, 5, 6}}, {{7, 8, 9}, {10, 11, 12}}};
+    ECHO(MultiArray<Vector<double>, 2> t{ {{1, 2, 3}, {4, 5, 6}}, {{7, 8, 9}, {10, 11, 12}} });
     TLDISP(t);
     TLDISP(t(0, 0));
     TLDISP(t(0, 0)(1));
@@ -539,9 +541,9 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    MultiArray<Matrix<double, 2, 2>, 2> m{
+    ECHO(MultiArray<Matrix<double, 2, 2>, 2> m{
         {{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}},
-        {{{9, 10}, {11, 12}}, {{13, 14}, {15, 16}}}};
+        {{{9, 10}, {11, 12}}, {{13, 14}, {15, 16}}} });
     TLDISP(m);
     TLDISP(m(0, 0));
     TLDISP(m(0, 0)(1, 1));
@@ -556,14 +558,14 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    MultiArray<MultiArray<double, 3>, 2> m1;
+    ECHO(MultiArray<MultiArray<double, 3>, 2> m1);
     TLDISP(m1);
     TLDISP(m1.dims());
     TLDISP(m1.size());
     TLDISP(m1.recursive_dims());
-    Dimensions tdims1({2, 2});
+    Dimensions tdims1({ 2, 2 });
     m1.resize(tdims1);
-    Dimensions tdims2({2, 3, 2});
+    Dimensions tdims2({ 2, 3, 2 });
 
     for (int i = 0; i < m1.dims()[0]; i++) {
       for (int j = 0; j < m1.dims()[1]; j++) {
@@ -593,7 +595,7 @@ int main(int argc, char *argv[]) {
 
   {
     CR();
-    MultiArray<MultiArray<double, 3>, 2> m1{{{{{-0, -1},
+    ECHO(MultiArray<MultiArray<double, 3>, 2> m1{ {{{{-0, -1},
                                        {-10, -11},
                                        {-20, -21}},
                                       {{-100, -101},
@@ -616,7 +618,7 @@ int main(int argc, char *argv[]) {
                                        {-11020, -11021}},
                                       {{-11100, -11101},
                                        {-11110, -11111},
-                                       {-11120, -11121}}}}};
+                                       {-11120, -11121}}}} });
 
     TLDISP(m1);
     TLDISP(m1.dims());

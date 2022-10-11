@@ -8,18 +8,18 @@ namespace mathq {
 
 
   /********************************************************************
-   * MatrixRepRow<Number>        -- variable size matrix (valarray)
-   *                        Number  = type for elements
-   * MatrixRepRow<Number,NR>    -- fixed number of rows (valarray)
+   * MatrixRepRow<Num>        -- variable size matrix (valarray)
+   *                        Num  = type for elements
+   * MatrixRepRow<Num,NR>    -- fixed number of rows (valarray)
    *                        NR = number of rows
-   * MatrixRepRow<Number,NR,NC> -- fixed number of rows and cols (array)
+   * MatrixRepRow<Num,NR,NC> -- fixed number of rows and cols (array)
    *                        NC = number of cols
    ********************************************************************
    */
 
-   //, typename = EnableIf<NumberTrait<Number>::value>
-  template <typename Number, int NR, int NC >
-  class MatrixRepRow : public ExpressionRW<MatrixRepRow<Number, NR, NC>, Number, Number, 1, 2> {
+   //, typename = EnableIf<NumberTrait<Num>::value>
+  template <typename Num, int NR, int NC >
+  class MatrixRepRow : public ExpressionRW<MatrixRepRow<Num, NR, NC>, Num, Num, 1, 2> {
 
   public:
     constexpr static int rank = 2;
@@ -28,28 +28,28 @@ namespace mathq {
     static constexpr bool resizable = (NR*NC==0) ? true : false;
     static constexpr bool resizableRows = (NR==0) ? true : false;
     static constexpr bool resizableCols = (NC==0) ? true : false;
-    typedef MatrixRepRow<Number, NR, NC> ConcreteType;
-    typedef Number ElementType;
-    typedef Number NumberType;
-    typedef typename SimpleNumberTrait<Number>::Type OrderedNumberType;
+    typedef MatrixRepRow<Num, NR, NC> ConcreteType;
+    typedef Num ElementType;
+    typedef Num NumberType;
+    typedef typename SimpleNumberTrait<Num>::Type SimpleNumberType;
 
 
     // if either NR or NC is 0, then we use valarray
-    typedef typename ArrayTypeTrait<Number, NC>::Type MyArrayType;
+    typedef typename ArrayTypeTrait<Num, NC>::Type MyArrayType;
 
     // *********************** OBJECT DATA ***********************************
     //
     // do NOT declare any other storage.
     // keep the instances lightweight
   private:
-    const Number zero_ = 0;
-    Number dummy_ = 0;
+    const Num zero_ = 0;
+    Num dummy_ = 0;
     MyArrayType data_;
 
     size_t Nrows_;
     size_t Ncols_;
 
-    static_assert(NumberTrait<Number>::value,
+    static_assert(NumberTrait<Num>::value,
       "class MatrixRepRow can only have numbers as elements, ie not vectors, matrices etc.");
 
 
@@ -61,14 +61,14 @@ namespace mathq {
   public:
 
     // -------------------  DEFAULT  CONSTRUCTOR --------------------
-    explicit MatrixRepRow<Number, NR, NC>() {
+    explicit MatrixRepRow<Num, NR, NC>() {
       size_t NN = NR*NC;
       resize(NR, NC);
       *this = 0;
     }
 
-    // -------------------  Number value --------------------
-    explicit MatrixRepRow<Number, NR, NC>(const Number& value) {
+    // -------------------  Num value --------------------
+    explicit MatrixRepRow<Num, NR, NC>(const Num& value) {
       size_t NN = NR*NC;
       resize(NR, NC);
       *this = value;
@@ -77,7 +77,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = NR*NC, EnableIf<(NN > 0)> = 0>
 
-    explicit MatrixRepRow<Number, NR, NC>(const Vector<Number>& v) {
+      explicit MatrixRepRow<Num, NR, NC>(const Vector<Num>& v) {
       resize(NR, NC);
       *this = v;
     }
@@ -86,7 +86,7 @@ namespace mathq {
     // -------------------  (Column) Vector --------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixRepRow<Number, NR, NC>(const Vector<Number>& v, const size_t Nr) {
+    explicit MatrixRepRow<Num, NR, NC>(const Vector<Num>& v, const size_t Nr) {
       const size_t Nc = v.size();
       resize(Nr, Nc);  // this a *request* to resize
       *this = v;
@@ -95,7 +95,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixRepRow<Number, NR, NC>(const size_t Nr, const size_t Nc) {
+    explicit MatrixRepRow<Num, NR, NC>(const size_t Nr, const size_t Nc) {
       resize(Nr, Nc);
       *this = 0;
     }
@@ -103,7 +103,7 @@ namespace mathq {
     // --------------------- variable-size CONSTRUCTOR ---------------------
     template<size_t NN = NR*NC, EnableIf<NN == 0> = 0>
 
-    explicit MatrixRepRow<Number, NR, NC>(const size_t Nr, const size_t Nc, const Number& value) {
+    explicit MatrixRepRow<Num, NR, NC>(const size_t Nr, const size_t Nc, const Num& value) {
       resize(Nr, Nc);
       *this = value;
     }
@@ -115,7 +115,7 @@ namespace mathq {
     //************************** DESTRUCTOR ******************************
     //**********************************************************************
 
-    ~MatrixRepRow<Number, NR, NC>() {
+    ~MatrixRepRow<Num, NR, NC>() {
       //remove from directory
     }
 
@@ -144,9 +144,6 @@ namespace mathq {
     }
 
 
-    bool isExpression(void) const {
-      return false;
-    }
     MultiArrays getEnum() const {
       return T_MATRIX;
     }
@@ -201,7 +198,7 @@ namespace mathq {
     //**********************************************************************
     // --------------------- resize() --------------------
 
-    MatrixRepRow<Number, NR, NC>& resize(const int Nr, const int Nc) {
+    MatrixRepRow<Num, NR, NC>& resize(const int Nr, const int Nc) {
       Nrows_ = NR;
       Ncols_ = NC;
       if constexpr (resizableRows) {
@@ -221,14 +218,14 @@ namespace mathq {
 
     // -------------------------- resize(Dimensions) --------------------------------
 
-    MatrixRepRow<Number, NR, NC>& resize(const Dimensions dims) {
+    MatrixRepRow<Num, NR, NC>& resize(const Dimensions dims) {
       resize(dims[0], dims[1]);
       return *this;
     }
 
 
 
-    MatrixRepRow<Number, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
+    MatrixRepRow<Num, NR, NC>& resize(const std::vector<Dimensions>& deepdims_new) {
       std::vector<Dimensions> recursive_dims(deepdims_new);
       Dimensions newdims = recursive_dims[0];
       resize(newdims);
@@ -241,7 +238,7 @@ namespace mathq {
 
     // the new matrix has teh same # of entries but has different number of rows/columns
     // data is left unchanged
-    MatrixRepRow<Number, NR, NC>& reshape(const size_t nr, const size_t nc) {
+    MatrixRepRow<Num, NR, NC>& reshape(const size_t nr, const size_t nc) {
       const size_t nn = nr*nc;
       if (nn==size()) {
         if (nn == 0) {
@@ -258,14 +255,14 @@ namespace mathq {
     }
 
 
-    MatrixRepRow<Number, NR, NC>& transpose(void) {
+    MatrixRepRow<Num, NR, NC>& transpose(void) {
       return *this;
     }
 
     // -------------------------- adjoint() --------------------------------
 
-    template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixRepRow<Number, NR, NC>& >::type adjoint() {
+    template< typename T = Num >
+    typename std::enable_if<is_complex<T>::value, MatrixRepRow<Num, NR, NC>& >::type adjoint() {
       return *this;
     }
 
@@ -277,7 +274,7 @@ namespace mathq {
     // NOTE: indexes over [0] to [total_size()] and note return type
 
     // read
-    const Number dat(const size_t n)  const {
+    const Num dat(const size_t n)  const {
       return (*this)[n];
     }
 
@@ -286,7 +283,7 @@ namespace mathq {
 
 
     // "read": x.dat(Indices)
-    const Number dat(const Indices& inds)  const {
+    const Num dat(const Indices& inds)  const {
       size_t r = inds[0];
       size_t c = inds[1];
       return (*this)(r, c);
@@ -298,7 +295,7 @@ namespace mathq {
 
 
     // "read": x.dat(DeepIndices)
-    const Number dat(const DeepIndices& dinds)  const {
+    const Num dat(const DeepIndices& dinds)  const {
       const size_t mydepth = dinds.size();
       const Indices& inds = dinds[mydepth -depth_value];
       size_t r = inds[0];
@@ -312,7 +309,7 @@ namespace mathq {
     //**********************************************************************
 
     // read / write
-    Number& operator[](const size_t n) {
+    Num& operator[](const size_t n) {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -320,7 +317,7 @@ namespace mathq {
     }
 
     // read
-    const Number operator[](const size_t n)  const {
+    const Num operator[](const size_t n)  const {
       const Indices& inds = indices(n);;
       size_t r = inds[0];
       size_t c = inds[1];
@@ -357,11 +354,11 @@ namespace mathq {
     //***************MultiArray-style Element Access: A(r,c) *********************
     //**********************************************************************
 
-    Number& operator()(const size_t r, const size_t c) {
+    Num& operator()(const size_t r, const size_t c) {
       return data_[c];
     }
 
-    const Number operator()(const size_t r, const size_t c) const {
+    const Num operator()(const size_t r, const size_t c) const {
       return data_[c];
     }
 
@@ -372,13 +369,13 @@ namespace mathq {
     //**********************************************************************
 
 
-    MatrixRepRow<Number, NR, NC>& set(const Vector<Number>& v) {
+    MatrixRepRow<Num, NR, NC>& set(const Vector<Num>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return *this;
     }
-    MatrixRepRow<Number, NR, NC>& operator=(const Vector<Number>& v) {
+    MatrixRepRow<Num, NR, NC>& operator=(const Vector<Num>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -386,7 +383,7 @@ namespace mathq {
     }
 
     template <class X>
-    MatrixRepRow<Number, NR, NC>& operator=(const ExpressionR<X, Number, Number, 1, 1>& v) {
+    MatrixRepRow<Num, NR, NC>& operator=(const ExpressionR<X, Num, Num, 1, 1>& v) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
@@ -394,22 +391,22 @@ namespace mathq {
     }
 
 
-    Vector<Number>& get() const {
-      Vector<Number>& v = *(new Vector<Number>(data_.size()));
+    Vector<Num>& get() const {
+      Vector<Num>& v = *(new Vector<Num>(data_.size()));
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = v[k];
       }
       return v;
     }
 
-    MatrixRepRow<Number, NR, NC>& operator=(const Number& value) {
+    MatrixRepRow<Num, NR, NC>& operator=(const Num& value) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = value;
       }
       return *this;
     }
 
-    MatrixRepRow<Number, NR, NC>& operator=(const MatrixRepRow<Number, NR, NC>& b) {
+    MatrixRepRow<Num, NR, NC>& operator=(const MatrixRepRow<Num, NR, NC>& b) {
       for (size_t k = 0; k < data_.size(); k++) {
         data_[k] = b[k];
       }
@@ -424,7 +421,7 @@ namespace mathq {
     //----------------- .roundzero(tol) ---------------------------
     // NOTE: in-place
 
-    MatrixRepRow<Number, NR, NC>& roundzero(OrderedNumberType tolerance = Functions<OrderedNumberType>::tolerance) {
+    MatrixRepRow<Num, NR, NC>& roundzero(SimpleNumberType tolerance = Functions<SimpleNumberType>::tolerance) {
       return *this;
     }
 
@@ -432,8 +429,8 @@ namespace mathq {
     //----------------- .conj() ---------------------------
     // NOTE: in-place
 
-    template< typename T = Number >
-    typename std::enable_if<is_complex<T>::value, MatrixRepRow<Number, NR, NC>& >::type conj() {
+    template< typename T = Num >
+    typename std::enable_if<is_complex<T>::value, MatrixRepRow<Num, NR, NC>& >::type conj() {
       return *this;
     }
 
@@ -447,7 +444,7 @@ namespace mathq {
       using namespace display;
       std::string s = "MatrixRepRow";
       s += StyledString::get(ANGLE1).get();
-      s += getTypeName(Number());
+      s += getTypeName(Num());
       if (NR!=0) {
         s += StyledString::get(COMMA).get();
         s += "NR=";
@@ -480,7 +477,7 @@ namespace mathq {
     // stream << operator
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const MatrixRepRow<Number, NR, NC>& m) {
+    friend std::ostream& operator<<(std::ostream& stream, const MatrixRepRow<Num, NR, NC>& m) {
       using namespace display;
 
       Style& style = FormatDataMatrix::style_for_punctuation;
@@ -515,8 +512,8 @@ namespace mathq {
     }
 
 
-    //template <typename Number>	
-    friend inline std::istream& operator>>(const std::string s, MatrixRepRow<Number, NR, NC>& m2) {
+    //template <typename Num>	
+    friend inline std::istream& operator>>(const std::string s, MatrixRepRow<Num, NR, NC>& m2) {
       std::istringstream st(s);
       return (st >> m2);
     }
@@ -524,7 +521,7 @@ namespace mathq {
 
     // stream >> operator
 
-    friend std::istream& operator>>(std::istream& stream, MatrixRepRow<Number, NR, NC>& m2) {
+    friend std::istream& operator>>(std::istream& stream, MatrixRepRow<Num, NR, NC>& m2) {
       return stream;
     }
 

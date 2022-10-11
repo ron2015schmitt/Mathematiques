@@ -13,15 +13,6 @@ namespace mathq {
   // ***************************************************************************
 
 
-  template<typename T, T val, size_t N>
-  constexpr auto array_of_one_value() {
-    std::array<T, N> A;
-    for (size_t i = 0; i < N; ++i) {
-      A[i] = val;
-    }
-    return A;
-  }
-
 
   constexpr bool is_all_zeros(std::initializer_list<size_t> list) {
     for (auto elem : list) {
@@ -37,19 +28,45 @@ namespace mathq {
     return true;
   }
 
+
+  template<typename T, size_t N, T val>
+  constexpr auto array_of_one_value() {
+    std::array<T, N> A;
+    for (size_t i = 0; i < N; ++i) {
+      A[i] = val;
+    }
+    return A;
+  }
+
+  template<typename T>
+  auto list_of_one_value(const T&& val, const size_t N) {
+    std::list<T> A;
+    for (size_t i = 0; i < N; ++i) {
+      A.push_back(val);
+    }
+    return A;
+  }
+
+
   template<typename T, size_t N>
   constexpr T compile_time_summation(const std::array<T, N>& A) {
-    T sum{T(0)};
+    T sum{ T(0) };
     for (size_t i = 0; i < N; ++i) {
       sum += A[i];
     }
     return sum;
   }
 
+  template<typename T, size_t N>
+  constexpr bool is_all_zeros(const std::array<T, N>& A) {
+    return (compile_time_summation(A) == 0);
+  }
+
+
   // note this returns 1 for arrays of size == 0
   template<typename T, size_t N>
   constexpr T compile_time_product(const std::array<T, N>& A) {
-    T product{T(1)};
+    T product{ T(1) };
     for (size_t i = 0; i < N; ++i) {
       product *= A[i];
     }
@@ -78,25 +95,32 @@ namespace mathq {
       return 0;
     }
     constexpr std::array<size_t, N> A = { (static_cast<size_t>(ints))... };
-    return compile_time_product<size_t,N>(A);
+    return compile_time_product<size_t, N>(A);
   }
 
 
 
   template<typename U> requires (std::is_integral<U>::value)
     size_t signed_index_to_unsigned_index(const U& index, const size_t& N) {
-      U temp = index;
-      while (temp < U(0)) {
-        temp += U(N);
-      }
-      return size_t(temp);
+    U temp = index;
+    while (temp < U(0)) {
+      temp += U(N);
     }
+    return size_t(temp);
+  }
+
+
+
 
   //*******************************************************
-  //          Typedefs
+  //          extended
   //*******************************************************
 
   using extended = long double;
+
+  //*******************************************************
+  //          NullType
+  //*******************************************************
 
   class NullType {
   public:
@@ -118,19 +142,6 @@ namespace mathq {
 
   };
 
-  // ***************************************************************************
-  // Materialize 
-  //
-  // This returns a concrete tensor of type specified by paramters.
-  // Useful when working with multiarray expressions.
-  // NOTE: not needed since the Great Refactoring
-  // ***************************************************************************
-
-  template <typename Element, size_t rank, size_t... ints>
-  class Materialize {
-  public:
-    using Type = MultiArray<Element, rank, ints...>;
-  };
 
 
   // ***************************************************************************
@@ -142,14 +153,14 @@ namespace mathq {
   class IsComplex {
   public:
     constexpr static bool value = false;
-    using OrderedNumberType = void;
+    using SimpleNumberType = void;
   };
 
-  template <typename SimpleNumber>
-  class IsComplex<std::complex<SimpleNumber>> {
+  template <typename SimpleNum>
+  class IsComplex<std::complex<SimpleNum>> {
   public:
     constexpr static bool value = true;
-    using OrderedNumberType = SimpleNumber;
+    using SimpleNumberType = SimpleNum;
   };
 
 
@@ -161,14 +172,14 @@ namespace mathq {
   class IsImaginary {
   public:
     constexpr static bool value = false;
-    using OrderedNumberType = void;
+    using SimpleNumberType = void;
   };
 
-  template <typename SimpleNumber>
-  class IsImaginary<mathq::Imaginary<SimpleNumber>> {
+  template <typename SimpleNum>
+  class IsImaginary<mathq::Imaginary<SimpleNum>> {
   public:
     constexpr static bool value = true;
-    using OrderedNumberType = SimpleNumber;
+    using SimpleNumberType = SimpleNum;
   };
 
   // ***************************************************************************
@@ -180,45 +191,85 @@ namespace mathq {
   class IsQuaternion {
   public:
     constexpr static bool value = false;
-    using OrderedNumberType = void;
+    using SimpleNumberType = void;
   };
 
-  template <typename SimpleNumber>
-  class IsQuaternion<mathq::Quaternion<SimpleNumber>> {
+  template <typename SimpleNum>
+  class IsQuaternion<mathq::Quaternion<SimpleNum>> {
   public:
     constexpr static bool value = true;
-    using OrderedNumberType = SimpleNumber;
+    using SimpleNumberType = SimpleNum;
   };
+
+
+
 
 
   // ***************************************************************************
-  //  IsMultiArrayOrExpression<T>
+  //  concept IsSimpleNumber<X>
+  //
+  // bool, integers, floating point
+  // ***************************************************************************
+
+  template <typename T>
+  concept IsSimpleNumber = std::is_integral_v<T> || std::is_floating_point_v<T>;
+
+
+  // ***************************************************************************
+  //  concept IsAdvancedNumber<X>
+  //
+  // complex, Imaginary, Quaternion
+  // ***************************************************************************
+
+  template <typename T>
+  concept IsAdvancedNumber = IsComplex<T>::value || IsImaginary<T>::value || IsQuaternion<T>::value;
+
+
+
+  // ***************************************************************************
+  // concept IsNumber<X>
+  //
+  // bool, integers, floating point
+  // complex, Imaginary, Quaternion
+  // ***************************************************************************
+
+  template <typename T>
+  concept IsNumber = IsSimpleNumber<T> || IsAdvancedNumber<T>;
+
+
+
+  // ***************************************************************************
+  //  IsReadableExpressionOrArray<X>
   //
   // MultiArrays and their Expressions
   // ***************************************************************************
 
-  template <typename T>
-  class IsMultiArrayOrExpression {
-  public:
-    constexpr static bool value = false;
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  bool readable_expression_test(const ExpressionR<X, Element, Num, depth, rank>& x) {
+    return true;
+  }
+
+  template <class X>
+  concept IsReadableExpressionOrArray = requires(X x) {
+    readable_expression_test(x);
   };
 
-  template <typename Element, size_t rank, size_t... ints>
-  class IsMultiArrayOrExpression<MultiArray<Element, rank, ints...>> {
-  public:
-    constexpr static bool value = true;
-  };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
-  class IsMultiArrayOrExpression<ExpressionR<Derived, Element, Number, depth, rank>> {
-  public:
-    constexpr static bool value = true;
-  };
+  // ***************************************************************************
+  //  IsWritableExpressionOrArray<X>
+  //
+  // MultiArrays and their Expressions
+  // ***************************************************************************
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
-  class IsMultiArrayOrExpression<ExpressionRW<Derived, Element, Number, depth, rank>> {
-  public:
-    constexpr static bool value = true;
+  template <class X, class Element, typename Num, size_t depth, size_t rank>
+  bool writable_expression_test(const ExpressionRW<X, Element, Num, depth, rank>& x) {
+    return true;
+  }
+
+
+  template <class X>
+  concept IsWritableExpressionOrArray = requires(X x) {
+    writable_expression_test(x);
   };
 
 
@@ -229,65 +280,145 @@ namespace mathq {
   // MultiArrays and their Expressions
   // ***************************************************************************
 
-  template <typename T>
-  class IsMultiArray {
-  public:
-    constexpr static bool value = false;
+  template <class T>
+  concept IsMultiArray = requires(T x) {
+    std::remove_cvref_t<T>::isNotExpression;
+      requires (IsWritableExpressionOrArray<T>);
+      requires std::is_same_v<bool const, decltype(std::remove_cvref_t<T>::isNotExpression)>;
+      requires (std::remove_cvref_t<T>::isNotExpression == true);
   };
 
-  template <typename Element, size_t rank, size_t... ints>
-  class IsMultiArray<MultiArray<Element, rank, ints...>> {
-  public:
-    constexpr static bool value = true;
+  // ***************************************************************************
+  //  HasStaticSizes<X>
+  //
+  // Not used. alternate way to determine if a class is a MultiArray
+  // ***************************************************************************
+
+
+  template <class X>
+  concept HasStaticSizes = requires(X x) {
+    std::remove_cvref_t<X>::static_dims_array;
   };
 
 
   // ***************************************************************************
-  //  IsMultiArrayExp<T>
+  //  IsGridlike<T>
+  //
+  // TODO: is this a good def?
   // ***************************************************************************
 
-  template <typename T>
-  class IsMultiArrayExp {
-  public:
-    constexpr static bool value = false;
-  };
-
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
-  class IsMultiArrayExp<ExpressionR<Derived, Element, Number, depth, rank>> {
-  public:
-    constexpr static bool value = true;
-  };
-
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
-  class IsMultiArrayExp<ExpressionRW<Derived, Element, Number, depth, rank>> {
-  public:
-    constexpr static bool value = true;
-  };
+  template <class T>
+  concept IsGridlike = IsMultiArray<T> && (std::remove_cvref_t<T>::depth_value == 1);
 
 
   // ***************************************************************************
-  //  IsMultiArrayExpRW<T>
+  //  IsReadableExpression<T>
   // ***************************************************************************
 
   template <typename T>
-  class IsMultiArrayExpRW {
-  public:
-    constexpr static bool value = false;
+  concept IsReadableExpression = IsReadableExpressionOrArray<T> && !IsMultiArray<T>;
+
+
+  // ***************************************************************************
+  //  IsWritableExpression<T>
+  // ***************************************************************************
+
+  template <typename T>
+  concept IsWritableExpression = IsWritableExpressionOrArray<T> && !IsMultiArray<T>;
+
+
+
+  // ***************************************************************************
+  //  MultiArrayHelper<Element, std:array>
+  //
+  //  This can be used to create a MultiArray using a std::array for template sizes
+  // ***************************************************************************
+
+
+  // MultiArrayHelperTrait 
+  //
+  // Used by MultiArrayHelper
+
+
+  template <
+    typename Element,
+    auto arr,
+    typename IS = decltype(std::make_index_sequence<arr.size()>())
+  >
+  struct MultiArrayHelperTrait;
+
+
+  template <
+    typename Element,
+    auto arr,
+    std::size_t... I
+  > requires (is_all_zeros(arr))
+    struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
+    using Type = MultiArray<Element, sizeof...(I)>;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth, size_t rank>
-  class IsMultiArrayExpRW<ExpressionRW<Derived, Element, Number, depth, rank>> {
-  public:
-    constexpr static bool value = true;
+  template <
+    typename Element,
+    auto arr,
+    std::size_t... I
+  > requires (!is_all_zeros(arr))
+    struct MultiArrayHelperTrait<Element, arr, std::index_sequence<I...>> {
+    using Type = MultiArray<Element, sizeof...(I), arr[I]...>;
   };
 
+
+  // MultiArrayHelper
+  //
+  // This allows creation of a MultiArray rank and sizes from a constexpr std::array
+
+  template <typename Element, auto arr>
+  using MultiArrayHelper = MultiArrayHelperTrait<Element, arr>::Type;
+
+
+
+
+  // ************************************************************************************
+  // MultiArrayType 
+  //
+  // This returns a concrete[1] and general[1] MultiArray of for the given MultiArray or Expression
+  // The operation is performed on all nested MultiArrays contained in the Element
+  //
+  // 1. By concrete, we meean a MultiArray and not an Expression
+  // 2. By general we mean a MultiArray and not a specialization like MultiArray_Constant
+  // ************************************************************************************
+
+  // default case 
+  template <typename T>
+  class MultiArrayTypeTrait {
+  public:
+    using Type = T;
+  };
+
+  // Expressions
+
+  template <typename T> requires (IsReadableExpression<T>)
+    class MultiArrayTypeTrait<T> {
+    public:
+      using Type = MultiArray< typename MultiArrayTypeTrait<typename T::ElementType>::Type, T::rank_value >;
+  };
+
+  // MultiArrays
+  template <typename T> requires (IsMultiArray<T>)
+    class MultiArrayTypeTrait<T> {
+    public:
+      using Type = MultiArrayHelper< typename MultiArrayTypeTrait<typename T::ElementType>::Type, T::static_dims_array >;
+  };
+
+
+  template <IsReadableExpressionOrArray X>
+  using MultiArrayType = MultiArrayTypeTrait<X>::Type;
 
   // ************************************************************************************************
   // NumberTrait<InputType, NewNumber>
   //
   // This operates recursively to find the base number type
   //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
-  
+
   //  InputType:           Type that was passed in as first arg
   //  Type:                Depends on InputType
   //                         numbers: InputType
@@ -302,295 +433,76 @@ namespace mathq {
   public:
     using InputType = T;
     using Type = NullType;
-  
-    constexpr static bool value = false;
-    constexpr static size_t depth() {
-      return 0;
-    }
-    constexpr static const size_t sum_of_ranks() {
-      return 0;
-    }
-    template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      return rank_array;
-    }
-  };
-
-
-  // built in ordered number types: bool, int, double etc
-  template <typename Number> requires (std::is_arithmetic<Number>::value)
-  class
-    NumberTrait<Number> {
-  public:
-    using InputType = Number;
-    using Type = Number;
-
-    constexpr static bool value = true;
-    constexpr static size_t depth() {
-      return 0;
-    }
-    constexpr static const size_t sum_of_ranks() {
-      return 0;
-    }
-    template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      return rank_array;
-    }
-  };
-
-  // complex number enclosing an ordered number
-  template <typename Number> requires (std::is_arithmetic<Number>::value)
-  class
-    NumberTrait<std::complex<Number>> {
-  public:
-    using InputType = std::complex<Number>;
-    using Type = std::complex<Number>;
-
-    constexpr static bool value = true;
-    constexpr static size_t depth() {
-      return 0;
-    }
-    constexpr static const size_t sum_of_ranks() {
-      return 0;
-    }
-    template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      return rank_array;
-    }
-
-  };
-
-
-  // imaginary number enclosing an ordered number
-  template <typename Number> requires (std::is_arithmetic<Number>::value)
-  class
-    NumberTrait<Imaginary<Number>> {
-  public:
-    using InputType = Imaginary<Number>;
-    using Type = Imaginary<Number>;
-
-    constexpr static bool value = true;
-    constexpr static size_t depth() {
-      return 0;
-    }
-    constexpr static const size_t sum_of_ranks() {
-      return 0;
-    }
-    template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      return rank_array;
-    }
-
-  };
-
-  // quaternion number enclosing an ordered number
-  template <typename Number>
-  class
-    NumberTrait<Quaternion<Number>> {
-  public:
-    using InputType = Quaternion<Number>;
-    using Type = Quaternion<Number>;
-
-    constexpr static bool value = true;
-    constexpr static size_t depth() {
-      return 0;
-    }
-    constexpr static const size_t sum_of_ranks() {
-      return 0;
-    }
-    template <size_t Nin = 0>
-    constexpr static const std::array<size_t,sum_of_ranks()+Nin> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      return rank_array;
-    }
-  };
-
-
-
-  //  MultiArray<Element>
-
-  template <typename Element, size_t rank, size_t... ints>
-  class
-    NumberTrait<MultiArray<Element, rank, ints...>> {
-  public:
-    using InputType = MultiArray<Element, rank, ints...>;
-    using Type = typename NumberTrait<Element>::Type;
 
     constexpr static bool value = false;
     constexpr static size_t depth() {
-      return 1 + NumberTrait<Element>::depth();
+      return 0;
+    }
+    constexpr static const size_t sum_of_ranks() {
+      return 0;
+    }
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
+      return rank_array;
+    }
+  };
+
+
+  template <IsNumber T>
+  class
+    NumberTrait<T> {
+  public:
+    using InputType = T;
+    using Type = T;
+
+    constexpr static bool value = true;
+    constexpr static size_t depth() {
+      return 0;
+    }
+    constexpr static const size_t sum_of_ranks() {
+      return 0;
+    }
+    template <size_t Nin = 0>
+    constexpr static const std::array<size_t, sum_of_ranks()+Nin> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
+      return rank_array;
+    }
+  };
+
+
+  //  IsReadableExpressionOrArray
+
+  template <IsReadableExpressionOrArray T>
+  class
+    NumberTrait<T> {
+  public:
+    using InputType = T;
+    using ElementType = typename T::ElementType;
+    using Type = typename NumberTrait<ElementType>::Type;
+
+    constexpr static bool value = false;
+
+    constexpr static size_t depth() {
+      return 1 + NumberTrait<ElementType>::depth();
     }
 
+    constexpr static size_t rank = T::rank_value;
+
     constexpr static const size_t sum_of_ranks() {
-      return rank + NumberTrait<Element>::sum_of_ranks();
+      return rank + NumberTrait<ElementType>::sum_of_ranks();
     }
 
     template <size_t Nin = 0>
-    constexpr static const std::array<size_t, Nin+depth()> get_rank_array(const std::array<size_t,Nin>& rank_array = std::array<size_t,Nin>{}) {
-      std::array<size_t,Nin+1> new_array{};
+    constexpr static const std::array<size_t, Nin+depth()> get_rank_array(const std::array<size_t, Nin>& rank_array = std::array<size_t, Nin>{}) {
+      std::array<size_t, Nin+1> new_array{};
       for (size_t ii = 0; ii < rank_array.size(); ii++) {
         new_array[ii] = rank_array[ii];
       }
       new_array[Nin] = rank;
-      auto x = NumberTrait<Element>::get_rank_array(new_array);
+      auto x = NumberTrait<ElementType>::get_rank_array(new_array);
       return x;
     }
 
   };
-
-  //  ExpressionR
-
-  template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
-  class
-    NumberTrait<ExpressionR<Derived, Element, Number, depth_in, rank>> {
-  public:
-    using InputType = ExpressionR<Derived, Element, Number, depth_in, rank>;
-    using Type = Number;
-
-    constexpr static bool value = false;
-    constexpr static size_t depth() {
-      return depth_in;
-    }
-    constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
-      std::valarray<size_t> new_array(rank_array.size() + 1);
-      for (size_t ii = 0; ii < rank_array.size(); ii++) {
-        new_array[ii] = rank_array[ii];
-      }
-      new_array[new_array.size()-1] = rank;
-      auto x =  NumberTrait<Element>::get_rank_array(new_array);
-      return x;
-    }
-    inline static size_t size(const InputType& x) {
-      return x.size();
-    }
-    inline static size_t total_size(const InputType& x) {
-      return x.total_size();
-    }
-  };
-
-
-  //  ExpressionRW
-
-  template <class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
-  class
-    NumberTrait<ExpressionRW<Derived, Element, Number, depth_in, rank>> {
-  public:
-    using InputType = ExpressionRW<Derived, Element, Number, depth_in, rank>;
-    using Type = Number;
-
-    constexpr static bool value = false;
-    constexpr static size_t depth() {
-      return depth_in;
-    }
-    constexpr static const std::valarray<size_t> get_rank_array(const std::valarray<size_t>& rank_array = std::valarray<size_t>{}) {
-      std::valarray<size_t> new_array(rank_array.size() + 1);
-      for (size_t ii = 0; ii < rank_array.size(); ii++) {
-        new_array[ii] = rank_array[ii];
-      }
-      new_array[new_array.size()-1] = rank;
-      auto x =  NumberTrait<Element>::get_rank_array(new_array);
-      return x;
-    }
-    inline static size_t size(const InputType& x) {
-      return x.size();
-    }
-    inline static size_t total_size(const InputType& x) {
-      return x.total_size();
-    }
-  };
-
-
-
-
-  // ************************************************************************************************
-  // ReplacedNumberTrait<InputType, NewNumber>
-  //
-  // This operates recursively to find the base number type
-  //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
-  
-  //  Type:  Depends on InputType
-  //                         numbers: NewNumber
-  //                         MultiArray: The InputType with the number type replaced by NewNumber
-  //                         ExpressionR{,W}: Derived type with the number type replaced in all contained expressions and MultiArrays 
-  // ************************************************************************************************
-
-  template <typename NewNumber>
-  class ReplacedNumberTrait<NullType, NewNumber> {
-  public:
-    using Type = NewNumber;
-  };
-
-
-  // built in ordered number types: bool, int, double etc
-  template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
-  class
-    ReplacedNumberTrait<Number, NewNumber> {
-  public:
-    using Type = NewNumber;
-  };
-
-  // complex number enclosing an ordered number
-  template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
-  class
-    ReplacedNumberTrait<std::complex<Number>, NewNumber> {
-  public:
-    using Type = NewNumber;
-  };
-
-
-  // imaginary number enclosing an ordered number
-  template <typename Number, typename NewNumber>  requires (std::is_arithmetic<Number>::value)
-  class
-    ReplacedNumberTrait<Imaginary<Number>, NewNumber> {
-  public:
-    using Type = NewNumber;
-  };
-
-  // quaternion number enclosing an ordered number
-  template <typename Number, typename NewNumber> requires (std::is_arithmetic<Number>::value)
-  class
-    ReplacedNumberTrait<Quaternion<Number>, NewNumber> {
-  public:
-    using Type = NewNumber;
-  };
-
-
-
-  //  MultiArray<Element>
-
-  template <typename NewNumber, typename Element, size_t rank, size_t... ints>
-  class
-    ReplacedNumberTrait<MultiArray<Element, rank, ints...>, NewNumber> {
-  public:
-    using ElementType = typename ReplacedNumberTrait<Element, NewNumber>::Type;
-    using Type = MultiArray<ElementType, rank, ints...>;
-  };
-
-  //  ExpressionR
-
-  template <typename NewNumber, class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
-  class
-    ReplacedNumberTrait<ExpressionR<Derived, Element, Number, depth_in, rank>, NewNumber> {
-  public:
-    using ElementType = typename ReplacedNumberTrait<Element, NewNumber>::Type;
-    using Type = typename ReplacedNumberTrait<Derived, NewNumber>::Type;
-    using DerivedType = Type;
-    using ExpressionType = ExpressionR<DerivedType, ElementType, NewNumber, depth_in, rank>;
-  };
-
-
-  //  ExpressionRW
-
-  template <typename NewNumber, class Derived, typename Element, typename Number, size_t depth_in, size_t rank>
-  class
-    ReplacedNumberTrait<ExpressionRW<Derived, Element, Number, depth_in, rank>, NewNumber> {
-  public:
-    using ElementType = typename ReplacedNumberTrait<Element, NewNumber>::Type;
-    using Type = typename ReplacedNumberTrait<Derived, NewNumber>::Type;
-    using DerivedType = Type;
-    using ExpressionType = ExpressionRW<DerivedType, ElementType, NewNumber, depth_in, rank>;
-  };
-
-
 
 
 
@@ -605,87 +517,162 @@ namespace mathq {
   template <typename T>
   class SimpleNumberTrait {
   public:
-    using Type = void;
-    constexpr static size_t depth() {
-      return 0;
-    }
+    using Type = NullType;
   };
 
   // for built-in number types (not classes)
   template <typename T>  requires (std::is_arithmetic<T>::value)
-  class
+    class
     SimpleNumberTrait<T> {
-  public:
-    using Type = T;
-    constexpr static size_t depth() {
-      return 0;
-    }
+    public:
+      using Type = T;
   };
 
-
-  template <typename Element, template <typename> class T>
-  class SimpleNumberTrait<T<Element>> {
-  public:
-    using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
-  };
 
   template <typename Element>
   class SimpleNumberTrait<std::complex<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
   };
 
   template <typename Element>
   class SimpleNumberTrait<Imaginary<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
   };
 
   template <typename Element>
   class SimpleNumberTrait<Quaternion<Element>> {
   public:
     using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
   };
 
 
-  template <typename Element, size_t rank, size_t... ints>
-  class SimpleNumberTrait<MultiArray<Element, rank, ints...>> {
+  template <typename T> requires (IsReadableExpressionOrArray<T>)
+    class SimpleNumberTrait<T> {
+    public:
+      using Type = typename SimpleNumberTrait<typename T::ElementType>::Type;
+  };
+
+
+
+  // ************************************************************************************************
+  // ReplaceElementTrait<InputType, NewElement>
+  //
+  // ************************************************************************************************
+
+  template <typename T, typename NewElement>
+  class ReplaceElementTrait {
   public:
-    using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
+    using Type = void;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank>
-  class SimpleNumberTrait<ExpressionR<Derived, Element, Number, depth_, rank>> {
+  //  MultiArray<Element>
+
+  template <IsMultiArray T, typename NewElement>
+  class
+    ReplaceElementTrait<T, NewElement> {
   public:
-    using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
+    using Type = typename T::Type_ReplaceElement<NewElement>;
   };
 
-  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank>
-  class SimpleNumberTrait<ExpressionRW<Derived, Element, Number, depth_, rank>> {
+
+
+  // ************************************************************************************************
+  // ReplaceNumberTrait<InputType, NewNumber>
+  //
+  // This operates recursively to find the base number type
+  //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
+
+  //  Type:  Depends on InputType
+  //                         numbers: NewNumber
+  //                         MultiArray: The InputType with the number type replaced by NewNumber
+  //                         ExpressionR{,W}: Derived type with the number type replaced in all contained expressions and MultiArrays 
+  // ************************************************************************************************
+
+  template <typename T, typename NewNumber>
+  class ReplaceNumberTrait {
   public:
-    using Type = typename SimpleNumberTrait<Element>::Type;
-    constexpr static size_t depth() {
-      return 1 + SimpleNumberTrait<Element>::depth();
-    }
+    using Type = void;
   };
+
+  // built in ordered number types: bool, int, double etc
+  template <IsNumber T, typename NewNumber>
+  class
+    ReplaceNumberTrait<T, NewNumber> {
+  public:
+    using Type = NewNumber;
+  };
+
+  //  MultiArray<Element>
+
+  template <IsMultiArray T, typename NewNumber>
+  class
+    ReplaceNumberTrait<T, NewNumber> {
+  public:
+    using OldElementType = typename T::ElementType;
+    using ElementType = typename ReplaceNumberTrait<OldElementType, NewNumber>::Type;
+    using Type = typename T::Type_ReplaceElement<ElementType>;
+  };
+
+
+
+
+  // ************************************************************************************************
+  // ReplaceSimpleNumberTrait<InputType, NewNumber>
+  //
+  // This operates recursively to find the base number type
+  //              eg. complex<double>, Imaginary<float>, Quaternion<float>, int, double, etc
+
+  //  Type:  Depends on InputType
+  //                         numbers: NewNumber
+  //                         MultiArray: The InputType with the number type replaced by NewNumber
+  //                         ExpressionR{,W}: Derived type with the number type replaced in all contained expressions and MultiArrays 
+  // ************************************************************************************************
+
+  template <typename T, typename NewNumber>
+  class ReplaceSimpleNumberTrait {
+  public:
+    using Type = void;
+  };
+
+  // built in ordered number types: bool, int, double etc
+  template <typename T, typename NewNumber> requires (IsSimpleNumber<T>)
+    class
+    ReplaceSimpleNumberTrait<T, NewNumber> {
+    public:
+      using Type = NewNumber;
+  };
+
+  template <typename Element, typename NewNumber>
+  class ReplaceSimpleNumberTrait<std::complex<Element>, NewNumber> {
+  public:
+    using Type = std::complex<NewNumber>;
+  };
+
+  template <typename Element, typename NewNumber>
+  class ReplaceSimpleNumberTrait<Imaginary<Element>, NewNumber> {
+  public:
+    using Type = Imaginary<NewNumber>;
+  };
+
+  template <typename Element, typename NewNumber>
+  class ReplaceSimpleNumberTrait<Quaternion<Element>, NewNumber> {
+  public:
+    using Type = Quaternion<NewNumber>;
+  };
+
+  //  MultiArray<Element>
+
+  template <IsMultiArray T, typename NewNumber>
+  class
+    ReplaceSimpleNumberTrait<T, NewNumber> {
+  public:
+    using OldElementType = typename T::ElementType;
+    using ElementType = typename ReplaceSimpleNumberTrait<OldElementType, NewNumber>::Type;
+    using Type = typename T::Type_ReplaceElement<ElementType>;
+  };
+
 
 
 
@@ -707,8 +694,6 @@ namespace mathq {
   // *****************************************************************************************
   // DimensionsTrait
   //
-  // This operates recursively to find the simple number type for type T
-  // We define simple number: as integers, rationals, reals, or subsets thereof.
   // ****************************************************************************************
 
   template <typename T, size_t level = 0>
@@ -736,18 +721,20 @@ namespace mathq {
 
 
 
+
+
   // ************************************************************************************************
   //  MakeInitializer
   // 
   // ************************************************************************************************
 
-  template <typename T, size_t depth> 
+  template <typename T, size_t depth>
   class MakeInitializer {
   public:
-    using Type = std::initializer_list< typename MakeInitializer<T,(depth-1)>::Type >;
+    using Type = std::initializer_list< typename MakeInitializer<T, (depth-1)>::Type >;
   };
-  template <typename T> 
-  class MakeInitializer<T,0> {
+  template <typename T>
+  class MakeInitializer<T, 0> {
   public:
     using Type = T;
   };
@@ -757,7 +744,7 @@ namespace mathq {
   //  InitializerTrait
   // ************************************************************************************************
 
-  template <typename T> 
+  template <typename T>
   class InitializerTrait {
   public:
     using Type = T;
@@ -773,7 +760,7 @@ namespace mathq {
     }
 
     template <size_t Nin = 0>
-    constexpr static const std::array<size_t,Nin> get_size_array( const Type& mylist, const std::array<size_t,Nin>& size_array = std::array<size_t,Nin>{} ) {
+    constexpr static const std::array<size_t, Nin> get_size_array(const Type& mylist, const std::array<size_t, Nin>& size_array = std::array<size_t, Nin>{}) {
       return size_array;
     }
 
@@ -795,8 +782,8 @@ namespace mathq {
     }
 
     template <size_t Nin = 0>
-    constexpr static const std::array<size_t, Nin+depth()> get_size_array( const Type& mylist, const std::array<size_t,Nin>& size_array = std::array<size_t,Nin>{} ) {
-      std::array<size_t,Nin+1> new_array{};
+    constexpr static const std::array<size_t, Nin+depth()> get_size_array(const Type& mylist, const std::array<size_t, Nin>& size_array = std::array<size_t, Nin>{}) {
+      std::array<size_t, Nin+1> new_array{};
       for (size_t ii = 0; ii < size_array.size(); ii++) {
         new_array[ii] = size_array[ii];
       }
@@ -821,48 +808,48 @@ namespace mathq {
   //          It does not turn complex, Imaginary, or Quarternion numbers etc inside out
   // ***************************************************************************
 
-  template <typename Number, class C = NullType>
+  template <typename Num, class C = NullType>
   class InversionType;
 
 
   // the template specializations for numbers just return the number type, which terminates ends the recursion
 
   // TODO: should ad check is_arithmetic
-  template <typename Number, class C>
+  template <typename Num, class C>
   class InversionType {
   public:
     using Type = C;
   };
-  template <typename Number, class C>
-  class InversionType<std::complex<Number>, C> {
+  template <typename Num, class C>
+  class InversionType<std::complex<Num>, C> {
   public:
     using Type = C;
   };
-  template <typename Number, class C>
-  class InversionType<Imaginary<Number>, C> {
-  public:
-    using Type = C;
-  };
-
-  template <typename Number, class C>
-  class InversionType<Quaternion<Number>, C> {
+  template <typename Num, class C>
+  class InversionType<Imaginary<Num>, C> {
   public:
     using Type = C;
   };
 
-
-
-
-  //  MultiArray<Element>
-  template <typename Element, size_t rank, size_t... ints, typename C>
-  class InversionType<MultiArray<Element, rank, ints...>, C> {
+  template <typename Num, class C>
+  class InversionType<Quaternion<Num>, C> {
   public:
-    using NumberType = typename NumberTrait<Element>::Type;
-    using MultiArrayD = MultiArray<NumberType, rank, ints...>; // top level array becomes bottom level array
-    using MultiArrayC = MultiArray<C, rank, ints...>;  // this is for the intermediate arrays
-    using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<Element, MultiArrayD>::Type, typename InversionType<Element, MultiArrayC>::Type  >::type;
+    using Type = C;
   };
 
+
+
+
+  //  MultiArray
+  template <typename T, typename C> requires (IsMultiArray<T>)
+    class InversionType<T, C> {
+    public:
+      using ElementType = typename T::ElementType;
+      using NumberType = typename NumberTrait<ElementType>::Type;
+      using MultiArray_NumberType = typename ReplaceElementTrait< T, NumberType >::Type; // top level array becomes bottom level array
+      using MultiArray_C = typename ReplaceElementTrait< T, C >::Type;  // this is for the intermediate arrays
+      using Type = typename std::conditional<  std::is_same<C, NullType>::value, typename InversionType<ElementType, MultiArray_NumberType>::Type, typename InversionType<ElementType, MultiArray_C>::Type  >::type;
+  };
 
 
 
@@ -871,20 +858,20 @@ namespace mathq {
   //            for container of any type, return x[n]
   // ***************************************************************************
 
-  template <typename Number>
-  inline Number&& At(Number&& x, size_t n) {
+  template <typename Num>
+  inline Num&& At(Num&& x, size_t n) {
     return x;
   }
-  template <typename Number>
-  inline const Number&& At(const Number&& x, size_t n) {
+  template <typename Num>
+  inline const Num&& At(const Num&& x, size_t n) {
     return x;
   }
-  template <template <class> class T, typename Number>
-  inline Number&& At(T<Number>&& x, size_t n) {
+  template <template <class> class T, typename Num>
+  inline Num&& At(T<Num>&& x, size_t n) {
     return x[n];
   }
-  template <template <class> class T, typename Number>
-  inline const Number&& At(const T<Number>&& x, size_t n) {
+  template <template <class> class T, typename Num>
+  inline const Num&& At(const T<Num>&& x, size_t n) {
     return x[n];
   }
 
@@ -1002,7 +989,7 @@ namespace mathq {
   class ResultType {
   public:
     using MyDeeperType = typename DeeperType<A, B>::Type;
-    using MultiArrayType = typename ReplacedNumberTrait<MyDeeperType, NewNumber>::Type;
+    using MultiArrayType = typename ReplaceNumberTrait<MyDeeperType, NewNumber>::Type;
 
     constexpr static bool isprim = (NumberTrait<A>::depth() == 0) && (NumberTrait<B>::depth() == 0);
     using Type = typename std::conditional<isprim, NewNumber, MultiArrayType>::type;
@@ -1092,63 +1079,41 @@ namespace mathq {
 
 
 
-
-
-
-
-  template <typename Number, size_t NDIMS, size_t rank, typename G>
+  template <typename Num, size_t NDIMS, size_t rank, typename G>
   class GridTraits {
     constexpr static bool isMultiArrayOfGrids = false;
     constexpr static bool isGridOfMultiArrays = false;
   };
 
-  template <typename Number, size_t NDIMS, size_t rank>
-  class GridTraits<Number, NDIMS, rank, MultiArrayOfGrids<Number, NDIMS, rank>> {
-    constexpr static bool isMultiArrayOfGrids = true;
-    constexpr static bool isGridOfMultiArrays = false;
-  };
+  // template <typename Num, size_t NDIMS, size_t rank>
+  // class GridTraits<Num, NDIMS, rank, MultiGrid_A<Num, NDIMS, rank>> {
+  //   constexpr static bool isMultiArrayOfGrids = true;
+  //   constexpr static bool isGridOfMultiArrays = false;
+  // };
 
-  template <typename Number, size_t NDIMS, size_t rank>
-  class GridTraits<Number, NDIMS, rank, GridOfMultiArrays<Number, NDIMS, rank>> {
-    constexpr static bool isMultiArrayOfGrids = false;
-    constexpr static bool isGridOfMultiArrays = true;
-  };
+  // template <typename Num, size_t NDIMS, size_t rank>
+  // class GridTraits<Num, NDIMS, rank, MultiGrid_B<Num, NDIMS, rank>> {
+  //   constexpr static bool isMultiArrayOfGrids = false;
+  //   constexpr static bool isGridOfMultiArrays = true;
+  // };
 
-
-
-  // ***************************************************************************
-  // * RealSet 
-  // ***************************************************************************
-
-  template <typename Number>
-  class RealSet;
 
 
   // ***************************************************************************
-  // * RealMultiSet 
-  // ***************************************************************************
-  template <typename Number, size_t NDIMS = 0, class MULTIGRID = MultiArrayOfGrids<Number, NDIMS>>
-  class RealMultiSet;
-
-
-  // ***************************************************************************
-  // * CurvilinearCoordinateSystem 
-  // ***************************************************************************
-  template <typename Number, size_t NDIMS, typename CHILD>
-  class CurvilinearCoordinateSystem;
-
-
   // ***************************************************************************
   // * Nabla
   // ***************************************************************************
   template <class T = void>
   class Nabla;
 
+  // * Domain 
+  // ***************************************************************************
 
+  template <typename GridElement>
+  class Domain;
 
-
-
-
+  template <typename GridElement> requires(IsSimpleNumber<GridElement>)
+    class Interval;
 
 
 

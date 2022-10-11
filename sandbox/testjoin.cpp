@@ -5,7 +5,7 @@
 #include "mathq.h"
 
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 
   const double pi = M_PI;
   std::string myname = argv[0];
@@ -47,10 +47,10 @@ int main(int argc, char *argv[]) {
   CR();
 
   {
-    Vector<int> Vi{11, 12, -100};
-    Vector<double> Vd1{1, 2};
-    Vector<double> Vd2{3, 4, 5};
-    Vector<double> Vd3{6, 7, 8, 9};
+    Vector<int> Vi{ 11, 12, -100 };
+    Vector<double> Vd1{ 1, 2 };
+    Vector<double> Vd2{ 3, 4, 5 };
+    Vector<double> Vd3{ 6, 7, 8, 9 };
     MOUT << blue.apply("Given:") << endl;
     MOUT << "  ";
     TLDISP(Vi);
@@ -77,29 +77,29 @@ int main(int argc, char *argv[]) {
 
 
     MOUT << blue.apply("LHS tests") << endl;
-    Vector<double> Vd4 = {11, 12, 13, 14, 15};
-    Vector<double> Vd5 = {21, 22, 23, 24, 25, 26, 27, 28, 29};
+    Vector<double> Vd4 = { 11, 12, 13, 14, 15 };
+    Vector<double> Vd5 = { 21, 22, 23, 24, 25, 26, 27, 28, 29 };
     MOUT << "Initial values: " << endl;
     MOUT << " ";
     MDISP(Vd1, Vd2, Vd3);
     MOUT << blue.apply("(Vd1,Vd2) = Vd4") << endl;
     (Vd1, Vd2) = Vd4;
     MOUT << " ";
-    DISP(Vd4);
+    EV(Vd4);
     MOUT << " ";
     MDISP(Vd1, Vd2);
     MOUT << blue.apply("(Vd1,Vd2,Vd3) = Vd5") << endl;
     (Vd1, Vd2, Vd3) = Vd5;
     MOUT << " ";
-    DISP(Vd5);
+    EV(Vd5);
     MOUT << " ";
     MDISP(Vd1, Vd2, Vd3);
 
-    TLDISP(IsMultiArrayExpRW<mathq::ExpressionR_Join<mathq::ExpressionR<mathq::ExpressionRW<mathq::ExpressionRW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>, mathq::ExpressionR<mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1, 1>, double, double, 1>>::value);
+    TLDISP(IsWritableExpression<mathq::ExpressionR_Join<mathq::ExpressionR<mathq::ExpressionRW<mathq::ExpressionRW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>, mathq::ExpressionR<mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1, 1>, double, double, 1>>);
 
-    TLDISP(IsMultiArrayExpRW<mathq::ExpressionR<mathq::ExpressionRW<mathq::ExpressionRW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>>::value);
+    TLDISP(IsWritableExpression<mathq::ExpressionR<mathq::ExpressionRW<mathq::ExpressionRW_Subset<double>, double, double, 1, 1>, double, double, 1, 1>>);
 
-    TLDISP(IsMultiArrayExpRW<mathq::ExpressionRW_Join<mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1>>::value);
+    TLDISP(IsWritableExpression<mathq::ExpressionRW_Join<mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, mathq::ExpressionRW<mathq::Vector<double>, double, double, 1, 1>, double, double, 1>>);
   }
 
 

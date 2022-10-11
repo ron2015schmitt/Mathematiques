@@ -12,15 +12,14 @@
 
 
 
-int main()
-{
+int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   int Nex = 1;
-  
+
   mathq_toc();
   CR();CR();
   GMD_TITLE("Calculus");
@@ -33,33 +32,33 @@ int main()
   CR();
   OUTPUT("![Definite Integral](DefiniteIntegral.png)");
 
-  
+
   {
     CR();
     CR();
-    EXAMPLE(Nex++,"Definite integrals");
+    EXAMPLE(Nex++, "Definite integrals");
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_t N = 100000 );
-    ECHO_CODE( const double a = 0 );
-    ECHO_CODE( const double b = 1 );
-    ECHO_CODE( Vector<double> x(linspace_ab<double>(a,b,N)) );
-    ECHO_CODE( Vector<double> f );
-    ECHO_CODE( f=-log(log(1/x)) );
+    ECHO(const size_t N = 100000);
+    ECHO(const double a = 0);
+    ECHO(const double b = 1);
+    ECHO(Vector<double> x(linspace_ab<double>(a, b, N)));
+    ECHO(Vector<double> f);
+    ECHO(f = -log(log(1/x)));
     GMD_CODE_END();
     CR();
 
-   
+
     OUTPUT("Integrating f(x), as given above, yields the [Euler–Mascheroni](http://mathworld.wolfram.com/Euler-MascheroniConstant.html) constant whose exact value is `0.577215664901532...`.  The function _f_(_x_) is singular at both x=0 and x=1.  Thus we omitted these points. As the results show, many points are needed to achieve even a few digits of accuracy, due to the singularities. ");
     CR();
     OUTPUT(" ![Euler–Mascheron Integral](EulerMascheroniConstant.png)");
     CR();
     resultstart3("");
-    resultmulti( N );
-    resultmulti( a );
-    resultmulti( b );
-    resultmulti( integrate_a2b(f,a,b,0) );
-    resultmulti( integrate_a2b(f,a,b,1) );
-    resultmulti( integrate_a2b(f,a,b,2) );
+    resultmulti(N);
+    resultmulti(a);
+    resultmulti(b);
+    resultmulti(integrate_a2b(f, a, b, 0));
+    resultmulti(integrate_a2b(f, a, b, 1));
+    resultmulti(integrate_a2b(f, a, b, 2));
     resultend();
   }
 
@@ -78,44 +77,44 @@ int main()
   CR();
   CR();
   OUTPUT("Where [`a`,`b`] defines the interval being used\n");
-  
+
   CR();
   CR();
   OUTPUT("A semi-definite integral yields a function as its output.");
-  
+
   OUTPUT("Integration requires a cumulative sum.  Thus the caculation can not be accomplished via element-wise operations.  For this reasons these functions can be performed: ");
   OUTPUT("  * on a Vector in place using `f.integrate_a2x(a, b)`, mimizing both memory usage and computation time.");
   OUTPUT("  * on a Vector or expression using the function `integrate_a2x(f, a, b)`,  in which case a `new Vector` is created inside the function and returned. ");
 
   OUTPUT("All of the remaining functions discussed in this page can be called in either manner.");
-  
+
 
   {
     CR();
     CR();
-    EXAMPLE(Nex++," The error function integral");
+    EXAMPLE(Nex++, " The error function integral");
     OUTPUT("The [error function](http://mathworld.wolfram.com/Erf.html) is the following semi-definite integral of a Gaussian function (with zero mean and variance of 1/2).");
     CR();
     OUTPUT("![ErrorFunction](ErrorFunction.png)");
     GMD_CODE_START("C++");
-    ECHO_CODE( const size_t N = 101 );
-    ECHO_CODE( const double a = 0 );
-    ECHO_CODE( const double b = 4 );
-    ECHO_CODE( const double pi = M_PI );
-    ECHO_CODE( Vector<double> x( linspace<double>(a,b,N) ) );
-    ECHO_CODE( Vector<double> gauss );
-    ECHO_CODE( gauss = 2/sqrt(pi)*exp(-sqr(x)) );
-    ECHO_CODE( Vector<double> erf = gauss );
-    ECHO_CODE( erf.integrate_a2x(a,b) ) ;
-    ECHO_CODE( set_mathematica_var_format() );
+    ECHO(const size_t N = 101);
+    ECHO(const double a = 0);
+    ECHO(const double b = 4);
+    ECHO(const double pi = M_PI);
+    ECHO(Vector<double> x(linspace<double>(a, b, N)));
+    ECHO(Vector<double> gauss);
+    ECHO(gauss = 2/sqrt(pi)*exp(-sqr(x)));
+    ECHO(Vector<double> erf = gauss);
+    ECHO(erf.integrate_a2x(a, b));
+    ECHO(set_mathematica_var_format());
     GMD_CODE_END();
     CR();
 
     OUTPUT("The results _x_ and _erf_(_x_) are:");
     CR();
     GMD_CODE_START("Mathematica");
-    DISP(x);
-    DISP(erf);
+    EV(x);
+    EV(erf);
     GMD_CODE_END();
 
     OUTPUT("Cut and paste the above data for `x` and `erf` into Mathematica as well as the following commands");
@@ -129,8 +128,8 @@ int main()
     OUTPUT("This yields the following plot comparing the results above [red dots] to the exact function [solid blue].");
 
     OUTPUT("![ErrorFunctionPlot](ErrorFunctionPlot.png)");
-    
-    
+
+
   }
 
 
@@ -144,7 +143,7 @@ int main()
   OUTPUT("Usage: \n");
   OUTPUT("* `f.integrate_x2b(a, b, order)`");
   OUTPUT("* `integrate_x2b(f, a, b, order)`");
-  
+
   GMD_HEADER2("Differentiation");
   OUTPUT("* Differentiation requires points around it.   The derivative can be performed :");
   OUTPUT("  * on a Vector in place using `f.deriv(a, b)`, mimizing both memory usage and computation time.");
@@ -154,23 +153,23 @@ int main()
   {
     CR();
     CR();
-    EXAMPLE(Nex++,"Derivative of the function _f_(_x_) = 5 _x_");
+    EXAMPLE(Nex++, "Derivative of the function _f_(_x_) = 5 _x_");
     CR();
     CR();
     OUTPUT("The derivative of the function _f_(_x_) = is the constant 5");
     GMD_CODE_START("C++");
-    ECHO_CODE( set_default_format() );
-    ECHO_CODE( const double pi = M_PI );
-    ECHO_CODE( const size_t N = 11 );
-    ECHO_CODE( const double a = 0 );
-    ECHO_CODE( const double b = 1 );
-    ECHO_CODE( Vector<double> x( linspace<double>(a,b,N) ) );
+    ECHO(set_default_format());
+    ECHO(const double pi = M_PI);
+    ECHO(const size_t N = 11);
+    ECHO(const double a = 0);
+    ECHO(const double b = 1);
+    ECHO(Vector<double> x(linspace<double>(a, b, N)));
     GMD_CODE_END();
     CR();
 
     resultstart3("");
     resultmulti(x);
-    resultmulti(deriv(5*x,a,b));
+    resultmulti(deriv(5*x, a, b));
 
     // resultmulti(deriv(5*x,a,b,1,2));
     // resultmulti(deriv(5*x,a,b,1,3));
@@ -186,20 +185,20 @@ int main()
   }
 
 
-    GMD_HEADER3("Differentiation: optional parameters");
-    OUTPUT("* The differentiation method/function has 3 optional parameters:");
-    OUTPUT("  * `f.deriv(a, b, n, Dpts, periodic)` or `deriv(f, a, b, n, Dpts, periodic)`");
-    OUTPUT("* The optional parameters are:");
-    OUTPUT("  * `n` [DEFAULT=`1`] is the number of derivatives to compute: ");
-    OUTPUT("  * `Dpts` [DEFAULT=`7`] is the number of points to use in the calculation: 2,3,5, or 7.  More points yield better accuracy. ");
-    OUTPUT("  * `periodic` [DEFAULT=`false`]. When set to `true` the derivative at the end points will be of higher accuracy for periodic function.");
+  GMD_HEADER3("Differentiation: optional parameters");
+  OUTPUT("* The differentiation method/function has 3 optional parameters:");
+  OUTPUT("  * `f.deriv(a, b, n, Dpts, periodic)` or `deriv(f, a, b, n, Dpts, periodic)`");
+  OUTPUT("* The optional parameters are:");
+  OUTPUT("  * `n` [DEFAULT=`1`] is the number of derivatives to compute: ");
+  OUTPUT("  * `Dpts` [DEFAULT=`7`] is the number of points to use in the calculation: 2,3,5, or 7.  More points yield better accuracy. ");
+  OUTPUT("  * `periodic` [DEFAULT=`false`]. When set to `true` the derivative at the end points will be of higher accuracy for periodic function.");
 
-    GMD_HEADER3("Differentiation: taking multiple derivatives in one call");
-    
+  GMD_HEADER3("Differentiation: taking multiple derivatives in one call");
+
   {
     CR();
     CR();
-    EXAMPLE(Nex++,"The fourth derivative of sin _x_");
+    EXAMPLE(Nex++, "The fourth derivative of sin _x_");
     CR();
     CR();
     OUTPUT("Here we take the 4th derivative of sin _x_ using `Dpts`=2,3,5, and 7 points. The result for all should be sin _x_:");
@@ -210,26 +209,26 @@ int main()
     CR();
     OUTPUT("We also set `periodic=true` since sin _x_ is periodic over [0,2pi)");
     GMD_CODE_START("C++");
-    ECHO_CODE( set_mathematica_var_format() );
-    ECHO_CODE( const double pi = M_PI );
-    ECHO_CODE( const size_t N = 25 );
-    ECHO_CODE( Vector<double> x( linspace_b<double>(0,2*pi,N) ) );
-    ECHO_CODE( const double a = min(x) );
-    ECHO_CODE( const double b = max(x) );
-    ECHO_CODE( Vector<double> f = sin(x) );
-    ECHO_CODE( Vector<double> f2 = deriv(f,a,b,4,2,true )  );
-    ECHO_CODE( Vector<double> f3 = deriv(f,a,b,4,3,true )  );
-    ECHO_CODE( Vector<double> f5 = deriv(f,a,b,4,5,true )  );
-    ECHO_CODE( Vector<double> f7 = deriv(f,a,b,4,7,true )  );
+    ECHO(set_mathematica_var_format());
+    ECHO(const double pi = M_PI);
+    ECHO(const size_t N = 25);
+    ECHO(Vector<double> x(linspace_b<double>(0, 2*pi, N)));
+    ECHO(const double a = min(x));
+    ECHO(const double b = max(x));
+    ECHO(Vector<double> f = sin(x));
+    ECHO(Vector<double> f2 = deriv(f, a, b, 4, 2, true));
+    ECHO(Vector<double> f3 = deriv(f, a, b, 4, 3, true));
+    ECHO(Vector<double> f5 = deriv(f, a, b, 4, 5, true));
+    ECHO(Vector<double> f7 = deriv(f, a, b, 4, 7, true));
     GMD_CODE_END();
     CR();
 
     GMD_CODE_START("Mathematica");
-    DISP(x);
-    DISP(f2);
-    DISP(f3);
-    DISP(f5);
-    DISP(f7);
+    EV(x);
+    EV(f2);
+    EV(f3);
+    EV(f5);
+    EV(f7);
     GMD_CODE_END();
 
     OUTPUT("Cut and paste the above data for `x`, `f2`, `f3`,...  into Mathematica as well as the following commands");
@@ -263,53 +262,53 @@ int main()
     OUTPUT("RootMeanSquare[f7 - Sin[x]]*10^6");
     GMD_CODE_END();
 
-    
+
   }
 
 
 
 
-  
+
   GMD_HEADER2("Various functions related to integration and differentiation");
   OUTPUT("All of these functions can be called _either_ as a method, eg `v.cumsum()` or a function `cumsum(v)`.");
 
   {
     CR();
     CR();
-    EXAMPLE(Nex++,"Various functions: `cumsum`, `cumprod`, `cumtrapz`, `diff`, etc");
+    EXAMPLE(Nex++, "Various functions: `cumsum`, `cumprod`, `cumtrapz`, `diff`, etc");
     GMD_CODE_START("C++");
-    ECHO_CODE( set_default_format() );
-    ECHO_CODE( Vector<double> v1(5) );
+    ECHO(set_default_format());
+    ECHO(Vector<double> v1(5));
     GMD_CODE_END();
     CR();
 
-   
+
     resultstart2("");
-    resultmulti( v1 = {1,4,9,16,25}  );
-    resultmulti( v1.cumsum()  );
-    resultmulti( v1 = {1,4,9,16,25}  );
-    resultmulti( v1.cumtrapz()  );
-    resultmulti( v1 = {1,2,3,4,5}  );
-    resultmulti( v1.cumprod()  );
-    resultmulti( v1 = {1,4,9,16,25}  );
-    resultmulti( v1.diff()  );
-    resultmulti( v1 = {1,4,9,16,25}  );
-    resultmulti( v1.diff(true)  );
-    resultmulti( v1 = {25,16,9,4,1}  );
-    resultmulti( v1.cumsum_rev()  );
-    resultmulti( v1 = {25,16,9,4,1}  );
-    resultmulti( v1.cumtrapz_rev()  );
-    resultmulti( v1 = {5,4,3,2,1}  );
-    resultmulti( v1.cumprod_rev()  );
-    resultmulti( v1 = {1,4,9,16,25}  );
-    resultmulti( v1.diff_rev()  );
-    resultmulti( v1 = {1,4,9,16,25}  );
-    resultmulti( v1.diff_rev(true)  );
+    resultmulti(v1 = { 1,4,9,16,25 });
+    resultmulti(v1.cumsum());
+    resultmulti(v1 = { 1,4,9,16,25 });
+    resultmulti(v1.cumtrapz());
+    resultmulti(v1 = { 1,2,3,4,5 });
+    resultmulti(v1.cumprod());
+    resultmulti(v1 = { 1,4,9,16,25 });
+    resultmulti(v1.diff());
+    resultmulti(v1 = { 1,4,9,16,25 });
+    resultmulti(v1.diff(true));
+    resultmulti(v1 = { 25,16,9,4,1 });
+    resultmulti(v1.cumsum_rev());
+    resultmulti(v1 = { 25,16,9,4,1 });
+    resultmulti(v1.cumtrapz_rev());
+    resultmulti(v1 = { 5,4,3,2,1 });
+    resultmulti(v1.cumprod_rev());
+    resultmulti(v1 = { 1,4,9,16,25 });
+    resultmulti(v1.diff_rev());
+    resultmulti(v1 = { 1,4,9,16,25 });
+    resultmulti(v1.diff_rev(true));
     resultend();
   }
 
   OUTPUT("The suffix `_rev` denote that the function starts at the highest element instead of the lowest element. Passing `true` to diff signifies that the function is periodic over the interval [a,b]. ");
-  
+
   mathq_toc();
 
 

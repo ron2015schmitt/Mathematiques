@@ -13,15 +13,19 @@ def delete(fname):
 today = datetime.datetime.now().strftime("%d %B %Y")
 #print(today)
 
+cmd = "python3 " + sys.argv[0]
+fullcmd = "python3 " + ' '.join(sys.argv)
+
 usage="""
 USAGE: python3 {} TAG_FILE_MATHQ body.md
-""".format(sys.argv[0])
+""".format(cmd)
 
 n = len(sys.argv)
 if n != 3: 
     print("Invalid number of command line arguments ({})\n".format(n) + usage)
     sys.exit(1)
 
+# load tag file
 tag_file = sys.argv[1]
 lines = []
 with open(tag_file, 'r') as f:
@@ -37,7 +41,7 @@ header = """
 
 """.format(tag)
 
-
+# load body file
 template = sys.argv[2]
 f = open(template, 'r')
 body = f.read()

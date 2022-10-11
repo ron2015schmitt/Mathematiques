@@ -1,19 +1,10 @@
-#include <iostream>
-#include <string>
-#include <climits>
-#include <limits>
-#include <stdbool.h>
-#include <typeinfo>
-#include <optional>
-
-
 #include "mathq.h"
 
 int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   GMD_PREAMBLE();
 
@@ -55,9 +46,9 @@ int main() {
   OUTPUT("The default values were chosen so that the typical numerical error encountered with trig functions will produce exactly zero when appropriate.");
   CR();
   GMD_CODE_START("C++");
-  DISP(Functions<float>::tolerance);
-  DISP(Functions<double>::tolerance);
-  DISP(Functions<long double>::tolerance);
+  EV(Functions<float>::tolerance);
+  EV(Functions<double>::tolerance);
+  EV(Functions<long double>::tolerance);
   GMD_CODE_END();
   CR();
 
@@ -165,7 +156,7 @@ int main() {
   CR();
 
 
-    OUTPUT("\n<br>\n");
+  OUTPUT("\n<br>\n");
   GMD_HEADER3("Mathematical functions from the C++ [``std::complex`` header](https://en.cppreference.com/w/cpp/numeric/complex)");
 
 
@@ -333,11 +324,11 @@ int main() {
   {
     OUTPUT("Examples:\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(int n = 3);
-    DISP(typeid(n).name());
+    ECHO(int n = 3);
+    EV(typeid(n).name());
     // OUTPUT("typeid(n).name() -> \"i\"");
-    ECHO_CODE(string s = "hello");
-    DISP(typeid(s).name());
+    ECHO(string s = "hello");
+    EV(typeid(s).name());
     // OUTPUT("typeid(s).name() -> \"NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE\"");
     GMD_CODE_END();
   }
@@ -348,11 +339,11 @@ int main() {
   {
     OUTPUT("Examples:\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(int n = 3);
-    DISP(getTypeName(n));
+    ECHO(int n = 3);
+    EV(getTypeName(n));
     // OUTPUT("getTypeName(n) -> \"int\"");
-    ECHO_CODE(string s = "hello");
-    DISP(getTypeName(s));
+    ECHO(string s = "hello");
+    EV(getTypeName(s));
     // OUTPUT("getTypeName(s) -> \"std::string\"");
     GMD_CODE_END();
   }
@@ -367,19 +358,19 @@ int main() {
   {
     OUTPUT("Examples:\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(short n1 = 3);
-    ECHO_CODE(int n2 = 100);
-    TRDISP(n1 * n2);
+    ECHO(short n1 = 3);
+    ECHO(int n2 = 100);
+    ETV(n1 * n2);
     // OUTPUT("n1 * n2 -> int 300");
     CR();
-    ECHO_CODE(float x1 = 3);
-    ECHO_CODE(double x2 = 0.1415);
-    TRDISP(x1 + x2);
+    ECHO(float x1 = 3);
+    ECHO(double x2 = 0.1415);
+    ETV(x1 + x2);
     // OUTPUT("x1 + x2 -> double 3.1415");
     CR();
-    ECHO_CODE(int8_t y1 = 25);
-    ECHO_CODE(double y2 = 0.25);
-    TRDISP(y1 / y2 + y2);
+    ECHO(int8_t y1 = 25);
+    ECHO(double y2 = 0.25);
+    ETV(y1 / y2 + y2);
     // OUTPUT("y1 / y2 + y2 -> double 100.25");
     GMD_CODE_END();
   }
@@ -394,11 +385,11 @@ int main() {
   {
     OUTPUT("Converting a floating point type to an integer:\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(int n1 = (int)3.14);
-    TRDISP(n1);
+    ECHO(int n1 = (int)3.14);
+    ETV(n1);
     // OUTPUT("n1 -> 3");
-    ECHO_CODE(int n2 = int(3.14));
-    TRDISP(n2);
+    ECHO(int n2 = int(3.14));
+    ETV(n2);
     // OUTPUT("n2 -> 3");
     GMD_CODE_END();
   }
@@ -406,11 +397,11 @@ int main() {
   {
     OUTPUT("Forcing floating point division by converting the numerator to a `float`\n");
     GMD_CODE_START("C++");
-    ECHO_CODE(double x = (21 + 1) / 7);
-    TRDISP(x);
+    ECHO(double x = (21 + 1) / 7);
+    ETV(x);
     // OUTPUT("x -> 3");
-    ECHO_CODE(double y = float(21 + 1) / 7);
-    TRDISP(y);
+    ECHO(double y = float(21 + 1) / 7);
+    ETV(y);
     // OUTPUT("y -> 3.14286");
     GMD_CODE_END();
   }

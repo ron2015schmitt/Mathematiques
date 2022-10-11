@@ -33,7 +33,7 @@ namespace mathq {
   // Abstract class that represents either a MultiArray or a MultiArray expression that is "read only"
   // --------------------------------------------------------------------------------------------------
 
-  template <class Derived, typename Element, typename Number, size_t depth_, size_t rank_>
+  template <class Derived, typename Element, typename Num, size_t depth_, size_t rank_>
   class ExpressionR {
   public:
 
@@ -52,12 +52,12 @@ namespace mathq {
     //**********************************************************************
 
     using ParentType = NullType;
-    using Type = ExpressionR<Derived, Element, Number, depth_value, rank_value>;
+    using Type = ExpressionR<Derived, Element, Num, depth_value, rank_value>;
     using ConcreteType = MultiArray<Element, rank_value>;
 
     using ElementType = Element;
     using NumberType = typename NumberTrait<Element>::Type;
-    using OrderedNumberType = typename SimpleNumberTrait<NumberType>::Type;
+    using SimpleNumberType = typename SimpleNumberTrait<NumberType>::Type;
 
     using DimensionsType = Dimensions;
     using ElementDimensionsType = typename DimensionsTrait<Element>::Type;
@@ -78,10 +78,6 @@ namespace mathq {
     //**********************************************************************
     //                         Basic characteristics
     //**********************************************************************
-
-    bool isExpression(void) const {
-      return derived().isExpression();
-    }
 
     // #if MATHQ_DEBUG>=1
     //     std::string expression(void) const {
@@ -163,7 +159,7 @@ namespace mathq {
     //**********************************************************************
     //************************** DEEP ACCESS *******************************
     //**********************************************************************
-    const Number dat(const size_t i) const {
+    const Num dat(const size_t i) const {
       return derived().dat(i);
     }
 
@@ -194,8 +190,9 @@ namespace mathq {
     }
 
 
-    friend std::ostream& operator<<(std::ostream& stream, const ExpressionR<Derived, Element, Number, depth_value, rank_value>& expression) {
+    friend std::ostream& operator<<(std::ostream& stream, const ExpressionR<Derived, Element, Num, depth_value, rank_value>& expression) {
       ConcreteType temp;
+      temp.resize(expression.recursive_dims());
       temp = expression;
       stream << temp;
       return stream;

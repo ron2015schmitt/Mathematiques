@@ -1,19 +1,10 @@
-#include <iostream>
-#include <string>
-#include <climits>
-#include <limits>
-#include <stdbool.h>
-#include <typeinfo>
-#include <optional>
-
-
 #include "mathq.h"
 
 int main() {
   using namespace mathq;
   using namespace std;
   using namespace display;
-  
+
 
   GMD_PREAMBLE();
 
@@ -43,11 +34,11 @@ int main() {
   CR();
   OUTPUT("Examples:\n");
   GMD_CODE_START("C++");
-  TRDISP((2 == 2));
-  TRDISP((1 / 2 == 0.5));
-  TRDISP((1. / 2 == 0.5));
-  TRDISP((-2 < 34.2));
-  TRDISP((2 > 0));
+  ETV((2 == 2));
+  ETV((1 / 2 == 0.5));
+  ETV((1. / 2 == 0.5));
+  ETV((-2 < 34.2));
+  ETV((2 > 0));
   GMD_CODE_END();
 
 

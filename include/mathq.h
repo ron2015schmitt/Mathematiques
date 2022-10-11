@@ -6,11 +6,14 @@
 #ifndef MATHQ
 #define MATHQ
 
+
 #include <cassert>
+#include <climits>
 #include <cstddef>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <codecvt>
 #include <complex>
 #include <fstream>
 #include <initializer_list>
@@ -20,14 +23,17 @@
 #include <limits>
 #include <list>
 #include <map>
+#include <numbers>
 #include <numeric>
 #include <queue>
 #include <sstream>
 #include <stdarg.h>
 #include <string>
+#include <string_view>
 #include <type_traits> 
 #include <typeinfo>
 #include <valarray>
+#include <variant>
 #include <vector>
 
 
@@ -35,6 +41,7 @@
 
 #include "declarations.h"
 #include "type-traits.h"
+#include "tensor.h"
 #include "display.h"
 #include "fileio.h"
 #include "util.h"
@@ -69,7 +76,7 @@
 // #include "vector-sparse.h"
 
 #include "matrix--constant.h"
-#include "matrix--repeat-vec.h"
+// #include "matrix--repeat-vec.h"
 // #include "matrix_constdiag.h"
 // #include "matrix_diagonal.h"
 // #include "matrix_exchange.h"
@@ -95,7 +102,13 @@
 // #include "array4-constant.h"
 // #include "array4-repeat-vec.h"
 
-#include "grids.h"
+#include "nabla.h"
+#include "domains.h"
+#include "complex-domains.h"
+#include "curvilinear-coords.h"
+#include "complex-coords.h"
+#include "curvilinear-fields.h"
+#include "complex-fields.h"
 
 #include "expressions-r.h"
 #include "expressions-rw.h"

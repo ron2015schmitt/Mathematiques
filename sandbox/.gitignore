@@ -5,6 +5,7 @@
 /expressions
 /dotproducts
 /type-traits
+/type-traits2
 /math_real
 /math_imag
 /multiarrays-conversion
@@ -36,3 +37,7 @@
 /testternary
 /testjoin
 /specialmultiarrays
+/curvilinear-2d
+/curvilinear-3d
+/intervals
+/complex-domains

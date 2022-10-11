@@ -47,8 +47,8 @@ int main(int argc, char* argv[]) {
   double mu = sum(v) / N;
   double sigma = norm(v - mu) / sqrt(N - 1);
 
-  DISP(mu);
-  DISP(sigma);
+  EV(mu);
+  EV(sigma);
 
   CR();
   MOUT << "done: " << CREATESTYLE(BOLD).apply(myname) << std::endl;

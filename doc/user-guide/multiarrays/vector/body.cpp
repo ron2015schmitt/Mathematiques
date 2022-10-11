@@ -1,12 +1,3 @@
-#include <iostream>
-#include <string>
-#include <climits>
-#include <limits>
-#include <stdbool.h>
-#include <typeinfo>
-#include <optional>
-
-
 #include "mathq.h"
 
 inline double fradius2(double x, double y) { return  std::sqrt(x*x + y*y); }
@@ -54,45 +45,45 @@ int main() {
   CR();
   GMD_CODE_START("C++");
   {
-    ECHO_CODE(using namespace mathq);
+    ECHO(using namespace mathq);
     CR();
-    ECHO_CODE(auto velocity2D = Vector<double, 2>(0));
-    ECHO_CODE(auto velocity3D = Vector<double, 3>(0));
-    ECHO_CODE(auto vector = Vector<double, 11>(0));
-    TRDISP(velocity2D);
-    TRDISP(velocity3D);
-    TRDISP(vector);
+    ECHO(auto velocity2D = Vector<double, 2>(0));
+    ECHO(auto velocity3D = Vector<double, 3>(0));
+    ECHO(auto vector = Vector<double, 11>(0));
+    ETV(velocity2D);
+    ETV(velocity3D);
+    ETV(vector);
   }
   {
     CR();
-    ECHO_CODE(Vector<double, 2> velocity2D(0));
-    ECHO_CODE(Vector<double, 3> velocity3D(1));
-    TRDISP(velocity2D);
-    TRDISP(velocity3D);
+    ECHO(Vector<double, 2> velocity2D(0));
+    ECHO(Vector<double, 3> velocity3D(1));
+    ETV(velocity2D);
+    ETV(velocity3D);
   }
   {
     CR();
-    ECHO_CODE(Vector<double, 2> velocity2D);
-    ECHO_CODE(velocity2D = 4);
-    ECHO_CODE(Vector<double, 3> velocity3D);
-    ECHO_CODE(velocity3D = -0.55);
-    TRDISP(velocity2D);
-    TRDISP(velocity3D);
+    ECHO(Vector<double, 2> velocity2D);
+    ECHO(velocity2D = 4);
+    ECHO(Vector<double, 3> velocity3D);
+    ECHO(velocity3D = -0.55);
+    ETV(velocity2D);
+    ETV(velocity3D);
   }
   {
     CR();
-    ECHO_CODE(Vector<double, 2> velocity2D({ 70.5, -30 }));
-    ECHO_CODE(Vector<double, 3> velocity3D({ 10, 0, -15 }));
-    TRDISP(velocity2D);
-    ECHO_CODE(Vector<double> v3(3));
-    TRDISP(velocity3D);
+    ECHO(Vector<double, 2> velocity2D({ 70.5, -30 }));
+    ECHO(Vector<double, 3> velocity3D({ 10, 0, -15 }));
+    ETV(velocity2D);
+    ECHO(Vector<double> v3(3));
+    ETV(velocity3D);
   }
   {
     CR();
-    ECHO_CODE(Vector<double, 2> velocity2D = Vector<double, 2>({ 70.5, -30 }));
-    ECHO_CODE(Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 }));
-    TRDISP(velocity2D);
-    TRDISP(velocity3D);
+    ECHO(Vector<double, 2> velocity2D = Vector<double, 2>({ 70.5, -30 }));
+    ECHO(Vector<double, 3> velocity3D = Vector<double, 3>({ 70.5, -30 }));
+    ETV(velocity2D);
+    ETV(velocity3D);
   }
   GMD_CODE_END();
 
@@ -118,15 +109,15 @@ int main() {
   GMD_CODE_START("C++");
 
   CR();
-  DISP(sizeof(array<double, 2>)/sizeof(double));
-  DISP(sizeof(Vector<double, 2>)/sizeof(double));
+  EV(sizeof(array<double, 2>)/sizeof(double));
+  EV(sizeof(Vector<double, 2>)/sizeof(double));
 
   CR();
-  DISP(sizeof(array<double, 100>)/sizeof(double));
-  DISP(sizeof(Vector<double, 100>)/sizeof(double));
+  EV(sizeof(array<double, 100>)/sizeof(double));
+  EV(sizeof(Vector<double, 100>)/sizeof(double));
   CR();
-  DISP(sizeof(array<array<double, 2>, 100>)/sizeof(double));
-  DISP(sizeof(Vector<Vector<double, 2>, 100>)/sizeof(double));
+  EV(sizeof(array<array<double, 2>, 100>)/sizeof(double));
+  EV(sizeof(Vector<Vector<double, 2>, 100>)/sizeof(double));
 
   GMD_CODE_END();
 
@@ -163,10 +154,10 @@ int main() {
   OUTPUT("Mathématiques supports the four arithmetic operators for quaternions:");
   CR();
   GMD_CODE_START("C++");
-  // TRDISP(q1+q2);
-  // TRDISP(q1-q2);
-  // TRDISP(q1*q2);
-  // TRDISP(q2/q1);
+  // ETV(q1+q2);
+  // ETV(q1-q2);
+  // ETV(q1*q2);
+  // ETV(q2/q1);
   GMD_CODE_END();
 
 
@@ -216,19 +207,19 @@ int main() {
 
   CR();
   GMD_CODE_START("C++");
-  // TRDISP(q1);
-  // TRDISP(q1.real());
-  // TRDISP(q1.imag());
-  // TRDISP(q1.jmag());
-  // TRDISP(q1.kmag());
-  // TRDISP(q1.abs());
-  // TRDISP(q1.scalar());
-  // TRDISP(q1.vector());
-  // TRDISP(q1.vabs());
-  // TRDISP(q1.unitvector());
-  // TRDISP(q1.angle());
-  // TRDISP(q1.polar());
-  // TRDISP(q1.matrix2by2());
+  // ETV(q1);
+  // ETV(q1.real());
+  // ETV(q1.imag());
+  // ETV(q1.jmag());
+  // ETV(q1.kmag());
+  // ETV(q1.abs());
+  // ETV(q1.scalar());
+  // ETV(q1.vector());
+  // ETV(q1.vabs());
+  // ETV(q1.unitvector());
+  // ETV(q1.angle());
+  // ETV(q1.polar());
+  // ETV(q1.matrix2by2());
   GMD_CODE_END();
 
   // // MOUT << "sizeof tuple = " << display::tuple_size_v<std::tuple<double, double, Vector<double, 3>>> << endl;
@@ -245,13 +236,13 @@ int main() {
 
   CR();
   GMD_CODE_START("C++");
-  // TRDISP(q);
-  // TRDISP(exp(q));
-  // TRDISP(log(q));
-  // TRDISP(pow(q, 2));
-  // TRDISP(pow(q, 0.5));
-  // TRDISP(inv(q));
-  // TRDISP(conj(q));
+  // ETV(q);
+  // ETV(exp(q));
+  // ETV(log(q));
+  // ETV(pow(q, 2));
+  // ETV(pow(q, 0.5));
+  // ETV(inv(q));
+  // ETV(conj(q));
   GMD_CODE_END();
 
 
@@ -267,7 +258,7 @@ int main() {
   // FormatDataVector::max_elements_per_line = 1;
   // FormatDataVector::string_endofline = "\n";
   // GMD_CODE_START("C++");
-  // ECHO_CODE(auto v = Vector<Quaternion<double>>({ 16 + 2*i + 3*j + 13*k,
+  // ECHO(auto v = Vector<Quaternion<double>>({ 16 + 2*i + 3*j + 13*k,
   //                                                5 + 11*i + 10*j + 8*k,
   //                                                9 + 7*i + 6*j + 12*k,
   //                                                4 + 14*i + 15*j + 1*k }));
@@ -275,20 +266,20 @@ int main() {
 
 
   GMD_CODE_START("C++");
-  // TRDISP(q);
+  // ETV(q);
   // CR();
-  // TRDISP(v);
+  // ETV(v);
   // CR();
-  // TRDISP(v + q);
+  // ETV(v + q);
   // CR();
-  // TRDISP(exp(v));
+  // ETV(exp(v));
   // CR();
-  // TRDISP(exp(v) + v);
-  // TRDISP(exp(v) + 1);
-  // TRDISP(exp(v) + 2.3);
-  // TRDISP(exp(v) + complex(1,2));
-  // TRDISP(exp(v) + Imaginary<double>(2));
-  // TRDISP(exp(v) + Quaternion<double>(1, 2, -1, -3));
+  // ETV(exp(v) + v);
+  // ETV(exp(v) + 1);
+  // ETV(exp(v) + 2.3);
+  // ETV(exp(v) + complex(1,2));
+  // ETV(exp(v) + Imaginary<double>(2));
+  // ETV(exp(v) + Quaternion<double>(1, 2, -1, -3));
   GMD_CODE_END();
 
   return 0;
