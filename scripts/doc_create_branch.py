@@ -326,7 +326,7 @@ for name in CHILDREN:
         link = "[{}]({})".format(chapter2["title"], "../"+name2+"/README.md")
         line = chapter2["prefix"]+ " " + link + "<br>\n"
       toc += line
-  chapter["header"] = re.sub('\(\.\.', '(../..', node["header"]) + menu.format(title, toc)
+  chapter["header"] = re.sub('\\.\.', '../..', node["header"]) + menu.format(title, toc)
 print("DONE: create child headers\n")
 
 
