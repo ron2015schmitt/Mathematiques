@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.1-alpha.048</a></h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.2</a></h1>
 
 <details>
 
@@ -7,25 +7,23 @@
 # [Documentation](../README.md)<br>
 Chapter 1. [License](../license/README.md)<br>
 Chapter 2. [About](../about/README.md)<br>
-Chapter 3. [Why?](../why/README.md)<br>
-Chapter 4. [Objectives](../objectives/README.md)<br>
-Chapter 5. [Versioning](../versioning/README.md)<br>
-Chapter 6. [Status & Release Notes](../status-release/README.md)<br>
-Chapter 7. [Upcoming Development](../development-schedule/README.md)<br>
-Chapter 8. [Introduction with Examples](../intro/README.md)<br>
-Chapter 9. [Installation](../installation/README.md)<br>
-Chapter 10. [Your First Mathématiques Project](../first-project/README.md)<br>
-Chapter 11. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-Chapter 12. _Benchmarks_ <br>
-Chapter 13. [Tests](../test/README.md)<br>
-Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
+Chapter 3. [Versioning](../versioning/README.md)<br>
+Chapter 4. [Status & Release Notes](../status-release/README.md)<br>
+Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
+Chapter 6. [Introduction with Examples](../intro/README.md)<br>
+Chapter 7. [Installation](../installation/README.md)<br>
+Chapter 8. [Your First Mathématiques Project](../first-project/README.md)<br>
+Chapter 9. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 10. _Benchmarks_ <br>
+Chapter 11. [Tests](../test/README.md)<br>
+Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
 
 
 </details>
 
 
 
-# Chapter 12. Benchmarks
+# Chapter 10. Benchmarks
 
 _This document was generated from the C++ file_ `benchmarks/body.cpp` _using macros and functions (in namespace `mathq::display`) from the header_ `"mathq.h"`. 
 
@@ -76,7 +74,7 @@ for (size_t k = 0; k < N; k++) {
   f[k] = 1 + 10 * x[k] + exp(i * (2 * pi + pi * sin(2 * pi * x[k] + pi / 6)));
 }
 ```
-☀ elapsed_time ➜ 267 μsec;
+☀ elapsed_time ➜ 274 μsec;
 
 
 #### Results 1B. Mathématiques C
@@ -88,7 +86,7 @@ Vector<std::complex<double>> f(N);
 x = linspace<double>(0, 1, N);
 f = 1 + 10 * x + exp(i * (2 * pi + pi * sin(2 * pi * x + pi / 6)));
 ```
-☀ elapsed_time ➜ 241 μsec;
+☀ elapsed_time ➜ 237 μsec;
 
 
 <br>
@@ -121,7 +119,7 @@ for (size_t r = 0; r < N; r++) {
   }
 }
 ```
-☀ elapsed_time ➜ 1347 μsec;
+☀ elapsed_time ➜ 1337 μsec;
 
 
 #### Results 2B. Mathématiques C
@@ -136,7 +134,7 @@ for (size_t k = 0; k < N*N; k++) {
 }
 y = A | x;
 ```
-☀ elapsed_time ➜ 1323 μsec;
+☀ elapsed_time ➜ 1310 μsec;
 
 
 

@@ -87,6 +87,8 @@ int main() {
   CR();
   OUTPUT("where we have used the [Einstein summation convention](https://en.wikipedia.org/wiki/Einstein_notation).");
   OUTPUT("Mathématiques uses modern tensor notation, and we write the inner product as either $A(B)$ or $B(A)$.");
+  OUTPUT("Refer to e.g. [Misner, Thorne, Wheeler, _Gravitation_, 1973](https://en.wikipedia.org/wiki/Gravitation_(book)).");
+
   {
     GMD_CODE_START("C++");
     ECHO(using namespace mathq::TensorIndex::LH);

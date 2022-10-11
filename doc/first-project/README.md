@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.1-alpha.048</a></h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.2</a></h1>
 
 <details>
 
@@ -7,25 +7,23 @@
 # [Documentation](../README.md)<br>
 Chapter 1. [License](../license/README.md)<br>
 Chapter 2. [About](../about/README.md)<br>
-Chapter 3. [Why?](../why/README.md)<br>
-Chapter 4. [Objectives](../objectives/README.md)<br>
-Chapter 5. [Versioning](../versioning/README.md)<br>
-Chapter 6. [Status & Release Notes](../status-release/README.md)<br>
-Chapter 7. [Upcoming Development](../development-schedule/README.md)<br>
-Chapter 8. [Introduction with Examples](../intro/README.md)<br>
-Chapter 9. [Installation](../installation/README.md)<br>
-Chapter 10. _Your First Mathématiques Project_ <br>
-Chapter 11. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-Chapter 12. [Benchmarks](../benchmarks/README.md)<br>
-Chapter 13. [Tests](../test/README.md)<br>
-Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
+Chapter 3. [Versioning](../versioning/README.md)<br>
+Chapter 4. [Status & Release Notes](../status-release/README.md)<br>
+Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
+Chapter 6. [Introduction with Examples](../intro/README.md)<br>
+Chapter 7. [Installation](../installation/README.md)<br>
+Chapter 8. _Your First Mathématiques Project_ <br>
+Chapter 9. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 10. [Benchmarks](../benchmarks/README.md)<br>
+Chapter 11. [Tests](../test/README.md)<br>
+Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
 
 
 </details>
 
 
 
-# Chapter 10. Your First Mathématiques Project
+# Chapter 8. Your First Mathématiques Project
 
 
 Now that you have completed installation, to use the Mathématiques library you need to 
@@ -170,7 +168,7 @@ int main(int argc, char* argv[]) {
 #
 # Copy this Makefile to your project directory
 #
-# Mon Oct 10 17:46:07 EDT 2022
+# Mon Oct 10 20:39:32 EDT 2022
 #
 # This Makefile was created by [BUILD_PARENT_DIR]/Mathematiques/configure from
 #   [BUILD_PARENT_DIR]/Mathematiques/make-lib/variables.mk

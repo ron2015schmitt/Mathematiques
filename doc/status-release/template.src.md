@@ -1,6 +1,6 @@
 ## Status
 
-As of v0.41, Mathématiques is now sponsorship-ready.  The core functionality has been implemented, demonstrating its feasibility, utility, and performance.
+As of v0.42, Mathématiques is now sponsorship-ready.  The core functionality has been implemented, demonstrating its feasibility, utility, and performance.
 
 ## Current Build Information
 
@@ -9,6 +9,10 @@ __BUILD_INFO__
 ```
 
 ## Release Notes
+
+### **0.42** Introduction Completed
+* Finished introduction and added minor featuers to support it
+* Migration to Semantic 2.0 versioning and optional prelease  (eg alpla, beta, etc)
 
 ### **0.41** Vector Calculus
   + New class hierarchies

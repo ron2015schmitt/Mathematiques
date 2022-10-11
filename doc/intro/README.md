@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.1-alpha.048</a></h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../README.md'>Mathématiques 0.42.2</a></h1>
 
 <details>
 
@@ -7,45 +7,43 @@
 # [Documentation](../README.md)<br>
 Chapter 1. [License](../license/README.md)<br>
 Chapter 2. [About](../about/README.md)<br>
-Chapter 3. [Why?](../why/README.md)<br>
-Chapter 4. [Objectives](../objectives/README.md)<br>
-Chapter 5. [Versioning](../versioning/README.md)<br>
-Chapter 6. [Status & Release Notes](../status-release/README.md)<br>
-Chapter 7. [Upcoming Development](../development-schedule/README.md)<br>
-Chapter 8. _Introduction with Examples_ <br>
-Chapter 9. [Installation](../installation/README.md)<br>
-Chapter 10. [Your First Mathématiques Project](../first-project/README.md)<br>
-Chapter 11. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
-Chapter 12. [Benchmarks](../benchmarks/README.md)<br>
-Chapter 13. [Tests](../test/README.md)<br>
-Chapter 14. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
+Chapter 3. [Versioning](../versioning/README.md)<br>
+Chapter 4. [Status & Release Notes](../status-release/README.md)<br>
+Chapter 5. [Upcoming Development](../development-schedule/README.md)<br>
+Chapter 6. _Introduction with Examples_ <br>
+Chapter 7. [Installation](../installation/README.md)<br>
+Chapter 8. [Your First Mathématiques Project](../first-project/README.md)<br>
+Chapter 9. [Usage Guide: Syntax, Data Types, Functions, etc](../user-guide/README.md)<br>
+Chapter 10. [Benchmarks](../benchmarks/README.md)<br>
+Chapter 11. [Tests](../test/README.md)<br>
+Chapter 12. [Developer Guide: Modifying and Extending Mathématiques](../developer-guide/README.md)<br>
 
 
 </details>
 
 
 
-# 8. Introduction with Examples
+# 6. Introduction with Examples
 
 **Basics**<br>
-8.1. [Pretty Printing and Debugging](print-debug/README.md)<br>
-8.2. [Number Systems and Arithmetic](numbers/README.md)<br>
+6.1. [Pretty Printing and Debugging](print-debug/README.md)<br>
+6.2. [Number Systems and Arithmetic](numbers/README.md)<br>
 <br>**MultiArrays**<br>
-8.3. [Vectors, Matrices, and MultiArrays](multiarrays/README.md)<br>
-8.4. [Nested MultiArrays](nested-multiarrays/README.md)<br>
-8.5. [Special Vectors, Matrices, and MultiArrays](special-multiarrays/README.md)<br>
+6.3. [Vectors, Matrices, and MultiArrays](multiarrays/README.md)<br>
+6.4. [Nested MultiArrays](nested-multiarrays/README.md)<br>
+6.5. [Special Vectors, Matrices, and MultiArrays](special-multiarrays/README.md)<br>
 <br>**Mathematics**<br>
-8.6. [MultiArray Arithmetic and Operators](multiarray-arithmetic/README.md)<br>
-8.7. [Mixed-Rank & Mixed-Depth Arithmetic](arithmetic-mixed/README.md)<br>
-8.8. [Linear Algebra](linear-algebra/README.md)<br>
-8.9. [Indexing, Masks, Slicing, Sorting, etc.](sort-mask-slice/README.md)<br>
-8.10. [Common and Special Mathematical Functions](math-functions/README.md)<br>
+6.6. [MultiArray Arithmetic and Operators](multiarray-arithmetic/README.md)<br>
+6.7. [Mixed-Rank & Mixed-Depth Arithmetic](arithmetic-mixed/README.md)<br>
+6.8. [Linear Algebra](linear-algebra/README.md)<br>
+6.9. [Indexing, Masks, Slicing, Sorting, etc.](sort-mask-slice/README.md)<br>
+6.10. [Common and Special Mathematical Functions](math-functions/README.md)<br>
 <br>**Discretized Functions, Tensors, and Calculus**<br>
-8.11. [Numerical / Discretized Mathematical Function Objects](numerical-functions/README.md)<br>
-8.12. [Functions of Complex Variables](complex-calculus/README.md)<br>
-8.13. [Vector Calculus and Curvilinear Coordinates](vector-calculus/README.md)<br>
-8.14. [Tensors](tensors/README.md)<br>
-8.15. [Series and transforms](series-transforms/README.md)<br>
+6.11. [Numerical / Discretized Mathematical Function Objects](numerical-functions/README.md)<br>
+6.12. [Functions of Complex Variables](complex-calculus/README.md)<br>
+6.13. [Vector Calculus and Curvilinear Coordinates](vector-calculus/README.md)<br>
+6.14. [Tensors](tensors/README.md)<br>
+6.15. [Series and transforms](series-transforms/README.md)<br>
 
 
 ## Planned Features

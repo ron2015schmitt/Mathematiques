@@ -104,20 +104,20 @@ Vector<double> g = cyl_bessel_j(nu, x);
 <tr>
 <td align="center">
 
-$\mathbf{v} =  \left[
+$$\mathbf{v} =  \left[
 \begin{matrix}
 1 \cr
 2 \cr
 3 
-\end{matrix} \right]$
+\end{matrix} \right]$$
 
-$\mathbf{A} =  \left[
+$$\mathbf{A} =  \left[
 \begin{matrix}
 1 & 2\cr
 3 & 4
-\end{matrix} \right]$
+\end{matrix} \right]$$
 
-$\mathbf{M} =  \left[
+$$\mathbf{M} =  \left[
 \left[ \begin{matrix}
 1 & 2\cr
 3 & 4
@@ -126,7 +126,7 @@ $\mathbf{M} =  \left[
 5 & 6\cr
 7 & 8
 \end{matrix} \right]
-\right]$
+\right]$$
 
 </td>
 </tr>
@@ -464,7 +464,7 @@ Extend an existing high-performance language that internally implements the phas
   + supports operator definitions for mathematical unicode symbols so that the code really looks like mathematical notation
   + also has multi-character ASCII alternatives for each unicode symbol
 * modern, cloud-based module/package loader
-* package repository site, eg [PyPi](https://pypi.org/) and [npm for NodeJs](https://www.npmjs.com/),for **user-created** open-source packages
+* package repository site, eg [PyPi for Python](https://pypi.org/) and [npm for NodeJs](https://www.npmjs.com/), for **user-created** open-source packages
 * web API for remote computation, likely using [gRPC](https://en.wikipedia.org/wiki/GRPC) and [GraphQL](https://en.wikipedia.org/wiki/GraphQL)
 * support for Latex generation and interaction with Jupyter notebooks
 

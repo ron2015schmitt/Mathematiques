@@ -7,6 +7,6 @@
 # The Makefile will tack on a revision string (to yield the full version strign eg. 2.1.21) for commits between changes.
 # This files documents features and functionality, not patches nor bug fixes
 export FEATURE_VERSION_MATHQ=0.42
-# 0.42: formally introduce Semantic 2.0 versioning and optional prelease tags
+# 0.42: formally introduce Semantic 2.0 versioning and optional prelease tags. finished introduction
 # V0.41 created from v0.40.262-c++20: introduction of *vector calculus*.
 # V0.40 created from v3.5.78-c++17: refactotring of MultiArrays such that Scalar, Vector and Matrix are simply type aliases
