@@ -1,6 +1,6 @@
 
 
-# Mathématiques 0.42.2
+# Mathématiques 0.42.3
 
 Mathématiques is a novel mathematical library with 
 * object classes based on **formal mathematical objects** and their operators
@@ -19,7 +19,7 @@ Mathématiques defines object classes for mathematical objects that are typicall
 Most importantly, Mathématiques fosters application code that is **compact** and **looks more like math** than code.
 
 
-## Phase 1 (in progress): C++ Numerical Library
+## Phase 1 (in progress): C++ Mathematical Library
   
 Starting in the late 1990s and early 2000s, several C++ numerical libraries (such as [Armadillo](https://en.wikipedia.org/wiki/Armadillo_(C%2B%2B_library)), [Blitz++](https://en.wikipedia.org/wiki/Blitz%2B%2B), [boost uBLAS](https://www.boost.org/doc/libs/1_59_0/libs/numeric/ublas/doc/index.html), [Dlib](https://en.wikipedia.org/wiki/Dlib), [Eigen](https://en.wikipedia.org/wiki/Eigen_(C%2B%2B_library)), [MTL](https://en.wikipedia.org/wiki/Matrix_Template_Library), [Trilinos](https://en.wikipedia.org/wiki/Trilinos), [xtensor](https://xtensor.readthedocs.io/en/latest/index.html)) were created using the novel technique of [expression templating](https://en.wikipedia.org/wiki/Expression_templates) and mostly focus on linear algebra.  Expression templating is a technique independently developed by Todd Veldhuizen and David Vandevoorde that performs operations at compile time to produce C++ numerical code without the problem of intermediate objects and intermediate loops.
 

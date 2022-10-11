@@ -1,4 +1,4 @@
-0.42.2+cpp20gpp11.2.0
+0.42.3+cpp20gpp11.2.0
 #!/bin/bash
 # version = Major.Minor
 # Minor should be manually updated any time new functionality is added.
