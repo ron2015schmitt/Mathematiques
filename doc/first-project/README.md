@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'><a href='../../README.md'>Mathématiques 0.42.5</a></h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../../README.md'>Mathématiques 0.42.6</a></h1>
 
 <details>
 
@@ -164,11 +164,11 @@ int main(int argc, char* argv[]) {
 
 ```Makefile
 ##############################################################################################
-# Mathematiques 0.42.4 User Code Makefile
+# Mathematiques 0.42.6 User Code Makefile
 #
 # Copy this Makefile to your project directory
 #
-# Mon Oct 10 21:59:47 EDT 2022
+# Sat Feb  4 16:51:44 EST 2023
 #
 # This Makefile was created by [BUILD_PARENT_DIR]/Mathematiques/configure from
 #   [BUILD_PARENT_DIR]/Mathematiques/make-lib/variables.mk
