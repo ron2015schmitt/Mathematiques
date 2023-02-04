@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'><a href='../../README.md'>Mathématiques 0.42.5</a></h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../../README.md'>Mathématiques 0.42.6</a></h1>
 
 <details>
 
