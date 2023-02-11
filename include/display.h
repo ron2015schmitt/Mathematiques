@@ -5,6 +5,7 @@
 #include <stdarg.h>
 #include <functional>
 #include <tuple>
+#include <regex>
 
 
 
@@ -148,6 +149,19 @@
 //   ETV(1+3); // "1+3  ➜  int 4"
 
 #define ETV(...) display::Display::trmydispcr(MOUT, __VA_ARGS__, #__VA_ARGS__)
+
+
+
+//
+// TV(x)
+//
+// prints the typename and value
+//
+// EXAMPLES:
+//   TV(1+3); // "1+3  ➜  int 4"
+
+#define TV(...) display::Display::disp_w_type(MOUT, __VA_ARGS__)
+
 
 
 //
@@ -474,16 +488,7 @@ namespace display {
 
 
 
-  std::string replace_all(const std::string& inout, const std::string_view what, const std::string_view with) {
-    std::string result(inout);
-    for (std::string::size_type pos{};
-      result.npos != (pos = result.find(what.data(), pos, what.length()));
-      pos += with.length()) {
-      std::string s = { with.begin(), with.end() };
-      result.replace(pos, what.length(), s);
-    }
-    return result;
-  }
+
 
   extern const char blankline[];
   //****************************************************************************
@@ -510,6 +515,123 @@ namespace display {
     }
     return s;
   }
+
+  inline std::string replace_all(const std::string& inout, const std::string_view what, const std::string_view with) {
+    std::string result(inout);
+    for (std::string::size_type pos{};
+      result.npos != (pos = result.find(what.data(), pos, what.length()));
+      pos += with.length()) {
+      std::string s = { with.begin(), with.end() };
+      result.replace(pos, what.length(), s);
+    }
+    return result;
+  }
+  inline std::string remove_styles(std::string s) {
+    return std::regex_replace(
+      s,
+      std::regex(R"((?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~])"),
+      ""
+    );
+  }
+
+  // trim from start (in place)
+  static inline void ltrim(std::string& s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+      return !std::isspace(ch);
+      }));
+  }
+
+  // trim from end (in place)
+  static inline void rtrim(std::string& s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+      return !std::isspace(ch);
+      }).base(), s.end());
+  }
+
+  // trim from both ends (in place)
+  static inline void trim(std::string& s) {
+    rtrim(s);
+    ltrim(s);
+  }
+
+  // trim from start (copying)
+  static inline std::string ltrim_copy(std::string s) {
+    ltrim(s);
+    return s;
+  }
+
+  // trim from end (copying)
+  static inline std::string rtrim_copy(std::string s) {
+    rtrim(s);
+    return s;
+  }
+
+  // trim from both ends (copying)
+  static inline std::string trim_copy(std::string s) {
+    trim(s);
+    return s;
+  }
+
+
+  //
+  // split
+  //
+
+  inline std::vector<std::string> split(std::string s, std::string delimiter) {
+    using std::string, std::endl, std::cout, std::cerr;
+
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    string token;
+    std::vector<string> res;
+
+    while ((pos_end = s.find(delimiter, pos_start)) != string::npos) {
+      token = s.substr(pos_start, pos_end - pos_start);
+      pos_start = pos_end + delim_len;
+      res.push_back(token);
+    }
+
+    res.push_back(s.substr(pos_start));
+    return res;
+  }
+
+
+
+  //
+  // remove_blanks
+  //
+
+  inline void remove_blanks(std::vector<std::string>& v) {
+    using std::string, std::endl, std::cout, std::cerr;
+
+    for (std::vector<string>::iterator it = v.begin(); it != v.end();) {
+      string s = trim_copy(*it);
+      if (s.length() == 0) {
+        it = v.erase(it);
+      }
+      else {
+        ++it;
+      }
+    }
+  }
+
+
+
+  //
+  // repeat
+  //
+
+  inline std::string repeat(std::string s, unsigned int num, std::string delimiter = "") {
+    using std::string, std::endl, std::cout, std::cerr;
+    string res;
+
+    for (int i = 0; i < num; i++) {
+      if (i > 0) res += delimiter;
+      res += s;
+    }
+
+    return res;
+  }
+
 
   //------------------------------------------------------------
   //                        printf2str
@@ -675,7 +797,7 @@ namespace display {
       return *style;
     }
 
-    inline Style() : stylestr_(""), stylename_("") {
+    inline Style(): stylestr_(""), stylename_("") {
     }
     inline Style(const std::string stylestr) : stylestr_(stylestr), stylename_("") {
     }
@@ -780,13 +902,13 @@ namespace display {
       return *(new StyledString(style, text));
     }
 
-    inline StyledString() : style_(CREATESTYLE(CROSSEDOUT)),
+    inline StyledString(): style_(CREATESTYLE(CROSSEDOUT)),
       text_(std::string("hello world")) {
       if (!StyledString::isInitialized) {
         StyledString::initialize();
       }
     }
-    inline StyledString(Style& style, const std::string text) : style_(style), text_(text) {
+    inline StyledString(Style& style, const std::string text): style_(style), text_(text) {
     }
     inline StyledString(const StyledString& styledstring) : style_(styledstring.getStyle()), text_(styledstring.getString()) {
     }

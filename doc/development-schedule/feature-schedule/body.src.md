@@ -122,8 +122,12 @@
 * each MultiArray should have a dynamic cast to a list
 * need function in display that converts (nested) lists to a string
 * use [std::source_location](https://en.cppreference.com/w/cpp/utility/source_location) in `log` functions
-* optional command to print tensors as 2.35 ∇r + 3.43 ∇θ,  or  ∂x/∂r  etc
-1. print expression classname preluded by the concrete type
+* optional command to print tensors as 2.35 ∇r + 3.43 ∇θ,  or  ∂x/∂r  etc and vector calc 2.35 r̂ + 3.43 θ^
+* print expression classname preluded by the concrete type
+* full support for ETV (expression type value) in every combination
+* display_strm with no coloring option
+* use C++ latex rednering library pus image display command like sudo apt install feh
+* otpion to print strign with enclosing ""
 
 
 ### Test memory usage and speed (benchmarks) of a variety of usages and optimizerefactor as necessary

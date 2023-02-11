@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'><a href='../../README.md'>Mathématiques 0.42.6</a></h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../../README.md'>Mathématiques 0.42.7</a></h1>
 
 <details>
 
@@ -32,7 +32,7 @@ As of v0.42, Mathématiques is now sponsorship-ready.  The core functionality ha
 ## Current Build Information
 
 ```
-Sat Feb  4 16:51:44 EST 2023
+Fri Feb 10 19:20:48 EST 2023
 Mathématiques 0.42.6
 Description:	Ubuntu 22.04.1 LTS
 g++ (Ubuntu 11.2.0-19ubuntu1) 11.2.0
