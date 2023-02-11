@@ -6,6 +6,8 @@
 #include <functional>
 #include <tuple>
 #include <regex>
+#include <string>
+#include <cstdio>
 
 
 

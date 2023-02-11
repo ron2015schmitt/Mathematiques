@@ -1,4 +1,4 @@
-<h1 style='border: 2px solid; text-align: center'><a href='../../../README.md'>Mathématiques 0.42.7</a></h1>
+<h1 style='border: 2px solid; text-align: center'><a href='../../../README.md'>Mathématiques 0.42.8</a></h1>
 
 <details>
 
@@ -174,7 +174,7 @@ ETV(std::string(mathq::version));
 ```C++
 ☀ __cplusplus ➜ long 202002;
 ☀ MATHQ_DEBUG ➜ int 0;
-☀ std::string(mathq::version) ➜ std::string 0.42.7;
+☀ std::string(mathq::version) ➜ std::string 0.42.8;
 ```
 This information can also be printed using the function `display::print_mathq_info()`
 ```C++
@@ -182,7 +182,7 @@ display::print_mathq_info();
 ```
 ```C++
                                                                                
-Mathématiques 0.42.7 
+Mathématiques 0.42.8 
 
 compile-time settings
   MATHQ_DEBUG 0 (production) 
